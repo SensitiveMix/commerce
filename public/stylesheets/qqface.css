@@ -1,0 +1,7 @@
+span.emotion{display: block;  cursor:pointer; line-height: 20px; font-size: 12px; padding: 8px 0 0 0;}
+span.emotion .head_picture{  float: left; padding:3px 6px 0 0; display: inline-block;}
+span.emotion:hover{background-position:2px}
+.qqFace{margin-top:4px;background:#fff;padding:2px;border:1px #dfe6f6 solid;}
+.qqFace table td{padding:0px;}
+.qqFace table td img{cursor:pointer;border:1px #fff solid;}
+.qqFace table td img:hover{border:1px #0066cc solid;}

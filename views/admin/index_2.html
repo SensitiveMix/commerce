@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title> </title>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<meta content="edge" http-equiv="X-UA-Compatible">       
+		<script src="../../public/js/lxb.js" charset="utf-8"></script><script src="../../public/js/hm.js"></script><script language="javascript" type="text/javascript" src="../../public/js/jquery-1.9.1.js"></script>
+		<script language="javascript" type="text/javascript" src="../../public/js/cookies.js"></script>
+		
+        <script>
+			function InputOnFocus(e)
+			{
+				if($(e).val() == $(e).attr("placeholder"))
+				{
+					$(e).val('');
+				}
+				$(e).css({color:'#3e3e3e'})
+			}
+
+			function InputOnBlur(e)
+			{
+				if($(e).val() == '')
+				{
+					$(e).val($(e).attr("placeholder")).css({color:'#a6a6a6'});
+				}
+			}
+			
+			var mailreg = /^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.){1,4}[a-z]{2,3}$/;
+			var passreg = /^[a-zA-Z0-9_]{6,16}$/;
+			var telreg = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
+			var nickreg = /^[^@']{2,10}$/;
+			var  _smscode=/^[0-9]\d{3,4}$/; 
+			var  _vcode=/^[a-zA-Z0-9]{4}$/; 
+			var  vde=false; 
+
+			function checkForm()
+			{
+				if($("#usermail").val() == "" || $("#usermail").val() == "如name@example.com"){
+					ShowError('账户（邮箱）不能为空！');
+					return false;
+				}
+				else if(!new RegExp(mailreg).test($("#usermail").val()))
+				{
+					ShowError('账户（邮箱）格式不正确！');
+					$('#usermail').focus();
+					return false;
+				}
+				else if($("#usertel").val() == ""){
+					ShowError('手机号码不能为空！');
+					return false;
+				}
+				else if(!new RegExp(telreg).test($("#usertel").val()))
+				{
+					ShowError('手机号码格式不正确（6~16位）！');
+					$('#usertel').focus();
+					return false;
+				}
+				else if($("#userpass").val() == ""){
+					ShowError('密码不能为空！');
+					$('#userpass').focus();
+					return false;
+				}
+				else if(!new RegExp(passreg).test($("#userpass").val()))
+				{
+					ShowError('密码格式不正确（6~16位）！');
+					$('#userpass').focus();
+					return false;
+				}
+				else if($("#reuserpass").val() == ""){
+					ShowError('第二次输入密码不能为空！');
+					return false;
+				}
+				else if(!new RegExp(passreg).test($("#reuserpass").val()))
+				{
+					ShowError('第二次密码格式不正确（6~16位）！');
+					$('#reuserpass').focus();
+					return false;
+				}
+				else if($("#userpass").val()!=$("#reuserpass").val())
+				{
+					ShowError('两次输入的密码不同！');
+					$('#reuserpass').focus();
+					return false;
+				}
+				else if($("#usernickname").val() == ""){
+					ShowError('昵称不能为空！');
+					return false;
+				}
+				else if(!new RegExp(nickreg).test($("#usernickname").val()))
+				{
+					ShowError('昵称格式不正确（2~10位）！');
+					$('#usernickname').focus();
+					return false;
+				}
+				if(!vde){vde=checkvcode($("#vcode")[0]);return false;}   //图片验证
+
+				
+
+				HideError();
+				return true;
+			}
+			
+			function ShowError(str)
+			{
+				$('#ErrTip').text(str).show();
+			}
+			
+			function HideError()
+			{
+				$('#ErrTip').text('').hide();
+			}
+			function RndNum(n)
+		{
+			var rnd="";
+			for(var i=0;i<n;i++)
+			rnd += Math.floor(Math.random()*10);
+			return rnd;
+		}
+		
+		var SmsCheckCode;
+		var SmsSendTime = 0;
+		var SmsSendInterval;
+		function SendSmsCode()
+		{   
+		    if(!new RegExp(telreg).test($("#usertel").val())||$("#usertel").val()=="" ){ShowError('手机号码格式不正确！');$('#usertel').focus();setTimeout("HideError()",2000);return;}
+			if(!vde||$("#vcode").val()==""){vde=checkvcode($("#vcode")[0]);setTimeout("HideError()",1000);return;}
+			if(SmsSendTime>0){return;}
+			var tel = $("#usertel").val();
+			SmsCheckCode = RndNum(4);
+			//发送接口
+			$.get("/sms.asp?smscontext="+SmsCheckCode+"&phonelist="+tel,{},function(){
+				alert('短信发送成功，请填写您收到的短信验证码。');
+			});
+			SmsSendTime = 60;//每隔10秒允许发送一次短信验证码
+			SmsSendInterval = setInterval(function(){
+				if(SmsSendTime<=0)
+				{
+					SmsSendTime = 0;
+					clearInterval(SmsSendInterval);
+					$(".smscodebt").text("发送短信验证");
+				}
+				else
+				{
+					$(".smscodebt").text("发送短信验证 "+SmsSendTime+" ");
+					SmsSendTime--;
+				}
+			},1000);
+			//ajax写入数据库
+		}
+		
+	     /*验证码*/
+		 function checkvcode(e)
+		{
+			var eid=e.id;
+			if (e.value!=""){
+			 
+				if(!new RegExp(_vcode).test(e.value))
+				{
+					ShowError('验证码输入错误！');
+					return false;
+				}
+				$.get("/Handle/Reg/Register.asp",{t:eid,d:e.value,s:getDataTimes()},function(result){
+					if(result=="true")
+					{
+						 HideError();
+						vde=true;
+					}
+					else
+					{
+						ShowError('验证码输入错误！');
+						vde=false;
+					}
+				  }); 
+			  }else
+			  {
+			      ShowError('请输入验证码！');
+				  setTimeout("HideError()",1000);
+			  }
+		}
+		function getDataTimes()
+		{
+			var strDate,strTime;
+			strDate = new Date();
+			strTime = strDate.getTime();
+			return strTime;
+		}
+		function changeAuthCode()
+		{
+			$("#authcode_img")[0].src=$("#authcode_img")[0].src.split("?")[0]+"?t="+getDataTimes();
+		}
+
+		</script>
+		<script>
+          var _hmt = _hmt || [];
+          (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?194eb45a9816004c603a189d428034ac";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+          })();
+        </script>
+    
+<link rel="stylesheet" type="text/css" href="../../public/stylesheets/index_2.css" media="all">
+</head>
+<body>
+        <div id="m_pbd" class="pbd clearfix">
+            <div class="m_left">
+                <a href="javascript:void(0)">
+                    <img title="点击下载VV手机版" alt="点击下载VV手机版" src="../../public/images/qlogin_left_001.png">
+                </a>
+            </div>
+            <div class="m_main">
+                <a id="m_close" class="dialog_close png24" href="javascript:void(0)" onclick="window.parent.Reg.Hide();">
+                </a>
+				<form id="login_frm" method="post" action="http://v.tjrjzx.com/handle/qreg/">
+					<div id="m_commonLogin" style="" class="m_form m_commonLogin  ">
+						<h3>
+							帐号注册 
+						</h3>
+						<div class="form_item">
+							<span class="m_textbox">
+								<input name="usermail" id="usermail" class="placeholder E_acct" value="如name@example.com" onfocus="InputOnFocus(this)" onblur="InputOnBlur(this)" placeholder="如name@example.com" type="text">
+								<span class="space">
+								</span>
+							</span>
+							<div id="ErrTip" class="m_tips png24 E_tips" style="display: none;"></div>
+						</div>
+						<div class="form_item">
+							<span class="m_textbox">
+								<input name="usertel" id="usertel" class="placeholder E_acct" value="手机号码" onfocus="InputOnFocus(this)" onblur="InputOnBlur(this)" placeholder="手机号码" type="text">
+								<span class="space">
+								</span>
+							</span>
+						</div>
+						<div class="form_item">
+								<input value="" style="float: left; outline: medium none; vertical-align: middle; width: 100px; font-size: 12px; padding-left: 7px; height: 25px;" autocomplete="off" placeholder=" 验证码" onmouseout="vde=checkvcode(this);" onkeyup="this.value = this.value.toUpperCase();" id="vcode" name="vcode" type="text">&nbsp;
+								<span onclick="return changeAuthCode();" href="javascript:void(0)">
+									<img id="authcode_img" class="imgAuthCode" src="../../public/images/vcode.asp">
+								</span>
+						</div>
+						
+
+						<div class="form_item">
+							<span class="m_textbox">
+								<input name="usernickname" id="usernickname" class="placeholder E_acct" value="昵称" onfocus="InputOnFocus(this)" onblur="InputOnBlur(this)" placeholder="昵称" type="text">
+								<span class="space">
+								</span>
+							</span>
+						</div>
+						<div class="form_item">
+							<span class="m_textbox">
+								<input id="userpass" name="userpass" onfocus="InputOnFocus(this)" value="" class="placeholder E_passwd" placeholder="密码" type="password">
+								<span class="space">
+								</span>
+							</span>
+						</div>
+						<div class="form_item">
+							<span class="m_textbox">
+								<input id="reuserpass" name="reuserpass" onfocus="InputOnFocus(this)" value="" class="placeholder E_passwd" placeholder="再次输入密码" type="password">
+								<span class="space">
+								</span>
+							</span>
+						</div>
+						<!--客户注册所属业务员 开始-->
+						
+						<!--客户注册所属公司 开始-->
+						
+						<div class="form_item form_opra">
+							<!--a onclick="return checkForm();" href="javascript:void(0);" class="m_button_large E_login">
+								登录
+							</a-->
+							<input value="注册" class="m_button_large E_login" onclick="return checkForm()" tabindex="4" type="submit">
+							<input name="Method" value="Reg" type="hidden">
+							<input id="_AutoLogin" value="1" name="_AutoLogin" type="hidden">
+							<input id="GoUrl" name="GoUrl" value="" type="hidden">
+							
+						</div>
+					</div>
+				</form>
+                <div class="m_opra">
+                    <div class="links">
+						<!--<a id="qqloginbt" style="background: url('/qqlogin/Connect_logo_1.png') no-repeat scroll left center transparent; padding-left: 20px;" href="http://www.vinv.cn/qqlogin/"> QQ登录</a>-->
+						<script>
+							if(window.location.search.substr(1)!=""&&window.location.search!='?undefined')
+							{
+								turl=window.location.search.substr(1);
+							}
+							else
+							{
+								turl="/";
+							}
+							//$("#qqloginbt")[0].href="http://www.vinv.cn/qqlogin/?"+turl;
+						</script>
+						<!--span class="vline"> </span>
+                        <!--a target="_blank" href="http://www.vinv.cn/getpass.shtml">
+                            找回密码
+                        </a>
+                        <span class="vline">
+                        </span-->
+                        <a href="javascript:void(0)" onclick="window.parent.Login.Show();">
+                            账号登录
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+</body>
+</html>

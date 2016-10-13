@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>电商网站后台</title>
+    <link href="/stylesheets/index-1.css" rel="stylesheet" type="text/css"/>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../layer-v2.2/layer/layer.js"></script>
+    <script src="/js/teacher.js"></script>
+</head>
+<body>
+<!--header star-->
+
+<!--header end-->
+<!--main-register star-->
+<div class="main-register">
+    <!--form star-->
+    <form id="login_frm" method="post" action="doadminlogin">
+        <div class="form">
+            <div class="form-ctn">
+
+                <h2>后台登录</h2>
+                <input id="Name1" name="name" type="text" placeholder=""/>
+                <input id="Moblie1" name="password" type="password" placeholder=""/>
+                <label><input type="checkbox" id="Agree1" checked="checked"
+                              style="zoom:1.5;"/><span>下次直接登录</span></label>
+                <a id="btnSub1" class="pngfix" onclick="checkForm()">登录</a>
+
+            </div>
+        </div>
+    </form>
+    <!--form end-->
+    <p>@2016&nbsp;&nbsp;&nbsp;&nbsp;电商网站平台 --- 一个专业做电商的可靠平台 </p>
+</div>
+<script>
+    function checkForm() {
+        if ($("#Name1").val() == "" || $("#Name1").val() == "如name@example.com") {
+            layer.tips('账户不能为空！', $("#Name1"));
+            return false;
+        }
+        else if ($("#Moblie1").val() == "") {
+            layer.tips('密码不能为空！', $("#Moblie1"));
+            return false;
+        }
+        else if ($("#Moblie1").val() == "") {
+            layer.tips('密码不能为空！', $("#Moblie1"));
+            return false;
+        }
+        document.getElementById('login_frm').submit();
+    }
+</script>
+<!--main-register end-->
+</body>
+</html>

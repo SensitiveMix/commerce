@@ -1,0 +1,2 @@
+/*!live-0.0.0.js 2016-06-03*/
+function uaMatch(a){a=a.toLowerCase();var b=rwebkit.exec(a)||ropera.exec(a)||rmsie.exec(a)||a.indexOf("compatible")<0&&rmozilla.exec(a)||[];return{browser:b[1]||"",version:b[2]||"0"}}jQuery.extend({browser:function(){var a={},b=window.navigator.userAgent,c=uaMatch(b);return c.browser&&(a[c.browser]=!0,a.version=c.version),{browser:a}}});

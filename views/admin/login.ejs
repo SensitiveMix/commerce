@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><%=title%></title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="/plugins/iCheck/square/blue.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>后台</title>
+    <link href="/stylesheets/index-1.css" rel="stylesheet" type="text/css" />
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../layer-v2.2/layer/layer.js"></script>
+    <script src="/js/teacher.js"></script>
+    <![endif]-->
+  </head>
+  <body class="hold-transition login-page">
+    <div class="login-box">
+      <div class="login-logo">
+        <b> 电商网站后台</b>
+      </div>
+      <div class="login-box-body">
+        <p class="login-box-msg text-red"></p>
+        <form action="doadminlogin" method="post">
+          <div class="form-group has-feedback">
+
+            <input id="Name1" type="text" name="name" class="form-control" placeholder="账号">
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input id="Moblie1" type="password" class="form-control" name="password" placeholder="密码">
+            <span  class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="row">
+            <div class="col-xs-8">
+              <div class="checkbox icheck">
+                <label>
+
+                </label>
+              </div>
+            </div><!-- /.col -->
+            <div class="col-xs-4">
+              <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
+            </div><!-- /.col -->
+          </div>
+        </form>
+       </div><!-- /.login-box-body -->
+    </div><!-- /.login-box -->
+
+    <!-- jQuery 2.1.4 -->
+    <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="/plugins/iCheck/icheck.min.js"></script>
+    <script>
+      function checkForm()
+      {
+        if($("#Name1").val() == "" || $("#Name1").val() == "如name@example.com"){
+          layer.tips('账户不能为空！', $("#Name1"));
+          return false;
+        }
+        else if($("#Moblie1").val() == ""){
+          layer.tips('密码不能为空！',$("#Moblie1"));
+          return false;
+        }
+        else if($("#Moblie1").val() == ""){
+          layer.tips('密码不能为空！',$("#Moblie1"));
+          return false;
+        }
+        document.getElementById('login_frm').submit();
+      }
+      $(function () {
+        $('input').iCheck({
+          checkboxClass: 'icheckbox_square-blue',
+          radioClass: 'iradio_square-blue',
+          increaseArea: '20%' // optional
+        });
+      });
+    </script>
+  </body>
+</html>

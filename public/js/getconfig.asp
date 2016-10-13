@@ -1,0 +1,1 @@
+var _SysConfig={};_SysConfig.SysName='融金资讯大讲堂';_SysConfig.DynamicFileServer='';_SysConfig.MoneyName='微币';_SysConfig.LoginUrl='/login.shtml';_SysConfig.MsgSpaceTime=2;_SysConfig.CheckMsg=0;_SysConfig.GlobalCheckMsg=0;_SysConfig.SaveMsg=1;_SysConfig.SaveGuestMsg=1;_SysConfig.OpenFriend=0;_SysConfig.OpenPrivateMsg=0;

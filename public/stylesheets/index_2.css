@@ -1,0 +1,34 @@
+/* ::::: http://v.tjrjzx.com/css/qreg.css ::::: */
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td { margin: 0px; padding: 0px; vertical-align: middle; }
+fieldset, img { border: 0px none; }
+a { text-decoration: none; outline: medium none; color: rgb(82, 163, 226); }
+a:hover { text-decoration: none; }
+body, button, input, select, textarea { font: 12px/1.5 Regular,"Microsoft Yahei",Helvetica,Arial,"宋体",sans-serif; }
+h3 { font-size: 14px; }
+.clearfix::after { content: "."; display: block; height: 0px; clear: both; visibility: hidden; }
+.clearfix { display: inline-block; }
+.clearfix { display: block; }
+.m_button_large { width: 120px; height: 40px; vertical-align: middle; line-height: 40px; font-size: 18px; color: white; text-align: center; display: inline-block; background: transparent url(../../../public/images/sdk.png) no-repeat scroll left -162px; border: medium none; cursor: pointer; }
+.m_tips { color: rgb(239, 75, 75); border: 1px solid rgb(236, 214, 74); background: rgb(255, 251, 226) url(../../../public/images/sdk.png) no-repeat scroll 5px -208px; padding: 5px 10px 5px 20px; }
+.m_textbox { display: inline-block; height: 30px; overflow-y: hidden; background: transparent url(../../../public/images/sdk.png) no-repeat scroll -507px -120px; padding-left: 10px; vertical-align: middle; }
+.m_textbox input { outline: medium none; vertical-align: middle; width: 230px; font-size: 12px; padding: 0px; border-width: 0px; height: 25px; color: rgb(62, 62, 62); }
+@media not all, not all {
+	.m_textbox input { padding-top: 2px; height: 23px; }
+}
+.m_textbox .space { vertical-align: middle; display: inline-block; width: 10px; height: 30px; background: transparent url(../../../public/images/sdk.png) no-repeat scroll right -120px; font-size: 0px; overflow: hidden; }
+input.placeholder { color: rgb(166, 166, 166); }
+.pbd { width: 529px; height: 429px; background: transparent url(../../../public/images/bg_001.png) no-repeat scroll center center; margin: auto; overflow: hidden; padding: 9px 0px 0px 9px; }
+.m_left { float: left; width: 164px; height: 420px; display: inline; overflow: hidden; border-radius: 4px 0px 0px 4px; }
+.m_left a { display: inline-block; width: 164px; height: 420px; }
+.m_left img { width: 164px; height: 420px; vertical-align: middle; }
+.m_main { float: left; width: 356px; height: 420px; display: inline; position: relative; color: rgb(119, 119, 119); }
+.m_main .dialog_close { display: inline-block; width: 10px; height: 10px; background: transparent url(../../../public/images/sdk.png) no-repeat scroll -41px 0px; font-size: 0px; overflow: hidden; position: absolute; top: 10px; right: 10px; z-index: 1000; }
+.m_form { padding-left: 20px; }
+.m_form h3 { font-weight: normal; font-size: 24px; color: rgb(51, 51, 51); padding-bottom: 2px; }
+.m_form .form_item { padding: 7px 0px; position: relative; }
+.m_form .form_item .m_tips { position: absolute; left: 0px; bottom: 90%; width: 218px; }
+.m_commonLogin .form_opra { margin-top: 1px; }
+.m_opra { position: absolute; bottom: 0px; height: 38px; width: 56px; left: 270px; border-top: 1px solid rgb(221, 221, 221); }
+.m_opra .links { text-align: right; line-height: 38px; }
+body { background: transparent url(../../../public/images/pixel.gif) repeat scroll 0% 0%; }

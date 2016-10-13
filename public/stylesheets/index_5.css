@@ -1,0 +1,27 @@
+/* ::::: http://v.tjrjzx.com/css/account.css ::::: */
+
+html { background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+* { font: 12px/1.5 Tahoma,Arial,宋体; }
+.nav-extra::after { content: "."; clear: both; display: block; height: 0px; visibility: hidden; }
+.nav-extra li a:not(tid) { padding: 2px 7px 1px; }
+.account-name h2:not(tid) { margin-top: 4px; }
+.account-name .split:not(tid) { margin-top: 6px; }
+.account-name .link:not(tid) { margin-top: 6px; }
+.tab-title ul::after { clear: both; content: "."; display: block; height: 0px; visibility: hidden; }
+.account-tab .tab-title li a:not(tid) { line-height: 32px; }
+/* ::::: http://v.tjrjzx.com/css/jquery.mCustomScrollbar.css ::::: */
+
+* { font: 12px/18px "Microsoft Yahei",Simsun,Arial,Helvetica,sans-serif; }
+html, body { margin: 0px; padding: 0px; height: 100%; background: transparent none repeat scroll 0% 0%; }
+.list { background: transparent none repeat scroll 0px 0px; height: auto; min-height: 100%; overflow: hidden; }
+.item { overflow: hidden; padding-left: 10px; padding-right: 10px; position: relative; margin-top: 10px; }
+.item .face { border: 1px solid rgb(255, 255, 255); margin-left: 0px; overflow: hidden; position: absolute; }
+.item .face img { width: 50px; height: 50px; }
+.box { margin: 22px auto 0px; background: transparent url(../images/pagebg.png) repeat scroll 0px 0px; }
+.box .title { height: 30px; line-height: 30px; background: transparent url(../images/cardbg.png) repeat scroll 0px 0px; color: rgb(52, 52, 52); }
+.box .title * { line-height: 30px; }
+.box .title .name { margin-left: 60px; float: left; }
+.box .title .attention { float: right; text-decoration: none; padding-left: 10px; padding-right: 10px; text-indent: 0px; text-align: center; background: rgb(237, 85, 101) none repeat scroll 0px 0px; color: rgb(255, 255, 255); height: 24px; line-height: 24px; margin-top: 3px; margin-right: 3px; }
+.box .title .shoutedhistory { float: right; text-decoration: none; width: 65px; text-indent: 0px; text-align: center; background: rgb(102, 204, 102) none repeat scroll 0px 0px; color: rgb(255, 255, 255); height: 24px; line-height: 24px; margin-top: 3px; margin-right: 3px; }
+.box .con { color: rgb(0, 0, 0); line-height: 24px; padding: 10px; }
+.box .title .Disable { background: rgb(210, 210, 210) none repeat scroll 0% 0%; color: rgb(153, 153, 153); }

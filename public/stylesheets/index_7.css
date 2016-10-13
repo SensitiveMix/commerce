@@ -1,0 +1,13 @@
+/* ::::: http://v.tjrjzx.com/css/indexCss/base.css ::::: */
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td { margin: 0px; padding: 0px; }
+body { font: 12px/22px "微软雅黑",arial,Verdana,"宋体"; }
+a { text-decoration: none; }
+fieldset, img { border: 0px none; }
+ol, ul, li { list-style: outside none none; }
+q::before, q::after { content: ""; }
+.clearfix::after { display: block; clear: both; content: ""; visibility: hidden; height: 0px; }
+body { background: transparent url(../images/vote_bg.png) repeat scroll 0px 0px; width: 800px; height: 100%; overflow: hidden; }
+.pop { background: transparent url(../images/201509021116017095.jpg) no-repeat scroll 0px 0px; color: rgb(255, 0, 0); height: 300px; position: relative; width: 800px; z-index: 999; }
+.qqs { color: rgb(217, 217, 18); font-size: 16px; font-weight: bold; position: absolute; bottom: 5px; text-align: center; padding: 5px; width: 100%; }
+.qqs li { display: inline-block; margin-right: 5px; }
