@@ -10,6 +10,7 @@ var crypto = require('crypto');
 var db = require('../model/index');
 var cheerio = require('cheerio');
 var superagent = require('superagent');
+var http_origin = require('http');
 
 var r = [];
 var u = [];
@@ -132,6 +133,31 @@ router.get('/crawler', function (req, res, next) {
             var items = [];
             var property = [];
             $('.list').find('li').each(function (idx, element) {
+                var url = $(this).find('img').attr('src');
+
+                http_origin.get(url, function (res) {
+                    var imgData = "";
+
+                    res.setEncoding("binary"); //一定要设置response的编码为binary否则会下载下来的图片打不开
+
+                    res.on("data", function (chunk) {
+                        imgData += chunk;
+                    });
+
+                    var Rand = Math.random();
+
+                    var save_url = '/Users/sunNode/WebstormProjects/e-commerce-platform/public/crawel_images/' + Rand + '.jpg';
+
+                    res.on("end", function () {
+                        fs.writeFile(save_url, imgData, "binary", function (err) {
+                            if (err) {
+                                console.log("down fail");
+                            }
+                            console.log("down success");
+                        });
+                    });
+                });
+
                 items.push({
                     image_id: idx,
                     image_url: $(this).find('img').attr('src'),
