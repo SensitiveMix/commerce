@@ -1,11 +1,16 @@
 # e-commerce-platform
 
-## first step
-    npm install(install all dependencies)
+## Installation
+    git clone https://bitbucket.org/wechatpla/master.git
 
-## second step
-* how to run
+
+## Install dependencies:
+    npm install
+
+## Start the server:
+``` bash
     + nodemon app.js
     + node ./bin/www
     + nodemon ./bin/www
     + npm start
+```
