@@ -16,6 +16,7 @@
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
+    "cheerio": "^0.22.0",
     "crypto": "0.0.3",
     "express-ejs-layouts": "^2.2.0",
     "express-partials": "^0.3.0",
@@ -23,6 +24,7 @@
     "fs": "0.0.1-security",
     "http": "0.0.0",
     "mongoose": "^4.6.3",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "superagent": "^2.3.0"
   }
 }

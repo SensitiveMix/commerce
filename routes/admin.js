@@ -8,6 +8,8 @@ var formidable = require('formidable');
 var fs = require('fs');
 var crypto = require('crypto');
 var db = require('../model/index');
+var cheerio = require('cheerio');
+var superagent = require('superagent');
 
 var r = [];
 var u = [];
@@ -80,7 +82,7 @@ var checkLogin = function (req, res, next) {
 };
 //后台登陆处理
 
-router.get('/doadminlogin',function (req,res,next) {
+router.get('/doadminlogin', function (req, res, next) {
     console.log('111');
 })
 router.post('/doadminlogin', function (req, res, next) {
@@ -118,6 +120,42 @@ router.get('/mainset', function (req, res, next) {
 function md5(text) {
     return crypto.createHash('md5').update(text).digest('hex');
 }
+
+
+router.get('/crawler', function (req, res, next) {
+    superagent.get('http://www.miniinthebox.com/diy-3d-pvc-wall-sticker-butterfly-12-pieces-set_p1920214.html?prm=2.1.8.0')
+        .end(function (err, result) {
+            if (err) {
+                return next(err);
+            }
+            var $ = cheerio.load(result.text);
+            var items = [];
+            var property = [];
+            $('.list').find('li').each(function (idx, element) {
+                items.push({
+                    image_id: idx,
+                    image_url: $(this).find('img').attr('src'),
+                    image_title: $(this).find('img').attr('title')
+                })
+            });
+
+
+            $('.specTitle').find('tr').each(function (idx, element) {
+                property.push({
+                    pro: $(this).find('th').html(),
+                    value: $(this).find('td').html()
+                })
+            });
+
+            var allItems = {
+                img: items,
+                property: property
+            }
+
+            res.send(allItems);
+        });
+});
+
 
 module.exports = router;
 
