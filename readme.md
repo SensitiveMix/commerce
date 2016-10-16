@@ -8,12 +8,11 @@
     npm install
 
 ## Start the server:
-``` bash
-    + nodemon app.js
-    + node ./bin/www
-    + nodemon ./bin/www
-    + npm start
-```
+
+*  nodemon app.js
+*  node ./bin/www
+*  nodemon ./bin/www
+*  npm start
 
 ## run test
 
