@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "mocha Mocha/ --bail",
+    "test-cov": "node node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha  -- Mocha/"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -16,6 +18,7 @@
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "cheerio": "^0.22.0",
     "crypto": "0.0.3",
     "express-ejs-layouts": "^2.2.0",
@@ -23,8 +26,13 @@
     "formidable": "^1.0.17",
     "fs": "0.0.1-security",
     "http": "0.0.0",
+    "istanbul-harmony": "^0.3.16",
+    "mocha": "^3.1.2",
+    "mochawesome": "^1.5.3",
     "mongoose": "^4.6.3",
     "nodemon": "^1.11.0",
-    "superagent": "^2.3.0"
+    "should": "^11.1.1",
+    "superagent": "^2.3.0",
+    "supertest": "^2.0.0"
   }
 }

@@ -101,10 +101,13 @@ router.post('/doadminlogin', function (req, res, next) {
             res.render('admin/index', {username: result[0].nick_name});
         } else {
             console.log(query.name + ":登录失败" + new Date());
-            res.render('room/login', {
-                title: r[0].option_value[0].room_name,
-                mes: '账号密码错误'
-            });
+            
+            // res.render('admin/login_1', {
+            //     mes_info: 'login failed',
+            //     mes: '账号密码错误'
+            // });
+            res.send('login failed');
+
         }
     });
 });

@@ -14,3 +14,12 @@
     + nodemon ./bin/www
     + npm start
 ```
+
+## run test
+
+* npm test
+
+## run test-cov
+
+* npm run-script test-cov
+
