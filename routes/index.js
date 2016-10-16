@@ -8,8 +8,15 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/getBanner', function (req, res) {
-    db.banners.find({}, function (err, result) {
-        if(err) throw err;
+    db.banners.find({'type': 'carousel'}, function (err, result) {
+        if (err) throw err;
+        res.send(result);
+    })
+});
+
+router.get('/getHeadBanner', function (req, res) {
+    db.banners.findOne({'type': 'headBanner'}, function (err, result) {
+        if (err) throw err;
         res.send(result);
     })
 });

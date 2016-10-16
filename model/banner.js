@@ -6,6 +6,7 @@ var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 var Schema = mongoose.Schema;
 var bannerData = new Schema({
+    type: String,
     image_url: String,
     upload_time: String,
     status: String
