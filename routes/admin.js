@@ -1,6 +1,3 @@
-/**
- * Created by sunNode on 16/10/13.
- */
 var express = require('express');
 var router = express.Router();
 var http = require('http').Server(express);
@@ -10,7 +7,7 @@ var crypto = require('crypto');
 var db = require('../model/index');
 var cheerio = require('cheerio');
 var superagent = require('superagent');
-var http_origin = require('http');
+
 
 var r = [];
 var u = [];
@@ -20,7 +17,7 @@ var u = [];
 router.post('/doupload', function (req, res) {
     var form = new formidable.IncomingForm();   //创建上传表单
     form.encoding = 'utf-8';		//设置编辑
-    form.uploadDir = 'c:/livewh/public' + '/upload/';	 //设置上传目录
+    form.uploadDir = '/Users/sunNode/WebstormProjects/e-commerce-platform/public' + '/upload/';	 //设置上传目录
     form.keepExtensions = true;	 //保留后缀
     form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
     form.parse(req, function (err, fields, files) {
@@ -101,7 +98,7 @@ router.post('/doadminlogin', function (req, res, next) {
             res.render('admin/index', {username: result[0].nick_name});
         } else {
             console.log(query.name + ":登录失败" + new Date());
-            
+
             // res.render('admin/login_1', {
             //     mes_info: 'login failed',
             //     mes: '账号密码错误'
@@ -124,6 +121,33 @@ router.get('/mainset', function (req, res, next) {
 function md5(text) {
     return crypto.createHash('md5').update(text).digest('hex');
 }
+
+//首页轮播图片保存
+router.get('/banner_manage', checkLogin);
+router.get('/banner_manage', function (req, res, next) {
+    console.log("图片轮播管理页面" + new Date());
+
+    res.render('admin/banner_manage', {username: u.nick_name});
+    console.log("页面访问成功");
+});
+
+
+//基本设置-直播室名称
+router.post('/saveBanners', checkLogin);
+router.post('/saveBanners', function (req, res) {
+    console.log("Banners 添加" + req.body.image_url + new Date());
+    var banner = {image_url: req.body.image_url, upload_time: req.body.upload_time, status: req.body.status};
+    var banners = new db.banners(banner);
+    banners.save(function (err) {
+        if (err) {
+            console.log('添加失败');
+            res.send('fail')
+        } else {
+            res.send('success');
+        }
+
+    });
+});
 
 
 router.get('/crawler', function (req, res, next) {
