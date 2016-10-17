@@ -86,7 +86,7 @@ router.get('/doadminlogin', function (req, res, next) {
 router.post('/doadminlogin', function (req, res, next) {
     // var newpassword = md5(req.body.password)
     // console.log(newpassword);
-    var query = {name: req.body.name, password: req.body.password};
+    var query = {name: req.body.name, password: req.body.password, level: '66'};
     db.users.find(query, function (err, result) {
         if (err) {
             console.log(err);

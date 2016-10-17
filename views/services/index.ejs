@@ -1,0 +1,78 @@
+<% layout('master.ejs') %>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">基本设置</h3>
+    </div>
+
+    <h2>欢迎登录客服后台</h2>
+    <!-- /.box-header -->
+    <!-- form start -->
+
+
+    <div class="box-body">
+
+    </div>
+    <!-- /.box-body -->
+
+    <!-- /.box-footer -->
+
+</div>
+<script type="text/javascript">
+
+    $(function () {
+        $('#updateLogo').on('click', function () {
+            var fulAvatarVal = $('#fulAvatar').val()
+
+            if (fulAvatarVal.length == 0) {
+                layer.alert('请选择文件！');
+                return false;
+            }
+
+            var extName = fulAvatarVal.substring(fulAvatarVal.lastIndexOf('.'), fulAvatarVal.length).toLowerCase();
+
+            if (extName != '.png' && extName != '.jpg') {
+                layer.alert("请选择JPG或者PNG图片！");
+                return false;
+            }
+            var formData = new FormData($("#form-signin")[0]);
+            $.ajax({
+                url: 'doupload',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (returndata) {
+                    layer.alert('上传成功！');
+                    $("#logoimg").attr("src", returndata);
+                    $("#imgoflogo").val(returndata);
+                },
+                error: function (returndata) {
+                    layer.alert('上传失败，请检查文件后缀名是否正确！');
+                }
+            });
+        })
+        $('#updateName').on('click', function () {
+            CHAT.init();
+            CHAT.submit();
+            var paramete = {
+                room_name: $("input[name=room_name]").val(),
+                imgoflogo: $("input[name=room_logo]").val(),
+                gundonggonggao: $("textarea[name=gundonggonggao]").val(),
+                jianjie: $("textarea[name=jianjie]").val()
+            };
+            $.ajax({
+                url: 'dosysset',
+                type: 'POST',
+                data: paramete,
+                success: function (returndata) {
+                    layer.alert('更新成功！');
+                }, error: function (returndata) {
+                    layer.alert('更新失败，请检查是否有非法词汇！');
+                }
+            });
+        })
+    });
+
+</script>
