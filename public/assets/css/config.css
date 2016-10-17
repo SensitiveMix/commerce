@@ -1,0 +1,192 @@
+@import "http://fonts.googleapis.com/css?family=Vidaloka";
+@import "http://fonts.googleapis.com/css?family=Raleway:400,700";
+@import "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css";
+
+body,
+.mi-slider ul li h4 {
+	color: #9a9a9a;
+}
+body,
+.comments h5,
+.mi-slider ul li h4 {
+	font-family: "Raleway", Arial, sans-serif;
+}
+
+* {
+	line-height: 1.785714em;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	line-height: 1.333333em;
+}
+h1 *,h2 *,h3 *,h4 *,h5 *,h6 * {
+	line-height: 1.333333em;
+}
+.nav > li > a {
+	font-size: 1.428571em;
+}
+
+h1,h2,h3,h4,h5,h6,
+.widget_product_size input,
+.nav > li > a,
+th,
+table.totals td,
+.single-product .summary .price,
+.mi-slider nav a {
+	font-family: "Vidaloka", Arial, sans-serif;
+}
+
+h2 { font-size: 32px; }
+h3,
+.mi-slider nav a { font-size: 20px; }
+
+.btn-invert {
+	background: #fff;
+}
+
+th,
+.single-product .summary .price,
+.commentlist .meta,
+.navbar-nav > li > a,
+#top-bar a,
+.products .title a,
+.widget_product_size input,
+.related h2,
+.staff .social-profiles i,
+#footer .widget-title,
+h3.position,
+.unbranded,
+.mi-slider ul li a:hover h4 {
+	color: #333;
+}
+#top-bar .icon-bar {
+	background-color: #333;
+}
+th,
+tr.order-total,
+h3.position span {
+	border-color: #c6c6c6;	
+}
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+	background-color: #f8f8fd;
+}
+
+.invert-color * {
+	color: #fff;
+}
+
+a {
+	text-decoration: none;
+}
+a:hover,
+a:active,
+a:focus {
+	text-decoration: underline;
+	outline: none;	
+}
+a,
+a:hover,
+a:active,
+a:focus,
+.nav > li > a:hover,
+.nav > li > a:active,
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus,
+#top-bar,
+.products .price,
+#footer a:hover,
+.free-shipping i,
+.page-title,
+table h3,
+table.totals td,
+h3.position span,
+.staff .social-profiles a:hover i,
+#product-thumb .owl-buttons > div,
+h1,h2,h3,h4,h5,h6,
+.nav-tabs > li > a,
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus,
+.btn-invert,
+.mi-slider nav a:hover,
+.mi-slider nav a.mi-selected {
+	color: #fd638f;
+}
+
+table.totals,
+#product-thumb .owl-buttons > div,
+#copyright,
+.sidebar .widget-title,
+#jPanelMenu-menu,
+#main-nav .navbar-toggle,
+.mi-slider nav {
+	border-color: #fd638f;
+}
+.product hr,
+#footer hr {
+	border-color: #fd638f !important;
+}
+.dropdown-menu,
+.mi-slider nav a.mi-selected:before {
+	border-top-color: #fd638f;
+}
+#main-nav .icon-bar,
+.widget_product_price .ui-slider-range,
+.widget_product_price .ui-slider-handle {
+	background: #fd638f;
+}
+
+.social-profiles .fa-circle {
+	color: #ab9aa0;
+}
+.social-profiles a,
+.social-profiles a:hover .fa-circle {
+	color: #fd638f !important;	
+}
+
+#content, .products-carousel .banner {
+	background: #fff;
+}
+
+#footer {
+	background: #f9f9f9;
+}
+
+#top-bar,
+.widget_product_categories a:hover,
+.widget_product_brand a:hover,
+.widget_product_color a:hover,
+.widget_product_size a:hover,
+.widget_recent_posts a:hover,
+.widget_archives a:hover,
+.widget_categories a:hover {
+	background: #f8f8fd;
+}
+
+#top-bar a:hover {
+	color: inherit;
+}
+
+.products .product:hover,
+.products .product:hover .title a,
+.products .product:hover .price,
+.sidebar .widget-title {
+	color: #fff;
+}
+
+.navbar-nav > li > a {
+	background: none !important;
+}
+
+.sidebar .widget-title {
+	background: #4c4c4c;
+}
+
+.quantity button,
+.tab-content,
+.nav-tabs,
+.nav-tabs > li > a,
+hr {
+	border-color: #cacaca !important;
+}
