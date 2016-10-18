@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "body-parser": "~1.15.1",
+    "chai": "^3.5.0",
     "cheerio": "^0.22.0",
     "colors": "^1.1.2",
     "cookie-parser": "~1.4.3",
@@ -20,11 +21,16 @@
     "express-ejs-layouts": "^2.2.0",
     "express-partials": "^0.3.0",
     "formidable": "^1.0.17",
+    "fs": "0.0.1-security",
     "istanbul-harmony": "^0.3.16",
+    "mocha": "^3.1.2",
+    "mochawesome": "^1.5.3",
     "moment": "^2.15.1",
     "mongoose": "^4.6.4",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "superagent": "^2.3.0",
+    "supertest": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
