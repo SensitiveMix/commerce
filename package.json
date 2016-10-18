@@ -19,6 +19,7 @@
     "express": "~4.13.4",
     "express-ejs-layouts": "^2.2.0",
     "express-partials": "^0.3.0",
+    "formidable": "^1.0.17",
     "istanbul-harmony": "^0.3.16",
     "moment": "^2.15.1",
     "mongoose": "^4.6.4",
