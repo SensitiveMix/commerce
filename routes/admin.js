@@ -80,12 +80,7 @@ var checkLogin = function (req, res, next) {
 };
 //后台登陆处理
 
-router.get('/doadminlogin', function (req, res, next) {
-    console.log('111');
-})
 router.post('/doadminlogin', function (req, res, next) {
-    // var newpassword = md5(req.body.password)
-    // console.log(newpassword);
     var query = {name: req.body.name, password: req.body.password, level: '66'};
     db.users.find(query, function (err, result) {
         if (err) {
@@ -98,12 +93,11 @@ router.post('/doadminlogin', function (req, res, next) {
             res.render('admin/index', {username: result[0].nick_name});
         } else {
             console.log(query.name + ":登录失败" + new Date());
-
-            // res.render('admin/login_1', {
-            //     mes_info: 'login failed',
-            //     mes: '账号密码错误'
-            // });
-            res.send('login failed');
+            res.render('admin/login_1', {
+                mes_info: 'login failed',
+                mes: '账号密码错误'
+            });
+            // res.send('login failed');
 
         }
     });
@@ -153,7 +147,6 @@ router.post('/saveBanners', function (req, res) {
     });
 });
 
-
 //首页头部广告管理
 router.get('/head_banner_manage', checkLogin);
 router.get('/head_banner_manage', function (req, res, next) {
@@ -188,6 +181,11 @@ router.post('/saveHeadBanners', function (req, res) {
     });
 });
 
+//上传产品
+router.get('/upload', checkLogin);
+router.get('/upload', function (req, res) {
+    res.render('admin/upload_goods', {username: u.nick_name});
+});
 
 router.get('/crawler', function (req, res, next) {
     superagent.get('http://www.miniinthebox.com/diy-3d-pvc-wall-sticker-butterfly-12-pieces-set_p1920214.html?prm=2.1.8.0')
@@ -247,7 +245,6 @@ router.get('/crawler', function (req, res, next) {
             res.send(allItems);
         });
 });
-
 
 module.exports = router;
 

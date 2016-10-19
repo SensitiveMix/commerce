@@ -11,6 +11,7 @@
     "body-parser": "~1.15.1",
     "colors": "^1.1.2",
     "cookie-parser": "~1.4.3",
+    "crypto": "0.0.3",
     "debug": "~2.2.0",
     "ejs": "~2.4.1",
     "ejs-locals": "^1.0.2",
