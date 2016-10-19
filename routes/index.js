@@ -4,8 +4,8 @@ var db = require('../model/index');
 var crypto = require('crypto');
 
 /* GET home page. */
-router.get('/', function (req, res) {
-    res.render('public', {title: 'Express'});
+router.get('/', function (req, res, next) {
+    res.render('assets/index', {title: 'Express'});
 });
 //获取轮播广告图
 router.get('/getBanner', function (req, res) {
