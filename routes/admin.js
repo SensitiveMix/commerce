@@ -5,8 +5,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var crypto = require('crypto');
 var db = require('../model/index');
-var cheerio = require('cheerio');
-var superagent = require('superagent');
+var async = require('async');
 
 
 var r = [];
@@ -79,28 +78,50 @@ var checkLogin = function (req, res, next) {
     next();
 };
 //后台登陆处理
-
 router.post('/doadminlogin', function (req, res, next) {
     var query = {name: req.body.name, password: req.body.password, level: '66'};
-    db.users.find(query, function (err, result) {
-        if (err) {
-            console.log(err);
-            // res.render("404");
-        }
-        if (result.length == 1) {
-            console.log(result[0].nick_name + ":登录成功" + new Date());
-            u = result[0];
-            res.render('admin/index', {username: result[0].nick_name});
-        } else {
-            console.log(query.name + ":登录失败" + new Date());
-            res.render('admin/login_1', {
-                mes_info: 'login failed',
-                mes: '账号密码错误'
-            });
-            // res.send('login failed');
+    async.parallel([
+            function (done) {
+                db.users.find(query, function (err, users) {
+                    if (err) {
+                        console.log(err);
 
-        }
-    });
+                    }
+                    done(err, users)
+                });
+            },
+            function (done) {
+                db.systems.findOne({}, null, {
+                    sort: {
+                        'updateTime': -1
+                    }
+                }, function (err, system_info) {
+                    done(err, system_info)
+                })
+            }
+        ],
+        function (err, results) {
+            if (err) {
+                done(err)
+            } else {
+                var user = results[0];
+                var system = results[1];
+                console.log(user);
+                console.log(system);
+                if (user.length == 1) {
+                    console.log(user.nick_name + ":登录成功" + new Date());
+                    u = user[0];
+                    res.render('admin/index', {username: user.nick_name, system: system});
+                } else {
+                    console.log(query.name + ":登录失败" + new Date());
+                    res.render('admin/login_1', {
+                        mes_info: 'login failed',
+                        mes: '账号密码错误'
+                    });
+                    // res.send('login failed');
+                }
+            }
+        });
 });
 
 //跳转页面-基本设置
@@ -108,8 +129,15 @@ router.post('/doadminlogin', function (req, res, next) {
 router.get('/mainset', function (req, res, next) {
     console.log("基本设置页面" + new Date());
 
-    res.render('admin/index', {username: u.nick_name});
-    console.log("基本设置成功" + u);
+    db.systems.findOne({}, null, {
+        sort: {
+            'updateTime': -1
+        }
+    }, function (err, system_info) {
+        res.render('admin/index', {username: u.nick_name, system: system_info});
+        console.log("基本设置成功" + u);
+    })
+
 });
 //MD5加密
 function md5(text) {
@@ -185,6 +213,51 @@ router.post('/saveHeadBanners', function (req, res) {
 router.get('/upload', checkLogin);
 router.get('/upload', function (req, res) {
     res.render('admin/upload_goods', {username: u.nick_name});
+});
+
+//更改注册须知
+router.post('/doChangeConditions', checkLogin);
+router.post('/doChangeConditions', function (req, res) {
+    console.log("更改注册须知" + req.body.mainContent + new Date());
+    db.systems.update({name: 'register_need_know'}, {$set: {mainContent: req.body.mainContent}}, function (err, system) {
+        if (err) {
+            res.send('failed');
+        } else {
+            res.send('success');
+        }
+
+    })
+});
+
+//用户管理
+router.get('/usermanage', checkLogin);
+router.get('/usermanage', function (req, res, next) {
+    console.log("用户管理" + new Date());
+    db.users.find({}, function (err, result) {
+        if (err) throw  err;
+        res.render('admin/user_manage', {users: result, username: u.nick_name});
+    });
+    console.log("用户管理页面登陆成功");
+});
+
+//获取用户
+router.get('/douserlist', function (req, res, next) {
+    console.log("当前分页" + req.query.iDisplayStart);
+    db.users.find({}, function (err, result) {
+        var lista = {
+            "draw": 2,
+            "recordsTotal": "",
+            "recordsFiltered": "",
+            "data": []
+        };
+        lista.recordsTotal = result.length;
+        lista.recordsFiltered = lista.recordsTotal;
+        lista.data = result;
+        console.log(result);
+        res.send(lista);
+        res.end();
+    }).sort({registerTime: -1});
+
 });
 
 router.get('/crawler', function (req, res, next) {
