@@ -110,7 +110,7 @@ blockquote cite {
 
 #top-bar {
 	font-size: 0.928571em;
-	padding: 14px 0;
+	padding: 0;
 }
 
 #top-nav {
@@ -1261,8 +1261,10 @@ tr.cart-subtotal > * {
 	#main-nav .navbar-nav > li > a {
 		padding-top: 0;
 		padding-bottom: 0;
-		line-height: 110px;
-		height: 110px;
+		/*line-height: 110px;*/
+		/*height: 110px;*/
+		line-height: 60px;
+		height: 60px;
 	}
 
 }

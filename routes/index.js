@@ -7,6 +7,9 @@ var crypto = require('crypto');
 router.get('/', function (req, res, next) {
     res.render('assets/index', {title: 'Express'});
 });
+router.get('/login', function (req, res, next) {
+    res.render('assets/login', {title: 'Express'});
+});
 //获取轮播广告图
 router.get('/getBanner', function (req, res) {
     db.banners.find({'type': 'carousel'}, function (err, result) {
