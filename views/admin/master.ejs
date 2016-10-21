@@ -27,6 +27,10 @@
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css">
+
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -82,11 +86,21 @@
                 <li class="header">MAIN NAVIGATION</li>
                 <!--系统设置-->
 
-                <li><a href="mainset"><i class="fa fa-circle-o"></i> 基本设置</a></li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-dashboard"></i>
+                        <span>基本设置</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu" style="display: none;">
+                        <li><a href="mainset"><i class="fa fa-circle-o"></i>用户注册须知管理</a></li>
+                    </ul>
+                </li>
                 <!--<li><a href="robotlist"><i class="fa fa-circle-o"></i>机器人管理</a></li>-->
-                <li><a href="usermanage"><i class="fa fa-circle-o"></i>用户管理</a></li>
-                <li><a href="banner_manage"><i class="fa fa-circle-o"></i>首页轮播图管理</a></li>
+                <li><a href="usermanage"><i class="fa fa-table"></i></i>用户管理</a></li>
+                <li><a href="banner_manage"><i class="fa fa-edit"></i>首页轮播图管理</a></li>
                 <li><a href="head_banner_manage"><i class="fa fa-circle-o"></i>首页顶部广告管理</a></li>
+                <li><a href="accessory_manage"><i class="fa fa-circle-o"></i>首页类目管理</a></li>
                 <!--<li><a href="userlist"><i class="fa fa-circle-o"></i>供应商管理</a></li>-->
                 <!--<li><a href="upload"><i class="fa fa-circle-o"></i>产品上传</a></li>-->
                 <!--<li><a href="loglist"><i class="fa fa-circle-o"></i>栏目管理</a></li>-->

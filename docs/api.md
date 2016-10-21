@@ -28,7 +28,17 @@ structure :
 调用方式:
 ```bash
 POST      : '/doregister'
-Response  : String('success'||'failed')
+Response  : user(JSON) && status('ok' or 'fail')
+USE       : <% user% >  <% status%>
+USER structure:
+  +   name: String
+  +   password: String
+  +   mobile: String
+  +   nick_name: String
+  +   level: String
+  +   levelName: String
+  +   userType: String
+  +   registerTime: Number
 params :
   +  email       :   邮箱地址当做用户名
   +  password    :   注册密码

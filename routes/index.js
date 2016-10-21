@@ -31,10 +31,13 @@ router.post('/dologin', function (req, res) {
         }
         if (result.length == 1) {
             console.log(result[0].nick_name + ":登录成功" + new Date());
-            res.send('success');
+            // res.send('success');
+            console.log(result);
+            res.render('assets/index', {user: result[0], status: 'ok'})
         } else {
             console.log(query.name + ":登录失败" + new Date());
-            res.send('failed');
+            // res.send('failed');
+            res.render('assets/index', {status: 'fail'})
         }
     });
 });

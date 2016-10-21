@@ -229,6 +229,18 @@ router.post('/doChangeConditions', function (req, res) {
     })
 });
 
+//类目管理
+router.get('/accessory_manage', checkLogin);
+router.get('/accessory_manage', function (req, res, next) {
+    console.log("类目管理" + new Date());
+    res.render('admin/accessory_manage', {username: u.nick_name});
+    // db.users.find({}, function (err, result) {
+    //     if (err) throw  err;
+    //
+    // });
+    console.log("类目管理页面登陆成功");
+});
+
 //用户管理
 router.get('/usermanage', checkLogin);
 router.get('/usermanage', function (req, res, next) {

@@ -1,0 +1,181 @@
+<% layout('master.ejs') %>
+
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">首页类目管理</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title"></h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>分类名称</th>
+                        <th>分类图片</th>
+                        <th>移动</th>
+                        <th>默认展开</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><img src="/images/add.svg" onclick="addThree()" alt=""><input id="fulAvatar" name="fulAvatar" type="file"/>
+                        </td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td></td>
+                        <td>
+                            <button>删除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td>Clean database</td>
+                        <td>
+                            <div class="progress progress-xs">
+                                <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
+                            </div>
+                        </td>
+                        <td><span class="badge bg-yellow">70%</span></td>
+                    </tr>
+                    <tr>
+                        <td>3.</td>
+                        <td>Cron job running</td>
+                        <td>
+                            <div class="progress progress-xs progress-striped active">
+                                <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
+                            </div>
+                        </td>
+                        <td><span class="badge bg-light-blue">30%</span></td>
+                    </tr>
+                    <tr>
+                        <td>4.</td>
+                        <td>Fix and squish bugs</td>
+                        <td>
+                            <div class="progress progress-xs progress-striped active">
+                                <div class="progress-bar progress-bar-success" style="width: 90%"></div>
+                            </div>
+                        </td>
+                        <td><span class="badge bg-green">90%</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <ul class="pagination pagination-sm no-margin pull-right">
+                    <li><a href="#">«</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">»</a></li>
+                </ul>
+            </div>
+        </div><!-- /.box -->
+    </div>
+    <div class="box-body">
+        <form id="form-signin" action="doupload" method="post" enctype='multipart/form-data' class="form-horizontal">
+            <div class="form-group total">
+                <div class="col-sm-12 one"><input type="text" placeholder="一级类目"></div>
+                <br><br>
+
+                <div class="col-sm-9 two"><input type="text" placeholder="二级类目"></div>
+                <div class="col-sm-3">
+                    <!--<img src="/images/add.svg" onclick="addTwo()" alt="">添加二级类目-->
+                </div>
+
+                <div class="col-sm-9 three"><input type="text" placeholder="三级类目"></div>
+                <br><br>
+                <div class="col-sm-3">
+                    <img src="/images/add.svg" onclick="addThree()" alt="">添加三级类目
+                </div>
+            </div>
+        </form>
+        <div class="box-footer">
+            <div class="pull-right">
+                <button id="updateName" class="btn btn-info" type="button">提 交</button>
+            </div>
+        </div>
+    </div>
+    <!-- /.box-body -->
+
+    <!-- /.box-footer -->
+
+</div>
+<script type="text/javascript">
+    var count_three = 0;
+    var count_two = 0;
+    var count_threes = 0;
+    function addThree() {
+        count_three++;
+        var section = document.createElement('input');
+        section.placeholder = '三级类目';
+        section.className = 'three_' + count_three.toString();
+        document.getElementsByClassName('three')[0].appendChild(section);
+    }
+
+    function addThreeUnique(count_two, count_threes) {
+        var newSeq = count_two;
+        var Three = count_threes;
+        console.log(count_two)
+        console.log(count_threes)
+        Three++;
+        var section = document.createElement('input');
+        section.placeholder = '三级类目';
+        section.className = 'two_' + count_two + Three;
+        document.getElementsByClassName('three')[newSeq].appendChild(section);
+    }
+
+    function addTwo() {
+        count_two++;
+        count_threes++;
+        var div_head = document.createElement('div');
+        div_head.className = "col-sm-9 two";
+        var input = document.createElement('input');
+        input.placeholder = "二级类目";
+        input.className = 'two_' + count_two.toString();
+        div_head.appendChild(input);
+
+        var div_head_two = document.createElement('div');
+        div_head_two.className = "col-sm-9" + " " + 'two_' + count_two.toString();
+        var input_three = document.createElement('input');
+        input_three.placeholder = "三级类目";
+        input_three.className = 'two_' + count_two.toString() + '_' + count_threes.toString();
+        div_head_two.appendChild(input_three);
+
+        document.getElementsByClassName('total')[0].appendChild(div_head);
+        document.getElementsByClassName('total')[0].appendChild(div_head_two);
+
+        var div_head_two_img = document.createElement('div');
+        div_head_two_img.className = "col-sm-3";
+        var img = document.createElement('img');
+        img.className = count_two.toString();
+        img.src = "/images/add.svg";
+
+        img.onclick = function () {
+            console.log(count_two)
+            console.log(count_threes)
+            count_threes++;
+            var section = document.createElement('input');
+            section.placeholder = '三级类目';
+            section.className = 'two_' + count_two.toString() + '_' + count_threes.toString();
+            document.getElementsByClassName('two_' + count_two)[count_threes].appendChild(section);
+        };
+
+        var t = document.createTextNode("添加三级类目");
+        div_head_two_img.appendChild(img);
+        div_head_two_img.appendChild(t);
+
+
+        document.getElementsByClassName('total')[0].appendChild(div_head_two_img);
+
+    }
+
+</script>
