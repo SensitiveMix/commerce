@@ -39,14 +39,8 @@
 
                 <nav id="language-selector">
                     <ul class="nav nav-pills">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">English <b class="caret"></b></a>
-                            <ul role="menu" class="dropdown-menu">
-                                <li><a href="#">German</a></li>
-                                <li><a href="#">Spanish</a></li>
-                                <li><a href="#">Italian</a></li>
-                            </ul>
-                        </li>
+                        <li>English </li>
+                        <li>Germany </li>
                     </ul>
                 </nav>
 
@@ -127,6 +121,26 @@
                 </div>
             </div>
         </nav>
+        <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                    Action <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <input type="text" class="form-control"/>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default">Search</button>
+            </div>
+        </div>
     </header>
     <%- body %>
     <!-- Content Wrapper. Contains page content -->
