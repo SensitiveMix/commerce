@@ -28,6 +28,17 @@ structure :
 调用方式:
 ```bash
 POST      : '/doregister'
+Response  : String('success'||'failed')
+params :
+  +  email       :   邮箱地址当做用户名
+  +  password    :   注册密码
+```
+
+
+## 前台登录接口
+调用方式:
+```bash
+POST      : '/dologin'
 Response  : user(JSON) && status('ok' or 'fail')
 USE       : <% user% >  <% status%>
 USER structure:
@@ -39,17 +50,6 @@ USER structure:
   +   levelName: String
   +   userType: String
   +   registerTime: Number
-params :
-  +  email       :   邮箱地址当做用户名
-  +  password    :   注册密码
-```
-
-
-## 前台登录接口
-调用方式:
-```bash
-POST      : '/dologin'
-Response  : String('success'||'failed')
 params :
   +  name       :    即为邮箱地址
   +  password    :   注册密码
