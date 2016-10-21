@@ -13,7 +13,8 @@ var userData = new Schema({
     email_address: String,
     level: String,
     levelName: String,
-    userType: String
+    userType: String,
+    registerTime: Number
 })
 
 module.exports = userData;

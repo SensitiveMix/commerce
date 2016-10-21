@@ -22,3 +22,25 @@ structure :
   +  upload_time :   上传时间(时间戳)
   +  status      :   图片状态(NEW,DELETE)
 ```
+
+
+## 前台注册接口
+调用方式:
+```bash
+POST      : '/doregister'
+Response  : String('success'||'failed')
+params :
+  +  email       :   邮箱地址当做用户名
+  +  password    :   注册密码
+```
+
+
+## 前台登录接口
+调用方式:
+```bash
+POST      : '/dologin'
+Response  : String('success'||'failed')
+params :
+  +  name       :    即为邮箱地址
+  +  password    :   注册密码
+```
