@@ -9,3 +9,4 @@ var db = mongoose.connect('mongodb://139.224.30.16:27017/livetest', function (er
 exports.users = mongoose.model('users', require('./user'));
 exports.banners = mongoose.model('banners', require('./banner'));
 exports.systems = mongoose.model('systems', require('./systems'));
+exports.categorys = mongoose.model('categorys', require('./categorys'));

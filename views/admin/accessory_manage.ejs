@@ -10,61 +10,41 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title"></h3>
+                <h3 class="box-title">
+                    <!--<button class="btn btn-info">添加分类</button>-->
+                </h3>
             </div><!-- /.box-header -->
             <div class="box-body">
-                <table class="table table-bordered">
-                    <tbody>
-                    <tr>
-                        <th style="width: 10px">#</th>
+                <table class="tb_total table table-bordered">
+                    <thead>
+                    <tr class="head_table">
                         <th>分类名称</th>
-                        <th>分类图片</th>
-                        <th>移动</th>
+                        <!--<th>分类图片</th>-->
                         <th>默认展开</th>
                         <th>创建时间</th>
                         <th>操作</th>
                     </tr>
-                    <tr>
-                        <td><input type="text"></td>
-                        <td><img src="/images/add.svg" onclick="addThree()" alt=""><input id="fulAvatar" name="fulAvatar" type="file"/>
+                    </thead>
+                    <tbody>
+                    <tr class="0_">
+                        <td><i class="fa fa-caret-down pull-left"></i><i style="display: none" class="fa fa-caret-right pull-left"></i>&nbsp;<input class="one" type="text"></td>
+                        <td><img class="fa-toggle-on" src="/images/toggle-on.svg" onclick="toggle('off')" style="display: none" alt=""><img class="fa-toggle-off" onclick="toggle('on')" src="/images/toggle-off.svg" alt="">
                         </td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
                         <td></td>
                         <td>
-                            <button>删除</button>
+                            <!--<button class="btn btn-danger">删除</button>-->
                         </td>
                     </tr>
-                    <tr>
-                        <td>2.</td>
-                        <td>Clean database</td>
-                        <td>
-                            <div class="progress progress-xs">
-                                <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                            </div>
+                    <tr class="xyz">
+                        <td>&nbsp;<img src="/images/arrow.svg" alt="">&nbsp;
+                            <button class="btn btn-info add">添加二级子类</button>
                         </td>
-                        <td><span class="badge bg-yellow">70%</span></td>
-                    </tr>
-                    <tr>
-                        <td>3.</td>
-                        <td>Cron job running</td>
                         <td>
-                            <div class="progress progress-xs progress-striped active">
-                                <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                            </div>
                         </td>
-                        <td><span class="badge bg-light-blue">30%</span></td>
-                    </tr>
-                    <tr>
-                        <td>4.</td>
-                        <td>Fix and squish bugs</td>
+                        <td></td>
+                        <td></td>
                         <td>
-                            <div class="progress progress-xs progress-striped active">
-                                <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                            </div>
                         </td>
-                        <td><span class="badge bg-green">90%</span></td>
                     </tr>
                     </tbody>
                 </table>
@@ -80,28 +60,10 @@
             </div>
         </div><!-- /.box -->
     </div>
-    <div class="box-body">
-        <form id="form-signin" action="doupload" method="post" enctype='multipart/form-data' class="form-horizontal">
-            <div class="form-group total">
-                <div class="col-sm-12 one"><input type="text" placeholder="一级类目"></div>
-                <br><br>
 
-                <div class="col-sm-9 two"><input type="text" placeholder="二级类目"></div>
-                <div class="col-sm-3">
-                    <!--<img src="/images/add.svg" onclick="addTwo()" alt="">添加二级类目-->
-                </div>
-
-                <div class="col-sm-9 three"><input type="text" placeholder="三级类目"></div>
-                <br><br>
-                <div class="col-sm-3">
-                    <img src="/images/add.svg" onclick="addThree()" alt="">添加三级类目
-                </div>
-            </div>
-        </form>
-        <div class="box-footer">
-            <div class="pull-right">
-                <button id="updateName" class="btn btn-info" type="button">提 交</button>
-            </div>
+    <div class="box-footer">
+        <div class="pull-right">
+            <button id="updateName" onclick="saveAll()" class="btn btn-info" type="button">提 交</button>
         </div>
     </div>
     <!-- /.box-body -->
@@ -113,6 +75,91 @@
     var count_three = 0;
     var count_two = 0;
     var count_threes = 0;
+    var count = 0;
+    var deleteId = 0;
+    var CategoryALL = [];
+
+    function toggle(param) {
+        if (param == 'off') {
+            $('.fa-toggle-off').show();
+            $('.fa-caret-right').hide();
+            $('.fa-caret-down').show();
+            $('.fa-toggle-on').hide();
+            $('table').find('tr').not('.0_').show();
+        } else {
+            $('.fa-caret-right').show();
+            $('.fa-caret-down').hide();
+            $('.fa-toggle-off').hide();
+            $('.fa-toggle-on').show();
+            $('table').find('tr').not('.0_').hide();
+            $('table tr[class=head_table]').show();
+
+        }
+    }
+
+    function saveAll() {
+        var FirstCategory = $('table tr[class*=0_]').find('input').val();
+        for (var i = 1; i <= $('table tr[class*=cateGory]').length; i++) {
+            var n = i + '_';
+            CategoryALL.push(getCateory(n))
+        }
+
+        var Category = {
+            firstCategory: FirstCategory,
+            secondCategory: JSON.stringify(CategoryALL)
+        }
+
+        console.log(Category)
+        $.ajax({
+            url: 'doAddCategory',
+            type: 'POST',
+            data: Category,
+            dataType: "json",
+            traditional: true,
+            success: function (result) {
+                if (result == 'success') {
+                    layer.msg('添加成功');
+                } else if (result == 'failed') {
+                    layer.alert('添加失败，请检查是否有非法词汇！');
+                }
+            }, error: function (err) {
+                if (err.status == 200) {
+                    layer.msg('添加成功');
+                    location.reload();
+                } else {
+                    layer.alert('添加失败，请检查是否有非法词汇！');
+                }
+
+            }
+        });
+
+        CategoryALL = [];
+
+
+    }
+
+    function getCateory(param) {
+        var twoArray = [];
+        var threeArray = [];
+        $('table tr[class*=' + param + ']').each(function () {
+            twoArray.push($(this).find('input').val())
+        })
+        twoArray.forEach(function (value, index) {
+            if (index > 0 && index < twoArray.length - 1) {
+                threeArray.push(value);
+            }
+        })
+
+        var second_Category = twoArray[0];
+        var three_Category = threeArray;
+        var totalGate = {
+            secondTitle: second_Category,
+            thirdTitle: three_Category
+        }
+
+        return totalGate;
+    }
+
     function addThree() {
         count_three++;
         var section = document.createElement('input');
@@ -177,5 +224,55 @@
         document.getElementsByClassName('total')[0].appendChild(div_head_two_img);
 
     }
+
+    function add(currentRowID) {
+        //遍历每一行，找到指定id的行的位置i,然后在该行后添加新行
+        $.each($('table:first tbody tr'), function (i, tr) {
+
+            var newCurrentRowID = currentRowID + '_' + " " + 'cateGory';
+            var tr_new = currentRowID + '_';
+            if ($(this).attr('class') == newCurrentRowID) {
+                if ($('table tr[class*=' + tr_new + ']').find('input').val() == "") {
+                    layer.msg('请添加二级分类');
+                } else {
+                    deleteId++;
+                    //获取当前行
+                    var currentRow = $('table:first tbody tr:eq(' + i + ')');
+                    //获取当前时间
+                    var now = new Date();
+                    var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
+                    //要添加的行的id
+                    var addRowID = currentRowID + '_' + deleteId;
+                    var str = '<tr class="' + addRowID + '"><td><img  style="margin-left: 40px" src="/images/jiao.svg" alt="">&nbsp;<input type="text"></td><td></td> <td>' + date + '</td> <td> <button onclick="deleteThreeRow (this)" class="btn btn-danger">删除</button> </td></tr>';
+                    //当前行之后插入一行
+                    currentRow.after(str);
+                }
+            }
+        });
+    }
+
+    function deleteThreeRow(obj) {
+        $(obj).parents("tr").remove();
+    }
+
+    function deleteTwo(obj) {
+        var newOBJ = obj + '_';
+        $('table tr[class*=' + newOBJ + ']').remove();
+    }
+
+    $(function () {
+        $(".add").click(function () {
+            if ($('table tr[class*=0_]').find('input').val() == "") {
+                layer.msg('请添加一级分类');
+            } else {
+                count++;
+                var now = new Date();
+                var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
+                var cla = count + '_' + " " + 'cateGory';
+                var claBTN = count + '_btn';
+                $(".tb_total").append('<tr class="' + cla + '"><td><img style="margin-left: 20px" src="/images/jiao.svg" alt="">&nbsp;<input type="text"></td><td></td> <td>' + date + '</td> <td> <button onclick="deleteTwo(' + count + ')" class="btn btn-danger ' + cla + '">删除</button> </td> </tr><tr class="' + claBTN + '"><td>&nbsp;<img class="' + cla + '" src="/images/arrow.svg" alt="">&nbsp; <button onclick="add(' + count + ')" class="btn btn-info add ' + cla + '">添加三级子类</button> </td><td><td></td></td><td></td><td></td></tr>');
+            }
+        });
+    });
 
 </script>

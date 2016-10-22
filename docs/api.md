@@ -54,3 +54,17 @@ params :
   +  name       :    即为邮箱地址
   +  password    :   注册密码
 ```
+
+## 首页类目接口
+调用方式:
+```bash
+URL      : '/'
+Response  : categories []
+USE       : <% categories% >  PS(forEach)
+categories structure:
+  +   firstCategory: String,
+  +   secondCategory: [{secondTitle:String,thirdTitle:[]}]
+  firstCategory: 一级类目
+  secondTitle  : 二级类目(多个)
+  thirdTitle   : 三级类目(多个)
+```

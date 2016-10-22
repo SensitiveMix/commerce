@@ -111,7 +111,7 @@ router.post('/doadminlogin', function (req, res, next) {
                 if (user.length == 1) {
                     console.log(user.nick_name + ":登录成功" + new Date());
                     u = user[0];
-                    res.render('admin/index', {username: user.nick_name, system: system});
+                    res.render('admin/index', {username: u.nick_name, system: system});
                 } else {
                     console.log(query.name + ":登录失败" + new Date());
                     res.render('admin/login_1', {
@@ -229,7 +229,7 @@ router.post('/doChangeConditions', function (req, res) {
     })
 });
 
-//类目管理
+//类目上传
 router.get('/accessory_manage', checkLogin);
 router.get('/accessory_manage', function (req, res, next) {
     console.log("类目管理" + new Date());
@@ -239,6 +239,27 @@ router.get('/accessory_manage', function (req, res, next) {
     //
     // });
     console.log("类目管理页面登陆成功");
+});
+
+//首页头部广告替换
+router.post('/doAddCategory', checkLogin);
+router.post('/doAddCategory', function (req, res) {
+    console.log(req.body.firstCategory);
+    console.log(JSON.parse(req.body.secondCategory));
+    
+    var Categories = {
+        firstCategory: req.body.firstCategory,
+        secondCategory: JSON.parse(req.body.secondCategory)
+    };
+    var category = new db.categorys(Categories);
+    category.save(function (err) {
+        console.log(err);
+        if (err) {
+            res.send('fail')
+        } else {
+            res.send('success');
+        }
+    });
 });
 
 //用户管理

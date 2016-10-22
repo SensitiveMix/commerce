@@ -27,10 +27,12 @@
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
-          type="text/css">
+    <!--<link href="../stylesheetsfont-awesome.min.css/" rel="stylesheet"-->
+    <!--type="text/css">-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
-    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+    <link href="../stylesheets/ionicons.min.css" rel="stylesheet" type="text/css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -64,14 +66,40 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                             <span class="hidden-xs" id="username"><%= username %></span>
                         </a>
+
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <p>
+                                    EC SELL - E-Commerce-Platform
+                                    <small>Admin since Nov. 2016</small>
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+                            <li class="user-body">
+
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="mainset" class="btn btn-default btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="adminLogin" class="btn btn-default btn-flat">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
                     </li>
                     <!-- Control Sidebar Toggle Button -->
                 </ul>
             </div>
         </nav>
     </header>
+
     <!-- Left side column. contains the logo and sidebar -->
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
@@ -79,13 +107,19 @@
             <!-- Sidebar user panel -->
 
             <!-- search form -->
-
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+              </span>
+                </div>
+            </form>
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">MAIN NAVIGATION</li>
                 <!--系统设置-->
-
                 <li class="treeview">
                     <a href="">
                         <i class="fa fa-dashboard"></i>
@@ -96,13 +130,32 @@
                         <li><a href="mainset"><i class="fa fa-circle-o"></i>用户注册须知管理</a></li>
                     </ul>
                 </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-navicon"></i>
+                        <span>商城首页管理</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu" style="display: none;">
+                        <li><a href="accessory_manage"><i class="fa fa-edit"></i>首页类目管理</a></li>
+                        <li><a href="banner_manage"><i class="fa fa-edit"></i>首页轮播图管理</a></li>
+                        <li><a href="head_banner_manage"><i class="fa fa-edit"></i>首页顶部广告管理</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-gift"></i>
+                        <span>产品管理</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu" style="display: none;">
+                        <li><a href="upload"><i class="fa fa-upload"></i>产品上传</a></li>
+                    </ul>
+                </li>
+                <li><a href="usermanage"><i class="fa fa-group"></i></i>用户管理</a></li>
+
                 <!--<li><a href="robotlist"><i class="fa fa-circle-o"></i>机器人管理</a></li>-->
-                <li><a href="usermanage"><i class="fa fa-table"></i></i>用户管理</a></li>
-                <li><a href="banner_manage"><i class="fa fa-edit"></i>首页轮播图管理</a></li>
-                <li><a href="head_banner_manage"><i class="fa fa-circle-o"></i>首页顶部广告管理</a></li>
-                <li><a href="accessory_manage"><i class="fa fa-circle-o"></i>首页类目管理</a></li>
                 <!--<li><a href="userlist"><i class="fa fa-circle-o"></i>供应商管理</a></li>-->
-                <!--<li><a href="upload"><i class="fa fa-circle-o"></i>产品上传</a></li>-->
                 <!--<li><a href="loglist"><i class="fa fa-circle-o"></i>栏目管理</a></li>-->
                 <!--<li><a href="loglist"><i class="fa fa-circle-o"></i>日志管理</a></li>-->
 

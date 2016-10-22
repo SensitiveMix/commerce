@@ -5,11 +5,19 @@ var crypto = require('crypto');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('assets/index', {title: 'Express'});
+    db.categorys.find({}, function (err, result) {
+        if (err) res.send('404');
+        res.render('assets/index', {title: 'ECSell', categories: result});
+    });
 });
+
 router.get('/login', function (req, res, next) {
-    res.render('assets/login', {title: 'Express'});
+    db.categorys.find({}, function (err, result) {
+        if (err) res.send('404');
+        res.render('assets/index', {title: 'ECSell', categories: result});
+    });
 });
+
 //获取轮播广告图
 router.get('/getBanner', function (req, res) {
     db.banners.find({'type': 'carousel'}, function (err, result) {
