@@ -89,7 +89,7 @@ blockquote cite {
 #main-nav .navbar {
 	margin: 0;
 	border: none;
-	border-bottom: #eceded 1px solid;
+	/*border-bottom: #eceded 1px solid;*/
 }
 #main-nav .navbar-brand {
 	height: auto;
@@ -1356,4 +1356,42 @@ tr.cart-subtotal > * {
 	#slider .carousel-inner img {
 		height: 400px!important;
 	}
+}
+body{
+	padding: 0;
+	margin: 0;
+	background-color: silver;
+}
+#main{
+	padding: 30px 30px;
+	background-color: #ffffff;
+}
+#main > .row{
+	margin-bottom: 30px;
+}
+h1,h2,h3,h4,h5,h6{
+	text-transform: uppercase;
+}
+.prev-con{
+	text-align: center;
+}
+.prev{
+	display: inline-block;
+	margin-bottom: 20px;
+	text-align: center;
+}
+h5{
+	font-weight: bold;
+}
+.fec{
+	font-size: 34px;
+	color: #FFB40C;
+	padding-right: 10px;
+}
+.zlight-hhh{
+	padding-bottom: 10px;
+	border-bottom: 1px solid #FFB40C;
+}
+#zlight-main-nav > li:first-child > a{
+	border: 0;
 }

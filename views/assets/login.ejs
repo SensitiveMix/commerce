@@ -33,11 +33,11 @@
                 <h3>Register a New Account</h3>
                 <div class="gap-20"></div>
                 <p>* Indicates required fields.</p>
-                <form role="form" action="/doregister" method="post">
+                <form role="form">
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">*</div>
-                            <input class="form-control input-lg" type="email" name="email" placeholder="Enter email">
+                            <input class="form-control input-lg" type="email" id="register_email" name="email" placeholder="Enter email">
                         </div>
                     </div>
                     <div class="form-group">
@@ -49,7 +49,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">*</div>
-                            <input class="form-control input-lg" type="password" name="password" placeholder="Password">
+                            <input class="form-control input-lg" type="password" id="register_password" name="password" placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group">
@@ -80,7 +80,7 @@
     $.ajax({
         type: 'POST',
         url: '/doregister',
-        data: {mobile: '18205253872', captcha: '8595'},
+        data: {email: $('#register_email').val(), password: $('#register_password').val()},
         dataType: 'json',
         success: function(data){
             console.log(data);

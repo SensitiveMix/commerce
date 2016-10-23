@@ -5,47 +5,52 @@
         <div class="container" id="slider-menu">
             <!--<ul class="nav nav-pills nav-stacked" role="tablist">-->
             <!--</ul>-->
-            <div class="col-md-3">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".menu-nav"
-                            style="border-color: #fd638f">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="navbar-collapse collapse menu-nav">
-                    <ul class="nav nav-pills nav-stacked" role="tablist">
-                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
-
-                        <li>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">原始
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">功能</a></li>
-                                    <li><a href="#">另一个功能</a></li>
-                                    <li><a href="#">其他</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">分离的链接</a></li>
-                                </ul>
-                            </div>
+            <div class="col-md-4">
+                <nav id="zlight-nav">
+                    <ul id="zlight-main-nav" style="border:0">
+                        <li class="zlight-dropdown" style="width: 100%"> <a href="#" style="border: 0px">Pages <i class="icon-angle-right"></i></a>
+                            <ul class="zlight-submenu" style="top: 0;
+    left: 100%;">
+                                <li class="zlight-dropdown"> <a href="#">Dropdown <i class="icon-angle-right"></i></a>
+                                </li>
+                                <li class="zlight-dropdown"> <a href="#">Dropdown <i class="icon-angle-right"></i></a>
+                                </li>
+                                <li class="zlight-dropdown"> <a href="#">Dropdown <i class="icon-angle-right"></i></a>
+                                </li>
+                            </ul>
                         </li>
-                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
-                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
-                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
-                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
-                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
-                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
-                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
-                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
-                        <li><a href="#" class="dropdown-toggle">Apple Accessories </a></li>
-                        <li><a href="#" class="dropdown-toggle">Apple Accessories </a></li>
+                        <li class="zlight-dropdown" style="width: 100%"> <a href="#" style="border: 0px">Pages <i class="icon-angle-right"></i></a>
+                            <ul class="zlight-submenu" style="top: 0;
+    left: 100%;">
+                                <li class="zlight-dropdown"> <a href="#">Dropdown <i class="icon-angle-right"></i></a>
+                                </li>
+                                <li class="zlight-dropdown"> <a href="#">Dropdown <i class="icon-angle-right"></i></a>
+                                </li>
+                                <li class="zlight-dropdown"> <a href="#">Dropdown <i class="icon-angle-right"></i></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="zlight-dropdown" style="width: 100%"> <a href="#" style="border: 0px">Pages <i class="icon-angle-right"></i></a>
+                            <ul class="zlight-submenu" style="top: 0;
+    left: 100%;">
+                                <li class="zlight-dropdown"> <a href="#">Dropdown <i class="icon-angle-right"></i></a>
+                                </li>
+                                <li class="zlight-dropdown"> <a href="#">Dropdown <i class="icon-angle-right"></i></a>
+                                </li>
+                                <li class="zlight-dropdown"> <a href="#">Dropdown <i class="icon-angle-right"></i></a>
+                                </li>
+                            </ul>
+                        </li>
+
                     </ul>
-                </div>
+                    <!-- MOBILE NAV -->
+                    <div id="zlight-mobile-nav"> <span>Menu</span> <i class="icon-reorder zlight-icon"></i>
+                        <select>
+                        </select>
+                    </div>
+                </nav>
             </div>
-            <div class="col-md-9" style="padding: 0">
+            <div class="col-md-8" style="padding: 0">
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
@@ -83,11 +88,11 @@
             </div>
         </div>
 
-        <p>------------------------------------------------</p>
-        <%= user.nick_name %>
-        <%= status %>
-        <%= title%>
-        <p>------------------------------------------------</p>
+        <!--<p>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</p>-->
+        <!--<%= user.nick_name %>-->
+        <!--<%= status %>-->
+        <!--<%= title%>-->
+        <!--<p>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</p>-->
 
         <!-- ========== SLIDER END ========== -->
 
@@ -393,4 +398,9 @@
 
 </div>
 
+<script>
+    $(document).ready(function(){
+        $('#zlight-nav').zlightMenu();
+    });
+</script>
 <!-- ========== CONTENT END ========== -->

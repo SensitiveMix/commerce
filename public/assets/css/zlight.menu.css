@@ -1,0 +1,196 @@
+#zlight-nav,
+#zlight-main-nav,
+#zlight-mobile-nav,
+#zlight-main-nav > li,
+#zlight-main-nav > li > a{
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	box-sizing:border-box;
+}
+/*************
+* WRAP
+*************/
+#zlight-nav{
+	display: block;
+	position: relative;
+	width: 100%;
+	z-index: 9999;
+}
+/*************
+* MAIN NAV
+*************/
+#zlight-main-nav{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: none;
+
+	border-right-width: 1px;
+	border-right-style: solid;
+
+}
+/*************
+* CLEAR
+*************/
+#zlight-main-nav:before,
+#zlight-main-nav:after,
+#zlight-nav:before,
+#zlight-nav:after {
+  display: table;
+  content: " ";
+}
+
+#zlight-main-nav:after,
+#zlight-nav:after {
+  clear: both;
+}
+/*************
+* LI & A
+*************/
+#zlight-main-nav > li{
+	padding: 0;
+	margin: 0;
+	float: left;
+	position: relative;
+	display: block;
+	-webkit-transition: background  ease 0.3s;
+	-moz-transition: background  ease 0.3s;
+	transition: background  ease 0.3s;
+}
+#zlight-main-nav > li > a{
+	display: block;
+	position: relative;
+	text-decoration: none;
+	text-transform: uppercase;
+	outline: 0;
+	padding: 0 22px;
+
+	border-left-width: 1px;
+	border-right-width: 1px;
+	border-left-style: solid;
+	border-right-style: solid;
+}
+#zlight-main-nav > li:first-child > a{
+	border-left: none;
+}
+
+/*************
+* DROPDOWN
+*************/
+.zlight-dropdown:hover > .zlight-submenu{
+	display: block;
+}
+/*************
+* SUBMENU
+*************/
+.zlight-submenu{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: none;
+
+	box-shadow: 0 1px 7px rgba(0,0,0,0.3);
+	position: absolute;
+	top: 100%;
+	left: 0;
+}
+.zlight-submenu > li{
+	float: none;
+	position: relative;
+	display: block;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+.zlight-submenu > li > a{
+	display: block;
+	float: none;
+	text-decoration: none;
+	outline: none;
+
+	text-transform: uppercase;
+	padding: 10px 22px;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+.zlight-submenu > li:first-child > a{
+	border-top: none;
+}
+.zlight-submenu > li:last-child > a{
+	border-bottom: none;
+}
+.zlight-submenu .zlight-submenu{
+	top: 0;
+	left: 100%;
+}
+/*************
+* ICON
+*************/
+#zlight-main-nav i{
+	padding: 0 5px;
+}
+/****************************
+* MOBILE NAV
+****************************/
+#zlight-mobile-nav{
+	display: none;
+}
+#zlight-mobile-nav > span{
+	text-transform: uppercase;
+	padding: 0 10px 0 20px;
+	float: left;
+}
+#zlight-mobile-nav > .zlight-icon{
+	float: right;
+	padding: 0 20px 0 10px;
+}
+#zlight-mobile-nav > select{
+	background: none;
+	border: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+
+	width: 100%;
+	cursor: pointer;
+}
+#zlight-mobile-nav:before,
+#zlight-mobile-nav:after {
+  display: table;
+  content: " ";
+}
+#zlight-mobile-nav:after {
+  clear: both;
+}
+
+/***************************
+* MEDIA QUERIES
+***************************/
+
+/* Small devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+	#zlight-mobile-nav{
+		display: block;
+	}
+}
+@media (min-width: 769px) {
+	#zlight-main-nav{
+		display: block;
+	}
+}
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+	
+}

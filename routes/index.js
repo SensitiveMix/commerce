@@ -9,14 +9,14 @@ router.get('/', function (req, res, next) {
         if (err) res.send('404');
 
         console.log(result);
-        res.render('assets/index', {title: 'ECSell', categories: result, user: {nick_name: '234'}, status: null});
+        res.render('assets/index', {title: 'ECSell', categories: result, user: {nick_name: '234'}, status: 500});
     });
 });
 
 router.get('/login', function (req, res, next) {
     db.categorys.find({}, function (err, result) {
         if (err) res.send('404');
-        res.render('assets/login', {title: 'ECSell', categories: result, user: {nick_name: '111'}, status: null});
+        res.render('assets/login', {title: 'ECSell', categories: result, user: {nick_name: '111'}, status: 500});
     });
 });
 
