@@ -7,14 +7,16 @@ var crypto = require('crypto');
 router.get('/', function (req, res, next) {
     db.categorys.find({}, function (err, result) {
         if (err) res.send('404');
-        res.render('assets/index', {title: 'ECSell', categories: result});
+
+        console.log(result);
+        res.render('assets/index', {title: 'ECSell', categories: result, user: {nick_name: '234'}, status: null});
     });
 });
 
 router.get('/login', function (req, res, next) {
     db.categorys.find({}, function (err, result) {
         if (err) res.send('404');
-        res.render('assets/index', {title: 'ECSell', categories: result});
+        res.render('assets/login', {title: 'ECSell', categories: result, user: {nick_name: '111'}, status: null});
     });
 });
 
@@ -44,11 +46,11 @@ router.post('/dologin', function (req, res) {
             console.log(result[0].nick_name + ":登录成功" + new Date());
             // res.send('success');
             console.log(result);
-            res.render('assets/index', {user: result[0], status: 'ok'})
+            res.render('assets/index', {user: result[0], status: 200})
         } else {
             console.log(query.name + ":登录失败" + new Date());
-            // res.send('failed');
-            res.render('assets/index', {status: 'fail'})
+            // res.send(500);
+            res.render('assets/login', {status: 500, user: null})
         }
     });
 });

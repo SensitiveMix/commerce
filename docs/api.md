@@ -40,7 +40,7 @@ params :
 ```bash
 POST      : '/dologin'
 Response  : user(JSON) && status('ok' or 'fail')
-USE       : <% user% >  <% status%>
+USE       : <%= user% >  <%= status%>
 USER structure:
   +   name: String
   +   password: String
@@ -60,7 +60,7 @@ params :
 ```bash
 URL      : '/'
 Response  : categories []
-USE       : <% categories% >  PS(forEach)
+USE       : <%= categories% >  PS(forEach)
 categories structure:
   +   firstCategory: String,
   +   secondCategory: [{secondTitle:String,thirdTitle:[]}]

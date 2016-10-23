@@ -2,32 +2,92 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <section id="slider">
-            <div id="bs-carousel" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#bs-carousel" data-slide-to="1"></li>
-                    <li data-target="#bs-carousel" data-slide-to="2"></li>
-                </ol>
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner">
-                    <div class="item active"><a href="#"><img src="http://placehold.it/1600x550" alt=""></a></div>
-                    <div class="item"><a href="#"><img src="http://placehold.it/1600x550" alt=""></a></div>
-                    <div class="item"><a href="#"><img src="http://placehold.it/1600x550" alt=""></a></div>
+        <div class="container" id="slider-menu">
+            <!--<ul class="nav nav-pills nav-stacked" role="tablist">-->
+            <!--</ul>-->
+            <div class="col-md-3">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".menu-nav"
+                            style="border-color: #fd638f">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                 </div>
+                <div class="navbar-collapse collapse menu-nav">
+                    <ul class="nav nav-pills nav-stacked" role="tablist">
+                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
 
-                <!-- Controls -->
-                <a class="left carousel-control" href="#bs-carousel" data-slide="prev">
-                    <i class="fa fa-angle-left"></i>
-                    <!--span class="glyphicon glyphicon-chevron-left"></span-->
-                </a>
-                <a class="right carousel-control" href="#bs-carousel" data-slide="next">
-                    <i class="fa fa-angle-right"></i>
-                    <!--span class="glyphicon glyphicon-chevron-right"></span-->
-                </a>
+                        <li>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">原始
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">功能</a></li>
+                                    <li><a href="#">另一个功能</a></li>
+                                    <li><a href="#">其他</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">分离的链接</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
+                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
+                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
+                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
+                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
+                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
+                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
+                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Apple Accessories </a></li>
+                        <li><a href="#" class="dropdown-toggle">Apple Accessories </a></li>
+                        <li><a href="#" class="dropdown-toggle">Apple Accessories </a></li>
+                    </ul>
+                </div>
             </div>
-        </section>
+            <div class="col-md-9" style="padding: 0">
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+                <section id="slider">
+                    <div id="bs-carousel" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#bs-carousel" data-slide-to="1"></li>
+                            <li data-target="#bs-carousel" data-slide-to="2"></li>
+                        </ol>
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            <div class="item active"><a href="#"><img src="http://placehold.it/1600x550" alt=""></a>
+                            </div>
+                            <div class="item"><a href="#"><img src="http://placehold.it/1600x550" alt=""></a></div>
+                            <div class="item"><a href="#"><img src="http://placehold.it/1600x550" alt=""></a></div>
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#bs-carousel" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                            <!--span class="glyphicon glyphicon-chevron-left"></span-->
+                        </a>
+                        <a class="right carousel-control" href="#bs-carousel" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                            <!--span class="glyphicon glyphicon-chevron-right"></span-->
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <p>------------------------------------------------</p>
+        <%= user.nick_name %>
+        <%= status %>
+        <%= title%>
+        <p>------------------------------------------------</p>
 
         <!-- ========== SLIDER END ========== -->
 

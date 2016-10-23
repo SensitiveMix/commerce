@@ -12,16 +12,17 @@
 
                 <h3>Log In</h3>
                 <div class="gap-20"></div>
-                <form role="form">
+                <form role="form" action="/dologin" method="post">
                     <div class="form-group">
-                        <input type="email" class="form-control input-lg" id="exampleInputEmail" placeholder="Enter">
+                        <input type="email" class="form-control input-lg" name="name" id="login_email" placeholder="Enter">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control input-lg" id="exampleInputPassword" placeholder="Password">
+                        <input type="password" class="form-control input-lg" name="password" id="login_password"
+                               placeholder="Password">
                     </div>
                     <a href="#" class="pull-left" id="forgot-password">Forgot Your Password?</a>
                     <div class="pull-right">
-                        <button type="submit" class="btn btn-primary btn-lg">Log In</button>
+                        <button type="submit" class="btn btn-primary btn-lg" id="login">Log In</button>
                     </div>
                 </form>
                 <div class="gap-30"></div>
@@ -32,11 +33,11 @@
                 <h3>Register a New Account</h3>
                 <div class="gap-20"></div>
                 <p>* Indicates required fields.</p>
-                <form role="form">
+                <form role="form" action="/doregister" method="post">
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">*</div>
-                            <input class="form-control input-lg" type="email" placeholder="Enter email">
+                            <input class="form-control input-lg" type="email" name="email" placeholder="Enter email">
                         </div>
                     </div>
                     <div class="form-group">
@@ -48,13 +49,13 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">*</div>
-                            <input class="form-control input-lg" type="email" placeholder="Password">
+                            <input class="form-control input-lg" type="password" name="password" placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">*</div>
-                            <input class="form-control input-lg" type="email" placeholder="Confirm Password">
+                            <input class="form-control input-lg" type="password" placeholder="Confirm Password">
                         </div>
                     </div>
                     <div class="checkbox pull-left">
@@ -70,9 +71,19 @@
 
             </div>
         </div>
-
-
     </div>
 </section>
 
 <!-- ========== CONTENT END ========== -->
+
+<script>
+    $.ajax({
+        type: 'POST',
+        url: '/doregister',
+        data: {mobile: '18205253872', captcha: '8595'},
+        dataType: 'json',
+        success: function(data){
+            console.log(data);
+        }
+    });
+</script>

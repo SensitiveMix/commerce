@@ -1,6 +1,7 @@
-@import "http://fonts.googleapis.com/css?family=Vidaloka";
+@import "family_Vidaloka.css";
 @import "http://fonts.googleapis.com/css?family=Raleway:400,700";
-@import "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css";
+@import "font-awesome.min.css";
+/*http://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts/fontawesome-webfont.svg?v=4.0.3#fontawesomeregular*/
 
 body,
 .mi-slider ul li h4 {
@@ -23,7 +24,7 @@ h1 *,h2 *,h3 *,h4 *,h5 *,h6 * {
 	line-height: 1.333333em;
 }
 .nav > li > a {
-	font-size: 1.428571em;
+	font-size: 1.0em;
 }
 
 h1,h2,h3,h4,h5,h6,

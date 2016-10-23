@@ -1272,12 +1272,15 @@ tr.cart-subtotal > * {
 @media (max-width: 1200px) {
 
 	.ad-banners img { margin-bottom: 22px; }
+	.nav>li>a{
+		padding: 1px 15px!important;
+	}
 
 }
 
 @media (max-width: 992px) {
 
-	#main-nav .nav > li > a { font-size: 1.142857em; }
+	#main-nav .nav > li > a { font-size: 1em; }
 
 	.coupon h3, .coupon .form-control { float: none; display: inline-block; }
 	.shop_table td.actions { text-align: center; }
@@ -1335,4 +1338,22 @@ tr.cart-subtotal > * {
 }
 #top-banner{
 	height: 85px!important;
+}
+.navbar-toggle .icon-bar{
+	background: #fd638f;
+}
+
+@media (min-width: 768px){
+	.navbar-collapse.collapse {
+		padding-top: 10px;
+	}
+	.nav>li>a{
+		padding: 1px 15px!important;
+	}
+	#slider-menu{
+		height: 400px;
+	}
+	#slider .carousel-inner img {
+		height: 400px!important;
+	}
 }
