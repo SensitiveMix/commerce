@@ -55,6 +55,7 @@
             <span class="logo-lg"><b> 电商后台 </b></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
+
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -65,6 +66,13 @@
 
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
+                        <div id="google_translate_element"></div><script type="text/javascript">
+                            function googleTranslateElementInit() {
+                                new google.translate.TranslateElement({pageLanguage: 'de', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, multilanguagePage: true}, 'google_translate_element');
+                            }
+                        </script>
+                        &nbsp;
+                        <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                             <span class="hidden-xs" id="username"><%= username %></span>
@@ -175,6 +183,9 @@
         <!-- Main content -->
 
     </div><!-- /.content-wrapper -->
+    <!--<div id="YOUDAO_FANYIER_WRAPPER" style="margin:0; border:0; padding:0; width:320px; height:240px;"></div>-->
+    <!--<script type="text/javascript" src="http://fanyi.youdao.com/openapi.do?keyfrom=commerce-pla&key=432591885&type=fanyier&version=1.2&select=on" charset="utf-8"></script>-->
+
 
 
 </div><!-- /.tab-pane -->
