@@ -286,8 +286,8 @@
         var salt = new Date().getTime() / 1000;
         var param = {
             q: q,
-            from: en,
-            to: zh,
+            from: 'en',
+            to: 'zh',
             appid: appid,
             salt: salt,
             sign: md5(appid + q + salt + secret)
