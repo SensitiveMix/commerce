@@ -11,21 +11,20 @@
                     <ul id="zlight-main-nav" style="border:0;width:100%;">
                         <% if(categories.length != 0){ %>
                         <% categories.forEach(function (item) { %>
-                        <li class="zlight-dropdown" style="width: 100%"><a href="#"
-                                                                           style="border: 0px"><%= item.firstCategory %>
+                        <li class="zlight-dropdown" style="width: 100%"><a href="<%= item.firstUrl %>"
+                                                                           style="border: 0px"><%= item.firstCategory %>(<%= item.firstCount %>)
                                 <i class="icon-angle-right"></i></a>
                             <ul class="zlight-submenu" style="top: 0;left: 100%;background: #fff;">
                                 <% if(item.secondCategory.length != 0) { %>
                                 <% item.secondCategory.forEach(function(secondItem) { %>
                                 <li class="zlight-dropdown">
-                                    <a href="#"><%= secondItem.secondTitle %></a>
+                                    <a href="<%= secondItem.secondUrl %>"><%= secondItem.secondTitle %>(<%= secondItem.secondCount %>)</a>
                                     <ul class="zlight-dropdown">
-                                        <% if(secondItem.thirdTitle.length != 0) { %>
-                                        <% secondItem.thirdTitle.forEach(function (thirdItem) { %>
+                                        <% if(secondItem.thirdTitles.length != 0) { %>
+                                        <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
                                         <li class="zlight-dropdown">
-                                            <a>
-                                                <div><%= thirdItem %>
-                                                </div>
+                                            <a href="<%= thirdItem.thirdUrl %>">
+                                                <div><%= thirdItem.thirdTitle %></div>
                                             </a>
                                         </li>
                                         <% }) %>

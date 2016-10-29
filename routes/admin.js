@@ -238,7 +238,7 @@ router.post('/doChangeConditions', function (req, res) {
     })
 });
 
-//类目上传
+//类目管理
 router.get('/accessory_manage', checkLogin);
 router.get('/accessory_manage', function (req, res, next) {
     console.log("类目管理" + new Date());
@@ -250,7 +250,7 @@ router.get('/accessory_manage', function (req, res, next) {
     console.log("类目管理页面登陆成功");
 });
 
-//首页头部广告替换
+//类目上传
 router.post('/doAddCategory', checkLogin);
 router.post('/doAddCategory', function (req, res) {
     console.log(req.body.firstCategory);
@@ -258,6 +258,8 @@ router.post('/doAddCategory', function (req, res) {
 
     var Categories = {
         firstCategory: req.body.firstCategory,
+        firstUrl: req.body.firstUrl,
+        firstCount: req.body.firstCount,
         secondCategory: JSON.parse(req.body.secondCategory)
     };
     var category = new db.categorys(Categories);
@@ -468,6 +470,33 @@ router.get('/douserlist', function (req, res, next) {
     }).sort({registerTime: -1});
 
 });
+
+
+/*-------------------------------------------------------------------*/
+/* ----------------------------上传产品模块 -------------------------*/
+router.post('/uploadTemporary', function (req, res, next) {
+    var Categories = {
+            firstCategory: req.body.firstCategory,
+            secondCategory: req.body.secondCategory,
+            thirdCategory: req.body.thirdCategory,
+            addBy: u.nick_name,
+            upload_time: (new Date().getTime() / 1000).toFixed(),
+            status: 'NEW'
+        }
+        ;
+    var category = new db.uploadTemporarys(Categories);
+    category.save(function (err) {
+        console.log(err);
+        if (err) {
+            res.send('fail')
+        } else {
+            res.send(Categories);
+        }
+    });
+});
+
+
+/* 多图片上传 */
 router.post('/uploadImage', upload.array("file"), function (req, res, next) {
     if (req.files == undefined) {
         res.send("请选择要上传的图片...");

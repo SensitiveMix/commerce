@@ -12,3 +12,5 @@ exports.systems = mongoose.model('systems', require('./systems'));
 exports.categorys = mongoose.model('categorys', require('./categorys'));
 exports.hotLabels = mongoose.model('hotlabels', require('./hotLabels'));
 exports.notices = mongoose.model('notices', require('./notices'));
+exports.uploadHistorys = mongoose.model('uploadhistorys', require('./uploadHistory'));
+exports.uploadTemporarys = mongoose.model('uploadTemporarys', require('./uploadTemporary'));

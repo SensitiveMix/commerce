@@ -7,9 +7,16 @@ var Schema = mongoose.Schema,
 var Schema = mongoose.Schema;
 var category = new Schema({
     firstCategory: String,
+    firstUrl: String,
+    firstCount: Number,
     secondCategory: [{
-        secondTitle:String,
-        thirdTitle:[]
+        secondTitle: String,
+        secondUrl: String,
+        secondCount: Number,
+        thirdTitles: [{
+            thirdTitle: String,
+            thirdUrl: String
+        }]
     }]
 });
 

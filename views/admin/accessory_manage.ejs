@@ -1,6 +1,11 @@
 <% layout('master.ejs') %>
 
-
+<style>
+    input {
+        width: 160px;
+        height: auto;
+    }
+</style>
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">首页类目管理</h3>
@@ -103,11 +108,13 @@
         var FirstCategory = $('table tr[class*=0_]').find('input').val();
         for (var i = 1; i <= $('table tr[class*=cateGory]').length; i++) {
             var n = i + '_';
-            CategoryALL.push(getCateory(n))
+            CategoryALL.push(getCategory(n))
         }
 
         var Category = {
             firstCategory: FirstCategory,
+            firstUrl: '#',
+            firstCount: 0,
             secondCategory: JSON.stringify(CategoryALL)
         }
 
@@ -136,11 +143,9 @@
         });
 
         CategoryALL = [];
-
-
     }
 
-    function getCateory(param) {
+    function getCategory(param) {
         var twoArray = [];
         var threeArray = [];
         $('table tr[class*=' + param + ']').each(function () {
@@ -148,7 +153,11 @@
         })
         twoArray.forEach(function (value, index) {
             if (index > 0 && index < twoArray.length - 1) {
-                threeArray.push(value);
+                var third = {
+                    thirdUrl: '#',
+                    thirdTitle: value
+                }
+                threeArray.push(third);
             }
         })
 
@@ -156,7 +165,9 @@
         var three_Category = threeArray;
         var totalGate = {
             secondTitle: second_Category,
-            thirdTitle: three_Category
+            secondUrl: '#',
+            secondCount: 0,
+            thirdTitles: three_Category
         }
 
         return totalGate;
@@ -261,7 +272,6 @@
         var newOBJ = obj + '_';
         $('table tr[class*=' + newOBJ + ']').remove();
     }
-
 
 
     $(function () {
