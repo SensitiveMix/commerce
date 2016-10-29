@@ -2,22 +2,83 @@ var express = require('express');
 var router = express.Router();
 var db = require('../model/index');
 var crypto = require('crypto');
+var async = require('async');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    db.categorys.find({}, function (err, result) {
-        if (err) res.send('404');
+    async.parallel([
+            function (done) {
+                db.categorys.find({}, function (err, result) {
+                    if (err) res.send('404');
 
-        console.log(result);
-        res.render('assets/index', {title: 'ECSell', categories: result, user: {nick_name: '234'}, status: 500});
-    });
+                    // console.log(result);
+                    done(err, result)
+                });
+            },
+            function (done) {
+                db.hotLabels.find({}, null, {
+                    sort: {
+                        add_time: -1
+                    }
+                }, function (err, labels) {
+                    done(err, labels)
+                })
+            }
+        ],
+        function (err, results) {
+            if (err) {
+                done(err)
+            } else {
+                var category = results[0];
+                var labels = results[1];
+                res.render('assets/index', {
+                    title: 'ECSell',
+                    categories: category,
+                    hotLabels: labels,
+                    user: {nick_name: ''},
+                    status: 500
+                });
+            }
+        });
+
+
 });
 
 router.get('/login', function (req, res, next) {
-    db.categorys.find({}, function (err, result) {
-        if (err) res.send('404');
-        res.render('assets/login', {title: 'ECSell', categories: result, user: {nick_name: '111'}, status: 500});
-    });
+    async.parallel([
+            function (done) {
+                db.categorys.find({}, function (err, result) {
+                    if (err) res.send('404');
+
+                    // console.log(result);
+                    done(err, result)
+                });
+            },
+            function (done) {
+                db.hotLabels.find({}, null, {
+                    sort: {
+                        add_time: -1
+                    }
+                }, function (err, labels) {
+                    done(err, labels)
+                })
+            }
+        ],
+        function (err, results) {
+            if (err) {
+                done(err)
+            } else {
+                var category = results[0];
+                var labels = results[1];
+                res.render('assets/index', {
+                    title: 'ECSell',
+                    categories: category,
+                    hotLabels: labels,
+                    user: {nick_name: ''},
+                    status: 500
+                });
+            }
+        });
 });
 
 //获取轮播广告图

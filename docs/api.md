@@ -68,3 +68,17 @@ categories structure:
   secondTitle  : 二级类目(多个)
   thirdTitle   : 三级类目(多个)
 ```
+
+## 首页最热标签接口
+调用方式:
+```bash
+URL      : '/'
+Response  : hotLabels []
+USE       : <%= hotLabels% >  PS(forEach)
+categories structure:
+  +   label_name: String,
+  +   color_name: String,
+  +   belong_category:String,
+  +   add_time:Number
+```
+

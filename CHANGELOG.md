@@ -31,4 +31,7 @@ views/services/
 *  添加多图片上传接口
 *  添加EXCEL-TO-JSON接口
 
+##  v0.0.6
+*  添加首页最热标签接口
+
 
