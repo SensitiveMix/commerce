@@ -34,7 +34,8 @@
     "superagent": "^2.3.0",
     "supertest": "^2.0.0",
     "xls-to-json-lc": "^0.3.3",
-    "xlsx": "^0.8.0"
+    "xlsx": "^0.8.0",
+    "xlsx-to-json-lc": "^0.2.5"
   },
   "devDependencies": {
     "chai": "^3.5.0",
