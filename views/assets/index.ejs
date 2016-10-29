@@ -17,7 +17,20 @@
                             <ul class="zlight-submenu" style="top: 0;left: 100%;background: #fff;">
                                 <% if(item.secondCategory.length != 0) { %>
                                 <% item.secondCategory.forEach(function(secondItem) { %>
-                                <li class="zlight-dropdown"><a href="#"><%= secondItem.secondTitle %></a>
+                                <li class="zlight-dropdown">
+                                    <a href="#"><%= secondItem.secondTitle %></a>
+                                    <ul class="zlight-dropdown">
+                                        <% if(secondItem.thirdTitle.length != 0) { %>
+                                        <% secondItem.thirdTitle.forEach(function (thirdItem) { %>
+                                        <li class="zlight-dropdown">
+                                            <a>
+                                                <div><%= thirdItem %>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <% }) %>
+                                        <% } %>
+                                    </ul>
                                 </li>
                                 <% }) %>
                                 <% } %>
@@ -55,13 +68,13 @@
                                     url: '/getBanner',
                                     data: {},
                                     dataType: 'json',
-                                    success: function(data){
+                                    success: function (data) {
                                         console.log(data);
-                                        if(data.length != 0){
-                                            data.forEach(function (item,index) {
-                                                var mybannerHtml = '<div class="item"><a href="#"><img src="'+item.image_url+'" alt=""></a></div>';
+                                        if (data.length != 0) {
+                                            data.forEach(function (item, index) {
+                                                var mybannerHtml = '<div class="item"><a href="#"><img src="' + item.image_url + '" alt=""></a></div>';
                                                 $('.carousel-inner').append(mybannerHtml);
-                                                var olBanner = '<li data-target="#bs-carousel" data-slide-to="'+index+'"></li>';
+                                                var olBanner = '<li data-target="#bs-carousel" data-slide-to="' + index + '"></li>';
                                                 $('.carousel-indicators').append(olBanner);
                                             })
 

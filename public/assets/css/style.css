@@ -141,10 +141,10 @@ blockquote cite {
 }
 
 #currency-selector,
-#shopping-cart {
+.shopping-cart {
 	margin: -2px 0;
 }
-#shopping-cart,
+.shopping-cart,
 #top-nav { text-align: center; }
 
 #language-selector { float: left; }
@@ -162,11 +162,11 @@ nav#language-selector > ul > li {
 #slider i.fa {
 	font-size: 60px;
 	margin-top: -30px;
-	left: 40%;
+	left: 0;
 }
 #slider .right i.fa {
 	left: auto;
-	right: 40%;
+	right: 0;
 }
 #slider .carousel-indicators li {
 	height: 20px;

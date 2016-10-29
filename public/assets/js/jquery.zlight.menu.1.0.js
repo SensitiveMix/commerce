@@ -5,7 +5,7 @@
             // height: '50px',
             subMenuHeight: '20px',
             fontSize: '13px',
-            subMenuWidth: '180px',
+            subMenuWidth: '629px',
             floating: 'left',
             transform: 'off',
             transformBreak: '100',
