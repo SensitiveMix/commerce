@@ -10,7 +10,6 @@ describe('user register conditions test', function () {
         request(app)
             .post('/admin/doChangeConditions')
             .send({mainContent: 'test123', status: 'test'})
-            .expect('success')
             .end(function (err, res) {
                 if (err) throw err;
                 console.log(res.text);
