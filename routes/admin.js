@@ -279,6 +279,162 @@ router.get('/usermanage', function (req, res, next) {
     console.log("用户管理页面登陆成功");
 });
 
+//关于我们管理页面
+router.get('/about_us', checkLogin);
+router.get('/about_us', function (req, res, next) {
+    console.log("关于我们管理" + new Date());
+    db.notices.findOne({}, function (err, allNotices) {
+        console.log(allNotices);
+        res.render('admin/notices/about_us', {aboutUs: allNotices.about_us, username: u.nick_name});
+    });
+    console.log("关于我们管理");
+});
+
+//更改我们管理页面
+router.post('/doChangeAboutUs', checkLogin);
+router.post('/doChangeAboutUs', function (req, res) {
+    console.log("更改注册须知" + req.body.mainContent + new Date());
+    db.notices.findOneAndUpdate({}, {
+        $set: {
+            about_us: [{
+                main_content: req.body.mainContent,
+                add_time: new Date().getTime(),
+                addBy: u.nick_name
+            }]
+        }
+    }, function (err, aboutUs) {
+        if (err) {
+            res.send('failed');
+        } else {
+            res.send('success');
+        }
+    })
+});
+
+//联系我们管理页面
+router.get('/contact_us', checkLogin);
+router.get('/contact_us', function (req, res, next) {
+    console.log("关于我们管理" + new Date());
+    db.notices.findOne({}, function (err, allNotices) {
+        res.render('admin/notices/contact_us', {contactUs: allNotices.contact_us, username: u.nick_name});
+    });
+    console.log("关于我们管理");
+});
+
+//更改联系我们管理页面
+router.post('/doChangeContactUs', checkLogin);
+router.post('/doChangeContactUs', function (req, res) {
+    console.log("更改注册须知" + req.body.mainContent + new Date());
+    db.notices.findOneAndUpdate({}, {
+        $set: {
+            contact_us: [{
+                main_content: req.body.mainContent,
+                add_time: new Date().getTime(),
+                addBy: u.nick_name
+            }]
+        }
+    }, function (err, contact) {
+        if (err) {
+            res.send('failed');
+        } else {
+            res.send('success');
+        }
+    })
+});
+
+//关于FAQ页面
+router.get('/FAQ', checkLogin);
+router.get('/FAQ', function (req, res, next) {
+    console.log("FAQ管理" + new Date());
+    db.notices.findOne({}, function (err, allNotices) {
+        res.render('admin/notices/faq', {faq: allNotices.FAQ, username: u.nick_name});
+    });
+    console.log("关于FAQ");
+});
+
+//更改FAQ页面
+router.post('/doChangeFAQ', checkLogin);
+router.post('/doChangeFAQ', function (req, res) {
+    console.log("FAQ须知" + req.body.mainContent + new Date());
+    db.notices.findOneAndUpdate({}, {
+        $set: {
+            FAQ: [{
+                main_content: req.body.mainContent,
+                add_time: new Date().getTime(),
+                addBy: u.nick_name
+            }]
+        }
+    }, function (err, aboutUs) {
+        if (err) {
+            res.send('failed');
+        } else {
+            res.send('success');
+        }
+    })
+});
+
+//关于attention页面
+router.get('/attention', checkLogin);
+router.get('/attention', function (req, res, next) {
+    console.log("attention管理" + new Date());
+    db.notices.findOne({}, function (err, allNotices) {
+        res.render('admin/notices/attention', {attention: allNotices.attention, username: u.nick_name});
+    });
+    console.log("关于attention");
+});
+
+//更改attention页面
+router.post('/doChangeAttention', checkLogin);
+router.post('/doChangeAttention', function (req, res) {
+    console.log("Attention须知" + req.body.mainContent + new Date());
+    db.notices.findOneAndUpdate({}, {
+        $set: {
+            attention: [{
+                main_content: req.body.mainContent,
+                add_time: new Date().getTime(),
+                addBy: u.nick_name
+            }]
+        }
+    }, function (err, attention) {
+        if (err) {
+            res.send('failed');
+        } else {
+            res.send('success');
+        }
+    })
+});
+
+//关于privacy页面
+router.get('/privacy', checkLogin);
+router.get('/privacy', function (req, res, next) {
+    console.log("FAQ管理" + new Date());
+    db.notices.findOne({}, function (err, allNotices) {
+        res.render('admin/notices/privacy', {privacy: allNotices.privacy_notice, username: u.nick_name});
+    });
+    console.log("关于FAQ");
+});
+
+//更改privacy页面
+router.post('/doChangePrivacy', checkLogin);
+router.post('/doChangePrivacy', function (req, res) {
+    console.log("Privacy须知" + req.body.mainContent + new Date());
+    db.notices.findOneAndUpdate({}, {
+        $set: {
+            privacy_notice: [{
+                main_content: req.body.mainContent,
+                add_time: new Date().getTime(),
+                addBy: u.nick_name
+            }]
+        }
+    }, function (err, privacy) {
+        if (err) {
+            res.send('failed');
+        } else {
+            res.send('success');
+        }
+    })
+});
+
 //用户管理
 router.get('/hot_product_manage', checkLogin);
 router.get('/hot_product_manage', function (req, res, next) {
@@ -309,7 +465,6 @@ router.get('/douserlist', function (req, res, next) {
     }).sort({registerTime: -1});
 
 });
-
 router.post('/uploadImage', upload.array("file"), function (req, res, next) {
     if (req.files == undefined) {
         res.send("请选择要上传的图片...");
@@ -388,6 +543,7 @@ router.post('/uploadFile', function (req, res, next) {
     })
 
 });
+
 
 /* 爬虫 */
 router.get('/crawler', function (req, res, next) {

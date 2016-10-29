@@ -11,3 +11,4 @@ exports.banners = mongoose.model('banners', require('./banner'));
 exports.systems = mongoose.model('systems', require('./systems'));
 exports.categorys = mongoose.model('categorys', require('./categorys'));
 exports.hotLabels = mongoose.model('hotlabels', require('./hotLabels'));
+exports.notices = mongoose.model('notices', require('./notices'));

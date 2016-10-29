@@ -6,7 +6,7 @@
 <script type="text/javascript" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title">关于我们自定义</h3>
+        <h3 class="box-title">联系我们自定义</h3>
         <!--<ol class="breadcrumb">-->
         <!--<li><a href="#"><i class="fa fa-dashboard"></i> 基本设置</a></li>-->
         <!--<li class="active">注册须知自定义</li>-->
@@ -19,6 +19,7 @@
         <div class="form-group">
             <script type="text/plain" id="myEditor" style="width:100%;height:auto;">
         <p>这里我可以写一些输入提示</p>
+
 
             </script>
             <script type="text/javascript">
@@ -35,8 +36,8 @@
                     initialFrameHeight: 500
                     //更多其他参数，请参考umeditor.config.js中的配置项
                 });
-                // um.insertHtml("<%= aboutUs[0].main_content %>");
-                um.setContent('<%- aboutUs[0].main_content %>');
+                // um.insertHtml("<%= contactUs[0].main_content %>");
+                um.setContent('<%- contactUs[0].main_content %>');
             </script>
         </div>
         <div class="box-footer">
@@ -54,7 +55,7 @@
         $('#updateName').on('click', function () {
             var para = {mainContent: um.getContent()};
             $.ajax({
-                url: 'doChangeAboutUs',
+                url: 'doChangeContactUs',
                 type: 'POST',
                 data: para,
                 success: function (res) {
