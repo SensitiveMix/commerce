@@ -43,12 +43,9 @@
                         <td>&nbsp;<img src="/images/arrow.svg" alt="">&nbsp;
                             <button class="btn btn-info add">添加二级子类</button>
                         </td>
-                        <td>
-                        </td>
                         <td></td>
                         <td></td>
-                        <td>
-                        </td>
+                        <td></td>
                     </tr>
                     </tbody>
                 </table>
@@ -265,6 +262,8 @@
         $('table tr[class*=' + newOBJ + ']').remove();
     }
 
+
+
     $(function () {
         $(".add").click(function () {
             if ($('table tr[class*=0_]').find('input').val() == "") {
@@ -275,7 +274,7 @@
                 var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
                 var cla = count + '_' + " " + 'cateGory';
                 var claBTN = count + '_btn';
-                $(".tb_total").append('<tr class="' + cla + '"><td><img style="margin-left: 20px" src="/images/jiao.svg" alt="">&nbsp;<input type="text"></td><td></td> <td>' + date + '</td> <td> <button onclick="deleteTwo(' + count + ')" class="btn btn-danger ' + cla + '">删除</button> </td> </tr><tr class="' + claBTN + '"><td>&nbsp;<img class="' + cla + '" src="/images/arrow.svg" alt="">&nbsp; <button onclick="add(' + count + ')" class="btn btn-info add ' + cla + '">添加三级子类</button> </td><td><td></td></td><td></td><td></td></tr>');
+                $(".xyz").before('<tr class="' + cla + '"><td><img style="margin-left: 20px" src="/images/jiao.svg" alt="">&nbsp;<input type="text">&nbsp;<img class="' + cla + '" src="/images/arrow.svg" alt="">&nbsp; <button onclick="add(' + count + ')" class="btn btn-info add ' + cla + '">添加三级子类</button> </td><td> </td> <td>' + date + '</td> <td> <button onclick="deleteTwo(' + count + ')" class="btn btn-danger ' + cla + '">删除</button> </td> </tr><tr class="' + claBTN + '"><td></td><td><td></td></td><td></td><td></td></tr>');
             }
         });
     });
