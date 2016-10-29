@@ -14,7 +14,6 @@ describe('Head banner testing', function () {
             .expect('Content-Type', /json/)
             .end(function (err, res) {
                 if (err) throw err;
-                console.log(res.text);
                 should.exist(res.text);
                 done();
             });
