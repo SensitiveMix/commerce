@@ -38,6 +38,7 @@ router.get('/', function (req, res, next) {
                 var labels = results[1];
                 res.render('assets/index', {
                     title: 'ECSell',
+                    url: '/',
                     categories: category,
                     hotLabels: labels,
                     user: {nick_name: ''},
@@ -114,7 +115,12 @@ router.post('/dologin', function (req, res) {
             console.log(result[0].nick_name + ":登录成功" + new Date());
             // res.send('success');
             console.log(result);
-            res.render('assets/index', {user: result[0], status: 200})
+            res.render('assets/index', {
+                user: result[0],
+                categories: categoryies,
+                hotLabels: hotLabel,
+                title: 'ECSell',
+                status: 200})
         } else {
             console.log(query.name + ":登录失败" + new Date());
             // res.send(500);
