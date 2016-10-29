@@ -7,7 +7,7 @@
             fontSize: '13px',
             subMenuWidth: '180px',
             floating: 'left',
-            transform: 'on',
+            transform: 'off',
             transformBreak: '100',
             lablColor: '#ffffff',
             lablFontSize: '13px',

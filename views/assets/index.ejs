@@ -1,47 +1,34 @@
 <% layout('master.ejs') %>
-<!--<script src="../assets/js/jquery.zlight.menu.1.0.min.js"></script>-->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container" id="slider-menu">
+            <div class="solid-ddd"></div>
             <!--<ul class="nav nav-pills nav-stacked" role="tablist">-->
             <!--</ul>-->
-            <div class="col-md-4" style="padding: 0;">
+            <div class="col-md-4 submenu" style="padding: 0;">
                 <nav id="zlight-nav">
                     <ul id="zlight-main-nav" style="border:0;width:100%;">
-                        <li class="zlight-dropdown" style="width: 100%"> <a href="#" style="border: 0px">Pages <i class="icon-angle-right"></i></a>
+                        <% if(categories.length != 0){ %>
+                        <% categories.forEach(function (item) { %>
+                        <li class="zlight-dropdown" style="width: 100%"><a href="#"
+                                                                           style="border: 0px"><%= item.firstCategory %>
+                                <i class="icon-angle-right"></i></a>
                             <ul class="zlight-submenu" style="top: 0;left: 100%;background: #fff;">
-                                <li class="zlight-dropdown"> <a href="#">Dropdown </a>
+                                <% if(item.secondCategory.length != 0) { %>
+                                <% item.secondCategory.forEach(function(secondItem) { %>
+                                <li class="zlight-dropdown"><a href="#"><%= secondItem.secondTitle %></a>
                                 </li>
-                                <li class="zlight-dropdown"> <a href="#">Dropdown </a>
-                                </li>
-                                <li class="zlight-dropdown"> <a href="#">Dropdown </a>
-                                </li>
+                                <% }) %>
+                                <% } %>
                             </ul>
                         </li>
-                        <li class="zlight-dropdown" style="width: 100%"> <a href="#" style="border: 0px">Pages <i class="icon-angle-right"></i></a>
-                            <ul class="zlight-submenu" style="top: 0;left: 100%;background: #fff;">
-                                <li class="zlight-dropdown"> <a href="#">Dropdown </a>
-                                </li>
-                                <li class="zlight-dropdown"> <a href="#">Dropdown </a>
-                                </li>
-                                <li class="zlight-dropdown"> <a href="#">Dropdown </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="zlight-dropdown" style="width: 100%"> <a href="#" style="border: 0px">Pages <i class="icon-angle-right"></i></a>
-                            <ul class="zlight-submenu" style="top: 0;left: 100%;background: #fff;">
-                                <li class="zlight-dropdown"> <a href="#">Dropdown </a>
-                                </li>
-                                <li class="zlight-dropdown"> <a href="#">Dropdown </a>
-                                </li>
-                                <li class="zlight-dropdown"> <a href="#">Dropdown </a>
-                                </li>
-                            </ul>
-                        </li>
+                        <% }) %>
+
+                        <% } %>
                     </ul>
                     <!-- MOBILE NAV -->
-                    <div id="zlight-mobile-nav"> <span>Menu</span> <i class="icon-reorder zlight-icon"></i>
+                    <div id="zlight-mobile-nav"><span>Menu</span> <i class="icon-reorder zlight-icon"></i>
                         <select>
                         </select>
                     </div>
@@ -59,16 +46,36 @@
                     <div id="bs-carousel" class="carousel slide" data-ride="carousel">
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
-                            <li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#bs-carousel" data-slide-to="1"></li>
-                            <li data-target="#bs-carousel" data-slide-to="2"></li>
                         </ol>
                         <!-- Wrapper for slides -->
+                        <script>
+                            $(function () {
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '/getBanner',
+                                    data: {},
+                                    dataType: 'json',
+                                    success: function(data){
+                                        console.log(data);
+                                        if(data.length != 0){
+                                            data.forEach(function (item,index) {
+                                                var mybannerHtml = '<div class="item"><a href="#"><img src="'+item.image_url+'" alt=""></a></div>';
+                                                $('.carousel-inner').append(mybannerHtml);
+                                                var olBanner = '<li data-target="#bs-carousel" data-slide-to="'+index+'"></li>';
+                                                $('.carousel-indicators').append(olBanner);
+                                            })
+
+                                            $('.carousel-inner .item').eq(0).addClass('active');
+                                            $('.carousel-indicators li').eq(0).addClass('active');
+                                        }
+                                    },
+                                    complete: function () {
+                                        $('.carousel').carousel();
+                                    }
+                                });
+                            })
+                        </script>
                         <div class="carousel-inner">
-                            <div class="item active"><a href="#"><img src="http://placehold.it/1600x550" alt=""></a>
-                            </div>
-                            <div class="item"><a href="#"><img src="http://placehold.it/1600x550" alt=""></a></div>
-                            <div class="item"><a href="#"><img src="http://placehold.it/1600x550" alt=""></a></div>
                         </div>
 
                         <!-- Controls -->
@@ -88,7 +95,7 @@
         <!--<p>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</p>-->
         <!--<%= user.nick_name %>-->
         <!--<%= status %>-->
-        <!--<%= title%>-->
+        <!--<%= title %>-->
         <!--<p>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</p>-->
 
         <!-- ========== SLIDER END ========== -->
@@ -396,7 +403,7 @@
 </div>
 <script src="../assets/js/jquery.zlight.menu.1.0.js"></script>
 <script>
-    $(function(){
+    $(function () {
         $('#zlight-nav').zlightMenu();
     });
 </script>

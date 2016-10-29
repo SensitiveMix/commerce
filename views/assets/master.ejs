@@ -13,6 +13,7 @@
     <link href="../assets/css/owl.theme.css" rel="stylesheet">
     <link href="../assets/css/owl.transitions.css" rel="stylesheet">
     <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../plugins/swiper/css/swiper.min.css" rel="stylesheet">
 
     <link href="../assets/css/style.css" rel="stylesheet">
     <link href="../assets/css/config.css" rel="stylesheet">
@@ -46,17 +47,6 @@
                         <li>Germany</li>
                     </ul>
                 </nav>
-
-                <nav id="shopping-cart">
-                    <a href="#">
-                        <i class="fa fa-shopping-cart fa-lg"></i> Cart
-                        <span class="fa-stack">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-stack-1x fa-inverse">3</i>
-          </span>
-                    </a>
-                </nav>
-
                 <nav id="top-nav" role="navigation" class="navbar">
                     <div class="navbar-header">
                         <button data-target=".top-nav" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -82,15 +72,33 @@
         <!-- ========== TOP BAR START ========== -->
 
         <!-- ========== KV =========== -->
+        <script>
+            $(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '/getHeadBanner',
+                    data: {},
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#kv-img').attr('src', data.image_url);
+                    }
+                });
+            })
+        </script>
         <div id="top-banner" class="widget min-widih-992 j-banner">
             <div class="ctr-track-a ctr-track-show ctr-info ctrTrackA ctrTrackShow ctrInfo"
                  ctr="{area:'ad_postion_107',entity:'global_image',ad_type:'public'}" style="height: 100%">
-                <div style="text-align:center; background-image:url(http://litbimg.rightinthebox.com/images/dfp/201610/mini_81191_bg_en.jpg); background-repeat:repeat;background-position:center;height: 100%;">
-                    <div class="j-wraper" style="width: 1000px;margin: 0 auto;position: relative;padding-top: 18px;">
-                        <i id="j-close" style="position: absolute;display: inline-block;width: 16px;height: 16px;background: #9395a4;top: 3px;right: 3px;cursor: pointer;transition: all .2s;-moz-transition: all .2s;-webkit-transition: all .2s;-o-transition: all .2s;"></i>
+                <div style="text-align:center; position:relative;height: 100%;">
+                    <!--<img id="kv-img" src="http://litbimg.rightinthebox.com/images/dfp/201610/mini_81191_bg_en.jpg">-->
+                    <img id="kv-img" src="">
+                    <div class="j-wraper" style="position:absolute;top:0;right:0;width: 1000px;padding-top: 18px;">
+                        <i id="j-close"
+                           style="position: absolute;display: inline-block;width: 16px;height: 16px;background: #9395a4;top: 3px;right: 3px;cursor: pointer;transition: all .2s;-moz-transition: all .2s;-webkit-transition: all .2s;-o-transition: all .2s;"></i>
                     </div>
                     <script type="text/javascript">
-                        $('#j-close').on('click',function(){$('.j-banner').slideUp();});
+                        $('#j-close').on('click', function () {
+                            $('.j-banner').slideUp();
+                        });
                     </script>
                     <div style="position: relative; width: 992px; margin: 0px auto; display: block;" class="hide">
                         <a target="_blank" href="http://www.miniinthebox.com/promotions/holiday-season-sale.html">
@@ -127,13 +135,23 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <% if( status == 200) { %>
-                                <a href="login" class="dropdown-toggle">Hi! <%= user.name %> </a>
+                                <a href="login" class="dropdown-toggle"><i
+                                            class="fa fa-user-circle"></i>Hi! <%= user.name %> </a>
                                 <% } else { %>
-                                <a href="login" class="dropdown-toggle">Login </a>
+                                <a href="login" class="dropdown-toggle">
+                                    <embed src="../assets/img/icon/user.svg" type="image/svg+xml"/>
+                                    Login</a>
                                 <% } %>
                             </li>
                             <li>
-                                <a href="index-1.html" class="dropdown-toggle">Customer Service </a>
+                                <a href="index-1.html" class="dropdown-toggle">
+                                    <embed src="../assets/img/icon/warning.svg" type="image/svg+xml"/>
+                                    Customer Service </a>
+                            </li>
+                            <li>
+                                <a class="link-country-currency ctr-info ctr-track-a" ctr="{'area':'country'}"
+                                   data-abbr="us"><strong class="link-ship-to">Ship to</strong>: <em
+                                            class="litb-icon-flag us"></em><b></b>$USD</a>
                             </li>
                         </ul>
                     </div>
@@ -151,10 +169,22 @@
                             </ul>
                         </div>
                         <div class="btn-group">
-                            <input type="text" class="form-control" placeholder="Search"/>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search"/>
+                                <span class="input-group-addon search"><embed src="../assets/img/icon/search.svg"
+                                                                       type="image/svg+xml"/></span>
+                            </div>
                         </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default">Search</button>
+                        <div class="btn-group btn-group-justified">
+                            <nav id="shopping-cart">
+                                <a href="#">
+                                    <i class="fa fa-shopping-cart fa-lg"></i> Cart
+                        <span class="fa-stack">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-stack-1x fa-inverse">3</i>
+          </span>
+                                </a>
+                            </nav>
                         </div>
                     </div>
 
