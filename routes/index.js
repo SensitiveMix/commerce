@@ -70,7 +70,7 @@ router.get('/login', function (req, res, next) {
             } else {
                 var category = results[0];
                 var labels = results[1];
-                res.render('assets/index', {
+                res.render('assets/login', {
                     title: 'ECSell',
                     categories: category,
                     hotLabels: labels,
