@@ -4,13 +4,17 @@ var db = require('../model/index');
 var crypto = require('crypto');
 var async = require('async');
 
+var hotLabel = [];
+var categoryies = [];
+var u = [];
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
     async.parallel([
             function (done) {
                 db.categorys.find({}, function (err, result) {
                     if (err) res.send('404');
-
+                    categoryies = result;
                     // console.log(result);
                     done(err, result)
                 });
@@ -21,6 +25,7 @@ router.get('/', function (req, res, next) {
                         add_time: -1
                     }
                 }, function (err, labels) {
+                    hotLabel = labels;
                     done(err, labels)
                 })
             }
@@ -49,7 +54,7 @@ router.get('/login', function (req, res, next) {
             function (done) {
                 db.categorys.find({}, function (err, result) {
                     if (err) res.send('404');
-
+                    categoryies = result;
                     // console.log(result);
                     done(err, result)
                 });
@@ -60,6 +65,7 @@ router.get('/login', function (req, res, next) {
                         add_time: -1
                     }
                 }, function (err, labels) {
+                    hotLabel = labels;
                     done(err, labels)
                 })
             }
@@ -104,6 +110,7 @@ router.post('/dologin', function (req, res) {
             res.render("404");
         }
         if (result.length == 1) {
+            u = result[0];
             console.log(result[0].nick_name + ":登录成功" + new Date());
             // res.send('success');
             console.log(result);
@@ -137,6 +144,25 @@ router.post('/doregister', function (req, res) {
             res.send('success');
         }
     });
+});
+//前台注册须知界面
+router.get('/teamOfUse', function (req, res) {
+    db.systems.findOne({}, function (err, system) {
+        if (err) {
+            res.send(404)
+        } else {
+            console.log(system);
+            res.render('assets/team_of_use', {
+                system: system,
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: {nick_name: u.nick_name},
+                status: 500
+            })
+        }
+    })
+
 });
 //MD5加密
 function md5(text) {

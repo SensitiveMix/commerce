@@ -33,7 +33,7 @@
                 <h3>Register a New Account</h3>
                 <div class="gap-20"></div>
                 <p>* Indicates required fields.</p>
-                <form role="form">
+                <div role="form">
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">*</div>
@@ -60,13 +60,13 @@
                     </div>
                     <div class="checkbox pull-left">
                         <label>
-                            *<input type="checkbox"> I agree to MiniInTheBox.com <a href="#">Terms and Conditions</a>.
+                            *<input type="checkbox"> I agree to MiniInTheBox.com <a href="/teamOfUse">Terms and Conditions</a>.
                         </label>
                     </div>
                     <div class="pull-right">
                         <a href="#" class="btn btn-primary btn-lg">Sign Up</a>
                     </div>
-                </form>
+                </div>
                 <div class="gap-30"></div>
 
             </div>
@@ -77,13 +77,13 @@
 <!-- ========== CONTENT END ========== -->
 
 <script>
-    $.ajax({
-        type: 'POST',
-        url: '/doregister',
-        data: {email: $('#register_email').val(), password: $('#register_password').val()},
-        dataType: 'json',
-        success: function(data){
-            console.log(data);
-        }
-    });
+//    $.ajax({
+//        type: 'POST',
+//        url: '/doregister',
+//        data: {email: $('#register_email').val(), password: $('#register_password').val()},
+//        dataType: 'json',
+//        success: function(data){
+//            console.log(data);
+//        }
+//    });
 </script>
