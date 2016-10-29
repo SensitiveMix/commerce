@@ -21,4 +21,8 @@ views/services/
 *  添加类目接口
 *  添加前台渲染title(EC Sell)
 
+##  v0.0.4
+*  更改添加类目样式
+
+
 

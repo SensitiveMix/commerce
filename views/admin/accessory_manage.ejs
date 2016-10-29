@@ -27,8 +27,12 @@
                     </thead>
                     <tbody>
                     <tr class="0_">
-                        <td><i class="fa fa-caret-down pull-left"></i><i style="display: none" class="fa fa-caret-right pull-left"></i>&nbsp;<input class="one" type="text"></td>
-                        <td><img class="fa-toggle-on" src="/images/toggle-on.svg" onclick="toggle('off')" style="display: none" alt=""><img class="fa-toggle-off" onclick="toggle('on')" src="/images/toggle-off.svg" alt="">
+                        <td><i class="fa fa-caret-down pull-left"></i><i style="display: none"
+                                                                         class="fa fa-caret-right pull-left"></i>&nbsp;<input
+                                    class="one" type="text"></td>
+                        <td><img class="fa-toggle-on" src="/images/toggle-on.svg" onclick="toggle('off')"
+                                 style="display: none" alt=""><img class="fa-toggle-off" onclick="toggle('on')"
+                                                                   src="/images/toggle-off.svg" alt="">
                         </td>
                         <td></td>
                         <td>
@@ -39,12 +43,9 @@
                         <td>&nbsp;<img src="/images/arrow.svg" alt="">&nbsp;
                             <button class="btn btn-info add">添加二级子类</button>
                         </td>
-                        <td>
-                        </td>
                         <td></td>
                         <td></td>
-                        <td>
-                        </td>
+                        <td></td>
                     </tr>
                     </tbody>
                 </table>
@@ -71,6 +72,7 @@
     <!-- /.box-footer -->
 
 </div>
+<script src="/js/md5.js"></script>
 <script type="text/javascript">
     var count_three = 0;
     var count_two = 0;
@@ -260,6 +262,8 @@
         $('table tr[class*=' + newOBJ + ']').remove();
     }
 
+
+
     $(function () {
         $(".add").click(function () {
             if ($('table tr[class*=0_]').find('input').val() == "") {
@@ -270,9 +274,39 @@
                 var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
                 var cla = count + '_' + " " + 'cateGory';
                 var claBTN = count + '_btn';
-                $(".tb_total").append('<tr class="' + cla + '"><td><img style="margin-left: 20px" src="/images/jiao.svg" alt="">&nbsp;<input type="text"></td><td></td> <td>' + date + '</td> <td> <button onclick="deleteTwo(' + count + ')" class="btn btn-danger ' + cla + '">删除</button> </td> </tr><tr class="' + claBTN + '"><td>&nbsp;<img class="' + cla + '" src="/images/arrow.svg" alt="">&nbsp; <button onclick="add(' + count + ')" class="btn btn-info add ' + cla + '">添加三级子类</button> </td><td><td></td></td><td></td><td></td></tr>');
+                $(".xyz").before('<tr class="' + cla + '"><td><img style="margin-left: 20px" src="/images/jiao.svg" alt="">&nbsp;<input type="text">&nbsp;<img class="' + cla + '" src="/images/arrow.svg" alt="">&nbsp; <button onclick="add(' + count + ')" class="btn btn-info add ' + cla + '">添加三级子类</button> </td><td> </td> <td>' + date + '</td> <td> <button onclick="deleteTwo(' + count + ')" class="btn btn-danger ' + cla + '">删除</button> </td> </tr><tr class="' + claBTN + '"><td></td><td><td></td></td><td></td><td></td></tr>');
             }
         });
     });
+
+    function translate() {
+        var q = 'apple';
+        var appid = '20161026000030775';
+        var secret = 'qPUbqa6ID_bzGtTyGIVt';
+        var salt = new Date().getTime() / 1000;
+        var param = {
+            q: q,
+            from: 'en',
+            to: 'zh',
+            appid: appid,
+            salt: salt,
+            sign: md5(appid + q + salt + secret)
+        }
+
+        $.ajax({
+            url: 'https://api.fanyi.baidu.com/api/trans/vip/translate',
+            type: 'POST',
+            data: param,
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                console.log(result.trans_result[0].dist);
+            }, error: function (err) {
+                console.error(err)
+            }
+        })
+    }
+
+    translate();
 
 </script>
