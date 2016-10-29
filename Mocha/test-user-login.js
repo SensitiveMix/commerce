@@ -11,7 +11,7 @@ describe('user register test', function () {
         request(app)
             .post('/dologin')
             .send({name: 'test@123.com', password: '123'})
-            .expect('failed')
+            .expect('Content-Type', 'text/html; charset=utf-8')
             .end(function (err, res) {
                 if (err) throw err;
                 console.log(res.text);

@@ -10,7 +10,7 @@ describe('user login test', function () {
         request(app)
             .post('/dologin')
             .send({name: 'test@123.com', password: '123'})
-            .expect('success')
+            .expect('Content-Type', 'text/html; charset=utf-8')
             .end(function (err, res) {
                 if (err) throw err;
                 console.log(res.text);
@@ -22,7 +22,7 @@ describe('user login test', function () {
         request(app)
             .post('/dologin')
             .send({name: 'test@123.com', password: '1234'})
-            .expect('failed')
+            .expect('Content-Type', 'text/html; charset=utf-8')
             .end(function (err, res) {
                 if (err) throw err;
                 console.log(res.text);
@@ -34,7 +34,7 @@ describe('user login test', function () {
         request(app)
             .post('/dologin')
             .send({email: 'test@123.com', password: '1234'})
-            .expect('failed')
+            .expect('Content-Type', 'text/html; charset=utf-8')
             .end(function (err, res) {
                 if (err) throw err;
                 console.log(res.text);
