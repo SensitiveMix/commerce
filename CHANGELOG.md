@@ -24,5 +24,8 @@ views/services/
 ##  v0.0.4
 *  更改添加类目样式
 
+##  v0.0.5
+*  添加多图片上传接口
+*  添加EXCEL-TO-JSON接口
 
 
