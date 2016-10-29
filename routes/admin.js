@@ -279,6 +279,17 @@ router.get('/usermanage', function (req, res, next) {
     console.log("用户管理页面登陆成功");
 });
 
+//用户管理
+router.get('/hot_product_manage', checkLogin);
+router.get('/hot_product_manage', function (req, res, next) {
+    console.log("最热产品管理" + new Date());
+    db.users.find({}, function (err, result) {
+        if (err) throw  err;
+        res.render('admin/hot_product_manage', {users: result, username: u.nick_name});
+    });
+    console.log("用户管理页面登陆成功");
+});
+
 //获取用户
 router.get('/douserlist', function (req, res, next) {
     console.log("当前分页" + req.query.iDisplayStart);
