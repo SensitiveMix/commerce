@@ -14,6 +14,7 @@
 	display: block;
 	position: relative;
 	width: 100%;
+	height: 100%!important;
 	z-index: 9999;
 }
 /*************

@@ -24,8 +24,8 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
           <!-- jQuery 2.1.4 -->
     <!--<script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>-->
-    <script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    <script src="../assets/js/jquery.zlight.menu.1.0.min.js"></script>
+    <script src="../assets/js/jquery-1.9.1.min.js"></script>
+
     <script src="../layer-v2.2/layer/layer.js"></script>
     <![endif]-->
 </head>
@@ -82,10 +82,16 @@
         <!-- ========== TOP BAR START ========== -->
 
         <!-- ========== KV =========== -->
-        <div id="top-banner" class="widget min-widih-992">
+        <div id="top-banner" class="widget min-widih-992 j-banner">
             <div class="ctr-track-a ctr-track-show ctr-info ctrTrackA ctrTrackShow ctrInfo"
                  ctr="{area:'ad_postion_107',entity:'global_image',ad_type:'public'}" style="height: 100%">
                 <div style="text-align:center; background-image:url(http://litbimg.rightinthebox.com/images/dfp/201610/mini_81191_bg_en.jpg); background-repeat:repeat;background-position:center;height: 100%;">
+                    <div class="j-wraper" style="width: 1000px;margin: 0 auto;position: relative;padding-top: 18px;">
+                        <i id="j-close" style="position: absolute;display: inline-block;width: 16px;height: 16px;background: #9395a4;top: 3px;right: 3px;cursor: pointer;transition: all .2s;-moz-transition: all .2s;-webkit-transition: all .2s;-o-transition: all .2s;"></i>
+                    </div>
+                    <script type="text/javascript">
+                        $('#j-close').on('click',function(){$('.j-banner').slideUp();});
+                    </script>
                     <div style="position: relative; width: 992px; margin: 0px auto; display: block;" class="hide">
                         <a target="_blank" href="http://www.miniinthebox.com/promotions/holiday-season-sale.html">
                             <img src="http://litbimg.rightinthebox.com/images/dfp/201610/mini_c0_81191_f_cp_1_en.jpg?34"
@@ -120,8 +126,8 @@
                     <div class="navbar-collapse collapse main-nav">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <% if( status == 200) {%>
-                                <a href="login" class="dropdown-toggle">Hi! <%= user.name%> </a>
+                                <% if( status == 200) { %>
+                                <a href="login" class="dropdown-toggle">Hi! <%= user.name %> </a>
                                 <% } else { %>
                                 <a href="login" class="dropdown-toggle">Login </a>
                                 <% } %>
@@ -318,7 +324,7 @@
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="../assets/js/jquery.min.js"></script>
+<!--<script src="../assets/js/jquery.min.js"></script>-->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../assets/js/bootstrap.min.js"></script>
 <script src="../assets/js/owl.carousel.min.js"></script>

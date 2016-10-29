@@ -1360,7 +1360,7 @@ tr.cart-subtotal > * {
 body{
 	padding: 0;
 	margin: 0;
-	background-color: silver;
+	/*background-color: silver;*/
 }
 #main{
 	padding: 30px 30px;
@@ -1394,4 +1394,57 @@ h5{
 }
 #zlight-main-nav > li:first-child > a{
 	border: 0;
+}
+
+#j-close:before {
+	display: inline-block;
+	content: '';
+	width: 2px;
+	height: 14px;
+	background: #2c2d4e;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -7px;
+	margin-left: -1px;
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+}
+#j-close:after {
+	display: inline-block;
+	content: '';
+	width: 2px;
+	height: 14px;
+	background: #2c2d4e;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -7px;
+	margin-left: -1px;
+	transform: rotate(-45deg);
+	-webkit-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: inherit;
+	-webkit-font-smoothing: antialiased;
+}
+
+.icon-angle-right{
+	float: right;
+}
+.icon-angle-right:before{
+	content: "\f105";
+	text-decoration: inherit;
+	display: inline-block;
+	speak: none;
 }
