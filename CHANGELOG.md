@@ -45,3 +45,12 @@ views/services/
 *  后台添加网站隐私政策管理
 
 
+##  v0.0.9
+*  后台添加历史上传接口
+*  前台类目,添加一级,二级类目的数量和链接
+*  更改三级类目的结构
+*  添加uploadHistory,uploadTemporary两张表
+
+
+
+
