@@ -1,30 +1,522 @@
 <% layout('master.ejs') %>
 
+<style>
+    ul {
+        list-style: none;
+        padding-left: 2px;
+    }
+
+    .leave01 {
+        float: right;
+        background: url("/assets/img/icon/leve01.png") 0 0 no-repeat;
+    }
+
+    .leave-cat-lv span.first {
+        width: 100px;
+    }
+
+    .leave-cat-lv span {
+        float: left;
+        display: block;
+        width: 99px;
+        line-height: 22px !important;
+        line-height: 20px;
+        text-align: center;
+        color: #fff;
+    }
+
+    .leave-cat-lv span.middle {
+        width: 106px;
+    }
+
+    .leave-cat-lv span.last {
+        width: 90px;
+    }
+
+    .catgoray-box {
+        width: 100%;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    .search-history {
+        position: relative;
+        z-index: 2;
+        height: 50px;
+        padding: 15px 10px 0;
+    }
+
+    .search-history .history-tit {
+        float: left;
+        color: #0b0b0b;
+        line-height: 24px;
+    }
+
+    .search-history .drop-down {
+        width: 65%;
+    }
+
+    .drop-down {
+        position: relative;
+        float: left;
+        padding-top: 1px;
+        height: 25px;
+        line-height: 22px;
+        border: 1px solid #8797b0;
+        background-color: #fff;
+    }
+
+    .drop-down-default {
+        display: block;
+        position: absolute;
+        right: 1px;
+        top: 0px;
+        height: 25px;
+        border-left: 1px solid #b9cbe7;
+        cursor: pointer;
+    }
+
+    .greay-cat-box {
+        border: 1px solid #f3f3f3;
+    }
+
+    .greay-cat-box .b-f-line {
+        margin: 0 auto;
+        width: 100%;
+        overflow: hidden;
+        padding: 8px;
+        border: 1px solid #fff;
+        background-color: #fafafa;
+    }
+
+    .categoryselectlistbox {
+        position: relative;
+        z-index: 0;
+        width: 100%;
+        padding: 0 0 0 1px;
+        height: 222px;
+        background: url("/assets/img/icon/category-bg.png") no-repeat;
+        background-size: 100% 100%;
+        overflow: hidden;
+    }
+
+    .categoryselectlist {
+        display: none;
+        overflow: hidden;
+        position: relative;
+        float: left;
+        width: 25%;
+        height: 220px;
+        border: 1px solid #b8c3d4;
+        margin-right: 9px;
+    }
+
+    .addscroll {
+        display: block;
+        overflow-y: scroll;
+    }
+
+    .categoryselectlist ul {
+        margin: 0 1px;
+    }
+
+    .categoryselectlist li.disable {
+        color: #bbb;
+    }
+
+    .categoryselectlist li {
+        padding-left: 0px;
+        line-height: 20px;
+        height: 20px;
+        text-indent: 10px;
+        cursor: pointer;
+    }
+
+    .categoryselectlist li .libox {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .categoryselectlist li .tipswrap {
+        position: relative;
+        padding-top: 6px;
+        z-index: 2;
+        display: none;
+    }
+
+    .limittips {
+        color: #000;
+        padding: 5px 10px;
+        background-color: #ffffe5;
+        border: 1px solid #efd491;
+        box-shadow: 2px 2px 0 #e5e5e5;
+        position: absolute;
+        top: 5px;
+        top: 3px \9;
+        left: 9px;
+        _left: 0;
+        text-indent: 0;
+    }
+
+    .limittips span {
+        display: block;
+        width: 0;
+        height: 0;
+        position: absolute;
+        left: 10px;
+        top: -6px;
+        border-color: transparent transparent #efd491;
+        border-width: 0 5px 5px;
+        border-style: dashed dashed solid;
+    }
+
+    .limittips span i {
+        display: block;
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: 1px;
+        left: -5px;
+        border-color: transparent transparent #ffffe5;
+        border-width: 0 5px 5px;
+        border-style: dashed dashed solid;
+        overflow: hidden;
+    }
+
+    .selected-category {
+        padding: 15px 0px;
+    }
+
+    .selected-category .chouseed-catrgory {
+        padding: 10px 10px 10px 10px;
+        border: 1px solid #fdcc7f;
+        background-color: #ffffe5;
+    }
+
+    .clearfix:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    .selected-category .chouseed-catrgory span.cate-title {
+        float: left;
+        color: #0b0b0b;
+    }
+
+    .selected-category .chouseed-catrgory span.cate-value {
+        float: left;
+        width: 830px;
+    }
+</style>
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title">产品上传图</h3>
-    </div>
-    <h1>使用multer中间件上传文件</h1>
-    <form enctype="multipart/form-data" method="post" action="uploadImage">
-        请选择文件：<input type="file" id="file" name="file" multiple/><br/>
-        <input type="submit" value="上传文件"/>
-        <div class="box-body">
-
-            <% if (upload.length != 0) { %>
-            <% upload.forEach(function(load){ %>
-            <img src="<%= load %>" alt="">
-            <% }) %>
-            <% } %>
+        <h3 class="box-title">产品上传</h3>
+        <div class="leave-cat-lv leave01">
+            <span class="first">1. 选择类目</span>
+            <span class="middle current">2. 填写信息</span>
+            <span class="last">3. 提交审核</span>
         </div>
-    </form>
+    </div>
+    <div class="catgoray-box">
+        <div class="search-history" id="search-history">
+            <span class="history-tit">您曾经使用过的类目：</span>
+            <div class="drop-down" id="div_history">
+                <span class="drop-down-value" id="show_history">--请选择曾用产品类目-- </span>
+                <span class="drop-down-default"><i class="fa fa-angle-down pull-right"></i></span>
+                <!--内容  -->
+                <div class="chouse-down-box" id="recentCategoryDropdown"></div>
+            </div>
+        </div>
+    </div>
+    <div class="greay-cat-box" id="greay-cat-box">
+        <div class="b-f-line">
+            <div class="categoryselectlistbox clearfix">
+                <div class="categoryselectlist addscroll" id="div_catagory0">
+                    <ul id="catagory0">
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="服装" data-en="Apparel"
+                            data-param="catePubId=014" data-valid="1" data-leaf="0" title="服装" data-remark="服装行业群号：262044180
+主营服装的卖家可加群" data-message="">
+                            <span class="libox j-clickbtn">服装</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
 
-    <form id        =  "uploadForm"
-          enctype   =  "multipart/form-data"
-          action    =  "uploadFile"
-          method    =  "post"
-    >
-        <input type="file" name="file" />Upload
-        <input type="submit" value="Upload" name="submit">
-    </form>
+                        <li data-crosscate="0" data-cn="汽车、摩托车" data-en="Automobiles &amp; Motorcycles"
+                            data-param="catePubId=143" data-valid="1" data-leaf="0" title="汽车、摩托车" data-remark=""
+                            data-message="">
+                            汽车、摩托车
+                        </li>
 
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="母婴用品"
+                            data-en="Baby, Kids &amp; Maternity" data-param="catePubId=142" data-valid="1" data-leaf="0"
+                            title="母婴用品" data-remark="" data-message="">
+                            <span class="libox j-clickbtn">母婴用品</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="箱包及箱包辅料"
+                            data-en="Bags, Luggages &amp; Accessories" data-param="catePubId=137" data-valid="1"
+                            data-leaf="0" title="箱包及箱包辅料" data-remark="" data-message="">
+                            <span class="libox j-clickbtn">箱包及箱包辅料</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="商业及工业"
+                            data-en="Business &amp; Industrial" data-param="catePubId=011" data-valid="1" data-leaf="0"
+                            title="商业及工业" data-remark="" data-message="">
+                            <span class="libox j-clickbtn">商业及工业</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li data-crosscate="0" data-cn="数码相机、摄影器材" data-en="Cameras &amp; Photo"
+                            data-param="catePubId=136" data-valid="1" data-leaf="0" title="数码相机、摄影器材" data-remark=""
+                            data-message="">
+                            数码相机、摄影器材
+                        </li>
+
+                        <li data-crosscate="0" data-cn="手机和手机附件" data-en="Cell Phones &amp; Accessories"
+                            data-param="catePubId=135" data-valid="1" data-leaf="0" title="手机和手机附件" data-remark=""
+                            data-message="">
+                            手机和手机附件
+                        </li>
+
+                        <li data-crosscate="0" data-cn="计算机和网络" data-en="Computers &amp; Networking"
+                            data-param="catePubId=009" data-valid="1" data-leaf="0" title="计算机和网络" data-remark=""
+                            data-message="">
+                            计算机和网络
+                        </li>
+
+                        <li data-crosscate="0" data-cn="消费类电子" data-en="Electronics" data-param="catePubId=008"
+                            data-valid="1" data-leaf="0" title="消费类电子" data-remark="" data-message="">
+                            消费类电子
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="其他产品" data-en="Everything Else"
+                            data-param="catePubId=099" data-valid="1" data-leaf="0" title="其他产品" data-remark=""
+                            data-message="">
+                            <span class="libox j-clickbtn">其他产品</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="时尚配件" data-en="Fashion Accessories"
+                            data-param="catePubId=140" data-valid="1" data-leaf="0" title="时尚配件" data-remark=""
+                            data-message="">
+                            <span class="libox j-clickbtn">时尚配件</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="食品饮料" data-en="Food &amp; Beverage"
+                            data-param="catePubId=178" data-valid="1" data-leaf="0" title="食品饮料" data-remark=""
+                            data-message="">
+                            <span class="libox j-clickbtn">食品饮料</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li data-crosscate="0" data-cn="电玩游戏" data-en="Games &amp; Accessories"
+                            data-param="catePubId=139" data-valid="1" data-leaf="0" title="电玩游戏" data-remark=""
+                            data-message="">
+                            电玩游戏
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="发制品" data-en="Hair Products"
+                            data-param="catePubId=169" data-valid="1" data-leaf="0" title="发制品" data-remark=""
+                            data-message="">
+                            <span class="libox j-clickbtn">发制品</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="健康与美容" data-en="Health &amp; Beauty"
+                            data-param="catePubId=018" data-valid="1" data-leaf="0" title="健康与美容" data-remark=""
+                            data-message="">
+                            <span class="libox j-clickbtn">健康与美容</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="家居与花园" data-en="Home &amp; Garden"
+                            data-param="catePubId=019" data-valid="1" data-leaf="0" title="家居与花园" data-remark=""
+                            data-message="">
+                            <span class="libox j-clickbtn">家居与花园</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="珠宝" data-en="Jewelry"
+                            data-param="catePubId=004" data-valid="1" data-leaf="0" title="珠宝" data-remark=""
+                            data-message="">
+                            <span class="libox j-clickbtn">珠宝</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="照明灯饰" data-en="Lights &amp; Lighting"
+                            data-param="catePubId=152" data-valid="1" data-leaf="0" title="照明灯饰" data-remark=""
+                            data-message="">
+                            <span class="libox j-clickbtn">照明灯饰</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="乐器" data-en="Musical Instruments"
+                            data-param="catePubId=144" data-valid="1" data-leaf="0" title="乐器" data-remark=""
+                            data-message="">
+                            <span class="libox j-clickbtn">乐器</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li data-crosscate="0" data-cn="安全与监控" data-en="Security &amp; Surveillance"
+                            data-param="catePubId=007" data-valid="1" data-leaf="0" title="安全与监控" data-remark=""
+                            data-message="">
+                            安全与监控
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="鞋类及鞋类辅料"
+                            data-en="Shoes &amp; Accessories" data-param="catePubId=141" data-valid="1" data-leaf="0"
+                            title="鞋类及鞋类辅料" data-remark="" data-message="">
+                            <span class="libox j-clickbtn">鞋类及鞋类辅料</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="运动与户外产品"
+                            data-en="Sports &amp; Outdoors" data-param="catePubId=024" data-valid="1" data-leaf="0"
+                            title="运动与户外产品" data-remark="" data-message="">
+                            <span class="libox j-clickbtn">运动与户外产品</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="战术装备" data-en="Tactical Gear"
+                            data-param="catePubId=176" data-valid="1" data-leaf="0" title="战术装备"
+                            data-remark="此类目为试运营，如申请准入请发送邮件至 wanqing@dhgate.com咨询，谢谢" data-message="">
+                            <span class="libox j-clickbtn">战术装备</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="玩具与礼物" data-en="Toys &amp; Gifts"
+                            data-param="catePubId=006" data-valid="1" data-leaf="0" title="玩具与礼物" data-remark=""
+                            data-message="">
+                            <span class="libox j-clickbtn">玩具与礼物</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="表" data-en="Watches"
+                            data-param="catePubId=005" data-valid="1" data-leaf="0" title="表" data-remark=""
+                            data-message="">
+                            <span class="libox j-clickbtn">表</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="婚纱礼服" data-en="Weddings &amp; Events"
+                            data-param="catePubId=002" data-valid="1" data-leaf="0" title="婚纱礼服" data-remark=""
+                            data-message="">
+                            <span class="libox j-clickbtn">婚纱礼服</span>
+                            <div class="tipswrap">
+                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
+                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
+                            </div>
+                        </li>
+
+
+                    </ul>
+                </div>
+                <div class="categoryselectlist" id="div_catagory1">
+                    <ul id="catagory1">
+                    </ul>
+                </div>
+                <div class="categoryselectlist" id="div_catagory2">
+                    <ul id="catagory2">
+                    </ul>
+                </div>
+                <div class="categoryselectlist " id="div_catagory3">
+                    <ul id="catagory3">
+                    </ul>
+                </div>
+            </div>
+            <div class="selected-category">
+                <!--   -----------------------------当前已选择的产品类目 DIV----------------------------               -->
+                <div class="chouseed-catrgory clearfix">
+                    <div class="clearfix">
+                        <span class="cate-title">当前已选择的类目：</span>
+                        <span class="cate-value show_category_path" id="show_category_path"></span>
+                    </div>
+                </div>
+                <!--   -----------------------------没有操作权限提醒 DIV----------------------------               -->
+                <div class="chousetips" id="div_show_admittance" style="display:none;">
+                </div>
+                <!--   -----------------------------类目介绍提醒DIV ----------------------------               -->
+                <div class="selected-category-tip clearfix" id="div_show_remark" style="display:none;">
+                    <span class="cate-title">类目介绍：</span>
+                    <span class="cate-value show_remark" id="show_remark"></span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="buttonbox">
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-primary btn-lg">保存并新增类目</button>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-primary btn-lg">立即发布新产品</button>
+                </div>
+            </div>
+            <!--<button id="submit_button" class="submit_button" type="button">-->
+            <!--<span id="button_category" class="submit-syi initialstate"><span>立即去发布新产品</span></span>-->
+            <!--</button>-->
+        </div>
+    </div>
 </div>
