@@ -2,113 +2,39 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <div class="container" id="slider-menu">
-            <div class="solid-ddd"></div>
-            <!--<ul class="nav nav-pills nav-stacked" role="tablist">-->
-            <!--</ul>-->
-            <div class="col-md-4 submenu" style="padding: 0;">
-                <nav id="zlight-nav">
-                    <ul id="zlight-main-nav" style="border:0;width:100%;">
-                        <% if(categories.length != 0){ %>
-                        <% categories.forEach(function (item) { %>
-                        <li class="zlight-dropdown" style="width: 100%"><a href="<%= item.firstUrl %>"
-                                                                           style="border: 0px"><%= item.firstCategory %>(<%= item.firstCount %>)
-                                <i class="icon-angle-right"></i></a>
-                            <ul class="zlight-submenu" style="top: 0;left: 100%;background: #fff;">
-                                <% if(item.secondCategory.length != 0) { %>
-                                <% item.secondCategory.forEach(function(secondItem) { %>
-                                <li class="zlight-dropdown">
-                                    <a href="<%= secondItem.secondUrl %>"><%= secondItem.secondTitle %>(<%= secondItem.secondCount %>)</a>
-                                    <ul class="zlight-dropdown">
-                                        <% if(secondItem.thirdTitles.length != 0) { %>
-                                        <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
-                                        <li class="zlight-dropdown">
-                                            <a href="<%= thirdItem.thirdUrl %>">
-                                                <div><%= thirdItem.thirdTitle %></div>
-                                            </a>
-                                        </li>
-                                        <% }) %>
-                                        <% } %>
-                                    </ul>
-                                </li>
-                                <% }) %>
-                                <% } %>
-                            </ul>
-                        </li>
-                        <% }) %>
 
-                        <% } %>
-                    </ul>
-                    <!-- MOBILE NAV -->
-                    <div id="zlight-mobile-nav"><span>Menu</span> <i class="icon-reorder zlight-icon"></i>
-                        <select>
-                        </select>
-                    </div>
-                </nav>
-            </div>
-            <div class="col-md-8" style="padding: 0">
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                </ul>
-                <section id="slider">
-                    <div id="bs-carousel" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                        </ol>
-                        <!-- Wrapper for slides -->
-                        <script>
-                            $(function () {
-                                $.ajax({
-                                    type: 'GET',
-                                    url: '/getBanner',
-                                    data: {},
-                                    dataType: 'json',
-                                    success: function (data) {
-                                        console.log(data);
-                                        if (data.length != 0) {
-                                            data.forEach(function (item, index) {
-                                                var mybannerHtml = '<div class="item"><a href="#"><img src="' + item.image_url + '" alt=""></a></div>';
-                                                $('.carousel-inner').append(mybannerHtml);
-                                                var olBanner = '<li data-target="#bs-carousel" data-slide-to="' + index + '"></li>';
-                                                $('.carousel-indicators').append(olBanner);
-                                            })
-
-                                            $('.carousel-inner .item').eq(0).addClass('active');
-                                            $('.carousel-indicators li').eq(0).addClass('active');
-                                        }
-                                    },
-                                    complete: function () {
-                                        $('.carousel').carousel();
-                                    }
-                                });
+        <script>
+            $(function () {
+                $('#menu-master').off();
+                $('.nav-top').off();
+                $('.submenu').show();
+                $('.slide-fa').show();
+                $('.caret').remove();
+                $.ajax({
+                    type: 'GET',
+                    url: '/getBanner',
+                    data: {},
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        if (data.length != 0) {
+                            data.forEach(function (item, index) {
+                                var mybannerHtml = '<div class="item"><a href="#"><img src="' + item.image_url + '" alt=""></a></div>';
+                                $('.carousel-inner').append(mybannerHtml);
+                                var olBanner = '<li data-target="#bs-carousel" data-slide-to="' + index + '"></li>';
+                                $('.carousel-indicators').append(olBanner);
                             })
-                        </script>
-                        <div class="carousel-inner">
-                        </div>
 
-                        <!-- Controls -->
-                        <a class="left carousel-control" href="#bs-carousel" data-slide="prev">
-                            <i class="fa fa-angle-left"></i>
-                            <!--span class="glyphicon glyphicon-chevron-left"></span-->
-                        </a>
-                        <a class="right carousel-control" href="#bs-carousel" data-slide="next">
-                            <i class="fa fa-angle-right"></i>
-                            <!--span class="glyphicon glyphicon-chevron-right"></span-->
-                        </a>
-                    </div>
-                </section>
-            </div>
-        </div>
-
-        <!--<p>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</p>-->
-        <!--<%= user.nick_name %>-->
-        <!--<%= status %>-->
-        <!--<%= title %>-->
-        <!--<p>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</p>-->
+                            $('.carousel-inner .item').eq(0).addClass('active');
+                            $('.carousel-indicators li').eq(0).addClass('active');
+                        }
+                    },
+                    complete: function () {
+                        $('.carousel').carousel();
+                    }
+                });
+            })
+        </script>
 
         <!-- ========== SLIDER END ========== -->
 
@@ -413,7 +339,7 @@
     <!-- Main content -->
 
 </div>
-<script src="../assets/js/jquery.zlight.menu.1.0.js"></script>
+
 <script>
     $(function () {
         $('#zlight-nav').zlightMenu();

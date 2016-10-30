@@ -110,36 +110,43 @@
 	float: left;
 	text-decoration: none;
 	outline: none;
-
+	width: 25%;
 	text-transform: uppercase;
 	padding: 6px 22px;
 
 	-webkit-transition: all 0.3s ease;
 	-moz-transition: all 0.3s ease;
 	transition: all 0.3s ease;
+	padding-right: 0;
+	font-weight: bolder;
 }
 .zlight-submenu > li > .zlight-dropdown{
-	padding-left: 160px;
+	padding-left: 25%;
 }
 .zlight-submenu > li > ul.zlight-dropdown li{
 	display: inline-block;
 	padding: 0 4px;
+	margin: 2px 0;
 	/*border-left: 2px solid #ddd;*/
 }
+.zlight-submenu > li > ul.zlight-dropdown > li >a{
+	color: #000;
+}
 .zlight-submenu > li > ul.zlight-dropdown > li >a:before{
-	position: absolute;
-	content: '';
-	bottom: -4px;
-	width: 1px;
-	height: 95%;
-	background: #dcdcdc;
-	-webkit-transform: scaleY(0.5);
-	transform: scaleY(0.5);
-	-webkit-transform-origin: 0 0;
-	transform-origin: 0 0;
+	/*position: absolute;*/
+	/*content: '';*/
+	/*bottom: -4px;*/
+	/*width: 1px;*/
+	/*height: 95%;*/
+	/*background: #dcdcdc;*/
+	/*-webkit-transform: scaleY(0.5);*/
+	/*transform: scaleY(0.5);*/
+	/*-webkit-transform-origin: 0 0;*/
+	/*transform-origin: 0 0;*/
 }
 .zlight-submenu > li > ul.zlight-dropdown > li >a >div{
 	padding-left: 10px;
+	border-left: 1px solid #dcdcdc;
 }
 .zlight-submenu > li:first-child > a{
 	border-top: none;

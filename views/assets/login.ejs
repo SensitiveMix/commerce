@@ -60,11 +60,11 @@
                     </div>
                     <div class="checkbox pull-left">
                         <label>
-                            *<input type="checkbox"> I agree to MiniInTheBox.com <a href="/teamOfUse">Terms and Conditions</a>.
+                            *<input type="checkbox" id="register-checkbox"> I agree to MiniInTheBox.com <a href="/team-of-use">Terms and Conditions</a>.
                         </label>
                     </div>
                     <div class="pull-right">
-                        <a href="#" class="btn btn-primary btn-lg">Sign Up</a>
+                        <a href="#" class="btn btn-primary btn-lg" id="register-btn" disabled="true">Sign Up</a>
                     </div>
                 </div>
                 <div class="gap-30"></div>
@@ -77,13 +77,24 @@
 <!-- ========== CONTENT END ========== -->
 
 <script>
-//    $.ajax({
-//        type: 'POST',
-//        url: '/doregister',
-//        data: {email: $('#register_email').val(), password: $('#register_password').val()},
-//        dataType: 'json',
-//        success: function(data){
-//            console.log(data);
-//        }
-//    });
+    $('#register-checkbox').change(function () {
+        if(document.getElementById("register-checkbox").checked == true){
+            $('#register-btn').removeAttr('disabled');
+            $('#register-btn').on('click',function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/doregister',
+                    data: {email: $('#register_email').val(), password: $('#register_password').val()},
+                    dataType: 'json',
+                    success: function(data){
+                        console.log(data);
+                    }
+                });
+            })
+        }else {
+            $('#register-btn').off();
+            $('#register-btn').attr('disabled','true');
+        }
+    })
+
 </script>

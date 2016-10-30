@@ -157,7 +157,7 @@ nav#language-selector > ul > li {
 /* SLIDER
 ==================================================================*/
 
-#slider { margin-bottom: 50px; }
+/*#slider { margin-bottom: 50px; }*/
 #slider .carousel-inner img { width: 100%; }
 #slider i.fa {
 	font-size: 60px;
@@ -1266,6 +1266,9 @@ tr.cart-subtotal > * {
 		line-height: 60px;
 		height: 60px;
 	}
+	#top-nav{
+		width: 10000px;
+	}
 
 }
 
@@ -1511,4 +1514,17 @@ embed{
 .input-group-addon.search{
 	background: #fa6f96;
 	border: 0;
+}
+
+.top-nav-li:hover{
+	border-bottom: 3px solid #fa6f96;
+}
+.top-nav-li{
+	border-bottom: 3px solid transparent;
+}
+
+@media screen and (min-width: 768px){
+	.carousel-indicators {
+		bottom: -13px!important;
+	}
 }

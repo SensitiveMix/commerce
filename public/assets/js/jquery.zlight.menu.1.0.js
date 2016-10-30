@@ -5,7 +5,7 @@
             // height: '50px',
             subMenuHeight: '20px',
             fontSize: '13px',
-            subMenuWidth: '629px',
+            subMenuWidth: '294%',
             floating: 'left',
             transform: 'off',
             transformBreak: '100',
@@ -17,7 +17,7 @@
             mainColor: '#fff',
             secondColor: '#ffffff',
             fontColor: '#000',
-            activeFontColor: '#ff8208',
+            activeFontColor: '#f96e96',
             borderLightColor: '#444444',
             borderDarkColor: '#222222',
             dropBorderLightColor: '#444444',
@@ -69,7 +69,7 @@
             'border-right-color': this.op.borderLightColor
         });
         if (this.active) {
-            this.active.css('background-color', this.op.secondColor).children('a').css({'color': this.op.activeFontColor,'font-weight':'bolder'})
+            this.active.css('background-color', this.op.secondColor).children('a').css({'color': this.op.activeFontColor})
         }
         ;
         this.subMenu.css({
@@ -121,10 +121,10 @@
         });
         this.li.add(this.subli).on('mouseenter mouseleave.zmenuEnter', function (event) {
             if (event.type === 'mouseenter') {
-                $(this).css('background-color', ele.op.secondColor).children('a').css({'color': ele.op.activeFontColor,'font-weight':'bolder'});
+                $(this).css('background-color', ele.op.secondColor).children('a').css({'color': ele.op.activeFontColor});
             } else if (event.type === 'mouseleave') {
                 if ($(this).hasClass('zlight-active') === false) {
-                    $(this).css('background-color', 'transparent').children('a').css({'font-weight':100, 'color': ele.op.fontColor});
+                    $(this).css('background-color', 'transparent').children('a').css({'color': ele.op.fontColor});
                 }
             }
         });

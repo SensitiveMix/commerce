@@ -152,13 +152,13 @@ router.post('/doregister', function (req, res) {
     });
 });
 //前台注册须知界面
-router.get('/teamOfUse', function (req, res) {
+router.get('/team-of-use', function (req, res) {
     db.systems.findOne({}, function (err, system) {
         if (err) {
             res.send(404)
         } else {
             console.log(system);
-            res.render('assets/team_of_use', {
+            res.render('assets/team-of-use', {
                 system: system,
                 title: 'ECSell',
                 categories: categoryies,

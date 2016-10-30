@@ -39,13 +39,15 @@
         <!-- ========== TOP BAR START ========== -->
 
         <div id="top-bar">
-            <div class="container">
+            <div class="container" style="overflow-x: scroll">
 
                 <nav id="language-selector">
-                    <ul class="nav nav-pills">
-                        <li>English</li>
-                        <li>Germany</li>
-                    </ul>
+                    <a class="left-icon"><i class="icon-chevron-left"></i></a>
+                    <a class="right-icon"><i class="icon-chevron-right"></i></a>
+                    <!--<ul class="nav nav-pills">-->
+                    <!--<li>English</li>-->
+                    <!--<li>Germany</li>-->
+                    <!--</ul>-->
                 </nav>
                 <nav id="top-nav" role="navigation" class="navbar">
                     <div class="navbar-header">
@@ -57,11 +59,12 @@
                         </button>
                     </div>
                     <div class="collapse navbar-collapse top-nav">
-                        <ul class="nav navbar-nav">
-                            <li><a href="about-us.html">About</a></li>
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a href="my-account.html">LogIn / Register</a></li>
+                        <ul class="nav navbar-nav top-nav-ul">
+                            <% if(hotLabels.length != 0) { %>
+                            <% hotLabels.forEach(function (item) { %>
+                            <li class="top-nav-li"><a href="<%= item.belong_category %>"><%= item.label_name %></a></li>
+                            <% }) %>
+                            <% } %>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </nav>
@@ -74,6 +77,11 @@
         <!-- ========== KV =========== -->
         <script>
             $(function () {
+                if ($(window).width() >= 970) {
+                    var width = $('.top-nav-ul').width();
+                    $('#top-nav').css('width', width + 100);
+                }
+
                 $.ajax({
                     type: 'GET',
                     url: '/getHeadBanner',
@@ -120,7 +128,7 @@
         <!-- ========== MENU START ========== -->
         <nav id="main-nav">
             <div class="navbar">
-                <div class="container">
+                <div class="container nav-top">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".main-nav">
                             <span class="icon-bar"></span>
@@ -145,7 +153,8 @@
                             </li>
                             <li>
                                 <a href="index-1.html" class="dropdown-toggle">
-                                    <embed src="../assets/img/icon/warning.svg" type="image/svg+xml"/>
+                                    <embed style="width: 13px;" src="../assets/img/icon/warning.svg"
+                                           type="image/svg+xml"/>
                                     Customer Service </a>
                             </li>
                             <li>
@@ -156,23 +165,17 @@
                         </ul>
                     </div>
                     <div class="btn-group btn-group-justified">
-                        <div class="btn-group">
+                        <div class="btn-group" style="width: 0.6%;" id="menu-master">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Action <span class="caret"></span>
+                                SHOP ALL CATEGORIES
+                                <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                            </ul>
                         </div>
                         <div class="btn-group">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Search"/>
                                 <span class="input-group-addon search"><embed src="../assets/img/icon/search.svg"
-                                                                       type="image/svg+xml"/></span>
+                                                                              type="image/svg+xml"/></span>
                             </div>
                         </div>
                         <div class="btn-group btn-group-justified">
@@ -187,11 +190,86 @@
                             </nav>
                         </div>
                     </div>
+                    <div class="col-md-3 submenu" style="display: none;padding: 0;">
+                        <nav id="zlight-nav" style="margin-bottom: 18px">
+                            <ul id="zlight-main-nav" style="border:0;width:100%;">
+                                <% if(categories.length != 0){ %>
+                                <% categories.forEach(function (item) { %>
+                                <li class="zlight-dropdown" style="width: 100%"><a href="<%= item.firstUrl %>"
+                                                                                   style="border: 0px"><%= item.firstCategory %>
+                                        (<%= item.firstCount %>)
+                                        <i class="icon-angle-right"></i></a>
+                                    <ul class="zlight-submenu" style="top: 0;left: 100%;background: #fff;">
+                                        <% if(item.secondCategory.length != 0) { %>
+                                        <% item.secondCategory.forEach(function(secondItem) { %>
+                                        <li class="zlight-dropdown">
+                                            <a href="<%= secondItem.secondUrl %>"><%= secondItem.secondTitle %>
+                                                (<%= secondItem.secondCount %>)</a>
+                                            <ul class="zlight-dropdown">
+                                                <% if(secondItem.thirdTitles.length != 0) { %>
+                                                <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
+                                                <li class="zlight-dropdown">
+                                                    <a href="<%= thirdItem.thirdUrl %>">
+                                                        <div><%= thirdItem.thirdTitle %></div>
+                                                    </a>
+                                                </li>
+                                                <% }) %>
+                                                <% } %>
+                                            </ul>
+                                        </li>
+                                        <% }) %>
+                                        <% } %>
+                                    </ul>
+                                </li>
+                                <% }) %>
 
+                                <% } %>
+                            </ul>
+                            <!-- MOBILE NAV -->
+                            <div id="zlight-mobile-nav"><span>Menu</span> <i class="icon-reorder zlight-icon"></i>
+                                <select>
+                                </select>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="col-md-9 slide-fa" style="display:none;padding: 0">
+                        <section id="slider">
+                            <div id="bs-carousel" class="carousel slide" data-ride="carousel">
+                                <!-- Indicators -->
+                                <ol class="carousel-indicators">
+                                </ol>
+                                <!-- Wrapper for slides -->
+                                <div class="carousel-inner">
+                                </div>
+
+                                <!-- Controls -->
+                                <a class="left carousel-control" href="#bs-carousel" data-slide="prev">
+                                    <i class="fa fa-angle-left"></i>
+                                    <!--span class="glyphicon glyphicon-chevron-left"></span-->
+                                </a>
+                                <a class="right carousel-control" href="#bs-carousel" data-slide="next">
+                                    <i class="fa fa-angle-right"></i>
+                                    <!--span class="glyphicon glyphicon-chevron-right"></span-->
+                                </a>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
         </nav>
-
+<script>
+    $(function () {
+        $('#menu-master').on('mouseover',function () {
+            $('.submenu').show();
+            $('.submenu').css('position','absolute');
+            $('#zlight-nav').zlightMenu();
+        })
+        $('.nav-top').on('mouseleave',function () {
+            $('#slider-menu').hide();
+            $('.submenu').hide();
+        })
+    })
+</script>
     </header>
     <%- body %>
     <!-- Content Wrapper. Contains page content -->
@@ -356,6 +434,7 @@
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <!--<script src="../assets/js/jquery.min.js"></script>-->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../assets/js/jquery.zlight.menu.1.0.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 <script src="../assets/js/owl.carousel.min.js"></script>
 <script src="../assets/js/jquery.jpanelmenu.min.js"></script>
