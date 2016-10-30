@@ -247,7 +247,7 @@ router.post('/doChangeConditions', function (req, res) {
 router.get('/accessory_manage', checkLogin);
 router.get('/accessory_manage', function (req, res, next) {
     console.log("类目管理" + new Date());
-    res.render('admin/accessory_manage', {username: u.nick_name});
+    res.render('admin/accessory_manage', {upload: [], username: u.nick_name});
     // db.users.find({}, function (err, result) {
     //     if (err) throw  err;
     //
@@ -517,8 +517,8 @@ router.post('/uploadImage', upload.array("file"), function (req, res, next) {
 
         }
         console.log(uploadArr);
-        res.render('admin/upload_goods', {upload: uploadArr, username: u.nick_name});
-        // res.send("上传的图片成功...");
+        // res.render('admin/upload_goods', {upload: uploadArr, username: u.nick_name});
+        res.render('admin/accessory_manage', {upload: uploadArr, username: u.nick_name});
     }
 });
 

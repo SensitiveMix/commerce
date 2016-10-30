@@ -24,7 +24,7 @@
                     <thead>
                     <tr class="head_table">
                         <th>分类名称</th>
-                        <!--<th>分类图片</th>-->
+                        <th>分类图片</th>
                         <th>默认展开</th>
                         <th>创建时间</th>
                         <th>操作</th>
@@ -32,12 +32,21 @@
                     </thead>
                     <tbody>
                     <tr class="0_">
-                        <td><i class="fa fa-caret-down pull-left"></i><i style="display: none"
-                                                                         class="fa fa-caret-right pull-left"></i>&nbsp;<input
-                                    class="one" type="text"></td>
-                        <td><img class="fa-toggle-on" src="/images/toggle-on.svg" onclick="toggle('off')"
-                                 style="display: none" alt=""><img class="fa-toggle-off" onclick="toggle('on')"
-                                                                   src="/images/toggle-off.svg" alt="">
+                        <td>
+                            <i class="fa fa-caret-down pull-left"></i>
+                            <i style="display: none" class="fa fa-caret-right pull-left"></i>&nbsp;
+                            <input class="one" type="text">
+                        </td>
+                        <td>
+                            <form enctype="multipart/form-data" method="post" action="uploadImage">
+                                <input type="file" id="file" name="file" multiple/><br/>
+                                <input type="submit" class="btn btn-info" value="上传图片"/>
+                            </form>
+                        </td>
+                        <td>
+                            <img class="fa-toggle-on" src="/images/toggle-on.svg" onclick="toggle('off')"
+                                 style="display: none" alt="">
+                            <img class="fa-toggle-off" onclick="toggle('on')" src="/images/toggle-off.svg" alt="">
                         </td>
                         <td></td>
                         <td>
@@ -48,6 +57,7 @@
                         <td>&nbsp;<img src="/images/arrow.svg" alt="">&nbsp;
                             <button class="btn btn-info add">添加二级子类</button>
                         </td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -111,9 +121,11 @@
             CategoryALL.push(getCategory(n))
         }
 
+        var timeStamps = (new Date().getTime() / 1000).toFixed();
         var Category = {
             firstCategory: FirstCategory,
-            firstUrl: '#',
+            firstTimeStamp: timeStamps,
+            firstUrl: FirstCategory + '_' + timeStamps,
             firstCount: 0,
             secondCategory: JSON.stringify(CategoryALL)
         }
@@ -153,8 +165,10 @@
         })
         twoArray.forEach(function (value, index) {
             if (index > 0 && index < twoArray.length - 1) {
+                var timeStamp = (new Date().getTime() / 1000).toFixed();
                 var third = {
-                    thirdUrl: '#',
+                    thirdTimeStamp: timeStamp,
+                    thirdUrl: value + '_' + timeStamp,
                     thirdTitle: value
                 }
                 threeArray.push(third);
@@ -163,9 +177,11 @@
 
         var second_Category = twoArray[0];
         var three_Category = threeArray;
+        var timeStamps = (new Date().getTime() / 1000).toFixed();
         var totalGate = {
             secondTitle: second_Category,
-            secondUrl: '#',
+            secondTimeStamp: timeStamps,
+            secondUrl: second_Category + '_' + timeStamps,
             secondCount: 0,
             thirdTitles: three_Category
         }
@@ -256,7 +272,7 @@
                     var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
                     //要添加的行的id
                     var addRowID = currentRowID + '_' + deleteId;
-                    var str = '<tr class="' + addRowID + '"><td><img  style="margin-left: 40px" src="/images/jiao.svg" alt="">&nbsp;<input type="text"></td><td></td> <td>' + date + '</td> <td> <button onclick="deleteThreeRow (this)" class="btn btn-danger">删除</button> </td></tr>';
+                    var str = '<tr class="' + addRowID + '"><td><img  style="margin-left: 40px" src="/images/jiao.svg" alt="">&nbsp;<input type="text"></td><td><form enctype="multipart/form-data" method="post" action="uploadImage"> <input type="file" id="file" name="file" multiple/><br/> <input type="submit" class="btn btn-info" value="上传图片"/> </form></td><td></td> <td>' + date + '</td> <td> <button onclick="deleteThreeRow (this)" class="btn btn-danger">删除</button> </td></tr>';
                     //当前行之后插入一行
                     currentRow.after(str);
                 }
@@ -284,7 +300,7 @@
                 var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
                 var cla = count + '_' + " " + 'cateGory';
                 var claBTN = count + '_btn';
-                $(".xyz").before('<tr class="' + cla + '"><td><img style="margin-left: 20px" src="/images/jiao.svg" alt="">&nbsp;<input type="text">&nbsp;<img class="' + cla + '" src="/images/arrow.svg" alt="">&nbsp; <button onclick="add(' + count + ')" class="btn btn-info add ' + cla + '">添加三级子类</button> </td><td> </td> <td>' + date + '</td> <td> <button onclick="deleteTwo(' + count + ')" class="btn btn-danger ' + cla + '">删除</button> </td> </tr><tr class="' + claBTN + '"><td></td><td><td></td></td><td></td><td></td></tr>');
+                $(".xyz").before('<tr class="' + cla + '"><td><img style="margin-left: 20px" src="/images/jiao.svg" alt="">&nbsp;<input type="text">&nbsp;<img class="' + cla + '" src="/images/arrow.svg" alt="">&nbsp; <button onclick="add(' + count + ')" class="btn btn-info add ' + cla + '">添加三级子类</button> </td><td>  <form enctype="multipart/form-data" method="post" action="uploadImage"> <input type="file" id="file" name="file" multiple/><br/> <input type="submit" class="btn btn-info" value="上传图片"/> </form></td><td> </td> <td>' + date + '</td> <td> <button onclick="deleteTwo(' + count + ')" class="btn btn-danger ' + cla + '">删除</button> </td> </tr><tr class="' + claBTN + '"></tr>');
             }
         });
     });
