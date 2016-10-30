@@ -219,9 +219,14 @@ router.post('/saveHeadBanners', function (req, res) {
 });
 
 //上传产品
-router.get('/upload', checkLogin);
+// router.get('/upload', checkLogin);
 router.get('/upload', function (req, res) {
-    res.render('admin/upload_goods', {username: u.nick_name, upload: []});
+    db.categorys.find({}, function (err, result) {
+        if (err) res.send('404');
+        console.log(result);
+        res.render('admin/upload_goods', {username: u.nick_name, upload: [], category: result});
+    });
+
 });
 
 //更改注册须知
