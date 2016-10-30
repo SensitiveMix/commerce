@@ -28,7 +28,14 @@ structure :
 调用方式:
 ```bash
 POST      : '/doregister'
-Response  : String('success'||'failed')
+Response  : {error_msg: [], info: "", result: "success", code: ""}
+
+状态码 | 状态值
+------|-------------
+2000  | 注册成功
+2001  | 用户已存在
+2002  | 服务器错误
+
 params :
   +  email       :   邮箱地址当做用户名
   +  password    :   注册密码
@@ -39,7 +46,14 @@ params :
 调用方式:
 ```bash
 POST      : '/dologin'
-Response  : user(JSON) && status('ok' or 'fail')
+Response  :  Response  : {error_msg: [], info: user, result: "success", code: ""}
+
+ 状态码 | 状态值
+ ------|-------------
+ 1000  | 登录成功
+ 1001  | 账号或密码错误
+ 1002  | 服务器错误
+
 USE       : <%= user% >  <%= status%>
 USER structure:
   +   name: String
