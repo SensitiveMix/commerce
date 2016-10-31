@@ -18,9 +18,26 @@ describe('upload temporyary testing', function () {
             .end(function (err, res) {
                 if (err) throw err;
                 console.log(res.text)
-                res.text.should.not.be.empty;
+                should.exist(res.text);
                 done();
             });
     });
+
+    it('uploadTemporyary should be return failed', function (done) {
+        request(app)
+            .post('/admin/uploadTemporary')
+            .send({
+                firstCategory: '',
+                secondCategory: '456',
+                thirdCategory: '567'
+            })
+            .end(function (err, res) {
+                if (err) throw err;
+                console.log(res.text)
+                should.exist(res.text);
+                done();
+            });
+    });
+
 
 });

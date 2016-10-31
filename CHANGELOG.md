@@ -51,6 +51,11 @@ views/services/
 *  更改三级类目的结构
 *  添加uploadHistory,uploadTemporary两张表
 
+##  v0.0.10
+*  后台上传类目多语言支持
+
+##  v0.0.11
+*  添加保存并新增类目接口
 
 
 
