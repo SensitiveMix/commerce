@@ -31,7 +31,7 @@ router.get('/servicesLogin', function (req, res) {
 //客服后台登陆处理
 var checkLogin = function (req, res, next) {
     if (u.length == 0) {
-        res.render("404");
+        res.render('services/404', {username: u.nick_name});
     }
     next();
 };

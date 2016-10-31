@@ -72,6 +72,10 @@ router.get('/', function (req, res) {
     res.render('admin/login_1', {title: '电商网站后台'});
 });
 
+router.get('', function (req, res) {
+    res.render('admin/login_1', {title: '电商网站后台'});
+});
+
 //后台登录界面
 router.get('/adminlogin', function (req, res) {
     res.render('admin/login_1', {title: '电商网站后台'});
@@ -81,7 +85,7 @@ var checkLogin = function (req, res, next) {
     console.log(req);
     if (req.body.status != 'test') {
         if (u.length == 0) {
-            res.render("404");
+            res.render('admin/404',{username: u.nick_name});
         }
     }
     next();

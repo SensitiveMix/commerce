@@ -12,35 +12,7 @@
     <!-- form start -->
 
     <div><h4>Terms and Conditions</h4></div>
-    <div class="box-body">
-        <div class="form-group">
-            <script type="text/plain" id="myEditor" style="width:100%;height:auto;">
-        <p>这里我可以写一些输入提示</p>
 
-
-            </script>
-            <script type="text/javascript">
-                var um = UM.getEditor('myEditor', {
-                    //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
-                    toolbar: ['fullscreen source undo redo bold italic underline'],
-                    //focus时自动清空初始化时的内容
-                    autoClearinitialContent: true,
-                    //关闭字数统计
-                    wordCount: false,
-                    //关闭elementPath
-                    elementPathEnabled: false,
-                    //默认的编辑区域高度
-                    initialFrameHeight: 500
-                    //更多其他参数，请参考umeditor.config.js中的配置项
-                });
-                // um.insertHtml("<%= sysset.lesson %>");
-                um.setContent('<%- sysset.lesson %>');
-            </script>
-        </div>
-        <div class="box-footer">
-            <button id="updateName" class="btn btn-info pull-right col-sm-1" type="button">提 交</button>
-        </div>
-    </div>
     <!-- /.box-body -->
 
     <!-- /.box-footer -->
