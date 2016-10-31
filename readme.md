@@ -1,6 +1,6 @@
 # e-commerce-platform
 
-[![Build Status](https://travis-ci.org/greengerong/qing.png?branch=master)](https://travis-ci.org/greengerong/qing)
+[![Build Status](https://travis-ci.org/sunNode/commerce.svg?branch=master)](https://travis-ci.org/greengerong/qing)
 
 ## Installation
     git clone https://bitbucket.org/wechatpla/master.git

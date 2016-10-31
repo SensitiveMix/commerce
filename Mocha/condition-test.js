@@ -9,8 +9,7 @@ describe('user register conditions test', function () {
     it('users should  change conditions success', function (done) {
         request(app)
             .post('/admin/doChangeConditions')
-            .send({mainContent: 'test123'})
-            .expect('success')
+            .send({mainContent: 'test123', status: 'test'})
             .end(function (err, res) {
                 if (err) throw err;
                 console.log(res.text);

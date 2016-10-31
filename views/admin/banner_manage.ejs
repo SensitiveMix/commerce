@@ -76,7 +76,7 @@
             var para = {
                 type: 'carousel',
                 image_url: $("input[name=room_logo]").val(),
-                upload_time: new Date().getTime(),
+                upload_time: (new Date().getTime() / 1000).toFixed(),
                 status: 'New'
 
             };

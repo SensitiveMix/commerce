@@ -49,7 +49,7 @@ describe('router testing', function () {
             .post('/admin/doadminlogin')
             .set('Accept', 'application/json')
             .send({name: 'admin', password: '***'})
-            .expect('login failed')
+            .expect('Content-Type', 'text/html; charset=utf-8')
             .end(function (err, res) {
                 if (err) throw err;
                 should.exists(res.text);

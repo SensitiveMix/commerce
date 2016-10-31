@@ -28,7 +28,14 @@ structure :
 调用方式:
 ```bash
 POST      : '/doregister'
-Response  : String('success'||'failed')
+Response  : {error_msg: [], info: "", result: "success", code: ""}
+
+状态码 | 状态值
+------|-------------
+2000  | 注册成功
+2001  | 用户已存在
+2002  | 服务器错误
+
 params :
   +  email       :   邮箱地址当做用户名
   +  password    :   注册密码
@@ -39,8 +46,53 @@ params :
 调用方式:
 ```bash
 POST      : '/dologin'
-Response  : String('success'||'failed')
+Response  :  Response  : {error_msg: [], info: user, result: "success", code: ""}
+
+ 状态码 | 状态值
+ ------|-------------
+ 1000  | 登录成功
+ 1001  | 账号或密码错误
+ 1002  | 服务器错误
+
+USE       : <%= user% >  <%= status%>
+USER structure:
+  +   name: String
+  +   password: String
+  +   mobile: String
+  +   nick_name: String
+  +   level: String
+  +   levelName: String
+  +   userType: String
+  +   registerTime: Number
 params :
   +  name       :    即为邮箱地址
   +  password    :   注册密码
 ```
+
+## 首页类目接口
+调用方式:
+```bash
+URL      : '/'
+Response  : categories []
+USE       : <%= categories% >  PS(forEach)
+categories structure:
+  +   firstCategory: String,
+  +   secondCategory: [{secondTitle:String,thirdTitle:[]}]
+  firstCategory: 一级类目
+  secondTitle  : 二级类目(多个)
+  thirdTitle   : 三级类目(多个)
+```
+
+## 首页最热标签接口
+调用方式:
+```bash
+URL      : '/'
+Response  : hotLabels []
+USE       : <%= hotLabels% >  PS(forEach)
+categories structure:
+  +   label_name: String,
+  +   color_name: String,
+  +   belong_category:String,
+  +   add_time:Number
+```
+

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha Mocha/ --bail",
+    "test": "mocha -t 20000 Mocha/ --bail",
     "test-cov": "node node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha  -- Mocha/"
   },
   "dependencies": {
@@ -29,9 +29,13 @@
     "moment": "^2.15.1",
     "mongoose": "^4.6.4",
     "morgan": "~1.7.0",
+    "multer": "^1.2.0",
     "serve-favicon": "~2.3.0",
     "superagent": "^2.3.0",
-    "supertest": "^2.0.0"
+    "supertest": "^2.0.0",
+    "xls-to-json-lc": "^0.3.3",
+    "xlsx": "^0.8.0",
+    "xlsx-to-json-lc": "^0.2.5"
   },
   "devDependencies": {
     "chai": "^3.5.0",

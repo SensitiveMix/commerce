@@ -2,32 +2,39 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <section id="slider">
-            <div id="bs-carousel" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#bs-carousel" data-slide-to="1"></li>
-                    <li data-target="#bs-carousel" data-slide-to="2"></li>
-                </ol>
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner">
-                    <div class="item active"><a href="#"><img src="http://placehold.it/1600x550" alt=""></a></div>
-                    <div class="item"><a href="#"><img src="http://placehold.it/1600x550" alt=""></a></div>
-                    <div class="item"><a href="#"><img src="http://placehold.it/1600x550" alt=""></a></div>
-                </div>
 
-                <!-- Controls -->
-                <a class="left carousel-control" href="#bs-carousel" data-slide="prev">
-                    <i class="fa fa-angle-left"></i>
-                    <!--span class="glyphicon glyphicon-chevron-left"></span-->
-                </a>
-                <a class="right carousel-control" href="#bs-carousel" data-slide="next">
-                    <i class="fa fa-angle-right"></i>
-                    <!--span class="glyphicon glyphicon-chevron-right"></span-->
-                </a>
-            </div>
-        </section>
+        <script>
+            $(function () {
+                $('#menu-master').off();
+                $('.nav-top').off();
+                $('.submenu').show();
+                $('.slide-fa').show();
+                $('.caret').remove();
+                $.ajax({
+                    type: 'GET',
+                    url: '/getBanner',
+                    data: {},
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        if (data.length != 0) {
+                            data.forEach(function (item, index) {
+                                var mybannerHtml = '<div class="item"><a href="#"><img src="' + item.image_url + '" alt=""></a></div>';
+                                $('.carousel-inner').append(mybannerHtml);
+                                var olBanner = '<li data-target="#bs-carousel" data-slide-to="' + index + '"></li>';
+                                $('.carousel-indicators').append(olBanner);
+                            })
+
+                            $('.carousel-inner .item').eq(0).addClass('active');
+                            $('.carousel-indicators li').eq(0).addClass('active');
+                        }
+                    },
+                    complete: function () {
+                        $('.carousel').carousel();
+                    }
+                });
+            })
+        </script>
 
         <!-- ========== SLIDER END ========== -->
 
@@ -333,4 +340,9 @@
 
 </div>
 
+<script>
+    $(function () {
+        $('#zlight-nav').zlightMenu();
+    });
+</script>
 <!-- ========== CONTENT END ========== -->

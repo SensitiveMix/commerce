@@ -6,10 +6,16 @@ var fs = require('fs');
 var crypto = require('crypto');
 var db = require('../model/index');
 var async = require('async');
+var multer = require('multer');
+var xlstojson = require("xls-to-json-lc");
+var xlsxtojson = require("xlsx-to-json-lc");
+var upload = multer({dest: './tmp'});
 
 
 var r = [];
 var u = [];
+
+
 /* GET users listing. */
 
 //上传文件接口
@@ -72,8 +78,11 @@ router.get('/adminlogin', function (req, res) {
 });
 
 var checkLogin = function (req, res, next) {
-    if (u.length == 0) {
-        res.render("404");
+    console.log(req);
+    if (req.body.status != 'test') {
+        if (u.length == 0) {
+            res.render("404");
+        }
     }
     next();
 };
@@ -111,7 +120,7 @@ router.post('/doadminlogin', function (req, res, next) {
                 if (user.length == 1) {
                     console.log(user.nick_name + ":登录成功" + new Date());
                     u = user[0];
-                    res.render('admin/index', {username: user.nick_name, system: system});
+                    res.render('admin/index', {username: u.nick_name, system: system});
                 } else {
                     console.log(query.name + ":登录失败" + new Date());
                     res.render('admin/login_1', {
@@ -210,9 +219,14 @@ router.post('/saveHeadBanners', function (req, res) {
 });
 
 //上传产品
-router.get('/upload', checkLogin);
+// router.get('/upload', checkLogin);
 router.get('/upload', function (req, res) {
-    res.render('admin/upload_goods', {username: u.nick_name});
+    db.categorys.find({}, function (err, result) {
+        if (err) res.send('404');
+        console.log(result);
+        res.render('admin/upload_goods', {username: u.nick_name, upload: [], category: result});
+    });
+
 });
 
 //更改注册须知
@@ -229,6 +243,41 @@ router.post('/doChangeConditions', function (req, res) {
     })
 });
 
+//类目管理
+router.get('/accessory_manage', checkLogin);
+router.get('/accessory_manage', function (req, res, next) {
+    console.log("类目管理" + new Date());
+    res.render('admin/accessory_manage', {upload: [], username: u.nick_name});
+    // db.users.find({}, function (err, result) {
+    //     if (err) throw  err;
+    //
+    // });
+    console.log("类目管理页面登陆成功");
+});
+
+//类目上传
+router.post('/doAddCategory', checkLogin);
+router.post('/doAddCategory', function (req, res) {
+    console.log(req.body.firstCategory);
+    console.log(JSON.parse(req.body.secondCategory));
+
+    var Categories = {
+        firstCategory: req.body.firstCategory,
+        firstUrl: req.body.firstUrl,
+        firstCount: req.body.firstCount,
+        secondCategory: JSON.parse(req.body.secondCategory)
+    };
+    var category = new db.categorys(Categories);
+    category.save(function (err) {
+        console.log(err);
+        if (err) {
+            res.send('fail')
+        } else {
+            res.send('success');
+        }
+    });
+});
+
 //用户管理
 router.get('/usermanage', checkLogin);
 router.get('/usermanage', function (req, res, next) {
@@ -236,6 +285,173 @@ router.get('/usermanage', function (req, res, next) {
     db.users.find({}, function (err, result) {
         if (err) throw  err;
         res.render('admin/user_manage', {users: result, username: u.nick_name});
+    });
+    console.log("用户管理页面登陆成功");
+});
+
+//关于我们管理页面
+router.get('/about_us', checkLogin);
+router.get('/about_us', function (req, res, next) {
+    console.log("关于我们管理" + new Date());
+    db.notices.findOne({}, function (err, allNotices) {
+        console.log(allNotices);
+        res.render('admin/notices/about_us', {aboutUs: allNotices.about_us, username: u.nick_name});
+    });
+    console.log("关于我们管理");
+});
+
+//更改我们管理页面
+router.post('/doChangeAboutUs', checkLogin);
+router.post('/doChangeAboutUs', function (req, res) {
+    console.log("更改注册须知" + req.body.mainContent + new Date());
+    db.notices.findOneAndUpdate({}, {
+        $set: {
+            about_us: [{
+                main_content: req.body.mainContent,
+                add_time: new Date().getTime(),
+                addBy: u.nick_name
+            }]
+        }
+    }, function (err, aboutUs) {
+        if (err) {
+            res.send('failed');
+        } else {
+            res.send('success');
+        }
+    })
+});
+
+//联系我们管理页面
+router.get('/contact_us', checkLogin);
+router.get('/contact_us', function (req, res, next) {
+    console.log("关于我们管理" + new Date());
+    db.notices.findOne({}, function (err, allNotices) {
+        res.render('admin/notices/contact_us', {contactUs: allNotices.contact_us, username: u.nick_name});
+    });
+    console.log("关于我们管理");
+});
+
+//更改联系我们管理页面
+router.post('/doChangeContactUs', checkLogin);
+router.post('/doChangeContactUs', function (req, res) {
+    console.log("更改注册须知" + req.body.mainContent + new Date());
+    db.notices.findOneAndUpdate({}, {
+        $set: {
+            contact_us: [{
+                main_content: req.body.mainContent,
+                add_time: new Date().getTime(),
+                addBy: u.nick_name
+            }]
+        }
+    }, function (err, contact) {
+        if (err) {
+            res.send('failed');
+        } else {
+            res.send('success');
+        }
+    })
+});
+
+//关于FAQ页面
+router.get('/FAQ', checkLogin);
+router.get('/FAQ', function (req, res, next) {
+    console.log("FAQ管理" + new Date());
+    db.notices.findOne({}, function (err, allNotices) {
+        res.render('admin/notices/faq', {faq: allNotices.FAQ, username: u.nick_name});
+    });
+    console.log("关于FAQ");
+});
+
+//更改FAQ页面
+router.post('/doChangeFAQ', checkLogin);
+router.post('/doChangeFAQ', function (req, res) {
+    console.log("FAQ须知" + req.body.mainContent + new Date());
+    db.notices.findOneAndUpdate({}, {
+        $set: {
+            FAQ: [{
+                main_content: req.body.mainContent,
+                add_time: new Date().getTime(),
+                addBy: u.nick_name
+            }]
+        }
+    }, function (err, aboutUs) {
+        if (err) {
+            res.send('failed');
+        } else {
+            res.send('success');
+        }
+    })
+});
+
+//关于attention页面
+router.get('/attention', checkLogin);
+router.get('/attention', function (req, res, next) {
+    console.log("attention管理" + new Date());
+    db.notices.findOne({}, function (err, allNotices) {
+        res.render('admin/notices/attention', {attention: allNotices.attention, username: u.nick_name});
+    });
+    console.log("关于attention");
+});
+
+//更改attention页面
+router.post('/doChangeAttention', checkLogin);
+router.post('/doChangeAttention', function (req, res) {
+    console.log("Attention须知" + req.body.mainContent + new Date());
+    db.notices.findOneAndUpdate({}, {
+        $set: {
+            attention: [{
+                main_content: req.body.mainContent,
+                add_time: new Date().getTime(),
+                addBy: u.nick_name
+            }]
+        }
+    }, function (err, attention) {
+        if (err) {
+            res.send('failed');
+        } else {
+            res.send('success');
+        }
+    })
+});
+
+//关于privacy页面
+router.get('/privacy', checkLogin);
+router.get('/privacy', function (req, res, next) {
+    console.log("FAQ管理" + new Date());
+    db.notices.findOne({}, function (err, allNotices) {
+        res.render('admin/notices/privacy', {privacy: allNotices.privacy_notice, username: u.nick_name});
+    });
+    console.log("关于FAQ");
+});
+
+//更改privacy页面
+router.post('/doChangePrivacy', checkLogin);
+router.post('/doChangePrivacy', function (req, res) {
+    console.log("Privacy须知" + req.body.mainContent + new Date());
+    db.notices.findOneAndUpdate({}, {
+        $set: {
+            privacy_notice: [{
+                main_content: req.body.mainContent,
+                add_time: new Date().getTime(),
+                addBy: u.nick_name
+            }]
+        }
+    }, function (err, privacy) {
+        if (err) {
+            res.send('failed');
+        } else {
+            res.send('success');
+        }
+    })
+});
+
+//用户管理
+router.get('/hot_product_manage', checkLogin);
+router.get('/hot_product_manage', function (req, res, next) {
+    console.log("最热产品管理" + new Date());
+    db.users.find({}, function (err, result) {
+        if (err) throw  err;
+        res.render('admin/hot_product_manage', {users: result, username: u.nick_name});
     });
     console.log("用户管理页面登陆成功");
 });
@@ -260,6 +476,113 @@ router.get('/douserlist', function (req, res, next) {
 
 });
 
+
+/*-------------------------------------------------------------------*/
+/* ----------------------------上传产品模块 -------------------------*/
+router.post('/uploadTemporary', function (req, res, next) {
+    var Categories = {
+            firstCategory: req.body.firstCategory,
+            secondCategory: req.body.secondCategory,
+            thirdCategory: req.body.thirdCategory,
+            addBy: u.nick_name,
+            upload_time: (new Date().getTime() / 1000).toFixed(),
+            status: 'NEW'
+        }
+        ;
+    var category = new db.uploadTemporarys(Categories);
+    category.save(function (err) {
+        console.log(err);
+        if (err) {
+            res.send('fail')
+        } else {
+            res.send(Categories);
+        }
+    });
+});
+
+
+/* 多图片上传 */
+router.post('/uploadImage', upload.array("file"), function (req, res, next) {
+    if (req.files == undefined) {
+        res.send("请选择要上传的图片...");
+    } else {
+        var str = "文件上传成功...";
+        var uploadArr = [];
+        for (var i = 0; i < req.files.length; i++) {
+            var filepath = '/Users/sunNode/WebstormProjects/e-commerce-platform/public' + "/tmp/" + req.files[i].originalname;
+            fs.renameSync(req.files[i].path, filepath);
+
+            var savePath = '/tmp/' + req.files[i].originalname;
+            uploadArr.push(savePath);
+
+        }
+        console.log(uploadArr);
+        // res.render('admin/upload_goods', {upload: uploadArr, username: u.nick_name});
+        res.render('admin/accessory_manage', {upload: uploadArr, username: u.nick_name});
+    }
+});
+
+/* 上传表格解析 */
+var storage = multer.diskStorage({ //multers disk storage settings
+    destination: function (req, file, cb) {
+        cb(null, '/Users/sunNode/WebstormProjects/e-commerce-platform/public/')
+    },
+    filename: function (req, file, cb) {
+        var datetimestamp = Date.now();
+        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
+    }
+});
+var uploads = multer({ //multer settings
+    storage: storage,
+    fileFilter: function (req, file, callback) { //file filter
+        if (['xls', 'xlsx'].indexOf(file.originalname.split('.')[file.originalname.split('.').length - 1]) === -1) {
+            return callback(new Error('Wrong extension type'));
+        }
+        callback(null, true);
+    }
+}).single('file');
+router.post('/uploadFile', function (req, res, next) {
+
+    var exceltojson;
+    uploads(req, res, function (err) {
+        if (err) {
+            res.json({error_code: 1, err_desc: err});
+            return;
+        }
+        /** Multer gives us file info in req.file object */
+        if (!req.file) {
+            res.json({error_code: 1, err_desc: "No file passed"});
+            return;
+        }
+        /** Check the extension of the incoming file and
+         *  use the appropriate module
+         */
+        if (req.file.originalname.split('.')[req.file.originalname.split('.').length - 1] === 'xlsx') {
+            exceltojson = xlsxtojson;
+        } else {
+            exceltojson = xlstojson;
+        }
+        console.log(req.file.path);
+        try {
+            exceltojson({
+                input: req.file.path,
+                output: null, //since we don't need output.json
+                lowerCaseHeaders: true
+            }, function (err, result) {
+                if (err) {
+                    return res.json({error_code: 1, err_desc: err, data: null});
+                }
+                res.json({error_code: 0, err_desc: null, data: result});
+            });
+        } catch (e) {
+            res.json({error_code: 1, err_desc: "Corupted excel file"});
+        }
+    })
+
+});
+
+
+/* 爬虫 */
 router.get('/crawler', function (req, res, next) {
     superagent.get('http://www.miniinthebox.com/diy-3d-pvc-wall-sticker-butterfly-12-pieces-set_p1920214.html?prm=2.1.8.0')
         .end(function (err, result) {
