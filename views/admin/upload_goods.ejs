@@ -1,6 +1,12 @@
 <% layout('master.ejs') %>
 
+<script src="/assets/js/category.js"></script>
 <style>
+    .categoryselectlist li.current, .categoryselectlist li.hover {
+        color: #fff;
+        background-color: #316ac5;
+    }
+
     ul {
         list-style: none;
         padding-left: 2px;
@@ -210,9 +216,82 @@
 
     .selected-category .chouseed-catrgory span.cate-value {
         float: left;
-        width: 830px;
     }
+
+    .selected-category .chouseed-catrgory span.cate-value b {
+        display: inline-block;
+        font-weight: 300;
+        color: #c34802;
+    }
+
+    .selected-category .chouseed-catrgory span.cate-value span {
+        padding: 0 6px;
+        color: #000;
+        font-family: Comic Sans MS;
+    }
+
 </style>
+<script>
+    $(function () {
+        $('#catagory0 li[data-crosscate="0"]').click(function () {
+            $('#show_category_path').empty();
+            $('#catagory0 li[data-crosscate="0"]').removeClass('current');
+            $(this).addClass('current');
+            var firstName = $('#catagory0 li[data-crosscate="0"].current').attr('title');
+            var firstNameTag = '<b>' + firstName + '</b><span class="color4">（请选择下级类目）</span>';
+            $('#show_category_path').append(firstNameTag);
+            <% if (category.length != 0){ %>
+            <% category.forEach(function (item) { %>
+            if ('<%= item.firstCategory %>' == firstName) {
+                if (<%= item.secondCategory.length %> !=0)
+                {
+                    $('#div_catagory1').addClass('addscroll');
+                    $('#catagory1').empty();
+                    <% item.secondCategory.forEach(function (secondItem) { %>
+                    var mysecondTitle = '<li data-crosscate="0" title="<%= secondItem.secondTitle %>" data-leaf="0" data-valid="1" data-param="catePubId=135005" data-en="<%= secondItem.secondTitle %>" data-cn="<%= secondItem.secondTitle %>"><%= secondItem.secondTitle %></li>'
+                    $('#catagory1').append(mysecondTitle);
+                    <% }) %>
+                }
+            }
+            <% }) %>
+            <% } %>
+
+            $('#catagory1 li[data-crosscate="0"]').on('click',function () {
+                $('#show_category_path span').eq(0).remove();
+                $('#show_category_path b').eq(1).remove();
+                $('#catagory1 li[data-crosscate="0"]').removeClass('current');
+                $(this).addClass('current');
+                var secondName = $(this).attr('title');
+                var secondNameTag = '<span>>></span><b>' + secondName + '</b>';
+                $('#show_category_path').append(secondNameTag);
+
+                <% if (category.length != 0){ %>
+                <% category.forEach(function (item) { %>
+                if (<%= item.secondCategory.length %> !=0)
+                {
+                    <% item.secondCategory.forEach(function (secondItem) { %>
+                    if('<%=secondItem.secondTitle %>' == secondName)
+                    {
+                        if(<%= secondItem.thirdTitles.length%> != 0 ){
+                        $('#div_catagory2').addClass('addscroll');
+                        $('#catagory2').empty();
+                        <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
+                        var mythirdTitle = '<li data-crosscate="0" title="<%= thirdItem.secondTitle %>" data-remark="读取3.5英寸软盘的设备可以读写1.44MB的3.5英寸软盘" data-leaf="1" data-valid="1" data-param="catePubId=009001007" data-en="Floppy Drives" data-cn="<%= thirdItem.secondTitle %>"><%= thirdItem.secondTitle %></li>'
+                        $('#catagory2').append(mythirdTitle);
+                        <% }) %>
+                    }
+                    }
+                    <% }) %>
+                }
+
+                <% }) %>
+                <% } %>
+            })
+
+        })
+
+    })
+</script>
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">产品上传</h3>
@@ -238,41 +317,14 @@
             <div class="categoryselectlistbox clearfix">
                 <div class="categoryselectlist addscroll" id="div_catagory0">
                     <ul id="catagory0">
-                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="服装" data-en="Apparel"
-                            data-param="catePubId=014" data-valid="1" data-leaf="0" title="服装" data-remark="服装行业群号：262044180
-主营服装的卖家可加群" data-message="">
-                            <span class="libox j-clickbtn">服装</span>
-                            <div class="tipswrap">
-                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
-                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
-                            </div>
+                        <% if(category.length != 0) { %>
+                        <% category.forEach(function (item) { %>
+                        <li data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="服装" data-en="Apparel"
+                            data-param="catePubId=014" data-valid="1" title="<%= item.firstCategory %>">
+                            <%= item.firstCategory %>
                         </li>
-
-                        <li data-crosscate="0" data-cn="汽车、摩托车" data-en="Automobiles &amp; Motorcycles"
-                            data-param="catePubId=143" data-valid="1" data-leaf="0" title="汽车、摩托车" data-remark=""
-                            data-message="">
-                            汽车、摩托车
-                        </li>
-
-                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="其他产品" data-en="Everything Else"
-                            data-param="catePubId=099" data-valid="1" data-leaf="0" title="其他产品" data-remark=""
-                            data-message="">
-                            <span class="libox j-clickbtn">其他产品</span>
-                            <div class="tipswrap">
-                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
-                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
-                            </div>
-                        </li>
-
-                        <li class="disable j-tipsbox" data-crosscate="2" data-cn="时尚配件" data-en="Fashion Accessories"
-                            data-param="catePubId=140" data-valid="1" data-leaf="0" title="时尚配件" data-remark=""
-                            data-message="">
-                            <span class="libox j-clickbtn">时尚配件</span>
-                            <div class="tipswrap">
-                                <div class="limittips"><span><i></i></span>您无当前类目发布产品权限，跨类目经营请提交申请，<a
-                                            href="http://seller.dhgate.com/help/c0210/203203.html">立即申请</a></div>
-                            </div>
-                        </li>
+                        <% }) %>
+                        <% } %>
                     </ul>
                 </div>
                 <div class="categoryselectlist" id="div_catagory1">
