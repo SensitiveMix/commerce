@@ -8,6 +8,7 @@
     "test-cov": "node node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha  -- Mocha/"
   },
   "dependencies": {
+    "assert": "^1.4.1",
     "async": "^2.1.2",
     "body-parser": "~1.15.1",
     "chai": "^3.5.0",

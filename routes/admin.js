@@ -521,6 +521,20 @@ router.post('/uploadTemporary', function (req, res, next) {
     }
 });
 
+router.post('/getGoodsDetail', function (req, res, next) {
+    if (req.body.firstCategory == '' && req.body.secondCategory != '') {
+        res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400"})
+    } else {
+        var Categories = {
+            firstCategory: req.body.firstCategory,
+            secondCategory: req.body.secondCategory,
+            thirdCategory: req.body.thirdCategory,
+            addBy: u.nick_name,
+            status: 'NEW'
+        };
+        res.send('admin/upload_goods_detail', {error_msg: [], info: Categories, result: "success", code: "200"});
+    }
+});
 
 /* 多图片上传 */
 router.post('/uploadImage', upload.array("file"), function (req, res, next) {
