@@ -234,6 +234,9 @@
 <script>
     $(function () {
         $('#catagory0 li[data-crosscate="0"]').click(function () {
+            $('#catagory1').empty();
+            $('#catagory2').empty();
+            $('#catagory3').empty();
             $('#show_category_path').empty();
             $('#catagory0 li[data-crosscate="0"]').removeClass('current');
             $(this).addClass('current');
@@ -257,12 +260,12 @@
             <% } %>
 
             $('#catagory1 li[data-crosscate="0"]').on('click',function () {
-                $('#show_category_path span').eq(0).remove();
+                $('#show_category_path span:last').remove();
                 $('#show_category_path b').eq(1).remove();
                 $('#catagory1 li[data-crosscate="0"]').removeClass('current');
                 $(this).addClass('current');
                 var secondName = $(this).attr('title');
-                var secondNameTag = '<span>>></span><b>' + secondName + '</b>';
+                var secondNameTag = '<span>>></span><b>' + secondName + '</b><span class="color4">（请选择下级类目）</span>';
                 $('#show_category_path').append(secondNameTag);
 
                 <% if (category.length != 0){ %>
@@ -276,7 +279,7 @@
                         $('#div_catagory2').addClass('addscroll');
                         $('#catagory2').empty();
                         <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
-                        var mythirdTitle = '<li data-crosscate="0" title="<%= thirdItem.secondTitle %>" data-remark="读取3.5英寸软盘的设备可以读写1.44MB的3.5英寸软盘" data-leaf="1" data-valid="1" data-param="catePubId=009001007" data-en="Floppy Drives" data-cn="<%= thirdItem.secondTitle %>"><%= thirdItem.secondTitle %></li>'
+                        var mythirdTitle = '<li data-crosscate="0" title="<%= thirdItem.thirdTitle %>" data-remark="读取3.5英寸软盘的设备可以读写1.44MB的3.5英寸软盘" data-leaf="1" data-valid="1" data-param="catePubId=009001007" data-en="Floppy Drives" data-cn="<%= thirdItem.thirdTitle %>"><%= thirdItem.thirdTitle %></li>'
                         $('#catagory2').append(mythirdTitle);
                         <% }) %>
                     }
@@ -286,6 +289,16 @@
 
                 <% }) %>
                 <% } %>
+
+                $('#catagory2 li[data-crosscate="0"]').on('click',function () {
+                    $('#show_category_path span:last').remove();
+                    $('#show_category_path b').eq(2).remove();
+                    $('#catagory2 li[data-crosscate="0"]').removeClass('current');
+                    $(this).addClass('current');
+                    var thirdName = $(this).attr('title');
+                    var thirdNameTag = '<span>>></span><b>' + thirdName + '</b>';
+                    $('#show_category_path').append(thirdNameTag);
+                })
             })
 
         })
