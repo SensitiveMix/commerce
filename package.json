@@ -24,6 +24,7 @@
     "express-partials": "^0.3.0",
     "formidable": "^1.0.17",
     "fs": "0.0.1-security",
+    "http": "0.0.0",
     "istanbul-harmony": "^0.3.16",
     "mocha": "^3.1.2",
     "mochawesome": "^1.5.3",

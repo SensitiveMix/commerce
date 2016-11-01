@@ -10,7 +10,9 @@ var multer = require('multer');
 var xlstojson = require("xls-to-json-lc");
 var xlsxtojson = require("xlsx-to-json-lc");
 var upload = multer({dest: './tmp'});
-
+var superagent=require('superagent');
+var cheerio=require('cheerio');
+var http_origin=require('http');
 
 var r = [];
 var u = [];
@@ -619,7 +621,7 @@ router.post('/uploadFile', function (req, res, next) {
 
 /* 爬虫 */
 router.get('/crawler', function (req, res, next) {
-    superagent.get('http://www.miniinthebox.com/diy-3d-pvc-wall-sticker-butterfly-12-pieces-set_p1920214.html?prm=2.1.8.0')
+    superagent.get('http://www.miniinthebox.com/high-premium-pc-full-body-cover-with-tempered-glass-film-case-for-iphone-5-5s-se_p4972423.html?category_id=9361&prm=2.2.1.1')
         .end(function (err, result) {
             if (err) {
                 return next(err);
