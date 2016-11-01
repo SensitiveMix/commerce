@@ -503,7 +503,19 @@ router.post('/uploadTemporary', function (req, res, next) {
                 console.log(err);
                 res.send({error_msg: ['INTERNAL SERVER ERROR'], info: "", result: "fail", code: "500"})
             } else {
-                res.send({error_msg: [], info: Categories, result: "success", code: "200"});
+                db.uploadTemporarys.find({}, null, {
+                    sort: {
+                        upload_time: -1
+                    }
+                }, function (err, result) {
+                    if (err) {
+                        res.send({error_msg: ['INTERNAL SERVER ERROR'], info: "", result: "fail", code: "500"});
+                    } else {
+                        res.send({error_msg: [], info: result, result: "success", code: "200"});
+                    }
+
+                });
+
             }
         });
     }
