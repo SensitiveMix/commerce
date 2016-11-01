@@ -157,7 +157,7 @@ curl -H "Content-Type: application/json \
 
 ## 点击上传产品页面,上部导航栏接口
 
-![](/api_images/landing.png)
+![](../public/api_images/landing.png)
 
 ### 返回状态码
 
