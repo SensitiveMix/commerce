@@ -233,6 +233,16 @@ router.get('/upload', function (req, res) {
 
 });
 
+//上传产品详细信息
+router.get('/upload-products-detail', function (req, res) {
+    db.categorys.find({}, function (err, result) {
+        if (err) res.send('404');
+        console.log(result);
+        res.render('admin/upload-products-detail', {username: u.nick_name, upload: [], category: result});
+    });
+
+});
+
 //更改注册须知
 router.post('/doChangeConditions', checkLogin);
 router.post('/doChangeConditions', function (req, res) {
