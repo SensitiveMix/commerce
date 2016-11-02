@@ -72,6 +72,10 @@ router.get('/', function (req, res) {
     res.render('admin/login_1', {title: '电商网站后台'});
 });
 
+router.get('', function (req, res) {
+    res.render('admin/login_1', {title: '电商网站后台'});
+});
+
 //后台登录界面
 router.get('/adminlogin', function (req, res) {
     res.render('admin/login_1', {title: '电商网站后台'});
@@ -81,7 +85,7 @@ var checkLogin = function (req, res, next) {
     console.log(req);
     if (req.body.status != 'test') {
         if (u.length == 0) {
-            res.render("404");
+            res.render('admin/404', {username: u.nick_name});
         }
     }
     next();
@@ -480,26 +484,57 @@ router.get('/douserlist', function (req, res, next) {
 /*-------------------------------------------------------------------*/
 /* ----------------------------上传产品模块 -------------------------*/
 router.post('/uploadTemporary', function (req, res, next) {
-    var Categories = {
+    if (req.body.firstCategory == '' && req.body.secondCategory != '') {
+        res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400"})
+    } else {
+        var Categories = {
+                firstCategory: req.body.firstCategory,
+                secondCategory: req.body.secondCategory,
+                thirdCategory: req.body.thirdCategory,
+                addBy: u.nick_name,
+                upload_time: (new Date().getTime() / 1000).toFixed(),
+                status: 'NEW'
+            }
+            ;
+        var category = new db.uploadTemporarys(Categories);
+        category.save(function (err) {
+            console.log(err);
+            if (err) {
+                console.log(err);
+                res.send({error_msg: ['INTERNAL SERVER ERROR'], info: "", result: "fail", code: "500"})
+            } else {
+                db.uploadTemporarys.find({}, null, {
+                    sort: {
+                        upload_time: -1
+                    }
+                }, function (err, result) {
+                    if (err) {
+                        res.send({error_msg: ['INTERNAL SERVER ERROR'], info: "", result: "fail", code: "500"});
+                    } else {
+                        res.send({error_msg: [], info: result, result: "success", code: "200"});
+                    }
+
+                });
+
+            }
+        });
+    }
+});
+
+router.post('/getGoodsDetail', function (req, res, next) {
+    if (req.body.firstCategory == '' && req.body.secondCategory != '') {
+        res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400"})
+    } else {
+        var Categories = {
             firstCategory: req.body.firstCategory,
             secondCategory: req.body.secondCategory,
             thirdCategory: req.body.thirdCategory,
             addBy: u.nick_name,
-            upload_time: (new Date().getTime() / 1000).toFixed(),
             status: 'NEW'
-        }
-        ;
-    var category = new db.uploadTemporarys(Categories);
-    category.save(function (err) {
-        console.log(err);
-        if (err) {
-            res.send('fail')
-        } else {
-            res.send(Categories);
-        }
-    });
+        };
+        res.send('admin/upload_goods_detail', {error_msg: [], info: Categories, result: "success", code: "200"});
+    }
 });
-
 
 /* 多图片上传 */
 router.post('/uploadImage', upload.array("file"), function (req, res, next) {

@@ -5,11 +5,14 @@
 
 var should = require('should');
 var app = require('../app');
+var chai = require('chai');
+var expect = chai.expect;
+var assert = require('assert');
 var request = require('supertest');
-describe('upload temporyary testing', function () {
+describe('getGoodsDetail temporyary testing', function () {
     it('uploadTemporyary should be return success', function (done) {
         request(app)
-            .post('/admin/uploadTemporary')
+            .post('/admin/getGoodsDetail')
             .send({
                 firstCategory: 'test111',
                 secondCategory: 'test2222',
@@ -17,15 +20,15 @@ describe('upload temporyary testing', function () {
             })
             .end(function (err, res) {
                 if (err) throw err;
-                console.log(res.text)
-                should.exist(res.text);
+                assert.equal("200", JSON.parse(res.text).code);
+                // should.exist(res.text);
                 done();
             });
     });
 
-    it('uploadTemporyary should be return failed', function (done) {
+    it('getGoodsDetail should be return failed', function (done) {
         request(app)
-            .post('/admin/uploadTemporary')
+            .post('/admin/getGoodsDetail')
             .send({
                 firstCategory: '',
                 secondCategory: '456',
@@ -33,8 +36,7 @@ describe('upload temporyary testing', function () {
             })
             .end(function (err, res) {
                 if (err) throw err;
-                console.log(res.text)
-                should.exist(res.text);
+                expect(JSON.parse(res.text).code).equal("400");
                 done();
             });
     });

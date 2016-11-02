@@ -52,5 +52,12 @@ views/services/
 *  添加uploadHistory,uploadTemporary两张表
 
 
+##  v0.0.10
+*  后台上传类目多语言支持
 
+##  v0.0.11
+*  添加保存并新增类目接口
 
+##  v0.0.12
+*  修改保存并新增类目接口
+*  添加上传产品详情页,landing导航接口

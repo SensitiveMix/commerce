@@ -6,9 +6,56 @@
         height: auto;
     }
 </style>
+<script src="/js/md5.js"></script>
+<script>
+    var temp = [];
+    function getAllTranslate(src, dst) {
+        temp.push(dst);
+        console.log(temp.length)
+        if (temp.length > 1) {
+            src = temp[temp.length - 2];
+        }
+
+        $('table tr input[type=text]').each(function () {
+            console.log($(this).val())
+            var that = this;
+            var appid = '20161031000031137';
+            var key = '5pFIYl4t5Hi1oSXzRv1X';
+            var salt = (new Date).getTime();
+            var query = $(that).val();
+            var from = src;
+            var to = dst;
+            var str1 = appid + query + salt + key;
+            var sign = MD5(str1);
+            $.ajax({
+                url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+                type: 'get',
+                dataType: 'jsonp',
+                data: {
+                    q: query,
+                    appid: appid,
+                    salt: salt,
+                    from: from,
+                    to: to,
+                    sign: sign
+                },
+                success: function (data) {
+                    $(that).val(data.trans_result[0].dst);
+                }
+            });
+        })
+    }
+</script>
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">首页类目管理</h3>
+    </div>
+    <div class="col-md-2 pull-right" style="margin: 15px 0">
+        <select name="语言选择" class="form-control" onchange="getAllTranslate('zh',this.value)" id="">
+            <option value="zh">中文</option>
+            <option value="en">英文</option>
+            <option value="de">德文</option>
+        </select>
     </div>
     <!-- /.box-header -->
     <!-- form start -->
@@ -87,7 +134,6 @@
     <!-- /.box-footer -->
 
 </div>
-<script src="/js/md5.js"></script>
 <script type="text/javascript">
     var count_three = 0;
     var count_two = 0;
@@ -305,34 +351,5 @@
         });
     });
 
-    function translate() {
-        var q = 'apple';
-        var appid = '20161026000030775';
-        var secret = 'qPUbqa6ID_bzGtTyGIVt';
-        var salt = new Date().getTime() / 1000;
-        var param = {
-            q: q,
-            from: 'en',
-            to: 'zh',
-            appid: appid,
-            salt: salt,
-            sign: md5(appid + q + salt + secret)
-        }
-
-        $.ajax({
-            url: 'https://api.fanyi.baidu.com/api/trans/vip/translate',
-            type: 'POST',
-            data: param,
-            dataType: "json",
-            success: function (result) {
-                console.log(result);
-                console.log(result.trans_result[0].dist);
-            }, error: function (err) {
-                console.error(err)
-            }
-        })
-    }
-
-    translate();
 
 </script>

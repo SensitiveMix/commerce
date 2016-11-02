@@ -96,3 +96,136 @@ categories structure:
   +   add_time:Number
 ```
 
+
+## 保存为新增类目接口
+
+### 返回状态码
+
+ 状态码 | 状态值
+ ------|-------------
+ 200   | 保存类目成功
+ 400   | 缺失(未找到)参数,保存失败
+ 500   | 服务器错误
+
+### End Point:
+``` bash
+curl -H "Content-Type: application/json \
+               -X POST -d '{"firstCategory":"1","secondCategory":"2","thirdCategory":"3","addBy":"admin","status":"NEW"}' \
+               http://<host>/admin/uploadTemporary
+```
+
+### Response Success
+```bash
+{
+    "error_msg": [],
+    "info": {
+        "firstCategory": "123",
+        "secondCategory": "456",
+        "thirdCategory": "567",
+        "upload_time": "1477933258",
+        "status": "NEW"
+    },
+    "result": "success",
+    "code": "200"
+}
+```
+
+### Response Failed
+```bash
+{
+    "error_msg": [
+        "FORMAT ERROR"
+    ],
+    "info": "",
+    "result": "fail",
+    "code": "400"
+}
+```
+
+### Response Failed
+```bash
+{
+    "error_msg": [
+        "INTERNAL SERVER ERROR"
+    ],
+    "info": "",
+    "result": "fail",
+    "code": "500"
+}
+```
+
+
+## 点击上传产品页面,上部导航栏接口
+
+![](../public/api_images/landing.png)
+
+### 返回状态码
+
+ 状态码 | 状态值
+ ------|-------------
+ 200   | 保存类目成功
+ 400   | 缺失(未找到)参数,保存失败
+ 500   | 服务器错误
+
+### End Point:
+``` bash
+curl -H "Content-Type: application/json \
+               -X POST -d '{"firstCategory":"1","secondCategory":"2","thirdCategory":"3","addBy":"admin","status":"NEW"}' \
+               http://<host>/admin/getGoodsDetail
+```
+
+Return Render Page:
+
+```bash
+    http://<host>/admin/upload_goods_detail
+```
+### Calling
+
+```bash
+    <%= info%>
+    <%= status%>
+```
+
+
+### Response Success
+```bash
+{
+    "error_msg": [],
+    "info": {
+        "firstCategory": "123",
+        "secondCategory": "456",
+        "thirdCategory": "567",
+        "upload_time": "1477933258",
+        "status": "NEW"
+    },
+    "result": "success",
+    "code": "200"
+}
+```
+
+### Response Failed
+```bash
+{
+    "error_msg": [
+        "FORMAT ERROR"
+    ],
+    "info": "",
+    "result": "fail",
+    "code": "400"
+}
+```
+
+### Response Failed
+```bash
+{
+    "error_msg": [
+        "INTERNAL SERVER ERROR"
+    ],
+    "info": "",
+    "result": "fail",
+    "code": "500"
+}
+```
+
+
+
