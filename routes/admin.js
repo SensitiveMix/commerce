@@ -225,7 +225,7 @@ router.post('/saveHeadBanners', function (req, res) {
 });
 
 //上传产品
-// router.get('/upload', checkLogin);
+router.get('/upload', checkLogin);
 router.get('/upload', function (req, res) {
     db.categorys.find({}, function (err, result) {
         if (err) res.send('404');

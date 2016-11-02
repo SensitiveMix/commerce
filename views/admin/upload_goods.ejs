@@ -260,8 +260,11 @@
             <% } %>
 
             $('#catagory1 li[data-crosscate="0"]').on('click',function () {
+                if($('#show_category_path b').length==3){$('#show_category_path b:last').remove();}
+                $('#show_category_path span').eq(1).remove();
                 $('#show_category_path span:last').remove();
                 $('#show_category_path b').eq(1).remove();
+
                 $('#catagory1 li[data-crosscate="0"]').removeClass('current');
                 $(this).addClass('current');
                 var secondName = $(this).attr('title');
