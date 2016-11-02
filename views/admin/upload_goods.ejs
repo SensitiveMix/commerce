@@ -1,6 +1,5 @@
 <% layout('master.ejs') %>
 
-<script src="/assets/js/category.js"></script>
 <style>
     .categoryselectlist li.current, .categoryselectlist li.hover {
         color: #fff;
@@ -229,20 +228,35 @@
         color: #000;
         font-family: Comic Sans MS;
     }
-
+    .buttonbox .container{
+        width: 100%!important;
+    }
+    .buttonbox .container .form-group{
+        float: right;
+    }
 </style>
 <script>
     $(function () {
+        function showPath() {
+            $('#show_category_path').empty();
+            var categoryPath = [];
+            $('li.current').each(function (index,item) {
+                categoryPath[index] = '<b>'+$.trim($(item).text())+'</b>';
+            })
+            var category_path = categoryPath.join('<span>>></span>');
+            $('#show_category_path').append(category_path+'<span class="color4">（请选择下级类目）</span>');
+        }
+
         $('#catagory0 li[data-crosscate="0"]').click(function () {
+            $('#catagory0 li[data-crosscate="0"]').removeClass('current');
+            $(this).addClass('current');
             $('#catagory1').empty();
             $('#catagory2').empty();
             $('#catagory3').empty();
-            $('#show_category_path').empty();
-            $('#catagory0 li[data-crosscate="0"]').removeClass('current');
-            $(this).addClass('current');
-            var firstName = $('#catagory0 li[data-crosscate="0"].current').attr('title');
-            var firstNameTag = '<b>' + firstName + '</b><span class="color4">（请选择下级类目）</span>';
-            $('#show_category_path').append(firstNameTag);
+            var firstName = $(this).attr('title');
+
+            showPath();
+
             <% if (category.length != 0){ %>
             <% category.forEach(function (item) { %>
             if ('<%= item.firstCategory %>' == firstName) {
@@ -260,16 +274,19 @@
             <% } %>
 
             $('#catagory1 li[data-crosscate="0"]').on('click',function () {
-                if($('#show_category_path b').length==3){$('#show_category_path b:last').remove();}
-                $('#show_category_path span').eq(1).remove();
-                $('#show_category_path span:last').remove();
-                $('#show_category_path b').eq(1).remove();
-
                 $('#catagory1 li[data-crosscate="0"]').removeClass('current');
+                $('#catagory2').empty();
                 $(this).addClass('current');
                 var secondName = $(this).attr('title');
-                var secondNameTag = '<span>>></span><b>' + secondName + '</b><span class="color4">（请选择下级类目）</span>';
-                $('#show_category_path').append(secondNameTag);
+                showPath();
+                $('#show_category_path').empty();
+                var categoryPath = [];
+                $('li.current').each(function (index,item) {
+                    categoryPath[index] = '<b>'+$.trim($(item).text())+'</b>';
+                })
+                console.log(categoryPath);
+                var category_path = categoryPath.join('<span>>></span>');
+                $('#show_category_path').append(category_path+'<span class="color4">（请选择下级类目）</span>');
 
                 <% if (category.length != 0){ %>
                 <% category.forEach(function (item) { %>
@@ -294,18 +311,36 @@
                 <% } %>
 
                 $('#catagory2 li[data-crosscate="0"]').on('click',function () {
-                    $('#show_category_path span:last').remove();
-                    $('#show_category_path b').eq(2).remove();
                     $('#catagory2 li[data-crosscate="0"]').removeClass('current');
                     $(this).addClass('current');
-                    var thirdName = $(this).attr('title');
-                    var thirdNameTag = '<span>>></span><b>' + thirdName + '</b>';
-                    $('#show_category_path').append(thirdNameTag);
+                    showPath();
                 })
             })
 
         })
 
+        $('#save_history').click(function () {
+            if($('#catagory0 li.current').text().length){
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/uploadTemporary',
+                    data: {
+                        firstCategory: $('#catagory0 li.current').text(),
+                        secondCategory: $('#catagory1 li.current').text().length?$('#catagory1 li.current').text():'',
+                        thirdCategory: $('#catagory2 li.current').text().length?$('#catagory2 li.current').text():'',
+                        addBy:'<%=username %>',
+                        status:'NEW'
+                    },
+                    dataType: 'json',
+                    success: function(data){
+                        console.log(data);
+                    }
+                });
+            }else {
+                alert('请选择类目!');
+            }
+
+        })
     })
 </script>
 <div class="box box-info">
@@ -379,8 +414,8 @@
         <div class="buttonbox">
             <div class="container">
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary btn-lg">保存并新增类目</button>
-                    <button type="button" class="btn btn-primary btn-lg">立即发布新产品</button>
+                    <button type="button" class="btn btn-primary" id="save_history">保存并收藏类目</button>
+                    <button type="button" class="btn btn-primary"><a href="/admin/upload-products-detail" style="color: #fff">立即发布新产品</a></button>
                 </div>
             </div>
             <!--<button id="submit_button" class="submit_button" type="button">-->

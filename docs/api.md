@@ -177,7 +177,7 @@ curl -H "Content-Type: application/json \
 Return Render Page:
 
 ```bash
-    http://<host>/admin/upload_goods_detail
+    http://<host>/admin/upload-products-detail
 ```
 ### Calling
 

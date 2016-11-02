@@ -378,6 +378,78 @@ router.post('/saveHeadBanners', function (req, res) {
 
     });
 });
+
+
+//上传产品
+router.get('/upload', checkLogin);
+router.get('/upload', function (req, res) {
+    db.categorys.find({}, function (err, result) {
+        if (err) res.send('404');
+        console.log(result);
+        res.render('admin/upload_goods', {username: u.nick_name, upload: [], category: result});
+    });
+
+});
+
+//上传产品详细信息
+router.get('/upload-products-detail', function (req, res) {
+    db.categorys.find({}, function (err, result) {
+        if (err) res.send('404');
+        console.log(result);
+        res.render('admin/upload-products-detail', {username: u.nick_name, upload: [], category: result});
+    });
+
+});
+
+//更改注册须知
+router.post('/doChangeConditions', checkLogin);
+router.post('/doChangeConditions', function (req, res) {
+    console.log("更改注册须知" + req.body.mainContent + new Date());
+    db.systems.update({name: 'register_need_know'}, {$set: {mainContent: req.body.mainContent}}, function (err, system) {
+        if (err) {
+            res.send('failed');
+        } else {
+            res.send('success');
+        }
+
+    })
+});
+
+//类目管理
+router.get('/accessory_manage', checkLogin);
+router.get('/accessory_manage', function (req, res, next) {
+    console.log("类目管理" + new Date());
+    res.render('admin/accessory_manage', {upload: [], username: u.nick_name});
+    // db.users.find({}, function (err, result) {
+    //     if (err) throw  err;
+    //
+    // });
+    console.log("类目管理页面登陆成功");
+});
+
+//类目上传
+router.post('/doAddCategory', checkLogin);
+router.post('/doAddCategory', function (req, res) {
+    console.log(req.body.firstCategory);
+    console.log(JSON.parse(req.body.secondCategory));
+
+    var Categories = {
+        firstCategory: req.body.firstCategory,
+        firstUrl: req.body.firstUrl,
+        firstCount: req.body.firstCount,
+        secondCategory: JSON.parse(req.body.secondCategory)
+    };
+    var category = new db.categorys(Categories);
+    category.save(function (err) {
+        console.log(err);
+        if (err) {
+            res.send('fail')
+        } else {
+            res.send('success');
+        }
+    });
+});
+
 //关于我们管理页面
 router.get('/about_us', checkLogin);
 router.get('/about_us', function (req, res, next) {
@@ -633,7 +705,7 @@ router.post('/getGoodsDetail', function (req, res, next) {
             addBy: u.nick_name,
             status: 'NEW'
         };
-        res.send('admin/upload_goods_detail', {error_msg: [], info: Categories, result: "success", code: "200"});
+        res.send('admin/upload-products-detail', {error_msg: [], info: Categories, result: "success", code: "200"});
     }
 });
 
