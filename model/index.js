@@ -14,3 +14,4 @@ exports.hotLabels = mongoose.model('hotlabels', require('./hotLabels'));
 exports.notices = mongoose.model('notices', require('./notices'));
 exports.uploadHistorys = mongoose.model('uploadhistorys', require('./uploadHistory'));
 exports.uploadTemporarys = mongoose.model('uploadTemporarys', require('./uploadTemporary'));
+exports.levels = mongoose.model('levels', require('./levels'));

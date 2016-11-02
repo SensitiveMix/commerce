@@ -10,65 +10,22 @@ var multer = require('multer');
 var xlstojson = require("xls-to-json-lc");
 var xlsxtojson = require("xlsx-to-json-lc");
 var upload = multer({dest: './tmp'});
-var superagent=require('superagent');
-var cheerio=require('cheerio');
-var http_origin=require('http');
+var superagent = require('superagent');
+var cheerio = require('cheerio');
+var http_origin = require('http');
 
 var r = [];
 var u = [];
+var leverlist = [];
+/*-------------------------------------------------------------------*/
+/* -----------------------实用工具 ---------------------------------*/
+//MD5加密
+function md5(text) {
+    return crypto.createHash('md5').update(text).digest('hex');
+}
 
-
-/* GET users listing. */
-
-//上传文件接口
-router.post('/doupload', function (req, res) {
-    var form = new formidable.IncomingForm();   //创建上传表单
-    form.encoding = 'utf-8';		//设置编辑
-    form.uploadDir = '/Users/sunNode/WebstormProjects/e-commerce-platform/public' + '/upload/';	 //设置上传目录
-    form.keepExtensions = true;	 //保留后缀
-    form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
-    form.parse(req, function (err, fields, files) {
-
-        if (err) {
-            res.locals.error = err;
-            res.end();
-            return;
-        }
-
-        var extName = '';  //后缀名
-        switch (files.fulAvatar.type) {
-            case 'image/pjpeg':
-                extName = 'jpg';
-                break;
-            case 'image/jpeg':
-                extName = 'jpg';
-                break;
-            case 'image/png':
-                extName = 'png';
-                break;
-            case 'image/x-png':
-                extName = 'png';
-                break;
-        }
-
-        if (extName.length == 0) {
-            res.locals.error = '只支持png和jpg格式图片';
-            res.end();
-            return;
-        }
-
-        var avatarName = Math.random() + '.' + extName;
-        var newPath = form.uploadDir + avatarName;
-        var savePath = '/upload/' + avatarName;
-        res.json(savePath);
-        res.end();
-        console.log(savePath);
-        fs.renameSync(files.fulAvatar.path, newPath);  //重命名
-    });
-
-    res.locals.success = '上传成功';
-});
-
+/*-------------------------------------------------------------------*/
+/* -----------------------管理员登录 -------------------------------*/
 //后台登录界面
 router.get('/', function (req, res) {
     res.render('admin/login_1', {title: '电商网站后台'});
@@ -140,7 +97,7 @@ router.post('/doadminlogin', function (req, res, next) {
 });
 
 //跳转页面-基本设置
-// router.get('/mainset', checkLogin);
+router.get('/mainset', checkLogin);
 router.get('/mainset', function (req, res, next) {
     console.log("基本设置页面" + new Date());
 
@@ -154,10 +111,183 @@ router.get('/mainset', function (req, res, next) {
     })
 
 });
-//MD5加密
-function md5(text) {
-    return crypto.createHash('md5').update(text).digest('hex');
-}
+
+
+/*-------------------------------------------------------------------*/
+/* ----------------------------用户模块 ----------------------------*/
+//获取用户
+router.get('/douserlist', function (req, res, next) {
+    console.log("当前分页" + req.query.iDisplayStart);
+    db.users.find({}, null, {
+        sort: {
+            'registerTime': 1
+        }
+    }, function (err, result) {
+        var lista = {
+            "draw": 2,
+            "recordsTotal": "",
+            "recordsFiltered": "",
+            "data": []
+        };
+        lista.recordsTotal = result.length;
+        lista.recordsFiltered = lista.recordsTotal;
+        lista.data = result;
+        // console.log(result);
+        res.send(lista);
+        res.end();
+    });
+
+});
+//用户管理
+router.get('/usermanage', checkLogin);
+router.get('/usermanage', function (req, res, next) {
+    console.log("用户管理" + new Date());
+    async.parallel([
+            function (done) {
+                db.users.find({}, function (err, users) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    done(err, users)
+                });
+            },
+            function (done) {
+                db.levels.find({},
+                    function (err, levels) {
+                        console.log(levels)
+                        leverlist = levels[0].level;
+                        done(err, levels)
+                    })
+            }
+        ],
+        function (err, results) {
+            if (err) {
+                done(err)
+            } else {
+                var user = results[0];
+                var level = results[1];
+                // console.log(user);
+                console.log(leverlist);
+                if (user.length > 1) {
+                    console.log("用户管理页面登陆成功");
+                    res.render('admin/user_manage', {users: user, username: u.nick_name, lvlist: leverlist});
+                } else {
+                    res.render('admin/login_1', {
+                        mes_info: 'login failed',
+                        mes: '账号密码错误'
+                    });
+                }
+            }
+        }
+    )
+});
+
+router.post('/doDelUer', checkLogin);
+router.post('/doDelUer', function (req, res, next) {
+    console.log("用户删除" + new Date());
+    console.log(req.body.user_id)
+    db.users.remove({_id: req.body.user_id}, function (err) {
+        if (err) {
+            res.send({"error_msg": ['ERROR'], "info": "", "result": "fail", "code": "500"})
+        }
+        res.send({"error_msg": [], "info": "", "result": "success", "code": "200"})
+    });
+});
+
+//添加用户
+router.post('/doAddUser', function (req, res, next) {
+    console.log("用户添加" + req.body.addName + new Date());
+    var date = Date();
+    var doc = {
+        name: req.body.addname,
+        password: md5(req.body.addpassword),
+        nick_name: req.body.addnickname,
+        level: req.body.addLevel,
+        levelName: req.body.addLevelName,
+        registerTime: req.body.registerTime
+    };
+    var robot = new db.users(doc);
+    robot.save(function (err) {
+        if (err) // ...
+            console.log('meow');
+        res.end();
+    });
+});
+
+//修改用户
+router.post('/doChangeUser', function (req, res, next) {
+    console.log("用户修改" + new Date());
+    var newPassword;
+    if (req.body.addpassword=='********') {
+        newPassword = req.body.oldPassword;
+    } else {
+        newPassword = md5(req.body.addpassword);
+    }
+    console.log(req.body);
+    db.users.update({_id: req.body.id}, {
+        $set: {
+            name: req.body.addname,
+            password: newPassword,
+            nick_name: req.body.addnickname,
+            level: req.body.addLevel,
+            levelName: req.body.addLevelName
+        }
+    
+    }, function (err) {
+        res.end();
+    });
+});
+
+/*-------------------------------------------------------------------*/
+/* ----------------------------商城前台管理 -------------------------*/
+//上传文件接口
+router.post('/doupload', function (req, res) {
+    var form = new formidable.IncomingForm();   //创建上传表单
+    form.encoding = 'utf-8';		//设置编辑
+    form.uploadDir = '/Users/sunNode/WebstormProjects/e-commerce-platform/public' + '/upload/';	 //设置上传目录
+    form.keepExtensions = true;	 //保留后缀
+    form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
+    form.parse(req, function (err, fields, files) {
+
+        if (err) {
+            res.locals.error = err;
+            res.end();
+            return;
+        }
+
+        var extName = '';  //后缀名
+        switch (files.fulAvatar.type) {
+            case 'image/pjpeg':
+                extName = 'jpg';
+                break;
+            case 'image/jpeg':
+                extName = 'jpg';
+                break;
+            case 'image/png':
+                extName = 'png';
+                break;
+            case 'image/x-png':
+                extName = 'png';
+                break;
+        }
+
+        if (extName.length == 0) {
+            res.locals.error = '只支持png和jpg格式图片';
+            res.end();
+            return;
+        }
+
+        var avatarName = Math.random() + '.' + extName;
+        var newPath = form.uploadDir + avatarName;
+        var savePath = '/upload/' + avatarName;
+        res.json(savePath);
+        res.end();
+        console.log(savePath);
+        fs.renameSync(files.fulAvatar.path, newPath);  //重命名
+    });
+
+    res.locals.success = '上传成功';
+});
 
 //首页轮播图片管理
 router.get('/banner_manage', checkLogin);
@@ -166,6 +296,31 @@ router.get('/banner_manage', function (req, res, next) {
 
     res.render('admin/banner_manage', {username: u.nick_name});
     console.log("页面访问成功");
+});
+
+//更改注册须知
+router.post('/doChangeConditions', checkLogin);
+router.post('/doChangeConditions', function (req, res) {
+    console.log("更改注册须知" + req.body.mainContent + new Date());
+    db.systems.update({name: 'register_need_know'}, {$set: {mainContent: req.body.mainContent}}, function (err, system) {
+        if (err) {
+            res.send('failed');
+        } else {
+            res.send('success');
+        }
+
+    })
+});
+
+//上传产品
+router.get('/upload', checkLogin);
+router.get('/upload', function (req, res) {
+    db.categorys.find({}, function (err, result) {
+        if (err) res.send('404');
+        console.log(result);
+        res.render('admin/upload_goods', {username: u.nick_name, upload: [], category: result});
+    });
+
 });
 
 //首页轮播图片替换
@@ -223,78 +378,6 @@ router.post('/saveHeadBanners', function (req, res) {
 
     });
 });
-
-//上传产品
-router.get('/upload', checkLogin);
-router.get('/upload', function (req, res) {
-    db.categorys.find({}, function (err, result) {
-        if (err) res.send('404');
-        console.log(result);
-        res.render('admin/upload_goods', {username: u.nick_name, upload: [], category: result});
-    });
-
-});
-
-//更改注册须知
-router.post('/doChangeConditions', checkLogin);
-router.post('/doChangeConditions', function (req, res) {
-    console.log("更改注册须知" + req.body.mainContent + new Date());
-    db.systems.update({name: 'register_need_know'}, {$set: {mainContent: req.body.mainContent}}, function (err, system) {
-        if (err) {
-            res.send('failed');
-        } else {
-            res.send('success');
-        }
-
-    })
-});
-
-//类目管理
-router.get('/accessory_manage', checkLogin);
-router.get('/accessory_manage', function (req, res, next) {
-    console.log("类目管理" + new Date());
-    res.render('admin/accessory_manage', {upload: [], username: u.nick_name});
-    // db.users.find({}, function (err, result) {
-    //     if (err) throw  err;
-    //
-    // });
-    console.log("类目管理页面登陆成功");
-});
-
-//类目上传
-router.post('/doAddCategory', checkLogin);
-router.post('/doAddCategory', function (req, res) {
-    console.log(req.body.firstCategory);
-    console.log(JSON.parse(req.body.secondCategory));
-
-    var Categories = {
-        firstCategory: req.body.firstCategory,
-        firstUrl: req.body.firstUrl,
-        firstCount: req.body.firstCount,
-        secondCategory: JSON.parse(req.body.secondCategory)
-    };
-    var category = new db.categorys(Categories);
-    category.save(function (err) {
-        console.log(err);
-        if (err) {
-            res.send('fail')
-        } else {
-            res.send('success');
-        }
-    });
-});
-
-//用户管理
-router.get('/usermanage', checkLogin);
-router.get('/usermanage', function (req, res, next) {
-    console.log("用户管理" + new Date());
-    db.users.find({}, function (err, result) {
-        if (err) throw  err;
-        res.render('admin/user_manage', {users: result, username: u.nick_name});
-    });
-    console.log("用户管理页面登陆成功");
-});
-
 //关于我们管理页面
 router.get('/about_us', checkLogin);
 router.get('/about_us', function (req, res, next) {
@@ -451,7 +534,7 @@ router.post('/doChangePrivacy', function (req, res) {
     })
 });
 
-//用户管理
+//最热产品管理
 router.get('/hot_product_manage', checkLogin);
 router.get('/hot_product_manage', function (req, res, next) {
     console.log("最热产品管理" + new Date());
@@ -462,29 +545,44 @@ router.get('/hot_product_manage', function (req, res, next) {
     console.log("用户管理页面登陆成功");
 });
 
-//获取用户
-router.get('/douserlist', function (req, res, next) {
-    console.log("当前分页" + req.query.iDisplayStart);
-    db.users.find({}, function (err, result) {
-        var lista = {
-            "draw": 2,
-            "recordsTotal": "",
-            "recordsFiltered": "",
-            "data": []
-        };
-        lista.recordsTotal = result.length;
-        lista.recordsFiltered = lista.recordsTotal;
-        lista.data = result;
-        console.log(result);
-        res.send(lista);
-        res.end();
-    }).sort({registerTime: -1});
-
-});
-
-
 /*-------------------------------------------------------------------*/
 /* ----------------------------上传产品模块 -------------------------*/
+//类目管理
+router.get('/accessory_manage', checkLogin);
+router.get('/accessory_manage', function (req, res, next) {
+    console.log("类目管理" + new Date());
+    res.render('admin/accessory_manage', {upload: [], username: u.nick_name});
+    // db.users.find({}, function (err, result) {
+    //     if (err) throw  err;
+    //
+    // });
+    console.log("类目管理页面登陆成功");
+});
+
+//类目上传
+router.post('/doAddCategory', checkLogin);
+router.post('/doAddCategory', function (req, res) {
+    console.log(req.body.firstCategory);
+    console.log(JSON.parse(req.body.secondCategory));
+
+    var Categories = {
+        firstCategory: req.body.firstCategory,
+        firstUrl: req.body.firstUrl,
+        firstCount: req.body.firstCount,
+        secondCategory: JSON.parse(req.body.secondCategory)
+    };
+    var category = new db.categorys(Categories);
+    category.save(function (err) {
+        console.log(err);
+        if (err) {
+            res.send('fail')
+        } else {
+            res.send('success');
+        }
+    });
+});
+
+//保存最近上传类目接口
 router.post('/uploadTemporary', function (req, res, next) {
     if (req.body.firstCategory == '' && req.body.secondCategory != '') {
         res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400"})
@@ -523,6 +621,7 @@ router.post('/uploadTemporary', function (req, res, next) {
     }
 });
 
+//上传产品首部导航栏接口
 router.post('/getGoodsDetail', function (req, res, next) {
     if (req.body.firstCategory == '' && req.body.secondCategory != '') {
         res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400"})
