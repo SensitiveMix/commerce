@@ -26,6 +26,8 @@
     "fs": "0.0.1-security",
     "http": "0.0.0",
     "istanbul-harmony": "^0.3.16",
+    "loadash": "0.0.1",
+    "lodash": "^4.16.6",
     "mocha": "^3.1.2",
     "mochawesome": "^1.5.3",
     "moment": "^2.15.1",

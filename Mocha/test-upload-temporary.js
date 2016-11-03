@@ -27,7 +27,7 @@ describe('upload temporyary testing', function () {
         request(app)
             .post('/admin/uploadTemporary')
             .send({
-                firstCategory: '',
+                firstCategory: '111',
                 secondCategory: '456',
                 thirdCategory: '567'
             })

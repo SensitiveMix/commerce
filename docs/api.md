@@ -170,8 +170,8 @@ curl -H "Content-Type: application/json \
 ### End Point:
 ``` bash
 curl -H "Content-Type: application/json \
-               -X POST -d '{"firstCategory":"1","secondCategory":"2","thirdCategory":"3","addBy":"admin","status":"NEW"}' \
-               http://<host>/admin/getGoodsDetail
+               -X POST -d '[{"firstCategory":"1","secondCategory":"2","thirdCategory":"3","addBy":"admin","status":"NEW"},{"firstCategory":"1","secondCategory":"2","thirdCategory":"3","addBy":"admin","status":"NEW"}]' \
+               http://<host>/admin/uploadProductsDetail
 ```
 
 Return Render Page:
@@ -190,17 +190,28 @@ Return Render Page:
 ### Response Success
 ```bash
 {
-    "error_msg": [],
-    "info": {
-        "firstCategory": "123",
-        "secondCategory": "456",
-        "thirdCategory": "567",
-        "upload_time": "1477933258",
-        "status": "NEW"
-    },
+    "error_msg": [
+
+    ],
+    "info": [
+        {
+            firstCategory: 'test111',
+            secondCategory: 'test2222',
+            thirdCategory: 'test33333',
+            addBy: undefined,
+            status: 'NEW'
+        },
+        {
+            firstCategory: 'test222',
+            secondCategory: 'test2222',
+            thirdCategory: 'test33333',
+            addBy: undefined,
+            status: 'NEW'
+        }
+    ],
     "result": "success",
     "code": "200",
-    "username":"admin"
+    "username": "admin"
 }
 ```
 

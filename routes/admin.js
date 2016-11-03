@@ -13,6 +13,7 @@ var upload = multer({dest: './tmp'});
 var superagent = require('superagent');
 var cheerio = require('cheerio');
 var http_origin = require('http');
+var _ = require('lodash');
 
 var r = [];
 var u = [];
@@ -686,25 +687,32 @@ router.post('/uploadTemporary', function (req, res, next) {
                         res.send({error_msg: [], info: result, result: "success", code: "200"});
                     }
 
-                });
+                }).limit(5);
 
             }
         });
     }
 });
 
-//上传产品首部导航栏接口
-router.post('/getGoodsDetail', function (req, res, next) {
-    if (req.body.firstCategory == '' && req.body.secondCategory != '') {
-        res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400", username: u.nick_name})
-    } else {
-        var Categories = {
-            firstCategory: req.body.firstCategory,
-            secondCategory: req.body.secondCategory,
-            thirdCategory: req.body.thirdCategory,
-            addBy: u.nick_name,
-            status: 'NEW'
-        };
+//上传产品
+router.post('/uploadProductDetail', function (req, res, next) {
+    var Categories = [];
+    _.each(req.body, function (product) {
+        if (product.firstCategory == '' && product.secondCategory != '') {
+            res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400", username: u.nick_name})
+        } else {
+            var singleCategories = {
+                firstCategory: product.firstCategory,
+                secondCategory: product.secondCategory,
+                thirdCategory: product.thirdCategory,
+                addBy: u.nick_name,
+                status: 'NEW'
+            };
+            Categories.push(singleCategories);
+        }
+    });
+    if (Categories.length != 0) {
+        console.log(Categories);
         res.render('admin/upload-products-detail', {
             error_msg: [],
             info: Categories,
@@ -712,6 +720,8 @@ router.post('/getGoodsDetail', function (req, res, next) {
             code: "200",
             username: u.nick_name
         });
+    } else {
+        res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400", username: u.nick_name})
     }
 });
 
