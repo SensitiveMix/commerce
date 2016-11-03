@@ -218,7 +218,7 @@ router.post('/doAddUser', function (req, res, next) {
 router.post('/doChangeUser', function (req, res, next) {
     console.log("用户修改" + new Date());
     var newPassword;
-    if (req.body.addpassword=='********') {
+    if (req.body.addpassword == '********') {
         newPassword = req.body.oldPassword;
     } else {
         newPassword = md5(req.body.addpassword);
@@ -232,7 +232,7 @@ router.post('/doChangeUser', function (req, res, next) {
             level: req.body.addLevel,
             levelName: req.body.addLevelName
         }
-    
+
     }, function (err) {
         res.end();
     });
@@ -696,7 +696,7 @@ router.post('/uploadTemporary', function (req, res, next) {
 //上传产品首部导航栏接口
 router.post('/getGoodsDetail', function (req, res, next) {
     if (req.body.firstCategory == '' && req.body.secondCategory != '') {
-        res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400"})
+        res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400", username: u.nick_name})
     } else {
         var Categories = {
             firstCategory: req.body.firstCategory,
@@ -705,7 +705,13 @@ router.post('/getGoodsDetail', function (req, res, next) {
             addBy: u.nick_name,
             status: 'NEW'
         };
-        res.send('admin/upload-products-detail', {error_msg: [], info: Categories, result: "success", code: "200"});
+        res.render('admin/upload-products-detail', {
+            error_msg: [],
+            info: Categories,
+            result: "success",
+            code: "200",
+            username: u.nick_name
+        });
     }
 });
 

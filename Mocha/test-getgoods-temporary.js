@@ -20,7 +20,6 @@ describe('getGoodsDetail temporyary testing', function () {
             })
             .end(function (err, res) {
                 if (err) throw err;
-                // assert.equal("200", JSON.parse(res.text).code);
                 should.exist(res.text);
                 done();
             });
@@ -37,7 +36,7 @@ describe('getGoodsDetail temporyary testing', function () {
             .end(function (err, res) {
                 if (err) throw err;
                 console.log(res.text);
-                // expect(JSON.parse(res.text).code).equal("400");
+                should.exist(res.text);
                 done();
             });
     });
