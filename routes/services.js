@@ -36,7 +36,7 @@ var checkLogin = function (req, res, next) {
     next();
 };
 router.post('/doServicesLogin', function (req, res, next) {
-    var query = {name: req.body.name, password: req.body.password, level: '0'};
+    var query = {name: req.body.name, password: md5(req.body.password), level: '0'};
     db.users.find(query, function (err, result) {
         if (err) {
             console.log(err);
