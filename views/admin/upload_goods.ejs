@@ -234,9 +234,37 @@
     .buttonbox .container .form-group{
         float: right;
     }
+    .chouse-down-box {
+        display: none;
+        position: absolute;
+        left: -1px;
+        top: 24px;
+        border: 1px solid #8797b0;
+        padding: 1px 0;
+        width: 162px;
+        z-index: 999;
+        background-color: #fff;
+    }
 </style>
 <script>
     $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/uploadTemporary',
+            data: {},
+            dataType: 'json',
+            success: function(data){
+                console.log(data);
+                var info = data.info;
+                console.log(info);
+                info.each(function (item) {
+                    var myhistory = '<span data-param="en" data-val="- '+item.firstCategory+' -">- '+item.firstCategory+' -</span>'
+                    $('#recentCategoryDropdown').append(myhistory);
+                })
+
+            }
+        });
+
         function showPath() {
             $('#show_category_path').empty();
             var categoryPath = [];

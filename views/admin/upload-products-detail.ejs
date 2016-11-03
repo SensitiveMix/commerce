@@ -38,7 +38,7 @@
         margin-bottom: 1px;
         border: 1px solid #e2eaf9;
         border-bottom: 1px solid #f4f9ff;
-        min-width: 948px;
+        min-width: 100%;
     }
 
     .categorydicbox .layer-b-bg {
@@ -85,11 +85,11 @@
 
     .syi-all-error {
         margin-top: 15px;
-        width: 847px;
+        width: 80%;
     }
 
     .syi-all-error-lt {
-        background: url("/assets/img/global-error.png") no-repeat 0px 0;
+        background: url("/assets/img/icon/global-error.jpg") no-repeat 0px 0;
         float: left;
         padding-left: 40px;
         width: 5px;
@@ -107,19 +107,112 @@
     .syi-all-error-ri p.p1 {
         color: #000;
     }
+    .nav:after,.nav:before{
+        display: none;
+    }
+    #syi_form {
+        min-width: 100%;
+    }
+    .titlebox {
+        margin: 20px 0;
+        padding: 6px 10px 0px;
+        height: 30px;
+        line-height: 25px;
+        border-bottom: 1px solid #d4deee;
+        background-color: #eff4fb;
+    }
+    .titlebox h3 {
+        display: inline;
+        color: #000;
+        font-size: 14px;
+    }
+    .mainlayout {
+        position: relative;
+        min-width: 70%;
+        margin: 15px 0 10px 138px;
+        clear: both;
+    }
+    .ml-title {
+        position: absolute;
+        width: 10%;
+        left: -10%;
+        top: 0;
+        text-align: right;
+        color: #000000;
+    }
+    span.required {
+        color: #ff0000;
+        margin-right: 7px;
+        vertical-align: middle;
+    }
+    a {
+        color: #3366cc;
+        text-decoration: none;
+        outline: none;
+    }
+    .m-text {
+        color: #999;
+        padding-bottom: 7px;
+    }
+    .orgfont {
+        color: #fb5501;
+    }
+    .greenfont {
+        color: #257800;
+    }
+    .similarity-tip-txt {
+        background: url("/assets/img/icon/similarity-tag.jpg") no-repeat;
+        padding-left: 22px;
+        line-height: 16px;
+    }
+    .addwid402 {
+        width: 45%;
+    }
+    .attr-text-input {
+        overflow: hidden;
+        padding: 2px 0 2px 5px;
+        color: #444;
+        vertical-align: middle;
+    }
+    .helptips {
+        color: #949494;
+    }
+    .marginleft10 {
+        margin-left: 10px;
+    }
+    .helpicon {
+        display: inline-block;
+        margin-left: 9px;
+        vertical-align: middle;
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+        background: url("/assets/img/icon/help.png") 0 0 no-repeat;
+    }
+    .tip-error {
+        margin-top: 5px;
+        padding: 4px 10px 4px 30px;
+        width: 390px;
+        height: 18px;
+        line-height: 18px;
+        vertical-align: middle;
+        border: solid 1px #F7ACAC;
+        background: url("/assets/img/icon/global-small-error.jpg") #feeeee 10px 50% no-repeat;
+    }
+    .clearfix:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
 </style>
 <script>
     $(function () {
         $.ajax({
             type: 'POST',
-            url: '/admin/getGoodsDetail',
-            data: {
-                firstCategory: $('#catagory0 li.current').text(),
-                secondCategory: $('#catagory1 li.current').text().length?$('#catagory1 li.current').text():'',
-                thirdCategory: $('#catagory2 li.current').text().length?$('#catagory2 li.current').text():'',
-                addBy:'<%=username %>',
-                status:'NEW'
-            },
+            url: '/uploadTemporary',
+            data: {},
             dataType: 'json',
             success: function(data){
                 console.log(data);
@@ -146,7 +239,7 @@
 
                 <b>当前已选择的产品类目：</b><span class="navbox">计算机和网络(Computers &amp; Networking)<span class="nav">&gt;</span>驱动器及存储设备(Drives &amp; Storages)<span
                             class="nav">&gt;</span>硬盘盒(HDD Enclosures)</span>
-                <a class="marginleft20" href="#" onclick="document.body.onbeforeunload=null;reselcatelog();">«返回修改类目</a>
+                <a class="marginleft20" href="#" onclick="javascript:history.go(-1);">«返回修改类目</a>
 
             </div>
         </div>
@@ -154,7 +247,7 @@
     </div>
     <!-- 已选择类目 结束 -->
     <!-- 错误信息 开始 -->
-    <div id="errorMsgDiv" style="/* display: none; */" class="syi-all-error clearfix">
+    <div id="errorMsgDiv" style="display: none;" class="syi-all-error clearfix">
         <div class="syi-all-error-lt"></div>
         <div class="syi-all-error-ri">
             <p class="p1"><b>您还有下述表单项填写不正确，请点击相应链接进行修改。</b></p>
