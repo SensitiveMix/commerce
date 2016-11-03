@@ -15,3 +15,4 @@ exports.notices = mongoose.model('notices', require('./notices'));
 exports.uploadHistorys = mongoose.model('uploadhistorys', require('./uploadHistory'));
 exports.uploadTemporarys = mongoose.model('uploadTemporarys', require('./uploadTemporary'));
 exports.levels = mongoose.model('levels', require('./levels'));
+exports.specifications = mongoose.model('specifications', require('./specifications'));

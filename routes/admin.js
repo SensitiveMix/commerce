@@ -18,6 +18,7 @@ var _ = require('lodash');
 var r = [];
 var u = [];
 var leverlist = [];
+var systems = [];
 /*-------------------------------------------------------------------*/
 /* -----------------------实用工具 ---------------------------------*/
 //MD5加密
@@ -34,6 +35,10 @@ router.get('/', function (req, res) {
 
 router.get('', function (req, res) {
     res.render('admin/login_1', {title: '电商网站后台'});
+});
+
+router.get('/main', function (req, res) {
+    res.render('admin/land_page', {username: u.nick_name});
 });
 
 //后台登录界面
@@ -81,10 +86,11 @@ router.post('/doadminlogin', function (req, res, next) {
                 var system = results[1];
                 console.log(user);
                 console.log(system);
+                systems = system;
                 if (user.length == 1) {
                     console.log(user.nick_name + ":登录成功" + new Date());
                     u = user[0];
-                    res.render('admin/index', {username: u.nick_name, system: system});
+                    res.render('admin/land_page', {username: u.nick_name, system: system});
                 } else {
                     console.log(query.name + ":登录失败" + new Date());
                     res.render('admin/login_1', {
@@ -694,6 +700,14 @@ router.post('/uploadTemporary', function (req, res, next) {
     }
 });
 
+router.get('/specification', checkLogin);
+router.get('/specification', function (req, res, next) {
+    console.log("产品上传管理" + new Date());
+    res.render('admin/specifications_manage', {username: u.nick_name});
+    console.log("产品上传管理登陆成功");
+});
+
+
 //上传产品
 router.post('/uploadProductDetail', function (req, res, next) {
     var Categories = [];
@@ -711,18 +725,22 @@ router.post('/uploadProductDetail', function (req, res, next) {
             Categories.push(singleCategories);
         }
     });
-    if (Categories.length != 0) {
-        console.log(Categories);
-        res.render('admin/upload-products-detail', {
-            error_msg: [],
-            info: Categories,
-            result: "success",
-            code: "200",
-            username: u.nick_name
-        });
-    } else {
-        res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400", username: u.nick_name})
-    }
+
+    db.specifications.find({}, function (err, product_spectication) {
+        console.log(product_spectication);
+        if (Categories.length != 0 && product_spectication.length != 0) {
+            console.log({categories: Categories, product_specification: product_spectication})
+            res.render('admin/upload-products-detail', {
+                error_msg: [],
+                info: {categories: Categories, product_specification: product_spectication},
+                result: "success",
+                code: "200",
+                username: u.nick_name
+            });
+        } else {
+            res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400", username: u.nick_name})
+        }
+    });
 });
 
 /* 多图片上传 */

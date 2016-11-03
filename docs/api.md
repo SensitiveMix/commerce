@@ -182,7 +182,8 @@ Return Render Page:
 ### Calling
 
 ```bash
-    <%= info%>
+    <%= info.categories%>
+     <%= info.product_specification%>
     <%= status%>
 ```
 
@@ -193,22 +194,50 @@ Return Render Page:
     "error_msg": [
 
     ],
-    "info": [
-        {
-            firstCategory: 'test111',
-            secondCategory: 'test2222',
-            thirdCategory: 'test33333',
-            addBy: undefined,
-            status: 'NEW'
-        },
-        {
-            firstCategory: 'test222',
-            secondCategory: 'test2222',
-            thirdCategory: 'test33333',
-            addBy: undefined,
-            status: 'NEW'
-        }
-    ],
+    "info":{
+               categories: [
+                   {
+                       firstCategory: 'test111',
+                       secondCategory: 'test2222',
+                       thirdCategory: 'test33333',
+                       addBy: undefined,
+                       status: 'NEW'
+                   },
+                   {
+                       firstCategory: 'test222',
+                       secondCategory: 'test2222',
+                       thirdCategory: 'test33333',
+                       addBy: undefined,
+                       status: 'NEW'
+                   }
+               ],
+               product_specification: [    //产品的所有规格
+                   {
+                       _id: 581b71ad5852754becc801f6,
+                       material: [         //材料
+                           Object
+                       ],
+                       Color: [            //颜色
+                           Object
+                       ],
+                       pattern: [          //模式
+                           Object
+                       ],
+                       features: [         //特征
+                           Object
+                       ],
+                       hardOrSoft: [       //柔软度
+                           Object
+                       ],
+                       type: [             //类型
+                           Object
+                       ],
+                       compatibility: [    //兼容性
+                           Object
+                       ]
+                   }
+               ]
+           }
     "result": "success",
     "code": "200",
     "username": "admin"
@@ -221,7 +250,10 @@ Return Render Page:
     "error_msg": [
         "FORMAT ERROR"
     ],
-    "info": "",
+    "info": {
+    categories:[],
+    product_specification:[]
+    },
     "result": "fail",
     "code": "400",
     "username":"admin"
@@ -234,7 +266,10 @@ Return Render Page:
     "error_msg": [
         "INTERNAL SERVER ERROR"
     ],
-    "info": "",
+    "info": {
+      categories:[],
+      product_specification:[]
+    },
     "result": "fail",
     "code": "500",
     "username":"admin"
