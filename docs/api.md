@@ -177,7 +177,7 @@ curl -H "Content-Type: application/json \
 Return Render Page:
 
 ```bash
-    http://<host>/admin/upload_goods_detail
+    http://<host>/admin/upload-products-detail
 ```
 ### Calling
 
@@ -199,7 +199,8 @@ Return Render Page:
         "status": "NEW"
     },
     "result": "success",
-    "code": "200"
+    "code": "200",
+    "username":"admin"
 }
 ```
 
@@ -211,7 +212,8 @@ Return Render Page:
     ],
     "info": "",
     "result": "fail",
-    "code": "400"
+    "code": "400",
+    "username":"admin"
 }
 ```
 
@@ -223,7 +225,8 @@ Return Render Page:
     ],
     "info": "",
     "result": "fail",
-    "code": "500"
+    "code": "500",
+    "username":"admin"
 }
 ```
 
