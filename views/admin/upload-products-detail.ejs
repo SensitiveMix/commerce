@@ -110,7 +110,21 @@
 </style>
 <script>
     $(function () {
-
+        $.ajax({
+            type: 'POST',
+            url: '/admin/getGoodsDetail',
+            data: {
+                firstCategory: $('#catagory0 li.current').text(),
+                secondCategory: $('#catagory1 li.current').text().length?$('#catagory1 li.current').text():'',
+                thirdCategory: $('#catagory2 li.current').text().length?$('#catagory2 li.current').text():'',
+                addBy:'<%=username %>',
+                status:'NEW'
+            },
+            dataType: 'json',
+            success: function(data){
+                console.log(data);
+            }
+        });
     })
 </script>
 <div class="box box-info">
