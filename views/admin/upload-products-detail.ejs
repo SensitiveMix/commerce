@@ -99,20 +99,25 @@
     .syi-all-error-ri {
         float: left;
     }
+
     .syi-all-error-ri p.p1 {
         line-height: 34px;
         font-size: 14px;
         font-weight: 700;
     }
+
     .syi-all-error-ri p.p1 {
         color: #000;
     }
-    .nav:after,.nav:before{
+
+    .nav:after, .nav:before {
         display: none;
     }
+
     #syi_form {
         min-width: 100%;
     }
+
     .titlebox {
         margin: 20px 0;
         padding: 6px 10px 0px;
@@ -121,17 +126,20 @@
         border-bottom: 1px solid #d4deee;
         background-color: #eff4fb;
     }
+
     .titlebox h3 {
         display: inline;
         color: #000;
         font-size: 14px;
     }
+
     .mainlayout {
         position: relative;
-        min-width: 70%;
+        max-width: 70%;
         margin: 15px 0 10px 138px;
         clear: both;
     }
+
     .ml-title {
         position: absolute;
         width: 20%;
@@ -140,46 +148,57 @@
         text-align: right;
         color: #000000;
     }
+
     span.required {
         color: #ff0000;
         margin-right: 7px;
         vertical-align: middle;
     }
+
     a {
         color: #3366cc;
         text-decoration: none;
         outline: none;
     }
+
     .m-text {
         color: #999;
         padding-bottom: 7px;
     }
+
     .orgfont {
         color: #fb5501;
     }
+
     .greenfont {
         color: #257800;
     }
+
     .similarity-tip-txt {
         background: url("/assets/img/icon/similarity-tag.jpg") no-repeat;
         padding-left: 22px;
         line-height: 16px;
     }
+
     .addwid402 {
         width: 45%;
     }
+
     .attr-text-input {
         overflow: hidden;
         padding: 2px 0 2px 5px;
         color: #444;
         vertical-align: middle;
     }
+
     .helptips {
         color: #949494;
     }
+
     .marginleft10 {
         margin-left: 10px;
     }
+
     .helpicon {
         display: inline-block;
         margin-left: 9px;
@@ -189,6 +208,7 @@
         cursor: pointer;
         background: url("/assets/img/icon/help.png") 0 0 no-repeat;
     }
+
     .tip-error {
         margin-top: 5px;
         padding: 4px 10px 4px 30px;
@@ -199,6 +219,7 @@
         border: solid 1px #F7ACAC;
         background: url("/assets/img/icon/global-small-error.jpg") #feeeee 10px 50% no-repeat;
     }
+
     .clearfix:after {
         content: ".";
         display: block;
@@ -207,23 +228,128 @@
         visibility: hidden;
     }
 
+    .J_Items {
+        position: relative;
+        border-bottom: 1px solid #dedede;
+        margin: 0 8px;
+    }
+
+    .head-attributes {
+        position: absolute;
+        left: 11px;
+        top: 9px;
+        color: #999;
+    }
+
+    .body-attributes {
+        padding: 0 0 0 26%;
+        display: block;
+    }
+
+    .checkbox-inline-product-attributes {
+        /*float: left;*/
+        margin: 9px 40px 9px 0;
+        height: 18px;
+        color: #000;
+        text-decoration: none;
+        font-weight: 100;
+    }
+
+    .btns {
+        border-top: 1px dashed #dedede;
+        padding: 0 0 0 26%;
+    }
+
+    .btns span {
+        margin: 5px;
+        padding: 1px 12px;
+    }
+
+    .product-attributes {
+        border: 1px solid #dedede;
+    }
+
+    .checkbox-inline-product-attributes input[type=checkbox], input[type=radio] {
+        margin-right: 5px;
+    }
+    @media (min-width: 768px){
+        .bkcon.addborderline .form-inline .form-group {
+            width: 24%;
+        }
+        .bkcon.addborderline .form-inline .form-group input {
+            width: 100%;
+        }
+        #div_self_defind_attr {
+            border: 1px solid #dedede;
+        }
+    }
+
+
+
 </style>
 <script>
     $(function () {
-        $.ajax({
-            type: 'POST',
-            url: '/uploadTemporary',
-            data: {},
-            dataType: 'json',
-            success: function(data){
-                console.log(data);
+        $('#keywordbutton').click(function() {
+            var keyword2 = $("#keyword2");
+            var keyword3 = $("#keyword3");
+            if (keyword2.is(":hidden")) {
+                keyword2.show();
+            } else {
+                keyword3.show();
+                $("#keywordbutton").hide();
             }
-        });
+        })
 
-        $('#productname').bind('input propertychange', function() {
+
+        $('#productname').bind('input propertychange', function () {
             var productNameLength = $('#productname').val().length;
-            $('#productNameLengthSpan').text(140-productNameLength);
+            $('#productNameLengthSpan').text(140 - productNameLength);
         });
+        $('#submit-product-attributes').click(function(){
+            var product_attributes_type = new Array();
+            $('input[name="type"]:checked').each(function(){
+                product_attributes_type.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_compatibility = new Array();
+            $('input[name="compatibility"]:checked').each(function(){
+                product_attributes_compatibility.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_hardOrSoft = new Array();
+            $('input[name="hardOrSoft"]:checked').each(function(){
+                product_attributes_hardOrSoft.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_features = new Array();
+            $('input[name="features"]:checked').each(function(){
+                product_attributes_features.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_Color = new Array();
+            $('input[name="Color"]:checked').each(function(){
+                product_attributes_Color.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_material = new Array();
+            $('input[name="material"]:checked').each(function(){
+                product_attributes_material.push($(this).val());//向数组中添加元素
+            });
+
+            console.log(product_attributes_compatibility);
+            console.log(product_attributes_type);
+            product_attributes_compatibility.forEach(function (item_compatibility) {
+                product_attributes_Color.forEach(function (item_type) {
+                    var table_body_tr = '<tr><td>【'+item_compatibility+'】'+ item_type +'</td><td></td><td></td></tr>';
+
+                    $('#product-attribute-table tbody').append(table_body_tr);
+                })
+            })
+            $('#bulk_operation').on('click', function(){
+                $('#product-attribute-table tbody tr').each(function (index, item) {
+                    var eq_1 = $('input[name="price"]').val();
+                    $(item).find('td').eq(1).text(eq_1);
+                    var eq_2 = $('input[name="count"]').val();
+                    $(item).find('td').eq(2).text(eq_2);
+                })   
+            })
+
+        })
     })
 </script>
 <div class="box box-info">
@@ -242,14 +368,14 @@
             <span class="layer-l"></span>
             <span class="layer-r"></span>
             <div class="cat-titleconbox">
-                <b>当前已选择的产品类目：</b>
-                <% tempCategory.forEach(function (item) { %>
-                <span class="navbox"><%= item.firstCategory%><span class="nav">&gt;</span><%= item.secondCategory%><span class="nav">&gt;</span><%= item.thirdCategory%></span>
-                <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <%})%>
+
+                <b>当前已选择的产品类目：</b><span class="navbox">计算机和网络(Computers &amp; Networking)<span class="nav">&gt;</span>驱动器及存储设备(Drives &amp; Storages)<span
+                            class="nav">&gt;</span>硬盘盒(HDD Enclosures)</span>
                 <a class="marginleft20" href="#" onclick="javascript:history.go(-1);">«返回修改类目</a>
+
             </div>
         </div>
+
     </div>
     <!-- 已选择类目 结束 -->
     <!-- 错误信息 开始 -->
@@ -327,195 +453,89 @@
                 <p class="helptips">设置完整的产品属性有助于买家更容易找到您的产品<span helptipval="product_cattr_container"
                                                                  class="helpicon"></span></p>
                 <div class="product-attributes">
-                    <table class="table-property j-attrs-list">
-                        <tbody>
-                        <tr class="j-attr-item" data-id="1127401" data-isother="0" data-defined="0" data-located="0"
-                            data-style="3" data-required="0">
-                            <td class="bktit" title="品牌">品牌：</td>
-                            <td class="bkcon j-attrList" data-aid="1127401">
-                                <div class="posionrel clearfix"><input type="hidden" value="1127401"
-                                                                       id="syiBrandAttrId">
-                                    <div id="selectBrandsDiv" onclick="onSelectBrandsClick();" class="drop-down"><span
-                                                id="brandNameSpan" class="drop-down-value text-indent">- 无品牌 -</span>
-                                        <span class="drop-down-default"></span>
-                                        <div style="display: none;" id="brandsDiv" class="chouse-down-box text-indent">
-                                            <span>- 无品牌 -</span><span class="lasted"><a href="javascript:void(0);"
-                                                                                        id="showBrandContainer">选择其它品牌</a></span>
-                                        </div>
-                                        <iframe></iframe>
-                                    </div>
-                                    <div class="brand-select-dropdown hasBrand modalContainer" id="brandsContainerDiv"
-                                         style="display: none;"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="j-attr-item" data-id="699575" data-isother="1" data-defined="0" data-located="0"
-                            data-style="1" data-required="1">
-                            <td class="bktit" title="尺寸"><span class="required">*</span>尺寸：</td>
-                            <td class="bkcon j-attrList" data-aid="699575"><select class="attr-select j-attr-select"
-                                                                                   name="c_699575_vname">
-                                    <option value="" data-text="请选择" data-etext="">请选择</option>
-                                    <option value="982974" data-text="3.5英寸" data-etext="3.5''">3.5''(3.5英寸)</option>
-                                    <option value="982973" data-text="2.5英寸" data-etext="2.5''">2.5''(2.5英寸)</option>
-                                    <option value="982972" data-text="1.8英寸" data-etext="1.8''">1.8''(1.8英寸)</option>
-                                    <option value="982975" data-text="5.25英寸" data-etext="5.25''">5.25''(5.25英寸)
-                                    </option>
-                                    <option value="0" data-text="自定义" data-etext="">自定义</option>
-                                </select>
-                                <table class="edit-properties j-attr-define" style="display:none;">
-                                    <tbody class="j-attr-define-list">
-                                    <tr>
-                                        <th>默认参数</th>
-                                        <th>自定义内容</th>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div id="tip-error-attr-699575" style="display:none;" class="tip-error j-tip-error">
-                                    <span></span></div>
-                            </td>
-                        </tr>
-                        <tr class="j-attr-item" data-id="699576" data-isother="1" data-defined="0" data-located="0"
-                            data-style="1" data-required="1">
-                            <td class="bktit" title="外壳材质"><span class="required">*</span>外壳材质：</td>
-                            <td class="bkcon j-attrList" data-aid="699576"><select class="attr-select j-attr-select"
-                                                                                   name="c_699576_vname">
-                                    <option value="" data-text="请选择" data-etext="">请选择</option>
-                                    <option value="982976" data-text="塑料" data-etext="Plastic">Plastic(塑料)</option>
-                                    <option value="982977" data-text="铝" data-etext="Aluminum">Aluminum(铝)</option>
-                                    <option value="982978" data-text="钛" data-etext="Titanium">Titanium(钛)</option>
-                                    <option value="0" data-text="自定义" data-etext="">自定义</option>
-                                </select>
-                                <table class="edit-properties j-attr-define" style="display:none;">
-                                    <tbody class="j-attr-define-list">
-                                    <tr>
-                                        <th>默认参数</th>
-                                        <th>自定义内容</th>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div id="tip-error-attr-699576" style="display:none;" class="tip-error j-tip-error">
-                                    <span></span></div>
-                            </td>
-                        </tr>
-                        <tr class="j-attr-item" data-id="699577" data-isother="1" data-defined="0" data-located="0"
-                            data-style="1" data-required="0">
-                            <td class="bktit" title="传输速率">传输速率：</td>
-                            <td class="bkcon j-attrList" data-aid="699577"><select class="attr-select j-attr-select"
-                                                                                   name="c_699577_vname">
-                                    <option value="" data-text="请选择" data-etext="">请选择</option>
-                                    <option value="982980" data-text="300Mbps" data-etext="300Mbps">300Mbps(300Mbps)
-                                    </option>
-                                    <option value="982981" data-text="480Mbps" data-etext="480Mbps">480Mbps(480Mbps)
-                                    </option>
-                                    <option value="982979" data-text="60Mbps" data-etext="60Mbps">60Mbps(60Mbps)
-                                    </option>
-                                    <option value="982983" data-text="3000Mbps" data-etext="3000Mbps">
-                                        3000Mbps(3000Mbps)
-                                    </option>
-                                    <option value="982982" data-text="1500Mbps" data-etext="1500Mbps">
-                                        1500Mbps(1500Mbps)
-                                    </option>
-                                    <option value="0" data-text="自定义" data-etext="">自定义</option>
-                                </select>
-                                <table class="edit-properties j-attr-define" style="display:none;">
-                                    <tbody class="j-attr-define-list">
-                                    <tr>
-                                        <th>默认参数</th>
-                                        <th>自定义内容</th>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div id="tip-error-attr-699577" style="display:none;" class="tip-error j-tip-error">
-                                    <span></span></div>
-                            </td>
-                        </tr>
-                        <tr class="j-attr-item" data-id="699579" data-isother="1" data-defined="0" data-located="0"
-                            data-style="1" data-required="0">
-                            <td class="bktit" title="内部接口">内部接口：</td>
-                            <td class="bkcon j-attrList" data-aid="699579"><select class="attr-select j-attr-select"
-                                                                                   name="c_699579_vname">
-                                    <option value="" data-text="请选择" data-etext="">请选择</option>
-                                    <option value="982990" data-text="SATA" data-etext="SATA">SATA(SATA)</option>
-                                    <option value="982989" data-text="IDE" data-etext="IDE">IDE(IDE)</option>
-                                    <option value="0" data-text="自定义" data-etext="">自定义</option>
-                                </select>
-                                <table class="edit-properties j-attr-define" style="display:none;">
-                                    <tbody class="j-attr-define-list">
-                                    <tr>
-                                        <th>默认参数</th>
-                                        <th>自定义内容</th>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div id="tip-error-attr-699579" style="display:none;" class="tip-error j-tip-error">
-                                    <span></span></div>
-                            </td>
-                        </tr>
-                        <tr class="j-attr-item" data-id="699578" data-isother="1" data-defined="0" data-located="0"
-                            data-style="1" data-required="0">
-                            <td class="bktit" title="外部接口">外部接口：</td>
-                            <td class="bkcon j-attrList" data-aid="699578"><select class="attr-select j-attr-select"
-                                                                                   name="c_699578_vname">
-                                    <option value="" data-text="请选择" data-etext="">请选择</option>
-                                    <option value="982985" data-text="USB" data-etext="USB">USB(USB)</option>
-                                    <option value="982986" data-text="eSATA" data-etext="eSATA">eSATA(eSATA)</option>
-                                    <option value="982984" data-text="IDE" data-etext="IDE">IDE(IDE)</option>
-                                    <option value="982988" data-text="IEEE 1394接口" data-etext="IEEE 1394">IEEE 1394(IEEE
-                                        1394接口)
-                                    </option>
-                                    <option value="982987" data-text="以太网" data-etext="Ethernet">Ethernet(以太网)</option>
-                                    <option value="0" data-text="自定义" data-etext="">自定义</option>
-                                </select>
-                                <table class="edit-properties j-attr-define" style="display:none;">
-                                    <tbody class="j-attr-define-list">
-                                    <tr>
-                                        <th>默认参数</th>
-                                        <th>自定义内容</th>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div id="tip-error-attr-699578" style="display:none;" class="tip-error j-tip-error">
-                                    <span></span></div>
-                            </td>
-                        </tr>
-                        <tr class="j-attr-item" data-id="1069578" data-isother="1" data-defined="0" data-located="0"
-                            data-style="1" data-required="0">
-                            <td class="bktit" title="是否有包装">是否有包装：</td>
-                            <td class="bkcon j-attrList" data-aid="1069578"><select class="attr-select j-attr-select"
-                                                                                    name="c_1069578_vname">
-                                    <option value="" data-text="请选择" data-etext="">请选择</option>
-                                    <option value="2062588" data-text="有" data-etext="Yes">Yes(有)</option>
-                                    <option value="2062589" data-text="无" data-etext="No">No(无)</option>
-                                    <option value="0" data-text="自定义" data-etext="">自定义</option>
-                                </select>
-                                <table class="edit-properties j-attr-define" style="display:none;">
-                                    <tbody class="j-attr-define-list">
-                                    <tr>
-                                        <th>默认参数</th>
-                                        <th>自定义内容</th>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div id="tip-error-attr-1069578" style="display:none;" class="tip-error j-tip-error">
-                                    <span></span></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="bktit">自定义属性：</td>
-                            <td class="bkcon j-custom-attr-list">
-                                <div class="j-custom-attr-item"><p class="marginbottom5 clearfix"><input type="text"
-                                                                                                         class="attr-text-input custom1 j-custom-attr-name"
-                                                                                                         maxlength="40">
-                                        <input type="text" class="attr-text-input custom1 j-custom-attr-value"
-                                               maxlength="40"> <a class="custom1 j-custom-attr-add" href="javascript:;">添加更多</a>
-                                    </p>
-                                    <div style="display:none" class="tip-error j-custom-attr-tip-error"><span></span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="items J_Items">
+                        <div class="head-attributes">compatibility</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.compatibility.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="compatibility" name="compatibility" value="<%= item %>"><%= item %>
+                                </label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="items J_Items">
+                        <div class="head-attributes">type</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.type.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="type" name="type" value="<%= item %>"><%= item %>
+                                </label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="items J_Items">
+                        <div class="head-attributes">hardOrSoft</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.hardOrSoft.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="hardOrSoft" name="hardOrSoft" value="<%= item %>"><%= item %>
+                                </label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="items J_Items">
+                        <div class="head-attributes">features</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.features.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="features" name="features" value="<%= item %>"><%= item %></label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="items J_Items">
+                        <div class="head-attributes">pattern</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.pattern.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="pattern" name="pattern" value="<%= item %>"><%= item %></label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="items J_Items">
+                        <div class="head-attributes">Color</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.Color.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="Color" name="Color" value="<%= item %>"><%= item %></label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="items J_Items" style="border-bottom: 0">
+                        <div class="head-attributes">material</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.material.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="material" name="material" value="<%= item %>"><%= item %></label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btns">
+                        <span class="btn btn-default" id="submit-product-attributes">提交</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -540,22 +560,11 @@
 
         </div>
         <!-- 产品基本属性 结束 -->
-        <!-- 兼容性 开始 -->
-        <div class="mainlayout clearfix j-multiattributes-container" style="display:none;">
-            <div class="ml-title">兼容性：</div>
-            <p class="helptips">请设置产品的兼容性，例如兼容哪些品牌、型号、年代。可多选。<span class="helpicon" title="兼容性帮助"
-                                                                   data-helpid="fixedAttributes"></span></p>
-            <a id="a_multiattributes"></a>
-            <div><a href="#" class="j-multiattributes-trigger">设置</a>
-            </div>
-        </div>
-        <!-- 兼容性 结束 -->
-        <!-- 产品规格 开始 -->
+        <!--产品销售规格 开始-->
         <div class="mainlayout j-basic-standard-container clearfix">
             <div class="ml-title">
-                产品规格：
+                产品销售规格：
             </div>
-            <p class="helptips">产品的不同规格，可以设置不同的零售价，并在前台展示给买家</p>
             <!-- ----- 产品基本属性结束 -----  -->
             <div class="product-attributes2" id="j-attribute-list">
                 <div>
@@ -568,42 +577,44 @@
                     <table class="table-property">
                         <tbody>
                         <tr>
-                            <td class="bktit addborderline">自定义规格</td>
+                            <td class="col-sm-2 bktit addborderline">批量操作</td>
                             <td class="bkcon addborderline">
-                                <div class="similarity-tip-txt">为提升买家购物体验，促进购买！上传自定义的属性值图片会优先在产品详情页关联展示。</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="bktit"></td>
-                            <td class="bkcon addpadtop j-attrList" data-aid="9999">
-                                <table class="edit-properties j-cattr-box" style="display:none">
-                                    <thead>
-                                    <tr>
-                                        <th>自定义规格名称</th>
-                                        <th>自定义图片（JPG格式，≤200K，可不添加）</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody class="j-customAttr-box">
-                                    </tbody>
-                                </table>
-                                <p class="marginbottom5 clearfix"><a href="#"
-                                                                     class="addmoreprop j-addCustomAttr"><span></span>增加自定义规格</a>
-                                </p>
-
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputEmail2">Price</label>
+                                        <input type="text" class="form-control" name="price" id="exampleInputEmail2" placeholder="Price">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputEmail2">Count</label>
+                                        <input type="text" class="form-control" name="count" id="exampleInputEmail2" placeholder="Count">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputEmail2">ProductId</label>
+                                        <input type="text" class="form-control" name="productId" id="exampleInputEmail2" placeholder="ProductId">
+                                    </div>
+                                    <a class="btn btn-default" id="bulk_operation">Confirm</a>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-                    <div style="display:none" class="tip-error" id="msgdiv_9999" data-anchor="div_self_defind_attr"
-                         data-id="tips-saletype" data-name="自定义规格">您选取的图片中有大于200K的图片
-                    </div>
+                    <table class="table table-bordered" id="product-attribute-table">
+                        <thead>
+                        <tr>
+                            <td class="col-sm-2 bktit addborderline">颜色分类</td>
+                            <td class="col-sm-2 bktit addborderline">价格(元)</td>
+                            <td class="col-sm-2 bktit addborderline">数量(件)</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
 
         </div>
-        <!-- 产品规格 结束 -->
-
+        <!--产品销售规格 结束-->
 
         <!-- 属性图片上传入口参数   -->
         <input id="functionname_avim" name="functionname_avim" type="hidden" value="avim">  <!--功能名   	不可以为空-->
