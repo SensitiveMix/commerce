@@ -714,7 +714,7 @@ router.post('/uploadTemporary', function (req, res, next) {
                 firstCategory: req.body.firstCategory,
                 secondCategory: req.body.secondCategory,
                 thirdCategory: req.body.thirdCategory,
-                addBy: u.nick_name,
+                addBy: req.body.addBy,
                 upload_time: (new Date().getTime() / 1000).toFixed(),
                 status: 'NEW'
             }
@@ -726,7 +726,7 @@ router.post('/uploadTemporary', function (req, res, next) {
                 console.log(err);
                 res.send({error_msg: ['INTERNAL SERVER ERROR'], info: "", result: "fail", code: "500"})
             } else {
-                db.uploadTemporarys.find({'addBy': req.body.username}, null, {
+                db.uploadTemporarys.find({'addBy': req.body.addBy}, null, {
                     sort: {
                         upload_time: -1
                     }
