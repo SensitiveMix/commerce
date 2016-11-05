@@ -320,15 +320,41 @@ router.post('/doChangeConditions', function (req, res) {
 });
 
 //上传产品
-router.get('/upload', checkLogin);
-router.get('/upload', function (req, res) {
-    db.categorys.find({}, function (err, result) {
-        if (err) res.send('404');
-        console.log(result);
-        res.render('admin/upload_goods', {username: u.nick_name, upload: [], category: result});
-    });
-
-});
+// router.get('/upload', checkLogin);
+// router.get('/upload', function (req, res) {
+//     db.categorys.find({}, function (err, category) {
+//         if (err) res.send('404');
+//         db.uploadTemporarys.find({}, null, {
+//             sort: {
+//                 upload_time: -1
+//             }
+//         }, function (err, result) {
+//             if (err) {
+//                 res.render({
+//                     error_msg: ['INTERNAL SERVER ERROR'],
+//                     info: "",
+//                     result: "fail",
+//                     code: "500",
+//                     username: u.nick_name,
+//                     upload: [],
+//                     category: category
+//                 });
+//             } else {
+//                 res.render('admin/upload_goods', {
+//                     error_msg: [],
+//                     info: result,
+//                     result: "success",
+//                     code: "200",
+//                     username: u.nick_name,
+//                     upload: [],
+//                     category: category
+//                 });
+//             }
+//
+//         }).limit(5);
+//     });
+//
+// });
 
 //首页轮播图片替换
 router.post('/saveBanners', checkLogin);
@@ -661,8 +687,26 @@ router.post('/doAddCategory', function (req, res) {
     });
 });
 
+
+router.get('/uploadTemporary', function (req, res, next) {
+    db.uploadTemporarys.find({}, null, {
+        sort: {
+            upload_time: -1
+        }
+    }, function (err, result) {
+        if (err) {
+            res.send({error_msg: ['INTERNAL SERVER ERROR'], info: "", result: "fail", code: "500"});
+        } else {
+            console.log('get ')
+            res.send({error_msg: [], info: result, result: "success", code: "200"});
+        }
+
+    }).limit(5);
+})
+
 //保存最近上传类目接口
 router.post('/uploadTemporary', function (req, res, next) {
+
     if (req.body.firstCategory == '' && req.body.secondCategory != '') {
         res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400"})
     } else {
@@ -698,6 +742,7 @@ router.post('/uploadTemporary', function (req, res, next) {
             }
         });
     }
+    
 });
 
 router.get('/specification', checkLogin);
