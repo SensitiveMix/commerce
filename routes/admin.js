@@ -689,7 +689,7 @@ router.post('/doAddCategory', function (req, res) {
 
 
 router.get('/uploadTemporary', function (req, res, next) {
-    db.uploadTemporarys.find({}, null, {
+    db.uploadTemporarys.find({'addBy': req.query.username}, null, {
         sort: {
             upload_time: -1
         }
@@ -726,7 +726,7 @@ router.post('/uploadTemporary', function (req, res, next) {
                 console.log(err);
                 res.send({error_msg: ['INTERNAL SERVER ERROR'], info: "", result: "fail", code: "500"})
             } else {
-                db.uploadTemporarys.find({}, null, {
+                db.uploadTemporarys.find({'addBy': req.body.username}, null, {
                     sort: {
                         upload_time: -1
                     }
@@ -742,7 +742,7 @@ router.post('/uploadTemporary', function (req, res, next) {
             }
         });
     }
-    
+
 });
 
 router.get('/specification', checkLogin);
