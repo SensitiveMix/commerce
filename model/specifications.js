@@ -10,7 +10,8 @@ var specManage = new Schema({
     features: [],
     pattern: [],
     Color:[],
-    material:[]
+    material:[],
+    addBy:String
 });
 
 module.exports = specManage;

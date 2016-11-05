@@ -4,1119 +4,409 @@
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">产品规格管理</h3>
+        <button class="btn btn-info" onclick="CompatibilityCLK()">添加</button>
     </div>
     <div class="box-body">
-        <div class="col-lg-6">
-            <div class="box-body ">
-                <table id="compatibility" class="table table-bordered " aria-describedby="example2_info">
-                    <thead>
-                    <tr>
-                        <th>属性名称</th>
-                        <th>添加人</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-            </div>
-            <div class="box-footer">
-                <button class="btn btn-info pull-right">提交</button>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="box-body">
-                <table id="compatibility" class="table table-bordered " aria-describedby="example2_info">
-                    <thead>
-                    <tr>
-                        <th>属性名称</th>
-                        <th>添加人</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-                <button class="btn btn-info pull-right">提交</button>
-            </div>
-            <!-- /.box-footer -->
-        </div>
-
-
-        <div class="col-lg-6">
-            <!-- /.box-header -->
-            <!-- form start -->
-            <div class="box-body">
-                <table id="type" class="table table-bordered " aria-describedby="example2_info">
-                    <thead>
-                    <tr>
-                        <th>属性名称</th>
-                        <th>添加人</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-                <button class="btn btn-info pull-right">提交</button>
-            </div>
-            <!-- /.box-footer -->
-        </div>
-
-        <div class="col-lg-6">
-            <div class="box-body">
-                <table id="handOrSoft" class="table table-bordered " aria-describedby="example2_info">
-                    <thead>
-                    <tr>
-                        <th>属性名称</th>
-                        <th>添加人</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-                <div class="box-footer">
-                    <button class="btn btn-info pull-right">提交</button>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Compatibility</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody class="Compatibility">
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.compatibility.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem %>" id="compatibility"
+                                        onclick="deltobase(this.name,this.id)">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
                 </div>
-            </div>
-
+            </div><!-- /.box -->
         </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">type</h3>
 
-        <div class="col-lg-6">
-            <div class="box-body">
-                <table id="feature" class="table table-bordered " aria-describedby="example2_info">
-                    <thead>
-                    <tr>
-                        <th>属性名称</th>
-                        <th>添加人</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-            </div>
-            <div class="box-footer">
-                <button class="btn btn-info pull-right">提交</button>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="box-body">
-                <table id="pattern" class="table table-bordered " aria-describedby="example2_info">
-                    <thead>
-                    <tr>
-                        <th>属性名称</th>
-                        <th>添加人</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-                <div class="box-footer">
-                    <button class="btn btn-info pull-right">提交</button>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.type.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem %>" id="type"
+                                        onclick="deltobase(this.name,this.id)">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
                 </div>
-            </div>
+            </div><!-- /.box -->
         </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">hardOrSoft</h3>
 
-        <div class="col-lg-6">
-            <div class="box-body">
-                <table id="material" class="table table-bordered " aria-describedby="example2_info">
-                    <thead>
-                    <tr>
-                        <th>属性名称</th>
-                        <th>添加人</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-                <div class="box-footer">
-                    <button class="btn btn-info pull-right">提交</button>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.hardOrSoft.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem %>" id="hardOrSoft"
+                                        onclick="deltobase(this.name,this.id)">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
                 </div>
-            </div>
+            </div><!-- /.box -->
         </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">features</h3>
 
-        <div class="col-lg-6">
-            <div class="box-body">
-                <table id="pattern" class="table table-bordered " aria-describedby="example2_info">
-                    <thead>
-                    <tr>
-                        <th>属性名称</th>
-                        <th>添加人</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-                <div class="box-footer">
-                    <button class="btn btn-info pull-right">提交</button>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.features.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem %>" id="features"
+                                        onclick="deltobase(this.name,this.id)">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
                 </div>
-            </div>
+            </div><!-- /.box -->
+        </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">pattern</h3>
+
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.pattern.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem %>" id="pattern"
+                                        onclick="deltobase(this.name,this.id)">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
+                </div>
+            </div><!-- /.box -->
+        </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Color</h3>
+
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.Color.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem %>" id="Color"
+                                        onclick="deltobase(this.name,this.id)">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
+                </div>
+            </div><!-- /.box -->
+        </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">material</h3>
+
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.material.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem %>" id="material"
+                                        onclick="deltobase(this.name,this.id)">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
+                </div>
+            </div><!-- /.box -->
         </div>
     </div>
+    <!--添加 form start -->
+    <div class="form-horizontal  layer_notice hidden" id="addRoboteForm">
+        <form class="" hidden="hidden" action="addParam" style="margin-top: 50px" method="post" id="addRote">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">属性</label>
+
+                    <div class="col-sm-6">
+                        <select id="pd_select" class="form-control" name="" id="">
+                            <option value="compatibility">
+                                compatibility
+                            </option>
+                            <option value="type">
+                                type
+                            </option>
+                            <option value="hardOrSoft">
+                                hardOrSoft
+                            </option>
+                            <option value="features">
+                                features
+                            </option>
+                            <option value="pattern">
+                                pattern
+                            </option>
+                            <option value="Color">
+                                Color
+                            </option>
+                            <option value="material">
+                                material
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">属性值</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="spec" name="spec">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">操作人</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="add_by" name="add_by">
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <button type="button" id="subaddRobotBtn" class="btn btn-info pull-right closeBtn"
+                        onclick="addtobase()">添加
+                </button>
+            </div>
+        </form>
+
+    </div>
+
 </div>
 
 <script>
-    $(document).ready(function () {
-        //初始化table
-        $('#compatibility').DataTable({
-            "ajax": "douserlist",//获取数据的url
-            "bFilter": false,                       //不使用过滤功能
-            "bLengthChange": false,                 //用户不可改变每页显示数量
-            "iDisplayLength": 9,                    //每页显示8条数据
-            "oLanguage": {                          //汉化
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "没有检索到数据",
-                "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
-                "sInfoEmtpy": "没有数据",
-                "sProcessing": "正在加载数据...",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "前页",
-                    "sNext": "后页",
-                    "sLast": "尾页"
-                }
+    function CompatibilityCLK() {
+        $('#addRoboteForm').removeClass('hidden');
+        $('#addRote').removeClass('hidden');
+        $('#addRote').show();
+        layer.open({
+            type: 1,
+            skin: 'layui-layer-rim',
+            shade: false,
+            title: false, //不显示标题
+            content: $('#addRoboteForm'), //捕获的元素
+            area: ['400px', "400px"],
+            cancel: function (index) {
+                layer.close(index);
             },
-            "columns": [
-                {"data": "_id"},
-                {"data": "name"},
-                {"data": "nick_name"},
-                {"data": "password"},
-                {"data": "levelName"},
-                {"data": "level"},
-                {"data": "registerTime"}
-            ],
-            "columnDefs": [
-                {
-                    "targets": [0],
-                    "data": "_id",
-                    "render": function (data, type, full) {
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [5],
-                    "data": "level",
-                    "render": function (data, type, full) {
-                        return "<button type='button' id='update' class='btn btn-primary updatess'>修改</button>";
-                    }
-                },
-                {
-                    "targets": [6],
-                    "data": "level",
-                    "render": function (data, type, full) {
-
-                        return "<button type='button' id='delete' class='btn btn-primary deletess'>删除</button>" + "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [7],
-                    "data": "level",
-                    "render": function (data, type, full) {
-
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                }, {
-                    "targets": [3],
-                    "data": "password",
-                    "render": function (data, type, full) {
-                        return "********" + "<input id='oldpass' type='hidden' value=" + data + ">";
-                    }
-                }
-            ], "fnDrawCallback": function (oSettings, json) {
-                $(".updatess").click(function () {
-                    $('#changeRobotForm').removeClass('hidden');
-                    $('#changerot').show();
-                    var trNode = $(this).parent().parent();
-                    trNodep = trNode;
-                    $("#account").val(trNode.children().eq(1).html());
-                    var sletcval = trNode.children().eq(7).find('input').val();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-
-                    $("#robotid").val(hiddenid);
-
-                    $("#nick_name").val(trNode.children().eq(2).html());
-                    $("input[name=password]").val("********");
-                    $("input[name=level_name]").val(trNode.children().eq(4).html());
-
-                    console.log(sletcval);
-
-                    $("#roleselect").val(sletcval);
-
-                    layer.open({
-                        type: 1,
-                        skin: 'layui-layer-rim',
-                        shade: false,
-                        title: false, //不显示标题
-                        content: $('#changeRobotForm'), //捕获的元素
-                        area: ['420px', "400px"],
-                        cancel: function (index) {
-                            layer.close(index);
-
-                        },
-                        scrollbar: false
-                    });
-                });
-                //绑定删除事件
-                $(".deletess").on('click', function () {
-                    var trNode = $(this).parent().parent();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-                    var parmets = {
-                        user_id: hiddenid
-                    }
-                    layer.confirm('您确定要删除吗？', {
-                        btn: ['确定', '返回'] //按钮
-                    }, function () {
-                        $.ajax({
-                            url: 'doDelUer',
-                            type: 'POST',
-                            data: parmets,
-                            success: function (returndata) {
-                                if (returndata.code == '200') {
-                                    layer.msg('删除成功');
-                                    trNode.children().hide();
-//                                    setTimeout('location.reload()', 1000);
-                                }
-                            }, error: function (returndata) {
-                                if (returndata.code == '500') {
-                                    layer.alert('更新失败，请检查是否有非法词汇！');
-                                }
-                            }
-                        });
-                    }, function () {
-                        layer.msg('已取消');
-                    });
-                });
-            }
+            scrollbar: false
         });
-        //初始化table
-        $('#type').DataTable({
-            "ajax": "douserlist",//获取数据的url
-            "bFilter": false,                       //不使用过滤功能
-            "bLengthChange": false,                 //用户不可改变每页显示数量
-            "iDisplayLength": 9,                    //每页显示8条数据
-            "oLanguage": {                          //汉化
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "没有检索到数据",
-                "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
-                "sInfoEmtpy": "没有数据",
-                "sProcessing": "正在加载数据...",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "前页",
-                    "sNext": "后页",
-                    "sLast": "尾页"
-                }
-            },
-            "columns": [
-                {"data": "_id"},
-                {"data": "name"},
-                {"data": "nick_name"},
-                {"data": "password"},
-                {"data": "levelName"},
-                {"data": "level"},
-                {"data": "registerTime"}
-            ],
-            "columnDefs": [
-                {
-                    "targets": [0],
-                    "data": "_id",
-                    "render": function (data, type, full) {
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [5],
-                    "data": "level",
-                    "render": function (data, type, full) {
-                        return "<button type='button' id='update' class='btn btn-primary updatess'>修改</button>";
-                    }
-                },
-                {
-                    "targets": [6],
-                    "data": "level",
-                    "render": function (data, type, full) {
+    }
 
-                        return "<button type='button' id='delete' class='btn btn-primary deletess'>删除</button>" + "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [7],
-                    "data": "level",
-                    "render": function (data, type, full) {
+    function addtobase() {
+        var params = {
+            property: $("#spec").val(),
+            addBy: $("#add_by").val(),
+            addProperty: $("#pd_select").find("option:selected").val()
+        }
+        console.log(params)
+        $.ajax({
+            url: 'doAddProperty',
+            type: 'POST',
+            data: params,
+            success: function (retmsgurndata) {
+                console.log(retmsgurndata)
+                $("#form-signin").hide();
+                setTimeout('location.reload()', 1000);
+                layer.msg('添加成功');
+                layer.closeAll();
+                $("#spec").val('');
+                $("#add_by").val('');
+                $("#pd_select").find("option:selected").val('Compatibility');
 
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                }, {
-                    "targets": [3],
-                    "data": "password",
-                    "render": function (data, type, full) {
-                        return "********" + "<input id='oldpass' type='hidden' value=" + data + ">";
-                    }
-                }
-            ], "fnDrawCallback": function (oSettings, json) {
-                $(".updatess").click(function () {
-                    $('#changeRobotForm').removeClass('hidden');
-                    $('#changerot').show();
-                    var trNode = $(this).parent().parent();
-                    trNodep = trNode;
-                    $("#account").val(trNode.children().eq(1).html());
-                    var sletcval = trNode.children().eq(7).find('input').val();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-
-                    $("#robotid").val(hiddenid);
-
-                    $("#nick_name").val(trNode.children().eq(2).html());
-                    $("input[name=password]").val("********");
-                    $("input[name=level_name]").val(trNode.children().eq(4).html());
-
-                    console.log(sletcval);
-
-                    $("#roleselect").val(sletcval);
-
-                    layer.open({
-                        type: 1,
-                        skin: 'layui-layer-rim',
-                        shade: false,
-                        title: false, //不显示标题
-                        content: $('#changeRobotForm'), //捕获的元素
-                        area: ['420px', "400px"],
-                        cancel: function (index) {
-                            layer.close(index);
-
-                        },
-                        scrollbar: false
-                    });
-                });
-                //绑定删除事件
-                $(".deletess").on('click', function () {
-                    var trNode = $(this).parent().parent();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-                    var parmets = {
-                        user_id: hiddenid
-                    }
-                    layer.confirm('您确定要删除吗？', {
-                        btn: ['确定', '返回'] //按钮
-                    }, function () {
-                        $.ajax({
-                            url: 'doDelUer',
-                            type: 'POST',
-                            data: parmets,
-                            success: function (returndata) {
-                                if (returndata.code == '200') {
-                                    layer.msg('删除成功');
-                                    trNode.children().hide();
-//                                    setTimeout('location.reload()', 1000);
-                                }
-                            }, error: function (returndata) {
-                                if (returndata.code == '500') {
-                                    layer.alert('更新失败，请检查是否有非法词汇！');
-                                }
-                            }
-                        });
-                    }, function () {
-                        layer.msg('已取消');
-                    });
-                });
-            }
-        });
-        //初始化table
-        $('#handOrSoft').DataTable({
-            "ajax": "douserlist",//获取数据的url
-            "bFilter": false,                       //不使用过滤功能
-            "bLengthChange": false,                 //用户不可改变每页显示数量
-            "iDisplayLength": 9,                    //每页显示8条数据
-            "oLanguage": {                          //汉化
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "没有检索到数据",
-                "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
-                "sInfoEmtpy": "没有数据",
-                "sProcessing": "正在加载数据...",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "前页",
-                    "sNext": "后页",
-                    "sLast": "尾页"
-                }
-            },
-            "columns": [
-                {"data": "_id"},
-                {"data": "name"},
-                {"data": "nick_name"},
-                {"data": "password"},
-                {"data": "levelName"},
-                {"data": "level"},
-                {"data": "registerTime"}
-            ],
-            "columnDefs": [
-                {
-                    "targets": [0],
-                    "data": "_id",
-                    "render": function (data, type, full) {
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [5],
-                    "data": "level",
-                    "render": function (data, type, full) {
-                        return "<button type='button' id='update' class='btn btn-primary updatess'>修改</button>";
-                    }
-                },
-                {
-                    "targets": [6],
-                    "data": "level",
-                    "render": function (data, type, full) {
-
-                        return "<button type='button' id='delete' class='btn btn-primary deletess'>删除</button>" + "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [7],
-                    "data": "level",
-                    "render": function (data, type, full) {
-
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                }, {
-                    "targets": [3],
-                    "data": "password",
-                    "render": function (data, type, full) {
-                        return "********" + "<input id='oldpass' type='hidden' value=" + data + ">";
-                    }
-                }
-            ], "fnDrawCallback": function (oSettings, json) {
-                $(".updatess").click(function () {
-                    $('#changeRobotForm').removeClass('hidden');
-                    $('#changerot').show();
-                    var trNode = $(this).parent().parent();
-                    trNodep = trNode;
-                    $("#account").val(trNode.children().eq(1).html());
-                    var sletcval = trNode.children().eq(7).find('input').val();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-
-                    $("#robotid").val(hiddenid);
-
-                    $("#nick_name").val(trNode.children().eq(2).html());
-                    $("input[name=password]").val("********");
-                    $("input[name=level_name]").val(trNode.children().eq(4).html());
-
-                    console.log(sletcval);
-
-                    $("#roleselect").val(sletcval);
-
-                    layer.open({
-                        type: 1,
-                        skin: 'layui-layer-rim',
-                        shade: false,
-                        title: false, //不显示标题
-                        content: $('#changeRobotForm'), //捕获的元素
-                        area: ['420px', "400px"],
-                        cancel: function (index) {
-                            layer.close(index);
-
-                        },
-                        scrollbar: false
-                    });
-                });
-                //绑定删除事件
-                $(".deletess").on('click', function () {
-                    var trNode = $(this).parent().parent();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-                    var parmets = {
-                        user_id: hiddenid
-                    }
-                    layer.confirm('您确定要删除吗？', {
-                        btn: ['确定', '返回'] //按钮
-                    }, function () {
-                        $.ajax({
-                            url: 'doDelUer',
-                            type: 'POST',
-                            data: parmets,
-                            success: function (returndata) {
-                                if (returndata.code == '200') {
-                                    layer.msg('删除成功');
-                                    trNode.children().hide();
-//                                    setTimeout('location.reload()', 1000);
-                                }
-                            }, error: function (returndata) {
-                                if (returndata.code == '500') {
-                                    layer.alert('更新失败，请检查是否有非法词汇！');
-                                }
-                            }
-                        });
-                    }, function () {
-                        layer.msg('已取消');
-                    });
-                });
-            }
-        });
-        //初始化table
-        $('#feature').DataTable({
-            "ajax": "douserlist",//获取数据的url
-            "bFilter": false,                       //不使用过滤功能
-            "bLengthChange": false,                 //用户不可改变每页显示数量
-            "iDisplayLength": 9,                    //每页显示8条数据
-            "oLanguage": {                          //汉化
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "没有检索到数据",
-                "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
-                "sInfoEmtpy": "没有数据",
-                "sProcessing": "正在加载数据...",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "前页",
-                    "sNext": "后页",
-                    "sLast": "尾页"
-                }
-            },
-            "columns": [
-                {"data": "_id"},
-                {"data": "name"},
-                {"data": "nick_name"},
-                {"data": "password"},
-                {"data": "levelName"},
-                {"data": "level"},
-                {"data": "registerTime"}
-            ],
-            "columnDefs": [
-                {
-                    "targets": [0],
-                    "data": "_id",
-                    "render": function (data, type, full) {
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [5],
-                    "data": "level",
-                    "render": function (data, type, full) {
-                        return "<button type='button' id='update' class='btn btn-primary updatess'>修改</button>";
-                    }
-                },
-                {
-                    "targets": [6],
-                    "data": "level",
-                    "render": function (data, type, full) {
-
-                        return "<button type='button' id='delete' class='btn btn-primary deletess'>删除</button>" + "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [7],
-                    "data": "level",
-                    "render": function (data, type, full) {
-
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                }, {
-                    "targets": [3],
-                    "data": "password",
-                    "render": function (data, type, full) {
-                        return "********" + "<input id='oldpass' type='hidden' value=" + data + ">";
-                    }
-                }
-            ], "fnDrawCallback": function (oSettings, json) {
-                $(".updatess").click(function () {
-                    $('#changeRobotForm').removeClass('hidden');
-                    $('#changerot').show();
-                    var trNode = $(this).parent().parent();
-                    trNodep = trNode;
-                    $("#account").val(trNode.children().eq(1).html());
-                    var sletcval = trNode.children().eq(7).find('input').val();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-
-                    $("#robotid").val(hiddenid);
-
-                    $("#nick_name").val(trNode.children().eq(2).html());
-                    $("input[name=password]").val("********");
-                    $("input[name=level_name]").val(trNode.children().eq(4).html());
-
-                    console.log(sletcval);
-
-                    $("#roleselect").val(sletcval);
-
-                    layer.open({
-                        type: 1,
-                        skin: 'layui-layer-rim',
-                        shade: false,
-                        title: false, //不显示标题
-                        content: $('#changeRobotForm'), //捕获的元素
-                        area: ['420px', "400px"],
-                        cancel: function (index) {
-                            layer.close(index);
-
-                        },
-                        scrollbar: false
-                    });
-                });
-                //绑定删除事件
-                $(".deletess").on('click', function () {
-                    var trNode = $(this).parent().parent();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-                    var parmets = {
-                        user_id: hiddenid
-                    }
-                    layer.confirm('您确定要删除吗？', {
-                        btn: ['确定', '返回'] //按钮
-                    }, function () {
-                        $.ajax({
-                            url: 'doDelUer',
-                            type: 'POST',
-                            data: parmets,
-                            success: function (returndata) {
-                                if (returndata.code == '200') {
-                                    layer.msg('删除成功');
-                                    trNode.children().hide();
-//                                    setTimeout('location.reload()', 1000);
-                                }
-                            }, error: function (returndata) {
-                                if (returndata.code == '500') {
-                                    layer.alert('更新失败，请检查是否有非法词汇！');
-                                }
-                            }
-                        });
-                    }, function () {
-                        layer.msg('已取消');
-                    });
-                });
-            }
-        });
-        //初始化table
-        $('#pattern').DataTable({
-            "ajax": "douserlist",//获取数据的url
-            "bFilter": false,                       //不使用过滤功能
-            "bLengthChange": false,                 //用户不可改变每页显示数量
-            "iDisplayLength": 9,                    //每页显示8条数据
-            "oLanguage": {                          //汉化
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "没有检索到数据",
-                "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
-                "sInfoEmtpy": "没有数据",
-                "sProcessing": "正在加载数据...",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "前页",
-                    "sNext": "后页",
-                    "sLast": "尾页"
-                }
-            },
-            "columns": [
-                {"data": "_id"},
-                {"data": "name"},
-                {"data": "nick_name"},
-                {"data": "password"},
-                {"data": "levelName"},
-                {"data": "level"},
-                {"data": "registerTime"}
-            ],
-            "columnDefs": [
-                {
-                    "targets": [0],
-                    "data": "_id",
-                    "render": function (data, type, full) {
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [5],
-                    "data": "level",
-                    "render": function (data, type, full) {
-                        return "<button type='button' id='update' class='btn btn-primary updatess'>修改</button>";
-                    }
-                },
-                {
-                    "targets": [6],
-                    "data": "level",
-                    "render": function (data, type, full) {
-
-                        return "<button type='button' id='delete' class='btn btn-primary deletess'>删除</button>" + "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [7],
-                    "data": "level",
-                    "render": function (data, type, full) {
-
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                }, {
-                    "targets": [3],
-                    "data": "password",
-                    "render": function (data, type, full) {
-                        return "********" + "<input id='oldpass' type='hidden' value=" + data + ">";
-                    }
-                }
-            ], "fnDrawCallback": function (oSettings, json) {
-                $(".updatess").click(function () {
-                    $('#changeRobotForm').removeClass('hidden');
-                    $('#changerot').show();
-                    var trNode = $(this).parent().parent();
-                    trNodep = trNode;
-                    $("#account").val(trNode.children().eq(1).html());
-                    var sletcval = trNode.children().eq(7).find('input').val();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-
-                    $("#robotid").val(hiddenid);
-
-                    $("#nick_name").val(trNode.children().eq(2).html());
-                    $("input[name=password]").val("********");
-                    $("input[name=level_name]").val(trNode.children().eq(4).html());
-
-                    console.log(sletcval);
-
-                    $("#roleselect").val(sletcval);
-
-                    layer.open({
-                        type: 1,
-                        skin: 'layui-layer-rim',
-                        shade: false,
-                        title: false, //不显示标题
-                        content: $('#changeRobotForm'), //捕获的元素
-                        area: ['420px', "400px"],
-                        cancel: function (index) {
-                            layer.close(index);
-
-                        },
-                        scrollbar: false
-                    });
-                });
-                //绑定删除事件
-                $(".deletess").on('click', function () {
-                    var trNode = $(this).parent().parent();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-                    var parmets = {
-                        user_id: hiddenid
-                    }
-                    layer.confirm('您确定要删除吗？', {
-                        btn: ['确定', '返回'] //按钮
-                    }, function () {
-                        $.ajax({
-                            url: 'doDelUer',
-                            type: 'POST',
-                            data: parmets,
-                            success: function (returndata) {
-                                if (returndata.code == '200') {
-                                    layer.msg('删除成功');
-                                    trNode.children().hide();
-//                                    setTimeout('location.reload()', 1000);
-                                }
-                            }, error: function (returndata) {
-                                if (returndata.code == '500') {
-                                    layer.alert('更新失败，请检查是否有非法词汇！');
-                                }
-                            }
-                        });
-                    }, function () {
-                        layer.msg('已取消');
-                    });
-                });
-            }
-        });
-        //初始化table
-        $('#color').DataTable({
-            "ajax": "douserlist",//获取数据的url
-            "bFilter": false,                       //不使用过滤功能
-            "bLengthChange": false,                 //用户不可改变每页显示数量
-            "iDisplayLength": 9,                    //每页显示8条数据
-            "oLanguage": {                          //汉化
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "没有检索到数据",
-                "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
-                "sInfoEmtpy": "没有数据",
-                "sProcessing": "正在加载数据...",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "前页",
-                    "sNext": "后页",
-                    "sLast": "尾页"
-                }
-            },
-            "columns": [
-                {"data": "_id"},
-                {"data": "name"},
-                {"data": "nick_name"},
-                {"data": "password"},
-                {"data": "levelName"},
-                {"data": "level"},
-                {"data": "registerTime"}
-            ],
-            "columnDefs": [
-                {
-                    "targets": [0],
-                    "data": "_id",
-                    "render": function (data, type, full) {
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [5],
-                    "data": "level",
-                    "render": function (data, type, full) {
-                        return "<button type='button' id='update' class='btn btn-primary updatess'>修改</button>";
-                    }
-                },
-                {
-                    "targets": [6],
-                    "data": "level",
-                    "render": function (data, type, full) {
-
-                        return "<button type='button' id='delete' class='btn btn-primary deletess'>删除</button>" + "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [7],
-                    "data": "level",
-                    "render": function (data, type, full) {
-
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                }, {
-                    "targets": [3],
-                    "data": "password",
-                    "render": function (data, type, full) {
-                        return "********" + "<input id='oldpass' type='hidden' value=" + data + ">";
-                    }
-                }
-            ], "fnDrawCallback": function (oSettings, json) {
-                $(".updatess").click(function () {
-                    $('#changeRobotForm').removeClass('hidden');
-                    $('#changerot').show();
-                    var trNode = $(this).parent().parent();
-                    trNodep = trNode;
-                    $("#account").val(trNode.children().eq(1).html());
-                    var sletcval = trNode.children().eq(7).find('input').val();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-
-                    $("#robotid").val(hiddenid);
-
-                    $("#nick_name").val(trNode.children().eq(2).html());
-                    $("input[name=password]").val("********");
-                    $("input[name=level_name]").val(trNode.children().eq(4).html());
-
-                    console.log(sletcval);
-
-                    $("#roleselect").val(sletcval);
-
-                    layer.open({
-                        type: 1,
-                        skin: 'layui-layer-rim',
-                        shade: false,
-                        title: false, //不显示标题
-                        content: $('#changeRobotForm'), //捕获的元素
-                        area: ['420px', "400px"],
-                        cancel: function (index) {
-                            layer.close(index);
-
-                        },
-                        scrollbar: false
-                    });
-                });
-                //绑定删除事件
-                $(".deletess").on('click', function () {
-                    var trNode = $(this).parent().parent();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-                    var parmets = {
-                        user_id: hiddenid
-                    }
-                    layer.confirm('您确定要删除吗？', {
-                        btn: ['确定', '返回'] //按钮
-                    }, function () {
-                        $.ajax({
-                            url: 'doDelUer',
-                            type: 'POST',
-                            data: parmets,
-                            success: function (returndata) {
-                                if (returndata.code == '200') {
-                                    layer.msg('删除成功');
-                                    trNode.children().hide();
-//                                    setTimeout('location.reload()', 1000);
-                                }
-                            }, error: function (returndata) {
-                                if (returndata.code == '500') {
-                                    layer.alert('更新失败，请检查是否有非法词汇！');
-                                }
-                            }
-                        });
-                    }, function () {
-                        layer.msg('已取消');
-                    });
-                });
-            }
-        });
-        //初始化table
-        $('#material').DataTable({
-            "ajax": "douserlist",//获取数据的url
-            "bFilter": false,                       //不使用过滤功能
-            "bLengthChange": false,                 //用户不可改变每页显示数量
-            "iDisplayLength": 9,                    //每页显示8条数据
-            "oLanguage": {                          //汉化
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "没有检索到数据",
-                "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
-                "sInfoEmtpy": "没有数据",
-                "sProcessing": "正在加载数据...",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "前页",
-                    "sNext": "后页",
-                    "sLast": "尾页"
-                }
-            },
-            "columns": [
-                {"data": "_id"},
-                {"data": "name"},
-                {"data": "nick_name"},
-                {"data": "password"},
-                {"data": "levelName"},
-                {"data": "level"},
-                {"data": "registerTime"}
-            ],
-            "columnDefs": [
-                {
-                    "targets": [0],
-                    "data": "_id",
-                    "render": function (data, type, full) {
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [5],
-                    "data": "level",
-                    "render": function (data, type, full) {
-                        return "<button type='button' id='update' class='btn btn-primary updatess'>修改</button>";
-                    }
-                },
-                {
-                    "targets": [6],
-                    "data": "level",
-                    "render": function (data, type, full) {
-
-                        return "<button type='button' id='delete' class='btn btn-primary deletess'>删除</button>" + "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                },
-                {
-                    "targets": [7],
-                    "data": "level",
-                    "render": function (data, type, full) {
-
-                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
-                    }
-                }, {
-                    "targets": [3],
-                    "data": "password",
-                    "render": function (data, type, full) {
-                        return "********" + "<input id='oldpass' type='hidden' value=" + data + ">";
-                    }
-                }
-            ], "fnDrawCallback": function (oSettings, json) {
-                $(".updatess").click(function () {
-                    $('#changeRobotForm').removeClass('hidden');
-                    $('#changerot').show();
-                    var trNode = $(this).parent().parent();
-                    trNodep = trNode;
-                    $("#account").val(trNode.children().eq(1).html());
-                    var sletcval = trNode.children().eq(7).find('input').val();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-
-                    $("#robotid").val(hiddenid);
-
-                    $("#nick_name").val(trNode.children().eq(2).html());
-                    $("input[name=password]").val("********");
-                    $("input[name=level_name]").val(trNode.children().eq(4).html());
-
-                    console.log(sletcval);
-
-                    $("#roleselect").val(sletcval);
-
-                    layer.open({
-                        type: 1,
-                        skin: 'layui-layer-rim',
-                        shade: false,
-                        title: false, //不显示标题
-                        content: $('#changeRobotForm'), //捕获的元素
-                        area: ['420px', "400px"],
-                        cancel: function (index) {
-                            layer.close(index);
-
-                        },
-                        scrollbar: false
-                    });
-                });
-                //绑定删除事件
-                $(".deletess").on('click', function () {
-                    var trNode = $(this).parent().parent();
-                    var hiddenid = trNode.children().eq(0).find("input").val();
-                    var parmets = {
-                        user_id: hiddenid
-                    }
-                    layer.confirm('您确定要删除吗？', {
-                        btn: ['确定', '返回'] //按钮
-                    }, function () {
-                        $.ajax({
-                            url: 'doDelUer',
-                            type: 'POST',
-                            data: parmets,
-                            success: function (returndata) {
-                                if (returndata.code == '200') {
-                                    layer.msg('删除成功');
-                                    trNode.children().hide();
-//                                    setTimeout('location.reload()', 1000);
-                                }
-                            }, error: function (returndata) {
-                                if (returndata.code == '500') {
-                                    layer.alert('更新失败，请检查是否有非法词汇！');
-                                }
-                            }
-                        });
-                    }, function () {
-                        layer.msg('已取消');
-                    });
-                });
+            }, error: function (returndata) {
+                alert('更新失败，请检查是否有非法词汇！');
             }
         });
     }
+
+    function deltobase(name, id) {
+
+        var params = {
+            property: name,
+            addProperty: id
+        }
+
+        $.ajax({
+            url: 'doDelProperty',
+            type: 'POST',
+            data: params,
+            success: function (retmsgurndata) {
+                console.log(retmsgurndata)
+                $("#form-signin").hide();
+                setTimeout('location.reload()', 1000);
+                layer.msg('删除成功');
+
+            }, error: function (returndata) {
+                alert('更新失败，请检查是否有非法词汇！');
+            }
+        });
+    }
+
 </script>

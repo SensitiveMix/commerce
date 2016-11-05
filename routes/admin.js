@@ -748,11 +748,139 @@ router.post('/uploadTemporary', function (req, res, next) {
 router.get('/specification', checkLogin);
 router.get('/specification', function (req, res, next) {
     console.log("产品上传管理" + new Date());
-    res.render('admin/specifications_manage', {username: u.nick_name});
+    db.specifications.find({}, function (err, result) {
+        res.render('admin/specifications_manage',
+            {
+                username: u.nick_name,
+                specifications: result[0]
+            }
+        );
+    })
+
     console.log("产品上传管理登陆成功");
 });
 
+//添加属性
+router.post('/doAddProperty', function (req, res, next) {
+    switch (req.body.addProperty) {
+        case 'compatibility':
+            db.specifications.update({}, {
+                $pushAll: {'compatibility': [req.body.property]}
+            }, function (err, result) {
+                if (err) res.send('500')
+                res.send('200')
+            });
+            break;
+        case 'type':
+            db.specifications.update({}, {
+                $pushAll: {'type': [req.body.property]}
+            }, function (err, result) {
+                if (err) res.send('500')
+                res.send('200')
+            });
+            break;
+        case 'hardOrSoft':
+            db.specifications.update({}, {
+                $pushAll: {'hardOrSoft': [req.body.property]}
+            });
+            break;
+        case 'features':
+            db.specifications.update({}, {
+                $pushAll: {'features': [req.body.property]}
+            }, function (err, result) {
+                if (err) res.send('500')
+                res.send('200')
+            });
+            break;
+        case 'pattern':
+            db.specifications.update({}, {
+                $pushAll: {'pattern': [req.body.property]}
+            }, function (err, result) {
+                if (err) res.send('500')
+                res.send('200')
+            });
+            break;
+        case 'Color':
+            db.specifications.update({}, {
+                $pushAll: {'Color': [req.body.property]}
+            }, function (err, result) {
+                if (err) res.send('500')
+                res.send('200')
+            });
+            break;
+        case 'material':
+            db.specifications.update({}, {
+                $pushAll: {'material': [req.body.property]}
+            }, function (err, result) {
+                if (err) res.send('500')
+                res.send('200')
+            });
+            break;
+    }
+});
 
+//删除属性
+router.post('/doDelProperty', function (req, res, next) {
+    console.log(req.body);
+    switch (req.body.addProperty) {
+        case 'compatibility':
+            db.specifications.update({}, {
+                $pull: {'compatibility': req.body.property}
+            },  function (err, result) {
+                if (err) res.send('500');
+                res.send('200')
+            });
+            break;
+        case 'type':
+            db.specifications.update({}, {
+                $pull: {'type': req.body.property}
+            },  function (err, result) {
+                if (err) res.send('500');
+                res.send('200')
+            });
+            break;
+        case 'hardOrSoft':
+            db.specifications.update({}, {
+                $pull: {'hardOrSoft': req.body.property}
+            },  function (err, result) {
+                if (err) res.send('500');
+                res.send('200')
+            });
+            break;
+        case 'features':
+            db.specifications.update({}, {
+                $pull: {'features': req.body.property}
+            },  function (err, result) {
+                if (err) res.send('500');
+                res.send('200')
+            });
+            break;
+        case 'pattern':
+            db.specifications.update({}, {
+                $pull: {'pattern': req.body.property}
+            },  function (err, result) {
+                if (err) res.send('500');
+                res.send('200')
+            });
+            break;
+        case 'Color':
+            db.specifications.update({}, {
+                $pull: {'Color': req.body.property}
+            },  function (err, result) {
+                if (err) res.send('500');
+                res.send('200')
+            });
+            break;
+        case 'material':
+            db.specifications.update({}, {
+                $pull: {'material': req.body.property}
+            },  function (err, result) {
+                if (err) res.send('500');
+                res.send('200')
+            });
+            break;
+    }
+});
 //上传产品
 router.post('/uploadProductDetail', function (req, res, next) {
     var Categories = [];

@@ -228,12 +228,15 @@
         color: #000;
         font-family: Comic Sans MS;
     }
-    .buttonbox .container{
-        width: 100%!important;
+
+    .buttonbox .container {
+        width: 100% !important;
     }
-    .buttonbox .container .form-group{
+
+    .buttonbox .container .form-group {
         float: right;
     }
+
     .chouse-down-box {
         display: none;
         position: absolute;
@@ -241,9 +244,18 @@
         top: 24px;
         border: 1px solid #8797b0;
         padding: 1px 0;
-        width: 162px;
+        width: 100%;
         z-index: 999;
         background-color: #fff;
+    }
+
+    .chouse-down-box span {
+        display: block;
+    }
+
+    .chouse-down-box span.hover, .chouse-down-box span.selected, .chouse-down-box span.sac_over {
+        color: #fff;
+        background-color: #316ac5;
     }
 </style>
 <script>
@@ -251,28 +263,79 @@
         $.ajax({
             type: 'GET',
             url: '/admin/uploadTemporary',
-            data: {},
+            data: {
+                username: '<%= username %>'
+            },
             dataType: 'json',
-            success: function(data){
+            success: function (data) {
                 console.log(data);
                 var info = data.info;
-                console.log(info);
-                info.each(function (item) {
-                    var myhistory = '<span data-param="en" data-val="- '+item.firstCategory+' -">- '+item.firstCategory+' -</span>'
+//                console.log(info);
+                info.forEach(function (item) {
+                    console.log(item);
+                    var myhistory = '<span data-param="en" data-val="' + item.firstCategory + '">- ' + item.firstCategory + '>>' + item.secondCategory + '>>' + item.thirdCategory + ' -</span>'
                     $('#recentCategoryDropdown').append(myhistory);
                 })
+                $('#div_history').click(function () {
+                    $('#recentCategoryDropdown').toggle();
+                })
+                $('#recentCategoryDropdown span').mouseover(function () {
+                    $('#recentCategoryDropdown span').removeClass('hover');
+                });
+                $('#recentCategoryDropdown span').mouseover(function () {
+                    $(this).addClass('hover');
+                })
+                $('#recentCategoryDropdown span').click(function () {
+                    var category = $(this).text();
+                    category = $.trim(category.split('-')[1]);
+                    category = category.split('>>');
+                    console.log(category);
+                    $('#catagory0 li').each(function (index,item) {
+                        console.log($(item).text());
+                        var firstC = $.trim($(item).text());
+                        if(firstC == $.trim(category[0])){
+                            $('#catagory0 li').removeClass('current');
+                            $(this).addClass('current');
+                            $(this).click();
+                            if($('#catagory1 li').length != 0 && category[1].length !=0){
+                                $('#catagory1 li').each(function (index,item) {
+                                    console.log($(item).text());
+                                    var secondC = $.trim($(item).text());
+                                    if(secondC == $.trim(category[1])){
+                                        $('#catagory1 li').removeClass('current');
+                                        $(this).addClass('current');
+                                        $(this).click();
+                                        if($('#catagory2 li').length != 0  && category[2] !=0){
+                                            $('#catagory2 li').each(function (index,item) {
+                                                console.log($(item).text());
+                                                var thirdC = $.trim($(item).text());
+                                                if(thirdC == $.trim(category[2])){
+                                                    $('#catagory2 li').removeClass('current');
+                                                    $(this).addClass('current');
+                                                }
+                                            })
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    })
+                    showPath();
+                })
 
-            }
+            },
         });
+
+
 
         function showPath() {
             $('#show_category_path').empty();
             var categoryPath = [];
-            $('li.current').each(function (index,item) {
-                categoryPath[index] = '<b>'+$.trim($(item).text())+'</b>';
+            $('li.current').each(function (index, item) {
+                categoryPath[index] = '<b>' + $.trim($(item).text()) + '</b>';
             })
             var category_path = categoryPath.join('<span>>></span>');
-            $('#show_category_path').append(category_path+'<span class="color4">（请选择下级类目）</span>');
+            $('#show_category_path').append(category_path + '<span class="color4">（请选择下级类目）</span>');
         }
 
         $('#catagory0 li[data-crosscate="0"]').click(function () {
@@ -301,7 +364,7 @@
             <% }) %>
             <% } %>
 
-            $('#catagory1 li[data-crosscate="0"]').on('click',function () {
+            $('#catagory1 li[data-crosscate="0"]').on('click', function () {
                 $('#catagory1 li[data-crosscate="0"]').removeClass('current');
                 $('#catagory2').empty();
                 $(this).addClass('current');
@@ -309,28 +372,32 @@
                 showPath();
                 $('#show_category_path').empty();
                 var categoryPath = [];
-                $('li.current').each(function (index,item) {
-                    categoryPath[index] = '<b>'+$.trim($(item).text())+'</b>';
+                $('li.current').each(function (index, item) {
+                    categoryPath[index] = '<b>' + $.trim($(item).text()) + '</b>';
                 })
                 console.log(categoryPath);
                 var category_path = categoryPath.join('<span>>></span>');
-                $('#show_category_path').append(category_path+'<span class="color4">（请选择下级类目）</span>');
+                $('#show_category_path').append(category_path + '<span class="color4">（请选择下级类目）</span>');
 
                 <% if (category.length != 0){ %>
                 <% category.forEach(function (item) { %>
-                if (<%= item.secondCategory.length %> !=0)
+                if (<%= item.secondCategory.length %> !=
+                0
+                )
                 {
                     <% item.secondCategory.forEach(function (secondItem) { %>
-                    if('<%=secondItem.secondTitle %>' == secondName)
-                    {
-                        if(<%= secondItem.thirdTitles.length%> != 0 ){
-                        $('#div_catagory2').addClass('addscroll');
-                        $('#catagory2').empty();
-                        <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
-                        var mythirdTitle = '<li data-crosscate="0" title="<%= thirdItem.thirdTitle %>" data-remark="读取3.5英寸软盘的设备可以读写1.44MB的3.5英寸软盘" data-leaf="1" data-valid="1" data-param="catePubId=009001007" data-en="Floppy Drives" data-cn="<%= thirdItem.thirdTitle %>"><%= thirdItem.thirdTitle %></li>'
-                        $('#catagory2').append(mythirdTitle);
-                        <% }) %>
-                    }
+                    if ('<%= secondItem.secondTitle %>' == secondName) {
+                        if (<%= secondItem.thirdTitles.length %> !=
+                        0
+                    )
+                        {
+                            $('#div_catagory2').addClass('addscroll');
+                            $('#catagory2').empty();
+                            <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
+                            var mythirdTitle = '<li data-crosscate="0" title="<%= thirdItem.thirdTitle %>" data-remark="读取3.5英寸软盘的设备可以读写1.44MB的3.5英寸软盘" data-leaf="1" data-valid="1" data-param="catePubId=009001007" data-en="Floppy Drives" data-cn="<%= thirdItem.thirdTitle %>"><%= thirdItem.thirdTitle %></li>'
+                            $('#catagory2').append(mythirdTitle);
+                            <% }) %>
+                        }
                     }
                     <% }) %>
                 }
@@ -338,7 +405,7 @@
                 <% }) %>
                 <% } %>
 
-                $('#catagory2 li[data-crosscate="0"]').on('click',function () {
+                $('#catagory2 li[data-crosscate="0"]').on('click', function () {
                     $('#catagory2 li[data-crosscate="0"]').removeClass('current');
                     $(this).addClass('current');
                     showPath();
@@ -348,27 +415,30 @@
         })
 
         $('#save_history').click(function () {
-            if($('#catagory0 li.current').text().length){
+            var myhistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + ' -</span>'
+            $('#recentCategoryDropdown').append(myhistory);
+            if ($('#catagory0 li.current').text().length) {
                 $.ajax({
                     type: 'POST',
                     url: '/admin/uploadTemporary',
                     data: {
                         firstCategory: $('#catagory0 li.current').text(),
-                        secondCategory: $('#catagory1 li.current').text().length?$('#catagory1 li.current').text():'',
-                        thirdCategory: $('#catagory2 li.current').text().length?$('#catagory2 li.current').text():'',
-                        addBy:'<%=username %>',
-                        status:'NEW'
+                        secondCategory: $('#catagory1 li.current').text(),
+                        thirdCategory: $('#catagory2 li.current').text(),
+                        addBy: '<%= username %>',
+                        status: 'NEW'
                     },
                     dataType: 'json',
-                    success: function(data){
+                    success: function (data) {
                         console.log(data);
                     }
                 });
-            }else {
+            } else {
                 alert('请选择类目!');
             }
 
         })
+
     })
 </script>
 <div class="box box-info">
@@ -399,9 +469,7 @@
                         <% if(category.length != 0) { %>
                         <% category.forEach(function (item) { %>
                         <li data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="服装" data-en="Apparel"
-                            data-param="catePubId=014" data-valid="1" title="<%= item.firstCategory %>">
-                            <%= item.firstCategory %>
-                        </li>
+                            data-param="catePubId=014" data-valid="1" title="<%= item.firstCategory %>"><%= item.firstCategory %></li>
                         <% }) %>
                         <% } %>
                     </ul>
@@ -443,7 +511,8 @@
             <div class="container">
                 <div class="form-group">
                     <button type="button" class="btn btn-primary" id="save_history">保存并收藏类目</button>
-                    <button type="button" class="btn btn-primary"><a href="/admin/upload-products-detail" style="color: #fff">立即发布新产品</a></button>
+                    <button type="button" class="btn btn-primary"><a href="/admin/upload-products-detail"
+                                                                     style="color: #fff">立即发布新产品</a></button>
                 </div>
             </div>
             <!--<button id="submit_button" class="submit_button" type="button">-->

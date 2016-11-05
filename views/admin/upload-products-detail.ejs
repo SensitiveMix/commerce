@@ -134,8 +134,8 @@
     }
     .ml-title {
         position: absolute;
-        width: 10%;
-        left: -10%;
+        width: 20%;
+        left: -20%;
         top: 0;
         text-align: right;
         color: #000000;
@@ -218,6 +218,11 @@
                 console.log(data);
             }
         });
+
+        $('#productname').bind('input propertychange', function() {
+            var productNameLength = $('#productname').val().length;
+            $('#productNameLengthSpan').text(140-productNameLength);
+        });
     })
 </script>
 <div class="box box-info">
@@ -275,7 +280,7 @@
             </div>
             <div>
                 <input id="productname" name="productname" style="ime-mode:disabled;" class="attr-text-input addwid402"
-                       maxlength="140" type="text" value="">
+                       maxlength="140" type="text" value="" autoComplete='off'>
                 <span id="productnameTip" class="helptips marginleft10">您还可以输入<b class="color444"
                                                                                  id="productNameLengthSpan">140</b><span
                             class="color000">/<span>140</span></span>个字符</span>
@@ -2817,7 +2822,7 @@
             <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系敦煌网客服部门。</strong><br>
             <button type="button" id="btn_submitproduct">
 			    <span id="loadingimg" class="submit-syi"><img
-                            src="http://image.dhgate.com/2008/web20/seller/img/loadings.gif" class="syi-img-show">
+                            src="/assets/img/icon/loadings.gif" class="syi-img-show">
 				<span id="submitopt">提 交</span>
 				</span>
             </button>
