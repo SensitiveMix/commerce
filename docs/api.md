@@ -171,7 +171,7 @@ curl -H "Content-Type: application/json \
 ``` bash
 curl -H "Content-Type: application/json \
                -X POST -d '[{"firstCategory":"1","secondCategory":"2","thirdCategory":"3","addBy":"admin","status":"NEW"},{"firstCategory":"1","secondCategory":"2","thirdCategory":"3","addBy":"admin","status":"NEW"}]' \
-               http://<host>/admin/uploadProductsDetail
+               http://<host>/admin/uploadProductDetail
 ```
 
 Return Render Page:

@@ -4,9 +4,9 @@
 *{margin:0;padding:0;list-style-type:none;}
 a,img{border:0;}
 em{font-style:normal;}
-body{font:12px/180% Arial, Helvetica, sans-serif;}
+/*body{font:12px/180% Arial, Helvetica, sans-serif;}*/
 a,a:visited{color:#5e5e5e;text-decoration:none;}
-a:hover{color:#3366cc!important;text-decoration:none;}
+/*a:hover{color:#3366cc!important;text-decoration:none;}*/
 .clear{display:block;overflow:hidden;clear:both;height:0;line-height:0;font-size:0;}
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
 .clearfix{display:inline-table;}/* Hides from IE-mac \*/
