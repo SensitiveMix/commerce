@@ -10,7 +10,7 @@ describe('user register test', function () {
         request(app)
             .post('/doregister')
             .send({email: 'test@123.com', password: '123'})
-            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect('"200"')
             .end(function (err, res) {
                 if (err) throw err;
                 console.log(res.text);
