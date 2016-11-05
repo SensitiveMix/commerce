@@ -19,6 +19,7 @@ var r = [];
 var u = [];
 var leverlist = [];
 var systems = [];
+var tempCategory = [];
 /*-------------------------------------------------------------------*/
 /* -----------------------实用工具 ---------------------------------*/
 //MD5加密
@@ -429,7 +430,13 @@ router.get('/upload-products-detail', function (req, res) {
     db.categorys.find({}, function (err, result) {
         if (err) res.send('404');
         console.log(result);
-        res.render('admin/upload-products-detail', {username: u.nick_name, upload: [], category: result});
+        res.render('admin/upload-products-detail', {
+            username: u.nick_name,
+            upload: [],
+            category: result,
+            tempCategory: tempCategory
+        });
+        tempCategory=[];
     });
 
 });
@@ -719,6 +726,7 @@ router.post('/uploadTemporary', function (req, res, next) {
                 status: 'NEW'
             }
             ;
+        tempCategory.push(Categories);
         var category = new db.uploadTemporarys(Categories);
         category.save(function (err) {
             console.log(err);
@@ -826,7 +834,7 @@ router.post('/doDelProperty', function (req, res, next) {
         case 'compatibility':
             db.specifications.update({}, {
                 $pull: {'compatibility': req.body.property}
-            },  function (err, result) {
+            }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')
             });
@@ -834,7 +842,7 @@ router.post('/doDelProperty', function (req, res, next) {
         case 'type':
             db.specifications.update({}, {
                 $pull: {'type': req.body.property}
-            },  function (err, result) {
+            }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')
             });
@@ -842,7 +850,7 @@ router.post('/doDelProperty', function (req, res, next) {
         case 'hardOrSoft':
             db.specifications.update({}, {
                 $pull: {'hardOrSoft': req.body.property}
-            },  function (err, result) {
+            }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')
             });
@@ -850,7 +858,7 @@ router.post('/doDelProperty', function (req, res, next) {
         case 'features':
             db.specifications.update({}, {
                 $pull: {'features': req.body.property}
-            },  function (err, result) {
+            }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')
             });
@@ -858,7 +866,7 @@ router.post('/doDelProperty', function (req, res, next) {
         case 'pattern':
             db.specifications.update({}, {
                 $pull: {'pattern': req.body.property}
-            },  function (err, result) {
+            }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')
             });
@@ -866,7 +874,7 @@ router.post('/doDelProperty', function (req, res, next) {
         case 'Color':
             db.specifications.update({}, {
                 $pull: {'Color': req.body.property}
-            },  function (err, result) {
+            }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')
             });
@@ -874,7 +882,7 @@ router.post('/doDelProperty', function (req, res, next) {
         case 'material':
             db.specifications.update({}, {
                 $pull: {'material': req.body.property}
-            },  function (err, result) {
+            }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')
             });

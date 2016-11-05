@@ -290,26 +290,26 @@
                     category = $.trim(category.split('-')[1]);
                     category = category.split('>>');
                     console.log(category);
-                    $('#catagory0 li').each(function (index,item) {
+                    $('#catagory0 li').each(function (index, item) {
                         console.log($(item).text());
                         var firstC = $.trim($(item).text());
-                        if(firstC == $.trim(category[0])){
+                        if (firstC == $.trim(category[0])) {
                             $('#catagory0 li').removeClass('current');
                             $(this).addClass('current');
                             $(this).click();
-                            if($('#catagory1 li').length != 0 && category[1].length !=0){
-                                $('#catagory1 li').each(function (index,item) {
+                            if ($('#catagory1 li').length != 0 && category[1].length != 0) {
+                                $('#catagory1 li').each(function (index, item) {
                                     console.log($(item).text());
                                     var secondC = $.trim($(item).text());
-                                    if(secondC == $.trim(category[1])){
+                                    if (secondC == $.trim(category[1])) {
                                         $('#catagory1 li').removeClass('current');
                                         $(this).addClass('current');
                                         $(this).click();
-                                        if($('#catagory2 li').length != 0  && category[2] !=0){
-                                            $('#catagory2 li').each(function (index,item) {
+                                        if ($('#catagory2 li').length != 0 && category[2] != 0) {
+                                            $('#catagory2 li').each(function (index, item) {
                                                 console.log($(item).text());
                                                 var thirdC = $.trim($(item).text());
-                                                if(thirdC == $.trim(category[2])){
+                                                if (thirdC == $.trim(category[2])) {
                                                     $('#catagory2 li').removeClass('current');
                                                     $(this).addClass('current');
                                                 }
@@ -325,7 +325,6 @@
 
             },
         });
-
 
 
         function showPath() {
@@ -351,7 +350,9 @@
             <% if (category.length != 0){ %>
             <% category.forEach(function (item) { %>
             if ('<%= item.firstCategory %>' == firstName) {
-                if (<%= item.secondCategory.length %> !=0)
+                if (<%= item.secondCategory.length %> !=
+                0
+            )
                 {
                     $('#div_catagory1').addClass('addscroll');
                     $('#catagory1').empty();
@@ -414,6 +415,7 @@
 
         })
 
+        var isSave = false;
         $('#save_history').click(function () {
             var myhistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + ' -</span>'
             $('#recentCategoryDropdown').append(myhistory);
@@ -430,6 +432,8 @@
                     },
                     dataType: 'json',
                     success: function (data) {
+                        isSave = true;
+                        layer.msg('收藏成功');
                         console.log(data);
                     }
                 });
@@ -439,6 +443,16 @@
 
         })
 
+        $('#product_detail').click(function () {
+            if ($('#catagory0 li.current').text() == '') {
+                layer.msg('请选择类目');
+            } else if (isSave == false) {
+                layer.msg('请收藏类目');
+            } else {
+                window.location.href = '/admin/upload-products-detail';
+            }
+
+        })
     })
 </script>
 <div class="box box-info">
@@ -469,7 +483,8 @@
                         <% if(category.length != 0) { %>
                         <% category.forEach(function (item) { %>
                         <li data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="服装" data-en="Apparel"
-                            data-param="catePubId=014" data-valid="1" title="<%= item.firstCategory %>"><%= item.firstCategory %></li>
+                            data-param="catePubId=014" data-valid="1"
+                            title="<%= item.firstCategory %>"><%= item.firstCategory %></li>
                         <% }) %>
                         <% } %>
                     </ul>
@@ -511,13 +526,9 @@
             <div class="container">
                 <div class="form-group">
                     <button type="button" class="btn btn-primary" id="save_history">保存并收藏类目</button>
-                    <button type="button" class="btn btn-primary"><a href="/admin/upload-products-detail"
-                                                                     style="color: #fff">立即发布新产品</a></button>
+                    <button type="button" class="btn btn-primary" id="product_detail">立即发布新产品</button>
                 </div>
             </div>
-            <!--<button id="submit_button" class="submit_button" type="button">-->
-            <!--<span id="button_category" class="submit-syi initialstate"><span>立即去发布新产品</span></span>-->
-            <!--</button>-->
         </div>
     </div>
 </div>

@@ -206,6 +206,7 @@
         clear: both;
         visibility: hidden;
     }
+
 </style>
 <script>
     $(function () {
@@ -241,14 +242,14 @@
             <span class="layer-l"></span>
             <span class="layer-r"></span>
             <div class="cat-titleconbox">
-
-                <b>当前已选择的产品类目：</b><span class="navbox">计算机和网络(Computers &amp; Networking)<span class="nav">&gt;</span>驱动器及存储设备(Drives &amp; Storages)<span
-                            class="nav">&gt;</span>硬盘盒(HDD Enclosures)</span>
+                <b>当前已选择的产品类目：</b>
+                <% tempCategory.forEach(function (item) { %>
+                <span class="navbox"><%= item.firstCategory%><span class="nav">&gt;</span><%= item.secondCategory%><span class="nav">&gt;</span><%= item.thirdCategory%></span>
+                <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <%})%>
                 <a class="marginleft20" href="#" onclick="javascript:history.go(-1);">«返回修改类目</a>
-
             </div>
         </div>
-
     </div>
     <!-- 已选择类目 结束 -->
     <!-- 错误信息 开始 -->
