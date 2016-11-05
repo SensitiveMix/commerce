@@ -143,8 +143,11 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <% if( status == 200) { %>
-                                <a href="login" class="dropdown-toggle"><i
-                                            class="fa fa-user-circle"></i>Hi! <%= user.name %> </a>
+                                <a class="dropdown-toggle"><i
+                                            class="fa fa-user-circle"></i>Hi! <%= user.name %>
+                                </a>
+
+
                                 <% } else { %>
                                 <a href="login" class="dropdown-toggle">
                                     <embed src="../assets/img/icon/user.svg" type="image/svg+xml"/>

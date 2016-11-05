@@ -110,17 +110,16 @@ router.post('/dologin', function (req, res) {
             console.log(err);
             res.render("404");
         }
-        if (result.length == 1) {
+        if (result.length > 0) {
             u = result[0];
             console.log(result[0].nick_name + ":登录成功" + new Date());
-            // res.send('success');
-            console.log(result);
             res.render('assets/index', {
                 user: result[0],
                 categories: categoryies,
                 hotLabels: hotLabel,
                 title: 'ECSell',
-                status: 200})
+                status: 200
+            })
         } else {
             console.log(query.name + ":登录失败" + new Date());
             // res.send(500);
@@ -142,14 +141,9 @@ router.post('/doregister', function (req, res) {
 
     var robot = new db.users(user);
     robot.save(function (err) {
-        if (err) {
-            res.end('failed');
-            console.log(err);
-
-        } else {
-            res.send('success');
-        }
+        res.end('500')
     });
+    res.json('200');
 });
 //前台注册须知界面
 router.get('/team-of-use', function (req, res) {

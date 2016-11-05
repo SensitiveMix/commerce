@@ -14,7 +14,8 @@
                 <div class="gap-20"></div>
                 <form role="form" action="/dologin" method="post">
                     <div class="form-group">
-                        <input type="email" class="form-control input-lg" name="name" id="login_email" placeholder="Enter">
+                        <input type="email" class="form-control input-lg" name="name" id="login_email"
+                               placeholder="Enter">
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control input-lg" name="password" id="login_password"
@@ -37,30 +38,36 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">*</div>
-                            <input class="form-control input-lg" type="email" id="register_email" name="email" placeholder="Enter email">
+                            <input class="form-control input-lg" type="email" id="register_email" name="email"
+                                   placeholder="Enter email">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">*</div>
-                            <input class="form-control input-lg" type="email" placeholder="Confirm Enter">
+                            <input class="form-control input-lg" type="email" onblur="validateName()" id="re_register_email"
+                                   placeholder="Confirm Enter">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">*</div>
-                            <input class="form-control input-lg" type="password" id="register_password" name="password" placeholder="Password">
+                            <input class="form-control input-lg" type="password" id="register_password" name="password"
+                                   placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">*</div>
-                            <input class="form-control input-lg" type="password" placeholder="Confirm Password">
+                            <input class="form-control input-lg" onblur="validatePwd()" id="re_register_password"
+                                   type="password"
+                                   placeholder="Confirm Password">
                         </div>
                     </div>
                     <div class="checkbox pull-left">
                         <label>
-                            *<input type="checkbox" id="register-checkbox"> I agree to MiniInTheBox.com <a href="/team-of-use">Terms and Conditions</a>.
+                            *<input type="checkbox" id="register-checkbox"> I agree to MiniInTheBox.com <a
+                                    href="/team-of-use">Terms and Conditions</a>.
                         </label>
                     </div>
                     <div class="pull-right">
@@ -77,23 +84,45 @@
 <!-- ========== CONTENT END ========== -->
 
 <script>
+    function validatePwd() {
+        if ($('#register_password').val() == '') {
+            layer.msg('Please Enter Password');
+        } else if ($('#register_password').val() != $('#re_register_password').val()) {
+            layer.msg('passwords are not consistent');
+        }
+    }
+
+    function validateName() {
+        if ($('#register_email').val() == '') {
+            layer.msg('Please Enter Email');
+        } else if ($('#register_email').val() != $('#re_register_email').val()) {
+            layer.msg('Email are not consistent');
+        }
+    }
+
     $('#register-checkbox').change(function () {
-        if(document.getElementById("register-checkbox").checked == true){
+        if (document.getElementById("register-checkbox").checked == true) {
             $('#register-btn').removeAttr('disabled');
-            $('#register-btn').on('click',function () {
+            $('#register-btn').on('click', function () {
                 $.ajax({
                     type: 'POST',
                     url: '/doregister',
                     data: {email: $('#register_email').val(), password: $('#register_password').val()},
                     dataType: 'json',
-                    success: function(data){
+                    success: function (data) {
+                        if (data == '200') {
+                            layer.msg('Register Success,Please Login!');
+                        }
                         console.log(data);
+                    },
+                    error: function (err) {
+                        layer.msg('Register Failed');
                     }
                 });
             })
-        }else {
+        } else {
             $('#register-btn').off();
-            $('#register-btn').attr('disabled','true');
+            $('#register-btn').attr('disabled', 'true');
         }
     })
 
