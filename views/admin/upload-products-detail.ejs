@@ -272,24 +272,26 @@
     .checkbox-inline-product-attributes input[type=checkbox], input[type=radio] {
         margin-right: 5px;
     }
-    @media (min-width: 768px){
+
+    @media (min-width: 768px) {
         .bkcon.addborderline .form-inline .form-group {
             width: 24%;
         }
+
         .bkcon.addborderline .form-inline .form-group input {
             width: 100%;
         }
+
         #div_self_defind_attr {
             border: 1px solid #dedede;
         }
     }
 
 
-
 </style>
 <script>
     $(function () {
-        $('#keywordbutton').click(function() {
+        $('#keywordbutton').click(function () {
             var keyword2 = $("#keyword2");
             var keyword3 = $("#keyword3");
             if (keyword2.is(":hidden")) {
@@ -305,29 +307,29 @@
             var productNameLength = $('#productname').val().length;
             $('#productNameLengthSpan').text(140 - productNameLength);
         });
-        $('#submit-product-attributes').click(function(){
+        $('#submit-product-attributes').click(function () {
             var product_attributes_type = new Array();
-            $('input[name="type"]:checked').each(function(){
+            $('input[name="type"]:checked').each(function () {
                 product_attributes_type.push($(this).val());//向数组中添加元素
             });
             var product_attributes_compatibility = new Array();
-            $('input[name="compatibility"]:checked').each(function(){
+            $('input[name="compatibility"]:checked').each(function () {
                 product_attributes_compatibility.push($(this).val());//向数组中添加元素
             });
             var product_attributes_hardOrSoft = new Array();
-            $('input[name="hardOrSoft"]:checked').each(function(){
+            $('input[name="hardOrSoft"]:checked').each(function () {
                 product_attributes_hardOrSoft.push($(this).val());//向数组中添加元素
             });
             var product_attributes_features = new Array();
-            $('input[name="features"]:checked').each(function(){
+            $('input[name="features"]:checked').each(function () {
                 product_attributes_features.push($(this).val());//向数组中添加元素
             });
             var product_attributes_Color = new Array();
-            $('input[name="Color"]:checked').each(function(){
+            $('input[name="Color"]:checked').each(function () {
                 product_attributes_Color.push($(this).val());//向数组中添加元素
             });
             var product_attributes_material = new Array();
-            $('input[name="material"]:checked').each(function(){
+            $('input[name="material"]:checked').each(function () {
                 product_attributes_material.push($(this).val());//向数组中添加元素
             });
 
@@ -335,18 +337,18 @@
             console.log(product_attributes_type);
             product_attributes_compatibility.forEach(function (item_compatibility) {
                 product_attributes_Color.forEach(function (item_type) {
-                    var table_body_tr = '<tr><td>【'+item_compatibility+'】'+ item_type +'</td><td></td><td></td></tr>';
+                    var table_body_tr = '<tr><td>【' + item_compatibility + '】' + item_type + '</td><td></td><td></td></tr>';
 
                     $('#product-attribute-table tbody').append(table_body_tr);
                 })
             })
-            $('#bulk_operation').on('click', function(){
+            $('#bulk_operation').on('click', function () {
                 $('#product-attribute-table tbody tr').each(function (index, item) {
                     var eq_1 = $('input[name="price"]').val();
                     $(item).find('td').eq(1).text(eq_1);
                     var eq_2 = $('input[name="count"]').val();
                     $(item).find('td').eq(2).text(eq_2);
-                })   
+                })
             })
 
         })
@@ -369,10 +371,13 @@
             <span class="layer-r"></span>
             <div class="cat-titleconbox">
 
-                <b>当前已选择的产品类目：</b><span class="navbox">计算机和网络(Computers &amp; Networking)<span class="nav">&gt;</span>驱动器及存储设备(Drives &amp; Storages)<span
-                            class="nav">&gt;</span>硬盘盒(HDD Enclosures)</span>
+                <b>当前已选择的产品类目：</b>
+                <% tempCategory.forEach(function (item) { %>
+                <span class="navbox"><%= item.firstCategory %><span class="nav">&gt;</span><%= item.secondCategory %>
+                    <span class="nav">&gt;</span><%= item.thirdCategory %></span>
+                <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <% }) %>
                 <a class="marginleft20" href="#" onclick="javascript:history.go(-1);">«返回修改类目</a>
-
             </div>
         </div>
 
@@ -459,7 +464,8 @@
                             <div class="items-detail" id="item">
                                 <% product_specification.compatibility.forEach(function(item){ %>
                                 <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="compatibility" name="compatibility" value="<%= item %>"><%= item %>
+                                    <input type="checkbox" data-fa="compatibility" name="compatibility"
+                                           value="<%= item %>"><%= item %>
                                 </label>
                                 <% }) %>
                             </div>
@@ -483,7 +489,8 @@
                             <div class="items-detail" id="item">
                                 <% product_specification.hardOrSoft.forEach(function(item){ %>
                                 <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="hardOrSoft" name="hardOrSoft" value="<%= item %>"><%= item %>
+                                    <input type="checkbox" data-fa="hardOrSoft" name="hardOrSoft"
+                                           value="<%= item %>"><%= item %>
                                 </label>
                                 <% }) %>
                             </div>
@@ -495,7 +502,8 @@
                             <div class="items-detail" id="item">
                                 <% product_specification.features.forEach(function(item){ %>
                                 <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="features" name="features" value="<%= item %>"><%= item %></label>
+                                    <input type="checkbox" data-fa="features" name="features"
+                                           value="<%= item %>"><%= item %></label>
                                 <% }) %>
                             </div>
                         </div>
@@ -506,7 +514,8 @@
                             <div class="items-detail" id="item">
                                 <% product_specification.pattern.forEach(function(item){ %>
                                 <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="pattern" name="pattern" value="<%= item %>"><%= item %></label>
+                                    <input type="checkbox" data-fa="pattern" name="pattern"
+                                           value="<%= item %>"><%= item %></label>
                                 <% }) %>
                             </div>
                         </div>
@@ -517,7 +526,8 @@
                             <div class="items-detail" id="item">
                                 <% product_specification.Color.forEach(function(item){ %>
                                 <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="Color" name="Color" value="<%= item %>"><%= item %></label>
+                                    <input type="checkbox" data-fa="Color" name="Color" value="<%= item %>"><%= item %>
+                                </label>
                                 <% }) %>
                             </div>
                         </div>
@@ -528,7 +538,8 @@
                             <div class="items-detail" id="item">
                                 <% product_specification.material.forEach(function(item){ %>
                                 <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="material" name="material" value="<%= item %>"><%= item %></label>
+                                    <input type="checkbox" data-fa="material" name="material"
+                                           value="<%= item %>"><%= item %></label>
                                 <% }) %>
                             </div>
                         </div>
@@ -582,15 +593,18 @@
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <label class="sr-only" for="exampleInputEmail2">Price</label>
-                                        <input type="text" class="form-control" name="price" id="exampleInputEmail2" placeholder="Price">
+                                        <input type="text" class="form-control" name="price" id="exampleInputEmail2"
+                                               placeholder="Price">
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only" for="exampleInputEmail2">Count</label>
-                                        <input type="text" class="form-control" name="count" id="exampleInputEmail2" placeholder="Count">
+                                        <input type="text" class="form-control" name="count" id="exampleInputEmail2"
+                                               placeholder="Count">
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only" for="exampleInputEmail2">ProductId</label>
-                                        <input type="text" class="form-control" name="productId" id="exampleInputEmail2" placeholder="ProductId">
+                                        <input type="text" class="form-control" name="productId" id="exampleInputEmail2"
+                                               placeholder="ProductId">
                                     </div>
                                     <a class="btn btn-default" id="bulk_operation">Confirm</a>
                                 </div>
@@ -1112,7 +1126,7 @@
 			<span class="yellowBtn11">
     			<input type="button" name="fileupload" id="fileupload" style="visibility: hidden; display: none;"
                        width="72" height="23"><object type="application/x-shockwave-flash"
-                                                      data="/syi/js/photo/upload2/uploadalbums.swf?v=1478101912166"
+                                                      data=""
                                                       width="72" height="23" id="fileuploadUploader"
                                                       style="visibility: visible;"><param name="quality" value="high"><param
                             name="wmode" value="transparent"><param name="allowScriptAccess" value="always"><param
@@ -1472,7 +1486,7 @@
         </span>
         <span class="yellowBtn11">
         <input type="button" name="fileupload_googleshopping" id="fileupload_googleshopping" style="display: none;"><object
-                    type="application/x-shockwave-flash" data="/syi/js/photo/upload2/uploadalbums.swf?v=1478101912035"
+                    type=""
                     width="72" height="23" id="fileupload_googleshoppingUploader" style="visibility: visible;"><param
                         name="quality" value="high"><param name="wmode" value="transparent"><param
                         name="allowScriptAccess" value="always"><param name="flashvars"

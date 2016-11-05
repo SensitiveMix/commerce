@@ -430,13 +430,16 @@ router.get('/upload-products-detail', function (req, res) {
     db.categorys.find({}, function (err, result) {
         if (err) res.send('404');
         console.log(result);
-        res.render('admin/upload-products-detail', {
-            username: u.nick_name,
-            upload: [],
-            category: result,
-            tempCategory: tempCategory
+        db.specifications.find({}, function (err, product_spectication) {
+            res.render('admin/upload-products-detail', {
+                username: u.nick_name,
+                upload: [],
+                category: result,
+                tempCategory: tempCategory,
+                product_specification: product_spectication[0]
+            });
+            tempCategory = [];
         });
-        tempCategory=[];
     });
 
 });
