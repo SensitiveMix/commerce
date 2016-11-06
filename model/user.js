@@ -8,12 +8,14 @@ var Schema = mongoose.Schema;
 var userData = new Schema({
     name: String,
     password: String,
+    sex: String,
     mobile: String,
     nick_name: String,
     email_address: String,
     level: String,
     levelName: String,
     userType: String,
+    company: String,
     registerTime: Number
 })
 

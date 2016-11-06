@@ -60,9 +60,11 @@
     .w-breadcrumb li, .w-breadcrumb a, .w-breadcrumb .home span, .w-breadcrumb li i {
         color: #0076c1;
     }
+
     .accountMenu dd.selected a {
         color: #900;
     }
+
     li {
         display: list-item;
         text-align: -webkit-match-parent;
@@ -104,17 +106,23 @@
     }
 
     #wrapper {
-        width: 1170px;
+        width: 1142px;
         margin: 0 auto;
         height: 553px;
         font-family: verdana;
     }
 
+    #breadcrumb {
+        z-index: 1000;
+        position: relative;
+        display: block;
+        border-bottom: 1px solid #dddddd;
+    }
+
     #wrapper-l {
         width: 208px;
         float: left;
-        margin-left: 15px;
-        font: 14px/150% Verdana,Helvetica,sans-serif;
+        font: 14px/150% Verdana, Helvetica, sans-serif;
     }
 
     .accountMenu {
@@ -205,8 +213,7 @@
     #wrapper-r {
         float: right;
         width: 752px;
-        margin-right: 18px;
-        font: 11px/150% Verdana,Helvetica,sans-serif;
+        font: 11px/150% Verdana, Helvetica, sans-serif;
     }
 
     #wrapper-r-t {
@@ -330,9 +337,9 @@
         <!-- widget-account-menu_1 -->
         <dl class="accountMenu">
             <dt>Personal Center</dt>
-            <dd><a href="https://www.miniinthebox.com/index.php?main_page=account">My Orders</a></dd>
+            <dd><a href="#">My Orders</a></dd>
 
-            <dd class="selected"><a href="https://www.miniinthebox.com/index.php?main_page=account_settings">Account
+            <dd class="selected"><a href="#">Account
                     Settings</a>
             </dd>
         </dl>
@@ -368,12 +375,11 @@
                 </div>
                 <div class="contentBlock">
                     <div id="ChangeInformation" style="display: block;">
-                        <form name="profileForm"
-                              action="https://www.miniinthebox.com/index.php?main_page=account_settings" method="post"
-                              id="profileForm"><input type="hidden" name="action" id="action"
-                                                      value="account_profile_edit"><input type="hidden" name="token"
-                                                                                          id="token"
-                                                                                          value="e638c59adc5efe6b170b37a1113e44430d5defa3b44de7e6ca21cbb464381f1c">
+                        <div name="profileForm"
+                             id="profileForm"><input type="hidden" name="action" id="action"
+                                                     value="account_profile_edit"><input type="hidden" name="token"
+                                                                                         id="token"
+                                                                                         value="e638c59adc5efe6b170b37a1113e44430d5defa3b44de7e6ca21cbb464381f1c">
                             <strong>Update your ECSELL.com profile</strong>
                             <br>
                             <br>
@@ -391,27 +397,32 @@
                                 </tr>
                                 <tr>
                                     <td align="right">
-                                        First name:&nbsp;
+                                        origin Name:&nbsp;
                                         <span class="red">*</span>
                                     </td>
                                     <td class="dialogueBox ">
-                                        <input id="firstname" type="text" maxlength="34" name="firstname" value="jack">
+                                        <input id="origin_nick_name" readonly type="text" maxlength="34" name="v"
+                                               value="<%= user.nick_name %>">
                                         <p class="errorInfo"></p>
                                     </td>
+
                                 </tr>
                                 <tr>
-                                    <td align="right">Last name:&nbsp;
+                                    <td align="right">
+                                        Full name:&nbsp;
                                         <span class="red">*</span>
                                     </td>
-                                    <td class="dialogueBox">
-                                        <input id="lastname" type="text" maxlength="34" name="lastname" value="sun">
+                                    <td class="dialogueBox ">
+                                        <input id="new_nick_name" type="text" maxlength="34" name="new_nick_name"
+                                               value="">
                                         <p class="errorInfo"></p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td align="right">Which one describes you the best?</td>
                                     <td class="dialogueBox">
-                                        <select name="describes" chkname="Which one describes you the best?">
+                                        <select name="describes" id="describes"
+                                                chkname="Which one describes you the best?">
                                             <option value="-1" selected="selected">Please select---</option>
                                             <option value="6">Consumer</option>
                                             <option value="2">Wholesaler</option>
@@ -425,25 +436,25 @@
                                 <tr>
                                     <td align="right">Your Company:&nbsp;</td>
                                     <td class="dialogueBox">
-                                        <input id="customers_company" type="text" name="customers_company" value="etcc">
+                                        <input id="customers_company" type="text" name="customers_company"
+                                               value="<%= user.company %>">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <button class="textbtn" type="submit">Save</button>
+                                        <button class="textbtn" onclick="profile_submit()">Save</button>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
-                        </form>
+                        </div>
                     </div>
                     <div id="ChangeMail" style="display: none;">
 
-                        <form name="emailForm"
-                              action="https://www.miniinthebox.com/index.php?main_page=account_settings" method="post"
-                              id="emailForm"><input type="hidden" name="action" id="action" value="account_email_edit">
-                            <div class="color333 widget"><strong>260134109@qq.com</strong><span
+                        <div name="emailForm"
+                             id="emailForm"><input type="hidden" name="action" id="action" value="account_email_edit">
+                            <div class="color333 widget"><strong><%= user.name %></strong><span
                                         class="confirmOk">&nbsp;</span></div>
                             <strong>Update your ECSELL.com account</strong>
                             <br>
@@ -451,13 +462,23 @@
                             <span class="red">*</span>Indicates required fields
                             <table width="590" cellspacing="0" cellpadding="0" border="0">
                                 <tbody>
+                                <tr style="display: none">
+                                    <td width="196" valign="top" align="right" style="padding-top:8px;">
+                                        Existing password:&nbsp;
+                                        <span class="red">*</span>
+                                    </td>
+                                    <td class="dialogueBox">
+                                        <input type="password" id="old_name" name="old_name" value="<%= user.name %>">
+                                        <p class="errorInfo"></p>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td width="196" valign="top" align="right" style="padding-top:8px;">
                                         Existing password:&nbsp;
                                         <span class="red">*</span>
                                     </td>
                                     <td class="dialogueBox">
-                                        <input type="password" name="existing_password">
+                                        <input type="password" id="existing_password" name="existing_password">
                                         <p class="errorInfo"></p>
                                     </td>
                                 </tr>
@@ -467,26 +488,26 @@
                                         <span class="red">*</span>
                                     </td>
                                     <td class="dialogueBox">
-                                        <input id="login-email-address1" type="text" value="260134109@qq.com"
-                                               name="email" autocomplete="off">
+                                        <input id="login-email-address1" type="text" value="<%= user.name %>"
+                                               name="newEmail" autocomplete="off">
                                         <p class="errorInfo"></p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <button class="textbtn" type="submit">Save</button>
+                                        <button class="textbtn  email_submit" onclick="email_submit()">Save</button>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
-                        </form>
+                        </div>
                     </div>
                     <div id="ChangePassword" style="display: none;">
-                        <form name="passwordForm"
-                              action="https://www.miniinthebox.com/index.php?main_page=account_settings" method="post"
-                              id="passwordForm"><input type="hidden" name="action" id="action"
-                                                       value="account_password_edit"> <strong>Update your
+                        <div name="passwordForm"
+                             action="/change-password" method="post"
+                             id="passwordForm"><input type="hidden" name="action" id="action"
+                                                      value="account_password_edit"> <strong>Update your
                                 ECSELL.com password</strong>
                             <br>
                             <br>
@@ -499,7 +520,7 @@
                                         <span class="red">*</span>
                                     </td>
                                     <td class="dialogueBox">
-                                        <input type="password" name="existing_password_1">
+                                        <input type="password" id="existing_password_1" name="existing_password_1">
                                         <p class="errorInfo"></p>
                                     </td>
                                 </tr>
@@ -519,22 +540,130 @@
                                         <span class="red">*</span>
                                     </td>
                                     <td class="dialogueBox">
-                                        <input type="password" name="confirmation">
+                                        <input type="password" id="login_password_twice" name="confirmation">
                                         <p class="errorInfo"></p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <button class="textbtn" type="submit">Save</button>
+                                        <button class="textbtn" onclick="password_submit()">Save</button>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <script>
+                    function profile_submit() {
+                        if ($('#new_nick_name').val() == '') {
+                            layer.msg('Please Enter New Name')
+                        } else {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/change-profile',
+                                data: {
+                                    gender: $('#gender').find("option:selected").val(),
+                                    origin_nick_name: $('#origin_nick_name').val(),
+                                    new_nick_name: $('#new_nick_name').val(),
+                                    describes: $('#describes').val(),
+                                    customers_company: $('#customers_company').val()
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+                                    if (data.code == '200') {
+                                        $('#new_nick_name').val('')
+                                        $('#origin_nick_name').val(data.account.nick_name)
+                                        $('#customers_company').val(data.account.company)
+                                        $('#gender').find("option:selected").val(data.account.sex)
+                                        layer.msg('CHANGE SUCCESS')
+                                    } else if (data.code == '500') {
+                                        $('#new_nick_name').val('')
+                                        $('#existing_password').val('')
+                                        layer.msg('CHANGE FAILED,PASSWORD INCORRECT')
+                                    }
+                                },
+                                error: function (err) {
+                                    if (err == '500') {
+                                        $('#new_nick_name').val('')
+                                        $('#existing_password').val('')
+                                        layer.msg('NETWORK ERROR');
+                                    }
+                                }
+                            });
+                        }
+
+                    }
+
+
+                    function email_submit() {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/change-email',
+                            data: {
+                                old_name: $('#old_name').val(),
+                                existing_password: $('#existing_password').val(),
+                                newEmail: $('#login-email-address1').val()
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.code == '200') {
+                                    $('#existing_password').val('')
+                                    $('#login-email-address1').val(data.account.name)
+                                    layer.msg('CHANGE SUCCESS')
+                                } else if (data.code == '500') {
+                                    $('#existing_password').val('')
+                                    layer.msg('CHANGE FAILED,PASSWORD INCORRECT')
+                                }
+                            },
+                            error: function (err) {
+                                if (err == '500') {
+                                    $('#existing_password').val('')
+                                    layer.msg('NETWORK ERROR');
+                                }
+                            }
+                        });
+                    }
+
+                    function password_submit() {
+                        if ($('#login-password1').val() != $('#login_password_twice').val()) {
+                            layer.msg('passwords are not consistent')
+                        } else if ($('#existing_password_1').val() == '') {
+                            layer.msg('Please Enter Old Password')
+                        } else if ($('#login-password1').val() == '' || $('#login_password_twice').val() == '') {
+                            layer.msg('Please Enter New Password')
+                        } else {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/change-password',
+                                data: {
+                                    old_name: $('#old_name').val(),
+                                    existing_password_1: $('#existing_password_1').val(),
+                                    login_password_one: $('#login-password1').val(),
+                                    login_password_twice: $('#login_password_twice').val()
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+                                    if (data.code == '200') {
+                                        $('#login_password_twice').val('')
+                                        $('#login-password1').val('')
+                                        $('#existing_password_1').val('')
+                                        layer.msg('CHANGE SUCCESS')
+                                    } else if (data.code == '500') {
+                                        layer.msg('CHANGE FAILED,Old PASSWORD INCORRECT')
+                                    }
+                                },
+                                error: function (err) {
+                                    if (err == '500') {
+                                        layer.msg('NETWORK ERROR');
+                                    }
+                                }
+                            });
+                        }
+
+                    }
+
                     (function layerswitch() {
                         var switches = $(".boxswitch div");
                         switches.click(function () {
@@ -543,62 +672,12 @@
                         });
                     })();
 
-                    $('#profileForm').submit(function () {
-                        var items = {
-                            firstname: [{type: 'null', errMsg: litb.langs.poAddr.noFirstName}, {
-                                type: 'latinMinlength',
-                                minlength: 2,
-                                errMsg: litb.langs.poAddr.shortFirstName.stringFormat(2)
-                            }],
-                            lastname: [{type: 'null', errMsg: litb.langs.poAddr.noLastName}, {
-                                type: 'latinMinlength',
-                                minlength: 2,
-                                errMsg: litb.langs.poAddr.shortLastName.stringFormat(2)
-                            }, {
-                                type: 'fullname',
-                                latinMaxlength: 34,
-                                jpMaxlength: 11,
-                                errMsg: litb.langs.poAddr.exceedFullName
-                            }]
-                        };
-                        return $(this).formCheck(items, {
-                            errinfoFinder: function (obj) {
-                                return obj.next();
-                            },
-                            rules: {
-                                latinMinlength: function (obj, checks) {
-                                    if (litb.lan == 'ja' || litb.lan == 'ko')return true;
-                                    return $(obj).val().length >= checks.minlength;
-                                },
-                                fullname: function (obj, checks) {
-                                    var maxlength = (litb.lan == 'ja' || litb.lan == 'ko') ? checks.jpMaxlength : checks.latinMaxlength;
-                                    return $('#firstname').val().length + $('#lastname').val().length <= maxlength;
-                                }
-                            }
-                        });
+                    $("#profileForm").form("submit", {
+                        success: function (data) {
+                            console.log(data)
+                        }
                     });
 
-                    $('#emailForm').submit(function () {
-                        var items = {
-                            email: [{type: 'null', errMsg: litb.langs.ckReg.noEmailAddress}, {
-                                type: 'email',
-                                errMsg: litb.langs.ckReg.invalidEmailAddress
-                            }],
-                            existing_password: [{
-                                type: 'null',
-                                errMsg: litb.langs.account.noExistPassword
-                            }, {
-                                type: 'minlength',
-                                minlength: 5,
-                                errMsg: litb.langs.ckReg.invalidPassword.stringFormat('5')
-                            }]
-                        };
-                        return $(this).formCheck(items, {
-                            errinfoFinder: function (obj) {
-                                return obj.next();
-                            }
-                        });
-                    });
 
                     $('#passwordForm').submit(function () {
                         var items = {
@@ -643,7 +722,8 @@
         <!-- widget-unsubscribe-newsletter -->
         <div class="widget w-unsubscribeNewsletter">
             <h4>Newsletter Subscription</h4>
-            <p><span>Your email address <strong></strong> is currently subscribed to MiniInTheBox.com's newsletter.</span>
+            <p>
+                <span>Your email address <strong></strong> is currently subscribed to ECSELL.com's newsletter.</span>
                 <a href="http://www.miniinthebox.com/index.php?main_page=account_settings&amp;action=unsub" class="u">Unsubscribe</a>
             </p>
         </div>

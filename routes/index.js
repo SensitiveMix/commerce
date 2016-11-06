@@ -127,6 +127,7 @@ router.get('/personal-center', function (req, res, next) {
     } else {
         statusCode = 500;
     }
+    console.log(req.cookies["account"]);
     res.render('assets/Personal-Center', {
         title: 'ECSell',
         categories: categoryies,
@@ -135,6 +136,109 @@ router.get('/personal-center', function (req, res, next) {
         status: statusCode
     })
 });
+
+router.post('/change-profile', function (req, res, next) {
+    console.log(req.body);
+    db.users.update({"nick_name": req.body.origin_nick_name}, {
+        $set: {
+            nick_name: req.body.new_nick_name,
+            company: req.body.customers_company,
+            sex: req.body.gender
+        }
+    }, function (err, result) {
+        if (err) {
+            res.send(404)
+        } else {
+            var changeCode = null;
+            var statusCode = null;
+            if (result.nModified == 0) {
+                res.send({account: '', code: 500, msg: 'CHANGE FAILED'})
+            } else {
+                if (req.cookies["account"] != null) {
+                    var name = req.cookies["account"].name;
+                    res.clearCookie("account");
+                    res.cookie("account", {
+                        name: name,
+                        nick_name: req.body.new_nick_name,
+                        company: req.body.customers_company,
+                        sex: req.body.gender
+                    })
+                    req.cookies["account"].name = name;
+                    req.cookies["account"].nick_name = req.body.new_nick_name;
+                    req.cookies["account"].company = req.body.customers_company;
+                    req.cookies["account"].sex = req.body.gender;
+                    res.send({account: req.cookies["account"], code: 200, msg: 'SUCCESS'})
+                } else {
+                    res.send({account: '', code: 500, msg: 'Not LOGIN'})
+                }
+            }
+
+        }
+    })
+});
+
+router.post('/change-email', function (req, res, next) {
+    console.log(req.body);
+    db.users.update({name: req.body.old_name, password: md5(req.body.existing_password)}, {
+        $set: {
+            name: req.body.newEmail
+        }
+    }, function (err, result) {
+        if (err) {
+            res.send(404)
+        } else {
+            console.log(result);
+            var changeCode = null;
+            if (result.nModified == 0) {
+                res.send({account: '', code: 500, msg: 'CHANGE FAILED'})
+            } else {
+                if (req.cookies["account"] != null) {
+                    var name = req.body.newEmail;
+                    var nick_name = req.cookies["account"].nick_name;
+                    var company = req.cookies["account"].company;
+                    res.clearCookie("account");
+                    res.cookie("account", {
+                        name: name,
+                        nick_name: nick_name,
+                        company: company,
+                        sex: req.body.gender
+                    });
+                    req.cookies["account"].name = req.body.newEmail;
+                    console.log(req.cookies["account"]);
+                    res.send({account: req.cookies["account"], code: 200, msg: 'SUCCESS'})
+                } else {
+                    res.send({account: '', code: 500, msg: 'Not LOGIN'})
+                }
+            }
+        }
+    })
+})
+
+router.post('/change-password', function (req, res, next) {
+    console.log(req.body);
+    db.users.update({name: req.body.old_name, password: md5(req.body.existing_password_1)}, {
+        $set: {
+            password: md5(req.body.login_password_twice)
+        }
+    }, function (err, result) {
+        if (err) {
+            res.send(404)
+        } else {
+            console.log(result);
+            var changeCode = null;
+            if (result.nModified == 0) {
+                res.send({account: '', code: 500, msg: 'CHANGE FAILED'})
+            } else {
+                if (req.cookies["account"] != null) {
+                    res.send({account: req.cookies["account"], code: 200, msg: 'SUCCESS'})
+                } else {
+                    res.send({account: '', code: 500, msg: 'Not LOGIN'})
+                }
+            }
+        }
+    })
+})
+
 //获取轮播广告图
 router.get('/getBanner', function (req, res) {
     db.banners.find({'type': 'carousel'}, function (err, result) {
@@ -159,7 +263,7 @@ router.post('/dologin', function (req, res) {
         }
         if (result.length > 0) {
             u = result[0];
-            res.cookie("account", {name: result[0].name, nick_name: result[0].nick_name})
+            res.cookie("account", {name: result[0].name, nick_name: result[0].nick_name, company: result[0].company})
             console.log(result[0].nick_name + ":登录成功" + new Date());
             db.hotLabels.find({}, null, {
                 sort: {
