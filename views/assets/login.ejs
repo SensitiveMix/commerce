@@ -38,14 +38,16 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">*</div>
-                            <input class="form-control input-lg" type="email" id="register_email" name="email"
+                            <input class="form-control input-lg" type="email" onblur="validateIsExist(this.value)"
+                                   id="register_email" name="email"
                                    placeholder="Enter email">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">*</div>
-                            <input class="form-control input-lg" type="email" onblur="validateName()" id="re_register_email"
+                            <input class="form-control input-lg" type="email" onblur="validateName()"
+                                   id="re_register_email"
                                    placeholder="Confirm Enter">
                         </div>
                     </div>
@@ -87,7 +89,7 @@
     function validatePwd() {
         if ($('#register_password').val() == '') {
             layer.msg('Please Enter Password');
-        } else if ($('#register_password').val() != $('#re_register_password').val()) {
+        } else if ($('#register_password').val() != $('#re_register_password').val() || $('#re_register_password').val() != "") {
             layer.msg('passwords are not consistent');
         }
     }
@@ -95,30 +97,56 @@
     function validateName() {
         if ($('#register_email').val() == '') {
             layer.msg('Please Enter Email');
-        } else if ($('#register_email').val() != $('#re_register_email').val()) {
+        } else if ($('#register_email').val() != $('#re_register_email').val() || $('#re_register_email').val() != '') {
             layer.msg('Email are not consistent');
         }
+    }
+
+    function validateIsExist(email) {
+        $.ajax({
+            type: 'POST',
+            url: '/validateEmail',
+            data: {email: email},
+            dataType: 'json',
+            success: function (data) {
+                if (data == '401') {
+                    $('#register_email').val('')
+                    layer.msg('Email has been registered')
+                }
+            },
+            error: function (err) {
+                if (err == '500') {
+                    layer.msg('NetWork Error');
+                }
+            }
+        });
     }
 
     $('#register-checkbox').change(function () {
         if (document.getElementById("register-checkbox").checked == true) {
             $('#register-btn').removeAttr('disabled');
             $('#register-btn').on('click', function () {
-                $.ajax({
-                    type: 'POST',
-                    url: '/doregister',
-                    data: {email: $('#register_email').val(), password: $('#register_password').val()},
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data == '200') {
-                            layer.msg('Register Success,Please Login!');
+                if ($('#register_email').val() == '' || $('#re_register_email').val() == '') {
+                    layer.msg('Please Enter Email!')
+                } else if ($('#register_password').val() || $('#re_register_password').val()) {
+                    layer.msg('Please Enter Password!')
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/doregister',
+                        data: {email: $('#register_email').val(), password: $('#register_password').val()},
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data == '200') {
+                                layer.msg('Register Success,Please Login!');
+                            }
+                            console.log(data);
+                        },
+                        error: function (err) {
+                            layer.msg('Register Failed');
                         }
-                        console.log(data);
-                    },
-                    error: function (err) {
-                        layer.msg('Register Failed');
-                    }
-                });
+                    });
+                }
             })
         } else {
             $('#register-btn').off();

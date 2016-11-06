@@ -88,6 +88,20 @@ router.get('/login', function (req, res, next) {
         });
 });
 
+router.post('/validateEmail', function (req, res, next) {
+    db.users.find({name: req.body.email}, function (err, result) {
+        if (err) {
+            res.end('500')
+        } else {
+            if (result.length > 0) {
+                res.send('401');  //email has exist
+            } else {
+                res.send('200');
+            }
+        }
+    })
+});
+
 //获取轮播广告图
 router.get('/getBanner', function (req, res) {
     db.banners.find({'type': 'carousel'}, function (err, result) {
