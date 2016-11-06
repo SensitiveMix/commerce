@@ -286,11 +286,81 @@
             border: 1px solid #dedede;
         }
     }
-
+    .pick-a-color-markup{
+        float: left;
+        width: 10%;
+    }
+    .pro-img-picbox .pic {
+        border: 1px dashed #d4d4d4;
+        width: 82px;
+        height: 82px;
+    }
+    .addpiccolor2 .pic {
+        width: 102px;
+        height: 102px;
+    }
+    .addpiccolor2 {
+        width: 104px;
+        height: 104px;
+        margin-top: 0px;
+    }
+    .pro-img-picbox {
+        width: 22%;
+        display: block;
+        float: left;
+        margin-right: 5px;
+        margin-top: 20px;
+    }
+    .pro-img-box {
+        position: relative;
+        overflow: hidden;
+        height: 140px;
+    }
 
 </style>
+<script src="../plugins/pick-color/js/tinycolor-0.9.15.min.js"></script>
+<script src="../plugins/pick-color/js/pick-a-color-1.2.3.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".pick-a-color").pickAColor({
+            showSpectrum            : false,
+            showSavedColors         : false,
+            saveColorsPerElement    : true,
+            fadeMenuToggle          : true,
+            showAdvanced						: false,
+            showBasicColors         : true,
+            showHexInput            : false,
+            allowBlank							: true,
+            inlineDropdown					: true
+        });
+
+    });
+
+</script>
 <script>
     $(function () {
+        $('input[name="highlight-color"]').eq(0).change(function(){
+            if($('input[name="highlight-color"]').eq(0).val() == '008000'){//绿色
+                $('#product-sell-status').val('库存确认可以采购');
+            }
+            if($('input[name="highlight-color"]').eq(0).val() == 'ff0000'){//红色
+                $('#product-sell-status').val('停产');
+            }
+            if($('input[name="highlight-color"]').eq(0).val() == 'ffff00'){//黄色
+                $('#product-sell-status').val('库存待确认');
+            }
+        })
+        $('input[name="highlight-color"]').eq(1).change(function(){
+            if($('input[name="highlight-color"]').eq(1).val() == '008000'){//绿色
+                $('#product-stock-time').val('2天');
+            }
+            if($('input[name="highlight-color"]').eq(1).val() == 'ffff00'){//黄色
+                $('#product-stock-time').val('3天');
+            }
+        })
         $('#keywordbutton').click(function () {
             var keyword2 = $("#keyword2");
             var keyword3 = $("#keyword3");
@@ -659,7 +729,7 @@
             <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
                 <div class="ml-title"><span class="required">*</span>销售计量单位：</div>
                 <a id="a_measureid"></a>
-                <select class="attr-select j-select-unit" name="measureid">
+                <select class="attr-select j-select-unit form-control" name="measureid">
                     <option disabled="disabled" value="">-- 请选择销售单位 --</option>
                     <option data-name="打" value="00000000000000000000000000000001">打(Dozen)</option>
                     <option data-name="英尺" value="00000000000000000000000000000002">英尺(Feet)</option>
@@ -690,8 +760,64 @@
                      data-name="销售计量单位"></div>
             </div>
             <!-- 销售计量单位 结束 -->
+            <div class="mainlayout j-basic-standard-container clearfix">
+                <div class="ml-title">
+                    产品销售状态： </div>
+                <p class="helptips">黄色(库存待确认)<br>
+                    绿色(库存确认可以采购，后台输入供应商信息)<br>
+                    红色(停产)
+                </p>
+                <!-- ----- 产品基本属性结束 -----  -->
+                <div class="product-attributes2" id="j-attribute-list">
+                    <div>
+                        <table class="table-property j-buy-attrs-list"></table>
+                    </div>
+                    <div>
+                        <table class="table-property j-sale-attrs-list"></table>
+                    </div>
+                    <div id="product_sell_status_div" class="j-list-item">
+                        <div>
+                            <input type="text" value="fff" name="highlight-color" class="pick-a-color form-control">
+                            <div class="form-group" style="float: left;width: 53%">
+                                <div class="input-group">
+                                    <input class="form-control" id="product-sell-status" type="text" placeholder="" style="height: 47px">
+                                </div>
+                            </div>
+                        </div>
 
+                    </div>
+                </div>
+
+            </div>
             <!-- 销售方式 开始 -->
+            <div class="mainlayout j-basic-standard-container clearfix">
+                <div class="ml-title">
+                    产品备货期： </div>
+                <p class="helptips">黄色(默认3天)<br>
+                    绿色(默认2天)<br>
+                </p>
+                <!-- ----- 产品基本属性结束 -----  -->
+                <div class="product-attributes2" id="j-attribute-list">
+                    <div>
+                        <table class="table-property j-buy-attrs-list"></table>
+                    </div>
+                    <div>
+                        <table class="table-property j-sale-attrs-list"></table>
+                    </div>
+                    <div id="product_sell_status_div" class="j-list-item">
+                        <div>
+                            <input type="text" value="fff" name="highlight-color" class="pick-a-color form-control">
+                            <div class="form-group" style="float: left;width: 53%">
+                                <div class="input-group">
+                                    <input class="form-control" id="product-stock-time" type="text" placeholder="" style="height: 47px">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
             <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
                 <div class="ml-title"><span class="required">*</span>销售方式：</div>
                 <div class="marginbottom10 clearfix"><label>
@@ -718,301 +844,6 @@
                      data-name="销售方式"><p></p></div>
             </div>
             <!-- 销售方式 结束 -->
-
-            <!-- 库存状态 开始 -->
-            <div class="mainlayout clearfix j-list-item">
-                <div class="ml-title"><span class="required">*</span>备货状态：</div>
-                <div class="marginbottom10 clearfix j-moreinstock-container">
-                    <label><input type="radio" name="inventoryStatus" checked="" value="1"><span
-                                class="marginleft5 marginright10">有备货，备货所在地</span></label>
-                <span>
-                  <span class="j-item" data-code="CN">
-					<select id="inventoryLocation" name="inventoryLocation" class="syi-select5">
-                                                <option title="中国" value="CN" selected="">中国</option>
-                                                <option title="美国" value="US">美国</option>
-                                                <option title="香港" value="HK">香港</option>
-                                                <option title="英国" value="UK">英国</option>
-                                                <option title="加拿大" value="CA">加拿大</option>
-                                                <option title="西班牙" value="ES">西班牙</option>
-                                                <option title="德国" value="DE">德国</option>
-                                                <option title="澳大利亚" value="AU">澳大利亚</option>
-                                                <option title="法国" value="FR">法国</option>
-                                                <option title="巴西" value="BR">巴西</option>
-                                                <option title="俄罗斯" value="RU">俄罗斯</option>
-                                                <option title="越南" value="VN">越南</option>
-                                                <option title="智利" value="CL">智利</option>
-                                                <option title="阿富汗" value="AF">阿富汗</option>
-                                                <option title="阿尔巴尼亚" value="AL">阿尔巴尼亚</option>
-                                                <option title="阿尔及利亚" value="DZ">阿尔及利亚</option>
-                                                <option title="美属萨摩亚" value="AS">美属萨摩亚</option>
-                                                <option title="安道尔(安多拉)" value="AD">安道尔(安多拉)</option>
-                                                <option title="安哥拉" value="AO">安哥拉</option>
-                                                <option title="安圭拉岛" value="AI">安圭拉岛</option>
-                                                <option title="安提瓜岛" value="AG">安提瓜岛</option>
-                                                <option title="阿根廷" value="AR">阿根廷</option>
-                                                <option title="亚美尼亚" value="AM">亚美尼亚</option>
-                                                <option title="阿鲁巴岛" value="AW">阿鲁巴岛</option>
-                                                <option title="奥地利" value="AT">奥地利</option>
-                                                <option title="阿塞拜疆" value="AZ">阿塞拜疆</option>
-                                                <option title="巴哈马群岛" value="BS">巴哈马群岛</option>
-                                                <option title="巴林群岛" value="BH">巴林群岛</option>
-                                                <option title="孟加拉国" value="BD">孟加拉国</option>
-                                                <option title="巴巴多斯岛" value="BB">巴巴多斯岛</option>
-                                                <option title="白俄罗斯" value="BY">白俄罗斯</option>
-                                                <option title="比利时" value="BE">比利时</option>
-                                                <option title="伯利兹城" value="BZ">伯利兹城</option>
-                                                <option title="贝宁湾" value="BJ">贝宁湾</option>
-                                                <option title="百慕大群岛" value="BM">百慕大群岛</option>
-                                                <option title="不丹" value="BT">不丹</option>
-                                                <option title="玻利维亚" value="BO">玻利维亚</option>
-                                                <option title="波斯尼亚" value="BA">波斯尼亚</option>
-                                                <option title="博茨瓦纳" value="BW">博茨瓦纳</option>
-                                                <option title="英属维尔京群岛" value="VG">英属维尔京群岛</option>
-                                                <option title="文莱" value="BN">文莱</option>
-                                                <option title="保加利亚" value="BG">保加利亚</option>
-                                                <option title="布基纳法索" value="BF">布基纳法索</option>
-                                                <option title="布隆迪" value="BI">布隆迪</option>
-                                                <option title="柬埔寨" value="KH">柬埔寨</option>
-                                                <option title="喀麦隆" value="CM">喀麦隆</option>
-                                                <option title="佛得角共和国" value="CV">佛得角共和国</option>
-                                                <option title="开曼群岛" value="KY">开曼群岛</option>
-                                                <option title="中非共和国" value="CF">中非共和国</option>
-                                                <option title="乍得" value="TD">乍得</option>
-                                                <option title="哥伦比亚" value="CO">哥伦比亚</option>
-                                                <option title="科摩罗" value="KM">科摩罗</option>
-                                                <option title="库克群岛" value="CK">库克群岛</option>
-                                                <option title="哥斯达黎加" value="CR">哥斯达黎加</option>
-                                                <option title="克罗地亚" value="HR">克罗地亚</option>
-                                                <option title="古巴" value="CU">古巴</option>
-                                                <option title="塞浦路斯" value="CY">塞浦路斯</option>
-                                                <option title="捷克" value="CZ">捷克</option>
-                                                <option title="刚果 金" value="CD">刚果 金</option>
-                                                <option title="丹麦" value="DK">丹麦</option>
-                                                <option title="吉布提" value="DJ">吉布提</option>
-                                                <option title="多米尼加" value="DM">多米尼加</option>
-                                                <option title="多米尼加共和国" value="DO">多米尼加共和国</option>
-                                                <option title="东帝汶" value="TL">东帝汶</option>
-                                                <option title="厄瓜多尔" value="EC">厄瓜多尔</option>
-                                                <option title="埃及" value="EG">埃及</option>
-                                                <option title="萨尔瓦多" value="SV">萨尔瓦多</option>
-                                                <option title="赤道几内亚" value="GQ">赤道几内亚</option>
-                                                <option title="厄立特里亚" value="ER">厄立特里亚</option>
-                                                <option title="爱沙尼亚" value="EE">爱沙尼亚</option>
-                                                <option title="埃塞俄比亚" value="ET">埃塞俄比亚</option>
-                                                <option title="法罗群岛" value="FO">法罗群岛</option>
-                                                <option title="福克兰群岛" value="FK">福克兰群岛</option>
-                                                <option title="斐济" value="FJ">斐济</option>
-                                                <option title="芬兰" value="FI">芬兰</option>
-                                                <option title="法属圭亚那" value="GF">法属圭亚那</option>
-                                                <option title="法属波利尼西亚" value="PF">法属波利尼西亚</option>
-                                                <option title="加蓬" value="GA">加蓬</option>
-                                                <option title="冈比亚" value="GM">冈比亚</option>
-                                                <option title="格鲁吉亚" value="GE">格鲁吉亚</option>
-                                                <option title="加纳" value="GH">加纳</option>
-                                                <option title="直布罗陀" value="GI">直布罗陀</option>
-                                                <option title="希腊" value="GR">希腊</option>
-                                                <option title="格陵兰" value="GL">格陵兰</option>
-                                                <option title="格林纳达" value="GD">格林纳达</option>
-                                                <option title="瓜德罗普岛" value="GP">瓜德罗普岛</option>
-                                                <option title="关岛" value="GU">关岛</option>
-                                                <option title="危地马拉" value="GT">危地马拉</option>
-                                                <option title="几内亚" value="GN">几内亚</option>
-                                                <option title="几内亚比绍共和国" value="GW">几内亚比绍共和国</option>
-                                                <option title="圭亚那" value="GY">圭亚那</option>
-                                                <option title="海地" value="HT">海地</option>
-                                                <option title="洪都拉斯" value="HN">洪都拉斯</option>
-                                                <option title="匈牙利" value="HU">匈牙利</option>
-                                                <option title="冰岛" value="IS">冰岛</option>
-                                                <option title="印度" value="IN">印度</option>
-                                                <option title="印尼" value="ID">印尼</option>
-                                                <option title="伊朗" value="IR">伊朗</option>
-                                                <option title="伊拉克" value="IQ">伊拉克</option>
-                                                <option title="爱尔兰" value="IE">爱尔兰</option>
-                                                <option title="以色列" value="IL">以色列</option>
-                                                <option title="意大利" value="IT">意大利</option>
-                                                <option title="科特迪瓦" value="CI">科特迪瓦</option>
-                                                <option title="牙买加" value="JM">牙买加</option>
-                                                <option title="日本" value="JP">日本</option>
-                                                <option title="约旦" value="JO">约旦</option>
-                                                <option title="哈萨克" value="KZ">哈萨克</option>
-                                                <option title="肯尼亚" value="KE">肯尼亚</option>
-                                                <option title="吉尔吉斯斯坦" value="KG">吉尔吉斯斯坦</option>
-                                                <option title="基里巴斯" value="KI">基里巴斯</option>
-                                                <option title="科威特" value="KW">科威特</option>
-                                                <option title="老挝国" value="LA">老挝国</option>
-                                                <option title="拉脱维亚" value="LV">拉脱维亚</option>
-                                                <option title="黎巴嫩" value="LB">黎巴嫩</option>
-                                                <option title="莱索托" value="LS">莱索托</option>
-                                                <option title="利比里亚" value="LR">利比里亚</option>
-                                                <option title="利比亚" value="LY">利比亚</option>
-                                                <option title="列支敦士登" value="LI">列支敦士登</option>
-                                                <option title="立陶宛" value="LT">立陶宛</option>
-                                                <option title="卢森堡" value="LU">卢森堡</option>
-                                                <option title="澳门" value="MO">澳门</option>
-                                                <option title="马其顿" value="MK">马其顿</option>
-                                                <option title="马达加斯加岛" value="MG">马达加斯加岛</option>
-                                                <option title="马拉维" value="MW">马拉维</option>
-                                                <option title="马来西亚" value="MY">马来西亚</option>
-                                                <option title="马尔代夫" value="MV">马尔代夫</option>
-                                                <option title="马里" value="ML">马里</option>
-                                                <option title="马耳他" value="MT">马耳他</option>
-                                                <option title="马绍尔群岛" value="MH">马绍尔群岛</option>
-                                                <option title="马提尼克" value="MQ">马提尼克</option>
-                                                <option title="毛利塔尼亚" value="MR">毛利塔尼亚</option>
-                                                <option title="毛里求斯" value="MU">毛里求斯</option>
-                                                <option title="墨西哥" value="MX">墨西哥</option>
-                                                <option title="密克罗尼西亚" value="FM">密克罗尼西亚</option>
-                                                <option title="摩尔多瓦" value="MD">摩尔多瓦</option>
-                                                <option title="摩纳哥" value="MC">摩纳哥</option>
-                                                <option title="蒙古" value="MN">蒙古</option>
-                                                <option title="黑山" value="ME">黑山</option>
-                                                <option title="蒙特塞拉特岛" value="MS">蒙特塞拉特岛</option>
-                                                <option title="摩洛哥" value="MA">摩洛哥</option>
-                                                <option title="莫桑比克" value="MZ">莫桑比克</option>
-                                                <option title="缅甸" value="MM">缅甸</option>
-                                                <option title="纳米比亚" value="NA">纳米比亚</option>
-                                                <option title="瑙鲁" value="NR">瑙鲁</option>
-                                                <option title="尼泊尔" value="NP">尼泊尔</option>
-                                                <option title="荷属安的列斯群岛" value="AN">荷属安的列斯群岛</option>
-                                                <option title="荷兰" value="NL">荷兰</option>
-                                                <option title="新喀里多尼亚" value="NC">新喀里多尼亚</option>
-                                                <option title="新西兰" value="NZ">新西兰</option>
-                                                <option title="尼加拉瓜" value="NI">尼加拉瓜</option>
-                                                <option title="尼日尔" value="NE">尼日尔</option>
-                                                <option title="尼日利亚" value="NG">尼日利亚</option>
-                                                <option title="纽埃" value="NU">纽埃</option>
-                                                <option title="诺福克" value="NF">诺福克</option>
-                                                <option title="北马里亚纳群岛" value="MP">北马里亚纳群岛</option>
-                                                <option title="挪威" value="NO">挪威</option>
-                                                <option title="阿曼" value="OM">阿曼</option>
-                                                <option title="巴基斯坦" value="PK">巴基斯坦</option>
-                                                <option title="帕劳群岛" value="PW">帕劳群岛</option>
-                                                <option title="巴拿马" value="PA">巴拿马</option>
-                                                <option title="巴布亚新几内亚" value="PG">巴布亚新几内亚</option>
-                                                <option title="巴拉圭" value="PY">巴拉圭</option>
-                                                <option title="秘鲁" value="PE">秘鲁</option>
-                                                <option title="菲律宾共和国" value="PH">菲律宾共和国</option>
-                                                <option title="波兰" value="PL">波兰</option>
-                                                <option title="葡萄牙" value="PT">葡萄牙</option>
-                                                <option title="波多黎各" value="PR">波多黎各</option>
-                                                <option title="卡塔尔" value="QA">卡塔尔</option>
-                                                <option title="留尼汪岛" value="RE">留尼汪岛</option>
-                                                <option title="罗马尼亚" value="RO">罗马尼亚</option>
-                                                <option title="卢旺达" value="RW">卢旺达</option>
-                                                <option title="圣基茨和尼维斯" value="KN">圣基茨和尼维斯</option>
-                                                <option title="圣卢西亚" value="LC">圣卢西亚</option>
-                                                <option title="圣文森特和格林纳丁斯" value="VC">圣文森特和格林纳丁斯</option>
-                                                <option title="萨摩亚" value="WS">萨摩亚</option>
-                                                <option title="圣马力诺" value="SM">圣马力诺</option>
-                                                <option title="圣多美和普林西比" value="ST">圣多美和普林西比</option>
-                                                <option title="沙特阿拉伯" value="SA">沙特阿拉伯</option>
-                                                <option title="塞内加尔" value="SN">塞内加尔</option>
-                                                <option title="塞尔维亚共和国" value="RS">塞尔维亚共和国</option>
-                                                <option title="塞舌尔" value="SC">塞舌尔</option>
-                                                <option title="塞拉利昂" value="SL">塞拉利昂</option>
-                                                <option title="新加坡" value="SG">新加坡</option>
-                                                <option title="斯洛伐克" value="SK">斯洛伐克</option>
-                                                <option title="斯洛文尼亚" value="SI">斯洛文尼亚</option>
-                                                <option title="所罗门" value="SB">所罗门</option>
-                                                <option title="索马里" value="SO">索马里</option>
-                                                <option title="南非" value="ZA">南非</option>
-                                                <option title="韩国" value="KR">韩国</option>
-                                                <option title="斯里兰卡" value="LK">斯里兰卡</option>
-                                                <option title="苏丹" value="SD">苏丹</option>
-                                                <option title="苏里南" value="SR">苏里南</option>
-                                                <option title="斯威士兰" value="SZ">斯威士兰</option>
-                                                <option title="瑞典" value="SE">瑞典</option>
-                                                <option title="瑞士" value="CH">瑞士</option>
-                                                <option title="叙利亚共和国" value="SY">叙利亚共和国</option>
-                                                <option title="台湾" value="TW">台湾</option>
-                                                <option title="塔吉克斯坦" value="TJ">塔吉克斯坦</option>
-                                                <option title="坦桑尼亚" value="TZ">坦桑尼亚</option>
-                                                <option title="泰国" value="TH">泰国</option>
-                                                <option title="刚果 布" value="CG">刚果 布</option>
-                                                <option title="多哥" value="TG">多哥</option>
-                                                <option title="汤加" value="TO">汤加</option>
-                                                <option title="特立尼达和多巴哥" value="TT">特立尼达和多巴哥</option>
-                                                <option title="突尼斯" value="TN">突尼斯</option>
-                                                <option title="土耳其" value="TR">土耳其</option>
-                                                <option title="土库曼斯坦" value="TM">土库曼斯坦</option>
-                                                <option title="特克斯和凯科斯群岛" value="TC">特克斯和凯科斯群岛</option>
-                                                <option title="图瓦卢" value="TV">图瓦卢</option>
-                                                <option title="美属维尔京群岛" value="VI">美属维尔京群岛</option>
-                                                <option title="乌干达" value="UG">乌干达</option>
-                                                <option title="乌克兰" value="UA">乌克兰</option>
-                                                <option title="阿拉伯联合酋长国" value="AE">阿拉伯联合酋长国</option>
-                                                <option title="乌拉圭" value="UY">乌拉圭</option>
-                                                <option title="乌兹别克斯坦" value="UZ">乌兹别克斯坦</option>
-                                                <option title="瓦努阿图" value="VU">瓦努阿图</option>
-                                                <option title="梵蒂冈" value="VA">梵蒂冈</option>
-                                                <option title="委内瑞拉" value="VE">委内瑞拉</option>
-                                                <option title="瓦利斯群岛" value="WF">瓦利斯群岛</option>
-                                                <option title="也门" value="YE">也门</option>
-                                                <option title="赞比亚" value="ZM">赞比亚</option>
-                                                <option title="津巴布韦" value="ZW">津巴布韦</option>
-                                            </select>
-                    <a href="javascript:;" class="marginright10 j-act-remove" style="display:none;">删除</a>
-                  </span>
-                    <a href="javascript:;" class="add-address j-act-attach">增加备货地</a>
-                </span>
-                    <span class="helptips">（有现货，可立即发货，备货期不大于四个工作日，如遇节假日顺延）</span>
-                    <div class="tip-error j-error-tip" style="display:none;"></div>
-                </div>
-                <div class="marginbottom10 clearfix">
-                    <label><input type="radio" name="inventoryStatus" value="0"><span class="marginleft5">待备货，客户一次最大购买数量为</span></label>
-                    <span class="j-nostock-label"><input type="text" data-helpid="maxSaleQty"
-                                                         class="attr-text-input addwid60 margindoublev5 j-help"
-                                                         name="maxSaleQty" value="10000" disabled=""><span
-                                class="j-unit">件</span><span class="helptips">（暂无现货需采购）</span></span>
-                    <span data-helpid="stockHelp" title="产品备货帮助" class="helpicon"></span>
-                </div>
-                <div style="display:none" class="tip-error" data-id="tips-maxSaleQty" data-anchor="j-saleBox"
-                     data-name="库存状态">
-                    <p></p></div>
-            </div>
-            <!-- 库存状态 结束 -->
-
-            <!-- 备货数量 开始 -->
-            <div class="mainlayout clearfix j-list-item j-stock-input">
-                <div class="ml-title"><span class="required">*</span>备货数量：</div>
-                <div class="clearfix"><input type="text" class="attr-text-input addwid60 j-sale-inventory"
-                                             name="inventory" value=""><span
-                            class="marginleft5 marginright20 j-unit">件</span>
-                </div>
-
-                <div style="display:none" class="tip-error" data-id="j-saleBox" data-anchor="j-saleBox"
-                     data-name="库存数量"><p></p>
-                </div>
-            </div>
-            <!-- 备货数量 结束 -->
-
-            <!-- 备货期 开始 -->
-            <div class="mainlayout clearfix j-list-item">
-                <div class="ml-title"><span class="required">*</span>备货期：</div>
-                <div class="clearfix">
-                    <div>
-                        <span class="j-set-unifyperiod-container" style="display:none;"><input type="checkbox"
-                                                                                               checked="checked"
-                                                                                               class="j-set-unifyperiod"
-                                                                                               name="isLeadingtime"> 统一设置备货期</span>
-                        <input type="text" name="proLeadingtime" data-helpid="proLeading"
-                               class="attr-text-input addwid60 marginright5 j-help" value="4">天
-                        <span class="helptips marginleft20 j-leadingtime-tip">有备货的产品备货期小于等于4天</span></div>
-                    <div style="display:none" class="tip-error" data-id="tips-leadingtime" data-anchor="tips-sale-foot"
-                         data-name="备货期"><p></p></div>
-                </div>
-            </div>
-            <!-- 备货期 结束 -->
-            <div class="mainlayout clearfix j-stock-box j-list-item" style="display: none;">
-                <div class="ml-title">备货总量：</div>
-                <div class="clearfix">
-                    <div><b class="color009b02 j-stock-totalnum">0</b><span class="j-unit">件</span> <span
-                                class="helptips marginleft20">产品备货数量的总和</span></div>
-                    <div data-name="库存总量" data-anchor="tips-sale-foot" data-id="tips-stockNum" class="tip-error"
-                         style="display:none"><p></p></div>
-                </div>
-            </div>
-
 
             <!-- 产品价格 开始 -->
             <div id="tips-sale" class="mainlayout clearfix" style="position:relative;">
@@ -1617,617 +1448,6 @@
         </div>
         <!-- 产品简短描述 结束 -->
 
-        <!-- 产品详细描述 开始 -->
-        <div class="mainlayout clearfix" id="featureshtmlTip">
-
-            <div class="ml-title"><span class="required">*</span>产品详细描述：</div>
-            <p class="helptips">详细描述一般包含产品功能属性、产品细节图片、支付物流、售后服务、公司实力等内容。<a
-                        href="http://seller.dhgate.com/prodmanage/relModel/relModel.do?dhpath=10001,79,7903"
-                        target="_blank">关联产品模板</a><span class="helpicon" title="产品详细描述帮助"
-                                                        helptipval="featureshtmlTip"></span></p>
-            <div class="ticonlist" id="boxContainer">
-                <div class="ticonbox view-box"
-                     style="visibility: visible; overflow: hidden; position: relative; z-index: 2; left: 0px;">
-                    <div id="boxList" class="weddingTemp clearfix"
-                         style="margin: 0px; padding: 0px; position: relative; list-style-type: none; z-index: 1; width: 140px; left: 0px;">
-                        <div class="wedBox" es-r="1" style="float: left; width: 50px;">
-                            <a href="javacript:void(0)" class="j-wedbox" data-wb="203312708088299520">
-                                <i class="choiceTag"></i>
-                                <img src="http://image.dhgate.com/100x100/f2/albu/g4/M00/95/88/rBVaEVd09oqAWl3vAAAJp0TwXaw832.jpg"></a>
-                            <p title="3C-A">3C-A</p>
-                        </div>
-                        <div class="wedBox wDefault" es-r="2" style="float: left; width: 50px;">
-                            <a href="javacript:void(0)" class="j-wedbox" data-wb=""><img
-                                        src="http://css.dhresource.com/seller/syi/weddingTemplate/image/w-default.gif"></a>
-                            <p>空白模板</p>
-                        </div>
-                    </div>
-                </div>
-                <span class="ticon-prevarrow prev disabled"></span><!--可点击时样式ticon-prevarrow-->
-                <span class="ticon-nextarrow next disabled"></span><!--不可点击时样式ticon-nonnextarrow-->
-                <input type="hidden" id="weddingtempid" name="productHtmlmodelid" value="203312708088299520">
-            </div>
-
-            <a id="a_featureshtml"></a>
-            <br>
-            <div style="width:930px;max-width:930px;">
-                <div id="elm" class=" edui-default">
-                    <div id="edui1" class="edui-editor  edui-default" style="z-index: 999; width: 100%;">
-                        <div id="edui1_toolbarbox" class="edui-editor-toolbarbox edui-default">
-                            <div id="edui1_toolbarboxouter" class="edui-editor-toolbarboxouter edui-default">
-                                <div class="edui-editor-toolbarboxinner edui-default">
-                                    <div id="edui2" class="edui-toolbar   edui-default" onselectstart="return false;"
-                                         onmousedown="return $EDITORUI[&quot;edui2&quot;]._onMouseDown(event, this);"
-                                         style="-webkit-user-select: none;">
-                                        <div id="edui3" class="edui-box edui-combox edui-for-fontfamily edui-default">
-                                            <div title="字体" id="edui3_state"
-                                                 onmousedown="$EDITORUI[&quot;edui3&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui3&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui3&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui3&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-combox-body edui-default">
-                                                    <div id="edui3_button_body"
-                                                         class="edui-box edui-button-body edui-default"
-                                                         onclick="$EDITORUI[&quot;edui3&quot;]._onButtonClick(event, this);">
-                                                        字体
-                                                    </div>
-                                                    <div class="edui-box edui-splitborder edui-default"></div>
-                                                    <div class="edui-box edui-arrow edui-default"
-                                                         onclick="$EDITORUI[&quot;edui3&quot;]._onArrowClick();"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui11" class="edui-box edui-combox edui-for-fontsize edui-default">
-                                            <div title="字号" id="edui11_state"
-                                                 onmousedown="$EDITORUI[&quot;edui11&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui11&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui11&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui11&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-combox-body edui-default">
-                                                    <div id="edui11_button_body"
-                                                         class="edui-box edui-button-body edui-default"
-                                                         onclick="$EDITORUI[&quot;edui11&quot;]._onButtonClick(event, this);">
-                                                        字号
-                                                    </div>
-                                                    <div class="edui-box edui-splitborder edui-default"></div>
-                                                    <div class="edui-box edui-arrow edui-default"
-                                                         onclick="$EDITORUI[&quot;edui11&quot;]._onArrowClick();"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui22" class="edui-box edui-button edui-for-bold edui-default">
-                                            <div id="edui22_state"
-                                                 onmousedown="$EDITORUI[&quot;edui22&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui22&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui22&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui22&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui22_body" unselectable="on" title="加粗"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui22&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui23" class="edui-box edui-button edui-for-italic edui-default">
-                                            <div id="edui23_state"
-                                                 onmousedown="$EDITORUI[&quot;edui23&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui23&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui23&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui23&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui23_body" unselectable="on" title="斜体"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui23&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui24" class="edui-box edui-button edui-for-underline edui-default">
-                                            <div id="edui24_state"
-                                                 onmousedown="$EDITORUI[&quot;edui24&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui24&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui24&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui24&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui24_body" unselectable="on" title="下划线"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui24&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui25"
-                                             class="edui-box edui-button edui-for-strikethrough edui-default">
-                                            <div id="edui25_state"
-                                                 onmousedown="$EDITORUI[&quot;edui25&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui25&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui25&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui25&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui25_body" unselectable="on" title="删除线"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui25&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui26" class="edui-box edui-separator  edui-default"></div>
-                                        <div id="edui27"
-                                             class="edui-box edui-splitbutton edui-for-forecolor edui-default edui-colorbutton">
-                                            <div title="字体颜色" id="edui27_state"
-                                                 onmousedown="$EDITORUI[&quot;edui27&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui27&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui27&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui27&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-splitbutton-body edui-default">
-                                                    <div id="edui27_button_body"
-                                                         class="edui-box edui-button-body edui-default"
-                                                         onclick="$EDITORUI[&quot;edui27&quot;]._onButtonClick(event, this);">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                        <div id="edui27_colorlump" class="edui-colorlump"></div>
-                                                    </div>
-                                                    <div class="edui-box edui-splitborder edui-default"></div>
-                                                    <div class="edui-box edui-arrow edui-default"
-                                                         onclick="$EDITORUI[&quot;edui27&quot;]._onArrowClick();"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui30"
-                                             class="edui-box edui-splitbutton edui-for-backcolor edui-default edui-colorbutton">
-                                            <div title="背景色" id="edui30_state"
-                                                 onmousedown="$EDITORUI[&quot;edui30&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui30&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui30&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui30&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-splitbutton-body edui-default">
-                                                    <div id="edui30_button_body"
-                                                         class="edui-box edui-button-body edui-default"
-                                                         onclick="$EDITORUI[&quot;edui30&quot;]._onButtonClick(event, this);">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                        <div id="edui30_colorlump" class="edui-colorlump"></div>
-                                                    </div>
-                                                    <div class="edui-box edui-splitborder edui-default"></div>
-                                                    <div class="edui-box edui-arrow edui-default"
-                                                         onclick="$EDITORUI[&quot;edui30&quot;]._onArrowClick();"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui33" class="edui-box edui-separator  edui-default"></div>
-                                        <div id="edui34" class="edui-box edui-button edui-for-justifyleft edui-default">
-                                            <div id="edui34_state"
-                                                 onmousedown="$EDITORUI[&quot;edui34&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui34&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui34&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui34&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui34_body" unselectable="on" title="居左对齐"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui34&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                        <div class="edui-box edui-label edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui35"
-                                             class="edui-box edui-button edui-for-justifycenter edui-default">
-                                            <div id="edui35_state"
-                                                 onmousedown="$EDITORUI[&quot;edui35&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui35&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui35&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui35&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui35_body" unselectable="on" title="居中对齐"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui35&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                        <div class="edui-box edui-label edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui36"
-                                             class="edui-box edui-button edui-for-justifyright edui-default">
-                                            <div id="edui36_state"
-                                                 onmousedown="$EDITORUI[&quot;edui36&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui36&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui36&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui36&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui36_body" unselectable="on" title="居右对齐"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui36&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                        <div class="edui-box edui-label edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui37" class="edui-box edui-separator  edui-default"></div>
-                                        <div id="edui38" class="edui-box edui-button edui-for-indent edui-default">
-                                            <div id="edui38_state"
-                                                 onmousedown="$EDITORUI[&quot;edui38&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui38&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui38&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui38&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui38_body" unselectable="on" title="首行缩进"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui38&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui39" class="edui-box edui-separator  edui-default"></div>
-                                        <div id="edui40"
-                                             class="edui-box edui-menubutton edui-for-insertorderedlist edui-default">
-                                            <div title="有序列表" id="edui40_state"
-                                                 onmousedown="$EDITORUI[&quot;edui40&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui40&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui40&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui40&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-menubutton-body edui-default">
-                                                    <div id="edui40_button_body"
-                                                         class="edui-box edui-button-body edui-default"
-                                                         onclick="$EDITORUI[&quot;edui40&quot;]._onButtonClick(event, this);">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                    <div class="edui-box edui-splitborder edui-default"></div>
-                                                    <div class="edui-box edui-arrow edui-default"
-                                                         onclick="$EDITORUI[&quot;edui40&quot;]._onArrowClick();"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui47"
-                                             class="edui-box edui-menubutton edui-for-insertunorderedlist edui-default">
-                                            <div title="无序列表" id="edui47_state"
-                                                 onmousedown="$EDITORUI[&quot;edui47&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui47&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui47&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui47&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-menubutton-body edui-default">
-                                                    <div id="edui47_button_body"
-                                                         class="edui-box edui-button-body edui-default"
-                                                         onclick="$EDITORUI[&quot;edui47&quot;]._onButtonClick(event, this);">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                    <div class="edui-box edui-splitborder edui-default"></div>
-                                                    <div class="edui-box edui-arrow edui-default"
-                                                         onclick="$EDITORUI[&quot;edui47&quot;]._onArrowClick();"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui54"
-                                             class="edui-box edui-menubutton edui-for-lineheight edui-default">
-                                            <div title="行间距" id="edui54_state"
-                                                 onmousedown="$EDITORUI[&quot;edui54&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui54&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui54&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui54&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-menubutton-body edui-default">
-                                                    <div id="edui54_button_body"
-                                                         class="edui-box edui-button-body edui-default"
-                                                         onclick="$EDITORUI[&quot;edui54&quot;]._onButtonClick(event, this);">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                    <div class="edui-box edui-splitborder edui-default"></div>
-                                                    <div class="edui-box edui-arrow edui-default"
-                                                         onclick="$EDITORUI[&quot;edui54&quot;]._onArrowClick();"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui63" class="edui-box edui-separator  edui-default"></div>
-                                        <div id="edui64" class="edui-box edui-button edui-for-undo edui-default">
-                                            <div id="edui64_state"
-                                                 onmousedown="$EDITORUI[&quot;edui64&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui64&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui64&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui64&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui64_body" unselectable="on" title="撤销"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui64&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui65" class="edui-box edui-button edui-for-redo edui-default">
-                                            <div id="edui65_state"
-                                                 onmousedown="$EDITORUI[&quot;edui65&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui65&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui65&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui65&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui65_body" unselectable="on" title="重做"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui65&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui66" class="edui-box edui-separator  edui-default"></div>
-                                        <div id="edui67"
-                                             class="edui-box edui-splitbutton edui-for-inserttable edui-default">
-                                            <div title="插入表格" id="edui67_state"
-                                                 onmousedown="$EDITORUI[&quot;edui67&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui67&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui67&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui67&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-splitbutton-body edui-default">
-                                                    <div id="edui67_button_body"
-                                                         class="edui-box edui-button-body edui-default"
-                                                         onclick="$EDITORUI[&quot;edui67&quot;]._onButtonClick(event, this);">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                    <div class="edui-box edui-splitborder edui-default"></div>
-                                                    <div class="edui-box edui-arrow edui-default"
-                                                         onclick="$EDITORUI[&quot;edui67&quot;]._onArrowClick();"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui70" class="edui-box edui-button edui-for-deletetable edui-default">
-                                            <div id="edui70_state"
-                                                 onmousedown="$EDITORUI[&quot;edui70&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui70&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui70&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui70&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui70_body" unselectable="on" title="删除表格"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui70&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui71" class="edui-box edui-separator  edui-default"></div>
-                                        <div id="edui78" class="edui-box edui-button edui-for-link edui-default">
-                                            <div id="edui78_state"
-                                                 onmousedown="$EDITORUI[&quot;edui78&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui78&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui78&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui78&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui78_body" unselectable="on" title="超链接"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui78&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                        <div class="edui-box edui-label edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui79" class="edui-box edui-button edui-for-unlink edui-default">
-                                            <div id="edui79_state"
-                                                 onmousedown="$EDITORUI[&quot;edui79&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui79&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui79&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui79&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui79_body" unselectable="on" title="取消链接"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui79&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui80" class="edui-box edui-button edui-for-cleardoc edui-default">
-                                            <div id="edui80_state"
-                                                 onmousedown="$EDITORUI[&quot;edui80&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui80&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui80&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui80&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui80_body" unselectable="on" title="清空文档"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui80&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                        <div class="edui-box edui-label edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui81" class="edui-box edui-button edui-for-fullscreen edui-default">
-                                            <div id="edui81_state"
-                                                 onmousedown="$EDITORUI[&quot;edui81&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui81&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui81&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui81&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui81_body" unselectable="on" title="全屏"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui81&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                        <div class="edui-box edui-label edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="edui82" class="edui-toolbar   edui-default" onselectstart="return false;"
-                                         onmousedown="return $EDITORUI[&quot;edui82&quot;]._onMouseDown(event, this);"
-                                         style="-webkit-user-select: none;">
-                                        <div id="edui83" class="edui-box edui-button edui-for-upload edui-default">
-                                            <div id="edui83_state"
-                                                 onmousedown="$EDITORUI[&quot;edui83&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui83&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui83&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui83&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui83_body" unselectable="on" title="上传本地图片"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui83&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                        <div class="edui-box edui-label edui-default">上传本地图片</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui84" class="edui-box edui-button edui-for-albums edui-default">
-                                            <div id="edui84_state"
-                                                 onmousedown="$EDITORUI[&quot;edui84&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui84&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui84&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui84&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui84_body" unselectable="on" title="图片相册"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui84&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                        <div class="edui-box edui-label edui-default">图片相册</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui85"
-                                             class="edui-box edui-button edui-for-relatedproduct edui-default">
-                                            <div id="edui85_state"
-                                                 onmousedown="$EDITORUI[&quot;edui85&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui85&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui85&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui85&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui85_body" unselectable="on" title="插入关联产品"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui85&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                        <div class="edui-box edui-label edui-default">插入关联产品</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui86" class="edui-box edui-separator  edui-default"></div>
-                                        <div id="edui87" class="edui-box edui-button edui-for-source edui-default">
-                                            <div id="edui87_state"
-                                                 onmousedown="$EDITORUI[&quot;edui87&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui87&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui87&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui87&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui87_body" unselectable="on" title="源代码"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui87&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="edui88" class="edui-box edui-button edui-for-preview edui-default">
-                                            <div id="edui88_state"
-                                                 onmousedown="$EDITORUI[&quot;edui88&quot;].Stateful_onMouseDown(event, this);"
-                                                 onmouseup="$EDITORUI[&quot;edui88&quot;].Stateful_onMouseUp(event, this);"
-                                                 onmouseover="$EDITORUI[&quot;edui88&quot;].Stateful_onMouseOver(event, this);"
-                                                 onmouseout="$EDITORUI[&quot;edui88&quot;].Stateful_onMouseOut(event, this);"
-                                                 class=" edui-default">
-                                                <div class="edui-button-wrap edui-default">
-                                                    <div id="edui88_body" unselectable="on" title="预览效果"
-                                                         class="edui-button-body edui-default"
-                                                         onmousedown="return false;"
-                                                         onclick="return $EDITORUI[&quot;edui88&quot;]._onClick();">
-                                                        <div class="edui-box edui-icon edui-default"></div>
-                                                        <div class="edui-box edui-label edui-default">预览效果</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="edui1_toolbarmsg" class="edui-editor-toolbarmsg edui-default"
-                                 style="display:none;">
-                                <div id="edui1_upload_dialog" class="edui-editor-toolbarmsg-upload edui-default"
-                                     onclick="$EDITORUI[&quot;edui1&quot;].showWordImageDialog();">点击上传
-                                </div>
-                                <div class="edui-editor-toolbarmsg-close edui-default"
-                                     onclick="$EDITORUI[&quot;edui1&quot;].hideToolbarMsg();">x
-                                </div>
-                                <div id="edui1_toolbarmsg_label"
-                                     class="edui-editor-toolbarmsg-label edui-default"></div>
-                                <div style="height:0;overflow:hidden;clear:both;" class=" edui-default"></div>
-                            </div>
-                        </div>
-                        <div id="edui1_iframeholder" class="edui-editor-iframeholder edui-default"
-                             style="height: 540px; overflow: hidden;">
-                            <iframe id="baidu_editor_0" width="100%" height="100%" scroll="no" frameborder="0"></iframe>
-                        </div>
-                        <div id="edui1_bottombar" class="edui-editor-bottomContainer edui-default">
-                            <table class=" edui-default">
-                                <tbody class=" edui-default">
-                                <tr class=" edui-default">
-                                    <td id="edui1_elementpath" class="edui-editor-bottombar edui-default">请勿输入非英文字符和符号
-                                    </td>
-                                    <td id="edui1_wordcount" class="edui-editor-wordcount edui-default">您还可以输入<strong>80000</strong>/80000个字符
-                                    </td>
-                                    <td id="edui1_scale" class="edui-editor-scale edui-default" style="display: none;">
-                                        <div class="edui-editor-icon edui-default"></div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div id="edui1_scalelayer" class=" edui-default"></div>
-                    </div>
-                </div>
-            </div>
-            <div id="featureshtmlErrTip" class="tip-error" style="display:none;"></div>
-        </div>
-        <!-- 产品详细描述 结束 -->
-
         <!-- 产品视频 开始 -->
         <div class="mainlayout clearfix j-list-item" id="vadiourlTip">
             <div class="ml-title">产品视频链接：</div>
@@ -2238,9 +1458,6 @@
             </p>
             <div class="margintop10"><input class="attr-text-input addwid402" type="text" id="videourl" size="120"
                                             name="videourl" maxlength="300" value="">
-            </div>
-            <div style="display:none" class="tip-error" data-name="产品视频链接">
-                <p></p>
             </div>
         </div>
         <!-- 产品视频结束 -->
@@ -2763,74 +1980,13 @@
         </script>    <!------- 运费设置列表结束 ------->
 
         <!-- title其他信息 开始 -->
-        <div class="titlebox"><h3>6、其他信息</h3></div>
 
-        <!-- 工厂编号产品 开始
-        <div class="mainlayout clearfix" id="keywordTip">
-            <div class="ml-title">工厂产品编号：</div>
-            <div>
-                <input class="attr-text-input marginright10" id="factoryproductname" name="factoryproductname" maxlength="25" type="text" value="" />
-            </div>
-        </div>-->
-
-        <!-- 工厂产品编号 结束 -->
-
-        <!-- 产品有效期 开始 -->
-        <div class="mainlayout clearfix" id="vailddayTip">
-            <div class="ml-title">产品有效期：</div>
-            <a id="a_vaildday"></a>
-            <span class="spanaddwid70"><input type="radio" name="vaildday" value="90" class="marginright5" checked="">90天</span>
-            <span class="spanaddwid70"><input type="radio" name="vaildday" value="30" class="marginright5">30天</span>
-            <span class="spanaddwid70 widauto"><input type="radio" name="vaildday" value="14"
-                                                      class="marginright5">14天</span>
-            <span class="helpicon" title="产品有效期帮助" helptipval="vailddayTip"></span>
-        </div>
-        <!-- 产品有效期 结束 -->
 
         <!-- 店铺会员专区产品 开始 -->
         <input type="hidden" id="specialzone0" value="0">
         <!-- 店铺会员专区产品 结束 -->
 
-        <!-- VIP专供产品 开始 -->
-        <input type="hidden" id="productvip0" value="0">
-        <!-- VIP专供产品 结束 -->
-        <!--显示售后模板-->
-        <div id="saleTemplate" class="mainlayout clearfix"><a id="a_saletemplate"></a>
-            <input type="hidden" name="saleTemplateId" id="saleTemplateId" value="251383508593451008">
-            <div class="ml-title"><span class="required">*</span> 售后服务模板：</div>
-            <div class="syi-lfselect">
-                <div id="selectSaleTemplateDiv" class="syi-simulation-select" style="width:378px;">
-                    <input type="text" id="saleTemplateName" name="saleTemplateName" value="请选择售后服务模板"
-                           class="syi-input15" readonly="readonly" style="width:350px;">
-                    <div class="syi-simulation-arrow"></div>
-                </div>
-                <div class="syi-category-list select-two select-two-saletemplate" style="display:none"
-                     id="saleTemplateDiv">
-                    <ul id="saleTemplatesUL"></ul>
-                    <iframe></iframe>
-                </div>
-            </div>
-            <a class="marginleft10"
-               href="http://seller.dhgate.com/prodmanage/serviceTemplate/templatemanage.do?dhpath=10001,79,7901"
-               target="_blank">管理售后服务模板</a>
-            <table class="aftersaleservice">
-                <tbody>
-                <tr class="tit">
-                    <td>是否接受无理由退货</td>
-                    <td>运费承担方</td>
-                    <td>接受的退货期限</td>
-                    <td>货物描述不符&amp;质量问题</td>
-                </tr>
-                <tr>
-                    <td>否</td>
-                    <td></td>
-                    <td></td>
-                    <td>部分/全额退款，买家保留货物</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <!--显示售后模板结束-->
+
         <!--对频繁上传产品的卖家显示验证码-->
         <!-- 敦煌网网络服务使用协议 开始 -->
         <div class="chousexybox">
