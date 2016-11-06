@@ -36,13 +36,19 @@ router.get('/', function (req, res, next) {
             } else {
                 var category = results[0];
                 var labels = results[1];
+                var account = null;
+                var statusCode = 500;
+                if (req.cookies["account"] != null) {
+                    account = req.cookies['account'];
+                    statusCode = 200;
+                }
                 res.render('assets/index', {
                     title: 'ECSell',
                     url: '/',
                     categories: category,
                     hotLabels: labels,
-                    user: {nick_name: ''},
-                    status: 500
+                    user: account,
+                    status: statusCode
                 });
             }
         });
@@ -77,17 +83,29 @@ router.get('/login', function (req, res, next) {
             } else {
                 var category = results[0];
                 var labels = results[1];
+                var account = null;
+                var statusCode = 500;
+                if (req.cookies["account"] != null) {
+                    account = req.cookies['account'];
+                    statusCode = 200;
+                }
                 res.render('assets/login', {
                     title: 'ECSell',
                     categories: category,
                     hotLabels: labels,
-                    user: {nick_name: ''},
-                    status: 500
+                    user: account,
+                    status: statusCode
                 });
             }
         });
 });
 
+//登出处理
+router.get('/logout', function (req, res, next) {
+    res.clearCookie("account");
+    res.redirect('/login');
+});
+//验证邮件
 router.post('/validateEmail', function (req, res, next) {
     db.users.find({name: req.body.email}, function (err, result) {
         if (err) {
@@ -101,7 +119,22 @@ router.post('/validateEmail', function (req, res, next) {
         }
     })
 });
-
+//person center
+router.get('/personal-center', function (req, res, next) {
+    var statusCode = null;
+    if (req.cookies["account"] != null) {
+        statusCode = 200;
+    } else {
+        statusCode = 500;
+    }
+    res.render('assets/Personal-Center', {
+        title: 'ECSell',
+        categories: categoryies,
+        hotLabels: hotLabel,
+        user: req.cookies['account'],
+        status: statusCode
+    })
+});
 //获取轮播广告图
 router.get('/getBanner', function (req, res) {
     db.banners.find({'type': 'carousel'}, function (err, result) {
@@ -126,17 +159,23 @@ router.post('/dologin', function (req, res) {
         }
         if (result.length > 0) {
             u = result[0];
+            res.cookie("account", {name: result[0].name, nick_name: result[0].nick_name})
             console.log(result[0].nick_name + ":登录成功" + new Date());
-            res.render('assets/index', {
-                user: result[0],
-                categories: categoryies,
-                hotLabels: hotLabel,
-                title: 'ECSell',
-                status: 200
-            })
+            db.hotLabels.find({}, null, {
+                sort: {
+                    add_time: -1
+                }
+            }, function (err, labels) {
+                res.render('assets/index', {
+                    user: result[0],
+                    categories: categoryies,
+                    hotLabels: labels,
+                    title: 'ECSell',
+                    status: 200
+                })
+            });
         } else {
             console.log(query.name + ":登录失败" + new Date());
-            // res.send(500);
             res.render('assets/login', {status: 500, user: null})
         }
     });
@@ -165,18 +204,138 @@ router.get('/team-of-use', function (req, res) {
         if (err) {
             res.send(404)
         } else {
-            console.log(system);
+            var statusCode = null;
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
             res.render('assets/team-of-use', {
                 system: system,
                 title: 'ECSell',
                 categories: categoryies,
                 hotLabels: hotLabel,
-                user: {nick_name: u.nick_name},
-                status: 500
+                user: req.cookies["account"],
+                status: statusCode
             })
         }
     })
+});
+//关于我们界面
+router.get('/about-us', function (req, res) {
+    db.notices.findOne({}, function (err, system) {
+        if (err) {
+            res.send(404)
+        } else {
+            var statusCode = null;
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
+            res.render('assets/about-us', {
+                system: system.about_us[0],
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies["account"],
+                status: statusCode
+            })
+        }
+    })
+});
+//Privacy Policy
+router.get('/privacy-policy', function (req, res) {
+    db.notices.findOne({}, function (err, system) {
+        if (err) {
+            res.send(404)
+        } else {
+            var statusCode = null;
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
 
+            res.render('assets/privacy-notice', {
+                system: system.privacy_notice[0],
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies['account'],
+                status: statusCode
+            })
+        }
+    })
+});
+//FAQ
+router.get('/FAQ', function (req, res) {
+    db.notices.findOne({}, function (err, system) {
+        if (err) {
+            res.send(404)
+        } else {
+            var statusCode = null;
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
+            res.render('assets/FAQ', {
+                system: system.FAQ[0],
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies['account'],
+                status: statusCode
+            })
+        }
+    })
+});
+//attention
+router.get('/attention', function (req, res) {
+    db.notices.findOne({}, function (err, system) {
+        if (err) {
+            res.send(404)
+        } else {
+            var statusCode = null;
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
+            res.render('assets/attention', {
+                system: system.attention[0],
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies['account'],
+                status: statusCode
+            })
+        }
+    })
+});
+//connect_us
+router.get('/contact-us', function (req, res) {
+    db.notices.findOne({}, function (err, system) {
+        if (err) {
+            res.send(404)
+        } else {
+            var statusCode = null;
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
+            res.render('assets/contact-us', {
+                system: system.contact_us[0],
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies['account'],
+                status: statusCode
+            })
+        }
+    })
 });
 //MD5加密
 function md5(text) {

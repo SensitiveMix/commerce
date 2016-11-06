@@ -26,27 +26,7 @@ var tempCategory = [];
 function md5(text) {
     return crypto.createHash('md5').update(text).digest('hex');
 }
-
-/*-------------------------------------------------------------------*/
-/* -----------------------管理员登录 -------------------------------*/
-//后台登录界面
-router.get('/', function (req, res) {
-    res.render('admin/login_1', {title: '电商网站后台'});
-});
-
-router.get('', function (req, res) {
-    res.render('admin/login_1', {title: '电商网站后台'});
-});
-
-router.get('/main', function (req, res) {
-    res.render('admin/land_page', {username: u.nick_name});
-});
-
-//后台登录界面
-router.get('/adminlogin', function (req, res) {
-    res.render('admin/login_1', {title: '电商网站后台'});
-});
-
+//验证登录
 var checkLogin = function (req, res, next) {
     console.log(req);
     if (req.body.status != 'test') {
@@ -56,6 +36,30 @@ var checkLogin = function (req, res, next) {
     }
     next();
 };
+
+/*-------------------------------------------------------------------*/
+/* -----------------------管理员登录 -------------------------------*/
+//后台登录界面
+router.get('/', function (req, res) {
+    res.render('admin/login_1', {title: '电商网站后台'});
+});
+
+//默认路径
+router.get('', function (req, res) {
+    res.render('admin/login_1', {title: '电商网站后台'});
+});
+
+//进入主页
+router.get('/main', function (req, res) {
+    res.render('admin/land_page', {username: u.nick_name});
+});
+
+//后台登录界面
+router.get('/adminlogin', function (req, res) {
+    res.render('admin/login_1', {title: '电商网站后台'});
+});
+
+
 //后台登陆处理
 router.post('/doadminlogin', function (req, res, next) {
     var query = {name: req.body.name, password: req.body.password, level: '66'};
@@ -414,35 +418,7 @@ router.post('/saveHeadBanners', function (req, res) {
 });
 
 
-//上传产品
-router.get('/upload', checkLogin);
-router.get('/upload', function (req, res) {
-    db.categorys.find({}, function (err, result) {
-        if (err) res.send('404');
-        console.log(result);
-        res.render('admin/upload_goods', {username: u.nick_name, upload: [], category: result});
-    });
 
-});
-
-//上传产品详细信息
-router.get('/upload-products-detail', function (req, res) {
-    db.categorys.find({}, function (err, result) {
-        if (err) res.send('404');
-        console.log(result);
-        db.specifications.find({}, function (err, product_spectication) {
-            res.render('admin/upload-products-detail', {
-                username: u.nick_name,
-                upload: [],
-                category: result,
-                tempCategory: tempCategory,
-                product_specification: product_spectication[0]
-            });
-            tempCategory = [];
-        });
-    });
-
-});
 
 //更改注册须知
 router.post('/doChangeConditions', checkLogin);
@@ -662,6 +638,37 @@ router.get('/hot_product_manage', function (req, res, next) {
 
 /*-------------------------------------------------------------------*/
 /* ----------------------------上传产品模块 -------------------------*/
+
+//上传产品
+router.get('/upload', checkLogin);
+router.get('/upload', function (req, res) {
+    db.categorys.find({}, function (err, result) {
+        if (err) res.send('404');
+        console.log(result);
+        res.render('admin/upload_goods', {username: u.nick_name, upload: [], category: result});
+    });
+
+});
+
+//上传产品详细信息
+router.get('/upload-products-detail', function (req, res) {
+    db.categorys.find({}, function (err, result) {
+        if (err) res.send('404');
+        console.log(result);
+        db.specifications.find({}, function (err, product_spectication) {
+            res.render('admin/upload-products-detail', {
+                username: u.nick_name,
+                upload: [],
+                category: result,
+                tempCategory: tempCategory,
+                product_specification: product_spectication[0]
+            });
+            tempCategory = [];
+        });
+    });
+
+});
+
 //类目管理
 router.get('/accessory_manage', checkLogin);
 router.get('/accessory_manage', function (req, res, next) {
@@ -697,7 +704,7 @@ router.post('/doAddCategory', function (req, res) {
     });
 });
 
-
+//进入产品页面GET所以收藏类目
 router.get('/uploadTemporary', function (req, res, next) {
     db.uploadTemporarys.find({'addBy': req.query.username}, null, {
         sort: {
@@ -714,7 +721,7 @@ router.get('/uploadTemporary', function (req, res, next) {
     }).limit(5);
 })
 
-//保存最近上传类目接口
+//产品页面POST保存最近上传类目接口
 router.post('/uploadTemporary', function (req, res, next) {
 
     if (req.body.firstCategory == '' && req.body.secondCategory != '') {
@@ -756,6 +763,7 @@ router.post('/uploadTemporary', function (req, res, next) {
 
 });
 
+//产品基本信息录入管理
 router.get('/specification', checkLogin);
 router.get('/specification', function (req, res, next) {
     console.log("产品上传管理" + new Date());
@@ -771,7 +779,7 @@ router.get('/specification', function (req, res, next) {
     console.log("产品上传管理登陆成功");
 });
 
-//添加属性
+//产品基本信息录入管理-添加属性
 router.post('/doAddProperty', function (req, res, next) {
     switch (req.body.addProperty) {
         case 'compatibility':
@@ -830,7 +838,7 @@ router.post('/doAddProperty', function (req, res, next) {
     }
 });
 
-//删除属性
+//产品基本信息录入管理-删除属性
 router.post('/doDelProperty', function (req, res, next) {
     console.log(req.body);
     switch (req.body.addProperty) {
@@ -892,7 +900,7 @@ router.post('/doDelProperty', function (req, res, next) {
             break;
     }
 });
-//上传产品
+//点击上传产品跳转到产品详情页接口
 router.post('/uploadProductDetail', function (req, res, next) {
     var Categories = [];
     _.each(req.body, function (product) {
@@ -927,6 +935,7 @@ router.post('/uploadProductDetail', function (req, res, next) {
     });
 });
 
+
 /* 多图片上传 */
 router.post('/uploadImage', upload.array("file"), function (req, res, next) {
     if (req.files == undefined) {
@@ -944,7 +953,7 @@ router.post('/uploadImage', upload.array("file"), function (req, res, next) {
         }
         console.log(uploadArr);
         // res.render('admin/upload_goods', {upload: uploadArr, username: u.nick_name});
-        res.render('admin/accessory_manage', {upload: uploadArr, username: u.nick_name});
+        res.render('admin/upload-products-detail', {upload: uploadArr, username: u.nick_name});
     }
 });
 

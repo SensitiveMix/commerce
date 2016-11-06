@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Garbini</title>
+    <title>ECSELL</title>
 
     <!-- Bootstrap -->
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
@@ -17,6 +17,7 @@
 
     <link href="../assets/css/style.css" rel="stylesheet">
     <link href="../assets/css/config.css" rel="stylesheet">
+    <link rel="stylesheet" href="../layer-v2.2/layer/skin/layer.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,6 +31,52 @@
     <script src="../layer-v2.2/layer/layer.js"></script>
     <![endif]-->
 </head>
+<style>
+    .person_ul {
+        display: none;
+        margin: 18px 0 0 32px;
+        border: 1px solid #999999 !important;
+        position: absolute;
+        top: 22px;
+        padding: 9px 0 5px 0;
+        background-color: #ffffff;
+        background-clip: padding-box;
+        z-index: 1000;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 4px;
+        width: 118px;
+        text-align: center;
+        white-space: nowrap;
+        color: #666;
+        font-size: 13px;
+    }
+
+    .person_ul li {
+        list-style-type: none;
+        padding-left: 6px;
+
+    }
+
+    .person_ul li:first-child {
+        list-style-type: none;
+        margin-top: -9px;
+    }
+
+    .person_ul li:last-child {
+        list-style-type: none;
+        margin-bottom: -5px;
+    }
+
+    .person_ul li:hover {
+        background-color: #2a9292
+    }
+
+    .person_ul a {
+        text-decoration: none
+    }
+</style>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -124,7 +171,6 @@
                     height: auto;
                 }</style>
         </div>
-
         <!-- ========== MENU START ========== -->
         <nav id="main-nav">
             <div class="navbar">
@@ -137,16 +183,27 @@
                         </button>
                         <a class="navbar-brand" href="/"><img src="../assets/img/logo.png" alt="Garbini"
                                                               class="img-responsive"
-                                                              style="height: 60px;"></a>
+                                                              style="height: 70px;"></a>
                     </div>
                     <div class="navbar-collapse collapse main-nav">
+
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <% if( status == 200) { %>
-                                <a class="dropdown-toggle"><i
-                                            class="fa fa-user-circle"></i>Hi! <%= user.name %>
-                                </a>
+                                <!--<a class="dropdown-toggle"><i-->
+                                <!--class="fa fa-user-circle"></i>Hi! <%= user.name %>-->
+                                <!--</a>-->
+                                <a href="/personal-center" class="dropdown-toggle person" data-toggle="dropdown"
+                                   aria-expanded="true">
+                                    <embed src="../assets/img/icon/user.svg" type="image/svg+xml"/>
+                                    Personal Center <i class="fa fa-sort-down "></i></a>
 
+                                <ul class="person_ul">
+                                    <li><a ref="nofollow" href="#">My Orders</a></li>
+                                    <li class=""><a ref="nofollow"
+                                                             href="/logout">Sign
+                                            out</a></li>
+                                </ul>
 
                                 <% } else { %>
                                 <a href="login" class="dropdown-toggle">
@@ -155,7 +212,7 @@
                                 <% } %>
                             </li>
                             <li>
-                                <a href="index-1.html" class="dropdown-toggle">
+                                <a href="/contact-us" class="dropdown-toggle">
                                     <embed style="width: 13px;" src="../assets/img/icon/warning.svg"
                                            type="image/svg+xml"/>
                                     Customer Service </a>
@@ -260,19 +317,19 @@
                 </div>
             </div>
         </nav>
-<script>
-    $(function () {
-        $('#menu-master').on('mouseover',function () {
-            $('.submenu').show();
-            $('.submenu').css('position','absolute');
-            $('#zlight-nav').zlightMenu();
-        })
-        $('.nav-top').on('mouseleave',function () {
-            $('#slider-menu').hide();
-            $('.submenu').hide();
-        })
-    })
-</script>
+        <script>
+            $(function () {
+                $('#menu-master').on('mouseover', function () {
+                    $('.submenu').show();
+                    $('.submenu').css('position', 'absolute');
+                    $('#zlight-nav').zlightMenu();
+                })
+                $('.nav-top').on('mouseleave', function () {
+                    $('#slider-menu').hide();
+                    $('.submenu').hide();
+                })
+            })
+        </script>
     </header>
     <%- body %>
     <!-- Content Wrapper. Contains page content -->
@@ -299,45 +356,25 @@
 
             <div class="col-sm-2">
                 <aside class="widget widget_nav_menu">
-                    <h3 class="widget-title">Garbini</h3>
+                    <h3 class="widget-title">ECsell</h3>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Log In / Sign Up</a></li>
-                        <li><a href="#">Checkout</a></li>
-                        <li><a href="#">My Wishlist</a></li>
-                        <li><a href="#">My Cart</a></li>
-                        <li><a href="#">What’s New</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about-us">About Us</a></li>
+                        <li><a href="/login">Log In / Sign Up</a></li>
                     </ul>
                 </aside>
             </div>
 
-            <div class="col-sm-2">
-                <aside class="widget widget_nav_menu">
-                    <h3 class="widget-title">Shop</h3>
-                    <ul>
-                        <li><a href="#">Cloting</a></li>
-                        <li><a href="#">Feeding Bottles</a></li>
-                        <li><a href="#">Diaper</a></li>
-                        <li><a href="#">Infant Clothes</a></li>
-                        <li><a href="#">Educational Baby Toys</a></li>
-                        <li><a href="#">Strollers &amp; Pams</a></li>
-                        <li><a href="#">Creams &amp; Ointments</a></li>
-                    </ul>
-                </aside>
-            </div>
 
             <div class="col-sm-2">
                 <aside class="widget widget_nav_menu">
                     <h3 class="widget-title">Info</h3>
                     <ul>
-                        <li><a href="#">Company</a></li>
-                        <li><a href="#">Franchisee</a></li>
-                        <li><a href="#">Partners</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="/contact-us">Contact</a></li>
+                        <li><a href="/FAQ">FAQ</a></li>
+                        <li><a href="/attention">Attention</a></li>
+                        <li><a href="/team-of-use">Terms of Service</a></li>
+                        <li><a href="/privacy-policy">Privacy Policy</a></li>
                     </ul>
                 </aside>
             </div>
@@ -425,8 +462,8 @@
     </div>
 
     <div id="copyright">
-        <div class="container">&copy; Copyright Garbini 2014 | All Rights Reserved | Designed by <a
-                    href="http://themeforest.net/user/jthemes">jThemes</a></div>
+        <div class="container">&copy; Copyright ECSELL 2016 | All Rights Reserved | Designed by <a
+                    href="http://themeforest.net/user/jthemes">WeChat Pla</a></div>
     </div>
 
 </footer>
@@ -442,7 +479,19 @@
 <script src="../assets/js/owl.carousel.min.js"></script>
 <script src="../assets/js/jquery.jpanelmenu.min.js"></script>
 <script src="../assets/js/main.js"></script>
+<script>
+    $('.person').hover(function () {
+        $('.person_ul').css('display', 'block');
+    }, function () {
+        $('.person_ul').css('display', 'none');
+    })
 
+    $('.person_ul').hover(function () {
+        $('.person_ul').css('display', 'block');
+    }, function () {
+        $('.person_ul').css('display', 'none');
+    })
+</script>
 <!-- jQuery UI 1.11.4 -->
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <!-- Bootstrap 3.3.5 -->
