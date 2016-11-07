@@ -18,15 +18,17 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>属性</th>
+                            <th>所属三级类目</th>
                             <th>操作</th>
                         </tr>
                         <% specifications.compatibility.forEach(function (secondItem) { %>
                         <tr>
                             <th></th>
-                            <th><%= secondItem %></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
                             <th>
-                                <button class="btn btn-danger" name="<%= secondItem %>" id="compatibility"
-                                        onclick="deltobase(this.name,this.id)">删除
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="compatibility"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
                                 </button>
                             </th>
                         </tr>
@@ -57,15 +59,17 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>属性</th>
+                            <th>所属三级类目</th>
                             <th>操作</th>
                         </tr>
                         <% specifications.type.forEach(function (secondItem) { %>
                         <tr>
                             <th></th>
-                            <th><%= secondItem %></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
                             <th>
-                                <button class="btn btn-danger" name="<%= secondItem %>" id="type"
-                                        onclick="deltobase(this.name,this.id)">删除
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
                                 </button>
                             </th>
                         </tr>
@@ -96,15 +100,17 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>属性</th>
+                            <th>所属三级类目</th>
                             <th>操作</th>
                         </tr>
                         <% specifications.hardOrSoft.forEach(function (secondItem) { %>
                         <tr>
                             <th></th>
-                            <th><%= secondItem %></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
                             <th>
-                                <button class="btn btn-danger" name="<%= secondItem %>" id="hardOrSoft"
-                                        onclick="deltobase(this.name,this.id)">删除
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="hardOrSoft"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
                                 </button>
                             </th>
                         </tr>
@@ -135,15 +141,17 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>属性</th>
+                            <th>所属三级类目</th>
                             <th>操作</th>
                         </tr>
                         <% specifications.features.forEach(function (secondItem) { %>
                         <tr>
                             <th></th>
-                            <th><%= secondItem %></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
                             <th>
-                                <button class="btn btn-danger" name="<%= secondItem %>" id="features"
-                                        onclick="deltobase(this.name,this.id)">删除
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="features"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
                                 </button>
                             </th>
                         </tr>
@@ -174,15 +182,17 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>属性</th>
+                            <th>所属三级类目</th>
                             <th>操作</th>
                         </tr>
                         <% specifications.pattern.forEach(function (secondItem) { %>
                         <tr>
                             <th></th>
-                            <th><%= secondItem %></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
                             <th>
-                                <button class="btn btn-danger" name="<%= secondItem %>" id="pattern"
-                                        onclick="deltobase(this.name,this.id)">删除
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="pattern"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
                                 </button>
                             </th>
                         </tr>
@@ -213,15 +223,17 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>属性</th>
+                            <th>所属三级类目</th>
                             <th>操作</th>
                         </tr>
                         <% specifications.Color.forEach(function (secondItem) { %>
                         <tr>
                             <th></th>
-                            <th><%= secondItem %></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
                             <th>
-                                <button class="btn btn-danger" name="<%= secondItem %>" id="Color"
-                                        onclick="deltobase(this.name,this.id)">删除
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="Color"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
                                 </button>
                             </th>
                         </tr>
@@ -252,15 +264,17 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>属性</th>
+                            <th>所属三级类目</th>
                             <th>操作</th>
                         </tr>
                         <% specifications.material.forEach(function (secondItem) { %>
                         <tr>
                             <th></th>
-                            <th><%= secondItem %></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
                             <th>
-                                <button class="btn btn-danger" name="<%= secondItem %>" id="material"
-                                        onclick="deltobase(this.name,this.id)">删除
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="material"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
                                 </button>
                             </th>
                         </tr>
@@ -310,6 +324,22 @@
                             <option value="material">
                                 material
                             </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-4 control-label">所属三级类目</label>
+
+                    <div class="col-sm-6">
+                        <select id="default_category" name="default_category" class="form-control" value="">
+                            <% category.forEach(function(item){ %>
+                            <% item.secondCategory.forEach(function(items){ %>
+                            <% items.thirdTitles.forEach(function(third){ %>
+                            <option value="<%= third.thirdTitle %>"><%= third.thirdTitle %></option>
+                            <% }) %>
+                            <% }) %>
+                            <% }) %>
                         </select>
                     </div>
                 </div>
@@ -363,7 +393,8 @@
         var params = {
             property: $("#spec").val(),
             addBy: $("#add_by").val(),
-            addProperty: $("#pd_select").find("option:selected").val()
+            addProperty: $("#pd_select").find("option:selected").val(),
+            belong: $("#default_category").find("option:selected").val()
         }
         console.log(params)
         $.ajax({
@@ -378,6 +409,7 @@
                 layer.closeAll();
                 $("#spec").val('');
                 $("#add_by").val('');
+                $("#default_category").find("option:selected").val('');
                 $("#pd_select").find("option:selected").val('Compatibility');
 
             }, error: function (returndata) {
@@ -386,12 +418,14 @@
         });
     }
 
-    function deltobase(name, id) {
+    function deltobase(name, id, belong) {
 
         var params = {
             property: name,
-            addProperty: id
+            addProperty: id,
+            belong: belong
         }
+        console.log(params)
 
         $.ajax({
             url: 'doDelProperty',

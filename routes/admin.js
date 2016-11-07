@@ -418,8 +418,6 @@ router.post('/saveHeadBanners', function (req, res) {
 });
 
 
-
-
 //更改注册须知
 router.post('/doChangeConditions', checkLogin);
 router.post('/doChangeConditions', function (req, res) {
@@ -654,20 +652,66 @@ router.get('/upload', function (req, res) {
 router.get('/upload-products-detail', function (req, res) {
     db.categorys.find({}, function (err, result) {
         if (err) res.send('404');
-        console.log(result);
+        // console.log(result);
+        var compatibility = [],
+            type = [],
+            hardOrSoft = [],
+            features = [],
+            pattern = [],
+            Color = [],
+            material = [];
         db.specifications.find({}, function (err, product_spectication) {
+            _.each(tempCategory, function (item) {
+                var compatibilityArr = filterArr(product_spectication[0].compatibility, item.thirdCategory);
+                compatibility = _.concat(compatibility, compatibilityArr)
+                
+                var typeArr = filterArr(product_spectication[0].type, item.thirdCategory)
+                type = _.concat(type, typeArr)
+                
+                var hardOrSoftArr = filterArr(product_spectication[0].hardOrSoft, item.thirdCategory);
+                hardOrSoft = _.concat(hardOrSoft, hardOrSoftArr)
+                
+                var featuresArr = filterArr(product_spectication[0].features, item.thirdCategory)
+                features = _.concat(features, featuresArr)
+                
+                var patternArr = filterArr(product_spectication[0].pattern, item.thirdCategory)
+                pattern = _.concat(pattern, patternArr)
+                
+                var ColorArr = filterArr(product_spectication[0].Color, item.thirdCategory);
+                Color = _.concat(Color, ColorArr)
+                
+                var materialArr = filterArr(product_spectication[0].material, item.thirdCategory)
+                material = _.concat(material, materialArr)
+            });
+
             res.render('admin/upload-products-detail', {
                 username: u.nick_name,
                 upload: [],
                 category: result,
                 tempCategory: tempCategory,
-                product_specification: product_spectication[0]
-            });
+                product_specification: {
+                    compatibility: compatibility,
+                    type: type,
+                    hardOrSoft: hardOrSoft,
+                    features: features,
+                    pattern: pattern,
+                    Color: Color,
+                    material: material
+                }
+            })
+            ;
             tempCategory = [];
         });
     });
 
 });
+
+function filterArr(spectication, tempCategory) {
+    var newArr = _.filter(spectication, function (compatibility) {
+        return tempCategory == compatibility.belong;
+    });
+    return newArr;
+}
 
 //类目管理
 router.get('/accessory_manage', checkLogin);
@@ -768,12 +812,16 @@ router.get('/specification', checkLogin);
 router.get('/specification', function (req, res, next) {
     console.log("产品上传管理" + new Date());
     db.specifications.find({}, function (err, result) {
-        res.render('admin/specifications_manage',
-            {
-                username: u.nick_name,
-                specifications: result[0]
-            }
-        );
+        db.categorys.find({}, function (err, data) {
+            if (err) res.send('404');
+            res.render('admin/specifications_manage',
+                {
+                    username: u.nick_name,
+                    category: data,
+                    specifications: result[0]
+                }
+            );
+        });
     })
 
     console.log("产品上传管理登陆成功");
@@ -784,7 +832,7 @@ router.post('/doAddProperty', function (req, res, next) {
     switch (req.body.addProperty) {
         case 'compatibility':
             db.specifications.update({}, {
-                $pushAll: {'compatibility': [req.body.property]}
+                $pushAll: {'compatibility': [{name: req.body.property, belong: req.body.belong}]}
             }, function (err, result) {
                 if (err) res.send('500')
                 res.send('200')
@@ -792,7 +840,7 @@ router.post('/doAddProperty', function (req, res, next) {
             break;
         case 'type':
             db.specifications.update({}, {
-                $pushAll: {'type': [req.body.property]}
+                $pushAll: {'type': [{name: req.body.property, belong: req.body.belong}]}
             }, function (err, result) {
                 if (err) res.send('500')
                 res.send('200')
@@ -800,12 +848,12 @@ router.post('/doAddProperty', function (req, res, next) {
             break;
         case 'hardOrSoft':
             db.specifications.update({}, {
-                $pushAll: {'hardOrSoft': [req.body.property]}
+                $pushAll: {'hardOrSoft': [{name: req.body.property, belong: req.body.belong}]}
             });
             break;
         case 'features':
             db.specifications.update({}, {
-                $pushAll: {'features': [req.body.property]}
+                $pushAll: {'features': [{name: req.body.property, belong: req.body.belong}]}
             }, function (err, result) {
                 if (err) res.send('500')
                 res.send('200')
@@ -813,7 +861,7 @@ router.post('/doAddProperty', function (req, res, next) {
             break;
         case 'pattern':
             db.specifications.update({}, {
-                $pushAll: {'pattern': [req.body.property]}
+                $pushAll: {'pattern': [{name: req.body.property, belong: req.body.belong}]}
             }, function (err, result) {
                 if (err) res.send('500')
                 res.send('200')
@@ -821,7 +869,7 @@ router.post('/doAddProperty', function (req, res, next) {
             break;
         case 'Color':
             db.specifications.update({}, {
-                $pushAll: {'Color': [req.body.property]}
+                $pushAll: {'Color': [{name: req.body.property, belong: req.body.belong}]}
             }, function (err, result) {
                 if (err) res.send('500')
                 res.send('200')
@@ -829,7 +877,7 @@ router.post('/doAddProperty', function (req, res, next) {
             break;
         case 'material':
             db.specifications.update({}, {
-                $pushAll: {'material': [req.body.property]}
+                $pushAll: {'material': [{name: req.body.property, belong: req.body.belong}]}
             }, function (err, result) {
                 if (err) res.send('500')
                 res.send('200')
@@ -844,7 +892,7 @@ router.post('/doDelProperty', function (req, res, next) {
     switch (req.body.addProperty) {
         case 'compatibility':
             db.specifications.update({}, {
-                $pull: {'compatibility': req.body.property}
+                $pull: {'compatibility': {name: req.body.property, belong: req.body.belong}}
             }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')
@@ -852,7 +900,7 @@ router.post('/doDelProperty', function (req, res, next) {
             break;
         case 'type':
             db.specifications.update({}, {
-                $pull: {'type': req.body.property}
+                $pull: {'type': {name: req.body.property, belong: req.body.belong}}
             }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')
@@ -860,7 +908,7 @@ router.post('/doDelProperty', function (req, res, next) {
             break;
         case 'hardOrSoft':
             db.specifications.update({}, {
-                $pull: {'hardOrSoft': req.body.property}
+                $pull: {'hardOrSoft': {name: req.body.property, belong: req.body.belong}}
             }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')
@@ -868,7 +916,7 @@ router.post('/doDelProperty', function (req, res, next) {
             break;
         case 'features':
             db.specifications.update({}, {
-                $pull: {'features': req.body.property}
+                $pull: {'features': {name: req.body.property, belong: req.body.belong}}
             }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')
@@ -876,7 +924,7 @@ router.post('/doDelProperty', function (req, res, next) {
             break;
         case 'pattern':
             db.specifications.update({}, {
-                $pull: {'pattern': req.body.property}
+                $pull: {'pattern': {name: req.body.property, belong: req.body.belong}}
             }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')
@@ -884,7 +932,7 @@ router.post('/doDelProperty', function (req, res, next) {
             break;
         case 'Color':
             db.specifications.update({}, {
-                $pull: {'Color': req.body.property}
+                $pull: {'Color': {name: req.body.property, belong: req.body.belong}}
             }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')
@@ -892,7 +940,7 @@ router.post('/doDelProperty', function (req, res, next) {
             break;
         case 'material':
             db.specifications.update({}, {
-                $pull: {'material': req.body.property}
+                $pull: {'material': {name: req.body.property, belong: req.body.belong}}
             }, function (err, result) {
                 if (err) res.send('500');
                 res.send('200')

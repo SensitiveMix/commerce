@@ -286,24 +286,29 @@
             border: 1px solid #dedede;
         }
     }
-    .pick-a-color-markup{
+
+    .pick-a-color-markup {
         float: left;
         width: 10%;
     }
+
     .pro-img-picbox .pic {
         border: 1px dashed #d4d4d4;
         width: 82px;
         height: 82px;
     }
+
     .addpiccolor2 .pic {
         width: 102px;
         height: 102px;
     }
+
     .addpiccolor2 {
         width: 104px;
         height: 104px;
         margin-top: 0px;
     }
+
     .pro-img-picbox {
         width: 22%;
         display: block;
@@ -311,6 +316,7 @@
         margin-right: 5px;
         margin-top: 20px;
     }
+
     .pro-img-box {
         position: relative;
         overflow: hidden;
@@ -326,15 +332,15 @@
     $(document).ready(function () {
 
         $(".pick-a-color").pickAColor({
-            showSpectrum            : false,
-            showSavedColors         : false,
-            saveColorsPerElement    : true,
-            fadeMenuToggle          : true,
-            showAdvanced						: false,
-            showBasicColors         : true,
-            showHexInput            : false,
-            allowBlank							: true,
-            inlineDropdown					: true
+            showSpectrum: false,
+            showSavedColors: false,
+            saveColorsPerElement: true,
+            fadeMenuToggle: true,
+            showAdvanced: false,
+            showBasicColors: true,
+            showHexInput: false,
+            allowBlank: true,
+            inlineDropdown: true
         });
 
     });
@@ -342,22 +348,22 @@
 </script>
 <script>
     $(function () {
-        $('input[name="highlight-color"]').eq(0).change(function(){
-            if($('input[name="highlight-color"]').eq(0).val() == '008000'){//绿色
+        $('input[name="highlight-color"]').eq(0).change(function () {
+            if ($('input[name="highlight-color"]').eq(0).val() == '008000') {//绿色
                 $('#product-sell-status').val('库存确认可以采购');
             }
-            if($('input[name="highlight-color"]').eq(0).val() == 'ff0000'){//红色
+            if ($('input[name="highlight-color"]').eq(0).val() == 'ff0000') {//红色
                 $('#product-sell-status').val('停产');
             }
-            if($('input[name="highlight-color"]').eq(0).val() == 'ffff00'){//黄色
+            if ($('input[name="highlight-color"]').eq(0).val() == 'ffff00') {//黄色
                 $('#product-sell-status').val('库存待确认');
             }
         })
-        $('input[name="highlight-color"]').eq(1).change(function(){
-            if($('input[name="highlight-color"]').eq(1).val() == '008000'){//绿色
+        $('input[name="highlight-color"]').eq(1).change(function () {
+            if ($('input[name="highlight-color"]').eq(1).val() == '008000') {//绿色
                 $('#product-stock-time').val('2天');
             }
-            if($('input[name="highlight-color"]').eq(1).val() == 'ffff00'){//黄色
+            if ($('input[name="highlight-color"]').eq(1).val() == 'ffff00') {//黄色
                 $('#product-stock-time').val('3天');
             }
         })
@@ -528,6 +534,7 @@
                 <p class="helptips">设置完整的产品属性有助于买家更容易找到您的产品<span helptipval="product_cattr_container"
                                                                  class="helpicon"></span></p>
                 <div class="product-attributes">
+                    <% if(product_specification.compatibility.length != 0) { %>
                     <div class="items J_Items">
                         <div class="head-attributes">compatibility</div>
                         <div class="body-attributes">
@@ -535,24 +542,29 @@
                                 <% product_specification.compatibility.forEach(function(item){ %>
                                 <label class="checkbox-inline-product-attributes">
                                     <input type="checkbox" data-fa="compatibility" name="compatibility"
-                                           value="<%= item %>"><%= item %>
+                                           value="<%= item.name %>"><%= item.name %>
                                 </label>
                                 <% }) %>
                             </div>
                         </div>
+                        <% } %>
                     </div>
+                    <% if(product_specification.type.length != 0) { %>
                     <div class="items J_Items">
                         <div class="head-attributes">type</div>
                         <div class="body-attributes">
                             <div class="items-detail" id="item">
                                 <% product_specification.type.forEach(function(item){ %>
                                 <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="type" name="type" value="<%= item %>"><%= item %>
+                                    <input type="checkbox" data-fa="type" name="type"
+                                           value="<%= item.name %>"><%= item.name %>
                                 </label>
                                 <% }) %>
                             </div>
                         </div>
                     </div>
+                    <% } %>
+                    <% if(product_specification.hardOrSoft.length != 0) { %>
                     <div class="items J_Items">
                         <div class="head-attributes">hardOrSoft</div>
                         <div class="body-attributes">
@@ -560,12 +572,14 @@
                                 <% product_specification.hardOrSoft.forEach(function(item){ %>
                                 <label class="checkbox-inline-product-attributes">
                                     <input type="checkbox" data-fa="hardOrSoft" name="hardOrSoft"
-                                           value="<%= item %>"><%= item %>
+                                           value="<%= item.name %>"><%= item.name %>
                                 </label>
                                 <% }) %>
                             </div>
                         </div>
                     </div>
+                    <% } %>
+                    <% if(product_specification.features.length != 0) { %>
                     <div class="items J_Items">
                         <div class="head-attributes">features</div>
                         <div class="body-attributes">
@@ -573,11 +587,13 @@
                                 <% product_specification.features.forEach(function(item){ %>
                                 <label class="checkbox-inline-product-attributes">
                                     <input type="checkbox" data-fa="features" name="features"
-                                           value="<%= item %>"><%= item %></label>
+                                           value="<%= item.name %>"><%= item.name %></label>
                                 <% }) %>
                             </div>
                         </div>
                     </div>
+                    <% } %>
+                    <% if(product_specification.pattern.length != 0) { %>
                     <div class="items J_Items">
                         <div class="head-attributes">pattern</div>
                         <div class="body-attributes">
@@ -585,23 +601,28 @@
                                 <% product_specification.pattern.forEach(function(item){ %>
                                 <label class="checkbox-inline-product-attributes">
                                     <input type="checkbox" data-fa="pattern" name="pattern"
-                                           value="<%= item %>"><%= item %></label>
+                                           value="<%= item.name %>"><%= item.name %></label>
                                 <% }) %>
                             </div>
                         </div>
                     </div>
+                    <% } %>
+                    <% if(product_specification.Color.length != 0) { %>
                     <div class="items J_Items">
                         <div class="head-attributes">Color</div>
                         <div class="body-attributes">
                             <div class="items-detail" id="item">
                                 <% product_specification.Color.forEach(function(item){ %>
                                 <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="Color" name="Color" value="<%= item %>"><%= item %>
+                                    <input type="checkbox" data-fa="Color" name="Color"
+                                           value="<%= item.name %>"><%= item.name %>
                                 </label>
                                 <% }) %>
                             </div>
                         </div>
                     </div>
+                    <% } %>
+                    <% if(product_specification.material.length != 0) { %>
                     <div class="items J_Items" style="border-bottom: 0">
                         <div class="head-attributes">material</div>
                         <div class="body-attributes">
@@ -609,11 +630,12 @@
                                 <% product_specification.material.forEach(function(item){ %>
                                 <label class="checkbox-inline-product-attributes">
                                     <input type="checkbox" data-fa="material" name="material"
-                                           value="<%= item %>"><%= item %></label>
+                                           value="<%= item.name %>"><%= item.name %></label>
                                 <% }) %>
                             </div>
                         </div>
                     </div>
+                    <% } %>
                     <div class="btns">
                         <span class="btn btn-default" id="submit-product-attributes">提交</span>
                     </div>
@@ -762,7 +784,8 @@
             <!-- 销售计量单位 结束 -->
             <div class="mainlayout j-basic-standard-container clearfix">
                 <div class="ml-title">
-                    产品销售状态： </div>
+                    产品销售状态：
+                </div>
                 <p class="helptips">黄色(库存待确认)<br>
                     绿色(库存确认可以采购，后台输入供应商信息)<br>
                     红色(停产)
@@ -780,7 +803,8 @@
                             <input type="text" value="fff" name="highlight-color" class="pick-a-color form-control">
                             <div class="form-group" style="float: left;width: 53%">
                                 <div class="input-group">
-                                    <input class="form-control" id="product-sell-status" type="text" placeholder="" style="height: 47px">
+                                    <input class="form-control" id="product-sell-status" type="text" placeholder=""
+                                           style="height: 47px">
                                 </div>
                             </div>
                         </div>
@@ -792,7 +816,8 @@
             <!-- 销售方式 开始 -->
             <div class="mainlayout j-basic-standard-container clearfix">
                 <div class="ml-title">
-                    产品备货期： </div>
+                    产品备货期：
+                </div>
                 <p class="helptips">黄色(默认3天)<br>
                     绿色(默认2天)<br>
                 </p>
@@ -809,7 +834,8 @@
                             <input type="text" value="fff" name="highlight-color" class="pick-a-color form-control">
                             <div class="form-group" style="float: left;width: 53%">
                                 <div class="input-group">
-                                    <input class="form-control" id="product-stock-time" type="text" placeholder="" style="height: 47px">
+                                    <input class="form-control" id="product-stock-time" type="text" placeholder=""
+                                           style="height: 47px">
                                 </div>
                             </div>
                         </div>

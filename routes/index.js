@@ -85,6 +85,7 @@ router.get('/login', function (req, res, next) {
                 var labels = results[1];
                 var account = null;
                 var statusCode = 500;
+                console.log(category);
                 if (req.cookies["account"] != null) {
                     account = req.cookies['account'];
                     statusCode = 200;
