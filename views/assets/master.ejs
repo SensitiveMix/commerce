@@ -39,14 +39,14 @@
         border: 1px solid #999999 !important;
         position: absolute;
         top: 22px;
-        padding: 9px 0 5px 0;
+        padding: 0;
         background-color: #ffffff;
         background-clip: padding-box;
         z-index: 1000;
-        border-top-left-radius: 4px;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 4px;
+        /*border-top-left-radius: 4px;*/
+        /*border-top-right-radius: 5px;*/
+        /*border-bottom-right-radius: 5px;*/
+        /*border-bottom-left-radius: 4px;*/
         width: 118px;
         text-align: center;
         white-space: nowrap;
@@ -56,27 +56,31 @@
 
     .person_ul li {
         list-style-type: none;
-        padding-left: 6px;
+        margin: 10px;
 
     }
 
-    .person_ul li:first-child {
-        list-style-type: none;
-        margin-top: -9px;
-    }
-
-    .person_ul li:last-child {
-        list-style-type: none;
-        margin-bottom: -5px;
-    }
-
-    .person_ul li:hover {
-        background-color: #2a9292
-    }
+    /*.person_ul li:hover {*/
+        /*background-color: #2a9292*/
+    /*}*/
 
     .person_ul a {
-        text-decoration: none
+        text-decoration: none;
+        color: #000;
     }
+
+    .person_ul li a:hover {
+        color: #fd638f;
+    }
+    @media (min-width: 992px){
+        .col-md-3 {
+            width: 23.2%;
+        }
+        .col-md-9 {
+            width: 76.8%;
+        }
+    }
+
 </style>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -202,9 +206,7 @@
                                 <ul class="person_ul">
                                     <li><a ref="nofollow" href="#">My Orders</a></li>
                                     <li><a ref="nofollow" href="/personal-center">My Account</a></li>
-                                    <li class=""><a ref="nofollow"
-                                                             href="/logout">Sign
-                                            out</a></li>
+                                    <li class=""><a ref="nofollow" href="/logout">Sign out</a></li>
                                 </ul>
 
                                 <% } else { %>
@@ -252,7 +254,7 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="col-md-3 submenu" style="display: none;padding: 0;">
+                    <div class="col-md-3 submenu" style="display: none;padding: 0;height: auto;">
                         <nav id="zlight-nav" style="margin-bottom: 18px">
                             <ul id="zlight-main-nav" style="border:0;width:100%;">
                                 <% if(categories.length != 0){ %>

@@ -322,7 +322,30 @@
         overflow: hidden;
         height: 140px;
     }
-
+    .chousexybox {
+        margin-top: 10px;
+        padding: 10px 20px;
+        border-top: 1px dashed #ddd;
+    }
+    .syi-submit {
+        padding: 30px 0;
+        text-align: center;
+    }
+    .marginleft5 {
+        margin-left: 5px;
+    }
+    .studybox {
+        padding: 10px 20px;
+    }
+    .studybox .studyicon {
+        padding: 0 0 0 20px;
+        background: url("/assets/img/icon/studyicon.png") 0 50% no-repeat;
+    }
+    .error-edit-text {
+        display: none;
+        font-size: 14px;
+        padding: 10px 20px;
+    }
 </style>
 <script src="../plugins/pick-color/js/tinycolor-0.9.15.min.js"></script>
 <script src="../plugins/pick-color/js/pick-a-color-1.2.3.min.js"></script>
@@ -413,7 +436,7 @@
             console.log(product_attributes_type);
             product_attributes_compatibility.forEach(function (item_compatibility) {
                 product_attributes_Color.forEach(function (item_type) {
-                    var table_body_tr = '<tr><td>【' + item_compatibility + '】' + item_type + '</td><td></td><td></td></tr>';
+                    var table_body_tr = '<tr><td>【' + item_compatibility + '】' + item_type + '</td><td></td></tr>';
 
                     $('#product-attribute-table tbody').append(table_body_tr);
                 })
@@ -422,8 +445,8 @@
                 $('#product-attribute-table tbody tr').each(function (index, item) {
                     var eq_1 = $('input[name="price"]').val();
                     $(item).find('td').eq(1).text(eq_1);
-                    var eq_2 = $('input[name="count"]').val();
-                    $(item).find('td').eq(2).text(eq_2);
+//                    var eq_2 = $('input[name="count"]').val();
+//                    $(item).find('td').eq(2).text(eq_2);
                 })
             })
 
@@ -500,24 +523,24 @@
         <!-- 产品标题 结束 -->
 
         <!-- 产品关键词 开始 -->
-        <div class="mainlayout clearfix" id="keywordTip">
-            <div class="ml-title">产品关键词：</div>
-            <a id="a_keyword1"></a><a id="a_keyword2"></a><a id="a_keyword3"></a>
-            <div>
-                <input class="attr-text-input marginright10" style="ime-mode:disabled;" maxlength="40" name="keyword1"
-                       id="keyword1" type="text" value="">
-                <input class="attr-text-input marginright10" maxlength="40" name="keyword2" id="keyword2" type="text"
-                       style="ime-mode:disabled;display: none;">
-                <input class="attr-text-input marginright10" maxlength="40" name="keyword3" id="keyword3" type="text"
-                       style="ime-mode:disabled;display: none;">
-                <span id="keywordbutton" class="tourBtn"><input type="button" value="添加多个关键词"
-                                                                onclick="showOtherKeywords();"></span>
-                <span class="helpicon" title="产品关键词帮助" helptipval="keywordTip"></span>
-            </div>
-            <div id="keyword1ErrTip" class="tip-error" style="display:none;"></div>
-            <div id="keyword2ErrTip" class="tip-error" style="display:none;"></div>
-            <div id="keyword3ErrTip" class="tip-error" style="display:none;"></div>
-        </div>
+        <!--<div class="mainlayout clearfix" id="keywordTip">-->
+            <!--<div class="ml-title">产品关键词：</div>-->
+            <!--<a id="a_keyword1"></a><a id="a_keyword2"></a><a id="a_keyword3"></a>-->
+            <!--<div>-->
+                <!--<input class="attr-text-input marginright10" style="ime-mode:disabled;" maxlength="40" name="keyword1"-->
+                       <!--id="keyword1" type="text" value="">-->
+                <!--<input class="attr-text-input marginright10" maxlength="40" name="keyword2" id="keyword2" type="text"-->
+                       <!--style="ime-mode:disabled;display: none;">-->
+                <!--<input class="attr-text-input marginright10" maxlength="40" name="keyword3" id="keyword3" type="text"-->
+                       <!--style="ime-mode:disabled;display: none;">-->
+                <!--<span id="keywordbutton" class="tourBtn"><input type="button" value="添加多个关键词"-->
+                                                                <!--onclick="showOtherKeywords();"></span>-->
+                <!--<span class="helpicon" title="产品关键词帮助" helptipval="keywordTip"></span>-->
+            <!--</div>-->
+            <!--<div id="keyword1ErrTip" class="tip-error" style="display:none;"></div>-->
+            <!--<div id="keyword2ErrTip" class="tip-error" style="display:none;"></div>-->
+            <!--<div id="keyword3ErrTip" class="tip-error" style="display:none;"></div>-->
+        <!--</div>-->
 
         <!-- 产品关键词 结束 -->
 
@@ -637,7 +660,7 @@
                     </div>
                     <% } %>
                     <div class="btns">
-                        <span class="btn btn-default" id="submit-product-attributes">提交</span>
+                        <span class="btn btn-default" id="submit-product-attributes">Confirm</span>
                     </div>
                 </div>
             </div>
@@ -664,62 +687,7 @@
         </div>
         <!-- 产品基本属性 结束 -->
         <!--产品销售规格 开始-->
-        <div class="mainlayout j-basic-standard-container clearfix">
-            <div class="ml-title">
-                产品销售规格：
-            </div>
-            <!-- ----- 产品基本属性结束 -----  -->
-            <div class="product-attributes2" id="j-attribute-list">
-                <div>
-                    <table class="table-property j-buy-attrs-list"></table>
-                </div>
-                <div>
-                    <table class="table-property j-sale-attrs-list"></table>
-                </div>
-                <div id="div_self_defind_attr" class="j-list-item">
-                    <table class="table-property">
-                        <tbody>
-                        <tr>
-                            <td class="col-sm-2 bktit addborderline">批量操作</td>
-                            <td class="bkcon addborderline">
-                                <div class="form-inline">
-                                    <div class="form-group">
-                                        <label class="sr-only" for="exampleInputEmail2">Price</label>
-                                        <input type="text" class="form-control" name="price" id="exampleInputEmail2"
-                                               placeholder="Price">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="exampleInputEmail2">Count</label>
-                                        <input type="text" class="form-control" name="count" id="exampleInputEmail2"
-                                               placeholder="Count">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="exampleInputEmail2">ProductId</label>
-                                        <input type="text" class="form-control" name="productId" id="exampleInputEmail2"
-                                               placeholder="ProductId">
-                                    </div>
-                                    <a class="btn btn-default" id="bulk_operation">Confirm</a>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <table class="table table-bordered" id="product-attribute-table">
-                        <thead>
-                        <tr>
-                            <td class="col-sm-2 bktit addborderline">颜色分类</td>
-                            <td class="col-sm-2 bktit addborderline">价格(元)</td>
-                            <td class="col-sm-2 bktit addborderline">数量(件)</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
 
-                </div>
-            </div>
-
-        </div>
         <!--产品销售规格 结束-->
 
         <!-- 属性图片上传入口参数   -->
@@ -747,6 +715,60 @@
         <a id="tips-sale-foot"></a>
         <div class="j-sale-container">
             <a id="a_saleinfo"></a>
+            <div class="mainlayout j-basic-standard-container clearfix">
+                <div class="ml-title">产品销售规格：</div>
+                <!-- ----- 产品基本属性结束 -----  -->
+                <div class="product-attributes2" id="j-attribute-list">
+                    <div>
+                        <table class="table-property j-buy-attrs-list"></table>
+                    </div>
+                    <div>
+                        <table class="table-property j-sale-attrs-list"></table>
+                    </div>
+                    <div id="div_self_defind_attr" class="j-list-item">
+                        <table class="table-property">
+                            <tbody>
+                            <tr>
+                                <td class="col-sm-2 bktit addborderline">批量操作</td>
+                                <td class="bkcon addborderline">
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputEmail2">Price</label>
+                                            <input type="text" class="form-control" name="price" id="exampleInputEmail2"
+                                                   placeholder="Price">
+                                        </div>
+                                        <!--<div class="form-group">-->
+                                            <!--<label class="sr-only" for="exampleInputEmail2">Count</label>-->
+                                            <!--<input type="text" class="form-control" name="count" id="exampleInputEmail2"-->
+                                                   <!--placeholder="Count">-->
+                                        <!--</div>-->
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputEmail2">ProductId</label>
+                                            <input type="text" class="form-control" name="productId" id="exampleInputEmail2"
+                                                   placeholder="ProductId">
+                                        </div>
+                                        <a class="btn btn-default" id="bulk_operation">Confirm</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered" id="product-attribute-table">
+                            <thead>
+                            <tr>
+                                <td class="col-sm-2 bktit addborderline">颜色分类</td>
+                                <td class="col-sm-2 bktit addborderline">价格(元)</td>
+                                <!--<td class="col-sm-2 bktit addborderline">数量(件)</td>-->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
             <!-- 销售计量单位 开始 -->
             <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
                 <div class="ml-title"><span class="required">*</span>销售计量单位：</div>
@@ -782,6 +804,15 @@
                      data-name="销售计量单位"></div>
             </div>
             <!-- 销售计量单位 结束 -->
+            <!-- 供应商 开始 -->
+            <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
+                <div class="ml-title"><span class="required"></span>供应商：</div>
+                <a id="a_measureid"></a>
+                <select class="attr-select j-select-unit form-control" name="measureid">
+                    <option disabled="disabled" value="">-- 请选择销售单位 --</option>
+                </select>
+            </div>
+            <!-- 供应商 结束 -->
             <div class="mainlayout j-basic-standard-container clearfix">
                 <div class="ml-title">
                     产品销售状态：
@@ -813,7 +844,7 @@
                 </div>
 
             </div>
-            <!-- 销售方式 开始 -->
+            <!-- 产品备货期 开始 -->
             <div class="mainlayout j-basic-standard-container clearfix">
                 <div class="ml-title">
                     产品备货期：
@@ -821,7 +852,7 @@
                 <p class="helptips">黄色(默认3天)<br>
                     绿色(默认2天)<br>
                 </p>
-                <!-- ----- 产品基本属性结束 -----  -->
+
                 <div class="product-attributes2" id="j-attribute-list">
                     <div>
                         <table class="table-property j-buy-attrs-list"></table>
@@ -844,18 +875,22 @@
                 </div>
 
             </div>
+            <!-- ----- 产品备货期 结束 -----  -->
+            <!-- ----- 销售方式 开始 -----  -->
             <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
                 <div class="ml-title"><span class="required">*</span>销售方式：</div>
                 <div class="marginbottom10 clearfix"><label>
                         <input name="sortby" id="sortbyradio1" data-name="件" type="radio" checked="" value="1">
                         <span class="marginleft5 marginright10"><label for="gg">按件卖</label>（单位：<span class="j-unit-no"
                                                                                                      name="sortbyunit">件</span>）</span>
+                        <input type="text" class="form-control" placeholder="元/件" name="sell-function-jian">
                     </label>
                 </div>
                 <div class="marginbottom10 clearfix">
                     <label>
                         <input name="sortby" id="sortbyradio2" data-name="包" type="radio" value="2">
                         <span class="marginleft5">按包卖</span>
+                        <input type="text" class="form-control" placeholder="元/包" name="sell-function-bao">
                     </label>
         <span>
 			<span class="j-sale-bao" style="display: none; ">
@@ -913,7 +948,7 @@
                                             class="j-section-salePrice"></span> <a href="#" class="j-section-del"
                                                                                    style="display: none;">删除</a></p>
                             </div>
-                            <p><a href="#" class="addmoreprop j-section-add"><span></span>增加区间</a></p>
+                            <!--<p><a href="#" class="addmoreprop j-section-add"><span></span>增加区间</a></p>-->
                         </div>
                     </div>
                     <div class="tip-error j-tip-error" style="display:none;"></div>
@@ -949,21 +984,38 @@
                     </div>
                     <div class="tip-error j-tip-error" style="display:none;"></div>
                 </div>
-
+                <div class="form-inline">
+                    <div class="form-group">
+                        <!--<label for="exampleInputEmail2">VIP Price</label>-->
+                        <input type="text" class="form-control" name="vip_price" id="vip_price" placeholder="VIP Price">
+                    </div>
+                    <div class="form-group">
+                        <!--<label for="exampleInputEmail2">Regular Price</label>-->
+                        <input type="text" class="form-control" name="regular_price" id="regular_price" placeholder="Regular Price">
+                    </div>
+                    <div class="form-group">
+                        <!--<label for="exampleInputEmail2">Market Price</label>-->
+                        <input type="text" class="form-control" name="market_price" id="market_price" placeholder="Market Price">
+                    </div>
+                </div>
+                促销价格:
+                <div class="form-inline">
+                    <div class="form-group">
+                        <!--<label for="exampleInputEmail2">VIP Price</label>-->
+                        <input type="text" class="form-control" name="promotion_vip_price" id="promotion_vip_price" placeholder="VIP Price">
+                    </div>
+                    <div class="form-group">
+                        <!--<label for="exampleInputEmail2">Regular Price</label>-->
+                        <input type="text" class="form-control" name="promotion_regular_price" id="promotion_regular_price" placeholder="Regular Price">
+                    </div>
+                    <div class="form-group">
+                        <!--<label for="exampleInputEmail2">Market Price</label>-->
+                        <input type="text" class="form-control" name="promotion_market_price" id="promotion_market_price" placeholder="Market Price">
+                    </div>
+                </div>
 
             </div>
             <!-- 产品价格 结束 -->
-            <!-- 商品编码 开始 -->
-            <div class="mainlayout clearfix j-goodcode-box j-list-item">
-                <div class="ml-title">商品编码：</div>
-                <div class="clearfix"><input type="text" class="attr-text-input addwid140 j-help" data-helpid="skuCode"
-                                             name="skuCode" value="">
-
-                    <div style="display:none" class="tip-error" data-id="tips-skucode" data-anchor="tips-sale-foot"
-                         data-name="商品编码"><p></p></div>
-                </div>
-            </div>
-            <!-- 商品编码 结束 -->
 
         </div>        <!-- title产品销售信息 结束 -->    <!-- title产品销售信息 结束 -->
 
@@ -1526,291 +1578,7 @@
             </div>
             <!------- 大标题结束 ------->
             <!------- 运费设置列表开始 ------->
-            <div class="syi-shipping-content addzindex02 clearfix" style="display: none;" id="templateTableDiv">
-                <div class="syi-shippingset-tit">
-                    <ul>
-                        <li class="wid160">物流公司</li>
-                        <li class="wid320">送达国家</li>
-                        <li class="wid190">运费设置</li>
-                        <li class="wid209 tipstion">
-                            运费(含燃油费)
-                            <p class="syi-font3">
-                                运送<input type="text" value="1" size="2" class="j-textchange" id="caculateQuantity">件(包)
-                                至
-                                <select id="caculateCountry" class="syi-select6">
-                                    <option value="">选择送达国家</option>
-                                    <option value="CN">中国</option>
-                                    <option value="US">美国</option>
-                                    <option value="HK">香港</option>
-                                    <option value="UK">英国</option>
-                                    <option value="CA">加拿大</option>
-                                    <option value="ES">西班牙</option>
-                                    <option value="DE">德国</option>
-                                    <option value="AU">澳大利亚</option>
-                                    <option value="FR">法国</option>
-                                    <option value="BR">巴西</option>
-                                    <option value="RU">俄罗斯</option>
-                                    <option value="VN">越南</option>
-                                    <option value="CL">智利</option>
-                                    <option value="AF">阿富汗</option>
-                                    <option value="AL">阿尔巴尼亚</option>
-                                    <option value="DZ">阿尔及利亚</option>
-                                    <option value="AS">美属萨摩亚</option>
-                                    <option value="AD">安道尔(安多拉)</option>
-                                    <option value="AO">安哥拉</option>
-                                    <option value="AI">安圭拉岛</option>
-                                    <option value="AG">安提瓜岛</option>
-                                    <option value="AR">阿根廷</option>
-                                    <option value="AM">亚美尼亚</option>
-                                    <option value="AW">阿鲁巴岛</option>
-                                    <option value="AT">奥地利</option>
-                                    <option value="AZ">阿塞拜疆</option>
-                                    <option value="BS">巴哈马群岛</option>
-                                    <option value="BH">巴林群岛</option>
-                                    <option value="BD">孟加拉国</option>
-                                    <option value="BB">巴巴多斯岛</option>
-                                    <option value="BY">白俄罗斯</option>
-                                    <option value="BE">比利时</option>
-                                    <option value="BZ">伯利兹城</option>
-                                    <option value="BJ">贝宁湾</option>
-                                    <option value="BM">百慕大群岛</option>
-                                    <option value="BT">不丹</option>
-                                    <option value="BO">玻利维亚</option>
-                                    <option value="BA">波斯尼亚</option>
-                                    <option value="BW">博茨瓦纳</option>
-                                    <option value="VG">英属维尔京群岛</option>
-                                    <option value="BN">文莱</option>
-                                    <option value="BG">保加利亚</option>
-                                    <option value="BF">布基纳法索</option>
-                                    <option value="BI">布隆迪</option>
-                                    <option value="KH">柬埔寨</option>
-                                    <option value="CM">喀麦隆</option>
-                                    <option value="CV">佛得角共和国</option>
-                                    <option value="KY">开曼群岛</option>
-                                    <option value="CF">中非共和国</option>
-                                    <option value="TD">乍得</option>
-                                    <option value="CO">哥伦比亚</option>
-                                    <option value="KM">科摩罗</option>
-                                    <option value="CK">库克群岛</option>
-                                    <option value="CR">哥斯达黎加</option>
-                                    <option value="HR">克罗地亚</option>
-                                    <option value="CU">古巴</option>
-                                    <option value="CY">塞浦路斯</option>
-                                    <option value="CZ">捷克</option>
-                                    <option value="CD">刚果 金</option>
-                                    <option value="DK">丹麦</option>
-                                    <option value="DJ">吉布提</option>
-                                    <option value="DM">多米尼加</option>
-                                    <option value="DO">多米尼加共和国</option>
-                                    <option value="TL">东帝汶</option>
-                                    <option value="EC">厄瓜多尔</option>
-                                    <option value="EG">埃及</option>
-                                    <option value="SV">萨尔瓦多</option>
-                                    <option value="GQ">赤道几内亚</option>
-                                    <option value="ER">厄立特里亚</option>
-                                    <option value="EE">爱沙尼亚</option>
-                                    <option value="ET">埃塞俄比亚</option>
-                                    <option value="FO">法罗群岛</option>
-                                    <option value="FK">福克兰群岛</option>
-                                    <option value="FJ">斐济</option>
-                                    <option value="FI">芬兰</option>
-                                    <option value="GF">法属圭亚那</option>
-                                    <option value="PF">法属波利尼西亚</option>
-                                    <option value="GA">加蓬</option>
-                                    <option value="GM">冈比亚</option>
-                                    <option value="GE">格鲁吉亚</option>
-                                    <option value="GH">加纳</option>
-                                    <option value="GI">直布罗陀</option>
-                                    <option value="GR">希腊</option>
-                                    <option value="GL">格陵兰</option>
-                                    <option value="GD">格林纳达</option>
-                                    <option value="GP">瓜德罗普岛</option>
-                                    <option value="GU">关岛</option>
-                                    <option value="GT">危地马拉</option>
-                                    <option value="GN">几内亚</option>
-                                    <option value="GW">几内亚比绍共和国</option>
-                                    <option value="GY">圭亚那</option>
-                                    <option value="HT">海地</option>
-                                    <option value="HN">洪都拉斯</option>
-                                    <option value="HU">匈牙利</option>
-                                    <option value="IS">冰岛</option>
-                                    <option value="IN">印度</option>
-                                    <option value="ID">印尼</option>
-                                    <option value="IR">伊朗</option>
-                                    <option value="IQ">伊拉克</option>
-                                    <option value="IE">爱尔兰</option>
-                                    <option value="IL">以色列</option>
-                                    <option value="IT">意大利</option>
-                                    <option value="CI">科特迪瓦</option>
-                                    <option value="JM">牙买加</option>
-                                    <option value="JP">日本</option>
-                                    <option value="JO">约旦</option>
-                                    <option value="KZ">哈萨克</option>
-                                    <option value="KE">肯尼亚</option>
-                                    <option value="KG">吉尔吉斯斯坦</option>
-                                    <option value="KI">基里巴斯</option>
-                                    <option value="KW">科威特</option>
-                                    <option value="LA">老挝国</option>
-                                    <option value="LV">拉脱维亚</option>
-                                    <option value="LB">黎巴嫩</option>
-                                    <option value="LS">莱索托</option>
-                                    <option value="LR">利比里亚</option>
-                                    <option value="LY">利比亚</option>
-                                    <option value="LI">列支敦士登</option>
-                                    <option value="LT">立陶宛</option>
-                                    <option value="LU">卢森堡</option>
-                                    <option value="MO">澳门</option>
-                                    <option value="MK">马其顿</option>
-                                    <option value="MG">马达加斯加岛</option>
-                                    <option value="MW">马拉维</option>
-                                    <option value="MY">马来西亚</option>
-                                    <option value="MV">马尔代夫</option>
-                                    <option value="ML">马里</option>
-                                    <option value="MT">马耳他</option>
-                                    <option value="MH">马绍尔群岛</option>
-                                    <option value="MQ">马提尼克</option>
-                                    <option value="MR">毛利塔尼亚</option>
-                                    <option value="MU">毛里求斯</option>
-                                    <option value="MX">墨西哥</option>
-                                    <option value="FM">密克罗尼西亚</option>
-                                    <option value="MD">摩尔多瓦</option>
-                                    <option value="MC">摩纳哥</option>
-                                    <option value="MN">蒙古</option>
-                                    <option value="ME">黑山</option>
-                                    <option value="MS">蒙特塞拉特岛</option>
-                                    <option value="MA">摩洛哥</option>
-                                    <option value="MZ">莫桑比克</option>
-                                    <option value="MM">缅甸</option>
-                                    <option value="NA">纳米比亚</option>
-                                    <option value="NR">瑙鲁</option>
-                                    <option value="NP">尼泊尔</option>
-                                    <option value="AN">荷属安的列斯群岛</option>
-                                    <option value="NL">荷兰</option>
-                                    <option value="NC">新喀里多尼亚</option>
-                                    <option value="NZ">新西兰</option>
-                                    <option value="NI">尼加拉瓜</option>
-                                    <option value="NE">尼日尔</option>
-                                    <option value="NG">尼日利亚</option>
-                                    <option value="NU">纽埃</option>
-                                    <option value="NF">诺福克</option>
-                                    <option value="MP">北马里亚纳群岛</option>
-                                    <option value="NO">挪威</option>
-                                    <option value="OM">阿曼</option>
-                                    <option value="PK">巴基斯坦</option>
-                                    <option value="PW">帕劳群岛</option>
-                                    <option value="PA">巴拿马</option>
-                                    <option value="PG">巴布亚新几内亚</option>
-                                    <option value="PY">巴拉圭</option>
-                                    <option value="PE">秘鲁</option>
-                                    <option value="PH">菲律宾共和国</option>
-                                    <option value="PL">波兰</option>
-                                    <option value="PT">葡萄牙</option>
-                                    <option value="PR">波多黎各</option>
-                                    <option value="QA">卡塔尔</option>
-                                    <option value="RE">留尼汪岛</option>
-                                    <option value="RO">罗马尼亚</option>
-                                    <option value="RW">卢旺达</option>
-                                    <option value="KN">圣基茨和尼维斯</option>
-                                    <option value="LC">圣卢西亚</option>
-                                    <option value="VC">圣文森特和格林纳丁斯</option>
-                                    <option value="WS">萨摩亚</option>
-                                    <option value="SM">圣马力诺</option>
-                                    <option value="ST">圣多美和普林西比</option>
-                                    <option value="SA">沙特阿拉伯</option>
-                                    <option value="SN">塞内加尔</option>
-                                    <option value="RS">塞尔维亚共和国</option>
-                                    <option value="SC">塞舌尔</option>
-                                    <option value="SL">塞拉利昂</option>
-                                    <option value="SG">新加坡</option>
-                                    <option value="SK">斯洛伐克</option>
-                                    <option value="SI">斯洛文尼亚</option>
-                                    <option value="SB">所罗门</option>
-                                    <option value="SO">索马里</option>
-                                    <option value="ZA">南非</option>
-                                    <option value="KR">韩国</option>
-                                    <option value="LK">斯里兰卡</option>
-                                    <option value="SD">苏丹</option>
-                                    <option value="SR">苏里南</option>
-                                    <option value="SZ">斯威士兰</option>
-                                    <option value="SE">瑞典</option>
-                                    <option value="CH">瑞士</option>
-                                    <option value="SY">叙利亚共和国</option>
-                                    <option value="TW">台湾</option>
-                                    <option value="TJ">塔吉克斯坦</option>
-                                    <option value="TZ">坦桑尼亚</option>
-                                    <option value="TH">泰国</option>
-                                    <option value="CG">刚果 布</option>
-                                    <option value="TG">多哥</option>
-                                    <option value="TO">汤加</option>
-                                    <option value="TT">特立尼达和多巴哥</option>
-                                    <option value="TN">突尼斯</option>
-                                    <option value="TR">土耳其</option>
-                                    <option value="TM">土库曼斯坦</option>
-                                    <option value="TC">特克斯和凯科斯群岛</option>
-                                    <option value="TV">图瓦卢</option>
-                                    <option value="VI">美属维尔京群岛</option>
-                                    <option value="UG">乌干达</option>
-                                    <option value="UA">乌克兰</option>
-                                    <option value="AE">阿拉伯联合酋长国</option>
-                                    <option value="UY">乌拉圭</option>
-                                    <option value="UZ">乌兹别克斯坦</option>
-                                    <option value="VU">瓦努阿图</option>
-                                    <option value="VA">梵蒂冈</option>
-                                    <option value="VE">委内瑞拉</option>
-                                    <option value="WF">瓦利斯群岛</option>
-                                    <option value="YE">也门</option>
-                                    <option value="ZM">赞比亚</option>
-                                    <option value="ZW">津巴布韦</option>
-                                </select>
-                            </p>
-                            <div style="left: -34px; top: 60px; display: block;" class="tiparrow-posbox j-package-tips">
-                                <div class="tiparrow-box" style="width:240px;">使用运费计算请填写完整"<a
-                                            href="#vadiourlTip">产品包装信息</a>"
-
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!--运费及物流设置内容 ajax渲染-->
-                <div class="j-shipping-box"></div>
-                <!--国家内容白色 弹层-->
-
-                <div class="syi-shippingset-bar j-shipping-bar" style="display:none"><b class="downarrow"></b></div>
-
-                <div style="display:none;" class="syi-country-wrap j-country-warp">
-                    <div class="syi-country-inner j-wrap-content"></div>
-                    <div class="syi-country-shadow"></div>
-                </div>
-                <!--国家内容白色 弹层-->
-
-            </div>
-            <div style="display: none;" id="shippingmodelidErrTip" class="tip-error"></div>
         </div>
-        <!--国家太多时显示的tip 开始-->
-        <div class="country_pop" style="display: none;position:absolute;z-index: 1000;" id="countryTip">
-            <a href="#" class="close_cpop" onclick="hideCoutriesTip();return false;"></a>
-            <div class="syi-line"></div>
-            <div class="country_popcont" id="coutryZoneDiv">
-            </div>
-            <iframe></iframe>
-        </div>
-        <!--国家太多时显示的tip 结束--><!------- 运费设置列表结束 ------->
-        <!-- 运费设置结束 -->
-        <!--初始化vo-->
-        <script>
-            //var g_shippingmodeVo = com.dhgate.syi.model.ShippingmodeVO@1f1e4c26;
-            //var g_shippingmodeVo = "null-value";
-        </script>    <!------- 运费设置列表结束 ------->
-
-        <!-- title其他信息 开始 -->
-
-
-        <!-- 店铺会员专区产品 开始 -->
-        <input type="hidden" id="specialzone0" value="0">
-        <!-- 店铺会员专区产品 结束 -->
-
-
         <!--对频繁上传产品的卖家显示验证码-->
         <!-- 敦煌网网络服务使用协议 开始 -->
         <div class="chousexybox">
@@ -1826,9 +1594,9 @@
         <!-- 完成提交开始 -->
         <div id="syi_submit_id" class="syi-submit">
             <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系敦煌网客服部门。</strong><br>
-            <button type="button" id="btn_submitproduct">
-			    <span id="loadingimg" class="submit-syi"><img
-                            src="/assets/img/icon/loadings.gif" class="syi-img-show">
+            <button type="button" id="btn_submitproduct" class="btn btn-primary btn-lg">
+			    <span id="loadingimg" class="submit-syi">
+                    <img src="/assets/img/icon/loadings.gif" class="syi-img-show">
 				<span id="submitopt">提 交</span>
 				</span>
             </button>
