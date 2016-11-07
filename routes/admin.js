@@ -650,59 +650,83 @@ router.get('/upload', function (req, res) {
 
 //上传产品详细信息
 router.get('/upload-products-detail', function (req, res) {
-    db.categorys.find({}, function (err, result) {
-        if (err) res.send('404');
-        // console.log(result);
-        var compatibility = [],
-            type = [],
-            hardOrSoft = [],
-            features = [],
-            pattern = [],
-            Color = [],
-            material = [];
-        db.specifications.find({}, function (err, product_spectication) {
-            _.each(tempCategory, function (item) {
-                var compatibilityArr = filterArr(product_spectication[0].compatibility, item.thirdCategory);
-                compatibility = _.concat(compatibility, compatibilityArr)
 
-                var typeArr = filterArr(product_spectication[0].type, item.thirdCategory)
-                type = _.concat(type, typeArr)
+    async.parallel([
+            function (done) {
+                db.categorys.find({}, function (err, result) {
+                    if (err) res.send('404');
+                    done(err, result)
+                });
 
-                var hardOrSoftArr = filterArr(product_spectication[0].hardOrSoft, item.thirdCategory);
-                hardOrSoft = _.concat(hardOrSoft, hardOrSoftArr)
+            },
+            function (done) {
+                db.specifications.find({}, function (err, product_spectication) {
+                    done(err, product_spectication)
+                });
+            },
+            function (done) {
+                db.suppliers.find({}, function (err, suppliers) {
+                    done(err, suppliers)
+                });
+            }
+        ],
+        function (err, results) {
+            if (err) {
+                done(err)
+            } else {
+                var categorys = results[0];
+                var product_spectication = results[1];
+                var suppliers = results[2];
+                var compatibility = [],
+                    type = [],
+                    hardOrSoft = [],
+                    features = [],
+                    pattern = [],
+                    Color = [],
+                    material = [];
+                _.each(tempCategory, function (item) {
+                    var compatibilityArr = filterArr(product_spectication[0].compatibility, item.thirdCategory);
+                    compatibility = _.concat(compatibility, compatibilityArr)
 
-                var featuresArr = filterArr(product_spectication[0].features, item.thirdCategory)
-                features = _.concat(features, featuresArr)
+                    var typeArr = filterArr(product_spectication[0].type, item.thirdCategory)
+                    type = _.concat(type, typeArr)
 
-                var patternArr = filterArr(product_spectication[0].pattern, item.thirdCategory)
-                pattern = _.concat(pattern, patternArr)
+                    var hardOrSoftArr = filterArr(product_spectication[0].hardOrSoft, item.thirdCategory);
+                    hardOrSoft = _.concat(hardOrSoft, hardOrSoftArr)
 
-                var ColorArr = filterArr(product_spectication[0].Color, item.thirdCategory);
-                Color = _.concat(Color, ColorArr)
+                    var featuresArr = filterArr(product_spectication[0].features, item.thirdCategory)
+                    features = _.concat(features, featuresArr)
 
-                var materialArr = filterArr(product_spectication[0].material, item.thirdCategory)
-                material = _.concat(material, materialArr)
-            });
+                    var patternArr = filterArr(product_spectication[0].pattern, item.thirdCategory)
+                    pattern = _.concat(pattern, patternArr)
 
-            res.render('admin/upload-products-detail', {
-                username: u.nick_name,
-                upload: [],
-                category: result,
-                tempCategory: tempCategory,
-                product_specification: {
-                    compatibility: compatibility,
-                    type: type,
-                    hardOrSoft: hardOrSoft,
-                    features: features,
-                    pattern: pattern,
-                    Color: Color,
-                    material: material
-                }
-            })
-            ;
-            tempCategory = [];
+                    var ColorArr = filterArr(product_spectication[0].Color, item.thirdCategory);
+                    Color = _.concat(Color, ColorArr)
+
+                    var materialArr = filterArr(product_spectication[0].material, item.thirdCategory)
+                    material = _.concat(material, materialArr)
+                });
+                console.log(suppliers);
+                res.render('admin/upload-products-detail', {
+                    username: u.nick_name,
+                    upload: [],
+                    category: categorys,
+                    tempCategory: tempCategory,
+                    suppliers: suppliers,
+                    product_specification: {
+                        compatibility: compatibility,
+                        type: type,
+                        hardOrSoft: hardOrSoft,
+                        features: features,
+                        pattern: pattern,
+                        Color: Color,
+                        material: material
+                    }
+                });
+                tempCategory = [];
+            }
         });
-    });
+
 
 });
 

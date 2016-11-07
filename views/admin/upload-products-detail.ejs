@@ -809,7 +809,9 @@
                 <div class="ml-title"><span class="required"></span>供应商：</div>
                 <a id="a_measureid"></a>
                 <select class="attr-select j-select-unit form-control" name="measureid">
-                    <option disabled="disabled" value="">-- 请选择销售单位 --</option>
+                    <% suppliers.forEach(function(supplier){ %>
+                    <option value="<%= supplier.name %>"><%= supplier.name %></option>
+                    <% }) %>
                 </select>
             </div>
             <!-- 供应商 结束 -->
