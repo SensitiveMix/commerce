@@ -44,6 +44,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "cheerio": "^0.22.0",
+    "coveralls": "^2.11.14",
     "crypto": "0.0.3",
     "express-ejs-layouts": "^2.2.0",
     "express-partials": "^0.3.0",
@@ -52,6 +53,7 @@
     "http": "0.0.0",
     "istanbul-harmony": "^0.3.16",
     "mocha": "^3.1.2",
+    "mocha-lcov-reporter": "^1.2.0",
     "mochawesome": "^1.5.3",
     "mongoose": "^4.6.3",
     "nodemon": "^1.11.0",

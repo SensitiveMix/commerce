@@ -3,3 +3,4 @@ node_modules
 *.DS
 coverage
 npm-debug.log
+.coveralls.yml
