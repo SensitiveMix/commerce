@@ -664,22 +664,22 @@ router.get('/upload-products-detail', function (req, res) {
             _.each(tempCategory, function (item) {
                 var compatibilityArr = filterArr(product_spectication[0].compatibility, item.thirdCategory);
                 compatibility = _.concat(compatibility, compatibilityArr)
-                
+
                 var typeArr = filterArr(product_spectication[0].type, item.thirdCategory)
                 type = _.concat(type, typeArr)
-                
+
                 var hardOrSoftArr = filterArr(product_spectication[0].hardOrSoft, item.thirdCategory);
                 hardOrSoft = _.concat(hardOrSoft, hardOrSoftArr)
-                
+
                 var featuresArr = filterArr(product_spectication[0].features, item.thirdCategory)
                 features = _.concat(features, featuresArr)
-                
+
                 var patternArr = filterArr(product_spectication[0].pattern, item.thirdCategory)
                 pattern = _.concat(pattern, patternArr)
-                
+
                 var ColorArr = filterArr(product_spectication[0].Color, item.thirdCategory);
                 Color = _.concat(Color, ColorArr)
-                
+
                 var materialArr = filterArr(product_spectication[0].material, item.thirdCategory)
                 material = _.concat(material, materialArr)
             });
@@ -982,6 +982,113 @@ router.post('/uploadProductDetail', function (req, res, next) {
         }
     });
 });
+
+/*----------------供应商管理---------------------*/
+//获取供应商
+router.get('/supplierList', function (req, res, next) {
+    console.log("当前分页" + req.query.iDisplayStart);
+    db.suppliers.find({}, null, {
+        sort: {
+            'add_time_number': 1
+        }
+    }, function (err, result) {
+        var lista = {
+            "draw": 2,
+            "recordsTotal": "",
+            "recordsFiltered": "",
+            "data": []
+        };
+        lista.recordsTotal = result.length;
+        lista.recordsFiltered = lista.recordsTotal;
+        lista.data = result;
+        res.send(lista);
+        res.end();
+    });
+
+});
+router.post('/doAddSupplier', checkLogin);
+router.get('/supplier_manage', function (req, res, next) {
+    res.render('admin/supplier_manage',
+        {
+            username: u.nick_name
+        }
+    );
+});
+router.post('/doAddSupplier', checkLogin);
+router.post('/doAddSupplier', function (req, res) {
+    var suppliers = {
+        name: req.body.add_name,
+        add_by: req.body.add_by,
+        supplier_id: Math.floor(Math.random() * 1000 + 1),
+        add_time: req.body.add_time,
+        add_time_number: req.body.add_time_number
+    };
+    var supplier = new db.suppliers(suppliers);
+    supplier.save(function (err) {
+        if (err) res.send({
+            error_msg: ['FORMAT PARAM Error'],
+            info: "",
+            result: "FAILED",
+            code: "500",
+            username: u.nick_name
+        })
+    });
+    res.send({
+        error_msg: [''],
+        info: "",
+        result: "SUCCESS",
+        code: "200",
+        username: u.nick_name
+    })
+});
+
+router.post('/doChangeSupplier', checkLogin);
+router.post('/doChangeSupplier', function (req, res) {
+    if (req.body.add_name != '' && req.body.add_by != '') {
+        db.suppliers.update({'_id': req.body.id}, {
+            $set: {
+                name: req.body.add_name,
+                add_by: req.body.add_by
+            }
+        }, function (err, result) {
+            if (err) res.send({
+                error_msg: ['FORMAT PARAM Error'],
+                info: "",
+                result: "FAILED",
+                code: "500",
+                username: u.nick_name
+            })
+            res.send({
+                error_msg: [''],
+                info: "",
+                result: "SUCCESS",
+                code: "200",
+                username: u.nick_name
+            })
+        })
+    } else {
+        res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "FAILED", code: "500", username: u.nick_name})
+    }
+});
+router.post('/doDelSuppler', checkLogin);
+router.post('/doDelSuppler', function (req, res, next) {
+    if (req.body.suppler_id != '') {
+        db.suppliers.remove({'_id': req.body.suppler_id}, function (err, result) {
+            if (err) res.send({
+                error_msg: ['FORMAT PARAM Error'],
+                info: "",
+                result: "FAILED",
+                code: "500",
+                username: u.nick_name
+            })
+            res.send({error_msg: [''], info: "", result: "SUCCESS", code: "200", username: u.nick_name})
+        })
+    } else {
+        res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "FAILED", code: "500", username: u.nick_name})
+    }
+});
+
+/*----------------------------------------------*/
 
 
 /* 多图片上传 */

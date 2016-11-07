@@ -16,3 +16,4 @@ exports.uploadHistorys = mongoose.model('uploadhistorys', require('./uploadHisto
 exports.uploadTemporarys = mongoose.model('uploadTemporarys', require('./uploadTemporary'));
 exports.levels = mongoose.model('levels', require('./levels'));
 exports.specifications = mongoose.model('specifications', require('./specifications'));
+exports.suppliers = mongoose.model('suppliers', require('./suppliers'));
