@@ -89,7 +89,7 @@
     function validatePwd() {
         if ($('#register_password').val() == '') {
             layer.msg('Please Enter Password');
-        } else if ($('#register_password').val() != $('#re_register_password').val() || $('#re_register_password').val() != "") {
+        } else if ($('#register_password').val().trim() != $('#re_register_password').val().trim() || $('#re_register_password').val().trim() == "") {
             layer.msg('passwords are not consistent');
         }
     }
@@ -97,7 +97,7 @@
     function validateName() {
         if ($('#register_email').val() == '') {
             layer.msg('Please Enter Email');
-        } else if ($('#register_email').val() != $('#re_register_email').val() || $('#re_register_email').val() != '') {
+        } else if ($('#register_email').val().trim() != $('#re_register_email').val().trim() || $('#re_register_email').val().trim() == '') {
             layer.msg('Email are not consistent');
         }
     }
@@ -126,18 +126,25 @@
         if (document.getElementById("register-checkbox").checked == true) {
             $('#register-btn').removeAttr('disabled');
             $('#register-btn').on('click', function () {
-                if ($('#register_email').val() == '' || $('#re_register_email').val() == '') {
+                if ($('#register_email').val().trim() == '' || $('#re_register_email').val().trim() == '') {
                     layer.msg('Please Enter Email!')
-                } else if ($('#register_password').val() || $('#re_register_password').val()) {
+                } else if ($('#register_password').val().trim() == '' || $('#re_register_password').val().trim() == '') {
                     layer.msg('Please Enter Password!')
                 } else {
                     $.ajax({
                         type: 'POST',
                         url: '/doregister',
-                        data: {email: $('#register_email').val(), password: $('#register_password').val()},
+                        data: {
+                            email: $('#register_email').val().trim(),
+                            password: $('#register_password').val().trim()
+                        },
                         dataType: 'json',
                         success: function (data) {
                             if (data == '200') {
+                                $('#register_password').val('')
+                                $('#re_register_password').val('')
+                                $('#register_email').val('')
+                                $('#re_register_email').val('')
                                 layer.msg('Register Success,Please Login!');
                             }
                             console.log(data);
