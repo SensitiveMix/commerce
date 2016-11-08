@@ -685,26 +685,28 @@ router.get('/upload-products-detail', function (req, res) {
                     Color = [],
                     material = [];
                 _.each(tempCategory, function (item) {
-                    var compatibilityArr = filterArr(product_spectication[0].compatibility, item.thirdCategory);
-                    compatibility = _.concat(compatibility, compatibilityArr)
+                    if (item.thirdCategory != '') {
+                        var compatibilityArr = filterArr(product_spectication[0].compatibility, item.thirdCategory);
+                        compatibility = _.concat(compatibility, compatibilityArr)
 
-                    var typeArr = filterArr(product_spectication[0].type, item.thirdCategory)
-                    type = _.concat(type, typeArr)
+                        var typeArr = filterArr(product_spectication[0].type, item.thirdCategory)
+                        type = _.concat(type, typeArr)
 
-                    var hardOrSoftArr = filterArr(product_spectication[0].hardOrSoft, item.thirdCategory);
-                    hardOrSoft = _.concat(hardOrSoft, hardOrSoftArr)
+                        var hardOrSoftArr = filterArr(product_spectication[0].hardOrSoft, item.thirdCategory);
+                        hardOrSoft = _.concat(hardOrSoft, hardOrSoftArr)
 
-                    var featuresArr = filterArr(product_spectication[0].features, item.thirdCategory)
-                    features = _.concat(features, featuresArr)
+                        var featuresArr = filterArr(product_spectication[0].features, item.thirdCategory)
+                        features = _.concat(features, featuresArr)
 
-                    var patternArr = filterArr(product_spectication[0].pattern, item.thirdCategory)
-                    pattern = _.concat(pattern, patternArr)
+                        var patternArr = filterArr(product_spectication[0].pattern, item.thirdCategory)
+                        pattern = _.concat(pattern, patternArr)
 
-                    var ColorArr = filterArr(product_spectication[0].Color, item.thirdCategory);
-                    Color = _.concat(Color, ColorArr)
+                        var ColorArr = filterArr(product_spectication[0].Color, item.thirdCategory);
+                        Color = _.concat(Color, ColorArr)
 
-                    var materialArr = filterArr(product_spectication[0].material, item.thirdCategory)
-                    material = _.concat(material, materialArr)
+                        var materialArr = filterArr(product_spectication[0].material, item.thirdCategory)
+                        material = _.concat(material, materialArr)
+                    }
                 });
                 console.log(suppliers);
                 res.render('admin/upload-products-detail', {
@@ -1134,7 +1136,7 @@ router.post('/uploadSingle', upload.array('file'), function (req, res, next) {
         for (var i = 0; i < req.files.length; i++) {
             var filepath = 'http://' + req.headers.host + "/tmp/" + req.files[i].originalname;
             // fs.renameSync(req.files[i].path, filepath);
-            
+
             uploadArr.push(filepath);
 
         }
