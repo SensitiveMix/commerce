@@ -14,6 +14,8 @@ var superagent = require('superagent');
 var cheerio = require('cheerio');
 var http_origin = require('http');
 var _ = require('lodash');
+var path = require('path');
+var config = require('../config')
 
 var r = [];
 var u = [];
@@ -1134,10 +1136,11 @@ router.post('/uploadSingle', upload.array('file'), function (req, res, next) {
         var str = "文件上传成功...";
         var uploadArr = [];
         for (var i = 0; i < req.files.length; i++) {
-            var filepath = 'http://' + req.headers.host + "/tmp/" + req.files[i].originalname;
-            // fs.renameSync(req.files[i].path, filepath);
+            // var filepath = 'http://' + req.headers.host + "/tmp/" + req.files[i].originalname;
+            var vitualPath = "public/tmp/" + req.files[i].originalname;
+            fs.renameSync(req.files[i].path, vitualPath);
 
-            uploadArr.push(filepath);
+            uploadArr.push(vitualPath);
 
         }
         console.log(uploadArr);
@@ -1173,78 +1176,80 @@ router.post('/uploadImage', upload.array("file"), function (req, res, next) {
 });
 
 /* 上传表格解析 */
-// var storage = multer.diskStorage({ //multers disk storage settings
-//     destination: function (req, file, cb) {
-//         cb(null, '/Users/sunNode/WebstormProjects/e-commerce-platform/public/')
-//     },
-//     filename: function (req, file, cb) {
-//         var datetimestamp = Date.now();
-//         cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
-//     }
-// });
-// var uploads = multer({ //multer settings
-//     storage: storage,
-//     fileFilter: function (req, file, callback) { //file filter
-//         if (['xls', 'xlsx'].indexOf(file.originalname.split('.')[file.originalname.split('.').length - 1]) === -1) {
-//             return callback(new Error('Wrong extension type'));
-//         }
-//         callback(null, true);
-//     }
-// }).single('file');
-// router.post('/uploadFile', function (req, res, next) {
-//
-//     var exceltojson;
-//     uploads(req, res, function (err) {
-//         if (err) {
-//             res.json({error_code: 1, err_desc: err});
-//             return;
-//         }
-//         /** Multer gives us file info in req.file object */
-//         if (!req.file) {
-//             res.json({error_code: 1, err_desc: "No file passed"});
-//             return;
-//         }
-//         /** Check the extension of the incoming file and
-//          *  use the appropriate module
-//          */
-//         if (req.file.originalname.split('.')[req.file.originalname.split('.').length - 1] === 'xlsx') {
-//             exceltojson = xlsxtojson;
-//         } else {
-//             exceltojson = xlstojson;
-//         }
-//         console.log(req.file.path);
-//         try {
-//             exceltojson({
-//                 input: req.file.path,
-//                 output: null, //since we don't need output.json
-//                 lowerCaseHeaders: true
-//             }, function (err, result) {
-//                 if (err) {
-//                     return res.json({error_code: 1, err_desc: err, data: null});
-//                 }
-//                 res.json({error_code: 0, err_desc: null, data: result});
-//             });
-//         } catch (e) {
-//             res.json({error_code: 1, err_desc: "Corupted excel file"});
-//         }
-//     })
-//
-// });
+var storage_file = multer.diskStorage({ //multers disk storage settings
+    destination: function (req, file, cb) {
+        cb(null, './public/crawler_file')
+    },
+    filename: function (req, file, cb) {
+        var datetimestamp = Date.now();
+        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
+    }
+});
+var uploads = multer({ //multer settings
+    storage: storage_file,
+    fileFilter: function (req, file, callback) { //file filter
+        if (['xls', 'xlsx'].indexOf(file.originalname.split('.')[file.originalname.split('.').length - 1]) === -1) {
+            return callback(new Error('Wrong extension type'));
+        }
+        callback(null, true);
+    }
+}).single('file');
+router.post('/uploadFile', function (req, res, next) {
+
+    var exceltojson;
+    uploads(req, res, function (err) {
+        if (err) {
+            res.json({error_code: 1, err_desc: err});
+            return;
+        }
+        /** Multer gives us file info in req.file object */
+        if (!req.file) {
+            res.json({error_code: 1, err_desc: "No file passed"});
+            return;
+        }
+        /** Check the extension of the incoming file and
+         *  use the appropriate module
+         */
+        if (req.file.originalname.split('.')[req.file.originalname.split('.').length - 1] === 'xlsx') {
+            exceltojson = xlsxtojson;
+        } else {
+            exceltojson = xlstojson;
+        }
+        console.log(req.file.path);
+        try {
+            exceltojson({
+                input: req.file.path,
+                output: null, //since we don't need output.json
+                lowerCaseHeaders: true
+            }, function (err, result) {
+                if (err) {
+                    return res.json({error_code: 1, err_desc: err, data: null});
+                }
+                res.json({error_code: 0, err_desc: null, data: result});
+            });
+        } catch (e) {
+            res.json({error_code: 1, err_desc: "Corupted excel file"});
+        }
+    })
+
+});
 
 
 /* 爬虫 */
 router.get('/crawler', function (req, res, next) {
-    superagent.get('http://www.miniinthebox.com/high-premium-pc-full-body-cover-with-tempered-glass-film-case-for-iphone-5-5s-se_p4972423.html?category_id=9361&prm=2.2.1.1')
+    superagent.get(req.query.link)
         .end(function (err, result) {
             if (err) {
                 return next(err);
             }
             var $ = cheerio.load(result.text);
             var items = [];
+            var img = [];
             var property = [];
+            var title = null;
             $('.list').find('li').each(function (idx, element) {
                 var url = $(this).find('img').attr('src');
-
+                var uniqueUrl = url.substring(url.lastIndexOf('/') + 1);
                 http_origin.get(url, function (res) {
                     var imgData = "";
 
@@ -1255,22 +1260,21 @@ router.get('/crawler', function (req, res, next) {
                     });
 
                     var Rand = Math.random();
-
-                    var save_url = '/Users/sunNode/WebstormProjects/e-commerce-platform/public/crawel_images/' + Rand + '.jpg';
-
+                    var save_url = config.savePath + uniqueUrl;
+                    img.push(save_url);
                     res.on("end", function () {
                         fs.writeFile(save_url, imgData, "binary", function (err) {
+                            // console.log(save_url);
                             if (err) {
-                                console.log("down fail");
+                                console.log(err);
                             }
-                            console.log("down success");
                         });
                     });
                 });
 
                 items.push({
                     image_id: idx,
-                    image_url: $(this).find('img').attr('src'),
+                    image_url: uniqueUrl,
                     image_title: $(this).find('img').attr('title')
                 })
             });
@@ -1283,7 +1287,13 @@ router.get('/crawler', function (req, res, next) {
                 })
             });
 
+            $('.prod-info-title').find('h1').each(function (idx, element) {
+                title = $(this).html()
+            });
+
+
             var allItems = {
+                title: title,
                 img: items,
                 property: property
             }
@@ -1291,6 +1301,12 @@ router.get('/crawler', function (req, res, next) {
             res.send(allItems);
         });
 });
+
+router.get('/crawler_manage', function (req, res, next) {
+    res.render('admin/crawler', {
+        username: u.nick_name
+    })
+})
 
 module.exports = router;
 

@@ -1,0 +1,151 @@
+<% layout('master.ejs') %>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">爬虫管理</h3>
+    </div>
+
+    <form class="form-horizontal  layer_notice" hidden="hidden" id="files"
+          enctype="multipart/form-data"
+          action="uploadFile"
+          method="post">
+        <div class="box-body">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">导入表格:</label>
+
+                <div class="col-sm-6">
+                    <input type="file" id="file" name="file"/>
+                </div>
+            </div>
+
+        </div>
+        <div class="box-footer">
+            <input type="button" class="btn btn-info pull-right closeBtn" id="file_sub" value="导入" name="submit">
+        </div>
+    </form>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <div class="box-body">
+        <div class="col-lg-12">
+            <div class="col-lg-8">
+                <input class="col-lg-12" type="text" id="crawler" placeholder="请输入爬取链接">
+            </div>
+            <div class="col-lg-1">
+                <button id="start_crawel" class="btn btn-info" onclick="start_crawler(this.id)">爬取</button>
+            </div>
+            <div class="col-lg-3">
+                <button id="start_batch_crawler" class="btn btn-info" onclick="start_batch_crawler()">批量爬取</button>
+            </div>
+        </div>
+        <table id="robotetable" class="table table-bordered " aria-describedby="example2_info">
+            <thead>
+            <tr>
+                <th></th>
+                <th>title</th>
+                <th>image</th>
+                <th>Compatibility</th>
+                <th>Type</th>
+                <th>Hard / Soft</th>
+                <th>Features</th>
+                <th>Pattern</th>
+                <th>Type</th>
+                <th>Color</th>
+                <th>Material</th>
+                <th></th>
+
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+
+</div>
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.css">
+<script>
+
+    //单条爬取
+    function start_crawler(link) {
+        if (link == 'start_crawel') {
+            link = $('#crawler').val()
+        }
+        if (link == '') {
+            layer.tips('请输入爬取链接', '#crawler');
+        } else {
+            $.ajax({
+                url: 'crawler',
+                type: 'GET',
+                data: {
+                    link: link
+                },
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res)    //爬取结果
+                },
+                error: function (returndata) {
+                    layer.alert('爬取失败，请检查链接是否有误！');
+                }
+            });
+        }
+    }
+    //多个爬取
+    function start_batch_crawler() {
+        $('#files').show();
+        layer.open({
+            type: 1,
+            skin: 'layui-layer-rim',
+            shade: false,
+            title: false, //不显示标题
+            content: $('#files'), //捕获的元素
+            area: ['420px', "400px"],
+            cancel: function (index) {
+                layer.close(index);
+
+            },
+            scrollbar: false
+        });
+    }
+
+    //表格上传
+    function uploadFile() {
+        var file = document.getElementById("file")
+        var formData = new FormData();
+        for (var i = 0; i < file.files.length; i++) {
+            formData.append('file', file.files[i]);
+        }
+        $.ajax({
+            url: 'uploadFile',
+            type: 'POST',
+            data: formData,
+            // async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                console.log(res)
+                if (res.err_desc == 'No file passed' || res.error_code == 1) {
+                    layer.msg('请选取表格');
+                } else {
+                    layer.msg('上传成功');
+                    res.data.forEach(function (item) {
+                        start_crawler(item.link);
+                    })
+                }
+            },
+            error: function () {
+                layer.msg('内部服务器错误');
+            }
+        });
+    }
+    function postPage() {
+        var uploada = document.getElementById('file_sub');
+        uploada.addEventListener("click", function () {
+            uploadFile();
+        }, false);
+    }
+    window.onload = function () {
+        postPage();
+    }
+</script>
