@@ -1113,10 +1113,46 @@ router.post('/doDelSuppler', function (req, res, next) {
 });
 
 /*----------------------------------------------*/
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/images')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+});
+var upload = multer({
+    storage: storage
+});
+router.post('/uploadSingle', upload.array('file'), function (req, res, next) {
+    console.log(req.files)
+    if (req.files == undefined) {
+        res.send("请选择要上传的图片...");
+    } else {
+        var str = "文件上传成功...";
+        var uploadArr = [];
+        for (var i = 0; i < req.files.length; i++) {
+            var filepath = 'http://' + req.headers.host + "/tmp/" + req.files[i].originalname;
+            // fs.renameSync(req.files[i].path, filepath);
+            
+            uploadArr.push(filepath);
 
+        }
+        console.log(uploadArr);
+        res.json({
+            code: 200,
+            data: uploadArr
+        })
+        // res.render('admin/upload_goods', {upload: uploadArr, username: u.nick_name});
+        // res.render('admin/upload-products-detail', {upload: uploadArr, username: u.nick_name});
+    }
+    // var url = 'http://' + req.headers.host + '/images/' + req.file.originalname;
+
+});
 
 /* 多图片上传 */
 router.post('/uploadImage', upload.array("file"), function (req, res, next) {
+    console.log(req.files)
     if (req.files == undefined) {
         res.send("请选择要上传的图片...");
     } else {
@@ -1130,70 +1166,68 @@ router.post('/uploadImage', upload.array("file"), function (req, res, next) {
             uploadArr.push(savePath);
 
         }
-        console.log(uploadArr);
-        // res.render('admin/upload_goods', {upload: uploadArr, username: u.nick_name});
-        res.render('admin/upload-products-detail', {upload: uploadArr, username: u.nick_name});
+        res.send(uploadArr);
     }
 });
 
 /* 上传表格解析 */
-var storage = multer.diskStorage({ //multers disk storage settings
-    destination: function (req, file, cb) {
-        cb(null, '/Users/sunNode/WebstormProjects/e-commerce-platform/public/')
-    },
-    filename: function (req, file, cb) {
-        var datetimestamp = Date.now();
-        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
-    }
-});
-var uploads = multer({ //multer settings
-    storage: storage,
-    fileFilter: function (req, file, callback) { //file filter
-        if (['xls', 'xlsx'].indexOf(file.originalname.split('.')[file.originalname.split('.').length - 1]) === -1) {
-            return callback(new Error('Wrong extension type'));
-        }
-        callback(null, true);
-    }
-}).single('file');
-router.post('/uploadFile', function (req, res, next) {
-
-    var exceltojson;
-    uploads(req, res, function (err) {
-        if (err) {
-            res.json({error_code: 1, err_desc: err});
-            return;
-        }
-        /** Multer gives us file info in req.file object */
-        if (!req.file) {
-            res.json({error_code: 1, err_desc: "No file passed"});
-            return;
-        }
-        /** Check the extension of the incoming file and
-         *  use the appropriate module
-         */
-        if (req.file.originalname.split('.')[req.file.originalname.split('.').length - 1] === 'xlsx') {
-            exceltojson = xlsxtojson;
-        } else {
-            exceltojson = xlstojson;
-        }
-        console.log(req.file.path);
-        try {
-            exceltojson({
-                input: req.file.path,
-                output: null, //since we don't need output.json
-                lowerCaseHeaders: true
-            }, function (err, result) {
-                if (err) {
-                    return res.json({error_code: 1, err_desc: err, data: null});
-                }
-                res.json({error_code: 0, err_desc: null, data: result});
-            });
-        } catch (e) {
-            res.json({error_code: 1, err_desc: "Corupted excel file"});
-        }
-    })
-
-});
+// var storage = multer.diskStorage({ //multers disk storage settings
+//     destination: function (req, file, cb) {
+//         cb(null, '/Users/sunNode/WebstormProjects/e-commerce-platform/public/')
+//     },
+//     filename: function (req, file, cb) {
+//         var datetimestamp = Date.now();
+//         cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
+//     }
+// });
+// var uploads = multer({ //multer settings
+//     storage: storage,
+//     fileFilter: function (req, file, callback) { //file filter
+//         if (['xls', 'xlsx'].indexOf(file.originalname.split('.')[file.originalname.split('.').length - 1]) === -1) {
+//             return callback(new Error('Wrong extension type'));
+//         }
+//         callback(null, true);
+//     }
+// }).single('file');
+// router.post('/uploadFile', function (req, res, next) {
+//
+//     var exceltojson;
+//     uploads(req, res, function (err) {
+//         if (err) {
+//             res.json({error_code: 1, err_desc: err});
+//             return;
+//         }
+//         /** Multer gives us file info in req.file object */
+//         if (!req.file) {
+//             res.json({error_code: 1, err_desc: "No file passed"});
+//             return;
+//         }
+//         /** Check the extension of the incoming file and
+//          *  use the appropriate module
+//          */
+//         if (req.file.originalname.split('.')[req.file.originalname.split('.').length - 1] === 'xlsx') {
+//             exceltojson = xlsxtojson;
+//         } else {
+//             exceltojson = xlstojson;
+//         }
+//         console.log(req.file.path);
+//         try {
+//             exceltojson({
+//                 input: req.file.path,
+//                 output: null, //since we don't need output.json
+//                 lowerCaseHeaders: true
+//             }, function (err, result) {
+//                 if (err) {
+//                     return res.json({error_code: 1, err_desc: err, data: null});
+//                 }
+//                 res.json({error_code: 0, err_desc: null, data: result});
+//             });
+//         } catch (e) {
+//             res.json({error_code: 1, err_desc: "Corupted excel file"});
+//         }
+//     })
+//
+// });
 
 
 /* 爬虫 */
