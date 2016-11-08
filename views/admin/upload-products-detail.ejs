@@ -377,6 +377,19 @@
 </script>
 <script>
     $(function () {
+        $('#cuxiao_price').change(function(){
+            if($('input[name="cuxiao_price"]:checked').length == 1){
+                $('#vip_price').attr('disabled','true');
+                $('#regular_price').attr('disabled','true');
+                $('#market_price').attr('disabled','true');
+
+            } else {
+                $('#vip_price').removeAttr('disabled')
+                $('#regular_price').removeAttr('disabled')
+                $('#market_price').removeAttr('disabled')
+            }
+        })
+
         $('input[name="highlight-color"]').eq(0).change(function () {
             if ($('input[name="highlight-color"]').eq(0).val() == '008000') {//绿色
                 $('#product-sell-status').val('库存确认可以采购');
@@ -442,7 +455,7 @@
             console.log(product_attributes_type);
             product_attributes_compatibility.forEach(function (item_compatibility) {
                 product_attributes_Color.forEach(function (item_type) {
-                    var table_body_tr = '<tr><td>【' + item_compatibility + '】' + item_type + '</td><td></td></tr>';
+                    var table_body_tr = '<tr><td>【' + item_compatibility + '】' + item_type + '</td><td><input type="text" class="form-control"></td></tr>';
 
                     $('#product-attribute-table tbody').append(table_body_tr);
                 })
@@ -450,7 +463,7 @@
             $('#bulk_operation').on('click', function () {
                 $('#product-attribute-table tbody tr').each(function (index, item) {
                     var eq_1 = $('input[name="price"]').val();
-                    $(item).find('td').eq(1).text(eq_1);
+                    $(item).find('td').eq(1).find('input').val(eq_1);
 //                    var eq_2 = $('input[name="count"]').val();
 //                    $(item).find('td').eq(2).text(eq_2);
                 })
@@ -840,11 +853,11 @@
                     </div>
                     <div id="product_sell_status_div" class="j-list-item">
                         <div>
-                            <input type="text" value="fff" name="highlight-color" class="pick-a-color form-control">
+                            <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
                             <div class="form-group" style="float: left;width: 53%">
                                 <div class="input-group">
                                     <input class="form-control" id="product-sell-status" type="text" placeholder=""
-                                           style="height: 47px">
+                                           style="height: 47px" value="库存确认可以采购">
                                 </div>
                             </div>
                         </div>
@@ -871,10 +884,10 @@
                     </div>
                     <div id="product_sell_status_div" class="j-list-item">
                         <div>
-                            <input type="text" value="fff" name="highlight-color" class="pick-a-color form-control">
+                            <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
                             <div class="form-group" style="float: left;width: 53%">
                                 <div class="input-group">
-                                    <input class="form-control" id="product-stock-time" type="text" placeholder=""
+                                    <input class="form-control" id="product-stock-time" type="text" placeholder="" value="2天"
                                            style="height: 47px">
                                 </div>
                             </div>
@@ -892,14 +905,13 @@
                         <input name="sortby" id="sortbyradio1" data-name="件" type="radio" checked="" value="1">
                         <span class="marginleft5 marginright10"><label for="gg">按件卖</label>（单位：<span class="j-unit-no"
                                                                                                      name="sortbyunit">件</span>）</span>
-                        <input type="text" class="form-control" placeholder="元/件" name="sell-function-jian">
                     </label>
                 </div>
                 <div class="marginbottom10 clearfix">
                     <label>
                         <input name="sortby" id="sortbyradio2" data-name="包" type="radio" value="2">
                         <span class="marginleft5">按包卖</span>
-                        <input type="text" class="form-control" placeholder="元/包" name="sell-function-bao">
+                        <input type="text" class="form-control" placeholder="件/包" name="sell-function-bao">
                     </label>
         <span>
 			<span class="j-sale-bao" style="display: none; ">
@@ -1009,7 +1021,11 @@
                                placeholder="Market Price">
                     </div>
                 </div>
-                促销价格:
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="cuxiao_price" name="cuxiao_price"> 促销价格:
+                    </label>
+                </div>
                 <div class="form-inline">
                     <div class="form-group">
                         <!--<label for="exampleInputEmail2">VIP Price</label>-->
@@ -1021,11 +1037,11 @@
                         <input type="text" class="form-control" name="promotion_regular_price"
                                id="promotion_regular_price" placeholder="Regular Price">
                     </div>
-                    <div class="form-group">
-                        <!--<label for="exampleInputEmail2">Market Price</label>-->
-                        <input type="text" class="form-control" name="promotion_market_price"
-                               id="promotion_market_price" placeholder="Market Price">
-                    </div>
+                    <!--<div class="form-group">-->
+                        <!--&lt;!&ndash;<label for="exampleInputEmail2">Market Price</label>&ndash;&gt;-->
+                        <!--<input type="text" class="form-control" name="promotion_market_price"-->
+                               <!--id="promotion_market_price" placeholder="Market Price">-->
+                    <!--</div>-->
                 </div>
 
             </div>
