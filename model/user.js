@@ -16,7 +16,9 @@ var userData = new Schema({
     levelName: String,
     userType: String,
     company: String,
-    registerTime: Number
+    registerTime: Number,
+    areaCode: {type: String, default: ""},
+    detailAddress: {type: String, default: ""},
 })
 
 module.exports = userData;

@@ -240,6 +240,33 @@ router.post('/change-password', function (req, res, next) {
     })
 })
 
+router.post('/change-address', function (req, res, next) {
+    console.log(req.body);
+    db.users.update({name: req.body.name}, {
+        $set: {
+            areaCode: req.body.areaCode,
+            detailAddress: req.body.detail_address
+        }
+    }, function (err, result) {
+        if (err) {
+            res.send(404)
+        } else {
+            console.log(result);
+            var changeCode = null;
+            if (result.nModified == 0) {
+                res.send({account: '', code: 500, msg: 'CHANGE FAILED'})
+            } else {
+                if (req.cookies["account"] != null) {
+                    req.cookies["account"].areaCode = req.body.areaCode;
+                    req.cookies["account"].detail_address = req.body.detail_address;
+                    res.send({account: req.cookies["account"], code: 200, msg: 'SUCCESS'})
+                } else {
+                    res.send({account: '', code: 500, msg: 'Not LOGIN'})
+                }
+            }
+        }
+    })
+})
 //获取轮播广告图
 router.get('/getBanner', function (req, res) {
     db.banners.find({'type': 'carousel'}, function (err, result) {
