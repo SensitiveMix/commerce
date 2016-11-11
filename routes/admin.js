@@ -1072,6 +1072,9 @@ router.post('/doAddSupplier', function (req, res) {
 
 router.post('/doChangeSupplier', checkLogin);
 router.post('/doChangeSupplier', function (req, res) {
+    console.log(req.body.add_name)
+    console.log(req.body.add_by)
+    console.log(req.body.id)
     if (req.body.add_name != '' && req.body.add_by != '') {
         db.suppliers.update({'_id': req.body.id}, {
             $set: {
@@ -1079,20 +1082,23 @@ router.post('/doChangeSupplier', function (req, res) {
                 add_by: req.body.add_by
             }
         }, function (err, result) {
-            if (err) res.send({
-                error_msg: ['FORMAT PARAM Error'],
-                info: "",
-                result: "FAILED",
-                code: "500",
-                username: u.nick_name
-            })
-            res.send({
-                error_msg: [''],
-                info: "",
-                result: "SUCCESS",
-                code: "200",
-                username: u.nick_name
-            })
+            if (err) {
+                res.send({
+                    error_msg: ['FORMAT PARAM Error'],
+                    info: "",
+                    result: "FAILED",
+                    code: "500",
+                    username: u.nick_name
+                })
+            } else {
+                res.send({
+                    error_msg: [''],
+                    info: "",
+                    result: "SUCCESS",
+                    code: "200",
+                    username: u.nick_name
+                })
+            }
         })
     } else {
         res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "FAILED", code: "500", username: u.nick_name})
