@@ -1143,7 +1143,7 @@ router.post('/uploadSingle', upload.array('file'), function (req, res, next) {
         var uploadArr = [];
         for (var i = 0; i < req.files.length; i++) {
             // var filepath = 'http://' + req.headers.host + "/tmp/" + req.files[i].originalname;
-            var vitualPath = "public/tmp/" + req.files[i].originalname;
+            var vitualPath = "/tmp/" + req.files[i].originalname;
             fs.renameSync(req.files[i].path, vitualPath);
 
             uploadArr.push(vitualPath);

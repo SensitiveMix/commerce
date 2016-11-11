@@ -377,11 +377,11 @@
 </script>
 <script>
     $(function () {
-        $('#cuxiao_price').change(function(){
-            if($('input[name="cuxiao_price"]:checked').length == 1){
-                $('#vip_price').attr('disabled','true');
-                $('#regular_price').attr('disabled','true');
-                $('#market_price').attr('disabled','true');
+        $('#cuxiao_price').change(function () {
+            if ($('input[name="cuxiao_price"]:checked').length == 1) {
+                $('#vip_price').attr('disabled', 'true');
+                $('#regular_price').attr('disabled', 'true');
+                $('#market_price').attr('disabled', 'true');
 
             } else {
                 $('#vip_price').removeAttr('disabled')
@@ -887,7 +887,8 @@
                             <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
                             <div class="form-group" style="float: left;width: 53%">
                                 <div class="input-group">
-                                    <input class="form-control" id="product-stock-time" type="text" placeholder="" value="2天"
+                                    <input class="form-control" id="product-stock-time" type="text" placeholder=""
+                                           value="2天"
                                            style="height: 47px">
                                 </div>
                             </div>
@@ -913,7 +914,7 @@
                         <span class="marginleft5">按包卖</span>
                         <input type="text" class="form-control" placeholder="件/包" name="sell-function-bao">
                     </label>
-        <span>
+                    <span>
 			<span class="j-sale-bao" style="display: none; ">
                 （每包产品的数量：<input id="packquantity" name="packquantity" value="1" type="text" class="input2" size="6"
                                 maxlength="8">
@@ -1038,9 +1039,9 @@
                                id="promotion_regular_price" placeholder="Regular Price">
                     </div>
                     <!--<div class="form-group">-->
-                        <!--&lt;!&ndash;<label for="exampleInputEmail2">Market Price</label>&ndash;&gt;-->
-                        <!--<input type="text" class="form-control" name="promotion_market_price"-->
-                               <!--id="promotion_market_price" placeholder="Market Price">-->
+                    <!--&lt;!&ndash;<label for="exampleInputEmail2">Market Price</label>&ndash;&gt;-->
+                    <!--<input type="text" class="form-control" name="promotion_market_price"-->
+                    <!--id="promotion_market_price" placeholder="Market Price">-->
                     <!--</div>-->
                 </div>
 
@@ -1068,17 +1069,17 @@
 
                     </div>
                 </div>
-			<span class="yellowBtn11">
+                <span class="yellowBtn11">
 
     			<!--<input type="button" name="fileupload" id="fileupload" style="visibility: hidden; display: none;"-->
-                <!--width="72" height="23"><object type="application/x-shockwave-flash"-->
-                <!--data=""-->
-                <!--width="72" height="23" id="fileuploadUploader"-->
-                <!--style="visibility: visible;"><param name="quality" value="high"><param-->
-                <!--name="wmode" value="transparent"><param name="allowScriptAccess" value="always"><param-->
-                <!--name="flashvars"-->
-                <!--value="uploadifyID=fileupload&amp;pagepath=/syi/&amp;script=http://upload.dhgate.com/uploadfile&amp;folder=uploaddify&amp;width=72&amp;height=23&amp;wmode=transparent&amp;method=GET&amp;queueSizeLimit=8&amp;simUploadLimit=8&amp;hideButton=true&amp;fileDesc=choose *.jpg/&amp;fileExt=*.jpg;*.JPG;*.jpeg;*.JPEG;&amp;multi=true&amp;sizeLimit=2097152&amp;fileDataName=Filedata&amp;queueID=productPicQueue"></object></span><span-->
-                <!--class="yellowBtn marginleft10"><input type="button" id="albumImgListButton" value="相册上传"></span>-->
+                    <!--width="72" height="23"><object type="application/x-shockwave-flash"-->
+                    <!--data=""-->
+                    <!--width="72" height="23" id="fileuploadUploader"-->
+                    <!--style="visibility: visible;"><param name="quality" value="high"><param-->
+                    <!--name="wmode" value="transparent"><param name="allowScriptAccess" value="always"><param-->
+                    <!--name="flashvars"-->
+                    <!--value="uploadifyID=fileupload&amp;pagepath=/syi/&amp;script=http://upload.dhgate.com/uploadfile&amp;folder=uploaddify&amp;width=72&amp;height=23&amp;wmode=transparent&amp;method=GET&amp;queueSizeLimit=8&amp;simUploadLimit=8&amp;hideButton=true&amp;fileDesc=choose *.jpg/&amp;fileExt=*.jpg;*.JPG;*.jpeg;*.JPEG;&amp;multi=true&amp;sizeLimit=2097152&amp;fileDataName=Filedata&amp;queueID=productPicQueue"></object></span><span-->
+                    <!--class="yellowBtn marginleft10"><input type="button" id="albumImgListButton" value="相册上传"></span>-->
 
 			<span class="helptips">
     			您还可以上传<b class="color444" id="photonum_b">8</b>
@@ -1188,7 +1189,7 @@
 								    <input type="button" name="puw_fileupload" id="puw_fileupload"
                                            style="visibility:hidden;">
 								</span>
-								<span class="uperrorbox">
+                                        <span class="uperrorbox">
 									<div id="div_imgdescErrTip" class="tip-error" style="display:none;"></div>
 								</span>
 
@@ -1430,15 +1431,16 @@
         <span class="yellowBtn j-btn-showpic">
         <input type="button" value="产品图片中选">
         </span>
-        <span class="yellowBtn11">
+                    <span class="yellowBtn11">
         <input type="button" name="fileupload_googleshopping" id="fileupload_googleshopping" style="display: none;"><object
-                    type=""
-                    width="72" height="23" id="fileupload_googleshoppingUploader" style="visibility: visible;"><param
-                        name="quality" value="high"><param name="wmode" value="transparent"><param
-                        name="allowScriptAccess" value="always"><param name="flashvars"
-                                                                       value="uploadifyID=fileupload_googleshopping&amp;pagepath=/syi/&amp;script=http://upload.dhgate.com/uploadfile&amp;folder=uploaddify&amp;width=72&amp;height=23&amp;wmode=transparent&amp;method=GET&amp;queueSizeLimit=8&amp;simUploadLimit=8&amp;hideButton=true&amp;fileDesc=choose *.jpg/&amp;fileExt=*.jpg;*.JPG;*.jpeg;*.JPEG;&amp;multi=true&amp;sizeLimit=2097152&amp;fileDataName=Filedata&amp;queueID=googleshoppingPicQueue"></object>
+                                type=""
+                                width="72" height="23" id="fileupload_googleshoppingUploader"
+                                style="visibility: visible;"><param
+                                    name="quality" value="high"><param name="wmode" value="transparent"><param
+                                    name="allowScriptAccess" value="always"><param name="flashvars"
+                                                                                   value="uploadifyID=fileupload_googleshopping&amp;pagepath=/syi/&amp;script=http://upload.dhgate.com/uploadfile&amp;folder=uploaddify&amp;width=72&amp;height=23&amp;wmode=transparent&amp;method=GET&amp;queueSizeLimit=8&amp;simUploadLimit=8&amp;hideButton=true&amp;fileDesc=choose *.jpg/&amp;fileExt=*.jpg;*.JPG;*.jpeg;*.JPEG;&amp;multi=true&amp;sizeLimit=2097152&amp;fileDataName=Filedata&amp;queueID=googleshoppingPicQueue"></object>
         </span>
-        <span class="yellowBtn marginleft10 j-btn-showalbum">
+                    <span class="yellowBtn marginleft10 j-btn-showalbum">
         <input type="button" value="相册上传">
         </span>
                 </div>
@@ -1749,23 +1751,28 @@
         var file = document.getElementById("file")
         var formData = new FormData();
         for (var i = 0; i < file.files.length; i++) {
-            formData.append('file', file.files[i]);
-        }
-        $.ajax({
-            url: '/admin/uploadSingle',
-            type: 'POST',
-            data: formData,
-            // async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                console.log(data)   //返回图片
-            },
-            error: function () {
-                console.log('err')
+            if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpg') {
+                layer.alert('上传图片格式有误')
+            } else {
+                formData.append('file', file.files[i]);
+                $.ajax({
+                    url: '/admin/uploadSingle',
+                    type: 'POST',
+                    data: formData,
+                    // async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        console.log(data)   //返回图片
+                    },
+                    error: function () {
+                        console.log('err')
+                    }
+                });
             }
-        });
+        }
+
     }
 
     function postPage() {
