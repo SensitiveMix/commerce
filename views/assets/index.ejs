@@ -162,41 +162,61 @@
                     </div>
 
                 </div>
-
-                <h2 class="align-center unbranded">Browse Our Store</h2>
+                <% if(categories.length != 0){ %>
+                <% categories.forEach(function (item) { %>
+                <h2 class="align-center unbranded"><a href="<%= item.firstUrl %>"><%= item.firstCategory %></a></h2>
                 <div class="gap-25"></div>
-
                 <ul class="products row">
-
-                    <li class="col-sm-3 first">
+                    <% if(item.secondCategory.length != 0) { %>
+                    <% item.secondCategory.forEach(function(secondItem) { %>
+                    <% if(secondItem.thirdTitles.length != 0) { %>
+                    <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
+                    <li class="col-sm-3">
                         <div class="product">
                             <div class="thumbnail">
-                                <a href="product.html"><img src="http://placehold.it/263x388" alt=""></a>
+                                <a href="<%= thirdItem.thirdUrl %>">
+                                    <img src="images/<%= thirdItem.thirdImages %>" alt=""></a>
                                 <a href="#" class="add-to-cart" title="Add to Cart">
-              <span class="fa-stack fa-2x">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
-              </span>
+                                  <span class="fa-stack fa-2x">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
+                                  </span>
                                 </a>
                             </div>
                             <hr>
                             <div class="title">
-                                <h3><a href="#">Reshape Panties</a></h3>
-                                <p>by Jack &amp; Jones</p>
+                                <h3>
+                                    <a href="<%= thirdItem.thirdUrl %>">
+                                        <%= thirdItem.thirdTitle %>
+                                    </a>
+                                </h3>
                             </div>
                             <span class="price">$18</span>
                         </div>
                     </li>
 
+                    <% }) %>
+                    <% } %>
+
+                    <% }) %>
+                    <% } %>
+                </ul>
+                <% }) %>
+                <% } %>
+
+                <h2 class="align-center unbranded">Browse Our Store</h2>
+                <div class="gap-25"></div>
+
+                <ul class="products row">
                     <li class="col-sm-3">
                         <div class="product">
                             <div class="thumbnail">
                                 <a href="product.html"><img src="http://placehold.it/263x388" alt=""></a>
                                 <a href="#" class="add-to-cart" title="Add to Cart">
-              <span class="fa-stack fa-2x">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
-              </span>
+                                  <span class="fa-stack fa-2x">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
+                                  </span>
                                 </a>
                             </div>
                             <hr>
