@@ -505,6 +505,45 @@ router.get('/product/:id', function (req, res, next) {
         }
     })
 });
+
+router.get('/single-product/:id', function (req, res, next) {
+    db.categorys.findOne({
+        'secondCategory.thirdTitles.product.product_id': req.params["id"]
+    }, function (err, result) {
+        var arr = [];
+        _.each(result.secondCategory, function (second) {
+            _.each(second.thirdTitles, function (third) {
+                var newArr = _.filter(third.product, function (four) {
+                    return four.product_id == req.params["id"]
+
+                });
+                arr = _.concat(newArr, arr)
+            });
+
+        });
+        console.log(arr);
+        if (arr.length == 0) {
+            res.render('assets/single-product-detail', {
+                product: [],
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies['account'],
+                status: 200
+            })
+        } else {
+            console.log(arr)
+            res.render('assets/single-product-detail', {
+                product: arr,
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies['account'],
+                status: 200
+            })
+        }
+    })
+});
 //MD5加密
 function md5(text) {
     return crypto.createHash('md5').update(text).digest('hex');
