@@ -38,7 +38,4 @@ describe('upload temporyary testing', function () {
                 done();
             });
     });
-    
-
-
 });

@@ -23,7 +23,7 @@ var leverlist = [];
 var systems = [];
 var tempCategory = [];
 /*-------------------------------------------------------------------*/
-/* -----------------------实用工具 ---------------------------------*/
+/* -------------------------实用工具 ---------------------------------*/
 //MD5加密
 function md5(text) {
     return crypto.createHash('md5').update(text).digest('hex');
@@ -40,7 +40,7 @@ var checkLogin = function (req, res, next) {
 };
 
 /*-------------------------------------------------------------------*/
-/* -----------------------管理员登录 -------------------------------*/
+/* -----------------------管理员登录 ---------------------------------*/
 //后台登录界面
 router.get('/', function (req, res) {
     res.render('admin/login_1', {title: '电商网站后台'});
@@ -126,9 +126,8 @@ router.get('/mainset', function (req, res, next) {
 
 });
 
-
 /*-------------------------------------------------------------------*/
-/* ----------------------------用户模块 ----------------------------*/
+/* -----------------------------用户管理 ----------------------------*/
 //获取用户
 router.get('/douserlist', function (req, res, next) {
     console.log("当前分页" + req.query.iDisplayStart);
@@ -195,7 +194,7 @@ router.get('/usermanage', function (req, res, next) {
         }
     )
 });
-
+//删除用户
 router.post('/doDelUer', checkLogin);
 router.post('/doDelUer', function (req, res, next) {
     console.log("用户删除" + new Date());
@@ -209,6 +208,7 @@ router.post('/doDelUer', function (req, res, next) {
 });
 
 //添加用户
+router.post('/doAddUser', checkLogin);
 router.post('/doAddUser', function (req, res, next) {
     console.log("用户添加" + req.body.addName + new Date());
     var date = Date();
@@ -229,6 +229,7 @@ router.post('/doAddUser', function (req, res, next) {
 });
 
 //修改用户
+router.post('/doChangeUser', checkLogin);
 router.post('/doChangeUser', function (req, res, next) {
     console.log("用户修改" + new Date());
     var newPassword;
@@ -253,7 +254,7 @@ router.post('/doChangeUser', function (req, res, next) {
 });
 
 /*-------------------------------------------------------------------*/
-/* ----------------------------商城前台管理 -------------------------*/
+/* -----------------------------商城前台管理 -------------------------*/
 //上传文件接口
 router.post('/doupload', function (req, res) {
     var form = new formidable.IncomingForm();   //创建上传表单
@@ -434,41 +435,6 @@ router.post('/doChangeConditions', function (req, res) {
     })
 });
 
-//类目管理
-router.get('/accessory_manage', checkLogin);
-router.get('/accessory_manage', function (req, res, next) {
-    console.log("类目管理" + new Date());
-    res.render('admin/accessory_manage', {upload: [], username: u.nick_name});
-    // db.users.find({}, function (err, result) {
-    //     if (err) throw  err;
-    //
-    // });
-    console.log("类目管理页面登陆成功");
-});
-
-//类目上传
-router.post('/doAddCategory', checkLogin);
-router.post('/doAddCategory', function (req, res) {
-    console.log(req.body.firstCategory);
-    console.log(JSON.parse(req.body.secondCategory));
-
-    var Categories = {
-        firstCategory: req.body.firstCategory,
-        firstUrl: req.body.firstUrl,
-        firstCount: req.body.firstCount,
-        secondCategory: JSON.parse(req.body.secondCategory)
-    };
-    var category = new db.categorys(Categories);
-    category.save(function (err) {
-        console.log(err);
-        if (err) {
-            res.send('fail')
-        } else {
-            res.send('success');
-        }
-    });
-});
-
 //关于我们管理页面
 router.get('/about_us', checkLogin);
 router.get('/about_us', function (req, res, next) {
@@ -636,6 +602,42 @@ router.get('/hot_product_manage', function (req, res, next) {
     console.log("用户管理页面登陆成功");
 });
 
+/* ----------------------------类目管理 -------------------------*/
+//类目管理
+router.get('/accessory_manage', checkLogin);
+router.get('/accessory_manage', function (req, res, next) {
+    console.log("类目管理" + new Date());
+    res.render('admin/accessory_manage', {upload: [], username: u.nick_name});
+    // db.users.find({}, function (err, result) {
+    //     if (err) throw  err;
+    //
+    // });
+    console.log("类目管理页面登陆成功");
+});
+
+//类目上传
+router.post('/doAddCategory', checkLogin);
+router.post('/doAddCategory', function (req, res) {
+    console.log(req.body.firstCategory);
+    console.log(JSON.parse(req.body.secondCategory));
+
+    var Categories = {
+        firstCategory: req.body.firstCategory,
+        firstUrl: req.body.firstUrl,
+        firstCount: req.body.firstCount,
+        secondCategory: JSON.parse(req.body.secondCategory)
+    };
+    var category = new db.categorys(Categories);
+    category.save(function (err) {
+        console.log(err);
+        if (err) {
+            res.send('fail')
+        } else {
+            res.send('success');
+        }
+    });
+});
+
 /*-------------------------------------------------------------------*/
 /* ----------------------------上传产品模块 -------------------------*/
 
@@ -652,7 +654,6 @@ router.get('/upload', function (req, res) {
 
 //上传产品详细信息
 router.get('/upload-products-detail', function (req, res) {
-
     async.parallel([
             function (done) {
                 db.categorys.find({}, function (err, result) {
@@ -835,6 +836,8 @@ router.post('/uploadTemporary', function (req, res, next) {
 
 });
 
+/*-------------------------------------------------------------------*/
+/*----------------------------产品基本信息管理-------------------------*/
 //产品基本信息录入管理
 router.get('/specification', checkLogin);
 router.get('/specification', function (req, res, next) {
@@ -976,6 +979,7 @@ router.post('/doDelProperty', function (req, res, next) {
             break;
     }
 });
+
 //点击上传产品跳转到产品详情页接口
 router.post('/uploadProductDetail', function (req, res, next) {
     var Categories = [];
@@ -1011,7 +1015,33 @@ router.post('/uploadProductDetail', function (req, res, next) {
     });
 });
 
-/*----------------供应商管理---------------------*/
+//保存详细产品
+router.post('/saveProductDetail', function (req, res, next) {
+    console.log(req.body.product);
+    console.log(req.body.product.belong_category);
+    _.each(req.body.product.belong_category, function (single_category) {
+        db.categorys.update({
+                'secondCategory.thirdTitles.thirdTitle': {
+                    '$in': [single_category.third]
+                },
+                'secondCategory.secondTitle': {
+                    '$in': [single_category.second]
+                },
+                'firstCategory': single_category.first
+            }, {
+                $pushAll: {
+                    'secondCategory.thirdTitles.product': req.body.product
+                }
+            },
+            function (err, result) {
+                console.log(result)
+            })
+    })
+});
+
+
+/*-------------------------------------------------------------------*/
+/*----------------------------供应商管理------------------------------*/
 //获取供应商
 router.get('/supplierList', function (req, res, next) {
     console.log("当前分页" + req.query.iDisplayStart);
@@ -1101,7 +1131,13 @@ router.post('/doChangeSupplier', function (req, res) {
             }
         })
     } else {
-        res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "FAILED", code: "500", username: u.nick_name})
+        res.send({
+            error_msg: ['FORMAT PARAM Error'],
+            info: "",
+            result: "FAILED",
+            code: "500",
+            username: u.nick_name
+        })
     }
 });
 router.post('/doDelSuppler', checkLogin);
@@ -1118,11 +1154,19 @@ router.post('/doDelSuppler', function (req, res, next) {
             res.send({error_msg: [''], info: "", result: "SUCCESS", code: "200", username: u.nick_name})
         })
     } else {
-        res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "FAILED", code: "500", username: u.nick_name})
+        res.send({
+            error_msg: ['FORMAT PARAM Error'],
+            info: "",
+            result: "FAILED",
+            code: "500",
+            username: u.nick_name
+        })
     }
 });
 
-/*----------------------------------------------*/
+/*-------------------------------------------------------------------*/
+/*------------------------------图片上传------------------------------*/
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './public/images')
@@ -1240,7 +1284,8 @@ router.post('/uploadFile', function (req, res, next) {
 
 });
 
-
+/*-------------------------------------------------------------------*/
+/*-------------------------------爬虫管理-----------------------------*/
 /* 爬虫 */
 router.get('/crawler', function (req, res, next) {
     superagent.get(req.query.link)
@@ -1313,6 +1358,7 @@ router.get('/crawler_manage', function (req, res, next) {
         username: u.nick_name
     })
 })
+
 
 module.exports = router;
 

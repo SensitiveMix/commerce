@@ -85,10 +85,8 @@
                             <input class="one" type="text">
                         </td>
                         <td>
-                            <form enctype="multipart/form-data" method="post" action="uploadImage">
-                                <input type="file" id="file" name="file" multiple/><br/>
-                                <input type="submit" class="btn btn-info" value="上传图片"/>
-                            </form>
+                            <!--<input type="file" id="file" name="file"/><br/>-->
+                            <!--<input type="button" id="upload" class="btn btn-info" value="上传图片"/>-->
                         </td>
                         <td>
                             <img class="fa-toggle-on" src="/images/toggle-on.svg" onclick="toggle('off')"
@@ -318,7 +316,7 @@
                     var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
                     //要添加的行的id
                     var addRowID = currentRowID + '_' + deleteId;
-                    var str = '<tr class="' + addRowID + '"><td><img  style="margin-left: 40px" src="/images/jiao.svg" alt="">&nbsp;<input type="text"></td><td><form enctype="multipart/form-data" method="post" action="uploadImage"> <input type="file" id="file" name="file" multiple/><br/> <input type="submit" class="btn btn-info" value="上传图片"/> </form></td><td></td> <td>' + date + '</td> <td> <button onclick="deleteThreeRow (this)" class="btn btn-danger">删除</button> </td></tr>';
+                    var str = '<tr class="' + addRowID + '"><td><img  style="margin-left: 40px" src="/images/jiao.svg" alt="">&nbsp;<input type="text"></td><td> <input type="file" id="file' + addRowID + '" name="file"/><br/> <input type="button" onclick="upload(this.id)" id="' + addRowID + '" class="btn btn-info" value="上传图片"/> </td><td></td> <td>' + date + '</td> <td> <button onclick="deleteThreeRow (this)" class="btn btn-danger">删除</button> </td></tr>';
                     //当前行之后插入一行
                     currentRow.after(str);
                 }
@@ -346,10 +344,43 @@
                 var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
                 var cla = count + '_' + " " + 'cateGory';
                 var claBTN = count + '_btn';
-                $(".xyz").before('<tr class="' + cla + '"><td><img style="margin-left: 20px" src="/images/jiao.svg" alt="">&nbsp;<input type="text">&nbsp;<img class="' + cla + '" src="/images/arrow.svg" alt="">&nbsp; <button onclick="add(' + count + ')" class="btn btn-info add ' + cla + '">添加三级子类</button> </td><td>  <form enctype="multipart/form-data" method="post" action="uploadImage"> <input type="file" id="file" name="file" multiple/><br/> <input type="submit" class="btn btn-info" value="上传图片"/> </form></td><td> </td> <td>' + date + '</td> <td> <button onclick="deleteTwo(' + count + ')" class="btn btn-danger ' + cla + '">删除</button> </td> </tr><tr class="' + claBTN + '"></tr>');
+                $(".xyz").before('<tr class="' + cla + '"><td><img style="margin-left: 20px" src="/images/jiao.svg" alt="">&nbsp;<input type="text">&nbsp;<img class="' + cla + '" src="/images/arrow.svg" alt="">&nbsp; <button onclick="add(' + count + ')" class="btn btn-info add ' + cla + '">添加三级子类</button> </td> <td> </td><td> </td> <td>' + date + '</td> <td> <button onclick="deleteTwo(' + count + ')" class="btn btn-danger ' + cla + '">删除</button> </td> </tr><tr class="' + claBTN + '"></tr>');
             }
         });
     });
+
+    function uploadFile(file_id) {
+        var file = document.getElementById("file" + file_id)
+        var formData = new FormData();
+        for (var i = 0; i < file.files.length; i++) {
+            if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpg') {
+                layer.alert('上传图片格式有误')
+            } else {
+                formData.append('file', file.files[i]);
+                $.ajax({
+                    url: '/admin/uploadImage',
+                    type: 'POST',
+                    data: formData,
+                    // async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        console.log(file_id)
+                        console.log(data)   //返回图片
+                    },
+                    error: function () {
+                        console.log('err')
+                    }
+                });
+            }
+        }
+
+    }
+
+    function upload(id) {
+        uploadFile(id);
+    }
 
 
 </script>
