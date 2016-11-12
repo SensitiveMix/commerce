@@ -12,12 +12,8 @@ describe('upload temporyary testing', function () {
             .get('/admin/crawler')
             .end(function (err, res) {
                 if (err) throw err;
-                console.log(res.text)
                 should.exist(res.text);
                 done();
             });
     });
-    
-
-
 });

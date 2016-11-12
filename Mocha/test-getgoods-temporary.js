@@ -24,27 +24,8 @@ describe('getGoodsDetail temporyary testing', function () {
             }])
             .end(function (err, res) {
                 if (err) throw err;
-                // console.log(res.text)
                 should.exist(res.text);
                 done();
             });
     });
-
-    // it('getGoodsDetail should be return failed', function (done) {
-    //     request(app)
-    //         .post('/admin/getGoodsDetail')
-    //         .send({
-    //             firstCategory: '',
-    //             secondCategory: '456',
-    //             thirdCategory: '567'
-    //         })
-    //         .end(function (err, res) {
-    //             if (err) throw err;
-    //             console.log(res.text);
-    //             should.exist(res.text);
-    //             done();
-    //         });
-    // });
-
-
 });

@@ -17,7 +17,6 @@ describe('upload temporyary testing', function () {
             })
             .end(function (err, res) {
                 if (err) throw err;
-                console.log(res.text)
                 should.exist(res.text);
                 done();
             });
@@ -33,7 +32,6 @@ describe('upload temporyary testing', function () {
             })
             .end(function (err, res) {
                 if (err) throw err;
-                console.log(res.text)
                 should.exist(res.text);
                 done();
             });
