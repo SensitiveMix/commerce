@@ -162,7 +162,8 @@
         var FirstCategory = $('table tr[class*=0_]').find('input').val();
         for (var i = 1; i <= $('table tr[class*=cateGory]').length; i++) {
             var n = i + '_';
-            CategoryALL.push(getCategory(n))
+            var p = i + '_' + i;
+            CategoryALL.push(getCategory(n, p))
         }
 
         var timeStamps = (new Date().getTime() / 1000).toFixed();
@@ -201,7 +202,8 @@
         CategoryALL = [];
     }
 
-    function getCategory(param) {
+    function getCategory(param, p) {
+        console.log(p)
         var twoArray = [];
         var threeArray = [];
         $('table tr[class*=' + param + ']').each(function () {
@@ -210,10 +212,14 @@
         twoArray.forEach(function (value, index) {
             if (index > 0 && index < twoArray.length - 1) {
                 var timeStamp = (new Date().getTime() / 1000).toFixed();
+                console.log(param + index)
+                console.log(twoArray.length - 1 - index)
+                var newIndex = twoArray.length - 1 - index;
                 var third = {
                     thirdTimeStamp: timeStamp,
-                    thirdUrl: value + '_' + timeStamp,
-                    thirdTitle: value
+                    thirdUrl: '/product/' + timeStamp + Math.floor((Math.random() * 100) + 1) + index,
+                    thirdTitle: value,
+                    thirdImages: $('#' + param + newIndex).attr("name")
                 }
                 threeArray.push(third);
             }
@@ -316,7 +322,7 @@
                     var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
                     //要添加的行的id
                     var addRowID = currentRowID + '_' + deleteId;
-                    var str = '<tr class="' + addRowID + '"><td><img  style="margin-left: 40px" src="/images/jiao.svg" alt="">&nbsp;<input type="text"></td><td> <input type="file" id="file' + addRowID + '" name="file"/><br/> <input type="button" onclick="upload(this.id)" id="' + addRowID + '" class="btn btn-info" value="上传图片"/> </td><td></td> <td>' + date + '</td> <td> <button onclick="deleteThreeRow (this)" class="btn btn-danger">删除</button> </td></tr>';
+                    var str = '<tr class="' + addRowID + '"><td><img  style="margin-left: 40px" src="/images/jiao.svg" alt="">&nbsp;<input type="text"></td><td> <input type="file" id="file' + addRowID + '" name="file"/><br/> <input type="button" onclick="upload(this.id)" id="' + addRowID + '" name="" class="btn btn-info" value="上传图片"/> </td><td></td> <td>' + date + '</td> <td> <button onclick="deleteThreeRow (this)" class="btn btn-danger">删除</button> </td></tr>';
                     //当前行之后插入一行
                     currentRow.after(str);
                 }
@@ -366,7 +372,8 @@
                     contentType: false,
                     processData: false,
                     success: function (data) {
-                        console.log(file_id)
+                        $('#' + file_id).val('上传成功');
+                        $('#' + file_id).attr('name', data);
                         console.log(data)   //返回图片
                     },
                     error: function () {

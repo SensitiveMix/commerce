@@ -330,8 +330,9 @@
     }
 
     .syi-submit {
-        padding: 30px 0;
         text-align: center;
+        margin: 10px 0;
+        border-top: 1px dashed #ddd;
     }
 
     .marginleft5 {
@@ -351,6 +352,95 @@
         display: none;
         font-size: 14px;
         padding: 10px 20px;
+    }
+
+    .fl-file-upload {
+        float: left;
+        margin-left: 8px;
+        padding: 0;
+    }
+
+    .fl-file-upload li {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        margin-left: 8px;
+        position: relative;
+        overflow: hidden;
+        border: 1px dashed #d4d4d4;
+        background: #fff;
+    }
+
+    .fl-file-upload li img {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    .fl-file-upload li .delete {
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: url(/assets/img/icon/close.png) no-repeat 50% 50%;
+        background-size: 100% 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .fl-file-upload .exchange {
+        display: inline-block;
+        width: 15px;
+        height: 12px;
+        background: url(/assets/img/icon/exchange.png) no-repeat 50% 50%;
+        background-size: 100% 100%;
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-left: 8px;
+        vertical-align: middle;
+    }
+
+    .upload-btn {
+        width: 80px;
+        height: 80px;
+        border: 1px solid #000;
+        position: relative;
+        text-align: center;
+        font-size: 64px;
+        line-height: 72px;
+    }
+
+    .upload-btn input {
+        display: block;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    .uploadShow {
+        background: rgba(0, 0, 0, .8);
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 9;
+        display: none;
+    }
+
+    .uploadShow p {
+        text-align: center;
+        color: #fff;
+        font-size: 24px;
+        margin-top: 120px;
     }
 </style>
 <script src="../plugins/pick-color/js/tinycolor-0.9.15.min.js"></script>
@@ -377,6 +467,123 @@
 </script>
 <script>
     $(function () {
+        var formData = [];
+        formData['product'] = [];
+        formData['product']['belong_category'] = [];
+        <% tempCategory.forEach(function (item) { %>
+        var belong_category_item = [];
+        belong_category_item['first'] = '<%= item.firstCategory %>';
+        belong_category_item['second'] = '<%= item.secondCategory %>';
+        belong_category_item['third'] = '<%= item.thirdCategory %>';
+        formData['product']['belong_category'].push(belong_category_item);
+
+        <% }) %>
+        $('#submitopt').click(function () {
+            if ($('#productname').val() == '') {
+                layer.alert('请输入产品标题')
+            }else if ($('#vip_price').val().length == 0) {
+                layer.alert('请输入VIP价格')
+            }else if ($('#regular_price').val().length == 0) {
+                layer.alert('请输入常规价格')
+            }else if ($('#market_price').val().length == 0) {
+                layer.alert('请输入市场价格')
+            } else if ($('#promotion_vip_price').val().length == 0) {
+                layer.alert('请输入促销VIP价格')
+            } else if ($('#promotion_regular_price').val().length == 0) {
+                layer.alert('请输入促销常规价格')
+            } else if ($('input[name="freight_company"]').val().length == 0) {
+                layer.alert('请输入快递公司')
+            } else if ($('input[name="freight_price"]').val().length == 0) {
+                layer.alert('请输入快递单价')
+            } else {
+                formData['product']['product_title'] = $('#productname').val();
+                formData['product']['product_spec'] = [];
+                formData['product']['product_spec']['compact'] = [];
+                formData['product']['product_spec']['hardOrSoft'] = [];
+                formData['product']['product_spec']['type'] = [];
+                formData['product']['product_spec']['features'] = [];
+                formData['product']['product_spec']['pattern'] = [];
+                formData['product']['product_spec']['color'] = [];
+                formData['product']['product_spec']['material'] = [];
+                formData['product']['product_price'] = [];
+                formData['product']['product_danWei'] = [];
+                formData['product']['product_danWei']['danWei_key'] = $('select[name="measureid"]').find("option:selected").attr('data-name');
+                formData['product']['product_danWei']['danWei_value'] = $('select[name="measureid"]').val();
+                formData['product']['product_supplier'] = $('select[name="supplier"]').val();
+                formData['product']['product_sell_status'] = $('.color-preview.current-color').eq(0).css('background-color');
+                formData['product']['product_stock_status'] = $('.color-preview.current-color').eq(1).css('background-color');
+                formData['product']['product_market'] = [];
+                formData['product']['product_market']['market_method'] = $('input[name="market_method"]:checked').val();
+                if ($('input[name="market_method"]:checked').val() == 2) {
+                    formData['product']['product_market']['market_amount'] = $('input[name="sell-function-bao"]').val();
+                } else {
+                    formData['product']['product_market']['market_amount'] = '';
+                }
+                formData['product']['product_origin_price'] = [];
+                formData['product']['product_origin_price']['vip_price'] = $('#vip_price').val();
+                formData['product']['product_origin_price']['regular_price'] = $('#regular_price').val();
+                formData['product']['product_origin_price']['market_price'] = $('#market_price').val();
+                formData['product']['product_origin_price']['sale_discount_vip_price'] = $('#promotion_vip_price').val();
+                formData['product']['product_origin_price']['sale_discount_regular_price'] = $('#promotion_regular_price').val();
+                formData['product']['product_video_link'] = $('#videourl').val();
+                formData['product']['product_images'] = [];
+
+                $('#file-upload li').each(function (index, item) {
+                    var data_product_image = [];
+                    data_product_image['title'] = '';
+                    data_product_image['url'] = $(item).find('img').attr('src');
+                    formData['product']['product_images'].push(data_product_image);
+                })
+                formData['product']['product_freight'] = [];
+                formData['product']['product_freight']['product_freight_company'] = $('input[name="freight_company"]').val();
+                formData['product']['product_freight']['product_freight_price'] = $('input[name="freight_price"]').val();
+                $('#product-attribute-table tbody tr').each(function (index, item) {
+                    var form_data_compile = [];
+                    form_data_compile['compile_spec'] = $(item).find('td').eq(0).text();
+                    form_data_compile['compile_price'] = $(item).find('td').eq(1).text();
+                    formData['product']['product_price'].push(form_data_compile);
+
+                })
+                $('input[name="compatibility"]:checked').each(function () {
+                    formData['product']['product_spec']['compact'].push($(this).val());//向数组中添加元素
+                });
+                $('input[name="type"]:checked').each(function () {
+                    formData['product']['product_spec']['type'].push($(this).val());//向数组中添加元素
+                });
+                $('input[name="hardOrSoft"]:checked').each(function () {
+                    formData['product']['product_spec']['hardOrSoft'].push($(this).val());//向数组中添加元素
+                });
+                $('input[name="features"]:checked').each(function () {
+                    formData['product']['product_spec']['features'].push($(this).val());//向数组中添加元素
+                });
+                $('input[name="pattern"]:checked').each(function () {
+                    formData['product']['product_spec']['pattern'].push($(this).val());//向数组中添加元素
+                });
+                $('input[name="Color"]:checked').each(function () {
+                    formData['product']['product_spec']['color'].push($(this).val());//向数组中添加元素
+                });
+                $('input[name="material"]:checked').each(function () {
+                    formData['product']['product_spec']['material'].push($(this).val());//向数组中添加元素
+                });
+                $.ajax({
+                    url: 'saveProductDetail',
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        console.log(data)   //返回图片
+                    },
+                    error: function () {
+                        console.log('err');
+                    }
+                });
+            }
+
+            console.log(formData);
+
+        })
         $('#cuxiao_price').change(function () {
             if ($('input[name="cuxiao_price"]:checked').length == 1) {
                 $('#vip_price').attr('disabled', 'true');
@@ -795,27 +1002,27 @@
                 <a id="a_measureid"></a>
                 <select class="attr-select j-select-unit form-control" name="measureid">
                     <option disabled="disabled" value="">-- 请选择销售单位 --</option>
-                    <option data-name="打" value="00000000000000000000000000000001">打(Dozen)</option>
-                    <option data-name="英尺" value="00000000000000000000000000000002">英尺(Feet)</option>
-                    <option data-name="件" value="00000000000000000000000000000003" selected="">件(Piece)</option>
-                    <option data-name="套" value="00000000000000000000000000000004">套(Set)</option>
-                    <option data-name="克" value="00000000000000000000000000000005">克(Gram)</option>
-                    <option data-name="英寸" value="00000000000000000000000000000008">英寸(Inch)</option>
-                    <option data-name="千克" value="00000000000000000000000000000009">千克(Kilogram)</option>
-                    <option data-name="千米" value="00000000000000000000000000000010">千米(Kilometre)</option>
-                    <option data-name="升" value="00000000000000000000000000000011">升(Liter)</option>
-                    <option data-name="吨" value="00000000000000000000000000000012">吨(Metric Tonne)</option>
-                    <option data-name="米" value="00000000000000000000000000000013">米(Meter)</option>
-                    <option data-name="毫升" value="00000000000000000000000000000015">毫升(Milliliter)</option>
-                    <option data-name="盎司" value="00000000000000000000000000000016">盎司(Ounce)</option>
-                    <option data-name="双" value="00000000000000000000000000000017">双(Pair)</option>
-                    <option data-name="磅" value="00000000000000000000000000000018">磅(Pound)</option>
-                    <option data-name="平方码" value="00000000000000000000000000000022">平方码(Square Yard)</option>
-                    <option data-name="平方米" value="00000000000000000000000000000023">平方米(Square Meter)</option>
-                    <option data-name="平方英尺" value="00000000000000000000000000000024">平方英尺(Square Feet)</option>
-                    <option data-name="码" value="00000000000000000000000000000028">码(Yard)</option>
-                    <option data-name="厘米" value="00000000000000000000000000000029">厘米(Centimeter)</option>
-                    <option data-name="箱" value="00000000000000000000000000000033">箱(Carton)</option>
+                    <option data-name="打" value="1">打(Dozen)</option>
+                    <option data-name="英尺" value="2">英尺(Feet)</option>
+                    <option data-name="件" value="3" selected="">件(Piece)</option>
+                    <option data-name="套" value="4">套(Set)</option>
+                    <option data-name="克" value="5">克(Gram)</option>
+                    <option data-name="英寸" value="6">英寸(Inch)</option>
+                    <option data-name="千克" value="7">千克(Kilogram)</option>
+                    <option data-name="千米" value="8">千米(Kilometre)</option>
+                    <option data-name="升" value="9">升(Liter)</option>
+                    <option data-name="吨" value="10">吨(Metric Tonne)</option>
+                    <option data-name="米" value="11">米(Meter)</option>
+                    <option data-name="毫升" value="12">毫升(Milliliter)</option>
+                    <option data-name="盎司" value="13">盎司(Ounce)</option>
+                    <option data-name="双" value="14">双(Pair)</option>
+                    <option data-name="磅" value="15">磅(Pound)</option>
+                    <option data-name="平方码" value="16">平方码(Square Yard)</option>
+                    <option data-name="平方米" value="17">平方米(Square Meter)</option>
+                    <option data-name="平方英尺" value="18">平方英尺(Square Feet)</option>
+                    <option data-name="码" value="19">码(Yard)</option>
+                    <option data-name="厘米" value="20">厘米(Centimeter)</option>
+                    <option data-name="箱" value="21">箱(Carton)</option>
                 </select> 示例：12美元/<span class="j-unit-no" name="sortbyunit">件</span>
                 <span class="helpicon" title="销售计量单位帮助" data-helpid="saleUnit"></span>
                 <input type="hidden" id="measurename" value="件">
@@ -828,7 +1035,7 @@
             <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
                 <div class="ml-title"><span class="required"></span>供应商：</div>
                 <a id="a_measureid"></a>
-                <select class="attr-select j-select-unit form-control" name="measureid">
+                <select class="attr-select j-select-unit form-control" name="supplier">
                     <% suppliers.forEach(function(supplier){ %>
                     <option value="<%= supplier.name %>"><%= supplier.name %></option>
                     <% }) %>
@@ -903,14 +1110,14 @@
             <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
                 <div class="ml-title"><span class="required">*</span>销售方式：</div>
                 <div class="marginbottom10 clearfix"><label>
-                        <input name="sortby" id="sortbyradio1" data-name="件" type="radio" checked="" value="1">
+                        <input name="market_method" id="sortbyradio1" data-name="件" type="radio" checked="" value="1">
                         <span class="marginleft5 marginright10"><label for="gg">按件卖</label>（单位：<span class="j-unit-no"
                                                                                                      name="sortbyunit">件</span>）</span>
                     </label>
                 </div>
                 <div class="marginbottom10 clearfix">
                     <label>
-                        <input name="sortby" id="sortbyradio2" data-name="包" type="radio" value="2">
+                        <input name="market_method" id="sortbyradio2" data-name="包" type="radio" value="2">
                         <span class="marginleft5">按包卖</span>
                         <input type="text" class="form-control" placeholder="件/包" name="sell-function-bao">
                     </label>
@@ -931,81 +1138,6 @@
             <!-- 产品价格 开始 -->
             <div id="tips-sale" class="mainlayout clearfix" style="position:relative;">
                 <div class="ml-title"><span class="required">*</span>产品价格区间：</div>
-                <div>
-                    <div class="helptips">
-            <span class="j-price-tipstxt">
-            您可以最多添加4个价格区间
-                   <span class="colorF60">
-                    <span class="tipstion">
-                        <span class="commission"></span>
-                        <div class="tiparrow-posbox" style="display: none;top:-145px;">
-                            <div class="tiparrow-box"></div>
-                        </div>
-                    </span>
-                    阶梯佣金计算公式
-                </span>
-            </span>
-                        <span class="helpicon" title="阶梯佣金计算公式帮助" data-helpid="expressions"></span>
-                    </div>
-                </div>
-                <div class="marginbottom10 clearfix j-price-typeList" style="display: none;">
-                    <label><input value="2" type="radio" checked="checked" name="setdiscounttype"><span
-                                class="marginleft5 ver-align-middle marginright20">统一设置价格</span></label>
-
-                    <label><input value="1" type="radio" name="setdiscounttype"><span
-                                class="marginleft5 ver-align-middle">分别设置价格</span></label>
-                </div>
-
-                <!-- 统一设置价格区域-->
-                <div class="j-list-item j-sectionA-box" style="">
-                    <div class="setwhoprice setshow marginbottom10">
-                        <div class="ladderprice">
-                            <div class="j-section-list">
-                                <p class="j-item"><input type="text" value="1"
-                                                         class="attr-text-input addwid50 margindoublev5 j-section-stock">
-                                    <span class="marginright20"><span class="j-unit">件</span>以上</span> 预计收入：US$ <input
-                                            type="text" value=""
-                                            class="attr-text-input addwid50 margindoublev5 j-section-price"> <span
-                                            class="marginright20">/<span class="j-unit">件</span></span> 买家价格： US$ <span
-                                            class="j-section-salePrice"></span> <a href="#" class="j-section-del"
-                                                                                   style="display: none;">删除</a></p>
-                            </div>
-                            <!--<p><a href="#" class="addmoreprop j-section-add"><span></span>增加区间</a></p>-->
-                        </div>
-                    </div>
-                    <div class="tip-error j-tip-error" style="display:none;"></div>
-                </div>
-                <!-- sku 绘制区域-->
-                <div class="j-sku-container">
-                    <div class="msg-error j-msg-error" style="display:none;"></div>
-                    <div class="rtab-warp syi-rtab j-sku-tab" style="display: none;">
-                        <b class="prev j-tab-prev" style="display:none;"><a href="#"></a></b>
-                        <div class="j-sku-tab-move" style="width: 700px; overflow: hidden; float: left;">
-                            <div style="width:2000px">
-                                <ul class="j-sku-tab-list"></ul>
-                            </div>
-                        </div>
-                        <b class="next j-tab-next" style="display:none;"><a href="#"></a></b>
-                    </div>
-                    <div class="j-sku-list"></div>
-                </div>
-                <!-- 分别设置价格区域-->
-                <div class="j-list-item j-sectionB-box" style="display:none;">
-                    <div class="setwhoprice setshow marginbottom10">
-                        <div class="ladderprice padbottom10">
-                            <a class="fltrig j-price-previewBtn" href="#">价格预览</a>
-                            <span class="required">*</span>设置产品的价格区间
-                        </div>
-                        <div class="ladderprice">
-                            <div class="j-section-list">
-                                <p class="j-item"> 购买 <input type="text" value="1"
-                                                             class="attr-text-input addwid50 margindoublev5 j-section-stock">
-                                    <span class="j-unit">件</span>及以上时，为表格中填写的预计收入。 </p></div>
-                            <p><a class="addmoreprop j-section-add" href="#"><span></span>添加批发区间</a></p>
-                        </div>
-                    </div>
-                    <div class="tip-error j-tip-error" style="display:none;"></div>
-                </div>
                 <div class="form-inline">
                     <div class="form-group">
                         <!--<label for="exampleInputEmail2">VIP Price</label>-->
@@ -1066,346 +1198,17 @@
                     请选择文件：<input type="file" id="file" name="file" multiple/><br/>
                     <input type="button" id="upload" value="相册上传"/>
                     <div class="box-body">
-
+                        <ul class="fl-file-upload" id="file-upload"></ul>
                     </div>
                 </div>
-                <span class="yellowBtn11">
-
-    			<!--<input type="button" name="fileupload" id="fileupload" style="visibility: hidden; display: none;"-->
-                    <!--width="72" height="23"><object type="application/x-shockwave-flash"-->
-                    <!--data=""-->
-                    <!--width="72" height="23" id="fileuploadUploader"-->
-                    <!--style="visibility: visible;"><param name="quality" value="high"><param-->
-                    <!--name="wmode" value="transparent"><param name="allowScriptAccess" value="always"><param-->
-                    <!--name="flashvars"-->
-                    <!--value="uploadifyID=fileupload&amp;pagepath=/syi/&amp;script=http://upload.dhgate.com/uploadfile&amp;folder=uploaddify&amp;width=72&amp;height=23&amp;wmode=transparent&amp;method=GET&amp;queueSizeLimit=8&amp;simUploadLimit=8&amp;hideButton=true&amp;fileDesc=choose *.jpg/&amp;fileExt=*.jpg;*.JPG;*.jpeg;*.JPEG;&amp;multi=true&amp;sizeLimit=2097152&amp;fileDataName=Filedata&amp;queueID=productPicQueue"></object></span><span-->
-                    <!--class="yellowBtn marginleft10"><input type="button" id="albumImgListButton" value="相册上传"></span>-->
-
 			<span class="helptips">
     			您还可以上传<b class="color444" id="photonum_b">8</b>
     			          <span class="color000">/<span>8</span></span> 张
     		</span>
                 <input type="hidden" id="inp_img_index" value="">
             </div>
-            <!--本地上传相关开始， 暂时先隐藏掉-->
-            <div id="fileQueue"></div>
-            <div id="div_imgcontainerErrTip" class="tip-error" style="display:none;"></div>
-
-            <input id="functionname" type="hidden" name="functionname" value="albu"><!--功能名   	不可以为空-->
-            <input id="imagebannername" type="hidden" name="imagebannername" value=""><!--水印名  现在是用户名-->
-            <input id="supplierid" type="hidden" name="supplierid" value="ff8080815750826c0157f953f6e36275">
-            <input id="waterMark" type="hidden" name="waterMark" value="">
-            <input id="imgtoken" type="hidden" name="imgtoken"
-                   value="-hwBEsUCl5XyIYsFzQ8sORfHHMMLG1cTrcmd9RwJdQjozQpZP_X079vpz7BdKT7Om15SvLgyphrdlcDEEKsw6lhfnPsOSZOSY_8yF9PgrTU">
-
-            <!--本地上传相关结束-->
-
-            <div class="pro-img-box margintop10 clearfix" id="div_imgcontaine_init">
-                <div class="pro-img-picbox addpiccolor2">
-                    <div class="pic">
-                        <img src="http://www.dhresource.com/dhs/mos/image/syi/new/no-photo-m.jpg" width="100"
-                             height="100">
-                    </div>
-                    <!--div class="pro-tit-nm">IMG_...5.JPG</div>
-                    <div class="pro-tit-del"><a href="#">删除</a></div-->
-                </div>
-                <div class="pro-img-picbox">
-                    <div class="pic">
-                        <img src="http://www.dhresource.com/dhs/mos/image/syi/new/no-photo-m2.jpg" width="80"
-                             height="80">
-                    </div>
-                    <!--div class="pro-img-upload"><span class="pro-img-upload-bar"><span style="width:40%;"></span></span></div-->
-                </div>
-            </div>
-
-            <div class="pro-img-box margintop10 clearfix" id="div_imgcontainer" style="display:none;" data-listidx="0">
-                <input type="hidden" id="inp_img_index" value="">
-                <input type="hidden" id="inp_imgbox_index" value="">
-                <input type="hidden" id="ori_tdalbumswindowid" value="">
-            </div>
-            <div id="j-waterMark-box" style="display:none">
-                <div class="pro-add-watermark margintop5">
-                    <p class="margintop10"><span class="pos-checkbox"><input id="j-waterMarkSelect" type="checkbox"
-                                                                             checked="true"></span>为“本地上传”的图片添加水印<a
-                                href="#" id="j-waterMarkBtn" class="marginleft10">设置水印位置并预览</a></p>
-                </div>
-                <div class="pro-bluewatermark-tip margintop5 clearfix">
-                <span>勾选：为本地上传的图片添加水印，默认位置为右下角；您还可以调整水印位置（点击【设置水印位置并预览】）。<br>
-                      不勾选：本地上传的图片不添加水印。
-                </span>
-                </div>
-            </div>
-            <div class="pos-content">
-                <!--P>为“本地上传”的图片添加水印<a href="#" class="marginleft10">真实产品图片水印效果预览</a></P-->
-                <p class="margintop5">将“本地上传”的图片保存至
-
-                    <select class="attr-select addwid140" name="s_albums_winid" id="s_albums_winid"
-                            onchange="javascript:onChangeAlbums_syn();">
-                        <option value="e4b1a4f6-4c12-4443-b1a0-c55687ee181a" selected="">默认相册</option>
-                    </select>
-
-
-                </p>
-            </div>
-        </div>
-        <!-- 产品图片 结束 -->
-        <!-- 从相册上传 开始-->
-        <div id="div_album_imglist" name="div_album_imglist" class="tc_warp" style="width:970px;display:none;">
-            <iframe id="ifm_album_imglist" name="ifm_album_imglist" width="970" height="597" frameborder="0"
-                    scrolling="no"></iframe>
-        </div>
-
-        <!--div id="div_desc_photoupload" name="div_desc_photoupload" class="tc_warp" style="width:610px;display:none;">
-            <iframe id="ifm_desc_photoupload" name="ifm_desc_photoupload" width="610" height="560" frameborder="0" scrolling='no' ></iframe>
-        </div-->
-        <!--  从相册上传 结束-->
-
-
-        <!--图片上传弹出窗口            开始-->
-
-        <div id="div_desc_photoupload" class="tc_warp" style="width:610px;display:none;">
-            <table class="noshade-pop-table" style="width:610px;">
-                <tbody>
-                <tr>
-                    <td class="t-lt"></td>
-                    <td class="t-mid"></td>
-                    <td class="t-ri"></td>
-                </tr>
-                <tr>
-                    <td class="m-lt"></td>
-                    <td class="m-mid">
-                        <div class="mid-warp">
-                            <div class="noshade-pop-content">
-                                <div class="noshade-pop-title">
-                                    <span>插入图片</span>
-                                </div>
-                                <div class="syi-pop-title3">
-                                    允许上传的图片格式为JPG，图片大小2M以内 。单次最多可上传8张，可分多次上传。
-                                </div>
-                                <div class="padrigbox02">
-                                    <div class="marginbottom10 clearfix">
-								<span class="yellowBtn" id="puw_spanobject_id">
-									<!--input type="button" value="本地上传"-->
-								    <input type="button" name="puw_fileupload" id="puw_fileupload"
-                                           style="visibility:hidden;">
-								</span>
-                                        <span class="uperrorbox">
-									<div id="div_imgdescErrTip" class="tip-error" style="display:none;"></div>
-								</span>
-
-                                    </div>
-                                    <div class="rigmovebox nobod">
-                                        <div class="rigmove-b noscrol">
-                                            <ul id="div_imgcontainer_upload">
-                                                <li id="pu_li_1">
-                                                    <div class="imgbod"><img id="pu_imgshowurl_1"
-                                                                             src="http://www.dhresource.com/dhs/mos/image/syi/new/no-photo-m3.jpg"
-                                                                             width="98" height="98"></div>
-                                                    <div><span id="descPicQueue_1"></span></div>
-                                                    <div><span id="pu_imgshowname_1" class="marginleft5">&nbsp;</span>
-                                                    </div>
-                                                    <div id="pu_img_del_1" style="display:none;"><a href="javascript:;"
-                                                                                                    onclick="javascript:deleteImgUI_puw('1');return false;">删除</a>
-                                                    </div>
-                                                    <input id="pu_imgurl_1" name="pu_imgurl" type="hidden" value="">
-                                                    <input id="pu_imgmd5_1" name="pu_imgmd5" type="hidden" value="">
-                                                    <input id="pu_localfilename_1" name="pu_localfilename" type="hidden"
-                                                           value="">
-                                                    <input id="pu_imgsize_1" name="pu_imgsize" type="hidden" value="">
-                                                    <input id="pu_state_1" name="pu_state" type="hidden" value="">
-                                                </li>
-
-                                                <li id="pu_li_2">
-                                                    <div class="imgbod"><img id="pu_imgshowurl_2"
-                                                                             src="http://www.dhresource.com/dhs/mos/image/syi/new/no-photo-m3.jpg"
-                                                                             width="98" height="98"></div>
-                                                    <div><span id="descPicQueue_2"></span></div>
-                                                    <div><span id="pu_imgshowname_2" class="marginleft5">&nbsp;</span>
-                                                    </div>
-                                                    <div id="pu_img_del_2" style="display:none;"><a href="javascript:;"
-                                                                                                    onclick="javascript:deleteImgUI_puw('2');return false;">删除</a>
-                                                    </div>
-                                                    <input id="pu_imgurl_2" name="pu_imgurl" type="hidden" value="">
-                                                    <input id="pu_imgmd5_2" name="pu_imgmd5" type="hidden" value="">
-                                                    <input id="pu_localfilename_2" name="pu_localfilename" type="hidden"
-                                                           value="">
-                                                    <input id="pu_imgsize_2" name="pu_imgsize" type="hidden" value="">
-                                                    <input id="pu_state_2" name="pu_state" type="hidden" value="">
-                                                </li>
-
-                                                <li id="pu_li_3">
-                                                    <div class="imgbod"><img id="pu_imgshowurl_3"
-                                                                             src="http://www.dhresource.com/dhs/mos/image/syi/new/no-photo-m3.jpg"
-                                                                             width="98" height="98"></div>
-                                                    <div><span id="descPicQueue_3"></span></div>
-                                                    <div><span id="pu_imgshowname_3" class="marginleft5">&nbsp;</span>
-                                                    </div>
-                                                    <div id="pu_img_del_3" style="display:none;"><a href="javascript:;"
-                                                                                                    onclick="javascript:deleteImgUI_puw('3');return false;">删除</a>
-                                                    </div>
-                                                    <input id="pu_imgurl_3" name="pu_imgurl" type="hidden" value="">
-                                                    <input id="pu_imgmd5_3" name="pu_imgmd5" type="hidden" value="">
-                                                    <input id="pu_localfilename_3" name="pu_localfilename" type="hidden"
-                                                           value="">
-                                                    <input id="pu_imgsize_3" name="pu_imgsize" type="hidden" value="">
-                                                    <input id="pu_state_3" name="pu_state" type="hidden" value="">
-                                                </li>
-
-                                                <li id="pu_li_4">
-                                                    <div class="imgbod"><img id="pu_imgshowurl_4"
-                                                                             src="http://www.dhresource.com/dhs/mos/image/syi/new/no-photo-m3.jpg"
-                                                                             width="98" height="98"></div>
-                                                    <div><span id="descPicQueue_4"></span></div>
-                                                    <div><span id="pu_imgshowname_4" class="marginleft5">&nbsp;</span>
-                                                    </div>
-                                                    <div id="pu_img_del_4" style="display:none;"><a href="javascript:;"
-                                                                                                    onclick="javascript:deleteImgUI_puw('4');return false;">删除</a>
-                                                    </div>
-                                                    <input id="pu_imgurl_4" name="pu_imgurl" type="hidden" value="">
-                                                    <input id="pu_imgmd5_4" name="pu_imgmd5" type="hidden" value="">
-                                                    <input id="pu_localfilename_4" name="pu_localfilename" type="hidden"
-                                                           value="">
-                                                    <input id="pu_imgsize_4" name="pu_imgsize" type="hidden" value="">
-                                                    <input id="pu_state_4" name="pu_state" type="hidden" value="">
-                                                </li>
-
-                                                <li id="pu_li_5">
-                                                    <div class="imgbod"><img id="pu_imgshowurl_5"
-                                                                             src="http://www.dhresource.com/dhs/mos/image/syi/new/no-photo-m3.jpg"
-                                                                             width="98" height="98"></div>
-                                                    <div><span id="descPicQueue_5"></span></div>
-                                                    <div><span id="pu_imgshowname_5" class="marginleft5">&nbsp;</span>
-                                                    </div>
-                                                    <div id="pu_img_del_5" style="display:none;"><a href="javascript:;"
-                                                                                                    onclick="javascript:deleteImgUI_puw('5');return false;">删除</a>
-                                                    </div>
-                                                    <input id="pu_imgurl_5" name="pu_imgurl" type="hidden" value="">
-                                                    <input id="pu_imgmd5_5" name="pu_imgmd5" type="hidden" value="">
-                                                    <input id="pu_localfilename_5" name="pu_localfilename" type="hidden"
-                                                           value="">
-                                                    <input id="pu_imgsize_5" name="pu_imgsize" type="hidden" value="">
-                                                    <input id="pu_state_5" name="pu_state" type="hidden" value="">
-                                                </li>
-
-                                                <li id="pu_li_6">
-                                                    <div class="imgbod"><img id="pu_imgshowurl_6"
-                                                                             src="http://www.dhresource.com/dhs/mos/image/syi/new/no-photo-m3.jpg"
-                                                                             width="98" height="98"></div>
-                                                    <div><span id="descPicQueue_6"></span></div>
-                                                    <div><span id="pu_imgshowname_6" class="marginleft5">&nbsp;</span>
-                                                    </div>
-                                                    <div id="pu_img_del_6" style="display:none;"><a href="javascript:;"
-                                                                                                    onclick="javascript:deleteImgUI_puw('6');return false;">删除</a>
-                                                    </div>
-                                                    <input id="pu_imgurl_6" name="pu_imgurl" type="hidden" value="">
-                                                    <input id="pu_imgmd5_6" name="pu_imgmd5" type="hidden" value="">
-                                                    <input id="pu_localfilename_6" name="pu_localfilename" type="hidden"
-                                                           value="">
-                                                    <input id="pu_imgsize_6" name="pu_imgsize" type="hidden" value="">
-                                                    <input id="pu_state_6" name="pu_state" type="hidden" value="">
-                                                </li>
-                                                <li id="pu_li_7">
-                                                    <div class="imgbod"><img id="pu_imgshowurl_7"
-                                                                             src="http://www.dhresource.com/dhs/mos/image/syi/new/no-photo-m3.jpg"
-                                                                             width="98" height="98"></div>
-                                                    <div><span id="descPicQueue_7"></span></div>
-                                                    <div><span id="pu_imgshowname_7" class="marginleft5">&nbsp;</span>
-                                                    </div>
-                                                    <div id="pu_img_del_7" style="display:none;"><a href="javascript:;"
-                                                                                                    onclick="javascript:deleteImgUI_puw('7');return false;">删除</a>
-                                                    </div>
-                                                    <input id="pu_imgurl_7" name="pu_imgurl" type="hidden" value="">
-                                                    <input id="pu_imgmd5_7" name="pu_imgmd5" type="hidden" value="">
-                                                    <input id="pu_localfilename_7" name="pu_localfilename" type="hidden"
-                                                           value="">
-                                                    <input id="pu_imgsize_7" name="pu_imgsize" type="hidden" value="">
-                                                    <input id="pu_state_7" name="pu_state" type="hidden" value="">
-                                                </li>
-
-                                                <li id="pu_li_8">
-                                                    <div class="imgbod"><img id="pu_imgshowurl_8"
-                                                                             src="http://www.dhresource.com/dhs/mos/image/syi/new/no-photo-m3.jpg"
-                                                                             width="98" height="98"></div>
-                                                    <div><span id="descPicQueue_8"></span></div>
-                                                    <div><span id="pu_imgshowname_8" class="marginleft5">&nbsp;</span>
-                                                    </div>
-                                                    <div id="pu_img_del_8" style="display:none;"><a href="javascript:;"
-                                                                                                    onclick="javascript:deleteImgUI_puw('8');return false;">删除</a>
-                                                    </div>
-                                                    <input id="pu_imgurl_8" name="pu_imgurl" type="hidden" value="">
-                                                    <input id="pu_imgmd5_8" name="pu_imgmd5" type="hidden" value="">
-                                                    <input id="pu_localfilename_8" name="pu_localfilename" type="hidden"
-                                                           value="">
-                                                    <input id="pu_imgsize_8" name="pu_imgsize" type="hidden" value="">
-                                                    <input id="pu_state_8" name="pu_state" type="hidden" value="">
-                                                </li>
-
-
-                                            </ul>
-                                            <div class="numimg ps01">1</div>
-                                            <div class="numimg ps02">2</div>
-                                            <div class="numimg ps03">3</div>
-                                            <div class="numimg ps04">4</div>
-                                            <div class="numimg ps05">5</div>
-                                            <div class="numimg ps06">6</div>
-                                            <div class="numimg ps07">7</div>
-                                            <div class="numimg ps08">8</div>
-                                        </div>
-                                    </div>
-                                    <div class="pro-add-watermark margintop10  clearfix">
-                                        <div class="pos-content">
-                                            <p class="margintop5">将“本地上传”的图片保存至
-
-
-                                                <select class="attr-select addwid140" name="puw_albums_winid"
-                                                        id="puw_albums_winid">
-                                                    <option value="e4b1a4f6-4c12-4443-b1a0-c55687ee181a" selected="">
-                                                        默认相册
-                                                    </option>
-                                                </select>
-
-
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="popupbox-button clearfix">
-                                        <span class="yellowBtn valmiddle"><input type="button" value="确 定"
-                                                                                 onclick="window.savaImageInfoToAlbum_puw();return false;"></span>
-                                        <span class="tourBtn"><input type="button" value="取 消"
-                                                                     onclick="window.closeSimpleModel();return false;"></span>
-                                    </div>
-                                </div>
-
-                                <div class="noshade-pop-bot"></div>
-                                <a class="noshade-pop-close" onclick="window.parent.closeSimpleModel();return false;"
-                                   href="javascript:;"></a>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="m-ri"></td>
-                </tr>
-                <tr>
-                    <td class="b-lt"></td>
-                    <td class="b-mid"></td>
-                    <td class="b-ri"></td>
-                </tr>
-                </tbody>
-            </table>
-
-
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-
 
         </div>
-
-        <!--input type="hidden" name="tdalbumswindowid" id="tdalbumswindowid" value="" />
-        <input type="hidden" name="pagenum" id="pagenum" value="" />
-        <input type="hidden" name="searchtype" id="searchtype" value="" />
-        <input type="hidden" name="imgCount" id="imgCount" value="" /-->
 
         <input id="current_oper_index" name="current_oper_index" type="hidden" value="1">
 
@@ -1413,80 +1216,6 @@
 
 
         <!--图片上传弹出窗口完-->
-
-
-        <!-- 产品图片 结束 -->
-        <!--google shopping页面-->
-        <!-- 站内外推广图片 开始 -->
-        <div class="mainlayout clearfix j-googleshopping-container" style="display:none;">
-            <a id="a_googleshopping"></a>
-            <div class="ml-title j-title">站内外推广图片：</div>
-            <div class="j-enabled">
-                <p class="helptips"><span class="color444">请上传一张高质量的图片用于站内外推广(例如google shopping)，图片上无人为修改，无促销、产品属性、名称等信息，无PS修改涂痕 <a
-                                href="http://seller.dhgate.com/help/seller-help/c1510/a90202.html"
-                                target="_blank">了解更多</a> </span><span class="helpicon" title="站内外推广图片帮助"
-                                                                      style="display:none;"
-                                                                      data-helpid="googleshopping"></span></p>
-                <div class="margintop10">
-        <span class="yellowBtn j-btn-showpic">
-        <input type="button" value="产品图片中选">
-        </span>
-                    <span class="yellowBtn11">
-        <input type="button" name="fileupload_googleshopping" id="fileupload_googleshopping" style="display: none;"><object
-                                type=""
-                                width="72" height="23" id="fileupload_googleshoppingUploader"
-                                style="visibility: visible;"><param
-                                    name="quality" value="high"><param name="wmode" value="transparent"><param
-                                    name="allowScriptAccess" value="always"><param name="flashvars"
-                                                                                   value="uploadifyID=fileupload_googleshopping&amp;pagepath=/syi/&amp;script=http://upload.dhgate.com/uploadfile&amp;folder=uploaddify&amp;width=72&amp;height=23&amp;wmode=transparent&amp;method=GET&amp;queueSizeLimit=8&amp;simUploadLimit=8&amp;hideButton=true&amp;fileDesc=choose *.jpg/&amp;fileExt=*.jpg;*.JPG;*.jpeg;*.JPEG;&amp;multi=true&amp;sizeLimit=2097152&amp;fileDataName=Filedata&amp;queueID=googleshoppingPicQueue"></object>
-        </span>
-                    <span class="yellowBtn marginleft10 j-btn-showalbum">
-        <input type="button" value="相册上传">
-        </span>
-                </div>
-                <div class="pro-img-box margintop10 clearfix" style="height: 120px">
-                    <div class="syi-upload-list addpiccolor" style="cursor: pointer;" data-itemidx="0">
-           <span class="img promo j-current-pic">
-			    										            			<!--<img src="http://image.dhgate.com/$thumbUrl">-->
-										</span>
-                        <div id="googleshoppingPicQueue"></div>
-                    </div>
-                </div>
-                <div class="tip-error j-error-tip" style="display:none;"></div>
-            </div>
-            <div class="j-disabled" style="display:none;">
-                <p class="helptips"><span class="color444">已上传 <a
-                                href="http://seller.dhgate.com/help/seller-help/c1510/a90202.html"
-                                target="_blank">了解更多</a> </span><span class="helpicon" style="display:none;"
-                                                                      title="站内外推广图片帮助"
-                                                                      data-helpid="googleshopping"></span></p>
-            </div>
-            <input type="hidden" name="googleshoppingimagelist" autocomplete="off"
-                   class="j-input-googleshoppingimagelist" value="">
-        </div>
-        <!-- 站内外推广图片 开始 -->
-
-        <!-- googleshopping 弹层 开始 -->
-        <div class="j-dialog-googleshopping-pic" style="width:390px;display:none;">
-            <div class="bs-pro-img-box">
-                <div class="bimg">
-                    <div class="bimg-inner"><span class="j-current"><img width="308"></span></div>
-                </div>
-                <div class="simg-warp">
-                    <div class="simg-list">
-                        <ul style="margin-left: 0px;" class="j-list">
-
-                        </ul>
-                    </div>
-                    <div class="simg-lg-arrow j-left"></div>
-                    <div id="simgRight" class="simg-rg-arrow j-right"></div>
-                </div>
-            </div>
-            <div class="deitbtnbox clearfix j-dialog-btnbox"><span class="j-btn-confirm yellowBtn"><input type="button"
-                                                                                                          value="确定"></span><span
-                        class="j-btn-cancel tourBtn"><input type="button" value="取消"></span></div>
-        </div>
-        <!-- googleshopping 弹层 结束 -->
 
         <!-- 产品视频 开始 -->
         <div class="mainlayout clearfix j-list-item" id="vadiourlTip">
@@ -1511,106 +1240,23 @@
         <div class="j-list-item">
             <!------- 大标题开始 ------->
             <div class="mainlayout clearfix j-shippingarea-container">
-                <div class="ml-title"><span class="required">*</span>选择运费模板：</div>
-                <div class="addwid800 tipstion" style="height:25px">
-                    <span class="helptips">驱动器及存储设备(Drives &amp; Storages)类目下的产品，订单最多的国家为美国，美国买家主要采用ePacket物流。</span>
-                    <a href="javascript:;" class="j-shippingarea-trigger">详细</a>
-                    <div class="tiparrow-box addrbox j-shippingarea-tip" style="display: none;">
-                        <div class="tiparrow-b" style="left:214px;"></div>
-                        <p>驱动器及存储设备 类目下，主要的订单国家和物流使用情况如下：</p>
-                        <table class="addrtips">
-                            <tbody>
-                            <tr class="addrtit">
-                                <td>二级类目</td>
-                                <td>发货订单量占比</td>
-                                <td>收货国家</td>
-                                <td>主要物流</td>
-                                <td>物流占比</td>
-                            </tr>
-                            <tr>
-                                <td rowspan="8">驱动器及存储设备<br>(Drives &amp; Storages)</td>
-                                <td>29.1 %</td>
-                                <td>美国</td>
-                                <td>ePacket</td>
-                                <td>63.4 %</td>
-                            </tr>
-                            <tr>
-                                <td>6.9 %</td>
-                                <td>英国</td>
-                                <td>ePacket</td>
-                                <td>51.9 %</td>
-                            </tr>
-                            <tr>
-                                <td>6.8 %</td>
-                                <td>澳大利亚</td>
-                                <td>ePacket</td>
-                                <td>59.4 %</td>
-                            </tr>
-                            <tr>
-                                <td>6.4 %</td>
-                                <td>法国</td>
-                                <td>ePacket</td>
-                                <td>48.0 %</td>
-                            </tr>
-                            <tr>
-                                <td>6.1 %</td>
-                                <td>加拿大</td>
-                                <td>ePacket</td>
-                                <td>53.1 %</td>
-                            </tr>
-                            <tr>
-                                <td>4.9 %</td>
-                                <td>西班牙</td>
-                                <td>DHL</td>
-                                <td>10.4 %</td>
-                            </tr>
-                            <tr>
-                                <td>4.0 %</td>
-                                <td>巴西</td>
-                                <td>ePacket</td>
-                                <td>14.3 %</td>
-                            </tr>
-                            <tr>
-                                <td>35.7 %</td>
-                                <td>其它</td>
-                                <td>ePacket</td>
-                                <td>11.3 %</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="addwid800 clearfix">
-                    <span class="tourBtn fltrig"><input type="button" value="标准运费计算器"
-                                                        onclick="showShippingCalculatorWin('');"></span>
-                    <!-- 产品运费选择内容开始 -->
-                    <div class="syi-select-dropdown-list syi-lfselect">
-                        <div class="syi-simulation-select" id="selectTemplateDiv">
-                            <input type="text" readonly="readonly" class="syi-input15" value="" name="shippingmodelname"
-                                   id="shippingmodelname">
-                            <div class="syi-simulation-arrow"></div>
+                <div class="ml-title"><span class="required">*</span>运费计算模板：</div>
+                <!--<p class="helptips">-->
+                <!--驱动器及存储设备(Drives &amp; Storages)类目下的产品，订单最多的国家为美国，美国买家主要采用ePacket物流。-->
+                <!--</p>-->
+                <div class="margintop10">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <!--<label for="exampleInputEmail2">VIP Price</label>-->
+                            <input type="text" class="form-control" name="freight_company" id="freight_company"
+                                   placeholder="快递公司">
                         </div>
-                        <div class="syi-category-list select-two" style="display:none" id="templatesDiv">
-                            <ul id="templatesUL"></ul>
-                            <div class="catemore" id="noTemplateDiv" style="display: none;">您目前还没有创建任何运费模板。<br>
-                                <a href="/mydhgate/product/transport/template.do?act=preCreateOrdinary" target="_blank">创建模板</a>
-                            </div>
-                            <iframe></iframe>
+                        <div class="form-group">
+                            <!--<label for="exampleInputEmail2">Regular Price</label>-->
+                            <input type="text" class="form-control" name="freight_price" id="freight_price"
+                                   placeholder="快递费:元/kg">/kg
                         </div>
                     </div>
-                    <!-- 产品运费选择内容结束 -->
-                    <a href="http://seller.dhgate.com/frttemplate/edit/create.do?vt=s&amp;dhpath=10001,79,7902#frttmpl-create-open"
-                       target="_blank" class="marginleft10">添加运费模板</a> |<a
-                            href="http://seller.dhgate.com/frttemplate/pageload.do?act=pageload&amp;dhpath=10001,0205"
-                            target="_blank" class="marginleft10"
-                            onclick="$('#shippingmodelidInfoTip').show();">管理运费模板</a><a href="javascript:void(0);"
-                                                                                        onclick="showSaveAsDiv();return false;"
-                                                                                        style="display: none;"
-                                                                                        class="marginleft10"
-                                                                                        id="saveTemplateLink">保存此设置为模板...</a>
-                    <span class="syi-loading" id="savingTemplateSpan" style="display: none;">模板保存中...</span><span
-                            class="syi-correct marginleft10" id="savedTemplateSpan" style="display: none;">模板保存成功</span>
                 </div>
                 <div id="postAirMail20160218" class="similarity-tip-gantan" style="display:none;"><span
                             style="color:red;">epacket、邮政小包类物流限重2KG，单件已超重禁止使用。</span></div>
@@ -1619,13 +1265,6 @@
             <!------- 运费设置列表开始 ------->
         </div>
         <!--对频繁上传产品的卖家显示验证码-->
-        <!-- 敦煌网网络服务使用协议 开始 -->
-        <div class="chousexybox">
-            <input type="checkbox" id="dhgateagree" checked="checked" onclick="clickagreee();"><span
-                    class="marginleft5">同意接受<a href="http://policy.dhgate.com/policy_list.php?catalogno=110305"
-                                               target="_blank">《敦煌网产品发布规则》</a></span>
-        </div>
-        <!-- 敦煌网网络服务使用协议 结束 -->
 
         <!-- title其他信息 结束 -->
 
@@ -1633,7 +1272,7 @@
         <!-- 完成提交开始 -->
         <div id="syi_submit_id" class="syi-submit">
             <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系敦煌网客服部门。</strong><br>
-            <button type="button" id="btn_submitproduct" class="btn btn-primary btn-lg">
+            <button type="button" id="btn_submitproduct" class="btn btn-primary">
 			    <span id="loadingimg" class="submit-syi">
                     <img src="/assets/img/icon/loadings.gif" class="syi-img-show">
 				<span id="submitopt">提 交</span>
@@ -1644,11 +1283,6 @@
             </button>-->
         </div>
         <!-- 完成提交结束 -->
-        <div class="studybox">
-            <a target="_blank"
-               href="http://survey.dhgate.com/index.php?sid=72953&amp;lang=zh-Hans&amp;dhsurveybuyerid=ff8080815750826c0157f953f6e36275"><span
-                        class="studyicon">产品上传不方便？我要提意见</span></a>
-        </div>
 
         <!-- 翻译 开始 -->
         <div id="translateBox" class="syi-translate" style="right: 26px;">
@@ -1678,15 +1312,6 @@
             </div>
         </div>
 
-        <!-- Top 开始 -->
-        <div id="returnTopBox" class="syi-returntop" style="right: 26px;">
-
-            <div class="returntopbox" style="display: none;">
-                <a href="#syiTop"></a>
-            </div>
-        </div>
-        <!-- Top 结束 -->
-
         <!-- footer文件调用开始 -->
         <div class="headerlayout">
             <!--[if IE 6]>
@@ -1697,50 +1322,6 @@
             <!--[if IE 6]></div></div><![endif]-->
         </div>
         <!-- footer文件调用结束 -->
-
-        <input type="hidden" name="rid" id="rid" value="8g0gj541b11EqskE1">
-
-        <input type="hidden" name="requestid" id="requestid" value="">
-        <input type="hidden" name="productid" id="productid" value="">
-        <input type="hidden" name="itemcode" id="itemcode" value="">
-        <input type="hidden" name="catepubid" id="inp_catepubid" value="009001002">
-
-        <input type="hidden" name="imglist" id="imglistid" value="">
-        <input type="hidden" name="prospeclist" id="prospeclistid" value="">
-        <input type="hidden" name="shippingmodelid" id="shippingmodelid" value="">
-        <input type="hidden" name="isquickup" id="isquickup" value="0">
-        <input type="hidden" name="viewSource" id="viewSource" value="">
-        <input type="hidden" name="repeatGroupId" id="repeatGroupId" value="">
-        <input type="hidden" id="invetoryQty" value="231">
-        <input type="hidden" id="isHaveSpec" value="0">
-        <input type="hidden" id="commissionRate"
-               value="300,0.125@300.0,1000,0.04@1000.0,5000,0.02@5000.0,10000,0.01@10000.0,0.005">
-        <input type="hidden" id="cateCommisionRateTip"
-               value="300,0.125@300.0,1000,0.04@1000.0,5000,0.02@5000.0,10000,0.01@10000.0,0.005">
-        <input type="hidden" id="commissionOrderAmount" value="">
-
-        <input type="hidden" id="oldSkuInfo" name="oldSkuInfo" value="">
-        <input type="hidden" id="forEditOldCatePubid" name="forEditOldCatePubid" value="">
-        <div id="div_proSkuInfo" style="display:none;"></div>
-        <input type="hidden" id="proSkuInfo" name="proSkuInfo"
-               value="[{&quot;class&quot;:&quot;###&quot;,&quot;inventoryLocation&quot;:&quot;CN&quot;,&quot;leadingTime&quot;:4,&quot;skuInfoList&quot;:[{&quot;class&quot;:&quot;#&quot;,&quot;attrList&quot;:[],&quot;status&quot;:&quot;1&quot;,&quot;price&quot;:&quot;&quot;,&quot;stock&quot;:&quot;&quot;,&quot;skuCode&quot;:&quot;&quot;,&quot;id&quot;:&quot;noSku&quot;}]}]">
-        <input type="hidden" id="customAttrList" name="specselfDef" value="[]">
-        <div id="div_customattrlist" style="display:none;"></div>
-        <input type="hidden" id="saleSectionData" name="discountRange"
-               value="[{&quot;startqty&quot;:&quot;1&quot;,&quot;discount&quot;:&quot;&quot;}]">
-        <input type="hidden" name="productInventorylist" id="productInventorylist" value="">
-        <input type="hidden" name="sourceItemcode" id="sourceItemcode" value="">
-        <input type="hidden" name="sourceSiteId" id="sourceSiteId" value="">
-        <input type="hidden" name="attrlist" id="attrlistid" value="">
-        <input type="hidden" name="tdProSaleSetId" id="tdProSaleSetId" value="">
-        <div style="display:none;" id="div_attrlistid"></div>
-        <input type="hidden" name="sourcetype" id="sourcetype" value="">
-        <input id="recruitActivityId" name="recruitActivityId" type="hidden" value="">
-        <input id="recruitProdPreId" name="recruitProdPreId" type="hidden" value="">
-        <input type="hidden" name="attrGroupDetail" id="attrGroupDetail" value="">
-        <input type="hidden" name="cmSzTableJson" id="szTemplateTable1">
-        <input type="hidden" name="cmszAdviseTableJson" id="szTemplateTable2">
-        <input type="hidden" name="szTemplateClassId" id="szTemplateClassId" value="">
     </form>
 
 
@@ -1765,6 +1346,24 @@
                     processData: false,
                     success: function (data) {
                         console.log(data)   //返回图片
+                        var data = data.data;
+                        if (data.length != 0) {
+                            data.forEach(function (item) {
+                                item = item.replace('public', '');
+                                var li = '<li><img src="' + item + '"><span class="delete"></span></li><span class="exchange"></span>';
+                                $('#file-upload').append(li);
+                            })
+                        }
+                        $('.delete').click(function () {
+                            $(this).parents('li').remove();
+                        })
+                        $('.exchange').click(function () {
+                            if ($(this).next().length && $(this).prev().length)
+                                var prev = $(this).prev().html();
+                            var next = $(this).next().html();
+                            $(this).prev().html(next);
+                            $(this).next().html(prev);
+                        })
                     },
                     error: function () {
                         console.log('err')
@@ -1772,7 +1371,6 @@
                 });
             }
         }
-
     }
 
     function postPage() {

@@ -3,6 +3,7 @@ var router = express.Router();
 var db = require('../model/index');
 var crypto = require('crypto');
 var async = require('async');
+var _ = require('lodash');
 
 var hotLabel = [];
 var categoryies = [];
@@ -465,6 +466,41 @@ router.get('/contact-us', function (req, res) {
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
                 status: statusCode
+            })
+        }
+    })
+});
+
+router.get('/product/:id', function (req, res, next) {
+    db.categorys.findOne({
+        'secondCategory.thirdTitles.thirdUrl': '/product/' + req.params["id"]
+    }, function (err, result) {
+        var arr = [];
+        _.each(result.secondCategory, function (second) {
+            var newArr = _.filter(second.thirdTitles, function (third) {
+                return third.thirdUrl == '/product/' + req.params["id"]
+
+            });
+            arr = _.concat(newArr, arr)
+        });
+        if (arr.length == 0) {
+            res.render('assets/product-detail', {
+                product: [],
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies['account'],
+                status: 200
+            })
+        } else {
+            console.log(arr)
+            res.render('assets/product-detail', {
+                product: arr,
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies['account'],
+                status: 200
             })
         }
     })

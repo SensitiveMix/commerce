@@ -24,10 +24,6 @@ var category = new Schema({
         thirdTitles: [{
             thirdTitle: String,
             firstTimeStamp: Number,
-            thirdImages: [{
-                imageUrl: String
-            }],
-            thirdUrl: String,
             product: [{
                 belong_category: [{
                     first: String,
@@ -57,8 +53,8 @@ var category = new Schema({
                 product_sell_status: String,
                 product_stock_status: String,
                 product_market: {
-                    market_method:String,
-                    market_amount:String
+                    market_method: String,
+                    market_amount: String
                 },
                 product_origin_price: {
                     vip_price: String,
@@ -76,8 +72,9 @@ var category = new Schema({
                     product_freight_company: String,
                     product_freight_price: String
                 }
-            }]
-
+            }],
+            thirdImages: String,
+            thirdUrl: String
         }]
     }]
 });

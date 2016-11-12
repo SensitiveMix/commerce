@@ -618,7 +618,7 @@ router.get('/accessory_manage', function (req, res, next) {
 //类目上传
 router.post('/doAddCategory', checkLogin);
 router.post('/doAddCategory', function (req, res) {
-    console.log(req.body.firstCategory);
+    console.log(req.body);
     console.log(JSON.parse(req.body.secondCategory));
 
     var Categories = {
@@ -835,6 +835,8 @@ router.post('/uploadTemporary', function (req, res, next) {
     }
 
 });
+
+
 
 /*-------------------------------------------------------------------*/
 /*----------------------------产品基本信息管理-------------------------*/
@@ -1214,14 +1216,14 @@ router.post('/uploadImage', upload.array("file"), function (req, res, next) {
         var str = "文件上传成功...";
         var uploadArr = [];
         for (var i = 0; i < req.files.length; i++) {
-            var filepath = '/Users/sunNode/WebstormProjects/e-commerce-platform/public' + "/tmp/" + req.files[i].originalname;
+            var filepath = req.files[i].originalname;
             fs.renameSync(req.files[i].path, filepath);
 
-            var savePath = '/tmp/' + req.files[i].originalname;
+            var savePath = req.files[i].originalname;
             uploadArr.push(savePath);
 
         }
-        res.send(uploadArr);
+        res.send(uploadArr[0]);
     }
 });
 
