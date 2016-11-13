@@ -587,7 +587,6 @@ router.get('/single-product/:id', function (req, res, next) {
         if (arr.length == 0) {
             res.render('assets/product-detail', {
                 product: [],
-                secondCategory: secondParam,
                 title: 'ECSell',
                 like_product: most_like,
                 prev_category: detail_params,
@@ -602,7 +601,6 @@ router.get('/single-product/:id', function (req, res, next) {
             console.log(arr)
             res.render('assets/product-detail', {
                 product: arr,
-                secondCategory: secondParam,
                 like_product: most_like,
                 prev_category: detail_params,
                 title: 'ECSell',
