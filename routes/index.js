@@ -512,10 +512,14 @@ router.get('/product/:id', function (req, res, next) {
     }, function (err, result) {
         var arr = [];
         var secondParam = {};
+        secondParam.firstTitle = result.firstCategory;
+        secondParam.firstUrl = result.firstUrl;
         _.each(result.secondCategory, function (second) {
             var newArr = _.filter(second.thirdTitles, function (third) {
                 secondParam.secondTitle = second.secondTitle;
                 secondParam.secondUrl = second.secondUrl;
+                secondParam.thirdTitle = third.thirdTitle;
+                secondParam.thirdUrl = third.thirdUrl;
                 return third.thirdUrl == '/product/' + req.params["id"]
             });
             arr = _.concat(newArr, arr)
@@ -526,10 +530,13 @@ router.get('/product/:id', function (req, res, next) {
         } else {
             statusCode = 500;
         }
+
+        console.log(secondParam)
         if (arr.length == 0) {
             res.render('assets/category', {
                 product: [],
                 title: 'ECSell',
+                prev_category: secondParam,
                 categories: categoryies,
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
@@ -540,6 +547,7 @@ router.get('/product/:id', function (req, res, next) {
             res.render('assets/category', {
                 product: arr,
                 title: 'ECSell',
+                prev_category: secondParam,
                 categories: categoryies,
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
@@ -740,7 +748,7 @@ router.get('/:category/:id', function (req, res, next) {
             } else {
                 statusCode = 500;
             }
-
+            console.log(detail_params)
             res.render('assets/second-category', {
                 product: newArr,
                 title: 'ECSell',
