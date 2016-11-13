@@ -750,8 +750,10 @@ router.get('/:category/:id', function (req, res, next) {
                 user: req.cookies['account'],
                 status: statusCode
             });
-            next();
+
         })
+    }else {
+        next();
     }
 
 });
