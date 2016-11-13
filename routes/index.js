@@ -486,6 +486,12 @@ router.get('/product/:id', function (req, res, next) {
             arr = _.concat(newArr, arr)
         });
         console.log(secondParam);
+        var statusCode = null;
+        if (req.cookies["account"] != null) {
+            statusCode = 200;
+        } else {
+            statusCode = 500;
+        }
         if (arr.length == 0) {
             res.render('assets/product-detail', {
                 product: [],
@@ -494,7 +500,7 @@ router.get('/product/:id', function (req, res, next) {
                 categories: categoryies,
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
-                status: 200,
+                status: statusCode,
                 errorCode: 500,
                 msg: 'NOT FOUND'
             })
@@ -507,7 +513,7 @@ router.get('/product/:id', function (req, res, next) {
                 categories: categoryies,
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
-                status: 200
+                status: statusCode
             })
         }
     })
@@ -529,6 +535,12 @@ router.get('/single-product/:id', function (req, res, next) {
 
         });
         console.log(arr);
+        var statusCode = null;
+        if (req.cookies["account"] != null) {
+            statusCode = 200;
+        } else {
+            statusCode = 500;
+        }
         if (arr.length == 0) {
             res.render('assets/single-product-detail', {
                 product: [],
@@ -536,7 +548,7 @@ router.get('/single-product/:id', function (req, res, next) {
                 categories: categoryies,
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
-                status: 200,
+                status: statusCode,
                 errorCode: 500,
                 msg: 'NOT FOUND'
             })
@@ -548,7 +560,7 @@ router.get('/single-product/:id', function (req, res, next) {
                 categories: categoryies,
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
-                status: 200
+                status: statusCode
             })
         }
     })
@@ -561,6 +573,12 @@ router.get('/products/:category/:id', function (req, res, next) {
     }, function (err, result) {
         var secondCategory = result[0].secondCategory;
         console.log(secondCategory);
+        var statusCode = null;
+        if (req.cookies["account"] != null) {
+            statusCode = 200;
+        } else {
+            statusCode = 500;
+        }
         if (secondCategory.length == 0) {
             res.render('assets/first-product', {
                 product: [],
@@ -568,7 +586,7 @@ router.get('/products/:category/:id', function (req, res, next) {
                 categories: categoryies,
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
-                status: 200,
+                status: statusCode,
                 errorCode: 500,
                 msg: 'NOT FOUND'
             })
@@ -579,7 +597,7 @@ router.get('/products/:category/:id', function (req, res, next) {
                 categories: categoryies,
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
-                status: 200
+                status: statusCode
             })
         }
     })
@@ -600,6 +618,12 @@ router.get('/product/:category/:id', function (req, res, next) {
         console.log(data)
         _.concat(newArr, arr);
         console.log(arr);
+        var statusCode = null;
+        if (req.cookies["account"] != null) {
+            statusCode = 200;
+        } else {
+            statusCode = 500;
+        }
 
         res.render('assets/second-product', {
             product: data.secondCategory,
@@ -607,23 +631,8 @@ router.get('/product/:category/:id', function (req, res, next) {
             categories: categoryies,
             hotLabels: hotLabel,
             user: req.cookies['account'],
-            status: 200
+            status: statusCode
         })
-
-        // if (arr.length == 0) {
-        //     res.render('assets/second-product', {
-        //         product: [],
-        //         title: 'ECSell',
-        //         categories: categoryies,
-        //         hotLabels: hotLabel,
-        //         user: req.cookies['account'],
-        //         status: 200,
-        //         errorCode: 500,
-        //         msg: 'NOT FOUND'
-        //     })
-        // } else {
-
-        // }
 
     })
 });
