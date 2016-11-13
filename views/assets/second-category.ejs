@@ -8,9 +8,93 @@
     <section class="content-header">
 
         <script>
-            $(function () {
-            })
+
+            $(document).ready(function () {
+                $('#zlight-nav-second').zlightMenu();
+                var width = 100 / '<%= product[0].thirdTitles.length %>' + '%';
+                $('#zlight-main-nav-second').children('li').css('width', width);
+            });
         </script>
+        <style>
+            #zlight-main-nav-second {
+                padding: 0;
+            }
+
+            #zlight-main-nav-second > li {
+                padding: 4px 10px !important;
+                margin: 0 !important;
+                float: left !important;
+                position: relative !important;
+                display: block !important;
+                border: 1px solid #fff;
+                width: 20%;
+                text-align: center;
+            }
+
+            #zlight-main-nav-second > li > a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            #zlight-main-nav-second li > ul {
+                z-index: 999;
+                width: 100%;
+            }
+
+            #zlight-main-nav-second li > ul > li {
+                font-weight: 100;
+                padding: 0 10px;
+            }
+
+            #zlight-main-nav-second li > ul > li > a {
+                padding-left: 0 !important;
+            }
+
+            .second-menu {
+                margin-bottom: 30px;
+            }
+
+            .third-menu {
+                margin-top: 30px;
+            }
+
+
+            .third-menu > ul > li{
+                padding: 15px 7px!important;
+            }
+            .third-menu > ul > li > .product {
+                margin-bottom: 0;
+                border: 1px solid #dedede;
+            }
+
+            .bar-line {
+                width: 100%;
+                height: 3px;
+                background-color: #999;
+                position: absolute;
+                top: 17%;
+                z-index: 1;
+                display: block;
+            }
+            .title p{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis
+            }
+
+            .breadcrumb {
+                margin-bottom: 0;
+            }
+            i.icon-angle-down:before {
+                content: "\f107";
+                text-decoration: inherit;
+                display: inline-block;
+                speak: none;
+            }
+            .icon-angle-down{
+                float: right;
+            }
+        </style>
 
         <!-- ========== SLIDER END ========== -->
 
@@ -21,31 +105,93 @@
 
                 <ol class="breadcrumb">
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">For Woman</a></li>
-                    <li class="active">535232532 #1</li>
+                    <li><a href="<%=prev_category.firstUrl %>"><%=prev_category.firstTitle %></a></li>
+                    <li class="active"><%=product[0].secondTitle%></li>
                 </ol>
 
-                <div class="row">
+                <div class="row" style="position: relative">
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 second-menu">
+                        <nav id="zlight-nav-second" style="margin-bottom: 18px">
+                            <ul id="zlight-main-nav-second" class="btn-group" style="border:0;width:100%;">
+                                <% if(product[0].thirdTitles.length != 0) { %>
+                                <% product[0].thirdTitles.forEach(function(thirdItem) { %>
+                                <li class="zlight-dropdown btn btn-info" style="width: 100% !important;">
+                                    <a href="<%= thirdItem.thirdUrl %>"><%= thirdItem.thirdTitle %></a>
+                                </li>
+                                <% }) %>
+                                <% } %>
+                            </ul>
+                            <!-- MOBILE NAV -->
+                            <div id="zlight-mobile-nav"><span>Menu</span> <i class="icon-reorder zlight-icon"></i>
+                                <select>
+                                </select>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="col-sm-12 third-menu">
 
                         <ul class="products row">
+                            <% if(product[0].thirdTitles.length != 0) { %>
+                            <% product[0].thirdTitles.forEach(function(thirdItem) { %>
 
+                            <% thirdItem.product.forEach(function(thirdProductItem){ %>
+                            <li class="col-sm-3">
+                                <div class="product">
+                                    <div class="thumbnail">
+                                        <a href="/single-product/<%= thirdProductItem.product_id %>"><img
+                                                    src="/tmp/<%= thirdProductItem.product_images[0].url %>" alt=""></a>
+                                        <a href="#" class="add-to-cart" title="Add to Cart">
+                                          <span class="fa-stack fa-2x">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
+                                          </span>
+                                        </a>
+                                    </div>
+                                    <hr>
+                                    <div class="title">
+                                        <h5><a href="#"><p><%= thirdProductItem.product_title %></p></a></h5>
+                                        <!--<p>by Jack &amp; Jones</p>-->
+                                    </div>
+                                    <% if( status == 200) { %>
+                                    <% if( user.level == '10' ) { %>
+                                    <% if( thirdProductItem.product_origin_price.sale_discount_regular_price.length == 0 ) { %>
+                                    <span class="price"><%= thirdProductItem.product_origin_price.regular_price %></span>
+                                    <% } else { %>
+                                    <span class="price"><%= thirdProductItem.product_origin_price.sale_discount_regular_price %></span>
+                                    <% } %>
+                                    <% } %>
+                                    <% if( user.level == '66' ) { %>
+                                    <% if( thirdProductItem.product_origin_price.sale_discount_vip_price.length == 0 ) { %>
+                                    <span class="price"><%= thirdProductItem.product_origin_price.regular_price %></span>
+                                    <% } else { %>
+                                    <span class="price"><%= thirdProductItem.product_origin_price.sale_discount_vip_price %></span>
+                                    <% } %>
+                                    <% } %>
+                                    <% } %>
+                                    <% if( status == 500 ) { %>
+                                    <span class="price"><%= thirdProductItem.product_origin_price.market_price %></span>
+                                    <% } %>
+                                </div>
+                            </li>
+                            <% }) %>
+                            <% }) %>
+
+                            <% } %>
 
                         </ul>
 
                         <!--<ul class="pagination">-->
-                            <!--<li><a href="#">&laquo;</a></li>-->
-                            <!--<li><a href="#">1</a></li>-->
-                            <!--<li><a href="#">2</a></li>-->
-                            <!--<li><a href="#">3</a></li>-->
-                            <!--<li><a href="#">4</a></li>-->
-                            <!--<li><a href="#">5</a></li>-->
-                            <!--<li><a href="#">&raquo;</a></li>-->
+                        <!--<li><a href="#">&laquo;</a></li>-->
+                        <!--<li><a href="#">1</a></li>-->
+                        <!--<li><a href="#">2</a></li>-->
+                        <!--<li><a href="#">3</a></li>-->
+                        <!--<li><a href="#">4</a></li>-->
+                        <!--<li><a href="#">5</a></li>-->
+                        <!--<li><a href="#">&raquo;</a></li>-->
                         <!--</ul>-->
 
                     </div>
-
                 </div>
 
             </div>
@@ -62,13 +208,11 @@
         $('#zlight-nav').zlightMenu();
     });
 </script>
+
 <!-- ========== CONTENT END ========== -->
 
 <!-- ========== CONTENT START ========== -->
 
-<br/>
-<br/>
-<%= product %>
 <!-- ========== CONTENT END ========== -->
 
 <script>

@@ -1496,8 +1496,8 @@ tr.cart-subtotal > * {
         width: 10000px;
     }
 
-    .product-show {
-        height: 500px !important;
+    .product-show{
+        padding: 15px 7px!important;
     }
 
 }

@@ -3,6 +3,22 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
 
+        <style>
+            .product{
+                margin-bottom: 0!important;
+                border: 1px solid #dedede;
+            }
+            .title {
+                width: 61%;
+                position: relative;
+            }
+            .title p{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
+            }
+        </style>
         <script>
             $(function () {
                 $('#menu-master').off();
@@ -42,19 +58,6 @@
 
         <section id="content">
             <div class="container">
-
-                <div class="row ad-banners">
-                    <div class="col-sm-4">
-                        <a href="#"><img src="../assets/img/images/ad-1.png" alt=""></a>
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="#"><img src="../assets/img/images/ad-2.png" alt=""></a>
-                        <a href="#"><img src="../assets/img/images/ad-3.png" alt=""></a>
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="#"><img src="../assets/img/images/ad-4.png" alt=""></a>
-                    </div>
-                </div>
 
                 <div class="products-carousel products-small products">
 
@@ -186,13 +189,12 @@
                             </div>
                             <hr>
                             <div class="title">
-                                <h3>
+                                <p style="font-weight: 900;font-size: 18px;">
                                     <a href="<%= thirdItem.thirdUrl %>">
                                         <%= thirdItem.thirdTitle %>
                                     </a>
-                                </h3>
+                                </p>
                             </div>
-                            <span class="price">$18</span>
                         </div>
                     </li>
                     <% } else { %>
