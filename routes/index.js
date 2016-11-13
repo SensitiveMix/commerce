@@ -615,7 +615,7 @@ router.get('/:category/:id', function (req, res, next) {
             console.log(secondCategory);
             var statusCode = null;
             var detail_params = {};
-            detail_params.firstTile = result[0].firstTile;
+            detail_params.firstTitle = result[0].firstCategory;
             detail_params.firstUrl = result[0].firstUrl;
 
             if (req.cookies["account"] != null) {
@@ -652,18 +652,21 @@ router.get('/:category/:id', function (req, res, next) {
         db.categorys.findOne({
             'secondCategory.secondUrl': '/' + req.params["category"] + '/' + req.params["id"]
         }, function (err, data) {
+            console.log(data)
             var detail_params = {};
-            detail_params.firstTile = data.firstTile;
+            detail_params.firstTitle = data.firstCategory;
             detail_params.firstUrl = data.firstUrl;
+
             var arr = [];
             var newArr = _.filter(data.secondCategory, function (second) {
-                detail_params.secondTile = second.secondTile;
+                detail_params.secondTitle = second.secondTitle;
                 detail_params.secondUrl = second.secondUrl;
+
                 return second.secondUrl == '/' + req.params["category"] + '/' + req.params["id"]
             });
             console.log(data)
             _.concat(newArr, arr);
-            console.log(arr);
+            console.log(newArr);
             var statusCode = null;
             if (req.cookies["account"] != null) {
                 statusCode = 200;
@@ -672,7 +675,7 @@ router.get('/:category/:id', function (req, res, next) {
             }
 
             res.render('assets/second-category', {
-                product: data.secondCategory,
+                product: newArr,
                 title: 'ECSell',
                 prev_category: detail_params,
                 categories: categoryies,
