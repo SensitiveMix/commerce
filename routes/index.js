@@ -732,7 +732,7 @@ router.get('/:category/:id', function (req, res, next) {
                 return second.secondUrl == '/' + req.params["category"] + '/' + req.params["id"]
             });
             console.log(req.params["category"])
-            _.concat(newArr, arr);
+            // _.concat(newArr, arr);
             console.log(newArr);
             var statusCode = null;
             if (req.cookies["account"] != null) {

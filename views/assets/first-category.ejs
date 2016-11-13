@@ -4,9 +4,6 @@
     <section class="content-header">
 
         <script>
-            $(function () {
-            })
-
             $(document).ready(function () {
                 $('#zlight-nav-second').zlightMenu();
                 var width = 100 / '<%= product.length %>' + '%';
@@ -19,18 +16,18 @@
             }
 
             #zlight-main-nav-second > li {
-                padding: 12px 10px !important;
+                padding: 4px 10px !important;
                 margin: 0 !important;
                 float: left !important;
                 position: relative !important;
                 display: block !important;
-                border: 1px solid #dedede;
+                border: 1px solid #fff;
                 width: 20%;
                 text-align: center;
             }
 
             #zlight-main-nav-second > li > a {
-                color: #000;
+                color: #fff;
                 text-decoration: none;
             }
 
@@ -56,13 +53,13 @@
                 margin-top: 30px;
             }
 
-            .third-menu > ul > li {
-                border: 1px solid #dedede;
-                margin: 0 10px;
-            }
 
+            .third-menu > ul > li{
+                padding: 15px 7px!important;
+            }
             .third-menu > ul > li > .product {
                 margin-bottom: 0;
+                border: 1px solid #dedede;
             }
 
             .bar-line {
@@ -74,9 +71,23 @@
                 z-index: 1;
                 display: block;
             }
+            .title p{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis
+            }
 
             .breadcrumb {
                 margin-bottom: 0;
+            }
+            i.icon-angle-down:before {
+                content: "\f107";
+                text-decoration: inherit;
+                display: inline-block;
+                speak: none;
+            }
+            .icon-angle-down{
+                float: right;
             }
         </style>
 
@@ -89,18 +100,19 @@
 
                 <ol class="breadcrumb">
                     <li><a href="#">Home</a></li>
-                    <li><a href="<%= prev_category.firstUrl %>"><%= prev_category.firstTitle %></a></li>
+                    <li class="active"><%= prev_category.firstTitle %></li>
                 </ol>
 
                 <div class="row" style="position: relative">
 
                     <div class="col-sm-12 second-menu">
                         <nav id="zlight-nav-second" style="margin-bottom: 18px">
-                            <ul id="zlight-main-nav-second" style="border:0;width:100%;">
+                            <ul id="zlight-main-nav-second" class="btn-group" style="border:0;width:100%;">
                                 <% if(product.length != 0){ %>
                                 <% product.forEach(function (item) { %>
-                                <li class="zlight-dropdown"><a href="<%= item.secondUrl %>"
+                                <li class="zlight-dropdown btn btn-info"><a href="<%= item.secondUrl %>"
                                                                style="border: 0px"><%= item.secondTitle %>
+                                        <i class="icon-angle-down"></i></a>
                                     </a>
                                     <ul class="zlight-submenu" style="background: #fff;">
                                         <% if(item.thirdTitles.length != 0) { %>
@@ -123,7 +135,7 @@
                             </div>
                         </nav>
                     </div>
-                    <p class="bar-line"></p>
+                    <!--<p class="bar-line"></p>-->
                     <div class="col-sm-12 third-menu">
 
                         <ul class="products row">
@@ -209,7 +221,6 @@
 
 <!-- ========== CONTENT START ========== -->
 
-<%= product %>
 <!-- ========== CONTENT END ========== -->
 
 <script>
