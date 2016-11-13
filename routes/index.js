@@ -564,6 +564,7 @@ router.get('/single-product/:id', function (req, res, next) {
         var arr = [];
         var most_like = [];
         var detail_params = {};
+        console.log(result)
         _.each(result.secondCategory, function (second) {
             _.each(second.thirdTitles, function (third) {
                 var newArr = _.filter(third.product, function (four) {

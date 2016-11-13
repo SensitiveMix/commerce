@@ -28,7 +28,7 @@ var category = new Schema({
                     second: String,
                     third: String
                 }],
-                product_id: ObjectId,
+                product_id: String,
                 product_title: String,
                 product_spec: {
                     compact: [],

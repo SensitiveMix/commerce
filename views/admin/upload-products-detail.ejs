@@ -469,119 +469,157 @@
     $(function () {
         var formData = [];
         formData['product'] = [];
-        formData['product']['belong_category'] = [];
+        var form = {};
+        var belong_category = [];
         <% tempCategory.forEach(function (item) { %>
-        var belong_category_item = [];
-        belong_category_item['first'] = '<%= item.firstCategory %>';
-        belong_category_item['second'] = '<%= item.secondCategory %>';
-        belong_category_item['third'] = '<%= item.thirdCategory %>';
-        formData['product']['belong_category'].push(belong_category_item);
-
+        var belong_category_item = {};
+        belong_category_item.first = '<%= item.firstCategory %>';
+        belong_category_item.second = '<%= item.secondCategory %>';
+        belong_category_item.third = '<%= item.thirdCategory %>';
+        belong_category.push(belong_category_item)
         <% }) %>
+        form.belong_category = belong_category;
         $('#submitopt').click(function () {
-            if ($('#productname').val() == '') {
-                layer.alert('请输入产品标题')
-            }else if ($('#vip_price').val().length == 0) {
-                layer.alert('请输入VIP价格')
-            }else if ($('#regular_price').val().length == 0) {
-                layer.alert('请输入常规价格')
-            }else if ($('#market_price').val().length == 0) {
-                layer.alert('请输入市场价格')
-            } else if ($('#promotion_vip_price').val().length == 0) {
-                layer.alert('请输入促销VIP价格')
-            } else if ($('#promotion_regular_price').val().length == 0) {
-                layer.alert('请输入促销常规价格')
-            } else if ($('input[name="freight_company"]').val().length == 0) {
-                layer.alert('请输入快递公司')
-            } else if ($('input[name="freight_price"]').val().length == 0) {
-                layer.alert('请输入快递单价')
-            } else {
-                formData['product']['product_title'] = $('#productname').val();
-                formData['product']['product_spec'] = [];
-                formData['product']['product_spec']['compact'] = [];
-                formData['product']['product_spec']['hardOrSoft'] = [];
-                formData['product']['product_spec']['type'] = [];
-                formData['product']['product_spec']['features'] = [];
-                formData['product']['product_spec']['pattern'] = [];
-                formData['product']['product_spec']['color'] = [];
-                formData['product']['product_spec']['material'] = [];
-                formData['product']['product_price'] = [];
-                formData['product']['product_danWei'] = [];
-                formData['product']['product_danWei']['danWei_key'] = $('select[name="measureid"]').find("option:selected").attr('data-name');
-                formData['product']['product_danWei']['danWei_value'] = $('select[name="measureid"]').val();
-                formData['product']['product_supplier'] = $('select[name="supplier"]').val();
-                formData['product']['product_sell_status'] = $('.color-preview.current-color').eq(0).css('background-color');
-                formData['product']['product_stock_status'] = $('.color-preview.current-color').eq(1).css('background-color');
-                formData['product']['product_market'] = [];
-                formData['product']['product_market']['market_method'] = $('input[name="market_method"]:checked').val();
-                if ($('input[name="market_method"]:checked').val() == 2) {
-                    formData['product']['product_market']['market_amount'] = $('input[name="sell-function-bao"]').val();
-                } else {
-                    formData['product']['product_market']['market_amount'] = '';
-                }
-                formData['product']['product_origin_price'] = [];
-                formData['product']['product_origin_price']['vip_price'] = $('#vip_price').val();
-                formData['product']['product_origin_price']['regular_price'] = $('#regular_price').val();
-                formData['product']['product_origin_price']['market_price'] = $('#market_price').val();
-                formData['product']['product_origin_price']['sale_discount_vip_price'] = $('#promotion_vip_price').val();
-                formData['product']['product_origin_price']['sale_discount_regular_price'] = $('#promotion_regular_price').val();
-                formData['product']['product_video_link'] = $('#videourl').val();
-                formData['product']['product_images'] = [];
+//            if ($('#productname').val() == '') {
+//                layer.alert('请输入产品标题')
+//            } else if ($('#vip_price').val().length == 0) {
+//                layer.alert('请输入VIP价格')
+//            } else if ($('#regular_price').val().length == 0) {
+//                layer.alert('请输入常规价格')
+//            } else if ($('#market_price').val().length == 0) {
+//                layer.alert('请输入市场价格')
+//            } else if ($('#promotion_vip_price').val().length == 0) {
+//                layer.alert('请输入促销VIP价格')
+//            } else if ($('#promotion_regular_price').val().length == 0) {
+//                layer.alert('请输入促销常规价格')
+//            } else if ($('input[name="freight_company"]').val().length == 0) {
+//                layer.alert('请输入快递公司')
+//            } else if ($('input[name="freight_price"]').val().length == 0) {
+//                layer.alert('请输入快递单价')
+//            } else {
+            form.product_title = $('#productname').val();
 
-                $('#file-upload li').each(function (index, item) {
-                    var data_product_image = [];
-                    data_product_image['title'] = '';
-                    data_product_image['url'] = $(item).find('img').attr('src');
-                    formData['product']['product_images'].push(data_product_image);
-                })
-                formData['product']['product_freight'] = [];
-                formData['product']['product_freight']['product_freight_company'] = $('input[name="freight_company"]').val();
-                formData['product']['product_freight']['product_freight_price'] = $('input[name="freight_price"]').val();
-                $('#product-attribute-table tbody tr').each(function (index, item) {
-                    var form_data_compile = [];
-                    form_data_compile['compile_spec'] = $(item).find('td').eq(0).text();
-                    form_data_compile['compile_price'] = $(item).find('td').eq(1).text();
-                    formData['product']['product_price'].push(form_data_compile);
-
-                })
-                $('input[name="compatibility"]:checked').each(function () {
-                    formData['product']['product_spec']['compact'].push($(this).val());//向数组中添加元素
-                });
-                $('input[name="type"]:checked').each(function () {
-                    formData['product']['product_spec']['type'].push($(this).val());//向数组中添加元素
-                });
-                $('input[name="hardOrSoft"]:checked').each(function () {
-                    formData['product']['product_spec']['hardOrSoft'].push($(this).val());//向数组中添加元素
-                });
-                $('input[name="features"]:checked').each(function () {
-                    formData['product']['product_spec']['features'].push($(this).val());//向数组中添加元素
-                });
-                $('input[name="pattern"]:checked').each(function () {
-                    formData['product']['product_spec']['pattern'].push($(this).val());//向数组中添加元素
-                });
-                $('input[name="Color"]:checked').each(function () {
-                    formData['product']['product_spec']['color'].push($(this).val());//向数组中添加元素
-                });
-                $('input[name="material"]:checked').each(function () {
-                    formData['product']['product_spec']['material'].push($(this).val());//向数组中添加元素
-                });
-                $.ajax({
-                    url: 'saveProductDetail',
-                    type: 'POST',
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function (data) {
-                        console.log(data)   //返回图片
-                    },
-                    error: function () {
-                        console.log('err');
-                    }
-                });
+            form.product_price = [];
+            form.product_danWei = [];
+            var danWei = {
+                danWei_key: $('select[name="measureid"]').find("option:selected").attr('data-name'),
+                danWei_value: $('select[name="measureid"]').val()
             }
+            form.product_danWei.push(danWei)
+            form.product_supplier = $('select[name="supplier"]').val();
+            form.product_sell_status = $('.color-preview.current-color').eq(0).css('background-color');
+            form.product_stock_status = $('.color-preview.current-color').eq(1).css('background-color');
 
-            console.log(formData);
+            form.product_market = [];
+            var market = {};
+            market.market_method = $('input[name="market_method"]:checked').val();
+
+            if ($('input[name="market_method"]:checked').val() == 2) {
+                market.market_amount = $('input[name="sell-function-bao"]').val();
+            } else {
+                market.market_amount = '';
+            }
+            form.product_market.push(market)
+
+            form.product_origin_price = []
+            var origin_price = {
+                vip_price: $('#vip_price').val(),
+                regular_price: $('#regular_price').val(),
+                market_price: $('#market_price').val(),
+                sale_discount_vip_price: $('#promotion_vip_price').val(),
+                sale_discount_regular_price: $('#promotion_regular_price').val()
+            }
+            form.product_origin_price.push(origin_price)
+            form.product_video_link = $('#videourl').val();
+            form.product_images = [];
+
+            $('#file-upload li').each(function (index, item) {
+                var data_product_image = {};
+                data_product_image.title = '';
+                data_product_image.url = $(item).find('img').attr('src');
+                form.product_images.push(data_product_image);
+            })
+            form.product_freight = [];
+            var freight = {
+                product_freight_company: $('input[name="freight_company"]').val(),
+                product_freight_price: $('input[name="freight_price"]').val()
+            }
+            form.product_freight.push(freight)
+
+            $('#product-attribute-table tbody tr').each(function (index, item) {
+                var form_data_compile = {};
+                form_data_compile.compile_spec = $(item).find('td').eq(0).text();
+                form_data_compile.compile_price = $(item).find('td').eq(1).text();
+                form.product_price.push(form_data_compile);
+
+            })
+
+            var product_spec = {}
+            product_spec.compact = [];
+            product_spec.hardOrSoft = [];
+            product_spec.type = [];
+            product_spec.features = [];
+            product_spec.pattern = [];
+            product_spec.color = [];
+            product_spec.material = [];
+
+            $('input[name="compatibility"]:checked').each(function () {
+                product_spec.compact.push($(this).val());//向数组中添加元素
+            });
+            $('input[name="type"]:checked').each(function () {
+                product_spec.type.push($(this).val());//向数组中添加元素
+            });
+            $('input[name="hardOrSoft"]:checked').each(function () {
+                product_spec.hardOrSoft.push($(this).val());//向数组中添加元素
+            });
+            $('input[name="features"]:checked').each(function () {
+                product_spec.features.push($(this).val());//向数组中添加元素
+            });
+            $('input[name="pattern"]:checked').each(function () {
+                product_spec.pattern.push($(this).val());//向数组中添加元素
+            });
+            $('input[name="Color"]:checked').each(function () {
+                product_spec.color.push($(this).val());//向数组中添加元素
+            });
+            $('input[name="material"]:checked').each(function () {
+                product_spec.material.push($(this).val());//向数组中添加元素
+            });
+
+            form.product_spec = product_spec;
+            console.log(form)
+
+
+            $.ajax({
+                url: '/admin/saveProductDetail',
+                type: 'POST',
+                data: {
+                    product_title: form.product_title,
+                    product_supplier: form.product_supplier,
+                    product_sell_status: form.product_sell_status,
+                    product_stock_status: form.product_stock_status,
+                    product_video_link: form.product_video_link,
+                    belong_category: JSON.stringify(form.belong_category),
+                    product_price: JSON.stringify(form.product_price),
+                    product_danWei: JSON.stringify(form.product_danWei),
+                    product_market: JSON.stringify(form.product_market),
+                    product_origin_price: JSON.stringify(form.product_origin_price),
+                    product_images: JSON.stringify(form.product_images),
+                    product_freight: JSON.stringify(form.product_freight),
+                    product_spec: JSON.stringify(form.product_spec)
+                },
+
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+                    console.log(data)   //返回图片
+                },
+                error: function () {
+                    console.log('err');
+                }
+            });
+//            }
+
+//            console.log(formData);
 
         })
         $('#cuxiao_price').change(function () {
@@ -1201,7 +1239,7 @@
                         <ul class="fl-file-upload" id="file-upload"></ul>
                     </div>
                 </div>
-			<span class="helptips">
+                <span class="helptips">
     			您还可以上传<b class="color444" id="photonum_b">8</b>
     			          <span class="color000">/<span>8</span></span> 张
     		</span>
@@ -1271,7 +1309,7 @@
 
         <!-- 完成提交开始 -->
         <div id="syi_submit_id" class="syi-submit">
-            <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系敦煌网客服部门。</strong><br>
+            <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系ECSELL客服部门。</strong><br>
             <button type="button" id="btn_submitproduct" class="btn btn-primary">
 			    <span id="loadingimg" class="submit-syi">
                     <img src="/assets/img/icon/loadings.gif" class="syi-img-show">

@@ -1018,25 +1018,59 @@ router.post('/uploadProductDetail', function (req, res, next) {
 
 //保存详细产品
 router.post('/saveProductDetail', function (req, res, next) {
-    console.log(req.body.product);
-    console.log(req.body.product.belong_category);
-    _.each(req.body.product.belong_category, function (single_category) {
-        db.categorys.update({
-                'secondCategory.thirdTitles.thirdTitle': {
-                    '$in': [single_category.third]
-                },
-                'secondCategory.secondTitle': {
-                    '$in': [single_category.second]
-                },
-                'firstCategory': single_category.first
-            }, {
-                $pushAll: {
-                    'secondCategory.thirdTitles.product': req.body.product
+    var data = {
+        product_title: req.body.product_title,
+        product_id: (new Date().getTime()).toFixed(),
+        product_supplier: req.body.product_supplier,
+        product_sell_status: req.body.product_sell_status,
+        product_stock_status: req.body.product_stock_status,
+        product_video_link: req.body.product_video_link,
+        belong_category: JSON.parse(req.body.belong_category),
+        product_price: JSON.parse(req.body.product_price),
+        product_danWei: JSON.parse(req.body.product_danWei)[0],
+        product_market: JSON.parse(req.body.product_market)[0],
+        product_origin_price: JSON.parse(req.body.product_origin_price)[0],
+        product_images: JSON.parse(req.body.product_images),
+        product_freight: JSON.parse(req.body.product_freight)[0],
+        product_spec: JSON.parse(req.body.product_spec)
+    };
+
+    console.log(data)
+
+    var thirdCate = [];
+    _.each(data.belong_category, function (item) {
+        thirdCate.push(item.third)
+    });
+
+    _.each(data.belong_category, function (item) {
+        console.log(item);
+        db.categorys.findOne({'secondCategory.thirdTitles.thirdTitle': item.third}, function (err, result) {
+            console.log(err)
+            console.log(result)
+            var newArr = _.filter(result.secondCategory, function (secondCategory) {
+                return secondCategory.secondTitle == item.second;
+            });
+
+            _.each(newArr[0].thirdTitles, function (thirdCategory) {
+                if (thirdCategory.thirdTitle == item.third) {
+                    thirdCategory.product.push(data)
                 }
-            },
-            function (err, result) {
-                console.log(result)
-            })
+            });
+
+            console.log(newArr[0].thirdTitles);
+            db.categorys.update({
+                    'secondCategory._id': newArr[0]._id
+                }, {
+                    $set: {
+                        "secondCategory.$.thirdTitles": newArr[0].thirdTitles
+                    }
+                },
+                function (err, result) {
+                    console.log(err);
+                    console.log(result)
+                })
+        });
+
     })
 });
 
@@ -1187,9 +1221,9 @@ router.post('/uploadSingle', upload.array('file'), function (req, res, next) {
         var str = "文件上传成功...";
         var uploadArr = [];
         for (var i = 0; i < req.files.length; i++) {
-            // var filepath = 'http://' + req.headers.host + "/tmp/" + req.files[i].originalname;
-            var vitualPath = "/tmp/" + req.files[i].originalname;
-            fs.renameSync(req.files[i].path, vitualPath);
+            var filepath = './public/images/' + req.files[i].originalname;
+            var vitualPath = "/images/" + req.files[i].originalname;
+            fs.renameSync(req.files[i].path, filepath);
 
             uploadArr.push(vitualPath);
 

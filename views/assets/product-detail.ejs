@@ -36,13 +36,13 @@
 
                         <div id="product-large" class="owl-carousel">
                             <% product[0].product_images.forEach(function(item){%>
-                            <div class="item"><img src="/tmp/<%=item.url %>"></div>
+                            <div class="item"><img src="<%=item.url %>"></div>
                             <% }) %>
                             <!--<div class="item"><img src="http://placehold.it/458x480"></div>-->
                         </div>
                         <div id="product-thumb" class="owl-carousel">
                             <% product[0].product_images.forEach(function(item){%>
-                            <div class="item"><img src="/tmp/<%=item.url %>"></div>
+                            <div class="item"><img src="<%=item.url %>"></div>
                             <% }) %>
                             <!--<div class="item"><img src="http://placehold.it/78x78"></div>-->
                         </div>
@@ -266,7 +266,7 @@
                         <li class="col-sm-3">
                             <div class="product">
                                 <div class="thumbnail">
-                                    <a href="/single-product/<%=item.product_id %>"><img src="/tmp/<%=item.product_images[0].url%>" alt=""></a>
+                                    <a href="/single-product/<%=item.product_id %>"><img src="<%=item.product_images[0].url%>" alt=""></a>
                                     <a href="#" class="add-to-cart" title="Add to Cart">
                                           <span class="fa-stack fa-2x">
                                             <i class="fa fa-circle fa-stack-2x"></i>
