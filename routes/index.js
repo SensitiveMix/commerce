@@ -476,26 +476,33 @@ router.get('/product/:id', function (req, res, next) {
         'secondCategory.thirdTitles.thirdUrl': '/product/' + req.params["id"]
     }, function (err, result) {
         var arr = [];
+        var secondParam = {};
         _.each(result.secondCategory, function (second) {
             var newArr = _.filter(second.thirdTitles, function (third) {
+                secondParam.secondTitle = second.secondTitle;
+                secondParam.secondUrl = second.secondUrl;
                 return third.thirdUrl == '/product/' + req.params["id"]
-
             });
             arr = _.concat(newArr, arr)
         });
+        console.log(secondParam);
         if (arr.length == 0) {
             res.render('assets/product-detail', {
                 product: [],
+                secondCategory: secondParam,
                 title: 'ECSell',
                 categories: categoryies,
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
-                status: 200
+                status: 200,
+                errorCode: 500,
+                msg: 'NOT FOUND'
             })
         } else {
             console.log(arr)
             res.render('assets/product-detail', {
                 product: arr,
+                secondCategory: secondParam,
                 title: 'ECSell',
                 categories: categoryies,
                 hotLabels: hotLabel,
@@ -529,7 +536,9 @@ router.get('/single-product/:id', function (req, res, next) {
                 categories: categoryies,
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
-                status: 200
+                status: 200,
+                errorCode: 500,
+                msg: 'NOT FOUND'
             })
         } else {
             console.log(arr)
@@ -544,6 +553,82 @@ router.get('/single-product/:id', function (req, res, next) {
         }
     })
 });
+
+//一级类目查找
+router.get('/products/:category/:id', function (req, res, next) {
+    db.categorys.find({
+        'firstUrl': '/products/' + req.params["category"] + '/' + req.params["id"]
+    }, function (err, result) {
+        var secondCategory = result[0].secondCategory;
+        console.log(secondCategory);
+        if (secondCategory.length == 0) {
+            res.render('assets/first-product', {
+                product: [],
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies['account'],
+                status: 200,
+                errorCode: 500,
+                msg: 'NOT FOUND'
+            })
+        } else {
+            res.render('assets/first-product', {
+                product: secondCategory,
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies['account'],
+                status: 200
+            })
+        }
+    })
+});
+
+//二级类目查找
+router.get('/product/:category/:id', function (req, res, next) {
+    console.log(req.params["category"])
+    console.log(req.params["id"])
+    db.categorys.findOne({
+        'secondCategory.secondUrl': '/product/' + req.params["category"] + '/' + req.params["id"]
+    }, function (err, data) {
+
+        var arr = [];
+        var newArr = _.filter(data.secondCategory, function (second) {
+            return second.secondUrl == '/product/' + req.params["category"] + '/' + req.params["id"]
+        });
+        console.log(data)
+        _.concat(newArr, arr);
+        console.log(arr);
+
+        res.render('assets/second-product', {
+            product: data.secondCategory,
+            title: 'ECSell',
+            categories: categoryies,
+            hotLabels: hotLabel,
+            user: req.cookies['account'],
+            status: 200
+        })
+
+        // if (arr.length == 0) {
+        //     res.render('assets/second-product', {
+        //         product: [],
+        //         title: 'ECSell',
+        //         categories: categoryies,
+        //         hotLabels: hotLabel,
+        //         user: req.cookies['account'],
+        //         status: 200,
+        //         errorCode: 500,
+        //         msg: 'NOT FOUND'
+        //     })
+        // } else {
+
+        // }
+
+    })
+});
+
+
 //MD5加密
 function md5(text) {
     return crypto.createHash('md5').update(text).digest('hex');

@@ -170,7 +170,7 @@
         var Category = {
             firstCategory: FirstCategory,
             firstTimeStamp: timeStamps,
-            firstUrl: FirstCategory + '_' + timeStamps,
+            firstUrl: '/products/' + FirstCategory + '/' + timeStamps + Math.floor((Math.random() * 100) + 1),
             firstCount: 0,
             secondCategory: JSON.stringify(CategoryALL)
         }
@@ -231,7 +231,7 @@
         var totalGate = {
             secondTitle: second_Category,
             secondTimeStamp: timeStamps,
-            secondUrl: second_Category + '_' + timeStamps,
+            secondUrl: '/product/' + second_Category + '/' + timeStamps + Math.floor((Math.random() * 100) + 1),
             secondCount: 0,
             thirdTitles: three_Category
         }

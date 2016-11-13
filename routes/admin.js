@@ -1209,7 +1209,7 @@ router.post('/uploadSingle', upload.array('file'), function (req, res, next) {
 
 /* 多图片上传 */
 router.post('/uploadImage', upload.array("file"), function (req, res, next) {
-    console.log(req.files)
+    console.log(req.files);
     if (req.files == undefined) {
         res.send("请选择要上传的图片...");
     } else {
