@@ -164,14 +164,14 @@
                 </div>
                 <% if(categories.length != 0){ %>
                 <% categories.forEach(function (item) { %>
-                <h2 class="align-center unbranded"><a href="<%= item.firstUrl %>"><%= item.firstCategory %></a></h2>
+                <h2 class="align-center unbranded"><a href="<%= item.firstUrl %>"><div><%= item.firstCategory %></div><p class="bar-line"></p></a></h2>
                 <div class="gap-25"></div>
                 <ul class="products row">
                     <% if(item.secondCategory.length != 0) { %>
                     <% item.secondCategory.forEach(function(secondItem) { %>
                     <% if(secondItem.thirdTitles.length != 0) { %>
                     <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
-                    <li class="col-sm-3">
+                    <li class="col-sm-3 product-show">
                         <div class="product">
                             <div class="thumbnail">
                                 <a href="<%= thirdItem.thirdUrl %>">
