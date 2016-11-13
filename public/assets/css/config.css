@@ -144,7 +144,7 @@ h1,h2,h3,h4,h5,h6,
 .nav-tabs > li.active > a:focus,
 .btn-invert,
 .mi-slider nav a:hover,
-.mi-slider nav a.mi-selected {
+.mi-slider nav a.mi-selected,span.selected {
 	color: #fd638f;
 }
 
@@ -154,7 +154,7 @@ table.totals,
 .sidebar .widget-title,
 #jPanelMenu-menu,
 #main-nav .navbar-toggle,
-.mi-slider nav {
+.mi-slider nav,span.selected {
 	border-color: #fd638f;
 }
 .product hr,

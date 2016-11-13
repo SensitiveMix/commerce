@@ -23,15 +23,15 @@
 
                 <div class="row">
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 second-menu">
 
                         <ul class="products row">
-                            <% if(product[0].product.length != 0 ) {%>
-                            <% product[0].product.forEach(function(item){%>
+                            <% if(product.length != 0 ) {%>
+                            <% product.forEach(function(item){%>
                             <li class="col-sm-3">
                                 <div class="product">
                                     <div class="thumbnail">
-                                        <a href="/single-product/<%=item.product_id %>"><img src="/tmp/<%=item.product_images[0].url%>" alt=""></a>
+                                        <a href="<%=item.secondUrl %>"><img src="/tmp/<%=item.secondImages%>" alt=""></a>
                                         <a href="#" class="add-to-cart" title="Add to Cart">
                                           <span class="fa-stack fa-2x">
                                             <i class="fa fa-circle fa-stack-2x"></i>
@@ -41,29 +41,49 @@
                                     </div>
                                     <hr>
                                     <div class="title">
-                                        <h3><a href="#"><%=item.product_images[0].title%></a></h3>
+                                        <h3><a href="#"><%=item.secondTitle%></a></h3>
                                         <!--<p>by Jack &amp; Jones</p>-->
                                     </div>
-                                    <% if( status == 200) { %>
-                                    <% if( user.level == '10' ) {%>
-                                    <% if( item.product_origin_price.sale_discount_regular_price.length == 0 ) {%>
-                                    <span class="price"><%=item.product_origin_price.regular_price %></span>
-                                    <% } else { %>
-                                    <span class="price"><%=item.product_origin_price.sale_discount_regular_price %></span>
-                                    <% } %>
-                                    <% } %>
-                                    <% if( user.level == '66' ) {%>
-                                    <% if( item.product_origin_price.sale_discount_vip_price.length == 0 ) {%>
-                                    <span class="price"><%=item.product_origin_price.regular_price %></span>
-                                    <% } else { %>
-                                    <span class="price"><%=item.product_origin_price.sale_discount_vip_price %></span>
-                                    <% } %>
-                                    <% } %>
-                                    <% } %>
-                                    <% if( status == 500 ) {%>
-                                    <span class="price"><%=item.product_origin_price.market_price %></span>
-                                    <% } %>
+                                </div>
+                            </li>
 
+                            <%})%>
+                            <% } %>
+
+                        </ul>
+
+                        <ul class="pagination">
+                            <li><a href="#">&laquo;</a></li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">&raquo;</a></li>
+                        </ul>
+
+                    </div>
+                    <div class="col-sm-12 third-menu">
+
+                        <ul class="products row">
+                            <% if(product.length != 0 ) {%>
+                            <% product.forEach(function(item){%>
+                            <li class="col-sm-3">
+                                <div class="product">
+                                    <div class="thumbnail">
+                                        <a href="<%=item.secondUrl %>"><img src="/tmp/<%=item.secondImages%>" alt=""></a>
+                                        <a href="#" class="add-to-cart" title="Add to Cart">
+                                          <span class="fa-stack fa-2x">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
+                                          </span>
+                                        </a>
+                                    </div>
+                                    <hr>
+                                    <div class="title">
+                                        <h3><a href="#"><%=item.secondTitle%></a></h3>
+                                        <!--<p>by Jack &amp; Jones</p>-->
+                                    </div>
                                 </div>
                             </li>
 
@@ -104,8 +124,7 @@
 
 <!-- ========== CONTENT START ========== -->
 
-<br/>
-<br/>
+<%= product[0]  %>
 
 <!-- ========== CONTENT END ========== -->
 

@@ -170,7 +170,8 @@
                     <% if(item.secondCategory.length != 0) { %>
                     <% item.secondCategory.forEach(function(secondItem) { %>
                     <% if(secondItem.thirdTitles.length != 0) { %>
-                    <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
+                    <% secondItem.thirdTitles.forEach(function (thirdItem,index) { %>
+                    <% if(index < 4) {%>
                     <li class="col-sm-3 product-show">
                         <div class="product">
                             <div class="thumbnail">
@@ -194,6 +195,9 @@
                             <span class="price">$18</span>
                         </div>
                     </li>
+                    <% } else { %>
+                    <% return false; %>
+                    <% } %>
 
                     <% }) %>
                     <% } %>
