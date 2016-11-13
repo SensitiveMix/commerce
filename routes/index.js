@@ -9,8 +9,9 @@ var hotLabel = [];
 var categoryies = [];
 var u = [];
 
+
 var checkCategories = function (req, res, next) {
-    if (categoryies.length == '') {
+    if (categoryies.length == 0) {
         db.categorys.find({}, function (err, result) {
             if (err) res.send('404');
             categoryies = result;
@@ -177,6 +178,7 @@ router.post('/change-profile', function (req, res, next) {
             } else {
                 if (req.cookies["account"] != null) {
                     var name = req.cookies["account"].name;
+                    var level = req.cookies["account"].level;
                     res.clearCookie("account");
                     res.cookie("account", {
                         name: name,
@@ -188,6 +190,7 @@ router.post('/change-profile', function (req, res, next) {
                     req.cookies["account"].nick_name = req.body.new_nick_name;
                     req.cookies["account"].company = req.body.customers_company;
                     req.cookies["account"].sex = req.body.gender;
+                    req.cookies["account"].level = level;
                     res.send({account: req.cookies["account"], code: 200, msg: 'SUCCESS'})
                 } else {
                     res.send({account: '', code: 500, msg: 'Not LOGIN'})
@@ -311,7 +314,12 @@ router.post('/dologin', function (req, res) {
         }
         if (result.length > 0) {
             u = result[0];
-            res.cookie("account", {name: result[0].name, nick_name: result[0].nick_name, company: result[0].company})
+            res.cookie("account", {
+                name: result[0].name,
+                level: result[0].level,
+                nick_name: result[0].nick_name,
+                company: result[0].company
+            })
             console.log(result[0].nick_name + ":登录成功" + new Date());
             db.hotLabels.find({}, null, {
                 sort: {
@@ -512,7 +520,64 @@ router.get('/product/:id', function (req, res, next) {
             });
             arr = _.concat(newArr, arr)
         });
-        console.log(secondParam);
+        var statusCode = null;
+        if (req.cookies["account"] != null) {
+            statusCode = 200;
+        } else {
+            statusCode = 500;
+        }
+        if (arr.length == 0) {
+            res.render('assets/category', {
+                product: [],
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies['account'],
+                status: statusCode
+            })
+        } else {
+            console.log(arr)
+            res.render('assets/category', {
+                product: arr,
+                title: 'ECSell',
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies['account'],
+                status: statusCode
+            })
+        }
+    })
+});
+
+router.get('/single-product/:id', function (req, res, next) {
+    db.categorys.findOne({
+        'secondCategory.thirdTitles.product.product_id': req.params["id"]
+    }, function (err, result) {
+        var arr = [];
+        var most_like = [];
+        var detail_params = {};
+        _.each(result.secondCategory, function (second) {
+            _.each(second.thirdTitles, function (third) {
+                var newArr = _.filter(third.product, function (four) {
+                    detail_params.thirdTitle = third.thirdTitle;
+                    detail_params.thirdUrl = third.thirdUrl;
+                    detail_params.secondTitle = second.secondTitle;
+                    detail_params.secondUrl = second.secondUrl;
+                    return four.product_id == req.params["id"]
+
+                });
+                arr = _.concat(newArr, arr)
+            });
+            _.each(second.thirdTitles, function (third) {
+                var mostArr = _.filter(third.product, function (four) {
+                    return four.product_id != req.params["id"]
+
+                });
+                most_like = _.concat(mostArr, most_like)
+            });
+
+        });
+        console.log(detail_params);
         var statusCode = null;
         if (req.cookies["account"] != null) {
             statusCode = 200;
@@ -524,6 +589,8 @@ router.get('/product/:id', function (req, res, next) {
                 product: [],
                 secondCategory: secondParam,
                 title: 'ECSell',
+                like_product: most_like,
+                prev_category: detail_params,
                 categories: categoryies,
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
@@ -536,6 +603,8 @@ router.get('/product/:id', function (req, res, next) {
             res.render('assets/product-detail', {
                 product: arr,
                 secondCategory: secondParam,
+                like_product: most_like,
+                prev_category: detail_params,
                 title: 'ECSell',
                 categories: categoryies,
                 hotLabels: hotLabel,
@@ -615,7 +684,7 @@ router.get('/:category/:id', function (req, res, next) {
             console.log(secondCategory);
             var statusCode = null;
             var detail_params = {};
-            detail_params.firstTile = result[0].firstTile;
+            detail_params.firstTitle = result[0].firstCategory;
             detail_params.firstUrl = result[0].firstUrl;
 
             if (req.cookies["account"] != null) {
@@ -649,21 +718,24 @@ router.get('/:category/:id', function (req, res, next) {
         })
     } else if (req.params["category"] != 'admin') {
         //二级类目
+        console.log(req.params["category"] + '------------');
         db.categorys.findOne({
             'secondCategory.secondUrl': '/' + req.params["category"] + '/' + req.params["id"]
         }, function (err, data) {
             var detail_params = {};
-            detail_params.firstTile = data.firstTile;
+            detail_params.firstTitle = data.firstCategory;
             detail_params.firstUrl = data.firstUrl;
+
             var arr = [];
             var newArr = _.filter(data.secondCategory, function (second) {
-                detail_params.secondTile = second.secondTile;
+                detail_params.secondTitle = second.secondTitle;
                 detail_params.secondUrl = second.secondUrl;
+
                 return second.secondUrl == '/' + req.params["category"] + '/' + req.params["id"]
             });
-            console.log(data)
+            console.log(req.params["category"])
             _.concat(newArr, arr);
-            console.log(arr);
+            console.log(newArr);
             var statusCode = null;
             if (req.cookies["account"] != null) {
                 statusCode = 200;
@@ -672,22 +744,19 @@ router.get('/:category/:id', function (req, res, next) {
             }
 
             res.render('assets/second-category', {
-                product: data.secondCategory,
+                product: newArr,
                 title: 'ECSell',
                 prev_category: detail_params,
                 categories: categoryies,
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
                 status: statusCode
-            })
-
+            });
+            next();
         })
     }
 
-    next();
-
 });
-
 
 //MD5加密
 function md5(text) {
