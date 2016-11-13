@@ -9,6 +9,25 @@ var hotLabel = [];
 var categoryies = [];
 var u = [];
 
+var checkCategories = function (req, res, next) {
+    if (categoryies.length == '') {
+        db.categorys.find({}, function (err, result) {
+            if (err) res.send('404');
+            categoryies = result;
+        });
+    } else if (hotLabel.length == 0) {
+        db.hotLabels.find({}, null, {
+            sort: {
+                add_time: -1
+            }
+        }, function (err, labels) {
+            hotLabel = labels;
+        })
+    }
+    next();
+};
+
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
     async.parallel([
@@ -63,7 +82,6 @@ router.get('/login', function (req, res, next) {
                 db.categorys.find({}, function (err, result) {
                     if (err) res.send('404');
                     categoryies = result;
-                    // console.log(result);
                     done(err, result)
                 });
             },
@@ -122,6 +140,7 @@ router.post('/validateEmail', function (req, res, next) {
     })
 });
 //person center
+router.get('/personal-center', checkCategories);
 router.get('/personal-center', function (req, res, next) {
     var statusCode = null;
     if (req.cookies["account"] != null) {
@@ -314,6 +333,7 @@ router.post('/dologin', function (req, res) {
     });
 });
 //前台注册处理
+router.post('/doregister', checkCategories);
 router.post('/doregister', function (req, res) {
     console.log("用户注册" + req.body.email + new Date());
     var user = {
@@ -332,6 +352,7 @@ router.post('/doregister', function (req, res) {
     res.json('200');
 });
 //前台注册须知界面
+router.get('/team-of-use', checkCategories);
 router.get('/team-of-use', function (req, res) {
     db.systems.findOne({}, function (err, system) {
         if (err) {
@@ -355,6 +376,7 @@ router.get('/team-of-use', function (req, res) {
     })
 });
 //关于我们界面
+router.get('/about-us', checkCategories);
 router.get('/about-us', function (req, res) {
     db.notices.findOne({}, function (err, system) {
         if (err) {
@@ -378,6 +400,7 @@ router.get('/about-us', function (req, res) {
     })
 });
 //Privacy Policy
+router.get('/privacy-policy', checkCategories);
 router.get('/privacy-policy', function (req, res) {
     db.notices.findOne({}, function (err, system) {
         if (err) {
@@ -425,6 +448,7 @@ router.get('/FAQ', function (req, res) {
     })
 });
 //attention
+router.get('/attention', checkCategories);
 router.get('/attention', function (req, res) {
     db.notices.findOne({}, function (err, system) {
         if (err) {
@@ -448,6 +472,7 @@ router.get('/attention', function (req, res) {
     })
 });
 //connect_us
+router.get('/contact-us', checkCategories);
 router.get('/contact-us', function (req, res) {
     db.notices.findOne({}, function (err, system) {
         if (err) {
@@ -471,6 +496,8 @@ router.get('/contact-us', function (req, res) {
     })
 });
 
+//三级类目查找
+router.get('/product/:id', checkCategories);
 router.get('/product/:id', function (req, res, next) {
     db.categorys.findOne({
         'secondCategory.thirdTitles.thirdUrl': '/product/' + req.params["id"]
@@ -519,14 +546,21 @@ router.get('/product/:id', function (req, res, next) {
     })
 });
 
+//产品详情页查找
+router.get('/single-product/:id', checkCategories);
 router.get('/single-product/:id', function (req, res, next) {
     db.categorys.findOne({
         'secondCategory.thirdTitles.product.product_id': req.params["id"]
     }, function (err, result) {
         var arr = [];
+        var detail_params = {};
         _.each(result.secondCategory, function (second) {
             _.each(second.thirdTitles, function (third) {
                 var newArr = _.filter(third.product, function (four) {
+                    detail_params.thirdTitle = third.thirdTitle;
+                    detail_params.thirdUrl = third.thirdUrl;
+                    detail_params.secondTitle = second.secondTitle;
+                    detail_params.secondUrl = second.secondUrl;
                     return four.product_id == req.params["id"]
 
                 });
@@ -534,6 +568,7 @@ router.get('/single-product/:id', function (req, res, next) {
             });
 
         });
+        console.log(detail_params);
         console.log(arr);
         var statusCode = null;
         if (req.cookies["account"] != null) {
@@ -544,6 +579,7 @@ router.get('/single-product/:id', function (req, res, next) {
         if (arr.length == 0) {
             res.render('assets/single-product-detail', {
                 product: [],
+                prev_category: detail_params,
                 title: 'ECSell',
                 categories: categoryies,
                 hotLabels: hotLabel,
@@ -556,6 +592,7 @@ router.get('/single-product/:id', function (req, res, next) {
             console.log(arr)
             res.render('assets/single-product-detail', {
                 product: arr,
+                prev_category: detail_params,
                 title: 'ECSell',
                 categories: categoryies,
                 hotLabels: hotLabel,
@@ -566,75 +603,89 @@ router.get('/single-product/:id', function (req, res, next) {
     })
 });
 
-//一级类目查找
-router.get('/products/:category/:id', function (req, res, next) {
-    db.categorys.find({
-        'firstUrl': '/products/' + req.params["category"] + '/' + req.params["id"]
-    }, function (err, result) {
-        var secondCategory = result[0].secondCategory;
-        console.log(secondCategory);
-        var statusCode = null;
-        if (req.cookies["account"] != null) {
-            statusCode = 200;
-        } else {
-            statusCode = 500;
-        }
-        if (secondCategory.length == 0) {
-            res.render('assets/first-product', {
-                product: [],
-                title: 'ECSell',
-                categories: categoryies,
-                hotLabels: hotLabel,
-                user: req.cookies['account'],
-                status: statusCode,
-                errorCode: 500,
-                msg: 'NOT FOUND'
-            })
-        } else {
-            res.render('assets/first-product', {
-                product: secondCategory,
-                title: 'ECSell',
-                categories: categoryies,
-                hotLabels: hotLabel,
-                user: req.cookies['account'],
-                status: statusCode
-            })
-        }
-    })
-});
+//一级&二级类目查找
+router.get('/:category/:id', checkCategories);
+router.get('/:category/:id', function (req, res, next) {
+    if (req.params["id"].indexOf('_') == -1 && req.params["category"] != 'admin') {
+        //一级类目
+        db.categorys.find({
+            'firstUrl': '/' + req.params["category"] + '/' + req.params["id"]
+        }, function (err, result) {
+            var secondCategory = result[0].secondCategory;
+            console.log(secondCategory);
+            var statusCode = null;
+            var detail_params = {};
+            detail_params.firstTile = result[0].firstTile;
+            detail_params.firstUrl = result[0].firstUrl;
 
-//二级类目查找
-router.get('/product/:category/:id', function (req, res, next) {
-    console.log(req.params["category"])
-    console.log(req.params["id"])
-    db.categorys.findOne({
-        'secondCategory.secondUrl': '/product/' + req.params["category"] + '/' + req.params["id"]
-    }, function (err, data) {
-
-        var arr = [];
-        var newArr = _.filter(data.secondCategory, function (second) {
-            return second.secondUrl == '/product/' + req.params["category"] + '/' + req.params["id"]
-        });
-        console.log(data)
-        _.concat(newArr, arr);
-        console.log(arr);
-        var statusCode = null;
-        if (req.cookies["account"] != null) {
-            statusCode = 200;
-        } else {
-            statusCode = 500;
-        }
-
-        res.render('assets/second-product', {
-            product: data.secondCategory,
-            title: 'ECSell',
-            categories: categoryies,
-            hotLabels: hotLabel,
-            user: req.cookies['account'],
-            status: statusCode
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
+            if (secondCategory.length == 0) {
+                res.render('assets/first-category', {
+                    product: [],
+                    title: 'ECSell',
+                    prev_category: detail_params,
+                    categories: categoryies,
+                    hotLabels: hotLabel,
+                    user: req.cookies['account'],
+                    status: statusCode,
+                    errorCode: 500,
+                    msg: 'NOT FOUND'
+                })
+            } else {
+                res.render('assets/first-category', {
+                    product: secondCategory,
+                    title: 'ECSell',
+                    prev_category: detail_params,
+                    categories: categoryies,
+                    hotLabels: hotLabel,
+                    user: req.cookies['account'],
+                    status: statusCode
+                })
+            }
         })
+    } else if (req.params["category"] != 'admin') {
+        //二级类目
+        db.categorys.findOne({
+            'secondCategory.secondUrl': '/' + req.params["category"] + '/' + req.params["id"]
+        }, function (err, data) {
+            var detail_params = {};
+            detail_params.firstTile = data.firstTile;
+            detail_params.firstUrl = data.firstUrl;
+            var arr = [];
+            var newArr = _.filter(data.secondCategory, function (second) {
+                detail_params.secondTile = second.secondTile;
+                detail_params.secondUrl = second.secondUrl;
+                return second.secondUrl == '/' + req.params["category"] + '/' + req.params["id"]
+            });
+            console.log(data)
+            _.concat(newArr, arr);
+            console.log(arr);
+            var statusCode = null;
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
 
-    })
+            res.render('assets/second-category', {
+                product: data.secondCategory,
+                title: 'ECSell',
+                prev_category: detail_params,
+                categories: categoryies,
+                hotLabels: hotLabel,
+                user: req.cookies['account'],
+                status: statusCode
+            })
+
+        })
+    }
+
+    next();
+
 });
 
 

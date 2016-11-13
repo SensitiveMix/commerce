@@ -837,7 +837,6 @@ router.post('/uploadTemporary', function (req, res, next) {
 });
 
 
-
 /*-------------------------------------------------------------------*/
 /*----------------------------产品基本信息管理-------------------------*/
 //产品基本信息录入管理
@@ -1216,7 +1215,7 @@ router.post('/uploadImage', upload.array("file"), function (req, res, next) {
         var str = "文件上传成功...";
         var uploadArr = [];
         for (var i = 0; i < req.files.length; i++) {
-            var filepath = req.files[i].originalname;
+            var filepath = './public/images/' + req.files[i].originalname;
             fs.renameSync(req.files[i].path, filepath);
 
             var savePath = req.files[i].originalname;

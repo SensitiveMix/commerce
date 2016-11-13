@@ -17,9 +17,7 @@ var category = new Schema({
         secondTitle: String,
         secondUrl: String,
         secondTimeStamp: Number,
-        secondImages: [{
-            imageUrl: String
-        }],
+        secondImages: String,
         secondCount: Number,
         thirdTitles: [{
             thirdTitle: String,
