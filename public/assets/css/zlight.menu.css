@@ -7,6 +7,23 @@
 	-webkit-box-sizing:border-box;
 	box-sizing:border-box;
 }
+#zlight-main-nav > li > a > p{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 0;
+	width: 73%;
+	display: inline-block;
+}
+
+#zlight-main-nav > li > ul > li > a > p{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 0;
+	width: 80%;
+	display: inline-block;
+}
 /*************
 * WRAP
 *************/
@@ -216,7 +233,7 @@
 }
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-	
+
 }
 
 /* Large devices (large desktops, 1200px and up) */

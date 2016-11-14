@@ -251,20 +251,24 @@
                         </div>
                     </div>
                     <div class="col-md-3 submenu" style="display: none;padding: 0;height: auto;z-index: 999">
-                        <nav id="zlight-nav" style="margin-bottom: 18px">
+                        <nav id="zlight-nav">
                             <ul id="zlight-main-nav" style="border:0;width:100%;">
                                 <% if(categories.length != 0){ %>
                                 <% categories.forEach(function (item) { %>
-                                <li class="zlight-dropdown" style="width: 100%"><a href="<%= item.firstUrl %>"
-                                                                                   style="border: 0px"><%= item.firstCategory %>
-                                        (<%= item.firstCount %>)
-                                        <i class="icon-angle-right"></i></a>
+                                <li class="zlight-dropdown" style="width: 100%">
+                                    <a href="<%= item.firstUrl %>" style="border: 0px;padding-right: 0;">
+                                        <p><%= item.firstCategory %></p>
+                                        <i class="icon-angle-right"></i>
+                                        <span style="float: right">(<%= item.firstCount %>)</span>
+                                    </a>
                                     <ul class="zlight-submenu" style="top: 0;left: 100%;background: #fff;">
                                         <% if(item.secondCategory.length != 0) { %>
                                         <% item.secondCategory.forEach(function(secondItem) { %>
                                         <li class="zlight-dropdown">
-                                            <a href="<%= secondItem.secondUrl %>"><%= secondItem.secondTitle %>
-                                                (<%= secondItem.secondCount %>)</a>
+                                            <a href="<%= secondItem.secondUrl %>">
+                                                <p><%= secondItem.secondTitle %></p>
+                                                <span style="float: right">(<%= secondItem.secondCount %>)</span>
+                                            </a>
                                             <ul class="zlight-dropdown">
                                                 <% if(secondItem.thirdTitles.length != 0) { %>
                                                 <% secondItem.thirdTitles.forEach(function (thirdItem) { %>

@@ -1500,6 +1500,10 @@ tr.cart-subtotal > * {
         padding: 15px 7px!important;
     }
 
+    .product_images{
+        height: 219px!important;
+    }
+
 }
 
 @media (max-width: 1200px) {
