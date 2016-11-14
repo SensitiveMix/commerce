@@ -45,14 +45,6 @@
                 padding-left: 0 !important;
             }
 
-            .second-menu {
-                margin-bottom: 30px;
-            }
-
-            .third-menu {
-                margin-top: 30px;
-            }
-
 
             .third-menu > ul > li{
                 padding: 15px 7px!important;
@@ -146,8 +138,9 @@
                             <li class="col-sm-3">
                                 <div class="product">
                                     <div class="thumbnail">
-                                        <a href="/single-product/<%= thirdProductItem.product_id %>"><img
-                                                    src="<%= thirdProductItem.product_images[0].url %>" alt=""></a>
+                                        <a href="/single-product/<%= thirdProductItem.product_id %>">
+                                            <img class="product_images" src="<%= thirdProductItem.product_images[0].url %>" alt="">
+                                        </a>
                                         <a href="#" class="add-to-cart" title="Add to Cart">
                                           <span class="fa-stack fa-2x">
                                             <i class="fa fa-circle fa-stack-2x"></i>

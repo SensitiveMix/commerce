@@ -233,9 +233,7 @@
 }
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-	.submenu{
-		width: 18.2%!important;
-	}
+
 }
 
 /* Large devices (large desktops, 1200px and up) */
