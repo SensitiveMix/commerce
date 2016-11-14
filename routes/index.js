@@ -583,10 +583,10 @@ router.get('/single-product/:id', function (req, res, next) {
         var arr = [];
         var most_like = [];
         var detail_params = {};
-        detail_params.firstTitle = result.firstCategory;
-        detail_params.firstUrl = result.firstUrl;
         console.log(result)
         if (result != null) {
+            detail_params.firstTitle = result.firstCategory;
+            detail_params.firstUrl = result.firstUrl;
             _.each(result.secondCategory, function (second) {
                 _.each(second.thirdTitles, function (third) {
                     var newArr = _.filter(third.product, function (four) {
@@ -741,6 +741,7 @@ router.get('/single-product/:id', function (req, res, next) {
 router.get('/:category/:id', checkCategories);
 router.get('/:category/:id', function (req, res, next) {
     if (req.params["id"].indexOf('_') == -1 && req.params["category"] != 'admin') {
+        console.log('-------');
         //一级类目
         db.categorys.find({
             'firstUrl': '/' + req.params["category"] + '/' + req.params["id"]
