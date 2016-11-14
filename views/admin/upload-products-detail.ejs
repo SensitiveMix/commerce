@@ -1372,43 +1372,46 @@
         for (var i = 0; i < file.files.length; i++) {
             if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpg') {
                 layer.alert('上传图片格式有误')
+                return
             } else {
                 formData.append('file', file.files[i]);
-                $.ajax({
-                    url: '/admin/uploadSingle',
-                    type: 'POST',
-                    data: formData,
-                    // async: false,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function (data) {
-                        console.log(data)   //返回图片
-                        var data = data.data;
-                        if (data.length != 0) {
-                            data.forEach(function (item) {
-                                item = item.replace('public', '');
-                                var li = '<li><img src="' + item + '"><span class="delete"></span></li><span class="exchange"></span>';
-                                $('#file-upload').append(li);
-                            })
-                        }
-                        $('.delete').click(function () {
-                            $(this).parents('li').remove();
-                        })
-                        $('.exchange').click(function () {
-                            if ($(this).next().length && $(this).prev().length)
-                                var prev = $(this).prev().html();
-                            var next = $(this).next().html();
-                            $(this).prev().html(next);
-                            $(this).next().html(prev);
-                        })
-                    },
-                    error: function () {
-                        console.log('err')
-                    }
-                });
             }
+
         }
+
+        $.ajax({
+            url: '/admin/uploadSingle',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                var data = data.data;
+                console.log(data)
+                if (data.length != 0) {
+                    data.forEach(function (item) {
+                        item = item.replace('public', '');
+                        var li = '<li><img src="' + item + '"><span class="delete"></span></li><span class="exchange"></span>';
+                        $('#file-upload').append(li);
+                    })
+                }
+                $('.delete').click(function () {
+                    $(this).parents('li').remove();
+                })
+                $('.exchange').click(function () {
+                    if ($(this).next().length && $(this).prev().length)
+                        var prev = $(this).prev().html();
+                    var next = $(this).next().html();
+                    $(this).prev().html(next);
+                    $(this).next().html(prev);
+                })
+            },
+            error: function () {
+                console.log('err')
+            }
+        });
     }
 
     function postPage() {
