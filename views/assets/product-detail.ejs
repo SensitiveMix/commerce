@@ -6,6 +6,7 @@
         <script>
             $(function () {
                 $('.color-detail span').click(function(){
+                    $('.color-detail span').removeClass('selected');
                     $(this).addClass('selected');
                 })
             })
@@ -16,6 +17,11 @@
                 clear: both;
                 position: relative;
             }
+            .product{
+                margin-bottom: 0;
+                border: 1px solid #dedede;
+            }
+
         </style>
 
         <!-- ========== SLIDER END ========== -->
@@ -130,53 +136,58 @@
                                 <tbody>
                                     <tr>
                                         <td>Compatibility</td>
-                                        <%if(product[0].product_spec[0].compact.length != 0) {%>
+                                        <td><%if(product[0].product_spec[0].compact.length != 0) {%>
                                         <% product[0].product_spec[0].compact.forEach(function(item){%>
-                                        <td><%=item %></td>
+                                        <%=item %>
                                         <% }) %>
                                         <% } else {%>
-                                           <td>null</td>
+                                           null
                                         <% } %>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Type</td>
-                                        <%if(product[0].product_spec[0].type.length != 0) {%>
+                                        <td><%if(product[0].product_spec[0].type.length != 0) {%>
                                         <% product[0].product_spec[0].type.forEach(function(item){%>
-                                        <td><%=item %></td>
+                                        <%=item %>
                                         <% }) %>
                                         <% } else {%>
-                                        <td>null</td>
+                                        null
                                         <% } %>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Features</td>
-                                        <%if(product[0].product_spec[0].features.length != 0) {%>
+                                        <td><%if(product[0].product_spec[0].features.length != 0) {%>
                                         <% product[0].product_spec[0].features.forEach(function(item){%>
-                                        <td><%=item %></td>
+                                        <%=item %>
                                         <% }) %>
                                         <% } else {%>
-                                        <td>null</td>
+                                        null
                                         <% } %>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Pattern</td>
-                                        <%if(product[0].product_spec[0].pattern.length != 0) {%>
+                                        <td><%if(product[0].product_spec[0].pattern.length != 0) {%>
                                         <% product[0].product_spec[0].pattern.forEach(function(item){%>
-                                        <td><%=item %></td>
+                                        <%=item %>
                                         <% }) %>
                                         <% } else {%>
-                                        <td>null</td>
+                                        null
                                         <% } %>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Material</td>
-                                        <%if(product[0].product_spec[0].material.length != 0) {%>
+                                        <td><%if(product[0].product_spec[0].material.length != 0) {%>
                                         <% product[0].product_spec[0].material.forEach(function(item){%>
-                                        <td><%=item %></td>
+                                        <%=item %>
                                         <% }) %>
                                         <% } else {%>
-                                        <td>null</td>
+                                        null
                                         <% } %>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -349,10 +360,6 @@
 <!-- ========== CONTENT END ========== -->
 
 <!-- ========== CONTENT START ========== -->
-<br/>
-<br/>
-<%= product[0].product %>
-
 
 <!-- ========== CONTENT END ========== -->
 
