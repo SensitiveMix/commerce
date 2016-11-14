@@ -1432,6 +1432,20 @@ tr.cart-subtotal > * {
 }
 
 @media screen and (max-width: 490px) {
+    .goTop {
+        bottom: 105px;
+        cursor: pointer;
+        font-size: 12px;
+        height: 33px;
+        right: 0;
+        line-height: 30px;
+        opacity: 0.8;
+        position: fixed;
+        text-align: center;
+        width: 30px;
+        background: #ddd;
+        display: none;
+    }
     .mi-slider {
         text-align: center;
         height: auto;
@@ -1629,6 +1643,20 @@ tr.cart-subtotal > * {
 
     #slider .carousel-inner img {
         height: 400px !important;
+    }
+    .goTop {
+        bottom: 105px;
+        cursor: pointer;
+        font-size: 12px;
+        height: 70px;
+        right: 0;
+        line-height: 70px;
+        opacity: 0.8;
+        position: fixed;
+        text-align: center;
+        width: 70px;
+        background: #ddd;
+        display: none;
     }
 }
 
@@ -1874,5 +1902,6 @@ embed {
     cursor: pointer;
     position: relative;
     color: #000;
+    border-radius: 7px;
 }
 

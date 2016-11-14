@@ -67,7 +67,8 @@ th,
 table.totals td,
 .single-product .summary .price,
 .mi-slider nav a {
-	font-family: "Raleway",Arial,sans-serif;
+	/*font-family: "Raleway",Arial,sans-serif;*/
+	font-family: "Vidaloka", Arial, sans-serif;
 }
 
 h2 { font-size: 32px; }

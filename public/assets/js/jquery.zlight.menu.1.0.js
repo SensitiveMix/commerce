@@ -121,10 +121,10 @@
         });
         this.li.add(this.subli).on('mouseenter mouseleave.zmenuEnter', function (event) {
             if (event.type === 'mouseenter') {
-                $(this).css('background-color', ele.op.secondColor).children('a').css({'color': ele.op.activeFontColor});
+                $(this).css({'background-color': ele.op.secondColor,'box-shadow': '0 3px 3px rgba(0,0,0,0.26)','border-bottom': '1px solid #000','border-top': '1px solid #000','border-left': '1px solid #000'}).children('a').css({'color': ele.op.activeFontColor});
             } else if (event.type === 'mouseleave') {
                 if ($(this).hasClass('zlight-active') === false) {
-                    $(this).css('background-color', 'transparent').children('a').css({'color': ele.op.fontColor});
+                    $(this).css({'background-color': 'transparent','box-shadow': 'none','border':'0'}).children('a').css({'color': ele.op.fontColor});
                 }
             }
         });

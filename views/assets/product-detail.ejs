@@ -5,6 +5,7 @@
 
         <script>
             $(function () {
+                $('body').addClass('single-product');
                 $('.color-detail span').click(function () {
                     $('.color-detail span').removeClass('selected');
                     $(this).addClass('selected');
@@ -23,6 +24,15 @@
                 border: 1px solid #dedede;
             }
 
+            .btn-primary {
+                color: #fff !important;
+                background-color: #fd638f !important;
+                border-color: #fd4a7d !important;
+            }
+
+            .synced .item {
+                border: 2px solid #000;
+            }
         </style>
 
         <!-- ========== SLIDER END ========== -->
@@ -45,13 +55,14 @@
 
                         <div id="product-large" class="owl-carousel">
                             <% product[0].product_images.forEach(function(item){ %>
-                            <div class="item"><img src="<%= item.url %>"></div>
+                            <div class="item" style="border: 1px solid rgba(0,0,0,.05);"><img src="<%= item.url %>">
+                            </div>
                             <% }) %>
                             <!--<div class="item"><img src="http://placehold.it/458x480"></div>-->
                         </div>
                         <div id="product-thumb" class="owl-carousel">
                             <% product[0].product_images.forEach(function(item){ %>
-                            <div class="item"><img src="<%= item.url %>"></div>
+                            <div class="item" style="margin: 0 8px;"><img src="<%= item.url %>"></div>
                             <% }) %>
                             <!--<div class="item"><img src="http://placehold.it/78x78"></div>-->
                         </div>
@@ -115,7 +126,8 @@
 
                         <div class="quantity buttons_added">
                             <button class="minus"><i class="fa fa-minus"></i></button>
-                            <input type="number" size="4" class="qty text form-control" title="Qty" value="1" name="qty"
+                            <input type="number" id="number" size="4" class="qty text form-control" title="Qty"
+                                   value="1" name="qty"
                                    step="1">
                             <button class="plus"><i class="fa fa-plus"></i></button>
                         </div>
@@ -329,7 +341,8 @@
                                 </div>
                                 <hr>
                                 <div class="title">
-                                    <h3><a href="#"><%= item.product_images[0].title %></a></h3>
+                                    <h3><a id="product_images_title" href="#"><%= item.product_images[0].title %></a>
+                                    </h3>
                                     <!--<p>by Jack &amp; Jones</p>-->
                                 </div>
                                 <% if( status == 200) { %>
@@ -385,28 +398,16 @@
 
 <script>
     function check_out() {
-        var product = {}
-        $.ajax({
-            url: '/checkout',
-            type: 'POST',
-            data: product,
-            dataType: "json",
-            traditional: true,
-            success: function (result) {
-                if (result == 'success') {
-                    layer.msg('添加成功');
-                } else if (result == 'failed') {
-                    layer.alert('添加失败，请检查是否有非法词汇！');
-                }
-            }, error: function (err) {
-                if (err.status == 200) {
-                    layer.msg('添加成功');
-                    location.reload();
-                } else {
-                    layer.alert('添加失败，请检查是否有非法词汇！');
-                }
-
-            }
-        });
+        console.log($('.amount').html())
+        console.log($('#number').val())
+        console.log($('.product_title').html())
+        if ("<%= status %>" == '500') {
+            layer.msg('Please Login')
+        }
+        else {
+            self.location.href = "/checkout?price=" + $('.amount').html() + "&amount=" + $('#number').val() + "&title=" + $('.product_title').html() + ""
+        }
     }
+
+
 </script>

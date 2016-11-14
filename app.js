@@ -40,8 +40,6 @@ app.use('/admin', admins);
 app.use('/service', services);
 
 
-
-
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
     'client_id': ppconfig.client_id,
@@ -58,17 +56,17 @@ app.get('/checkout', function (req, res) {
         intent: 'sale',
         redirect_urls: {
             return_url: 'http://localhost:3000/return',
-            cancel_url: 'http://localhost:3000/payment/cancel'
+            cancel_url: 'http://localhost:3000/cancel'
         },
         payer: {
             payment_method: 'paypal'
         },
         transactions: [{
             amount: {
-                total: '7.47',
+                total: parseInt(req.query.amount) * parseInt(req.query.price),
                 currency: 'USD'
             },
-            description: 'This is the payment transaction description.'
+            description: req.query.title
         }]
     };
 
@@ -164,6 +162,11 @@ app.get('/return', function (req, res) {
             })
         }
     })
+});
+
+app.get('/cancel', function (req, res) {
+    console.log(req.query)
+    res.redirect('/');
 });
 
 // catch 404 and forward to error handler
