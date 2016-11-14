@@ -851,6 +851,18 @@ router.get('/:category/:id', function (req, res, next) {
 
 });
 
+//SEO
+router.get('/SEO_Engine', function (req, res, next) {
+    db.SEOS.find({'SEO_Name': req.query.name}, function (err, result) {
+        if (err) res.send(404)
+        if (result.length != 0) {
+            res.send(result)
+        } else {
+            res.send({status: 500, msg: 'NOT FOUND'})
+        }
+    })
+});
+
 //MD5加密
 function md5(text) {
     return crypto.createHash('md5').update(text).digest('hex');

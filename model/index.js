@@ -17,3 +17,4 @@ exports.uploadTemporarys = mongoose.model('uploadTemporarys', require('./uploadT
 exports.levels = mongoose.model('levels', require('./levels'));
 exports.specifications = mongoose.model('specifications', require('./specifications'));
 exports.suppliers = mongoose.model('suppliers', require('./suppliers'));
+exports.SEOS = mongoose.model('seos', require('./seo'));

@@ -1058,6 +1058,30 @@ router.post('/saveProductDetail', function (req, res, next) {
             });
 
             console.log(newArr[0].thirdTitles);
+            var SEOS = {
+                SEO_Name: data.product_title,
+                SEO_Url: '/single-product/' + data.product_id,
+                add_time: (new Date().getTime()).toFixed()
+            };
+
+            var SEO_V = new db.SEOS(SEOS);
+            SEO_V.save();
+
+            // db.SEOS.findOne({}, function (err, seo_result) {
+            //     if (err) res.send(404)
+            //     if (seo_result == null) {
+            //
+            //     } else {
+            //         db.SEOS.find({}, {
+            //             '$push': {
+            //                 'SEO': SEOS.SEO
+            //             }
+            //         }, function (err, seo_push_res) {
+            //             console.log('seo_push_res' + seo_push_res)
+            //         })
+            //     }
+            // });
+
             db.categorys.update({
                     'secondCategory._id': newArr[0]._id
                 }, {

@@ -83,14 +83,14 @@
         }
     }
 
-    #google_translate_element{
+    #google_translate_element {
         padding-top: 17px;
     }
 
 </style>
 <script>
     $(function () {
-        if($(window).width() > 720) {
+        if ($(window).width() > 720) {
             var master = $('#menu-master').width();
             $('.submenu').width(master + 'px');
             var slide_width = $('.btn-search-add-cart').width() - master - 3;
@@ -231,7 +231,7 @@
                             </li>
                             <li>
                                 <!--<div  class="link-country-currency ctr-info ctr-track-a"-->
-                                   <!--id="google_translate_element"></div>-->
+                                <!--id="google_translate_element"></div>-->
 
                             </li>
                         </ul>
@@ -245,9 +245,11 @@
                         </div>
                         <div class="btn-group">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search"/>
-                                <span class="input-group-addon search"><embed src="../assets/img/icon/search.svg"
-                                                                              type="image/svg+xml"/></span>
+                                <input type="text" id="search_engine" class="form-control"
+                                       placeholder="Search"/>
+                                <span class="input-group-addon search" onclick="search_product()"><embed
+                                            src="../assets/img/icon/search.svg"
+                                            type="image/svg+xml"/></span>
                             </div>
                         </div>
                         <div class="btn-group btn-group-justified">
@@ -542,16 +544,54 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
 <script type="text/javascript">
-//    function googleTranslateElementInit() {
-//        new google.translate.TranslateElement({
-//            pageLanguage: 'en',
-//            includedLanguages: 'en,ku,zh-CN',
-//            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-//        }, 'google_translate_element');
-//    }
+    //    function googleTranslateElementInit() {
+    //        new google.translate.TranslateElement({
+    //            pageLanguage: 'en',
+    //            includedLanguages: 'en,ku,zh-CN',
+    //            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    //        }, 'google_translate_element');
+    //    }
 </script>
 <script type="text/javascript" src="/js/translate.js">
 
+</script>
+
+<script>
+    function search_product() {
+        if ($('#search_engine').val() == '') {
+            layer.msg('PLEASE ENTER PRODUCT')
+        } else {
+            $.ajax({
+                url: 'SEO_Engine',
+                type: 'GET',
+                data: {
+                    name: $('#search_engine').val()
+                },
+                dataType: "json",
+                traditional: true,
+                success: function (result) {
+                    if (result.length == 1) {
+                        self.location.href = result[0].SEO_Url
+                    }
+                    console.log(result)
+                }, error: function (err) {
+                    if (err.status == 500) {
+                        layer.msg('NOT FOUND');
+                    } else {
+                        layer.alert('NOT FOUND');
+                    }
+                }
+            });
+        }
+    }
+
+    document.onkeydown = function () {
+        if (event.keyCode == 13 && $('#search_engine').val() != '') {
+            search_product()
+        }
+        else {
+        }
+    }
 </script>
 </body>
 </html>
