@@ -27,7 +27,9 @@
 
                 <ol class="breadcrumb">
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">Fow Woman</a></li>
+                    <li><a href="<%=prev_category.firstUrl%>"><%=prev_category.firstTitle%></a></li>
+                    <li><a href="<%=prev_category.secondUrl%>"><%=prev_category.secondTitle%></a></li>
+                    <li><a href="<%=prev_category.thirdUrl%>"><%=prev_category.thirdTitle%></a></li>
                     <li><%=product[0].product_title  %></li>
                 </ol>
 
@@ -128,33 +130,53 @@
                                 <tbody>
                                     <tr>
                                         <td>Compatibility</td>
+                                        <%if(product[0].product_spec[0].compact.length != 0) {%>
                                         <% product[0].product_spec[0].compact.forEach(function(item){%>
                                         <td><%=item %></td>
                                         <% }) %>
+                                        <% } else {%>
+                                           <td>null</td>
+                                        <% } %>
                                     </tr>
                                     <tr>
                                         <td>Type</td>
+                                        <%if(product[0].product_spec[0].type.length != 0) {%>
                                         <% product[0].product_spec[0].type.forEach(function(item){%>
                                         <td><%=item %></td>
                                         <% }) %>
+                                        <% } else {%>
+                                        <td>null</td>
+                                        <% } %>
                                     </tr>
                                     <tr>
                                         <td>Features</td>
+                                        <%if(product[0].product_spec[0].features.length != 0) {%>
                                         <% product[0].product_spec[0].features.forEach(function(item){%>
                                         <td><%=item %></td>
                                         <% }) %>
+                                        <% } else {%>
+                                        <td>null</td>
+                                        <% } %>
                                     </tr>
                                     <tr>
                                         <td>Pattern</td>
+                                        <%if(product[0].product_spec[0].pattern.length != 0) {%>
                                         <% product[0].product_spec[0].pattern.forEach(function(item){%>
                                         <td><%=item %></td>
                                         <% }) %>
+                                        <% } else {%>
+                                        <td>null</td>
+                                        <% } %>
                                     </tr>
                                     <tr>
                                         <td>Material</td>
+                                        <%if(product[0].product_spec[0].material.length != 0) {%>
                                         <% product[0].product_spec[0].material.forEach(function(item){%>
                                         <td><%=item %></td>
                                         <% }) %>
+                                        <% } else {%>
+                                        <td>null</td>
+                                        <% } %>
                                     </tr>
                                 </tbody>
                             </table>
