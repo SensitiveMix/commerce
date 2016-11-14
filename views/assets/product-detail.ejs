@@ -5,6 +5,7 @@
 
         <script>
             $(function () {
+                $('body').addClass('single-product');
                 $('.color-detail span').click(function(){
                     $('.color-detail span').removeClass('selected');
                     $(this).addClass('selected');
@@ -21,7 +22,14 @@
                 margin-bottom: 0;
                 border: 1px solid #dedede;
             }
-
+            .btn-primary {
+                color: #fff!important;
+                background-color: #fd638f!important;
+                border-color: #fd4a7d!important;
+            }
+            .synced .item{
+                border: 2px solid #000;
+            }
         </style>
 
         <!-- ========== SLIDER END ========== -->
@@ -44,13 +52,13 @@
 
                         <div id="product-large" class="owl-carousel">
                             <% product[0].product_images.forEach(function(item){%>
-                            <div class="item"><img src="<%=item.url %>"></div>
+                            <div class="item" style="border: 1px solid rgba(0,0,0,.05);"><img src="<%=item.url %>"></div>
                             <% }) %>
                             <!--<div class="item"><img src="http://placehold.it/458x480"></div>-->
                         </div>
                         <div id="product-thumb" class="owl-carousel">
                             <% product[0].product_images.forEach(function(item){%>
-                            <div class="item"><img src="<%=item.url %>"></div>
+                            <div class="item" style="margin: 0 8px;"><img src="<%=item.url %>"></div>
                             <% }) %>
                             <!--<div class="item"><img src="http://placehold.it/78x78"></div>-->
                         </div>
