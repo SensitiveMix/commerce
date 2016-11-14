@@ -90,8 +90,12 @@
 </style>
 <script>
     $(function () {
-        var master = $('#menu-master').width();
-        $('.submenu').width(master+'px');
+        if($(window).width() > 720) {
+            var master = $('#menu-master').width();
+            $('.submenu').width(master + 'px');
+            var slide_width = $('.btn-search-add-cart').width() - master - 3;
+            $('.slide-fa').width(slide_width + 'px');
+        }
     })
 </script>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -155,6 +159,8 @@
                         $('#kv-img').attr('src', data.image_url);
                     }
                 });
+
+
             })
         </script>
         <div id="top-banner" class="widget min-widih-992 j-banner">
@@ -224,13 +230,13 @@
                                     Customer Service </a>
                             </li>
                             <li>
-                                <div  class="link-country-currency ctr-info ctr-track-a"
-                                   id="google_translate_element"></div>
+                                <!--<div  class="link-country-currency ctr-info ctr-track-a"-->
+                                   <!--id="google_translate_element"></div>-->
 
                             </li>
                         </ul>
                     </div>
-                    <div class="btn-group btn-group-justified">
+                    <div class="btn-group btn-group-justified btn-search-add-cart">
                         <div class="btn-group" style="width: 0.6%;" id="menu-master">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                 SHOP ALL CATEGORIES
@@ -532,13 +538,13 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
 <script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'en',
-            includedLanguages: 'en,ku,zh-CN',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-        }, 'google_translate_element');
-    }
+//    function googleTranslateElementInit() {
+//        new google.translate.TranslateElement({
+//            pageLanguage: 'en',
+//            includedLanguages: 'en,ku,zh-CN',
+//            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+//        }, 'google_translate_element');
+//    }
 </script>
 <script type="text/javascript" src="/js/translate.js">
 

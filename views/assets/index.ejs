@@ -66,102 +66,40 @@
                     </div>
 
                     <div class="carousel">
+                        <% if(categories.length != 0){ %>
+                        <% categories.forEach(function (item) { %>
+                            <% if(item.secondCategory.length != 0) { %>
+                            <% item.secondCategory.forEach(function(secondItem) { %>
+                            <% if(secondItem.thirdTitles.length != 0) { %>
+                            <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
+                            <% if(thirdItem.product.length != 0) { %>
+                            <% thirdItem.product.forEach(function (productItem,index) { %>
+
                         <div>
-                            <div class="product">
+                            <div class="product" style="display: block">
                                 <div class="thumbnail">
-                                    <a href="#"><img src="http://placehold.it/204x204" alt=""></a>
+                                    <a href="/single-product/<%=productItem.product_id %>"><img class="product_images" src="<%=productItem.product_images[0].url %>" alt=""></a>
                                 </div>
                                 <hr>
                                 <div class="title">
-                                    <h3><a href="#">Reshape Panties</a></h3>
-                                    <p>by Jack &amp; Jones</p>
+                                    <h5><a href="#">
+                                            <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"><%=productItem.product_title %></p></a></h5>
+                                    <!--<p>123</p>-->
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div class="product">
-                                <div class="thumbnail">
-                                    <a href="#"><img src="http://placehold.it/204x204" alt=""></a>
-                                </div>
-                                <hr>
-                                <div class="title">
-                                    <h3><a href="#">Reshape Panties</a></h3>
-                                    <p>by Jack &amp; Jones</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="product">
-                                <div class="thumbnail">
-                                    <a href="#"><img src="http://placehold.it/204x204" alt=""></a>
-                                </div>
-                                <hr>
-                                <div class="title">
-                                    <h3><a href="#">Reshape Panties</a></h3>
-                                    <p>by Jack &amp; Jones</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="product">
-                                <div class="thumbnail">
-                                    <a href="#"><img src="http://placehold.it/204x204" alt=""></a>
-                                </div>
-                                <hr>
-                                <div class="title">
-                                    <h3><a href="#">Reshape Panties</a></h3>
-                                    <p>by Jack &amp; Jones</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="product">
-                                <div class="thumbnail">
-                                    <a href="#"><img src="http://placehold.it/204x204" alt=""></a>
-                                </div>
-                                <hr>
-                                <div class="title">
-                                    <h3><a href="#">Reshape Panties</a></h3>
-                                    <p>by Jack &amp; Jones</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="product">
-                                <div class="thumbnail">
-                                    <a href="#"><img src="http://placehold.it/204x204" alt=""></a>
-                                </div>
-                                <hr>
-                                <div class="title">
-                                    <h3><a href="#">Reshape Panties</a></h3>
-                                    <p>by Jack &amp; Jones</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="product">
-                                <div class="thumbnail">
-                                    <a href="#"><img src="http://placehold.it/204x204" alt=""></a>
-                                </div>
-                                <hr>
-                                <div class="title">
-                                    <h3><a href="#">Reshape Panties</a></h3>
-                                    <p>by Jack &amp; Jones</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="product">
-                                <div class="thumbnail">
-                                    <a href="#"><img src="http://placehold.it/204x204" alt=""></a>
-                                </div>
-                                <hr>
-                                <div class="title">
-                                    <h3><a href="#">Reshape Panties</a></h3>
-                                    <p>by Jack &amp; Jones</p>
-                                </div>
-                            </div>
-                        </div>
+
+
+                            <% }) %>
+                            <% } %>
+                            <% }) %>
+                            <% } %>
+
+                            <% }) %>
+                            <% } %>
+                        <% }) %>
+                        <% } %>
+
                     </div>
 
                 </div>
@@ -179,7 +117,7 @@
                         <div class="product">
                             <div class="thumbnail">
                                 <a href="<%= thirdItem.thirdUrl %>">
-                                    <img src="images/<%= thirdItem.thirdImages %>" alt=""></a>
+                                    <img class="product_images" src="images/<%= thirdItem.thirdImages %>" alt=""></a>
                                 <a href="#" class="add-to-cart" title="Add to Cart">
                                   <span class="fa-stack fa-2x">
                                     <i class="fa fa-circle fa-stack-2x"></i>
@@ -209,152 +147,6 @@
                 </ul>
                 <% }) %>
                 <% } %>
-
-                <h2 class="align-center unbranded">Browse Our Store</h2>
-                <div class="gap-25"></div>
-
-                <ul class="products row">
-                    <li class="col-sm-3">
-                        <div class="product">
-                            <div class="thumbnail">
-                                <a href="product.html"><img src="http://placehold.it/263x388" alt=""></a>
-                                <a href="#" class="add-to-cart" title="Add to Cart">
-                                  <span class="fa-stack fa-2x">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
-                                  </span>
-                                </a>
-                            </div>
-                            <hr>
-                            <div class="title">
-                                <h3><a href="#">Reshape Panties</a></h3>
-                                <p>by Jack &amp; Jones</p>
-                            </div>
-                            <span class="price">$18</span>
-                        </div>
-                    </li>
-
-                    <li class="col-sm-3">
-                        <div class="product">
-                            <div class="thumbnail">
-                                <a href="product.html"><img src="http://placehold.it/263x388" alt=""></a>
-                                <a href="#" class="add-to-cart" title="Add to Cart">
-              <span class="fa-stack fa-2x">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
-              </span>
-                                </a>
-                            </div>
-                            <hr>
-                            <div class="title">
-                                <h3><a href="#">Reshape Panties</a></h3>
-                                <p>by Jack &amp; Jones</p>
-                            </div>
-                            <span class="price">$18</span>
-                        </div>
-                    </li>
-
-                    <li class="col-sm-3 last">
-                        <div class="product">
-                            <div class="thumbnail">
-                                <a href="product.html"><img src="http://placehold.it/263x388" alt=""></a>
-                                <a href="#" class="add-to-cart" title="Add to Cart">
-              <span class="fa-stack fa-2x">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
-              </span>
-                                </a>
-                            </div>
-                            <hr>
-                            <div class="title">
-                                <h3><a href="#">Reshape Panties</a></h3>
-                                <p>by Jack &amp; Jones</p>
-                            </div>
-                            <span class="price">$18</span>
-                        </div>
-                    </li>
-
-                    <li class="col-sm-3 first">
-                        <div class="product">
-                            <div class="thumbnail">
-                                <a href="product.html"><img src="http://placehold.it/263x388" alt=""></a>
-                                <a href="#" class="add-to-cart" title="Add to Cart">
-              <span class="fa-stack fa-2x">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
-              </span>
-                                </a>
-                            </div>
-                            <hr>
-                            <div class="title">
-                                <h3><a href="#">Reshape Panties</a></h3>
-                                <p>by Jack &amp; Jones</p>
-                            </div>
-                            <span class="price">$18</span>
-                        </div>
-                    </li>
-
-                    <li class="col-sm-3">
-                        <div class="product">
-                            <div class="thumbnail">
-                                <a href="product.html"><img src="http://placehold.it/263x388" alt=""></a>
-                                <a href="#" class="add-to-cart" title="Add to Cart">
-              <span class="fa-stack fa-2x">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
-              </span>
-                                </a>
-                            </div>
-                            <hr>
-                            <div class="title">
-                                <h3><a href="#">Reshape Panties</a></h3>
-                                <p>by Jack &amp; Jones</p>
-                            </div>
-                            <span class="price">$18</span>
-                        </div>
-                    </li>
-
-                    <li class="col-sm-3">
-                        <div class="product">
-                            <div class="thumbnail">
-                                <a href="product.html"><img src="http://placehold.it/263x388" alt=""></a>
-                                <a href="#" class="add-to-cart" title="Add to Cart">
-              <span class="fa-stack fa-2x">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
-              </span>
-                                </a>
-                            </div>
-                            <hr>
-                            <div class="title">
-                                <h3><a href="#">Reshape Panties</a></h3>
-                                <p>by Jack &amp; Jones</p>
-                            </div>
-                            <span class="price">$18</span>
-                        </div>
-                    </li>
-
-                    <li class="col-sm-3 last">
-                        <div class="product">
-                            <div class="thumbnail">
-                                <a href="product.html"><img src="http://placehold.it/263x388" alt=""></a>
-                                <a href="#" class="add-to-cart" title="Add to Cart">
-              <span class="fa-stack fa-2x">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
-              </span>
-                                </a>
-                            </div>
-                            <hr>
-                            <div class="title">
-                                <h3><a href="#">Reshape Panties</a></h3>
-                                <p>by Jack &amp; Jones</p>
-                            </div>
-                            <span class="price">$18</span>
-                        </div>
-                    </li>
-
-                </ul>
 
 
             </div>
