@@ -512,40 +512,59 @@ router.get('/product/:id', function (req, res, next) {
     }, function (err, result) {
         var arr = [];
         var secondParam = {};
-        secondParam.firstTitle = result.firstCategory;
-        secondParam.firstUrl = result.firstUrl;
-        _.each(result.secondCategory, function (second) {
-            var newArr = _.filter(second.thirdTitles, function (third) {
-                secondParam.secondTitle = second.secondTitle;
-                secondParam.secondUrl = second.secondUrl;
-                secondParam.thirdTitle = third.thirdTitle;
-                secondParam.thirdUrl = third.thirdUrl;
-                return third.thirdUrl == '/product/' + req.params["id"]
-            });
-            arr = _.concat(newArr, arr)
-        });
-        var statusCode = null;
-        if (req.cookies["account"] != null) {
-            statusCode = 200;
-        } else {
-            statusCode = 500;
-        }
 
-        console.log(secondParam)
-        if (arr.length == 0) {
-            res.render('assets/category', {
-                product: [],
-                title: 'ECSell',
-                prev_category: secondParam,
-                categories: categoryies,
-                hotLabels: hotLabel,
-                user: req.cookies['account'],
-                status: statusCode
-            })
+        if (result != null) {
+            secondParam.firstTitle = result.firstCategory;
+            secondParam.firstUrl = result.firstUrl;
+            _.each(result.secondCategory, function (second) {
+                var newArr = _.filter(second.thirdTitles, function (third) {
+                    secondParam.secondTitle = second.secondTitle;
+                    secondParam.secondUrl = second.secondUrl;
+                    secondParam.thirdTitle = third.thirdTitle;
+                    secondParam.thirdUrl = third.thirdUrl;
+                    return third.thirdUrl == '/product/' + req.params["id"]
+                });
+                arr = _.concat(newArr, arr)
+            });
+            var statusCode = null;
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
+
+            console.log(secondParam)
+            if (arr.length == 0) {
+                res.render('assets/category', {
+                    product: [],
+                    title: 'ECSell',
+                    prev_category: secondParam,
+                    categories: categoryies,
+                    hotLabels: hotLabel,
+                    user: req.cookies['account'],
+                    status: statusCode
+                })
+            } else {
+                console.log(arr)
+                res.render('assets/category', {
+                    product: arr,
+                    title: 'ECSell',
+                    prev_category: secondParam,
+                    categories: categoryies,
+                    hotLabels: hotLabel,
+                    user: req.cookies['account'],
+                    status: statusCode
+                })
+            }
         } else {
-            console.log(arr)
-            res.render('assets/category', {
-                product: arr,
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
+
+            res.render('assets/404', {
+                product: [],
                 title: 'ECSell',
                 prev_category: secondParam,
                 categories: categoryies,
@@ -565,36 +584,68 @@ router.get('/single-product/:id', function (req, res, next) {
         var most_like = [];
         var detail_params = {};
         console.log(result)
-        _.each(result.secondCategory, function (second) {
-            _.each(second.thirdTitles, function (third) {
-                var newArr = _.filter(third.product, function (four) {
-                    detail_params.thirdTitle = third.thirdTitle;
-                    detail_params.thirdUrl = third.thirdUrl;
-                    detail_params.secondTitle = second.secondTitle;
-                    detail_params.secondUrl = second.secondUrl;
-                    return four.product_id == req.params["id"]
+        if (result != null) {
+            _.each(result.secondCategory, function (second) {
+                _.each(second.thirdTitles, function (third) {
+                    var newArr = _.filter(third.product, function (four) {
+                        detail_params.thirdTitle = third.thirdTitle;
+                        detail_params.thirdUrl = third.thirdUrl;
+                        detail_params.secondTitle = second.secondTitle;
+                        detail_params.secondUrl = second.secondUrl;
+                        return four.product_id == req.params["id"]
 
+                    });
+                    arr = _.concat(newArr, arr)
                 });
-                arr = _.concat(newArr, arr)
-            });
-            _.each(second.thirdTitles, function (third) {
-                var mostArr = _.filter(third.product, function (four) {
-                    return four.product_id != req.params["id"]
+                _.each(second.thirdTitles, function (third) {
+                    var mostArr = _.filter(third.product, function (four) {
+                        return four.product_id != req.params["id"]
 
+                    });
+                    most_like = _.concat(mostArr, most_like)
                 });
-                most_like = _.concat(mostArr, most_like)
-            });
 
-        });
-        console.log(detail_params);
-        var statusCode = null;
-        if (req.cookies["account"] != null) {
-            statusCode = 200;
+            });
+            console.log(detail_params);
+            var statusCode = null;
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
+            if (arr.length == 0) {
+                res.render('assets/product-detail', {
+                    product: [],
+                    title: 'ECSell',
+                    like_product: most_like,
+                    prev_category: detail_params,
+                    categories: categoryies,
+                    hotLabels: hotLabel,
+                    user: req.cookies['account'],
+                    status: statusCode,
+                    errorCode: 500,
+                    msg: 'NOT FOUND'
+                })
+            } else {
+                console.log(arr)
+                res.render('assets/product-detail', {
+                    product: arr,
+                    like_product: most_like,
+                    prev_category: detail_params,
+                    title: 'ECSell',
+                    categories: categoryies,
+                    hotLabels: hotLabel,
+                    user: req.cookies['account'],
+                    status: statusCode
+                })
+            }
         } else {
-            statusCode = 500;
-        }
-        if (arr.length == 0) {
-            res.render('assets/product-detail', {
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
+            res.render('assets/404', {
                 product: [],
                 title: 'ECSell',
                 like_product: most_like,
@@ -605,18 +656,6 @@ router.get('/single-product/:id', function (req, res, next) {
                 status: statusCode,
                 errorCode: 500,
                 msg: 'NOT FOUND'
-            })
-        } else {
-            console.log(arr)
-            res.render('assets/product-detail', {
-                product: arr,
-                like_product: most_like,
-                prev_category: detail_params,
-                title: 'ECSell',
-                categories: categoryies,
-                hotLabels: hotLabel,
-                user: req.cookies['account'],
-                status: statusCode
             })
         }
     })
@@ -630,46 +669,63 @@ router.get('/single-product/:id', function (req, res, next) {
     }, function (err, result) {
         var arr = [];
         var detail_params = {};
-        _.each(result.secondCategory, function (second) {
-            _.each(second.thirdTitles, function (third) {
-                var newArr = _.filter(third.product, function (four) {
-                    detail_params.thirdTitle = third.thirdTitle;
-                    detail_params.thirdUrl = third.thirdUrl;
-                    detail_params.secondTitle = second.secondTitle;
-                    detail_params.secondUrl = second.secondUrl;
-                    return four.product_id == req.params["id"]
+        if (result != null) {
+            _.each(result.secondCategory, function (second) {
+                _.each(second.thirdTitles, function (third) {
+                    var newArr = _.filter(third.product, function (four) {
+                        detail_params.thirdTitle = third.thirdTitle;
+                        detail_params.thirdUrl = third.thirdUrl;
+                        detail_params.secondTitle = second.secondTitle;
+                        detail_params.secondUrl = second.secondUrl;
+                        return four.product_id == req.params["id"]
 
+                    });
+                    arr = _.concat(newArr, arr)
                 });
-                arr = _.concat(newArr, arr)
-            });
 
-        });
-        console.log(detail_params);
-        console.log(arr);
-        var statusCode = null;
-        if (req.cookies["account"] != null) {
-            statusCode = 200;
+            });
+            console.log(detail_params);
+            console.log(arr);
+            var statusCode = null;
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
+            if (arr.length == 0) {
+                res.render('assets/single-product-detail', {
+                    product: [],
+                    prev_category: detail_params,
+                    title: 'ECSell',
+                    categories: categoryies,
+                    hotLabels: hotLabel,
+                    user: req.cookies['account'],
+                    status: statusCode,
+                    errorCode: 500,
+                    msg: 'NOT FOUND'
+                })
+            } else {
+                console.log(arr)
+                res.render('assets/single-product-detail', {
+                    product: arr,
+                    prev_category: detail_params,
+                    title: 'ECSell',
+                    categories: categoryies,
+                    hotLabels: hotLabel,
+                    user: req.cookies['account'],
+                    status: statusCode
+                })
+            }
         } else {
-            statusCode = 500;
-        }
-        if (arr.length == 0) {
-            res.render('assets/single-product-detail', {
+            if (req.cookies["account"] != null) {
+                statusCode = 200;
+            } else {
+                statusCode = 500;
+            }
+            res.render('assets/404', {
                 product: [],
-                prev_category: detail_params,
                 title: 'ECSell',
-                categories: categoryies,
-                hotLabels: hotLabel,
-                user: req.cookies['account'],
-                status: statusCode,
-                errorCode: 500,
-                msg: 'NOT FOUND'
-            })
-        } else {
-            console.log(arr)
-            res.render('assets/single-product-detail', {
-                product: arr,
                 prev_category: detail_params,
-                title: 'ECSell',
                 categories: categoryies,
                 hotLabels: hotLabel,
                 user: req.cookies['account'],
@@ -687,35 +743,53 @@ router.get('/:category/:id', function (req, res, next) {
         db.categorys.find({
             'firstUrl': '/' + req.params["category"] + '/' + req.params["id"]
         }, function (err, result) {
-            var secondCategory = result[0].secondCategory;
-            console.log(secondCategory);
-            var statusCode = null;
-            var detail_params = {};
-            detail_params.firstTitle = result[0].firstCategory;
-            detail_params.firstUrl = result[0].firstUrl;
+            console.log(result);
+            if (result.length != 0) {
+                var secondCategory = result[0].secondCategory;
+                console.log(secondCategory);
+                var statusCode = null;
+                var detail_params = {};
+                detail_params.firstTitle = result[0].firstCategory;
+                detail_params.firstUrl = result[0].firstUrl;
 
-            if (req.cookies["account"] != null) {
-                statusCode = 200;
+                if (req.cookies["account"] != null) {
+                    statusCode = 200;
+                } else {
+                    statusCode = 500;
+                }
+                if (secondCategory.length == 0) {
+                    res.render('assets/first-category', {
+                        product: [],
+                        title: 'ECSell',
+                        prev_category: detail_params,
+                        categories: categoryies,
+                        hotLabels: hotLabel,
+                        user: req.cookies['account'],
+                        status: statusCode,
+                        errorCode: 500,
+                        msg: 'NOT FOUND'
+                    })
+                } else {
+                    res.render('assets/first-category', {
+                        product: secondCategory,
+                        title: 'ECSell',
+                        prev_category: detail_params,
+                        categories: categoryies,
+                        hotLabels: hotLabel,
+                        user: req.cookies['account'],
+                        status: statusCode
+                    })
+                }
             } else {
-                statusCode = 500;
-            }
-            if (secondCategory.length == 0) {
-                res.render('assets/first-category', {
+                if (req.cookies["account"] != null) {
+                    statusCode = 200;
+                } else {
+                    statusCode = 500;
+                }
+                res.render('assets/404', {
                     product: [],
                     title: 'ECSell',
-                    prev_category: detail_params,
-                    categories: categoryies,
-                    hotLabels: hotLabel,
-                    user: req.cookies['account'],
-                    status: statusCode,
-                    errorCode: 500,
-                    msg: 'NOT FOUND'
-                })
-            } else {
-                res.render('assets/first-category', {
-                    product: secondCategory,
-                    title: 'ECSell',
-                    prev_category: detail_params,
+                    prev_category: [],
                     categories: categoryies,
                     hotLabels: hotLabel,
                     user: req.cookies['account'],
@@ -761,7 +835,7 @@ router.get('/:category/:id', function (req, res, next) {
             });
 
         })
-    }else {
+    } else {
         next();
     }
 
