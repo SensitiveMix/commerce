@@ -18,7 +18,7 @@
     <link href="../assets/css/style.css" rel="stylesheet">
     <link href="../assets/css/config.css" rel="stylesheet">
     <link rel="stylesheet" href="../layer-v2.2/layer/skin/layer.css">
-    <link rel="shortcut icon" href="../images/favicon.ico" />
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -61,7 +61,7 @@
     }
 
     /*.person_ul li:hover {*/
-        /*background-color: #2a9292*/
+    /*background-color: #2a9292*/
     /*}*/
 
     .person_ul a {
@@ -72,13 +72,19 @@
     .person_ul li a:hover {
         color: #fd638f;
     }
-    @media (min-width: 992px){
+
+    @media (min-width: 992px) {
         .col-md-3 {
             width: 23.2%;
         }
+
         .col-md-9 {
             width: 76.8%;
         }
+    }
+
+    #google_translate_element{
+        padding-top: 17px;
     }
 
 </style>
@@ -212,9 +218,9 @@
                                     Customer Service </a>
                             </li>
                             <li>
-                                <a class="link-country-currency ctr-info ctr-track-a" ctr="{'area':'country'}"
-                                   data-abbr="us"><strong class="link-ship-to">Ship to</strong>: <em
-                                            class="litb-icon-flag us"></em><b></b>$USD</a>
+                                <div  class="link-country-currency ctr-info ctr-track-a"
+                                   id="google_translate_element"></div>
+
                             </li>
                         </ul>
                     </div>
@@ -236,7 +242,7 @@
                             <nav class="shopping-cart">
                                 <a href="#">
                                     <i class="fa fa-shopping-cart fa-lg"></i> Cart
-                        <span class="fa-stack">
+                                    <span class="fa-stack">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-stack-1x fa-inverse">3</i>
           </span>
@@ -515,5 +521,17 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,ku,zh-CN',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="/js/translate.js">
+
+</script>
 </body>
 </html>

@@ -1214,7 +1214,7 @@ var upload = multer({
     storage: storage
 });
 router.post('/uploadSingle', upload.array('file'), function (req, res, next) {
-    console.log(req.files)
+    console.log(req.files);
     if (req.files == undefined) {
         res.send("请选择要上传的图片...");
     } else {
@@ -1228,16 +1228,13 @@ router.post('/uploadSingle', upload.array('file'), function (req, res, next) {
             uploadArr.push(vitualPath);
 
         }
+        console.log(req.files.length)
         console.log(uploadArr);
         res.json({
             code: 200,
             data: uploadArr
         })
-        // res.render('admin/upload_goods', {upload: uploadArr, username: u.nick_name});
-        // res.render('admin/upload-products-detail', {upload: uploadArr, username: u.nick_name});
     }
-    // var url = 'http://' + req.headers.host + '/images/' + req.file.originalname;
-
 });
 
 /* 多图片上传 */
