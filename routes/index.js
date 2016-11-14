@@ -319,7 +319,7 @@ router.post('/dologin', function (req, res) {
                 level: result[0].level,
                 nick_name: result[0].nick_name,
                 company: result[0].company
-            })
+            });
             console.log(result[0].nick_name + ":登录成功" + new Date());
             db.hotLabels.find({}, null, {
                 sort: {
@@ -577,6 +577,9 @@ router.get('/product/:id', function (req, res, next) {
 });
 
 router.get('/single-product/:id', function (req, res, next) {
+    console.log('-------------')
+    console.log(req.cookies["account"]);
+    console.log('---***----')
     db.categorys.findOne({
         'secondCategory.thirdTitles.product.product_id': req.params["id"]
     }, function (err, result) {
@@ -666,6 +669,9 @@ router.get('/single-product/:id', function (req, res, next) {
 //产品详情页查找
 router.get('/single-product/:id', checkCategories);
 router.get('/single-product/:id', function (req, res, next) {
+    console.log('-------------')
+    console.log(req.cookies["account"]);
+    console.log('---***----')
     db.categorys.findOne({
         'secondCategory.thirdTitles.product.product_id': req.params["id"]
     }, function (err, result) {
@@ -694,6 +700,7 @@ router.get('/single-product/:id', function (req, res, next) {
             } else {
                 statusCode = 500;
             }
+
             if (arr.length == 0) {
                 res.render('assets/single-product-detail', {
                     product: [],

@@ -5,19 +5,20 @@
 
         <script>
             $(function () {
-                $('.color-detail span').click(function(){
+                $('.color-detail span').click(function () {
                     $('.color-detail span').removeClass('selected');
                     $(this).addClass('selected');
                 })
             })
         </script>
         <style>
-            .specifications{
+            .specifications {
                 min-width: 70%;
                 clear: both;
                 position: relative;
             }
-            .product{
+
+            .product {
                 margin-bottom: 0;
                 border: 1px solid #dedede;
             }
@@ -33,24 +34,24 @@
 
                 <ol class="breadcrumb">
                     <li><a href="/">Home</a></li>
-                    <li><a href="<%=prev_category.firstUrl%>"><%=prev_category.firstTitle%></a></li>
-                    <li><a href="<%=prev_category.secondUrl%>"><%=prev_category.secondTitle%></a></li>
-                    <li><a href="<%=prev_category.thirdUrl%>"><%=prev_category.thirdTitle%></a></li>
-                    <li><%=product[0].product_title  %></li>
+                    <li><a href="<%= prev_category.firstUrl %>"><%= prev_category.firstTitle %></a></li>
+                    <li><a href="<%= prev_category.secondUrl %>"><%= prev_category.secondTitle %></a></li>
+                    <li><a href="<%= prev_category.thirdUrl %>"><%= prev_category.thirdTitle %></a></li>
+                    <li><%= product[0].product_title %></li>
                 </ol>
 
                 <div class="row">
                     <div class="col-sm-5">
 
                         <div id="product-large" class="owl-carousel">
-                            <% product[0].product_images.forEach(function(item){%>
-                            <div class="item"><img src="<%=item.url %>"></div>
+                            <% product[0].product_images.forEach(function(item){ %>
+                            <div class="item"><img src="<%= item.url %>"></div>
                             <% }) %>
                             <!--<div class="item"><img src="http://placehold.it/458x480"></div>-->
                         </div>
                         <div id="product-thumb" class="owl-carousel">
-                            <% product[0].product_images.forEach(function(item){%>
-                            <div class="item"><img src="<%=item.url %>"></div>
+                            <% product[0].product_images.forEach(function(item){ %>
+                            <div class="item"><img src="<%= item.url %>"></div>
                             <% }) %>
                             <!--<div class="item"><img src="http://placehold.it/78x78"></div>-->
                         </div>
@@ -58,36 +59,37 @@
                     </div>
                     <div class="col-sm-7 summary entry-summary">
 
-                        <h1 class="product_title"><%=product[0].product_title  %></h1>
+                        <h1 class="product_title"><%= product[0].product_title %></h1>
 
                         <p class="price">
                             <% if( status == 200) { %>
-                            <% if( user.level == '10' ) {%>
-                            <% if( product[0].product_origin_price.sale_discount_regular_price.length == 0 ) {%>
-                            <span class="amount"><%=product[0].product_origin_price.regular_price %></span><sup>00</sup>
+                            <% if( user.level == '10' ) { %>
+                            <% if( product[0].product_origin_price.sale_discount_regular_price.length == 0 ) { %>
+                            <span class="amount"><%= product[0].product_origin_price.regular_price %></span><sup>00</sup>
                             <% } else { %>
-                            <span class="amount"><%=product[0].product_origin_price.sale_discount_regular_price %></span><sup>00</sup>
+                            <span class="amount"><%= product[0].product_origin_price.sale_discount_regular_price %></span><sup>00</sup>
                             <% } %>
                             <% } %>
-                            <% if( user.level == '66' ) {%>
-                            <% if( product[0].product_origin_price.sale_discount_vip_price.length == 0 ) {%>
-                            <span class="amount"><%=product[0].product_origin_price.regular_price %></span><sup>00</sup>
+                            <% if( user.level == '66' ) { %>
+                            <% if( product[0].product_origin_price.sale_discount_vip_price.length == 0 ) { %>
+                            <span class="amount"><%= product[0].product_origin_price.regular_price %></span><sup>00</sup>
                             <% } else { %>
-                            <span class="amount"><%=product[0].product_origin_price.sale_discount_vip_price %></span><sup>00</sup>
+                            <span class="amount"><%= product[0].product_origin_price.sale_discount_vip_price %></span><sup>00</sup>
                             <% } %>
                             <% } %>
                             <% } %>
-                            <% if( status == 500 ) {%>
-                            <span class="amount"><%=product[0].product_origin_price.market_price %></span><sup>00</sup>
+                            <% if( status == 500 ) { %>
+                            <span class="amount"><%= product[0].product_origin_price.market_price %></span><sup>00</sup>
                             <% } %>
                         </p>
 
                         <h3>Color</h3>
                         <div class="color-detail">
-                            <% product[0].product_price.forEach(function(item){%>
-                            <span data-value="6916" data-id="attr_4819169_6916" class="value-6916" image-id="29980083" data-color="Red">
+                            <% product[0].product_price.forEach(function(item){ %>
+                            <span data-value="6916" data-id="attr_4819169_6916" class="value-6916" image-id="29980083"
+                                  data-color="Red">
 								<em class="litb-icon-selected"></em>
-                                <em class="litb-icon-selected-disabled"></em><%=item.compile_spec %>
+                                <em class="litb-icon-selected-disabled"></em><%= item.compile_spec %>
 							</span>
 
                             <% }) %>
@@ -98,26 +100,28 @@
                         <!--<h3>Very Few Items Left!</h3>-->
 
                         <!--<div class="variations">-->
-                            <!--<div class="row">-->
-                                <!---->
-                                <!--<div class="col-sm-6">-->
-                                    <!--<select class="form-control col-sm-6" name="size" id="size">-->
-                                        <!--<option value="0">Size</option>-->
-                                        <!--<option value="red">M</option>-->
-                                        <!--<option value="blue">L</option>-->
-                                        <!--<option value="green">XL</option>-->
-                                    <!--</select>-->
-                                <!--</div>-->
-                            <!--</div>-->
+                        <!--<div class="row">-->
+                        <!---->
+                        <!--<div class="col-sm-6">-->
+                        <!--<select class="form-control col-sm-6" name="size" id="size">-->
+                        <!--<option value="0">Size</option>-->
+                        <!--<option value="red">M</option>-->
+                        <!--<option value="blue">L</option>-->
+                        <!--<option value="green">XL</option>-->
+                        <!--</select>-->
+                        <!--</div>-->
+                        <!--</div>-->
                         <!--</div>-->
 
                         <div class="quantity buttons_added">
                             <button class="minus"><i class="fa fa-minus"></i></button>
-                            <input type="number" size="4" class="qty text form-control" title="Qty" value="1" name="qty" step="1">
+                            <input type="number" size="4" class="qty text form-control" title="Qty" value="1" name="qty"
+                                   step="1">
                             <button class="plus"><i class="fa fa-plus"></i></button>
                         </div>
 
-                        <input type="submit" class="btn btn-primary btn-lg" id="add-to-cart" value="Add to Cart">
+                        <input type="button" onclick="check_out()" class="btn btn-primary btn-lg" id="add-to-cart"
+                               value="Add to Cart">
 
                     </div>
                 </div>
@@ -134,61 +138,66 @@
                             <h4>Specifications</h4>
                             <table class="table">
                                 <tbody>
-                                    <tr>
-                                        <td>Compatibility</td>
-                                        <td><%if(product[0].product_spec[0].compact.length != 0) {%>
-                                        <% product[0].product_spec[0].compact.forEach(function(item){%>
-                                        <%=item %>
+                                <tr>
+                                    <td>Compatibility</td>
+                                    <td>
+                                        <% if(product[0].product_spec[0].compact.length != 0) { %>
+                                        <% product[0].product_spec[0].compact.forEach(function(item){ %>
+                                        <%= item %>
                                         <% }) %>
-                                        <% } else {%>
-                                           null
-                                        <% } %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Type</td>
-                                        <td><%if(product[0].product_spec[0].type.length != 0) {%>
-                                        <% product[0].product_spec[0].type.forEach(function(item){%>
-                                        <%=item %>
-                                        <% }) %>
-                                        <% } else {%>
+                                        <% } else { %>
                                         null
                                         <% } %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Features</td>
-                                        <td><%if(product[0].product_spec[0].features.length != 0) {%>
-                                        <% product[0].product_spec[0].features.forEach(function(item){%>
-                                        <%=item %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Type</td>
+                                    <td>
+                                        <% if(product[0].product_spec[0].type.length != 0) { %>
+                                        <% product[0].product_spec[0].type.forEach(function(item){ %>
+                                        <%= item %>
                                         <% }) %>
-                                        <% } else {%>
+                                        <% } else { %>
                                         null
                                         <% } %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pattern</td>
-                                        <td><%if(product[0].product_spec[0].pattern.length != 0) {%>
-                                        <% product[0].product_spec[0].pattern.forEach(function(item){%>
-                                        <%=item %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Features</td>
+                                    <td>
+                                        <% if(product[0].product_spec[0].features.length != 0) { %>
+                                        <% product[0].product_spec[0].features.forEach(function(item){ %>
+                                        <%= item %>
                                         <% }) %>
-                                        <% } else {%>
+                                        <% } else { %>
                                         null
                                         <% } %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Material</td>
-                                        <td><%if(product[0].product_spec[0].material.length != 0) {%>
-                                        <% product[0].product_spec[0].material.forEach(function(item){%>
-                                        <%=item %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Pattern</td>
+                                    <td>
+                                        <% if(product[0].product_spec[0].pattern.length != 0) { %>
+                                        <% product[0].product_spec[0].pattern.forEach(function(item){ %>
+                                        <%= item %>
                                         <% }) %>
-                                        <% } else {%>
+                                        <% } else { %>
                                         null
                                         <% } %>
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Material</td>
+                                    <td>
+                                        <% if(product[0].product_spec[0].material.length != 0) { %>
+                                        <% product[0].product_spec[0].material.forEach(function(item){ %>
+                                        <%= item %>
+                                        <% }) %>
+                                        <% } else { %>
+                                        null
+                                        <% } %>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
 
@@ -196,7 +205,11 @@
                         <div class="photos">
                             <h4>Video</h4>
                             <div id="item-flash">
-                                <embed style="width: 100%" type="application/x-shockwave-flash" src="//cloud.video.taobao.com/play/u/735994334/p/2/e/1/t/3/43850387.swf" width="480" height="388" id="itemFlashObject" name="itemFlashObject" quality="high" wmode="opaque" allowfullscreen="true" menu="false" flashvars="MMplayerType=PlugInn&amp;reservelt=false&amp;showplayinglogo=false">
+                                <embed style="width: 100%" type="application/x-shockwave-flash"
+                                       src="//cloud.video.taobao.com/play/u/735994334/p/2/e/1/t/3/43850387.swf"
+                                       width="480" height="388" id="itemFlashObject" name="itemFlashObject"
+                                       quality="high" wmode="opaque" allowfullscreen="true" menu="false"
+                                       flashvars="MMplayerType=PlugInn&amp;reservelt=false&amp;showplayinglogo=false">
                             </div>
                         </div>
                     </div>
@@ -217,7 +230,8 @@
                                                 <span class="glyphicon glyphicon-star"></span>
                                             </div>
                                             <h5 class="meta">James Koster <span>— June 7, 2013</span></h5>
-                                            <p>Really happy with this print. The colors are great, and the paper quality is good too.</p>
+                                            <p>Really happy with this print. The colors are great, and the paper quality
+                                                is good too.</p>
                                         </div>
                                     </div>
                                 </li>
@@ -234,7 +248,8 @@
                                                 <span class="glyphicon glyphicon-star"></span>
                                             </div>
                                             <h5 class="meta">Cobus Bester <span>— June 7, 2013</span></h5>
-                                            <p>You only get the picture, not the person holding it, something they don’t mention in the description, now I’ve got to find my own person.</p>
+                                            <p>You only get the picture, not the person holding it, something they don’t
+                                                mention in the description, now I’ve got to find my own person.</p>
                                         </div>
                                     </div>
                                 </li>
@@ -251,7 +266,8 @@
                                                 <span class="glyphicon glyphicon-star"></span>
                                             </div>
                                             <h5 class="meta">Stuart <span>— June 7, 2013</span></h5>
-                                            <p>This is a fantastic quality print and is happily hanging framed on my wall now.</p>
+                                            <p>This is a fantastic quality print and is happily hanging framed on my
+                                                wall now.</p>
                                         </div>
                                     </div>
                                 </li>
@@ -282,8 +298,11 @@
                                         </select>
                                     </p>
                                 </div>
-                                <p class="comment-form-comment"><textarea name="review" id="review" class="form-control" cols="30" rows="5" placeholder="Your Review"></textarea></p>
-                                <p class="form-submit"><input type="submit" class="btn btn-primary btn-lg" name="proceed" value="Post Review"></p>
+                                <p class="comment-form-comment"><textarea name="review" id="review" class="form-control"
+                                                                          cols="30" rows="5"
+                                                                          placeholder="Your Review"></textarea></p>
+                                <p class="form-submit"><input type="submit" class="btn btn-primary btn-lg"
+                                                              name="proceed" value="Post Review"></p>
                             </form>
                         </div>
 
@@ -293,13 +312,14 @@
                 <div class="related">
                     <h2>You May Also Like</h2>
                     <ul class="products row">
-                        <% if(like_product.length != 0 ) {%>
-                        <% like_product.forEach(function(item,index){%>
-                        <% if(index < 4) {%>
+                        <% if(like_product.length != 0 ) { %>
+                        <% like_product.forEach(function(item, index){ %>
+                        <% if(index < 4) { %>
                         <li class="col-sm-3">
                             <div class="product">
                                 <div class="thumbnail">
-                                    <a href="/single-product/<%=item.product_id %>"><img src="<%=item.product_images[0].url%>" alt=""></a>
+                                    <a href="/single-product/<%= item.product_id %>"><img
+                                                src="<%= item.product_images[0].url %>" alt=""></a>
                                     <a href="#" class="add-to-cart" title="Add to Cart">
                                           <span class="fa-stack fa-2x">
                                             <i class="fa fa-circle fa-stack-2x"></i>
@@ -309,27 +329,27 @@
                                 </div>
                                 <hr>
                                 <div class="title">
-                                    <h3><a href="#"><%=item.product_images[0].title%></a></h3>
+                                    <h3><a href="#"><%= item.product_images[0].title %></a></h3>
                                     <!--<p>by Jack &amp; Jones</p>-->
                                 </div>
                                 <% if( status == 200) { %>
-                                <% if( user.level == '10' ) {%>
-                                <% if( item.product_origin_price.sale_discount_regular_price.length == 0 ) {%>
-                                <span class="price"><%=item.product_origin_price.regular_price %></span>
+                                <% if( user.level == '10' ) { %>
+                                <% if( item.product_origin_price.sale_discount_regular_price.length == 0 ) { %>
+                                <span class="price"><%= item.product_origin_price.regular_price %></span>
                                 <% } else { %>
-                                <span class="price"><%=item.product_origin_price.sale_discount_regular_price %></span>
+                                <span class="price"><%= item.product_origin_price.sale_discount_regular_price %></span>
                                 <% } %>
                                 <% } %>
-                                <% if( user.level == '66' ) {%>
-                                <% if( item.product_origin_price.sale_discount_vip_price.length == 0 ) {%>
-                                <span class="price"><%=item.product_origin_price.regular_price %></span>
+                                <% if( user.level == '66' ) { %>
+                                <% if( item.product_origin_price.sale_discount_vip_price.length == 0 ) { %>
+                                <span class="price"><%= item.product_origin_price.regular_price %></span>
                                 <% } else { %>
-                                <span class="price"><%=item.product_origin_price.sale_discount_vip_price %></span>
+                                <span class="price"><%= item.product_origin_price.sale_discount_vip_price %></span>
                                 <% } %>
                                 <% } %>
                                 <% } %>
-                                <% if( status == 500 ) {%>
-                                <span class="price"><%=item.product_origin_price.market_price %></span>
+                                <% if( status == 500 ) { %>
+                                <span class="price"><%= item.product_origin_price.market_price %></span>
                                 <% } %>
 
                             </div>
@@ -338,7 +358,7 @@
                         <% return false; %>
                         <% } %>
 
-                        <%})%>
+                        <% }) %>
                         <% } %>
                     </ul>
                 </div>
@@ -364,5 +384,29 @@
 <!-- ========== CONTENT END ========== -->
 
 <script>
+    function check_out() {
+        var product = {}
+        $.ajax({
+            url: '/checkout',
+            type: 'POST',
+            data: product,
+            dataType: "json",
+            traditional: true,
+            success: function (result) {
+                if (result == 'success') {
+                    layer.msg('添加成功');
+                } else if (result == 'failed') {
+                    layer.alert('添加失败，请检查是否有非法词汇！');
+                }
+            }, error: function (err) {
+                if (err.status == 200) {
+                    layer.msg('添加成功');
+                    location.reload();
+                } else {
+                    layer.alert('添加失败，请检查是否有非法词汇！');
+                }
 
+            }
+        });
+    }
 </script>

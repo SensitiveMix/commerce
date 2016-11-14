@@ -1,2 +1,8 @@
 <% layout('master.ejs') %>
-<img style="width: 93%;height: 85%;" src="/images/assert_404.jpg" alt="">
+<img style="width: 93%;height: 85%;" src="/images/assert_404.jpg" onclick="jump()" alt="">
+
+<script>
+    function jump() {
+        self.location.href = "/"
+    }
+</script>

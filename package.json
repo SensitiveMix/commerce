@@ -34,6 +34,7 @@
     "mongoose": "^4.6.4",
     "morgan": "~1.7.0",
     "multer": "^1.2.0",
+    "paypal-rest-sdk": "^1.7.0",
     "serve-favicon": "~2.3.0",
     "superagent": "^2.3.0",
     "supertest": "^2.0.0",
