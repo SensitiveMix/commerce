@@ -10,6 +10,17 @@
                     $('.color-detail span').removeClass('selected');
                     $(this).addClass('selected');
                 })
+                $('.plus').click(function () {
+                    var num = parseInt($('input[type="number"]').val());
+                    $('input[type="number"]').val((num+1));
+                })
+                $('.minus').click(function () {
+                    var num = $('input[type="number"]').val();
+                    if(num > 0){
+                        $('input[type="number"]').val((num-1));
+                    }
+
+                })
             })
         </script>
         <style>
@@ -32,6 +43,14 @@
 
             .synced .item {
                 border: 2px solid #000;
+            }
+            input[type="number"]{
+                -moz-appearance:textfield;
+            }
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button{
+                -webkit-appearance: none !important;
+                margin: 0;
             }
         </style>
 
@@ -232,7 +251,7 @@
 
                                 <li class="comment">
                                     <div class="comment_container">
-                                        <img src="http://placehold.it/64x64" class="avatar">
+                                        <!--<img src="http://placehold.it/64x64" class="avatar">-->
                                         <div class="comment-text">
                                             <div class="start-rating">
                                                 <span class="glyphicon glyphicon-star"></span>
@@ -250,7 +269,7 @@
 
                                 <li class="comment">
                                     <div class="comment_container">
-                                        <img src="http://placehold.it/64x64" class="avatar">
+                                        <!--<img src="http://placehold.it/64x64" class="avatar">-->
                                         <div class="comment-text">
                                             <div class="start-rating">
                                                 <span class="glyphicon glyphicon-star"></span>
@@ -268,7 +287,7 @@
 
                                 <li class="comment">
                                     <div class="comment_container">
-                                        <img src="http://placehold.it/64x64" class="avatar">
+                                        <!--<img src="http://placehold.it/64x64" class="avatar">-->
                                         <div class="comment-text">
                                             <div class="start-rating">
                                                 <span class="glyphicon glyphicon-star"></span>
@@ -330,7 +349,7 @@
                         <li class="col-sm-3">
                             <div class="product">
                                 <div class="thumbnail">
-                                    <a href="/single-product/<%= item.product_id %>"><img
+                                    <a href="/single-product/<%= item.product_id %>"><img class="product_images"
                                                 src="<%= item.product_images[0].url %>" alt=""></a>
                                     <a href="#" class="add-to-cart" title="Add to Cart">
                                           <span class="fa-stack fa-2x">

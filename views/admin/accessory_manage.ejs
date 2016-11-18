@@ -168,7 +168,7 @@
         CategoryALL.forEach(function (item) {
             item.secondUrl = ('/' + FirstCategory + item.secondUrl.replace(/\s+/g, "")).trim();
         })
-        var timeStamps = (new Date().getTime() / 1000).toFixed();
+        var timeStamps = (new Date().getTime() / 10000000).toFixed();
         var Category = {
             firstCategory: FirstCategory,
             firstTimeStamp: timeStamps,
@@ -217,7 +217,7 @@
         })
         twoArray.forEach(function (value, index) {
             if (index > 0 && index < twoArray.length - 1) {
-                var timeStamp = (new Date().getTime() / 1000).toFixed();
+                var timeStamp = (new Date().getTime() / 10000000).toFixed();
                 var third = {
                     thirdTimeStamp: timeStamp,
                     thirdUrl: '/product/' + timeStamp + Math.floor((Math.random() * 100) + 1) + index,
@@ -230,7 +230,7 @@
 
         var second_Category = twoArray[0].value.replace(/\s+/g, "");
         var three_Category = threeArray;
-        var timeStamps = (new Date().getTime() / 1000).toFixed();
+        var timeStamps = (new Date().getTime() / 100000000).toFixed();
         var totalGate = {
             secondTitle: second_Category,
             secondTimeStamp: timeStamps,
@@ -354,7 +354,7 @@
                 var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
                 var cla = count + '_' + " " + 'cateGory';
                 var claBTN = count + '_btn';
-                $(".xyz").before('<tr class="' + cla + '"><td><img style="margin-left: 20px" src="/images/jiao.svg" alt="">&nbsp;<input type="text">&nbsp;<img class="' + cla + '" src="/images/arrow.svg" alt="">&nbsp; <button onclick="add(' + count + ')" class="btn btn-info add ' + cla + '">添加三级子类</button> </td></td><td> </td> <td>' + date + '</td> <td> <button onclick="deleteTwo(' + count + ')" class="btn btn-danger ' + cla + '">删除</button> </td> </tr><tr class="' + claBTN + '"></tr>');
+                $(".xyz").before('<tr class="' + cla + '"><td><img style="margin-left: 20px" src="/images/jiao.svg" alt="">&nbsp;<input type="text">&nbsp;<img class="' + cla + '" src="/images/arrow.svg" alt="">&nbsp; <button onclick="add(' + count + ')" class="btn btn-info add ' + cla + '">添加三级子类</button> </td><td></td><td> </td> <td>' + date + '</td> <td> <button onclick="deleteTwo(' + count + ')" class="btn btn-danger ' + cla + '">删除</button> </td> </tr><tr class="' + claBTN + '"></tr>');
             }
         });
     });

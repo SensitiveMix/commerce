@@ -175,6 +175,7 @@ blockquote cite {
 #top-nav .navbar-toggle {
     padding: 3px;
     margin: 0;
+    border-color: #fd638f;
 }
 
 #top-nav {
@@ -186,6 +187,7 @@ blockquote cite {
     padding: 0;
     font-size: inherit;
     background: none;
+    color: #d3d3d3;
 }
 
 #top-bar nav a:hover,
@@ -1429,6 +1431,13 @@ tr.cart-subtotal > * {
     .mi-slider nav {
         top: 220px;
     }
+    #top-nav{
+        display: block;
+    }
+    #top-bar .swiper-container,#top-bar .swiper-button-next, .swiper-button-prev{
+        display: none;
+    }
+
 }
 
 @media screen and (max-width: 490px) {
@@ -1517,7 +1526,12 @@ tr.cart-subtotal > * {
     .product_images{
         height: 219px!important;
     }
-
+    #top-nav{
+        display: none;
+    }
+    #top-bar .swiper-container,#top-bar .swiper-button-next, .swiper-button-prev{
+        display: block;
+    }
 }
 
 @media (max-width: 1200px) {
@@ -1882,7 +1896,7 @@ embed {
     text-transform: uppercase;
 }
 
-.unbranded a .bar-line {
+.bar-line {
     width: 100%;
     height: 1px;
     background-color: #999;
