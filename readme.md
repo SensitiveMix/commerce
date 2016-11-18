@@ -13,19 +13,19 @@
 
 ```bash
 
-dev serve       : npm run dev                //test env
+dev serve       : npm run dev
 
 ```
 
 ```bash
 
-browser serve   : npm run browsersync    //sync front page
+browser serve   : npm run browsersync
 
 ```
 
 ```bash
 
-product serve   : npm run production    //deploy env
+product serve   : npm run production
 
 ```
 
