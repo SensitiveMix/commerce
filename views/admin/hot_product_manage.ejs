@@ -1,79 +1,446 @@
 <% layout('master.ejs') %>
 <link href="/stylesheets/lanrenzhijia.css" type="text/css" rel="stylesheet"/>
+<script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">最热标签管理</h3>
+        <button class="btn btn-info" onclick="CompatibilityCLK()">添加</button>
     </div>
-    <!-- /.box-header -->
-    <!-- form start -->
-
-
     <div class="box-body">
-        <div class="demo">
-
-            <div class="plus-tag tagbtn clearfix" id="myTags"></div>
-
-            <div class="plus-tag-add">
-                <form id="" action="" class="login">
-                    <ul class="Form FancyForm">
-                        <li>
-                            <span class="label">我的标签：</span>
-                            <input id="" name="" type="text" class="stext" maxlength="20"/>
-                            <label>输入标签</label>
-                            <span class="fff"></span>
-                        </li>
-                        <li>
-                            <button type="button" class="Button RedButton Button18" style="font-size:22px;">添加标签
-                            </button>
-                            <a href="javascript:void(0);">展开推荐标签</a>
-                        </li>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Compatibility</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody class="Compatibility">
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>所属三级类目</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.compatibility.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="compatibility"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
                     </ul>
-                </form>
-            </div><!--plus-tag-add end-->
+                </div>
+            </div><!-- /.box -->
+        </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">type</h3>
 
-            <div id="mycard-plus" style="display:none;">
-                <div class="default-tag tagbtn">
-                    <div class="clearfix">
-                        <a value="-1" title="互联网" href="javascript:void(0);"><span>互联网</span><em></em></a>
-                        <a value="-1" title="移动互联网" href="javascript:void(0);"><span>移动互联网</span><em></em></a>
-                        <a value="-1" title="it" href="javascript:void(0);"><span>it</span><em></em></a>
-                        <a value="-1" title="电子商务" href="javascript:void(0);"><span>电子商务</span><em></em></a>
-                        <a value="-1" title="广告" href="javascript:void(0);"><span>广告</span><em></em></a>
-                        <a value="-1" title="网络编辑" href="javascript:void(0);"><span>网络编辑</span><em></em></a>
-                        <a value="-1" title="产品经理" href="javascript:void(0);"><span>产品经理</span><em></em></a>
-                        <a value="-1" title="程序员" href="javascript:void(0);"><span>程序员</span><em></em></a>
-                        <a value="-1" title="网管" href="javascript:void(0);"><span>网管</span><em></em></a>
-                        <a value="-1" title="文案策划" href="javascript:void(0);"><span>文案策划</span><em></em></a>
-                        <a value="-1" title="java工程师" href="javascript:void(0);"><span>java工程师</span><em></em></a>
-                        <a value="-1" title="php工程师" href="javascript:void(0);"><span>php工程师</span><em></em></a>
-                        <a value="-1" title="dreamweaver"
-                           href="javascript:void(0);"><span>dreamweaver</span><em></em></a>
-                        <a value="-1" title="photoshop" href="javascript:void(0);"><span>photoshop</span><em></em></a>
-                        <a value="-1" title="公文写作" href="javascript:void(0);"><span>公文写作</span><em></em></a>
-                        <a value="-1" title="70后" href="javascript:void(0);"><span>70后</span><em></em></a>
-                        <a value="-1" title="80后" href="javascript:void(0);"><span>80后</span><em></em></a>
-                        <a value="-1" title="加班狂" href="javascript:void(0);"><span>加班狂</span><em></em></a>
-                    </div>
-                    <div class="clearfix" style="display:none;"><a value="-1" title="媒体"
-                                                                   href="javascript:void(0);"><span>媒体</span><em></em></a>
-                    </div>
-                    <div class="clearfix" style="display:none;"><a value="-1" title="网络营销"
-                                                                   href="javascript:void(0);"><span>网络营销</span><em></em></a>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>所属三级类目</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.type.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
+                </div>
+            </div><!-- /.box -->
+        </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">hardOrSoft</h3>
+
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>所属三级类目</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.hardOrSoft.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="hardOrSoft"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
+                </div>
+            </div><!-- /.box -->
+        </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">features</h3>
+
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>所属三级类目</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.features.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="features"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
+                </div>
+            </div><!-- /.box -->
+        </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">pattern</h3>
+
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>所属三级类目</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.pattern.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="pattern"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
+                </div>
+            </div><!-- /.box -->
+        </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Color</h3>
+
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>所属三级类目</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.Color.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="Color"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
+                </div>
+            </div><!-- /.box -->
+        </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">material</h3>
+
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>属性</th>
+                            <th>所属三级类目</th>
+                            <th>操作</th>
+                        </tr>
+                        <% specifications.material.forEach(function (secondItem) { %>
+                        <tr>
+                            <th></th>
+                            <th><%= secondItem.name %></th>
+                            <th><%= secondItem.belong %></th>
+                            <th>
+                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="material"
+                                        onclick="deltobase(this.name,this.id,'<%= secondItem.belong %>')">删除
+                                </button>
+                            </th>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </div>
+    <!--添加 form start -->
+    <div class="form-horizontal  layer_notice hidden" id="addRoboteForm">
+        <form class="" hidden="hidden" action="addParam" style="margin-top: 50px" method="post" id="addRote">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">属性</label>
+
+                    <div class="col-sm-6">
+                        <select id="pd_select" class="form-control" name="" id="">
+                            <option value="compatibility">
+                                compatibility
+                            </option>
+                            <option value="type">
+                                type
+                            </option>
+                            <option value="hardOrSoft">
+                                hardOrSoft
+                            </option>
+                            <option value="features">
+                                features
+                            </option>
+                            <option value="pattern">
+                                pattern
+                            </option>
+                            <option value="Color">
+                                Color
+                            </option>
+                            <option value="material">
+                                material
+                            </option>
+                        </select>
                     </div>
                 </div>
-                <div align="right"><a href="javascript:void(0);" id="change-tips" style="color:#3366cc;">换一换</a></div>
-            </div><!--mycard-plus end-->
 
-        </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-4 control-label">所属三级类目</label>
 
+                    <div class="col-sm-6">
+                        <select id="default_category" name="default_category" class="form-control" value="">
+                            <% category.forEach(function(item){ %>
+                            <% item.secondCategory.forEach(function(items){ %>
+                            <% items.thirdTitles.forEach(function(third){ %>
+                            <option value="<%= third.thirdTitle %>"><%= third.thirdTitle %></option>
+                            <% }) %>
+                            <% }) %>
+                            <% }) %>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">属性值</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="spec" name="spec">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">操作人</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="add_by" name="add_by">
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <button type="button" id="subaddRobotBtn" class="btn btn-info pull-right closeBtn"
+                        onclick="addtobase()">添加
+                </button>
+            </div>
+        </form>
 
     </div>
-
-    <!-- /.box-body -->
-    <div class="box-footer">
-        <button class="btn btn-info pull-right">提交</button>
-    </div>
-    <!-- /.box-footer -->
 
 </div>
-<script type="text/javascript" src="/js/lanrenzhijia.js"></script>
+
+<script>
+    function CompatibilityCLK() {
+        $('#addRoboteForm').removeClass('hidden');
+        $('#addRote').removeClass('hidden');
+        $('#addRote').show();
+        layer.open({
+            type: 1,
+            skin: 'layui-layer-rim',
+            shade: false,
+            title: false, //不显示标题
+            content: $('#addRoboteForm'), //捕获的元素
+            area: ['400px', "400px"],
+            cancel: function (index) {
+                layer.close(index);
+            },
+            scrollbar: false
+        });
+    }
+
+    function addtobase() {
+        var params = {
+            property: $("#spec").val(),
+            addBy: $("#add_by").val(),
+            addProperty: $("#pd_select").find("option:selected").val(),
+            belong: $("#default_category").find("option:selected").val()
+        }
+        console.log(params)
+        $.ajax({
+            url: 'doAddProperty',
+            type: 'POST',
+            data: params,
+            success: function (retmsgurndata) {
+                console.log(retmsgurndata)
+                $("#form-signin").hide();
+                setTimeout('location.reload()', 1000);
+                layer.msg('添加成功');
+                layer.closeAll();
+                $("#spec").val('');
+                $("#add_by").val('');
+                $("#default_category").find("option:selected").val('');
+                $("#pd_select").find("option:selected").val('Compatibility');
+
+            }, error: function (returndata) {
+                alert('更新失败，请检查是否有非法词汇！');
+            }
+        });
+    }
+
+    function deltobase(name, id, belong) {
+
+        var params = {
+            property: name,
+            addProperty: id,
+            belong: belong
+        }
+        console.log(params)
+
+        $.ajax({
+            url: 'doDelProperty',
+            type: 'POST',
+            data: params,
+            success: function (retmsgurndata) {
+                console.log(retmsgurndata)
+                $("#form-signin").hide();
+                setTimeout('location.reload()', 1000);
+                layer.msg('删除成功');
+
+            }, error: function (returndata) {
+                alert('更新失败，请检查是否有非法词汇！');
+            }
+        });
+    }
+
+</script>
