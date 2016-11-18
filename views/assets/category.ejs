@@ -3,13 +3,28 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <style>
-            .product{
+            .product {
                 margin-bottom: 0;
                 border: 1px solid #dedede;
             }
+
+            /*.sort-bar {*/
+                /*background: #f2f2f2;*/
+                /*border: 1px solid #b1b1b1;*/
+                /*!*min-height: 40px!important;*!*/
+            /*}*/
+            .menuItem a{
+                color: #fff;
+            }
+            .menuItem.active a{
+                color: #fff;
+                background: #000;
+            }
+
         </style>
         <script>
             $(function () {
+
             })
         </script>
 
@@ -22,22 +37,36 @@
 
                 <ol class="breadcrumb">
                     <li><a href="/">Home</a></li>
-                    <li><a href="<%=prev_category.firstUrl%>"><%=prev_category.firstTitle%></a></li>
-                    <li><a href="<%=prev_category.secondUrl%>"><%=prev_category.secondTitle%></a></li>
-                    <li class="active"><%=product[0].thirdTitle  %></li>
+                    <li><a href="<%= prev_category.firstUrl %>"><%= prev_category.firstTitle %></a></li>
+                    <li><a href="<%= prev_category.secondUrl %>"><%= prev_category.secondTitle %></a></li>
+                    <li class="active"><%= product[0].thirdTitle %></li>
                 </ol>
 
                 <div class="row">
 
                     <div class="col-sm-12">
+                        <div class="navwrapper">
+                            <div class="navbar navbar-default navbar-static-top sort-bar">
+                                <div class="navbar-collapse collapse">
+                                    <ul class="nav navbar-nav">
+                                        <li class="menuItem active"><a>推荐</a></li>
+                                        <li class="menuItem"><a>时间</a></li>
+                                        <li class="menuItem"><a>价格</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <ul class="products row">
-                            <% if(product[0].product.length != 0 ) {%>
-                            <% product[0].product.forEach(function(item){%>
+                            <% if(product[0].product.length != 0 ) { %>
+                            <% product[0].product.forEach(function(item){ %>
                             <li class="col-sm-3">
                                 <div class="product">
                                     <div class="thumbnail">
-                                        <a href="/single-product/<%=item.product_id %>"><img class="product_images" src="<%=item.product_images[0].url%>" alt=""></a>
+                                        <a href="/single-product/<%= item.product_id %>"><img class="product_images"
+                                                                                              src="<%= item.product_images[0].url %>"
+                                                                                              alt=""></a>
                                         <a href="#" class="add-to-cart" title="Add to Cart">
                                           <span class="fa-stack fa-2x">
                                             <i class="fa fa-circle fa-stack-2x"></i>
@@ -47,33 +76,33 @@
                                     </div>
                                     <hr>
                                     <div class="title">
-                                        <h3><a href="#"><%=item.product_images[0].title%></a></h3>
+                                        <h3><a href="#"><%= item.product_images[0].title %></a></h3>
                                         <!--<p>by Jack &amp; Jones</p>-->
                                     </div>
                                     <% if( status == 200) { %>
-                                    <% if( user.level == '10' ) {%>
-                                    <% if( item.product_origin_price.sale_discount_regular_price.length == 0 ) {%>
-                                    <span class="price"><%=item.product_origin_price.regular_price %></span>
+                                    <% if( user.level == '10' ) { %>
+                                    <% if( item.product_origin_price.sale_discount_regular_price.length == 0 ) { %>
+                                    <span class="price"><%= item.product_origin_price.regular_price %></span>
                                     <% } else { %>
-                                    <span class="price"><%=item.product_origin_price.sale_discount_regular_price %></span>
+                                    <span class="price"><%= item.product_origin_price.sale_discount_regular_price %></span>
                                     <% } %>
                                     <% } %>
-                                    <% if( user.level == '66' ) {%>
-                                    <% if( item.product_origin_price.sale_discount_vip_price.length == 0 ) {%>
-                                    <span class="price"><%=item.product_origin_price.regular_price %></span>
+                                    <% if( user.level == '66' ) { %>
+                                    <% if( item.product_origin_price.sale_discount_vip_price.length == 0 ) { %>
+                                    <span class="price"><%= item.product_origin_price.regular_price %></span>
                                     <% } else { %>
-                                    <span class="price"><%=item.product_origin_price.sale_discount_vip_price %></span>
+                                    <span class="price"><%= item.product_origin_price.sale_discount_vip_price %></span>
                                     <% } %>
                                     <% } %>
                                     <% } %>
-                                    <% if( status == 500 ) {%>
-                                    <span class="price"><%=item.product_origin_price.market_price %></span>
+                                    <% if( status == 500 ) { %>
+                                    <span class="price"><%= item.product_origin_price.market_price %></span>
                                     <% } %>
 
                                 </div>
                             </li>
 
-                            <%})%>
+                            <% }) %>
                             <% } %>
 
                         </ul>
@@ -99,7 +128,6 @@
 <!-- ========== CONTENT END ========== -->
 
 <!-- ========== CONTENT START ========== -->
-
 
 
 <!-- ========== CONTENT END ========== -->
