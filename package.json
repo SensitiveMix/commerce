@@ -3,9 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=dev sudo nodemon app.js",
-    "build": "webpack",
+    "start": "node app.js",
+    "dev": "cross-env NODE_ENV=dev node app.js",
+    "build": "webpack --progress --colors --watch",
     "test": "mocha -t 60000 Mocha/ --bail",
+    "browsersync": "cross-env NODE_ENV=dev node app_browsersync",
+    "production": "webpack --watch --config webpack.production.config.js -p & cross-env NODE_ENV=production node app",
     "test-cov": "node node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha  -- Mocha/"
   },
   "dependencies": {
@@ -18,6 +21,7 @@
     "chokidar": "^1.5.1",
     "clean-webpack-plugin": "^0.1.10",
     "colors": "^1.1.2",
+    "consolidate": "^0.14.5",
     "cookie-parser": "~1.4.3",
     "cross-env": "^1.0.8",
     "crypto": "0.0.3",

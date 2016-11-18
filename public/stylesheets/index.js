@@ -9,5 +9,4 @@ require('../assets/css/font-awesome.min.css')
 require('../plugins/swiper/css/swiper.min.css')
 require('../assets/css/style.css')
 require('../assets/css/config.css')
-// require('../layer-v2.2/layer/skin/layer.css')
 

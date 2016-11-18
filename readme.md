@@ -11,10 +11,31 @@
 
 ## Start the server:
 
-*  nodemon app.js
-*  node ./bin/www
-*  nodemon ./bin/www
-*  npm start
+```bash
+
+dev serve       : npm run dev                //test env
+
+```
+
+```bash
+
+browser serve   : npm run browsersync    //sync front page
+
+```
+
+```bash
+
+product serve   : npm run production    //deploy env
+
+```
+
+```bash
+
+manual package  : npm run build
+
+```
+
+
 
 ## run test
 
