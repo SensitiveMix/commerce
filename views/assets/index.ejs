@@ -105,7 +105,8 @@
                 </div>
                 <% if(categories.length != 0){ %>
                 <% categories.forEach(function (item) { %>
-                <h2 class="align-center unbranded"><a href="<%= item.firstUrl %>"><div><%= item.firstCategory %></div><p class="bar-line"></p></a></h2>
+                <a href="<%= item.firstUrl %>"><h2 class="align-center unbranded"><%= item.firstCategory %></h2></a>
+                <!--<p class="bar-line"></p>-->
                 <div class="gap-25"></div>
                 <ul class="products row">
                     <% if(item.secondCategory.length != 0) { %>

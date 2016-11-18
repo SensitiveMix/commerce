@@ -88,17 +88,29 @@
 <script>
     function validatePwd() {
         if ($('#register_password').val() == '') {
-            layer.msg('Please Enter Password');
+//            layer.msg('Please Enter Password');
+            $('#register_password').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                    +'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                    +'<strong>Warning!</strong>Please Enter Password!</div>');
         } else if ($('#register_password').val().trim() != $('#re_register_password').val().trim() || $('#re_register_password').val().trim() == "") {
             layer.msg('passwords are not consistent');
+            $('#register_password').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                    +'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                    +'<strong>Warning!</strong>Passwords are not consistent!</div>');
         }
     }
 
     function validateName() {
         if ($('#register_email').val() == '') {
-            layer.msg('Please Enter Email');
+//            layer.msg('Please Enter Email');
+            $('#register_email').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                    +'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                    +'<strong>Warning!</strong>Please Enter Email!</div>');
         } else if ($('#register_email').val().trim() != $('#re_register_email').val().trim() || $('#re_register_email').val().trim() == '') {
-            layer.msg('Email are not consistent');
+//            layer.msg('Email are not consistent');
+            $('#register_email').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                    +'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                    +'<strong>Warning!</strong>Email are not consistent!</div>');
         }
     }
 
@@ -111,7 +123,11 @@
             success: function (data) {
                 if (data == '401') {
                     $('#register_email').val('')
-                    layer.msg('Email has been registered')
+                    $('#register_email').parents('.form-group').addClass('has-error');
+                    $('#register_email').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                            +'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                    +'<strong>Warning!</strong>'+'Email has been registered!</div>');
+//                    layer.msg('Email has been registered')
                 }
             },
             error: function (err) {
@@ -127,9 +143,15 @@
             $('#register-btn').removeAttr('disabled');
             $('#register-btn').on('click', function () {
                 if ($('#register_email').val().trim() == '' || $('#re_register_email').val().trim() == '') {
-                    layer.msg('Please Enter Email!')
+//                    layer.msg('Please Enter Email!')
+                    $('#re_register_email').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                            +'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                            +'<strong>Warning!</strong>Please Enter Email!</div>');
                 } else if ($('#register_password').val().trim() == '' || $('#re_register_password').val().trim() == '') {
-                    layer.msg('Please Enter Password!')
+//                    layer.msg('Please Enter Password!')
+                    $('#register_password').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                            +'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                            +'<strong>Warning!</strong>Please Enter Password!</div>');
                 } else {
                     $.ajax({
                         type: 'POST',
