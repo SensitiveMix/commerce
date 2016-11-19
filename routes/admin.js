@@ -30,7 +30,6 @@ function md5(text) {
 }
 //验证登录
 var checkLogin = function (req, res, next) {
-    console.log(req);
     if (req.body.status != 'test') {
         if (u.length == 0) {
             res.render('admin/404', {username: u.nick_name});
@@ -627,6 +626,22 @@ router.post('/doAddCategory', function (req, res) {
         firstCount: req.body.firstCount,
         secondCategory: JSON.parse(req.body.secondCategory)
     };
+    //保存到产品属性表
+    _.each(JSON.parse(req.body.secondCategory), function (second) {
+        _.each(second.thirdTitles, function (third) {
+            var spec = {
+                firstCategory: req.body.firstCategory,
+                secondCategory: second.secondTitle,
+                thirdCategory: third.thirdTitle,
+                specification: null,
+                addBy: ""
+            };
+            var specs = new db.specifications(spec);
+            console.log(spec);
+            specs.save();
+        })
+    });
+
     var category = new db.categorys(Categories);
     category.save(function (err) {
         console.log(err);
@@ -663,9 +678,57 @@ router.get('/upload-products-detail', function (req, res) {
 
             },
             function (done) {
-                db.specifications.find({}, function (err, product_spectication) {
-                    done(err, product_spectication)
+                var compatibility = [],
+                    type = [],
+                    hardOrSoft = [],
+                    features = [],
+                    pattern = [],
+                    Color = [],
+                    material = [];
+                _.each(tempCategory, function (temp) {
+                    db.specifications.findOne({
+                        'thirdCategory': temp.thirdCategory,
+                        'secondCategory': temp.secondCategory
+                    }, function (err, result) {
+                        if (err) {
+                            res.send(500)
+                        } else {
+                            _.each(result.specification.compatibility, function (item) {
+                                compatibility.push(item.value)
+                            });
+                            _.each(result.specification.type, function (item) {
+                                type.push(item.value)
+                            });
+                            _.each(result.specification.hardOrSoft, function (item) {
+                                hardOrSoft.push(item.value)
+                            });
+                            _.each(result.specification.features, function (item) {
+                                features.push(item.value)
+                            });
+                            _.each(result.specification.Color, function (item) {
+                                Color.push(item.value)
+                            });
+                            _.each(result.specification.pattern, function (item) {
+                                pattern.push(item.value)
+                            });
+                            _.each(result.specification.material, function (item) {
+                                material.push(item.value)
+                            });
+                        }
+                    })
                 });
+
+                var product_spectication = {
+                    compatibility: compatibility,
+                    type: type,
+                    hardOrSoft: hardOrSoft,
+                    features: features,
+                    pattern: pattern,
+                    Color: Color,
+                    material: material
+                }
+
+                done(null, product_spectication)
             },
             function (done) {
                 db.suppliers.find({}, function (err, suppliers) {
@@ -680,38 +743,10 @@ router.get('/upload-products-detail', function (req, res) {
                 var categorys = results[0];
                 var product_spectication = results[1];
                 var suppliers = results[2];
-                var compatibility = [],
-                    type = [],
-                    hardOrSoft = [],
-                    features = [],
-                    pattern = [],
-                    Color = [],
-                    material = [];
-                _.each(tempCategory, function (item) {
-                    if (item.thirdCategory != '') {
-                        var compatibilityArr = filterArr(product_spectication[0].compatibility, item.thirdCategory);
-                        compatibility = _.concat(compatibility, compatibilityArr)
 
-                        var typeArr = filterArr(product_spectication[0].type, item.thirdCategory)
-                        type = _.concat(type, typeArr)
+                console.log(product_spectication)
 
-                        var hardOrSoftArr = filterArr(product_spectication[0].hardOrSoft, item.thirdCategory);
-                        hardOrSoft = _.concat(hardOrSoft, hardOrSoftArr)
-
-                        var featuresArr = filterArr(product_spectication[0].features, item.thirdCategory)
-                        features = _.concat(features, featuresArr)
-
-                        var patternArr = filterArr(product_spectication[0].pattern, item.thirdCategory)
-                        pattern = _.concat(pattern, patternArr)
-
-                        var ColorArr = filterArr(product_spectication[0].Color, item.thirdCategory);
-                        Color = _.concat(Color, ColorArr)
-
-                        var materialArr = filterArr(product_spectication[0].material, item.thirdCategory)
-                        material = _.concat(material, materialArr)
-                    }
-                });
-                console.log(suppliers);
+                console.log(tempCategory);
                 res.render('admin/upload-products-detail', {
                     username: u.nick_name,
                     upload: [],
@@ -719,13 +754,13 @@ router.get('/upload-products-detail', function (req, res) {
                     tempCategory: tempCategory,
                     suppliers: suppliers,
                     product_specification: {
-                        compatibility: compatibility,
-                        type: type,
-                        hardOrSoft: hardOrSoft,
-                        features: features,
-                        pattern: pattern,
-                        Color: Color,
-                        material: material
+                        compatibility: product_spectication.compatibility,
+                        type: product_spectication.type,
+                        hardOrSoft: product_spectication.hardOrSoft,
+                        features: product_spectication.features,
+                        pattern: product_spectication.pattern,
+                        Color: product_spectication.Color,
+                        material: product_spectication.material
                     }
                 });
                 tempCategory = [];
@@ -741,41 +776,6 @@ function filterArr(spectication, tempCategory) {
     });
     return newArr;
 }
-
-//类目管理
-router.get('/accessory_manage', checkLogin);
-router.get('/accessory_manage', function (req, res, next) {
-    console.log("类目管理" + new Date());
-    res.render('admin/accessory_manage', {upload: [], username: u.nick_name});
-    // db.users.find({}, function (err, result) {
-    //     if (err) throw  err;
-    //
-    // });
-    console.log("类目管理页面登陆成功");
-});
-
-//类目上传
-router.post('/doAddCategory', checkLogin);
-router.post('/doAddCategory', function (req, res) {
-    console.log(req.body.firstCategory);
-    console.log(JSON.parse(req.body.secondCategory));
-
-    var Categories = {
-        firstCategory: req.body.firstCategory,
-        firstUrl: req.body.firstUrl,
-        firstCount: req.body.firstCount,
-        secondCategory: JSON.parse(req.body.secondCategory)
-    };
-    var category = new db.categorys(Categories);
-    category.save(function (err) {
-        console.log(err);
-        if (err) {
-            res.send('fail')
-        } else {
-            res.send('success');
-        }
-    });
-});
 
 //进入产品页面GET所以收藏类目
 router.get('/uploadTemporary', function (req, res, next) {
@@ -834,151 +834,6 @@ router.post('/uploadTemporary', function (req, res, next) {
         });
     }
 
-});
-
-
-/*-------------------------------------------------------------------*/
-/*----------------------------产品基本信息管理-------------------------*/
-//产品基本信息录入管理
-router.get('/specification', checkLogin);
-router.get('/specification', function (req, res, next) {
-    console.log("产品上传管理" + new Date());
-    db.specifications.find({}, function (err, result) {
-        db.categorys.find({}, function (err, data) {
-            if (err) res.send('404');
-            res.render('admin/specifications_manage',
-                {
-                    username: u.nick_name,
-                    category: data,
-                    specifications: result[0]
-                }
-            );
-        });
-    })
-
-    console.log("产品上传管理登陆成功");
-});
-
-//产品基本信息录入管理-添加属性
-router.post('/doAddProperty', function (req, res, next) {
-    switch (req.body.addProperty) {
-        case 'compatibility':
-            db.specifications.update({}, {
-                $pushAll: {'compatibility': [{name: req.body.property, belong: req.body.belong}]}
-            }, function (err, result) {
-                if (err) res.send('500')
-                res.send('200')
-            });
-            break;
-        case 'type':
-            db.specifications.update({}, {
-                $pushAll: {'type': [{name: req.body.property, belong: req.body.belong}]}
-            }, function (err, result) {
-                if (err) res.send('500')
-                res.send('200')
-            });
-            break;
-        case 'hardOrSoft':
-            db.specifications.update({}, {
-                $pushAll: {'hardOrSoft': [{name: req.body.property, belong: req.body.belong}]}
-            });
-            break;
-        case 'features':
-            db.specifications.update({}, {
-                $pushAll: {'features': [{name: req.body.property, belong: req.body.belong}]}
-            }, function (err, result) {
-                if (err) res.send('500')
-                res.send('200')
-            });
-            break;
-        case 'pattern':
-            db.specifications.update({}, {
-                $pushAll: {'pattern': [{name: req.body.property, belong: req.body.belong}]}
-            }, function (err, result) {
-                if (err) res.send('500')
-                res.send('200')
-            });
-            break;
-        case 'Color':
-            db.specifications.update({}, {
-                $pushAll: {'Color': [{name: req.body.property, belong: req.body.belong}]}
-            }, function (err, result) {
-                if (err) res.send('500')
-                res.send('200')
-            });
-            break;
-        case 'material':
-            db.specifications.update({}, {
-                $pushAll: {'material': [{name: req.body.property, belong: req.body.belong}]}
-            }, function (err, result) {
-                if (err) res.send('500')
-                res.send('200')
-            });
-            break;
-    }
-});
-
-//产品基本信息录入管理-删除属性
-router.post('/doDelProperty', function (req, res, next) {
-    console.log(req.body);
-    switch (req.body.addProperty) {
-        case 'compatibility':
-            db.specifications.update({}, {
-                $pull: {'compatibility': {name: req.body.property, belong: req.body.belong}}
-            }, function (err, result) {
-                if (err) res.send('500');
-                res.send('200')
-            });
-            break;
-        case 'type':
-            db.specifications.update({}, {
-                $pull: {'type': {name: req.body.property, belong: req.body.belong}}
-            }, function (err, result) {
-                if (err) res.send('500');
-                res.send('200')
-            });
-            break;
-        case 'hardOrSoft':
-            db.specifications.update({}, {
-                $pull: {'hardOrSoft': {name: req.body.property, belong: req.body.belong}}
-            }, function (err, result) {
-                if (err) res.send('500');
-                res.send('200')
-            });
-            break;
-        case 'features':
-            db.specifications.update({}, {
-                $pull: {'features': {name: req.body.property, belong: req.body.belong}}
-            }, function (err, result) {
-                if (err) res.send('500');
-                res.send('200')
-            });
-            break;
-        case 'pattern':
-            db.specifications.update({}, {
-                $pull: {'pattern': {name: req.body.property, belong: req.body.belong}}
-            }, function (err, result) {
-                if (err) res.send('500');
-                res.send('200')
-            });
-            break;
-        case 'Color':
-            db.specifications.update({}, {
-                $pull: {'Color': {name: req.body.property, belong: req.body.belong}}
-            }, function (err, result) {
-                if (err) res.send('500');
-                res.send('200')
-            });
-            break;
-        case 'material':
-            db.specifications.update({}, {
-                $pull: {'material': {name: req.body.property, belong: req.body.belong}}
-            }, function (err, result) {
-                if (err) res.send('500');
-                res.send('200')
-            });
-            break;
-    }
 });
 
 //点击上传产品跳转到产品详情页接口
@@ -1064,27 +919,20 @@ router.post('/saveProductDetail', function (req, res, next) {
                 add_time: (new Date().getTime()).toFixed()
             };
 
+            //save product in seo engine
             var SEO_V = new db.SEOS(SEOS);
             SEO_V.save();
 
-            // db.SEOS.findOne({}, function (err, seo_result) {
-            //     if (err) res.send(404)
-            //     if (seo_result == null) {
-            //
-            //     } else {
-            //         db.SEOS.find({}, {
-            //             '$push': {
-            //                 'SEO': SEOS.SEO
-            //             }
-            //         }, function (err, seo_push_res) {
-            //             console.log('seo_push_res' + seo_push_res)
-            //         })
-            //     }
-            // });
 
             db.categorys.update({
                     'secondCategory._id': newArr[0]._id
                 }, {
+                    $inc: {
+                        "firstCount": 1,
+                        "secondCategory.$.secondCount": 1
+                    }
+                }
+                , {
                     $set: {
                         "secondCategory.$.thirdTitles": newArr[0].thirdTitles
                     }
@@ -1098,6 +946,69 @@ router.post('/saveProductDetail', function (req, res, next) {
     })
 });
 
+
+/*-------------------------------------------------------------------*/
+/*----------------------------产品基本信息管理-------------------------*/
+//产品基本信息录入管理
+router.get('/specification', checkLogin);
+router.get('/specification', function (req, res, next) {
+    console.log("产品上传管理" + new Date());
+    db.specifications.find({}, function (err, result) {
+        db.categorys.find({}, function (err, data) {
+            if (err) res.send('404');
+
+            console.log(result.length)
+            res.render('admin/specifications_manage',
+                {
+                    username: u.nick_name,
+                    category: data,
+                    specification: result
+                }
+            );
+        });
+    })
+
+    console.log("产品上传管理登陆成功");
+});
+
+//产品基本信息录入管理-添加属性
+router.post('/spec/property/add', function (req, res, next) {
+    var date = new Date();
+    var add_time = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
+    var attribute = "specification." + req.body.addProperty
+    db.specifications.update({'thirdCategory': req.body.belong},
+        {
+            '$pushAll': {
+                [attribute]: [{
+                    "name": req.body.addProperty,
+                    "value": req.body.property,
+                    "addTime": add_time
+                }]
+            }
+        }, function (err, data) {
+            if (err) res.json('500')
+            res.send('200')
+        });
+});
+
+//产品基本信息录入管理-删除属性
+router.post('/spec/property/delete', function (req, res, next) {
+    console.log(req.body);
+    var attribute = "specification." + req.body.name
+    db.specifications.update({'thirdCategory': req.body.belong},
+        {
+            '$pull': {
+                [attribute]: {
+                    "name": req.body.name,
+                    "value": req.body.value
+                }
+            }
+        }, function (err, data) {
+            if (err) res.json('500')
+            console.log(data)
+            res.send('200')
+        });
+});
 
 /*-------------------------------------------------------------------*/
 /*----------------------------供应商管理------------------------------*/
