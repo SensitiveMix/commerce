@@ -28,6 +28,12 @@ var tempCategory = [];
 function md5(text) {
     return crypto.createHash('md5').update(text).digest('hex');
 }
+
+function getDate() {
+    var date = new Date();
+    var add_time = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
+    return add_time
+}
 //验证登录
 var checkLogin = function (req, res, next) {
     if (req.body.status != 'test') {
@@ -1079,7 +1085,8 @@ router.post('/doChangeSupplier', function (req, res) {
         db.suppliers.update({'_id': req.body.id}, {
             $set: {
                 name: req.body.add_name,
-                add_by: req.body.add_by
+                add_by: req.body.add_by,
+                add_time: getDate()
             }
         }, function (err, result) {
             if (err) {

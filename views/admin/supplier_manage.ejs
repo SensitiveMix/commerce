@@ -14,7 +14,7 @@
                 <th>供应商编号</th>
                 <th>供应商名称</th>
                 <th>添加人</th>
-                <th>添加时间</th>
+                <th>修改时间</th>
                 <th>修改操作</th>
                 <th>删除操作</th>
                 <th></th>
@@ -165,6 +165,7 @@
                     success: function (returndata) {
                         trNodep.children().eq(2).html($("input[name=change_supplier_name]").val());
                         trNodep.children().eq(3).html($("input[name=change_add_by]").val());
+                        trNodep.children().eq(4).html(getDate());
                         layer.closeAll();
                         layer.alert('修改成功');
                     }, error: function (returndata) {
@@ -173,6 +174,13 @@
                 });
             }
         });
+
+        function getDate() {
+            var date = new Date();
+            var add_time = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
+            return add_time
+        }
+
         //添加用户显示层
         $("#addRobotBtn").on('click', function () {
             $('#addSupplierForm').removeClass('hidden');
