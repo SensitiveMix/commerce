@@ -16,3 +16,4 @@ require('../assets/js/owl.carousel.min.js');
 require('../assets/js/jquery.jpanelmenu.min.js');
 require('../assets/js/bootstrap.min.js');
 require('../assets/js/main.js');
+require('./master')

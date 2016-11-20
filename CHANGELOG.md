@@ -75,3 +75,7 @@ views/services/
 ##  v0.0.15
 *  修改供应商管理时间,时间格式 YYYY-MM-DD HH:MM
 *  修改最热标签管理页
+
+##  v0.1.0
+*  master首页样式和JS webpack打包
+*  添加Person-Order页面

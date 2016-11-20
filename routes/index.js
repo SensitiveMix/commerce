@@ -159,6 +159,24 @@ router.get('/personal-center', function (req, res, next) {
     })
 });
 
+router.get('/personal-Order', checkCategories);
+router.get('/personal-Order', function (req, res, next) {
+    var statusCode = null;
+    if (req.cookies["account"] != null) {
+        statusCode = 200;
+    } else {
+        statusCode = 500;
+    }
+    console.log(req.cookies["account"]);
+    res.render('assets/Personal-Order', {
+        title: 'ECSell',
+        categories: categoryies,
+        hotLabels: hotLabel,
+        user: req.cookies['account'],
+        status: statusCode
+    })
+});
+
 router.post('/change-profile', function (req, res, next) {
     console.log(req.body);
     db.users.update({"nick_name": req.body.origin_nick_name}, {
