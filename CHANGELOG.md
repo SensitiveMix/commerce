@@ -74,3 +74,4 @@ views/services/
 
 ##  v0.0.15
 *  修改供应商管理时间,时间格式 YYYY-MM-DD HH:MM
+*  修改最热标签管理页

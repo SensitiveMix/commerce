@@ -606,8 +606,8 @@ router.get('/hot_product_manage', function (req, res, next) {
     });
     console.log("用户管理页面登陆成功");
 });
-
-/* ----------------------------类目管理 -------------------------*/
+/*-------------------------------------------------------------------*/
+/* -------------------------------类目管理 ---------------------------*/
 //类目管理
 router.get('/accessory_manage', checkLogin);
 router.get('/accessory_manage', function (req, res, next) {
@@ -658,6 +658,33 @@ router.post('/doAddCategory', function (req, res) {
         }
     });
 });
+
+/*-------------------------------------------------------------------*/
+/* ----------------------------最热标签管理 -------------------------*/
+//获取用户
+router.get('/hotlabel', function (req, res, next) {
+    console.log("当前分页" + req.query.iDisplayStart);
+    db.hotLabels.find({}, null, {
+        sort: {
+            'registerTime': 1
+        }
+    }, function (err, result) {
+        var lista = {
+            "draw": 2,
+            "recordsTotal": "",
+            "recordsFiltered": "",
+            "data": []
+        };
+        lista.recordsTotal = result.length;
+        lista.recordsFiltered = lista.recordsTotal;
+        lista.data = result;
+        // console.log(result);
+        res.send(lista);
+        res.end();
+    });
+
+});
+
 
 /*-------------------------------------------------------------------*/
 /* ----------------------------上传产品模块 -------------------------*/
