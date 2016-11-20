@@ -549,7 +549,8 @@
             $('#product-attribute-table tbody tr').each(function (index, item) {
                 var form_data_compile = {};
                 form_data_compile.compile_spec = $(item).find('td').eq(0).text();
-                form_data_compile.compile_price = $(item).find('td').eq(1).text();
+                form_data_compile.compile_vip_price = $(item).find('td').eq(1).text();
+                form_data_compile.compile_normal_price = $(item).find('td').eq(2).text();
                 form.product_price.push(form_data_compile);
 
             })
@@ -588,35 +589,35 @@
             form.product_spec = product_spec;
             console.log(form)
 
-
-            $.ajax({
-                url: '/admin/saveProductDetail',
-                type: 'POST',
-                data: {
-                    product_title: form.product_title,
-                    product_supplier: form.product_supplier,
-                    product_sell_status: form.product_sell_status,
-                    product_stock_status: form.product_stock_status,
-                    product_video_link: form.product_video_link,
-                    belong_category: JSON.stringify(form.belong_category),
-                    product_price: JSON.stringify(form.product_price),
-                    product_danWei: JSON.stringify(form.product_danWei),
-                    product_market: JSON.stringify(form.product_market),
-                    product_origin_price: JSON.stringify(form.product_origin_price),
-                    product_images: JSON.stringify(form.product_images),
-                    product_freight: JSON.stringify(form.product_freight),
-                    product_spec: JSON.stringify(form.product_spec)
-                },
-
-                dataType: 'json',
-                cache: false,
-                success: function (data) {
-                    console.log(data)   //返回图片
-                },
-                error: function () {
-                    console.log('err');
-                }
-            });
+//
+//            $.ajax({
+//                url: '/admin/saveProductDetail',
+//                type: 'POST',
+//                data: {
+//                    product_title: form.product_title,
+//                    product_supplier: form.product_supplier,
+//                    product_sell_status: form.product_sell_status,
+//                    product_stock_status: form.product_stock_status,
+//                    product_video_link: form.product_video_link,
+//                    belong_category: JSON.stringify(form.belong_category),
+//                    product_price: JSON.stringify(form.product_price),
+//                    product_danWei: JSON.stringify(form.product_danWei),
+//                    product_market: JSON.stringify(form.product_market),
+//                    product_origin_price: JSON.stringify(form.product_origin_price),
+//                    product_images: JSON.stringify(form.product_images),
+//                    product_freight: JSON.stringify(form.product_freight),
+//                    product_spec: JSON.stringify(form.product_spec)
+//                },
+//
+//                dataType: 'json',
+//                cache: false,
+//                success: function (data) {
+//                    console.log(data)   //返回图片
+//                },
+//                error: function () {
+//                    console.log('err');
+//                }
+//            });
 
 
         })
@@ -698,7 +699,7 @@
             console.log(product_attributes_type);
             product_attributes_compatibility.forEach(function (item_compatibility) {
                 product_attributes_Color.forEach(function (item_type) {
-                    var table_body_tr = '<tr><td>【' + item_compatibility + '】' + item_type + '</td><td><input type="text" class="form-control"></td></tr>';
+                    var table_body_tr = '<tr><td>【' + item_compatibility + '】' + item_type + '</td><td><input type="text" class="form-control"></td><td><input type="text" class="form-control"></td><td><input type="text" class="form-control"></td></tr>';
 
                     $('#product-attribute-table tbody').append(table_body_tr);
                 })
@@ -707,6 +708,7 @@
                 $('#product-attribute-table tbody tr').each(function (index, item) {
                     var eq_1 = $('input[name="price"]').val();
                     $(item).find('td').eq(1).find('input').val(eq_1);
+                    $(item).find('td').eq(2).find('input').val((parseInt(eq_1) + 0.5).toString());
 //                    var eq_2 = $('input[name="count"]').val();
 //                    $(item).find('td').eq(2).text(eq_2);
                 })
@@ -1020,8 +1022,9 @@
                             <thead>
                             <tr>
                                 <td class="col-sm-2 bktit addborderline">颜色分类</td>
-                                <td class="col-sm-2 bktit addborderline">价格(元)</td>
-                                <!--<td class="col-sm-2 bktit addborderline">数量(件)</td>-->
+                                <td class="col-sm-2 bktit addborderline">VIP价格(美元)</td>
+                                <td class="col-sm-2 bktit addborderline">普通会员价格(美元)</td>
+                                <td class="col-sm-2 bktit addborderline">促销价格(美元)</td>
                             </tr>
                             </thead>
                             <tbody>
@@ -1172,51 +1175,51 @@
             <!-- 销售方式 结束 -->
 
             <!-- 产品价格 开始 -->
-            <div id="tips-sale" class="mainlayout clearfix" style="position:relative;">
-                <div class="ml-title"><span class="required">*</span>产品价格区间：</div>
-                <div class="form-inline">
-                    <div class="form-group">
-                        <!--<label for="exampleInputEmail2">VIP Price</label>-->
-                        <input type="text" class="form-control" name="vip_price" id="vip_price" placeholder="VIP Price">
-                    </div>
-                    <div class="form-group">
-                        <!--<label for="exampleInputEmail2">Regular Price</label>-->
-                        <input type="text" class="form-control" name="regular_price" id="regular_price"
-                               placeholder="Regular Price">
-                    </div>
-                    <div class="form-group">
-                        <!--<label for="exampleInputEmail2">Market Price</label>-->
-                        <input type="text" class="form-control" name="market_price" id="market_price"
-                               placeholder="Market Price">
-                    </div>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="cuxiao_price" name="cuxiao_price"> 促销价格:
-                    </label>
-                </div>
-                <div class="form-inline">
-                    <div class="form-group">
-                        <!--<label for="exampleInputEmail2">VIP Price</label>-->
-                        <input type="text" class="form-control" name="promotion_vip_price" id="promotion_vip_price"
-                               placeholder="VIP Price">
-                    </div>
-                    <div class="form-group">
-                        <!--<label for="exampleInputEmail2">Regular Price</label>-->
-                        <input type="text" class="form-control" name="promotion_regular_price"
-                               id="promotion_regular_price" placeholder="Regular Price">
-                    </div>
+            <!--<div id="tips-sale" class="mainlayout clearfix" style="position:relative;">-->
+                <!--<div class="ml-title"><span class="required">*</span>产品价格区间：</div>-->
+                <!--<div class="form-inline">-->
+                    <!--<div class="form-group">-->
+                        <!--&lt;!&ndash;<label for="exampleInputEmail2">VIP Price</label>&ndash;&gt;-->
+                        <!--<input type="text" class="form-control" name="vip_price" id="vip_price" placeholder="VIP Price">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--&lt;!&ndash;<label for="exampleInputEmail2">Regular Price</label>&ndash;&gt;-->
+                        <!--<input type="text" class="form-control" name="regular_price" id="regular_price"-->
+                               <!--placeholder="Regular Price">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--&lt;!&ndash;<label for="exampleInputEmail2">Market Price</label>&ndash;&gt;-->
+                        <!--<input type="text" class="form-control" name="market_price" id="market_price"-->
+                               <!--placeholder="Market Price">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="checkbox">-->
+                    <!--<label>-->
+                        <!--<input type="checkbox" id="cuxiao_price" name="cuxiao_price"> 促销价格:-->
+                    <!--</label>-->
+                <!--</div>-->
+                <!--<div class="form-inline">-->
+                    <!--<div class="form-group">-->
+                        <!--&lt;!&ndash;<label for="exampleInputEmail2">VIP Price</label>&ndash;&gt;-->
+                        <!--<input type="text" class="form-control" name="promotion_vip_price" id="promotion_vip_price"-->
+                               <!--placeholder="VIP Price">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--&lt;!&ndash;<label for="exampleInputEmail2">Regular Price</label>&ndash;&gt;-->
+                        <!--<input type="text" class="form-control" name="promotion_regular_price"-->
+                               <!--id="promotion_regular_price" placeholder="Regular Price">-->
+                    <!--</div>-->
                     <!--<div class="form-group">-->
                     <!--&lt;!&ndash;<label for="exampleInputEmail2">Market Price</label>&ndash;&gt;-->
                     <!--<input type="text" class="form-control" name="promotion_market_price"-->
                     <!--id="promotion_market_price" placeholder="Market Price">-->
                     <!--</div>-->
-                </div>
+                <!--</div>-->
 
-            </div>
+            <!--</div>-->
             <!-- 产品价格 结束 -->
 
-        </div>        <!-- title产品销售信息 结束 -->    <!-- title产品销售信息 结束 -->
+        <!--</div>        &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;    &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;-->
 
         <!-- title产品内容描述 开始 -->
         <div class="titlebox"><h3>3、产品内容描述</h3></div>
