@@ -1067,7 +1067,7 @@ router.get('/supplierList', function (req, res, next) {
     });
 
 });
-router.post('/doAddSupplier', checkLogin);
+router.get('/supplier_manage', checkLogin);
 router.get('/supplier_manage', function (req, res, next) {
     res.render('admin/supplier_manage',
         {
@@ -1084,6 +1084,7 @@ router.post('/doAddSupplier', function (req, res) {
         add_time: req.body.add_time,
         add_time_number: req.body.add_time_number
     };
+    console.log(suppliers)
     var supplier = new db.suppliers(suppliers);
     supplier.save(function (err) {
         if (err) res.send({

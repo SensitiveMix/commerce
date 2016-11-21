@@ -778,7 +778,7 @@
                 英文
                 <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
                 德文
-                <input type="checkbox" class="demen" onclick="getTranslate('en',this.value)"
+                <input type="checkbox" class="demen" onclick="getTranslateTitle()"
                        data-group-cls="btn-group-lg">
                 <input id="productname" name="productname" style="ime-mode:disabled;" class="attr-text-input addwid402"
                        maxlength="140" placeholder="英文" type="text" value="" autoComplete='off'>
@@ -1102,16 +1102,52 @@
                 </div>
 
             </div>
+            <!--添加供应商 form start -->
+            <div class="form-horizontal  layer_notice hidden" id="addForm">
+                <form class="" hidden="hidden" action="addsupplier" style="margin-top: 50px"
+                      id="addsupplier" method="post">
+                    <div class="box-body" style="margin-top: 70px">
+                        <input type="text" style="display: none" class="form-control" name="id" id="id"/>
 
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">供应商名称</label>
+
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="supplier_name" name="supplier_name">
+                            </div>
+                        </div>
+
+                        <input type="text" style="display: none" class="form-control" name="id" id="id"/>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">添加人</label>
+
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="supplier_user" name="supplier_user">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="box-footer">
+                        <input type="button" value="添加" id="addRobotBtn"
+                               class='btn btn-info pull-right closeBtn'/>
+                    </div>
+                </form>
+
+
+            </div>
             <!-- 供应商 开始 -->
             <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
                 <div class="ml-title"><span class="required"></span>供应商：</div>
                 <a id="a_measureid"></a>
-                <select class="attr-select j-select-unit form-control" name="supplier">
+                <select class="attr-select j-select-unit form-control" id="supplier" name="supplier">
                     <% suppliers.forEach(function(supplier){ %>
                     <option value="<%= supplier.name %>"><%= supplier.name %></option>
                     <% }) %>
                 </select>
+                <input type="button" value="添加供应商" style="margin-top: 10px" id="addSupplierBtn"
+                       class='btn btn-primary'/>
             </div>
             <!-- 供应商 结束 -->
             <div class="mainlayout j-basic-standard-container clearfix">
@@ -1165,7 +1201,7 @@
                         <div>
                             <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
                             <div class="form-group" style="float: left;width: 53%">
-                                <div class="input-group">
+                                <div class="input-group" style="display: inline-block">
                                     <input class="form-control" id="product-stock-time" type="text" placeholder=""
                                            value="2天"
                                            style="height: 47px">
@@ -1282,7 +1318,7 @@
                 <div class="helptips" style="width:70px;margin-bottom: 5px;">
                     <select style="display:inline-block" name="语言选择" class="form-control"
                             onchange="getTranslate('en',this.value)" id="">
-                        <option value="en">选择</option>
+                        <option value="en">选择语言</option>
                         <option value="en">英文</option>
                         <option value="de">德文</option>
                     </select>
@@ -1390,16 +1426,61 @@
 </div>
 </div>
 <script>
-    var temp = []
-    function getTranslateTitle(src, dst) {
+
+    //提交添加
+    $("#addRobotBtn").on('click', function () {
+
+        var date = new Date();
+        var parmets = {
+            add_name: $("#supplier_name").val(),
+            add_by: $("#supplier_user").val(),
+            add_time: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes(),
+            add_time_number: (date.getTime() / 1000).toFixed()
+        }
+
+        console.log(parmets)
+        if (parmets.add_name == '') {
+            layer.tips('请填写供应商', '#supplier_name')
+        } else {
+            console.log(parmets)
+            $.ajax({
+                url: 'doAddSupplier',
+                type: 'POST',
+                data: parmets,
+                success: function (retmsgurndata) {
+                    console.log(retmsgurndata)
+                    $("#addForm").hide();
+                    $("#supplier").append("<option value='" + $("#supplier_name").val() + "'>" + $("#supplier_name").val() + "</option>");
+                    $("#supplier_name").val('');
+                    $("#add_by").val('');
+                    layer.closeAll();
+                    layer.msg('添加成功');
+                }, error: function (returndata) {
+                    alert('添加失败，请检查是否有非法词汇！');
+                }
+            });
+        }
+    });
+
+    //添加用户显示层
+    $("#addSupplierBtn").on('click', function () {
+        $('#addForm').removeClass('hidden');
+        $('#addsupplier').show();
+        layer.open({
+            type: 1,
+            skin: 'layui-layer-rim',
+            shade: false,
+            title: false, //不显示标题
+            content: $('#addForm'), //捕获的元素
+            area: ['420px', "350px"],
+            cancel: function (index) {
+                layer.close(index);
+            },
+            scrollbar: false
+        });
+    });
+    function getTranslateTitle() {
         if ($(".deman").attr("checked")) {
-            var re = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
-            if (re.test($('#product_remark').val())) {
-                src = 'en'
-            } else {
-                src = 'zh'
-            }
-            console.log(re.test($('.product_remark').val()))
             var appid = '20161031000031137';
             var key = '5pFIYl4t5Hi1oSXzRv1X';
             var salt = (new Date).getTime();

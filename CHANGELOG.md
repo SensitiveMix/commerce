@@ -79,3 +79,11 @@ views/services/
 ##  v0.1.0
 *  master首页样式和JS webpack打包
 *  添加Person-Order页面
+
+##  v0.1.1
+*  产品详情页添加供应商接口
+*  添加标题,remark 英文,德文翻译
+*  删除促销价格
+*  修改产品备货期Input样式
+*  添加产品备注
+*  修改产品备货期各组件位置
