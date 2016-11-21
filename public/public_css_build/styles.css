@@ -1083,7 +1083,8 @@ ul.products .product {
 
 .widget img {
     min-width: 100%;
-    height: 100%
+    width: 100%;
+    height: auto;
 }
 
 #map-canvas {
@@ -1786,6 +1787,7 @@ tr.cart-subtotal > * {
         width: 30px;
         background: #ddd;
         display: none;
+        z-index: 44;
     }
     .mi-slider {
         text-align: center;
@@ -1967,7 +1969,7 @@ tr.cart-subtotal > * {
 }
 
 #top-banner {
-    height: 85px !important;
+    /*height: 85px !important;*/
 }
 
 .navbar-toggle .icon-bar {

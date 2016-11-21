@@ -11,4 +11,3 @@ require('../plugins/swiper/css/swiper.min.css')
 require('../assets/css/style.css')
 require('../assets/css/config.css')
 require('./master.css')
-
