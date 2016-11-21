@@ -8,17 +8,19 @@
                 border: 1px solid #dedede;
             }
 
-            /*.sort-bar {*/
-                /*background: #f2f2f2;*/
-                /*border: 1px solid #b1b1b1;*/
-                /*!*min-height: 40px!important;*!*/
-            /*}*/
+            .sort-bar {
+                min-height: 34px;
+                margin-bottom: 15px;
+            }
             .menuItem a{
                 color: #fff;
+                height: 34px;
+                line-height: 34px!important;
+                font-weight: 500;
             }
             .menuItem.active a{
-                color: #fff;
-                background: #000;
+                color: #fff!important;
+                background: #333!important;
             }
 
         </style>
@@ -34,7 +36,8 @@
 
         <section id="content">
             <div class="container">
-
+                <div class="row">
+                    <div class="col-xs-10 col-md-10" style="margin: 0 auto;float: none">
                 <ol class="breadcrumb">
                     <li><a href="/">Home</a></li>
                     <li><a href="<%= prev_category.firstUrl %>"><%= prev_category.firstTitle %></a></li>
@@ -47,7 +50,7 @@
                     <div class="col-sm-12">
                         <div class="navwrapper">
                             <div class="navbar navbar-default navbar-static-top sort-bar">
-                                <div class="navbar-collapse collapse">
+                                <div class="navbar-collapse collapse" style="padding: 0">
                                     <ul class="nav navbar-nav">
                                         <li class="menuItem active"><a>Recommended</a></li>
                                         <li class="menuItem"><a>Time</a></li>
@@ -110,7 +113,8 @@
                     </div>
 
                 </div>
-
+                </div>
+                </div>
             </div>
         </section>
 
