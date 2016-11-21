@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js",
+    "start": "cross-env NODE_ENV=dev node app_browsersync",
     "dev": "cross-env NODE_ENV=dev sudo nodemon app.js",
     "build": "webpack --progress --colors --watch",
     "test": "mocha -t 60000 Mocha/ --bail",
