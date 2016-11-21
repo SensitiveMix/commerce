@@ -916,7 +916,7 @@ tr.cart-subtotal > * {
 .breadcrumb {
     background: none;
     padding: 0;
-    margin-bottom: 50px;
+    margin-bottom: 15px;
 }
 
 .pagination {
@@ -1919,5 +1919,8 @@ embed {
     position: relative;
     color: #000;
     border-radius: 7px;
+}
+.navbar-static-top{
+    z-index: 1!important;
 }
 
