@@ -727,27 +727,30 @@ router.get('/upload-products-detail', function (req, res, next) {
                             res.send(500)
                         } else {
                             console.log(result)
-                            _.each(result.specification.compatibility, function (item) {
-                                compatibility.push(item.value)
-                            });
-                            _.each(result.specification.type, function (item) {
-                                type.push(item.value)
-                            });
-                            _.each(result.specification.hardOrSoft, function (item) {
-                                hardOrSoft.push(item.value)
-                            });
-                            _.each(result.specification.features, function (item) {
-                                features.push(item.value)
-                            });
-                            _.each(result.specification.Color, function (item) {
-                                Color.push(item.value)
-                            });
-                            _.each(result.specification.pattern, function (item) {
-                                pattern.push(item.value)
-                            });
-                            _.each(result.specification.material, function (item) {
-                                material.push(item.value)
-                            });
+                            if (result != null) {
+                                _.each(result.specification.compatibility, function (item) {
+                                    compatibility.push(item.value)
+                                });
+                                _.each(result.specification.type, function (item) {
+                                    type.push(item.value)
+                                });
+                                _.each(result.specification.hardOrSoft, function (item) {
+                                    hardOrSoft.push(item.value)
+                                });
+                                _.each(result.specification.features, function (item) {
+                                    features.push(item.value)
+                                });
+                                _.each(result.specification.Color, function (item) {
+                                    Color.push(item.value)
+                                });
+                                _.each(result.specification.pattern, function (item) {
+                                    pattern.push(item.value)
+                                });
+                                _.each(result.specification.material, function (item) {
+                                    material.push(item.value)
+                                });
+                            }
+
                         }
                     })
                 });
