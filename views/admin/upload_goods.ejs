@@ -415,11 +415,70 @@
 
         })
 
+        $('.delete').click(function () {
+            console.log($(this))
+            $(this).prev().remove();
+        })
+
+        function deleteCategory() {
+            $('#deleteCategory').prev().remove();
+        }
+
         var isSave = false;
+        var total_category = []
+        var total = {};
         $('#save_history').click(function () {
-            var myhistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + ' -</span>'
-            $('#recentCategoryDropdown').append(myhistory);
-            if ($('#catagory0 li.current').text().length) {
+
+            var single = {
+                firstCategory: $('#catagory0 li.current').text(),
+                secondCategory: $('#catagory1 li.current').text(),
+                thirdCategory: $('#catagory2 li.current').text()
+            }
+
+            var Length = total_category.filter(function (item) {
+                return single.firstCategory == item.firstCategory && single.secondCategory == item.secondCategory && single.thirdCategory == item.thirdCategory
+            }).length
+
+            if (Length > 0) {
+                layer.msg('该类目已存在');
+            } else {
+                total_category.push(single);
+                var myhistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + ' -</span>'
+                $('#recentCategoryDropdown').append(myhistory);
+                $('.save_category').css('display', 'block');
+                var saveHistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + '</span><span class="delete">删除</span><br/>'
+                $('.save_category_path').append(saveHistory)
+                $('.delete').click(function () {
+                    var context = $(this).prev().text()
+                    var threeCategory = context.substring(context.lastIndexOf('>') + 1, context.length)
+                    if (threeCategory != '') {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'deleteTemporary',
+                            data: {thirdCategory: threeCategory},
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.status == 200) {
+                                    layer.msg('删除成功');
+                                } else {
+                                    layer.msg('删除失败');
+                                }
+
+                            }
+                        });
+                    } else {
+                        layer.msg('删除失败')
+                    }
+
+                    layer.msg('删除成功')
+                    $(this).prev().remove();
+                    $(this).next().remove();
+                    $(this).remove()
+                })
+
+            }
+
+            if ($('#catagory0 li.current').text().length != 0) {
                 $.ajax({
                     type: 'POST',
                     url: '/admin/uploadTemporary',
@@ -437,9 +496,11 @@
                         console.log(data);
                     }
                 });
+
             } else {
                 alert('请选择类目!');
             }
+            console.log(total_category)
 
         })
 
@@ -508,6 +569,12 @@
                     <div class="clearfix">
                         <span class="cate-title">当前已选择的类目：</span>
                         <span class="cate-value show_category_path" id="show_category_path"></span>
+                    </div>
+                    <div class="clearfix save_category" style="display: none;">
+                        <span class="cate-title">当前已保存的类目：</span>
+                        <!--<br/>-->
+                        <span class="cate-value save_category_path"
+                              id="save_category_path"></span>
                     </div>
                 </div>
                 <!--   -----------------------------没有操作权限提醒 DIV----------------------------               -->

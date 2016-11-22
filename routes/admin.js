@@ -701,7 +701,7 @@ router.get('/upload', function (req, res) {
 });
 
 //上传产品详细信息
-router.get('/upload-products-detail', function (req, res) {
+router.get('/upload-products-detail', function (req, res, next) {
     async.parallel([
             function (done) {
                 db.categorys.find({}, function (err, result) {
@@ -726,6 +726,7 @@ router.get('/upload-products-detail', function (req, res) {
                         if (err) {
                             res.send(500)
                         } else {
+                            console.log(result)
                             _.each(result.specification.compatibility, function (item) {
                                 compatibility.push(item.value)
                             });
@@ -779,7 +780,6 @@ router.get('/upload-products-detail', function (req, res) {
 
                 console.log(product_spectication)
 
-                console.log(tempCategory);
                 res.render('admin/upload-products-detail', {
                     username: u.nick_name,
                     upload: [],
@@ -799,8 +799,6 @@ router.get('/upload-products-detail', function (req, res) {
                 tempCategory = [];
             }
         });
-
-
 });
 
 function filterArr(spectication, tempCategory) {
@@ -834,14 +832,13 @@ router.post('/uploadTemporary', function (req, res, next) {
         res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400"})
     } else {
         var Categories = {
-                firstCategory: req.body.firstCategory,
-                secondCategory: req.body.secondCategory,
-                thirdCategory: req.body.thirdCategory,
-                addBy: req.body.addBy,
-                upload_time: (new Date().getTime() / 1000).toFixed(),
-                status: 'NEW'
-            }
-            ;
+            firstCategory: req.body.firstCategory,
+            secondCategory: req.body.secondCategory,
+            thirdCategory: req.body.thirdCategory,
+            addBy: req.body.addBy,
+            upload_time: (new Date().getTime() / 1000).toFixed(),
+            status: 'NEW'
+        };
         tempCategory.push(Categories);
         var category = new db.uploadTemporarys(Categories);
         category.save(function (err) {
@@ -866,7 +863,18 @@ router.post('/uploadTemporary', function (req, res, next) {
             }
         });
     }
+});
 
+router.post('/deleteTemporary', function (req, res, next) {
+
+    if (req.body.thirdCategory != '') {
+        tempCategory = _.filter(function (item) {
+            return item.thirdCategory != req.body.thirdCategory
+        })
+        res.json({status: 200, msg: 'SUCCESS'})
+    } else {
+        res.json({status: 403, msg: 'NOT FOUND'})
+    }
 });
 
 //点击上传产品跳转到产品详情页接口
