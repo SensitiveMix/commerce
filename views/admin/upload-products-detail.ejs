@@ -1,5 +1,96 @@
 <% layout('master.ejs') %>
 <script src="/js/md5.js"></script>
+<script type="text/javascript">
+    function getTranslateTitle(param) {
+        if ($(".demen").is(":checked")) {
+            if (param) {
+                $('.title_re').append('<input id="productname_de" name="productname_de" style="ime-mode:disabled;margin-left: 94px;" class="attr-text-input addwid402" maxlength="140" placeholder="德文" type="text" value="" autoComplete="off"><span id="productnameTip" style="padding-left:4px;" class="helptips marginleft10">您还可以输入<b class="color444" id="productNameLengthSpan_de">140</b><span class="color000">/<span>140</span></span>个字符</span>')
+            }
+            var productNameLength = $('#productname').val().length;
+            $('#productNameLengthSpan_de').text(140 - productNameLength);
+            $('#productname_de').bind('input propertychange', function () {
+                var productNameLength = $('#productname_de').val().length;
+                $('#productNameLengthSpan_de').text(140 - productNameLength);
+            });
+
+
+            var appid = '20161031000031137';
+            var key = '5pFIYl4t5Hi1oSXzRv1X';
+            var salt = (new Date).getTime();
+            var query = $("#productname").val();
+            var from = 'en';
+            var to = 'de';
+            var str1 = appid + query + salt + key;
+            var sign = MD5(str1);
+            $.ajax({
+                url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+                type: 'get',
+                dataType: 'jsonp',
+                data: {
+                    q: query,
+                    appid: appid,
+                    salt: salt,
+                    from: from,
+                    to: to,
+                    sign: sign
+                },
+                success: function (data) {
+                    console.log(data)
+                    $('#productname_de').val(data.trans_result[0].dst);
+                },
+                error: function (data) {
+                    layer.msg('翻译服务已停用')
+                    console.log(data)
+                }
+            });
+        } else {
+            if (param) {
+                $('#productname').next().next().remove()
+                $('#productname').next().remove()
+
+            }
+        }
+
+    }
+    function getTranslate(param) {
+        if ($(".demen_remark").is(":checked")) {
+            if (param) {
+                $('.vadiourlTip_remark').append('<textarea name="product_de_remark" placeholder="默认德文" class="product_de_remark" id="" cols="50" rows="4"></textarea>')
+            }
+            var appid = '20161031000031137';
+            var key = '5pFIYl4t5Hi1oSXzRv1X';
+            var salt = (new Date).getTime();
+            var query = $(".product_remark").val();
+            var from = 'en';
+            var to = 'de';
+            var str1 = appid + query + salt + key;
+            var sign = MD5(str1);
+            $.ajax({
+                url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+                type: 'get',
+                dataType: 'jsonp',
+                data: {
+                    q: query,
+                    appid: appid,
+                    salt: salt,
+                    from: from,
+                    to: to,
+                    sign: sign
+                },
+                success: function (data) {
+                    console.log(data)
+                    $('.product_de_remark').val(data.trans_result[0].dst);
+                },
+                error: function (data) {
+                    layer.msg('翻译服务已停用')
+                    console.log(data)
+                }
+            });
+        } else {
+            $('.product_remark').next().remove()
+        }
+    }
+</script>
 <style>
     ul {
         list-style: none;
@@ -757,7 +848,7 @@
         </div>
     </div>
     <!-- 错误信息 结束 -->
-    <form id="syi_form" name="SYIForm" method="post" enctype="multipart/form-data" target="_blank">
+    <div id="syi_form" name="SYIForm" method="post" enctype="multipart/form-data" target="_blank">
 
         <!-- title产品基本信息 开始 -->
         <div class="titlebox"><h3>1、产品基本信息</h3></div>
@@ -774,16 +865,17 @@
                 您填写的标题和短描的相似单词数已超过50%，信息重复会降低商品信息质量不利于产品曝光。
             </div>
 
-            <div>
+            <div class="title_re">
                 英文
                 <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
                 德文
-                <input type="checkbox" class="demen" onclick="getTranslateTitle()"
+                <input type="checkbox" class="demen" onclick="getTranslateTitle(true)"
                        data-group-cls="btn-group-lg">
-                <input id="productname" name="productname" style="ime-mode:disabled;" class="attr-text-input addwid402"
+                <input id="productname" onchange="getTranslateTitle(false)" name="productname"
+                       style="ime-mode:disabled;" class="attr-text-input addwid402"
                        maxlength="140" placeholder="英文" type="text" value="" autoComplete='off'>
-                <span id="productnameTip" class="helptips marginleft10">您还可以输入<b class="color444"
-                                                                                 id="productNameLengthSpan">140</b><span
+                <span id="productnameTip productname_tip" class="helptips marginleft10">您还可以输入<b class="color444"
+                                                                                                 id="productNameLengthSpan">140</b><span
                             class="color000">/<span>140</span></span>个字符</span>
             </div>
             <div id="productnameErrTip" class="tip-error" style="display:none;"></div>
@@ -944,7 +1036,7 @@
                         <span class="drop-down-default"></span>
                         <div class="chouse-down-box text-indent" id="brandsDiv" style="display: none;">
                         </div>
-                        <iframe></iframe>
+                        <!--<iframe></iframe>-->
                     </div>
 
                 </div>
@@ -1313,18 +1405,19 @@
             <!-- 产品视频结束 -->
 
             <!-- 产品备注 开始 -->
-            <div class="mainlayout clearfix j-list-item" id="vadiourlTip">
+            <div class="mainlayout clearfix j-list-item vadiourlTip_remark" id="vadiourlTip">
                 <div class="ml-title">产品备注：</div>
-                <div class="helptips" style="width:70px;margin-bottom: 5px;">
-                    <select style="display:inline-block" name="语言选择" class="form-control"
-                            onchange="getTranslate('en',this.value)" id="">
-                        <option value="en">选择语言</option>
-                        <option value="en">英文</option>
-                        <option value="de">德文</option>
-                    </select>
+                <div class="helptips" style="width:126px;margin-bottom: 5px;">
+                    英文
+                    <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
+                    德文
+                    <input type="checkbox" class="demen_remark" onclick="getTranslate(true)"
+                           data-group-cls="btn-group-lg">
+                    <span class="helpicon" title="勾选语言" helptipval="vadiourlTip"></span>
                 </div>
-
-                <textarea name="product_remark" class="product_remark" id="" cols="50" rows="4"></textarea>
+                <textarea name="product_remark" onchange="getTranslate(false)" placeholder="默认英文" class="product_remark"
+                          id="" cols="50"
+                          rows="4"></textarea>
 
             </div>
             <!-- 产品视频结束 -->
@@ -1415,15 +1508,13 @@
                 <!--[if IE 6]>
                 <div class="layoutmargin">
                     <div class="layoutpadding"><![endif]-->
-                <iframe id="headiframe" name="head" src="http://seller.dhgate.com/syihtml/footer_syi.html" width="100%"
-                        height="81" frameborder="0" scrolling="no"></iframe>
+                <!--<iframe id="headiframe" name="head" src="http://seller.dhgate.com/syihtml/footer_syi.html" width="100%"-->
+                <!--height="81" frameborder="0" scrolling="no"></iframe>-->
                 <!--[if IE 6]></div></div><![endif]-->
             </div>
             <!-- footer文件调用结束 -->
-    </form>
-
-
-</div>
+        </div>
+    </div>
 </div>
 <script>
 
@@ -1479,76 +1570,6 @@
             scrollbar: false
         });
     });
-    function getTranslateTitle() {
-        if ($(".deman").attr("checked")) {
-            var appid = '20161031000031137';
-            var key = '5pFIYl4t5Hi1oSXzRv1X';
-            var salt = (new Date).getTime();
-            var query = $(".productname").val();
-            var from = 'en';
-            var to = 'de';
-            var str1 = appid + query + salt + key;
-            var sign = MD5(str1);
-            $.ajax({
-                url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
-                type: 'get',
-                dataType: 'jsonp',
-                data: {
-                    q: query,
-                    appid: appid,
-                    salt: salt,
-                    from: from,
-                    to: to,
-                    sign: sign
-                },
-                success: function (data) {
-                    console.log(data)
-                    $('#productname').val(data.trans_result[0].dst);
-                },
-                error: function (data) {
-                    console.log(data)
-                }
-            });
-        }
-
-    }
-    function getTranslate(src, dst) {
-        var re = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
-        if (re.test($('.product_remark').val())) {
-            src = 'en'
-        } else {
-            src = 'zh'
-        }
-        console.log(re.test($('.product_remark').val()))
-        var appid = '20161031000031137';
-        var key = '5pFIYl4t5Hi1oSXzRv1X';
-        var salt = (new Date).getTime();
-        var query = $(".product_remark").val();
-        var from = src;
-        var to = dst;
-        var str1 = appid + query + salt + key;
-        var sign = MD5(str1);
-        $.ajax({
-            url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
-            type: 'get',
-            dataType: 'jsonp',
-            data: {
-                q: query,
-                appid: appid,
-                salt: salt,
-                from: from,
-                to: to,
-                sign: sign
-            },
-            success: function (data) {
-                console.log(data)
-                $('.product_remark').val(data.trans_result[0].dst);
-            },
-            error: function (data) {
-                console.log(data)
-            }
-        });
-    }
     function uploadFile() {
         var file = document.getElementById("file")
         var formData = new FormData();
