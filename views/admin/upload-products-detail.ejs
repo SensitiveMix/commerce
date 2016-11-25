@@ -1368,14 +1368,14 @@
                 <p class="helptips">上传优质产品图片会获得更多的站内外流量。<br>优质产品图片定义：产品原图，即无人为修改痕迹、无水印、无修饰边框和文字。</p>
                 <div class="margintop10">
                     <div id="uploadImages">
-                        请选择文件：<input type="file" id="file" name="file" multiple/><br/>
-                        <input type="button" id="upload" value="相册上传"/>
+                        相册上传：<input type="file" onchange="uploadFile()" id="file" name="file"
+                                    multiple/><br/>
                         <div class="box-body">
                             <ul class="fl-file-upload" id="file-upload"></ul>
                         </div>
                     </div>
                     <span class="helptips">
-    			您还可以上传<b class="color444" id="photonum_b">8</b>
+    			您还可以上传<b class="color444 limit_pic" id="photonum_b">8</b>
     			          <span class="color000">/<span>8</span></span> 张
     		</span>
                     <input type="hidden" id="inp_img_index" value="">
@@ -1570,62 +1570,66 @@
             scrollbar: false
         });
     });
+
     function uploadFile() {
         var file = document.getElementById("file")
         var formData = new FormData();
-        for (var i = 0; i < file.files.length; i++) {
-            if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpg') {
-                layer.alert('上传图片格式有误')
-                return
-            } else {
-                formData.append('file', file.files[i]);
+        console.log(file)
+        console.log(file.files)
+        if (file.files.length > 8) {
+            layer.alert('上传图片大于8张')
+        } else {
+            for (var i = 0; i < file.files.length; i++) {
+                if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpeg') {
+                    layer.alert('上传图片格式有误')
+                    return false
+                } else if (file.files[i].size / 1024 > 2000) {
+                    layer.alert('上传图片大小不能超过2M')
+                    return false
+                } else {
+                    formData.append('file', file.files[i]);
+                }
+
+                $('.limit_pic').text(8 - file.files.length)
             }
 
+            $.ajax({
+                url: '/admin/uploadSingle',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var data = data.data;
+                    console.log(data)
+                    if (data.length != 0) {
+                        data.forEach(function (item, index) {
+                            item = item.replace('public', '');
+                            var li = '<li class="' + index + '"><img src="' + item + '"><span class="delete"></span></li><span class="exchange ' + index + '"></span>';
+                            $('#file-upload').append(li);
+                        })
+                    }
+                    $('.delete').click(function () {
+                        var exchange = $(this).parents('li').attr('class')
+                        $('.' + exchange).remove();
+                        $('.limit_pic').text(parseInt($('.limit_pic').text()) + 1)
+                    })
+                    $('.exchange').click(function () {
+                        if ($(this).next().length && $(this).prev().length)
+                            var prev = $(this).prev().html();
+                        var next = $(this).next().html();
+                        $(this).prev().html(next);
+                        $(this).next().html(prev);
+                    })
+                },
+                error: function () {
+                    layer.msg('上传文件格式错误')
+                }
+            });
         }
 
-        $.ajax({
-            url: '/admin/uploadSingle',
-            type: 'POST',
-            data: formData,
-            async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                var data = data.data;
-                console.log(data)
-                if (data.length != 0) {
-                    data.forEach(function (item) {
-                        item = item.replace('public', '');
-                        var li = '<li><img src="' + item + '"><span class="delete"></span></li><span class="exchange"></span>';
-                        $('#file-upload').append(li);
-                    })
-                }
-                $('.delete').click(function () {
-                    $(this).parents('li').remove();
-                })
-                $('.exchange').click(function () {
-                    if ($(this).next().length && $(this).prev().length)
-                        var prev = $(this).prev().html();
-                    var next = $(this).next().html();
-                    $(this).prev().html(next);
-                    $(this).next().html(prev);
-                })
-            },
-            error: function () {
-                console.log('err')
-            }
-        });
-    }
 
-    function postPage() {
-        var uploada = document.getElementById('upload');
-        uploada.addEventListener("click", function () {
-            uploadFile();
-        }, false);
-    }
-
-    window.onload = function () {
-        postPage();
     }
 </script>

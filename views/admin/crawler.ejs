@@ -51,11 +51,13 @@
             <tbody>
             </tbody>
         </table>
-        <div class="modal fade" id="mycrawel_img" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="mycrawel_img" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                                    class="sr-only">Close</span></button>
                         <h4 class="modal-title" id="myModalLabel">图片详情</h4>
                     </div>
                     <div class="modal-body">
@@ -67,11 +69,13 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade bs-example-modal-lg" id="property-detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade bs-example-modal-lg" id="property-detail" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="width: 1100px">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                                    class="sr-only">Close</span></button>
                         <h4 class="modal-title" id="myModalLabel">图片详情</h4>
                     </div>
                     <div class="modal-body">
@@ -133,54 +137,54 @@
                     var imgArrayQuery = [];
                     img.forEach(function (item, index) {
                         imgArrayQuery.push(item.image_url);
-                        imgArray.push('<a data-url="/crawel_images/'+item.image_url+'" class="view-crawel_img btn btn-link" data-toggle="modal" data-target="#mycrawel_img">图片'+(index+1)+'</a>');
+                        imgArray.push('<a data-url="/crawel_images/' + item.image_url + '" class="view-crawel_img btn btn-link" data-toggle="modal" data-target="#mycrawel_img">图片' + (index + 1) + '</a>');
                     })
                     var imgQuery = imgArray.join('');//图片链接
                     var property = res.property;
-                    var compatibility = property[1].value.replace(/[\r\n]/g,"");
+                    var compatibility = property[1].value.replace(/[\r\n]/g, "");
                     var type = property[2].value;
-                    var hardOrSoft = property[3].value.replace(/[\r\n]/g,"");
-                    var features = property[4].value.replace(/[\r\n]/g,"");
-                    var pattern = property[5].value.replace(/[\r\n]/g,"");
-                    var color = property[6].value.replace(/[\r\n]/g,"");
-                    var material = property[7].value.replace(/[\r\n]/g,"");
-                    var dimensions = property[8].value.replace(/[\r\n]/g,"");
-                    var netWeight = property[9].value.replace(/[\r\n]/g,"");
-                    var customization = property[10].value.replace(/[\r\n]/g,"");
+                    var hardOrSoft = property[3].value.replace(/[\r\n]/g, "");
+                    var features = property[4].value.replace(/[\r\n]/g, "");
+                    var pattern = property[5].value.replace(/[\r\n]/g, "");
+                    var color = property[6].value.replace(/[\r\n]/g, "");
+                    var material = property[7].value.replace(/[\r\n]/g, "");
+                    var dimensions = property[8].value.replace(/[\r\n]/g, "");
+                    var netWeight = property[9].value.replace(/[\r\n]/g, "");
+                    var customization = property[10] != 'undefined' ? null : property[10].value.replace(/[\r\n]/g, "");
 
                     var myhtml = '<tr>' +
-                            '<td>'+ title +'</td>' +
-                            '<td>'+ imgQuery +'</td>' +
+                            '<td>' + title + '</td>' +
+                            '<td>' + imgQuery + '</td>' +
                             '<td><a class="property-detail btn btn-xs btn-info" data-toggle="modal" data-target="#property-detail">详情</a></td>' +
-                            '<td style="display: none" class="compatibility">'+ compatibility +'</td>' +
-                            '<td style="display: none" class="type">'+ type +'</td>' +
-                            '<td style="display: none" class="hardOrSoft">'+ hardOrSoft +'</td>' +
-                            '<td style="display: none" class="features">'+ features +'</td>' +
-                            '<td style="display: none" class="pattern">'+ pattern +'</td>' +
-                            '<td style="display: none" class="color">'+ color +'</td>' +
-                            '<td style="display: none" class="material">'+ material +'</td>' +
-                            '<td style="display: none" class="dimensions">'+ dimensions +'</td>' +
-                            '<td style="display: none" class="netWeight">'+ netWeight +'</td>' +
-                            '<td style="display: none" class="customization">'+ customization +'</td>' +
+                            '<td style="display: none" class="compatibility">' + compatibility + '</td>' +
+                            '<td style="display: none" class="type">' + type + '</td>' +
+                            '<td style="display: none" class="hardOrSoft">' + hardOrSoft + '</td>' +
+                            '<td style="display: none" class="features">' + features + '</td>' +
+                            '<td style="display: none" class="pattern">' + pattern + '</td>' +
+                            '<td style="display: none" class="color">' + color + '</td>' +
+                            '<td style="display: none" class="material">' + material + '</td>' +
+                            '<td style="display: none" class="dimensions">' + dimensions + '</td>' +
+                            '<td style="display: none" class="netWeight">' + netWeight + '</td>' +
+                            '<td style="display: none" class="customization">' + customization + '</td>' +
                             '<td><a class="btn btn-danger delete-crawel-detail">删除</a></td>' +
                             '<td><a class="btn btn-primary upload-crawel-detail">上传</a></td>' +
                             '</tr>';
                     $('#robotetable tbody').append(myhtml);
 
-                    $('.view-crawel_img').click(function(){
+                    $('.view-crawel_img').click(function () {
                         var src = $(this).attr('data-url');
                         $('#mycrawel_img').find('.modal-body img').attr('src', src);
                     })
-                    $('.delete-crawel-detail').click(function(){
+                    $('.delete-crawel-detail').click(function () {
                         $(this).parent('tr').remove();
                     })
-                    $('.upload-crawel-detail').click(function(){
+                    $('.upload-crawel-detail').click(function () {
                         var data = [];
                         data['title'] = title;
                         data['img'] = imgArrayQuery;
                         data['propertyArray'] = [];
                         data['propertyArray']['compatibility'] = [];
-                        $(this).parents('tr').find('.compatibility span').each(function (index,item) {
+                        $(this).parents('tr').find('.compatibility span').each(function (index, item) {
                             data['propertyArray']['compatibility'][index] = $(item).text();
                         })
                         data['propertyArray']['type'] = $(this).parents('tr').find('.type a').html();
@@ -193,24 +197,24 @@
                         data['propertyArray']['netWeight'] = $.trim($(this).parents('tr').find('.netWeight').text());
                         data['propertyArray']['customization'] = $.trim($(this).parents('tr').find('.customization').text());
                         console.log(data);
-                        $.ajax({
-                            url: '/',
-                            type: 'POST',
-                            data: data,
-                            cache: false,
-                            contentType: false,
-                            processData: false,
-                            success: function (res) {
-                                console.log(res)
-                            },
-                            error: function () {
-                                layer.msg('内部服务器错误');
-                            }
-                        });
+//                        $.ajax({
+//                            url: '/',
+//                            type: 'POST',
+//                            data: data,
+//                            cache: false,
+//                            contentType: false,
+//                            processData: false,
+//                            success: function (res) {
+//                                console.log(res)
+//                            },
+//                            error: function () {
+//                                layer.msg('内部服务器错误');
+//                            }
+//                        });
 
                     })
 
-                    $('.property-detail').click(function(){
+                    $('.property-detail').click(function () {
                         $('#property-detail table tbody').empty();
                         var compatibility = $(this).parents('tr').find('.compatibility').html();
                         var type = $(this).parents('tr').find('.type').html();
@@ -223,16 +227,16 @@
                         var netWeight = $(this).parents('tr').find('.netWeight').html();
                         var customization = $(this).parents('tr').find('.customization').html();
                         var myhtml = '<tr>' +
-                                '<td class="compatibility">'+ compatibility +'</td>' +
-                                '<td class="type">'+ type +'</td>' +
-                                '<td class="hardOrSoft">'+ hardOrSoft +'</td>' +
-                                '<td class="features">'+ features +'</td>' +
-                                '<td class="pattern">'+ pattern +'</td>' +
-                                '<td class="color">'+ color +'</td>' +
-                                '<td class="material">'+ material +'</td>' +
-                                '<td class="dimensions">'+ dimensions +'</td>' +
-                                '<td class="netWeight">'+ netWeight +'</td>' +
-                                '<td class="customization">'+ customization +'</td>' +
+                                '<td class="compatibility">' + compatibility + '</td>' +
+                                '<td class="type">' + type + '</td>' +
+                                '<td class="hardOrSoft">' + hardOrSoft + '</td>' +
+                                '<td class="features">' + features + '</td>' +
+                                '<td class="pattern">' + pattern + '</td>' +
+                                '<td class="color">' + color + '</td>' +
+                                '<td class="material">' + material + '</td>' +
+                                '<td class="dimensions">' + dimensions + '</td>' +
+                                '<td class="netWeight">' + netWeight + '</td>' +
+                                '<td class="customization">' + customization + '</td>' +
                                 '</tr>';
                         $('#property-detail table tbody').append(myhtml);
                     })
