@@ -1,4 +1,4 @@
-var express = require('express');
+﻿var express = require('express');
 var router = express.Router();
 var db = require('../model/index');
 var crypto = require('crypto');
@@ -320,7 +320,7 @@ router.get('/getHeadBanner', function (req, res) {
     db.banners.findOne({'type': 'headBanner'}, function (err, result) {
         if (err) throw err;
         res.send(result);
-    })
+    }).sort({upload_time: -1})
 });
 //前台登陆处理
 router.post('/dologin', function (req, res) {
