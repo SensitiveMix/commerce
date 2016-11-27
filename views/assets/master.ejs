@@ -88,6 +88,7 @@
                         data: {},
                         dataType: 'json',
                         success: function (data) {
+                            $("#kv-img").height("20px");
                             $('#kv-img').attr('src', data.image_url);
                         }
                     });
@@ -125,151 +126,156 @@
                 <div class="container nav-top">
                     <div class="row">
                         <div class="col-xs-10 col-md-10" style="margin: 0 auto;float: none">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".main-nav">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="/"><img src="../assets/img/logo.png" alt="Garbini"
-                                                              class="img-responsive"
-                                                              style="height: 70px;"></a>
-                    </div>
-                    <div class="navbar-collapse collapse main-nav">
-
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <% if( status == 200) { %>
-                                <!--<a class="dropdown-toggle"><i-->
-                                <!--class="fa fa-user-circle"></i>Hi! <%= user.name %>-->
-                                <!--</a>-->
-                                <a href="" class="dropdown-toggle person" data-toggle="dropdown"
-                                   aria-expanded="true">
-                                    <embed src="../assets/img/icon/user.svg" type="image/svg+xml"/>
-                                    Personal Center <i class="fa fa-sort-down "></i></a>
-
-                                <ul class="person_ul">
-                                    <li><a ref="nofollow" href="/Personal-Order">My Orders</a></li>
-                                    <li><a ref="nofollow" href="/personal-center">My Account</a></li>
-                                    <li class=""><a ref="nofollow" href="/logout">Sign out</a></li>
-                                </ul>
-
-                                <% } else { %>
-                                <a href="/login" class="dropdown-toggle">
-                                    <embed src="../assets/img/icon/user.svg" type="image/svg+xml"/>
-                                    Login</a>
-                                <% } %>
-                            </li>
-                            <li>
-                                <a href="/contact-us" class="dropdown-toggle">
-                                    <embed style="width: 13px;" src="../assets/img/icon/warning.svg"
-                                           type="image/svg+xml"/>
-                                    Customer Service </a>
-                            </li>
-                            <li>
-                                <div class="link-country-currency ctr-info ctr-track-a"
-                                     id="google_translate_element"></div>
-
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="btn-group btn-group-justified btn-search-add-cart">
-                        <div class="btn-group" style="width: 0.6%;" id="menu-master">
-                            <button style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                SHOP ALL CATEGORIES
-                                <span class="caret"></span>
-                            </button>
-                        </div>
-                        <div class="btn-group">
-                            <div class="input-group">
-                                <input type="text" id="search_engine" class="form-control"
-                                       placeholder="Search"/>
-                                <span class="input-group-addon search" onclick="search_product()"><embed
-                                            src="../assets/img/icon/search.svg"
-                                            type="image/svg+xml"/></span>
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                        data-target=".main-nav">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="/"><img src="../assets/img/logo.png" alt="Garbini"
+                                                                      class="img-responsive"
+                                                                      style="height: 70px;"></a>
                             </div>
-                        </div>
-                        <div class="btn-group btn-group-justified">
-                            <nav class="shopping-cart">
-                                <a href="/Personal-Order">
-                                    <i class="fa fa-shopping-cart fa-lg"></i> Cart
-                                    <span class="fa-stack">
+                            <div class="navbar-collapse collapse main-nav">
+
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li>
+                                        <% if( status == 200) { %>
+                                        <!--<a class="dropdown-toggle"><i-->
+                                        <!--class="fa fa-user-circle"></i>Hi! <%= user.name %>-->
+                                        <!--</a>-->
+                                        <a href="" class="dropdown-toggle person" data-toggle="dropdown"
+                                           aria-expanded="true">
+                                            <embed src="../assets/img/icon/user.svg" type="image/svg+xml"/>
+                                            Personal Center <i class="fa fa-sort-down "></i></a>
+
+                                        <ul class="person_ul">
+                                            <li><a ref="nofollow" href="/Personal-Order">My Orders</a></li>
+                                            <li><a ref="nofollow" href="/personal-center">My Account</a></li>
+                                            <li class=""><a ref="nofollow" href="/logout">Sign out</a></li>
+                                        </ul>
+
+                                        <% } else { %>
+                                        <a href="/login" class="dropdown-toggle">
+                                            <embed src="../assets/img/icon/user.svg" type="image/svg+xml"/>
+                                            Login</a>
+                                        <% } %>
+                                    </li>
+                                    <li>
+                                        <a href="/contact-us" class="dropdown-toggle">
+                                            <embed style="width: 13px;" src="../assets/img/icon/warning.svg"
+                                                   type="image/svg+xml"/>
+                                            Customer Service </a>
+                                    </li>
+                                    <li>
+                                        <div class="link-country-currency ctr-info ctr-track-a"
+                                             id="google_translate_element"></div>
+
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="btn-group btn-group-justified btn-search-add-cart">
+                                <div class="btn-group" style="width: 0.6%;" id="menu-master">
+                                    <button style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"
+                                            type="button" class="btn btn-primary dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        SHOP ALL CATEGORIES
+                                        <span class="caret"></span>
+                                    </button>
+                                </div>
+                                <div class="btn-group">
+                                    <div class="input-group">
+                                        <input type="text" id="search_engine" class="form-control"
+                                               placeholder="Search"/>
+                                        <span class="input-group-addon search" onclick="search_product()"><embed
+                                                    src="../assets/img/icon/search.svg"
+                                                    type="image/svg+xml"/></span>
+                                    </div>
+                                </div>
+                                <div class="btn-group btn-group-justified">
+                                    <nav class="shopping-cart">
+                                        <a href="/Personal-Order">
+                                            <i class="fa fa-shopping-cart fa-lg"></i> Cart
+                                            <span class="fa-stack">
                                         <i class="fa fa-circle fa-stack-2x"></i>
                                         <i class="fa fa-stack-1x fa-inverse">0</i>
                                     </span>
-                                </a>
-                            </nav>
-                        </div>
-                    </div>
-                    <div class="col-md-3 submenu" style="display: none;padding: 0;height: auto;z-index: 999">
-                        <nav id="zlight-nav">
-                            <ul id="zlight-main-nav" style="border:0;width:100%;">
-                                <% if(categories.length != 0){ %>
-                                <% categories.forEach(function (item) { %>
-                                <li class="zlight-dropdown" style="width: 100%">
-                                    <a href="<%= item.firstUrl %>" style="border: 0px;padding-right: 0;">
-                                        <p><%= item.firstCategory %></p>
-                                        <i class="icon-angle-right"></i>
-                                        <span style="float: right">(<%= item.firstCount %>)</span>
-                                    </a>
-                                    <ul class="zlight-submenu" style="top: 0;left: 100%;background: #fff;">
-                                        <% if(item.secondCategory.length != 0) { %>
-                                        <% item.secondCategory.forEach(function(secondItem) { %>
-                                        <li class="zlight-dropdown">
-                                            <a href="<%= secondItem.secondUrl %>">
-                                                <p><%= secondItem.secondTitle %></p>
-                                                <span style="float: right">(<%= secondItem.secondCount %>)</span>
+                                        </a>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="col-md-3 submenu" style="display: none;padding: 0;height: auto;z-index: 999">
+                                <nav id="zlight-nav">
+                                    <ul id="zlight-main-nav" style="border:0;width:100%;">
+                                        <% if(categories.length != 0){ %>
+                                        <% categories.forEach(function (item) { %>
+                                        <li class="zlight-dropdown" style="width: 100%">
+                                            <a href="<%= item.firstUrl %>" style="border: 0px;padding-right: 0;">
+                                                <p><%= item.firstCategory %></p>
+                                                <i class="icon-angle-right"></i>
+                                                <span style="float: right">(<%= item.firstCount %>)</span>
                                             </a>
-                                            <ul class="zlight-dropdown">
-                                                <% if(secondItem.thirdTitles.length != 0) { %>
-                                                <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
+                                            <ul class="zlight-submenu" style="top: 0;left: 100%;background: #fff;">
+                                                <% if(item.secondCategory.length != 0) { %>
+                                                <% item.secondCategory.forEach(function(secondItem) { %>
                                                 <li class="zlight-dropdown">
-                                                    <a href="<%= thirdItem.thirdUrl %>">
-                                                        <div><%= thirdItem.thirdTitle %></div>
+                                                    <a href="<%= secondItem.secondUrl %>">
+                                                        <p><%= secondItem.secondTitle %></p>
+                                                        <span style="float: right">(<%= secondItem.secondCount %>
+                                                            )</span>
                                                     </a>
+                                                    <ul class="zlight-dropdown">
+                                                        <% if(secondItem.thirdTitles.length != 0) { %>
+                                                        <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
+                                                        <li class="zlight-dropdown">
+                                                            <a href="<%= thirdItem.thirdUrl %>">
+                                                                <div><%= thirdItem.thirdTitle %></div>
+                                                            </a>
+                                                        </li>
+                                                        <% }) %>
+                                                        <% } %>
+                                                    </ul>
                                                 </li>
                                                 <% }) %>
                                                 <% } %>
                                             </ul>
                                         </li>
                                         <% }) %>
+
                                         <% } %>
                                     </ul>
-                                </li>
-                                <% }) %>
-
-                                <% } %>
-                            </ul>
-                            <!-- MOBILE NAV -->
-                            <div id="zlight-mobile-nav"><span>Menu</span> <i class="icon-reorder zlight-icon"></i>
-                                <select>
-                                </select>
+                                    <!-- MOBILE NAV -->
+                                    <div id="zlight-mobile-nav"><span>Menu</span> <i
+                                                class="icon-reorder zlight-icon"></i>
+                                        <select>
+                                        </select>
+                                    </div>
+                                </nav>
                             </div>
-                        </nav>
-                    </div>
-                    <div class="col-md-9 slide-fa" style="display:none;padding: 0">
-                        <section id="slider">
-                            <div id="bs-carousel" class="carousel slide" data-ride="carousel">
-                                <!-- Indicators -->
-                                <ol class="carousel-indicators">
-                                </ol>
-                                <!-- Wrapper for slides -->
-                                <div class="carousel-inner">
-                                </div>
+                            <div class="col-md-9 slide-fa" style="display:none;padding: 0">
+                                <section id="slider">
+                                    <div id="bs-carousel" class="carousel slide" data-ride="carousel">
+                                        <!-- Indicators -->
+                                        <ol class="carousel-indicators">
+                                        </ol>
+                                        <!-- Wrapper for slides -->
+                                        <div class="carousel-inner">
+                                        </div>
 
-                                <!-- Controls -->
-                                <a class="left carousel-control" href="#bs-carousel" data-slide="prev">
-                                    <i class="fa fa-angle-left"></i>
-                                    <!--span class="glyphicon glyphicon-chevron-left"></span-->
-                                </a>
-                                <a class="right carousel-control" href="#bs-carousel" data-slide="next">
-                                    <i class="fa fa-angle-right"></i>
-                                    <!--span class="glyphicon glyphicon-chevron-right"></span-->
-                                </a>
+                                        <!-- Controls -->
+                                        <a class="left carousel-control" href="#bs-carousel" data-slide="prev">
+                                            <i class="fa fa-angle-left"></i>
+                                            <!--span class="glyphicon glyphicon-chevron-left"></span-->
+                                        </a>
+                                        <a class="right carousel-control" href="#bs-carousel" data-slide="next">
+                                            <i class="fa fa-angle-right"></i>
+                                            <!--span class="glyphicon glyphicon-chevron-right"></span-->
+                                        </a>
+                                    </div>
+                                </section>
                             </div>
-                        </section>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -289,7 +295,7 @@
         </script>
     </header>
 
-            <%- body %>
+    <%- body %>
 
     <!-- Content Wrapper. Contains page content -->
 
