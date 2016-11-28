@@ -1,6 +1,127 @@
 <% layout('../master.ejs') %>
+<style>
+    .freight-fullname {
+        display: none;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px 10px 10px;
+        border: 1px solid #dedede;
+    }
+
+    .freight-intro {
+        color: #666;
+        overflow: hidden;
+    }
+
+    .freight-fullname ol ul, ul ul {
+        list-style-type: circle;
+    }
+
+    .freight-intro li {
+        float: left;
+        width: 280px;
+        overflow: hidden;
+        margin-left: 30px;
+        display: list-item;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+        box-sizing: border-box;
+        list-style-type: circle;
+        text-align: -webkit-match-parent;
+    }
+
+    .freight-intro strong {
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .top-arr {
+        position: relative;
+        top: -10px;
+        left: 720px;
+        width: 7px;
+        height: 5px;
+    }
+
+    .freight-intro ul {
+        list-style: disc;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+        -webkit-margin-before: 0px;
+        -webkit-margin-after: 0px;
+        display: block;
+        list-style-type: disc;
+        -webkit-margin-before: 1em;
+        -webkit-margin-after: 1em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        -webkit-padding-start: 40px;
+    }
+
+</style>
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title">运费模板</h3>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <h3 class="box-title">管理运费模板</h3>
+            <div class="nav navbar-nav navbar-right">
+                <li><a href="#FAQ">什么是运费模板？</a></li>
+                <li><a href="#FAQ">在哪里能看到具体的运费？</a></li>
+                <li><a class="f-view-more" href="http://seller.dhgate.com/help/c0410/18272.html#help_php-listmiddel-7"
+                       target="_blank">更多运费模板帮助</a></li>
+            </div>
+        </div>
     </div>
+    <div class="box-body">
+        <div class="col-lg-4">
+            <button class="btn btn-info">新增运费模板</button>
+        </div>
+        <div class="pull-right">
+            <a id="wuliu" style="text-decoration: none" name="true" onclick="showLine(this.name)">了解物流方式缩写展开</a>
+        </div>
+        <div class="col-lg-12">
+            <div id="freight-fullname" style="display: none" class="freight-fullname">
+                <div class="top-arr"></div>
+                <ul class="freight-intro">
+                    <ul>
+                        <li><strong>CHP</strong>: Swiss Post</li>
+                        <li><strong>CPAM</strong>: China Post Registered Air Mail</li>
+                        <li><strong>CPAP</strong>: China Post Air Parcel</li>
+                        <li><strong>DGM</strong>: DHL Global Mail</li>
+                        <li><strong>HKPAM</strong>: Hongkong Post Air Mail</li>
+                        <li><strong>HKPAP</strong>: Hongkong Post Air Parcel</li>
+                        <li><strong>Other</strong>: Seller's Shipping Method</li>
+                        <li><strong>SEP</strong>: Sweden Post</li>
+                        <li><strong>SF</strong>: SF Express</li>
+                        <li><strong>SGP</strong>: Singapore Post</li>
+                        <li><strong>UPSE</strong>: UPS Expedited™</li>
+                        <li><strong>UPSS</strong>: UPS Express Saver™</li>
+                        <li><strong>YANWEN JYT</strong>: China Post Ordinary Small Packet Plus</li>
+                        <li><strong>ZTORU</strong>: ZTO Express to Russia</li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+<script>
+    function showLine(name) {
+        if (name == "true") {
+            $('#freight-fullname').css('display', 'block')
+            $('#wuliu').attr("name", 'false')
+        } else if (name == "false") {
+            $('#freight-fullname').css('display', 'none')
+            $('#wuliu').attr("name", "true")
+        }
+    }
+</script>
+
