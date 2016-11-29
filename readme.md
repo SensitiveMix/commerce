@@ -1,6 +1,18 @@
-# e-commerce-platform
+```bash
+                                                                                                      _           _      __
+                                                                                                     | |         | |    / _|
+   ___   ______    ___    ___    _ __ ___    _ __ ___     ___   _ __    ___    ___   ______   _ __   | |   __ _  | |_  | |_    ___    _ __   _ __ ___
+  / _ \ |______|  / __|  / _ \  | '_ ` _ \  | '_ ` _ \   / _ \ | '__|  / __|  / _ \ |______| | '_ \  | |  / _` | | __| |  _|  / _ \  | '__| | '_ ` _ \
+ |  __/          | (__  | (_) | | | | | | | | | | | | | |  __/ | |    | (__  |  __/          | |_) | | | | (_| | | |_  | |   | (_) | | |    | | | | | |
+  \___|           \___|  \___/  |_| |_| |_| |_| |_| |_|  \___| |_|     \___|  \___|          | .__/  |_|  \__,_|  \__| |_|    \___/  |_|    |_| |_| |_|
+                                                                                             | |
+                                                                                             |_|
 
-[![Build Status](https://travis-ci.org/sunNode/commerce.svg?branch=master)]
+```
+
+![Build Status](https://travis-ci.org/sunNode/commerce.svg?branch=master)
+[![codecov](https://codecov.io/gh/sunNode/commerce/branch/master/graph/badge.svg)](https://codecov.io/gh/sunNode/commerce)
+
 
 ## Installation
     git clone https://bitbucket.org/wechatpla/master.git
