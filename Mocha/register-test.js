@@ -10,10 +10,9 @@ describe('user register test', function () {
         request(app)
             .post('/doregister')
             .send({email: 'test@123.com', password: '123'})
-            .expect('"200"')
+            .expect(200)
             .end(function (err, res) {
                 if (err) throw err;
-                console.log(res.text);
                 should.exist(res.text);
                 done();
             });

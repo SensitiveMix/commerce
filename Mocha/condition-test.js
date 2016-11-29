@@ -11,8 +11,6 @@ describe('user register conditions test', function () {
             .post('/admin/doChangeConditions')
             .send({mainContent: 'test123', status: 'test'})
             .end(function (err, res) {
-                if (err) throw err;
-                console.log(res.text);
                 should.exist(res.text);
                 done();
             });

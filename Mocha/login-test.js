@@ -13,7 +13,6 @@ describe('user login test', function () {
             .expect('Content-Type', 'text/html; charset=utf-8')
             .end(function (err, res) {
                 if (err) throw err;
-                console.log(res.text);
                 should.exist(res.text);
                 done();
             });
@@ -25,7 +24,6 @@ describe('user login test', function () {
             .expect('Content-Type', 'text/html; charset=utf-8')
             .end(function (err, res) {
                 if (err) throw err;
-                console.log(res.text);
                 should.exist(res.text);
                 done();
             });
