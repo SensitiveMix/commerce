@@ -1,6 +1,6 @@
 # e-commerce-platform
 
-[![Build Status](https://travis-ci.org/sunNode/commerce.svg?branch=master)
+[![Build Status](https://travis-ci.org/sunNode/commerce.svg?branch=master)]
 
 ## Installation
     git clone https://bitbucket.org/wechatpla/master.git
