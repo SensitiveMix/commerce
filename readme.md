@@ -9,7 +9,7 @@
 
 ![Build Status](https://travis-ci.org/sunNode/commerce.svg?branch=master)
 [![codecov](https://codecov.io/gh/sunNode/commerce/branch/master/graph/badge.svg)](https://codecov.io/gh/sunNode/commerce)
-<img src="https://img.shields.io/npm/v/npm.svg" alt="">
+![npm](https://img.shields.io/npm/v/npm.svg)
 
 
 ## Installation
