@@ -103,5 +103,8 @@ views/services/
 * 添加string id
 * 后台模板增加样式
 
+##  v0.1.5
+* 添加全局请求logo
+
 
 

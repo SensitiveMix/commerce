@@ -8,6 +8,8 @@ var http = require('http').Server(express);
 var partials = require('express-partials');
 var engine = require('ejs-locals');
 var https = require('http');
+var morgan = require('morgan');
+var fs = require('fs')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -34,7 +36,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
+// setup the logger
+app.use(morgan('combined', {stream: accessLogStream}))
 
 var isDev = process.env.NODE_ENV !== 'production';
 app.locals.env = process.env.NODE_ENV || 'dev';

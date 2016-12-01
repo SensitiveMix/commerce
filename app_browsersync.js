@@ -19,6 +19,8 @@ var paypal = require('paypal-rest-sdk');
 var async = require('async');
 var consolidate = require('consolidate');
 var isDev = process.env.NODE_ENV !== 'production';
+var morgan = require('morgan');
+var fs = require('fs')
 var app = express();
 var port = 3000;
 
@@ -40,6 +42,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
+// setup the logger
+app.use(morgan('combined', {stream: accessLogStream}))
 
 app.locals.env = process.env.NODE_ENV || 'dev';
 app.locals.reload = false;
