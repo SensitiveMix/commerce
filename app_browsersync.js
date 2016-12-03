@@ -18,6 +18,7 @@ var ppconfig = require('./payment/ppconfig/sandbox');
 var paypal = require('paypal-rest-sdk');
 var async = require('async');
 var consolidate = require('consolidate');
+var cors = require('cors');
 var isDev = process.env.NODE_ENV !== 'production';
 var morgan = require('morgan');
 var fs = require('fs')
@@ -46,6 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
 // setup the logger
 app.use(morgan('combined', {stream: accessLogStream}))
+app.use(cors());
 
 app.locals.env = process.env.NODE_ENV || 'dev';
 app.locals.reload = false;

@@ -9,7 +9,8 @@ var partials = require('express-partials');
 var engine = require('ejs-locals');
 var https = require('http');
 var morgan = require('morgan');
-var fs = require('fs')
+var fs = require('fs');
+var cors = require('cors');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -40,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
 // setup the logger
 app.use(morgan('combined', {stream: accessLogStream}))
+app.use(cors());
 
 var isDev = process.env.NODE_ENV !== 'production';
 app.locals.env = process.env.NODE_ENV || 'dev';
