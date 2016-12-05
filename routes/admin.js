@@ -16,6 +16,10 @@ var http_origin = require('http');
 var _ = require('lodash');
 var path = require('path');
 var config = require('../config')
+const express_conf = require('../public/transport/express_price.json');
+const oridinary_conf = require('../public/transport/ordinary_price.json');
+const little_pucket_conf = require('../public/transport/little_packet.json');
+
 
 var r = [];
 var u = [];
@@ -1378,6 +1382,54 @@ router.get('/crawler_manage', function (req, res, next) {
 /*---------------------------------运费模板管理------------------------------*/
 router.get('/shopping_template', function (req, res, next) {
     res.render('admin/templates/shopping-templates', {username: u.nick_name})
+});
+
+
+router.post('/transport', (req, res, next)=> {
+    let [weight,area]=[parseInt(req.body.weight), req.body.area];
+    var execution_weight = 0;
+    let decimal_weight = weight - Math.floor(weight);
+    //特快和普快处理
+    if (weight < 0.5) {
+        execution_weight = 0.5
+    } else {
+        if (decimal_weight < 0.5) {
+            decimal_weight = 0.5
+        } else {
+            decimal_weight = 1
+        }
+    }
+    execution_weight = execution_weight + decimal_weight;
+    //小包处理
+    if (weight < 2) {
+        var little_packet_length = weight.toString().split(".")[1].length
+        if (little_packet_length > 1) {
+            var little_packet_weight = Math.ceil(weight * 10)
+        }
+    }
+
+    if (execution_weight < 2) {
+        var express_price = parseInt(express_conf.data.filter((item)=> {
+                return item.area.indexOf(area) > -1
+            })[0][execution_weight.toString()]) * execution_weight;
+
+        var ordinary_price = parseInt(oridinary_conf.data.filter((item)=> {
+                return item.area.indexOf(area) > -1
+            })[0][execution_weight.toString()]) * execution_weight;
+
+        var little_packet_price = parseInt(little_pucket_conf.data.filter((item)=> {
+                return item.kg.indexOf(little_packet_weight.toString()) > -1;
+            })[0][little_packet_weight.toString()] * little_packet_weight);
+    }else if(execution_weight <5){
+
+    }else if(execution_weight <21){
+
+    }
+    res.send(200, {
+        express: {price: express_price, msg: "特快快递"},
+        ordinary: {price: ordinary_price, msg: "普通快递"},
+        little_packet: {price: little_packet_price, msg: "小包"}
+    })
 });
 /*------------------------------------------------------------------------*/
 
