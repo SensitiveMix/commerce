@@ -1384,12 +1384,33 @@ router.get('/shopping_template', function (req, res, next) {
     res.render('admin/templates/shopping-templates', {username: u.nick_name})
 });
 
-
+/**
+ * [Description]
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
 router.post('/transport', (req, res, next)=> {
-    let [weight,area]=[parseInt(req.body.weight), req.body.area];
+    if (req.body.weight == 'undefined' || req.body.area == 'undefined') {
+        return next(customError(404, "Invalid param"))
+    }
+
+    if (req.body.weight == '' || req.body.area == '') {
+        return next(customError(404, "Invalid param"))
+    }
+
+    var weight = Number(req.body.weight);
+    console.log('weight : %d', weight)
+    var area = req.body.area;
     var execution_weight = 0;
+    var express_price = 0;
+    var ordinary_price = 0;
+    var little_packet_price = 0;
+    var little_packet_weight = 0;
+    var ordinary_weight = 0;
     let decimal_weight = weight - Math.floor(weight);
-    //特快和普快处理
+    //特快处理
     if (weight < 0.5) {
         execution_weight = 0.5
     } else {
@@ -1400,37 +1421,114 @@ router.post('/transport', (req, res, next)=> {
         }
     }
     execution_weight = execution_weight + decimal_weight;
+
+    //普快处理
+    var ordinary_length = weight.toString().substring(weight.toString().indexOf('.') + 1, weight.toString().length).length
+    if (ordinary_length > 1) {
+        ordinary_weight = Math.ceil(weight * 10) / 10
+    }
+    ordinary_weight = weight
+
     //小包处理
     if (weight < 2) {
-        var little_packet_length = weight.toString().split(".")[1].length
+        var little_packet_length = weight.toString().substring(weight.toString().indexOf('.') + 1, weight.toString().length).length
+        console.log(little_packet_length)
         if (little_packet_length > 1) {
-            var little_packet_weight = Math.ceil(weight * 10)
+            little_packet_weight = Math.ceil(weight * 10) / 10
         }
+        little_packet_weight = weight
+
+        console.log(weight)
     }
 
-    if (execution_weight < 2) {
-        var express_price = parseInt(express_conf.data.filter((item)=> {
-                return item.area.indexOf(area) > -1
-            })[0][execution_weight.toString()]) * execution_weight;
+    try {
+        if (weight < 2) {
+            express_price = getTransportPrice(express_conf, execution_weight, area)
+            ordinary_price = getTransportPrice(oridinary_conf, ordinary_weight, area)
+            little_packet_price = getLittleTransportPrice(little_pucket_conf, little_packet_weight)
 
-        var ordinary_price = parseInt(oridinary_conf.data.filter((item)=> {
-                return item.area.indexOf(area) > -1
-            })[0][execution_weight.toString()]) * execution_weight;
-
-        var little_packet_price = parseInt(little_pucket_conf.data.filter((item)=> {
-                return item.kg.indexOf(little_packet_weight.toString()) > -1;
-            })[0][little_packet_weight.toString()] * little_packet_weight);
-    }else if(execution_weight <5){
-
-    }else if(execution_weight <21){
-
+            res.send(200, {
+                express: {price: express_price, msg: "特快快递"},
+                ordinary: {price: ordinary_price, msg: "普通快递"},
+                little_packet: {price: little_packet_price, msg: "小包"}
+            });
+        }
+        else if (weight < 21) {
+            express_price = getTransportPrice(express_conf, execution_weight, area)
+            ordinary_price = getTransportPrice(oridinary_conf, ordinary_weight, area)
+            res.send(200, {
+                express: {price: express_price, msg: "特快快递"},
+                ordinary: {price: ordinary_price, msg: "普通快递"},
+            });
+        } else {
+            var origin_weight = '';
+            if (weight <= 44) {
+                origin_weight = '21-44'
+            } else if (weight <= 70) {
+                origin_weight = '45-70'
+            } else if (weight <= 100) {
+                origin_weight = '71-99'
+            } else if (weight <= 299) {
+                origin_weight = '100-299'
+            } else if (weight <= 499) {
+                origin_weight = '300-499'
+            } else if (weight <= 999) {
+                origin_weight = '500-999'
+            } else {
+                origin_weight = '1000+'
+            }
+            ordinary_price = getOrdinaryTransportPrice(oridinary_conf, origin_weight, ordinary_weight, area)
+            res.send(200, {
+                ordinary: {price: ordinary_price, msg: "普通快递"},
+            });
+        }
+    } catch (e) {
+        return next(customError(500, 'InternalError'))
     }
-    res.send(200, {
-        express: {price: express_price, msg: "特快快递"},
-        ordinary: {price: ordinary_price, msg: "普通快递"},
-        little_packet: {price: little_packet_price, msg: "小包"}
-    })
+
+
 });
+
+/**
+ * calculate express/ordinary transport price
+ * @param type translate conf
+ * @param weight
+ * @returns {number}
+ */
+function getTransportPrice(type, weight, area) {
+    console.log('area:' + area)
+    console.log('type: %d,weight: %d', type, weight)
+    return parseInt(type.data.filter((item)=> {
+            return item.zh.indexOf(area) > -1
+        })[0][weight.toString()]) * weight;
+}
+/**
+ * calculate ordinary translate price when weight bigger then 20
+ * @param type
+ * @param origin_weight
+ * @param weight
+ * @param area
+ * @returns {number}
+ */
+function getOrdinaryTransportPrice(type, origin_weight, weight, area) {
+    console.log('area:' + area)
+    console.log('type: %d,weight: %d', type, weight)
+    return parseInt(type.data.filter((item)=> {
+            return item.zh.indexOf(area) > -1
+        })[0][origin_weight]) * weight;
+}
+/**
+ * calculate little transport price
+ * @param type
+ * @param weight
+ * @returns {Number}
+ */
+function getLittleTransportPrice(type, weight) {
+    console.log('type: %d,weight: %d', '小包', weight)
+    return parseInt(type.data.filter((item)=> {
+            return item['kg'].indexOf(weight.toString()) > -1;
+        })[0]['fee']) * weight;
+}
 /*------------------------------------------------------------------------*/
 
 module.exports = router;
