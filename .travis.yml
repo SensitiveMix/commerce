@@ -3,6 +3,8 @@ node_js:
   - "4.4.7"
 
 script:
+  - npm install
+  - npm run build
   - npm run test-cov
 after_success:
 - bash <(curl -s https://codecov.io/bash) -t 7e7082e9-fe6b-4a24-936c-b5c56708233b
