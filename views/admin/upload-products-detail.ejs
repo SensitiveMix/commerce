@@ -533,6 +533,25 @@
         font-size: 24px;
         margin-top: 120px;
     }
+    .syi-img-show{
+        display: none;
+    }
+    .alert-warning {
+        color: #c09853!important;
+        background-color: #fcf8e3!important;
+        border-color: #faebcc!important;
+        padding: 8px;
+        font-size: 9px;
+        border-radius: 0;
+        margin: 10px 0!important;
+    }
+    .alert-warning a {
+        color: #3366cc;
+        text-decoration: none;
+    }
+    .alert-warning button{
+        right: -2px!important;
+    }
 </style>
 <script src="../plugins/pick-color/js/tinycolor-0.9.15.min.js"></script>
 <script src="../plugins/pick-color/js/pick-a-color-1.2.3.min.js"></script>
@@ -752,6 +771,27 @@
             } else {
                 keyword3.show();
                 $("#keywordbutton").hide();
+            }
+        })
+
+        $('.logistics-panel-type').click(function(){
+            var index = $(this).index();
+            $('#logistic-list .logistics-panel').hide();
+            $('#logistic-list .logistics-panel').eq(index).toggle();
+        })
+
+        $('.logistic-checkbox').click(function(){
+            if($(this).is(':checked') == true){
+                console.log($(this).parents('tr').find('.standard-logistic'));
+
+                $(this).parents('tr').find('.standard-logistic').removeAttr("disabled");
+                $(this).parents('tr').find('.no-logistic').removeAttr("disabled");
+            }
+            if($(this).is(':checked') == false){
+                console.log($(this).parents('tr').find('.standard-logistic'));
+                $(this).parents('tr').find('.standard-logistic').attr("disabled","true");
+                $(this).parents('tr').find('.no-logistic').attr("disabled","true");
+
             }
         })
 
@@ -1445,20 +1485,1742 @@
                 <!------- 大标题开始 ------->
                 <div class="mainlayout clearfix j-shippingarea-container">
                     <div class="ml-title"><span class="required">*</span>运费计算模板：</div>
-                    <!--<p class="helptips">-->
-                    <!--驱动器及存储设备(Drives &amp; Storages)类目下的产品，订单最多的国家为美国，美国买家主要采用ePacket物流。-->
-                    <!--</p>-->
                     <div class="margintop10">
                         <div class="form-inline">
                             <div class="form-group">
-                                <!--<label for="exampleInputEmail2">VIP Price</label>-->
-                                <input type="text" class="form-control" name="freight_company" id="freight_company"
-                                       placeholder="快递公司">
+                                <select class="form-control">
+                                    <option>--选择运费模板--</option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <!--<label for="exampleInputEmail2">Regular Price</label>-->
-                                <input type="text" class="form-control" name="freight_price" id="freight_price"
-                                       placeholder="快递费:元/kg">/kg
+                                <button type="button" class="btn btn-link" id="create-yunfei-model">添加运费模板</button>
+                            </div>
+                            <script>
+                                $('#create-yunfei-model').click(function(){
+                                    $('.ui-tab.ui-tab-normal.tab-wrap.logistics-container.ui-switchable').toggle();
+                                })
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="ui-tab ui-tab-normal tab-wrap logistics-container ui-switchable" data-name="loc-cn" data-country="CN" style="display: none;" data-widget-cid="widget-5">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-primary active logistics-panel-type">
+                                <input type="radio" name="options" autocomplete="off" checked>经济类物流
+                            </label>
+                            <label class="btn btn-primary logistics-panel-type">
+                                <input type="radio" name="options" autocomplete="off">标准类物流
+                            </label>
+                            <label class="btn btn-primary logistics-panel-type">
+                                <input type="radio" name="options" autocomplete="off">快速类物流
+                            </label>
+                            <label class="btn btn-primary logistics-panel-type">
+                                <input type="radio" name="options" autocomplete="off">其他物流
+                            </label>
+                        </div>
+                        <div class="ui-tab-body ui-switchable-content" id="logistic-list">
+                            <div id="economy-logistics-panel" class="logistics-panel ui-tab-pane ui-tab-active series-wrap ui-switchable-panel" data-role="panel" data-series="cn-post" style="display: block;">
+                                <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                    经济类物流运费优惠，但不提供目的国包裹妥投信息，仅适合货值低、重量轻的商品使用。<a href="=#">查看详情</a>
+                                </div>
+                                <table width="100%" cellspacing="0" cellpadding="8" class="table table-bordered table-list logistic-list ui-table">
+                                    <thead>
+                                    <tr>
+                                        <th width="20%">选择物流</th>
+                                        <th width="40%">运费设置
+                                            <span class="setting-help-icon ui-help ui-help-icon"></span>
+                                        </th>
+                                        <th width="40%">运达时间设置</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- 物流公司列表-->
+                                    <tr id="YANWEN_JYT" class="logistic-row" logisticcompany="YANWEN_JYT" isdeliverycountryzone="COUNTRY" companydisplayname="					China Post Ordinary Small Packet Plus
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国邮政平常小包+
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="YANWEN_JYT-check" name="logistic-name" value="YANWEN_JYT" checked="checked">
+                                            <span id="YANWEN_JYT">					China Post Ordinary Small Packet Plus
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国邮政平常小包+
+					</span>
+                                            <span class="logisticname-info ui-help ui-help-icon"></span>
+                                            <div class="tip-me logisticname-tip" style="display:none;">
+                                                <div class="help-content-wrap">
+                                                    速卖通线上发货渠道，无挂号费，适合运送货值低重量轻的商品，不提供目的国包裹妥投信息。<br>
+                                                    <a href="http://seller.aliexpress.com/so/onlinelogistics_postbj.php" target="_blank">了解详情</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-YANWEN_JYT" value="all_standard" type="radio" checked="checked">
+                                                <span>标准运费</span>
+                                                <span class="decount-box" style="display: none;">
+                                            减免
+                                            <input id="decount-box-input-YANWEN_JYT" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-YANWEN_JYT">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="display: none;">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-YANWEN_JYT" value="all_free" type="radio">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-YANWEN_JYT" value="all_standard" type="radio">
+                                                承诺运达时间
+                                                <input id="time-box-input-YANWEN_JYT" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-YANWEN_JYT" value="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-YANWEN_JYT" class="custom-commit-time" name="arrival-time-mode-YANWEN_JYT" value="self_define" type="radio" logisticcompany="YANWEN_JYT" isdeliverycountryzone="COUNTRY" checked="checked">
+                                                <label for="custom-commit-time-YANWEN_JYT" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-YANWEN_JYT"></textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="SGP_OMP" class="logistic-row  disabled-row" logisticcompany="SGP_OMP" isdeliverycountryzone="COUNTRY" companydisplayname="					4PX Singapore Post OM Pro
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4PX新邮经济小包
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="SGP_OMP-check" name="logistic-name" value="SGP_OMP">
+                                            <span id="SGP_OMP">					4PX Singapore Post OM Pro
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4PX新邮经济小包
+					</span>
+                                            <span class="logisticname-info ui-help ui-help-icon"></span>
+                                            <div class="tip-me logisticname-tip" style="display:none;">
+                                                <div class="help-content-wrap">
+                                                    速卖通线上发货渠道，无挂号费，可寄送带电商品，不提供目的国包裹妥投信息。<br>
+                                                    <a href="http://seller.aliexpress.com/so/onlinelogistics_fpxsg.php" target="_blank">了解详情</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-SGP_OMP" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-SGP_OMP" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-SGP_OMP" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-SGP_OMP" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-SGP_OMP" value="all_standard" type="radio" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-SGP_OMP" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-SGP_OMP" value="" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-SGP_OMP" class="custom-commit-time" name="arrival-time-mode-SGP_OMP" value="self_define" type="radio" logisticcompany="SGP_OMP" isdeliverycountryzone="COUNTRY" checked="checked" disabled="">
+                                                <label for="custom-commit-time-SGP_OMP" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-SGP_OMP"> </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="ITELLA_PY" class="logistic-row  disabled-row" logisticcompany="ITELLA_PY" isdeliverycountryzone="COUNTRY" companydisplayname="					Posti Finland Economy
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;速优宝芬邮经济小包
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="ITELLA_PY-check" name="logistic-name" value="ITELLA_PY">
+                                            <span id="ITELLA_PY">					Posti Finland Economy
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;速优宝芬邮经济小包
+					</span>
+                                            <span class="logisticname-info ui-help ui-help-icon"></span>
+                                            <div class="tip-me logisticname-tip" style="display:none;">
+                                                <div class="help-content-wrap">
+                                                    速卖通线上发货渠道，无挂号费，适合运送货值低重量轻的商品，不提供目的国包裹妥投信息。<br>
+                                                    <a href="http://seller.aliexpress.com/so/onlinelogistics_distributor_766072.php" target="_blank">了解详情</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-ITELLA_PY" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-ITELLA_PY" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-ITELLA_PY" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-ITELLA_PY" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-ITELLA_PY" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-ITELLA_PY" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-ITELLA_PY" value="45" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-ITELLA_PY" class="custom-commit-time" name="arrival-time-mode-ITELLA_PY" value="self_define" type="radio" logisticcompany="ITELLA_PY" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-ITELLA_PY" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-ITELLA_PY">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="SINOTRANS_PY" class="logistic-row" logisticcompany="SINOTRANS_PY" isdeliverycountryzone="COUNTRY" companydisplayname="					Correos Economy
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中外运-西邮经济小包
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="SINOTRANS_PY-check" name="logistic-name" value="SINOTRANS_PY" checked="checked">
+                                            <span id="SINOTRANS_PY">					Correos Economy
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中外运-西邮经济小包
+					</span>
+                                            <span class="logisticname-info ui-help ui-help-icon"></span>
+                                            <div class="tip-me logisticname-tip" style="display:none;">
+                                                <div class="help-content-wrap">
+                                                    速卖通线上发货渠道，时效全平台最优，不提供目的国包裹妥投信息。<br>
+                                                    <a href="http://seller.aliexpress.com/so/onlinelogistics_sinotrans_py.php" target="_blank">了解详情</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-SINOTRANS_PY" value="all_standard" type="radio" checked="checked">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-SINOTRANS_PY" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-SINOTRANS_PY">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-SINOTRANS_PY" value="all_free" type="radio">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-SINOTRANS_PY" value="all_standard" type="radio" checked="checked">
+                                                承诺运达时间
+                                                <input id="time-box-input-SINOTRANS_PY" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-SINOTRANS_PY" value="60">
+                                                天
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr id="ROYAL_MAIL_PY" class="logistic-row  disabled-row" logisticcompany="ROYAL_MAIL_PY" isdeliverycountryzone="COUNTRY" companydisplayname="					Royal Mail Economy
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中外运-英邮经济小包
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="ROYAL_MAIL_PY-check" name="logistic-name" value="ROYAL_MAIL_PY">
+                                            <span id="ROYAL_MAIL_PY">					Royal Mail Economy
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中外运-英邮经济小包
+					</span>
+                                            <span class="logisticname-info ui-help ui-help-icon"></span>
+                                            <div class="tip-me logisticname-tip" style="display:none;">
+                                                <div class="help-content-wrap">
+                                                    速卖通线上发货渠道，时效全平台最优，不提供目的国包裹妥投信息。<br>
+                                                    <a href="http://seller.aliexpress.com/so/onlinelogistics_distributor_1682692.php" target="_blank">了解详情</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-ROYAL_MAIL_PY" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-ROYAL_MAIL_PY" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-ROYAL_MAIL_PY" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-ROYAL_MAIL_PY" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-ROYAL_MAIL_PY" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-ROYAL_MAIL_PY" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-ROYAL_MAIL_PY" value="35" disabled="">
+                                                天
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr id="YANWEN_ECONOMY" class="logistic-row  disabled-row" logisticcompany="YANWEN_ECONOMY" isdeliverycountryzone="COUNTRY" companydisplayname="					Yanwen Economic Air Mail
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;燕文航空经济小包
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="YANWEN_ECONOMY-check" name="logistic-name" value="YANWEN_ECONOMY">
+                                            <span id="YANWEN_ECONOMY">					Yanwen Economic Air Mail
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;燕文航空经济小包
+					</span>
+                                            <span class="logisticname-info ui-help ui-help-icon"></span>
+                                            <div class="tip-me logisticname-tip" style="display:none;">
+                                                <div class="help-content-wrap">
+                                                    速卖通线上发货渠道，无挂号费，适合运送货值低重量轻的商品，不提供目的国包裹妥投信息。<br>
+                                                    <a href="http://seller.aliexpress.com/so/onlinelogistics_YW.php" target="_blank">了解详情</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-YANWEN_ECONOMY" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-YANWEN_ECONOMY" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-YANWEN_ECONOMY" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-YANWEN_ECONOMY" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-YANWEN_ECONOMY" value="all_standard" type="radio" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-YANWEN_ECONOMY" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-YANWEN_ECONOMY" value="" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-YANWEN_ECONOMY" class="custom-commit-time" name="arrival-time-mode-YANWEN_ECONOMY" value="self_define" type="radio" logisticcompany="YANWEN_ECONOMY" isdeliverycountryzone="COUNTRY" checked="checked" disabled="">
+                                                <label for="custom-commit-time-YANWEN_ECONOMY" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-YANWEN_ECONOMY"></textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="SUNYOU_ECONOMY" class="logistic-row  disabled-row" logisticcompany="SUNYOU_ECONOMY" isdeliverycountryzone="COUNTRY" companydisplayname="					SunYou Economic Air Mail
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺友航空经济小包
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="SUNYOU_ECONOMY-check" name="logistic-name" value="SUNYOU_ECONOMY">
+                                            <span id="SUNYOU_ECONOMY">					SunYou Economic Air Mail
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺友航空经济小包
+					</span>
+                                            <span class="logisticname-info ui-help ui-help-icon"></span>
+                                            <div class="tip-me logisticname-tip" style="display:none;">
+                                                <div class="help-content-wrap">
+                                                    速卖通线上发货渠道，可以寄送液体及带电商品，无挂号费，不提供目的国包裹妥投信息。<br>
+                                                    <a href="//sale.aliexpress.com/seller/onlinelogistics_sunyou_economy.htm" target="_blank">了解详情</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-SUNYOU_ECONOMY" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-SUNYOU_ECONOMY" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-SUNYOU_ECONOMY" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-SUNYOU_ECONOMY" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-SUNYOU_ECONOMY" value="all_standard" type="radio" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-SUNYOU_ECONOMY" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-SUNYOU_ECONOMY" value="" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-SUNYOU_ECONOMY" class="custom-commit-time" name="arrival-time-mode-SUNYOU_ECONOMY" value="self_define" type="radio" logisticcompany="SUNYOU_ECONOMY" isdeliverycountryzone="COUNTRY" checked="checked" disabled="">
+                                                <label for="custom-commit-time-SUNYOU_ECONOMY" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-SUNYOU_ECONOMY"></textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="OMNIVA_ECONOMY" class="logistic-row  disabled-row" logisticcompany="OMNIVA_ECONOMY" isdeliverycountryzone="COUNTRY" companydisplayname="					OMNIVA Economic Air Mail
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;爱沙尼亚邮政经济小包
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="OMNIVA_ECONOMY-check" name="logistic-name" value="OMNIVA_ECONOMY">
+                                            <span id="OMNIVA_ECONOMY">					OMNIVA Economic Air Mail
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;爱沙尼亚邮政经济小包
+					</span>
+                                            <span class="logisticname-info ui-help ui-help-icon"></span>
+                                            <div class="tip-me logisticname-tip" style="display:none;">
+                                                <div class="help-content-wrap">
+                                                    速卖通线上发货渠道，无挂号费，适合运送货值低重量轻的商品，不提供目的国包裹妥投信息。<br>
+                                                    <a href="//sale.aliexpress.com/seller/onlinelogistics_omniva_economy.htm" target="_blank">了解详情</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-OMNIVA_ECONOMY" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-OMNIVA_ECONOMY" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-OMNIVA_ECONOMY" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-OMNIVA_ECONOMY" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-OMNIVA_ECONOMY" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-OMNIVA_ECONOMY" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-OMNIVA_ECONOMY" value="60" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-OMNIVA_ECONOMY" class="custom-commit-time" name="arrival-time-mode-OMNIVA_ECONOMY" value="self_define" type="radio" logisticcompany="OMNIVA_ECONOMY" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-OMNIVA_ECONOMY" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-OMNIVA_ECONOMY">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="RUSTON_ECONOMY" class="logistic-row  disabled-row" logisticcompany="RUSTON_ECONOMY" isdeliverycountryzone="COUNTRY" companydisplayname="					Ruston Economic Air Mail
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中俄航空经济小包
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="RUSTON_ECONOMY-check" name="logistic-name" value="RUSTON_ECONOMY">
+                                            <span id="RUSTON_ECONOMY">					Ruston Economic Air Mail
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中俄航空经济小包
+					</span>
+                                            <span class="logisticname-info ui-help ui-help-icon"></span>
+                                            <div class="tip-me logisticname-tip" style="display:none;">
+                                                <div class="help-content-wrap">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-RUSTON_ECONOMY" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-RUSTON_ECONOMY" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-RUSTON_ECONOMY" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-RUSTON_ECONOMY" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-RUSTON_ECONOMY" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-RUSTON_ECONOMY" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-RUSTON_ECONOMY" value="35" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-RUSTON_ECONOMY" class="custom-commit-time" name="arrival-time-mode-RUSTON_ECONOMY" value="self_define" type="radio" logisticcompany="RUSTON_ECONOMY" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-RUSTON_ECONOMY" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-RUSTON_ECONOMY">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="SF_EPARCEL_OM" class="logistic-row  disabled-row" logisticcompany="SF_EPARCEL_OM" isdeliverycountryzone="COUNTRY" companydisplayname="					SF Economic Air Mail
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺丰国际经济小包
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="SF_EPARCEL_OM-check" name="logistic-name" value="SF_EPARCEL_OM">
+                                            <span id="SF_EPARCEL_OM">					SF Economic Air Mail
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺丰国际经济小包
+					</span>
+                                            <span class="logisticname-info ui-help ui-help-icon"></span>
+                                            <div class="tip-me logisticname-tip" style="display:none;">
+                                                <div class="help-content-wrap">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-SF_EPARCEL_OM" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-SF_EPARCEL_OM" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-SF_EPARCEL_OM" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-SF_EPARCEL_OM" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-SF_EPARCEL_OM" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-SF_EPARCEL_OM" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-SF_EPARCEL_OM" value="60" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-SF_EPARCEL_OM" class="custom-commit-time" name="arrival-time-mode-SF_EPARCEL_OM" value="self_define" type="radio" logisticcompany="SF_EPARCEL_OM" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-SF_EPARCEL_OM" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-SF_EPARCEL_OM">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="standard-logistics-panel" class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="panel" data-series="cn-business" style="display: none;">
+                                <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                    标准类物流包括邮政挂号服务和专线类服务，全程物流追踪信息可查询。无忧物流的排他规则已取消，您可以如其他物流线路一样设置使用<a href="=#">查看详情</a>
+                                </div>
+                                <table width="100%" cellspacing="0" cellpadding="8" class="table table-bordered table-list logistic-list ui-table">
+                                    <thead>
+                                    <tr>
+                                        <th width="20%">选择物流</th>
+                                        <th width="40%">运费设置
+                                            <span class="setting-help-icon ui-help ui-help-icon"></span>
+                                        </th>
+                                        <th width="40%">运达时间设置</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <!-- 先展示无忧物流标准 BEGIN-->
+                                    <!-- 在无忧物流标准白名单内 BEGIN-->
+                                    <!-- 在无忧物流标准白名单内 END-->
+                                    <tr class="logistic-row" logisticcompany="EMS_ZX_ZX_US" isdeliverycountryzone="COUNTRY" companydisplayname="					ePacket
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e邮宝
+					">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="EMS_ZX_ZX_US-check" name="logistic-name" value="EMS_ZX_ZX_US" checked="checked">
+                                            <div id="EMS_ZX_ZX_US-name-div" class="marginleft5 logistics-name-div">
+                                                ePacket
+                                                <br>e邮宝
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-EMS_ZX_ZX_US" value="all_standard" type="radio" checked="checked">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-EMS_ZX_ZX_US" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-EMS_ZX_ZX_US">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-EMS_ZX_ZX_US" value="all_free" type="radio">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-EMS_ZX_ZX_US" value="all_standard" type="radio" checked="checked">
+                                                承诺运达时间
+                                                <input id="time-box-input-EMS_ZX_ZX_US" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-EMS_ZX_ZX_US" value="35">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-EMS_ZX_ZX_US" class="custom-commit-time" name="arrival-time-mode-EMS_ZX_ZX_US" value="self_define" type="radio" logisticcompany="EMS_ZX_ZX_US" isdeliverycountryzone="COUNTRY">
+                                                <label for="custom-commit-time-EMS_ZX_ZX_US" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-EMS_ZX_ZX_US">  </textarea>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr class="logistic-row" logisticcompany="CPAM" isdeliverycountryzone="COUNTRY" companydisplayname="					China Post Registered Air Mail
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国邮政挂号小包
+					">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="CPAM-check" name="logistic-name" value="CPAM" checked="checked">
+                                            <div id="CPAM-name-div" class="marginleft5 logistics-name-div">
+                                                China Post Registered Air Mail
+                                                <br>中国邮政挂号小包
+                                                <span class="logisticname-info ui-help ui-help-icon"></span>
+                                                <div class="tip-me logisticname-tip" style="display:none;">
+                                                    <div class="help-content-wrap">
+                                                        可寄送2kg以下普通商品，运送范围为全球，可使用速卖通线上发货，专享线上发货合约价及服务保障！<br>
+                                                        <a href="http://seller.aliexpress.com/so/onlinelogistics_cprm.php" target="_blank">了解详情</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-CPAM" value="all_standard" type="radio" checked="checked">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-CPAM" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-CPAM">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-CPAM" value="all_free" type="radio">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-CPAM" value="all_standard" type="radio">
+                                                承诺运达时间
+                                                <input id="time-box-input-CPAM" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-CPAM" value="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-CPAM" class="custom-commit-time" name="arrival-time-mode-CPAM" value="self_define" type="radio" logisticcompany="CPAM" isdeliverycountryzone="COUNTRY" checked="checked">
+                                                <label for="custom-commit-time-CPAM" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-CPAM"></textarea>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr class="logistic-row  disabled-row" logisticcompany="CPAP" isdeliverycountryzone="COUNTRY" companydisplayname="					China Post Air Parcel
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国邮政大包
+					">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="CPAP-check" name="logistic-name" value="CPAP">
+                                            <div id="CPAP-name-div" class="marginleft5 logistics-name-div">
+                                                China Post Air Parcel
+                                                <br>中国邮政大包
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-CPAP" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-CPAP" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-CPAP" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-CPAP" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-CPAP" value="all_standard" type="radio" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-CPAP" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-CPAP" value="" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-CPAP" class="custom-commit-time" name="arrival-time-mode-CPAP" value="self_define" type="radio" logisticcompany="CPAP" isdeliverycountryzone="COUNTRY" checked="checked" disabled="">
+                                                <label for="custom-commit-time-CPAP" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-CPAP"></textarea>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr class="logistic-row  disabled-row" logisticcompany="HKPAM" isdeliverycountryzone="COUNTRY" companydisplayname="					HongKong Post Air Mail
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;香港邮政挂号小包
+					">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="HKPAM-check" name="logistic-name" value="HKPAM">
+                                            <div id="HKPAM-name-div" class="marginleft5 logistics-name-div">
+                                                HongKong Post Air Mail
+                                                <br>香港邮政挂号小包
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-HKPAM" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-HKPAM" value="all_standard" type="radio" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-HKPAM" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-HKPAM" value="" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-HKPAM" class="custom-commit-time" name="arrival-time-mode-HKPAM" value="self_define" type="radio" logisticcompany="HKPAM" isdeliverycountryzone="COUNTRY" checked="checked" disabled="">
+                                                <label for="custom-commit-time-HKPAM" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-HKPAM"></textarea>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr class="logistic-row  disabled-row" logisticcompany="HKPAP" isdeliverycountryzone="COUNTRY" companydisplayname="					HongKong Post Air Parcel
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;香港邮政大包
+					">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="HKPAP-check" name="logistic-name" value="HKPAP">
+                                            <div id="HKPAP-name-div" class="marginleft5 logistics-name-div">
+                                                HongKong Post Air Parcel
+                                                <br>香港邮政大包
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-HKPAP" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-HKPAP" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-HKPAP" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-HKPAP" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-HKPAP" value="all_standard" type="radio" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-HKPAP" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-HKPAP" value="" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-HKPAP" class="custom-commit-time" name="arrival-time-mode-HKPAP" value="self_define" type="radio" logisticcompany="HKPAP" isdeliverycountryzone="COUNTRY" checked="checked" disabled="">
+                                                <label for="custom-commit-time-HKPAP" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-HKPAP"></textarea>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr class="logistic-row  disabled-row" logisticcompany="SGP" isdeliverycountryzone="COUNTRY" companydisplayname="					Singapore Post
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;新加坡邮政挂号小包
+					">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="SGP-check" name="logistic-name" value="SGP">
+                                            <div id="SGP-name-div" class="marginleft5 logistics-name-div">
+                                                Singapore Post
+                                                <br>新加坡邮政挂号小包
+                                                <span class="logisticname-info ui-help ui-help-icon"></span>
+                                                <div class="tip-me logisticname-tip" style="display:none;">
+                                                    <div class="help-content-wrap">
+                                                        可发送2kg以下带电商品，运送范围为全球。可使用速卖通线上发货，专享线上发货合约价及服务保障！<br>
+                                                        <a href="http://seller.aliexpress.com/so/onlinelogistics_fpxsg.php" target="_blank">了解详情</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-SGP" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-SGP" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-SGP" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-SGP" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-SGP" value="all_standard" type="radio" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-SGP" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-SGP" value="" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-SGP" class="custom-commit-time" name="arrival-time-mode-SGP" value="self_define" type="radio" logisticcompany="SGP" isdeliverycountryzone="COUNTRY" checked="checked" disabled="">
+                                                <label for="custom-commit-time-SGP" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-SGP"> </textarea>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr class="logistic-row  disabled-row" logisticcompany="SEP" isdeliverycountryzone="COUNTRY" companydisplayname="					Sweden Post
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;瑞典邮政挂号小包
+					">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="SEP-check" name="logistic-name" value="SEP">
+                                            <div id="SEP-name-div" class="marginleft5 logistics-name-div">
+                                                Sweden Post
+                                                <br>瑞典邮政挂号小包
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-SEP" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-SEP" value="all_standard" type="radio" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-SEP" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-SEP" value="" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-SEP" class="custom-commit-time" name="arrival-time-mode-SEP" value="self_define" type="radio" logisticcompany="SEP" isdeliverycountryzone="COUNTRY" checked="checked" disabled="">
+                                                <label for="custom-commit-time-SEP" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-SEP"> </textarea>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr id="TOLL" class="logistic-row  disabled-row" logisticcompany="TOLL" isdeliverycountryzone="COUNTRY" companydisplayname="					DPEX
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="TOLL-check" name="logistic-name" value="TOLL">
+                                            <span id="TOLL">					DPEX
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-TOLL" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-TOLL" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-TOLL" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-TOLL" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-TOLL" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-TOLL" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-TOLL" value="27" disabled="">
+                                                天
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr id="SF" class="logistic-row  disabled-row" logisticcompany="SF" isdeliverycountryzone="COUNTRY" companydisplayname="					SF Express
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺丰速运
+					" logisticsmessage="顺丰速运新增运达国家，可根据您的实际情况编辑运费模板。<a href=http://bbs.seller.aliexpress.com/bbs/read.php?tid=294253&amp;page=1&amp;toread=1#tpc' target='_blanke'>点击了解详情</a>">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="SF-check" name="logistic-name" value="SF">
+                                            <span id="SF">					SF Express
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺丰速运
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-SF" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-SF" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-SF" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-SF" value="23" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-SF" class="custom-commit-time" name="arrival-time-mode-SF" value="self_define" type="radio" logisticcompany="SF" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-SF" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-SF">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="express-logistics-panel" class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="panel" data-series="cn-dedicated" style="display: block;">
+                                <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                    快速类物流方案包含邮政快递、商业快递，时效快全程物流追踪信息可查询，适合高货值商品使用。<a href="=#">查看详情</a>
+                                </div>
+                                <table width="100%" cellspacing="0" cellpadding="8" class="table table-bordered  table-list logistic-list ui-table">
+                                    <thead>
+                                    <tr>
+                                        <th width="20%">选择物流</th>
+                                        <th width="40%">运费设置
+                                            <span class="setting-help-icon ui-help ui-help-icon"></span>
+                                        </th>
+                                        <th width="40%">运达时间设置</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- 物流公司列表-->
+                                    <tr id="DHLECOM" class="logistic-row  disabled-row" logisticcompany="DHLECOM" isdeliverycountryzone="COUNTRY" companydisplayname="					DHL e-commerce
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DHL e-commerce
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="DHLECOM-check" name="logistic-name" value="DHLECOM">
+                                            <span id="DHLECOM">					DHL e-commerce
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DHL e-commerce
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-DHLECOM" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                            <div>
+                                                <input class="custom-logistic" id="custom-define-DHLECOM" name="freight-mode-DHLECOM" value="self_define" type="radio" logisticcompany="DHLECOM" isdeliverycountryzone="COUNTRY" checked="checked" disabled="">
+                                                <label class="custom-logistic-link" for="custom-define-DHLECOM">
+                                                    自定义运费
+                                                </label>
+                                                <textarea class="custom-logistic-content" name="freight-custom-setting-DHLECOM"></textarea>
+                                                <input type="hidden" class="no-send-country" value="" disabled="">
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-DHLECOM" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-DHLECOM" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-DHLECOM" value="23" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-DHLECOM" class="custom-commit-time" name="arrival-time-mode-DHLECOM" value="self_define" type="radio" logisticcompany="DHLECOM" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-DHLECOM" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-DHLECOM">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="GATI" class="logistic-row  disabled-row" logisticcompany="GATI" isdeliverycountryzone="COUNTRY" companydisplayname="					GATI
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GATI
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="GATI-check" name="logistic-name" value="GATI">
+                                            <span id="GATI">					GATI
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GATI
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-GATI" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-GATI" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-GATI" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-GATI" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                            <div>
+                                                <input class="custom-logistic" id="custom-define-GATI" name="freight-mode-GATI" value="self_define" type="radio" logisticcompany="GATI" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label class="custom-logistic-link" for="custom-define-GATI">
+                                                    自定义运费
+                                                </label>
+                                                <textarea class="custom-logistic-content" name="freight-custom-setting-GATI"></textarea>
+                                                <input type="hidden" class="no-send-country" value="" disabled="">
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-GATI" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-GATI" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-GATI" value="23" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-GATI" class="custom-commit-time" name="arrival-time-mode-GATI" value="self_define" type="radio" logisticcompany="GATI" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-GATI" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-GATI">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="EMS" class="logistic-row" logisticcompany="EMS" isdeliverycountryzone="COUNTRY" companydisplayname="					EMS
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="EMS-check" name="logistic-name" value="EMS" checked="checked">
+                                            <span id="EMS">					EMS
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-EMS" value="all_standard" type="radio" checked="checked">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-EMS" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-EMS">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-EMS" value="all_free" type="radio">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                            <div>
+                                                <input class="custom-logistic" id="custom-define-EMS" name="freight-mode-EMS" value="self_define" type="radio" logisticcompany="EMS" isdeliverycountryzone="COUNTRY">
+                                                <label class="custom-logistic-link" for="custom-define-EMS">
+                                                    自定义运费
+                                                </label>
+                                                <textarea class="custom-logistic-content" name="freight-custom-setting-EMS"></textarea>
+                                                <input type="hidden" class="no-send-country" value="">
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-EMS" value="all_standard" type="radio" checked="checked">
+                                                承诺运达时间
+                                                <input id="time-box-input-EMS" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-EMS" value="27">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-EMS" class="custom-commit-time" name="arrival-time-mode-EMS" value="self_define" type="radio" logisticcompany="EMS" isdeliverycountryzone="COUNTRY">
+                                                <label for="custom-commit-time-EMS" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-EMS">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="E_EMS" class="logistic-row  disabled-row" logisticcompany="E_EMS" isdeliverycountryzone="COUNTRY" companydisplayname="					e-EMS
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E特快
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="E_EMS-check" name="logistic-name" value="E_EMS">
+                                            <span id="E_EMS">					e-EMS
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E特快
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-E_EMS" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-E_EMS" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-E_EMS" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-E_EMS" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                            <div>
+                                                <input class="custom-logistic" id="custom-define-E_EMS" name="freight-mode-E_EMS" value="self_define" type="radio" logisticcompany="E_EMS" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label class="custom-logistic-link" for="custom-define-E_EMS">
+                                                    自定义运费
+                                                </label>
+                                                <textarea class="custom-logistic-content" name="freight-custom-setting-E_EMS"></textarea>
+                                                <input type="hidden" class="no-send-country" value="" disabled="">
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-E_EMS" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-E_EMS" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-E_EMS" value="27" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-E_EMS" class="custom-commit-time" name="arrival-time-mode-E_EMS" value="self_define" type="radio" logisticcompany="E_EMS" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-E_EMS" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-E_EMS">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="DHL" class="logistic-row  disabled-row" logisticcompany="DHL" isdeliverycountryzone="COUNTRY" companydisplayname="					DHL
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="DHL-check" name="logistic-name" value="DHL">
+                                            <span id="DHL">					DHL
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-DHL" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-DHL" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-DHL" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-DHL" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                            <div>
+                                                <input class="custom-logistic" id="custom-define-DHL" name="freight-mode-DHL" value="self_define" type="radio" logisticcompany="DHL" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label class="custom-logistic-link" for="custom-define-DHL">
+                                                    自定义运费
+                                                </label>
+                                                <textarea class="custom-logistic-content" name="freight-custom-setting-DHL"></textarea>
+                                                <input type="hidden" class="no-send-country" value="" disabled="">
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-DHL" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-DHL" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-DHL" value="23" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-DHL" class="custom-commit-time" name="arrival-time-mode-DHL" value="self_define" type="radio" logisticcompany="DHL" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-DHL" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-DHL">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="UPS" class="logistic-row  disabled-row" logisticcompany="UPS" isdeliverycountryzone="COUNTRY" companydisplayname="					UPS Express Saver
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UPS全球速快
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="UPS-check" name="logistic-name" value="UPS">
+                                            <span id="UPS">					UPS Express Saver
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UPS全球速快
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-UPS" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-UPS" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-UPS" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-UPS" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                            <div>
+                                                <input class="custom-logistic" id="custom-define-UPS" name="freight-mode-UPS" value="self_define" type="radio" logisticcompany="UPS" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label class="custom-logistic-link" for="custom-define-UPS">
+                                                    自定义运费
+                                                </label>
+                                                <textarea class="custom-logistic-content" name="freight-custom-setting-UPS"></textarea>
+                                                <input type="hidden" class="no-send-country" value="" disabled="">
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-UPS" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-UPS" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-UPS" value="23" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-UPS" class="custom-commit-time" name="arrival-time-mode-UPS" value="self_define" type="radio" logisticcompany="UPS" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-UPS" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-UPS">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="UPSE" class="logistic-row  disabled-row" logisticcompany="UPSE" isdeliverycountryzone="COUNTRY" companydisplayname="					UPS Expedited
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UPS全球快捷
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="UPSE-check" name="logistic-name" value="UPSE">
+                                            <span id="UPSE">					UPS Expedited
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UPS全球快捷
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-UPSE" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-UPSE" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-UPSE" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-UPSE" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                            <div>
+                                                <input class="custom-logistic" id="custom-define-UPSE" name="freight-mode-UPSE" value="self_define" type="radio" logisticcompany="UPSE" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label class="custom-logistic-link" for="custom-define-UPSE">
+                                                    自定义运费
+                                                </label>
+                                                <textarea class="custom-logistic-content" name="freight-custom-setting-UPSE"></textarea>
+                                                <input type="hidden" class="no-send-country" value="" disabled="">
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-UPSE" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-UPSE" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-UPSE" value="23" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-UPSE" class="custom-commit-time" name="arrival-time-mode-UPSE" value="self_define" type="radio" logisticcompany="UPSE" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-UPSE" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-UPSE">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="FEDEX" class="logistic-row  disabled-row" logisticcompany="FEDEX" isdeliverycountryzone="COUNTRY" companydisplayname="					Fedex IP
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="FEDEX-check" name="logistic-name" value="FEDEX">
+                                            <span id="FEDEX">					Fedex IP
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-FEDEX" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-FEDEX" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-FEDEX" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-FEDEX" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                            <div>
+                                                <input class="custom-logistic" id="custom-define-FEDEX" name="freight-mode-FEDEX" value="self_define" type="radio" logisticcompany="FEDEX" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label class="custom-logistic-link" for="custom-define-FEDEX">
+                                                    自定义运费
+                                                </label>
+                                                <textarea class="custom-logistic-content" name="freight-custom-setting-FEDEX"></textarea>
+                                                <input type="hidden" class="no-send-country" value="" disabled="">
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-FEDEX" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-FEDEX" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-FEDEX" value="23" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-FEDEX" class="custom-commit-time" name="arrival-time-mode-FEDEX" value="self_define" type="radio" logisticcompany="FEDEX" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-FEDEX" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-FEDEX">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="FEDEX_IE" class="logistic-row  disabled-row" logisticcompany="FEDEX_IE" isdeliverycountryzone="COUNTRY" companydisplayname="					Fedex IE
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="FEDEX_IE-check" name="logistic-name" value="FEDEX_IE">
+                                            <span id="FEDEX_IE">					Fedex IE
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-FEDEX_IE" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-FEDEX_IE" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-FEDEX_IE" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-FEDEX_IE" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                            <div>
+                                                <input class="custom-logistic" id="custom-define-FEDEX_IE" name="freight-mode-FEDEX_IE" value="self_define" type="radio" logisticcompany="FEDEX_IE" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label class="custom-logistic-link" for="custom-define-FEDEX_IE">
+                                                    自定义运费
+                                                </label>
+                                                <textarea class="custom-logistic-content" name="freight-custom-setting-FEDEX_IE"></textarea>
+                                                <input type="hidden" class="no-send-country" value="" disabled="">
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-FEDEX_IE" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-FEDEX_IE" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-FEDEX_IE" value="23" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-FEDEX_IE" class="custom-commit-time" name="arrival-time-mode-FEDEX_IE" value="self_define" type="radio" logisticcompany="FEDEX_IE" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-FEDEX_IE" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-FEDEX_IE">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="TNT" class="logistic-row  disabled-row" logisticcompany="TNT" isdeliverycountryzone="COUNTRY" companydisplayname="					TNT
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="TNT-check" name="logistic-name" value="TNT">
+                                            <span id="TNT">					TNT
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-TNT" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-TNT" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-TNT" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-TNT" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                            <div>
+                                                <input class="custom-logistic" id="custom-define-TNT" name="freight-mode-TNT" value="self_define" type="radio" logisticcompany="TNT" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label class="custom-logistic-link" for="custom-define-TNT">
+                                                    自定义运费
+                                                </label>
+                                                <textarea class="custom-logistic-content" name="freight-custom-setting-TNT"></textarea>
+                                                <input type="hidden" class="no-send-country" value="" disabled="">
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-TNT" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-TNT" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-TNT" value="23" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-TNT" class="custom-commit-time" name="arrival-time-mode-TNT" value="self_define" type="radio" logisticcompany="TNT" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-TNT" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-TNT">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="SPSR_CN" class="logistic-row  disabled-row" logisticcompany="SPSR_CN" isdeliverycountryzone="COUNTRY" companydisplayname="					Russia Express-SPSR
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中俄快递-SPSR
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="SPSR_CN-check" name="logistic-name" value="SPSR_CN">
+                                            <span id="SPSR_CN">					Russia Express-SPSR
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中俄快递-SPSR
+					</span>
+                                            <span class="logisticname-info ui-help ui-help-icon"></span>
+                                            <div class="tip-me logisticname-tip" style="display:none;">
+                                                <div class="help-content-wrap">
+                                                    速卖通线上发货渠道，俄罗斯最好的快递公司，可寄送15公斤以内包裹！<br>
+                                                    <a href="http://seller.aliexpress.com/so/onlinelogistics_distributor_766143.php" target="_blank">了解详情</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-SPSR_CN" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-SPSR_CN" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-SPSR_CN" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-SPSR_CN" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-SPSR_CN" value="all_standard" type="radio" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-SPSR_CN" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-SPSR_CN" value="" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-SPSR_CN" class="custom-commit-time" name="arrival-time-mode-SPSR_CN" value="self_define" type="radio" logisticcompany="SPSR_CN" isdeliverycountryzone="COUNTRY" checked="checked" disabled="">
+                                                <label for="custom-commit-time-SPSR_CN" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-SPSR_CN">{"defines":[{"commitDay":"14","country":"904430000"},{"commitDay":"15","country":"904090000,904180000,904230000,904330000,904370000,904470000,904530000,904600000,904650000,904680000,904710000,904730000,904770000,904790000,904800000"},{"commitDay":"16","country":"904050000,904110000,904140000,904310000,904410000,904540000,904260000,904420000,904760000"},{"commitDay":"17","country":"904060000,904200000,904210000,904390000,904490000,904510000,904520000,904570000,904580000,904740000"},{"commitDay":"18","country":"904080000,904450000,904500000,904100000,904150000,904690000,904620000,904780000"},{"commitDay":"22","country":"904020000,904040000,904170000,904240000,904270000,904320000,904340000,904350000,904560000,904010000,904610000,904630000,904700000,904750000,904830000"},{"commitDay":"23","country":"904120000,904440000,904590000,904640000,904820000"},{"commitDay":"24","country":"904070000,904220000,904660000"},{"commitDay":"25","country":"904400000,904550000,904810000"},{"commitDay":"26","country":"904360000,904380000,904670000"},{"commitDay":"32","country":"904030000,904130000,904190000,904250000,904280000,904300000,904460000,904160000,904290000,904480000,904720000"}],"other":null} </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="TOLL" class="logistic-row  disabled-row" logisticcompany="TOLL" isdeliverycountryzone="COUNTRY" companydisplayname="					DPEX
+					" logisticsmessage="">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="TOLL-check" name="logistic-name" value="TOLL">
+                                            <span id="TOLL">					DPEX
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                                <input class="standard-logistic" name="freight-mode-TOLL" value="all_standard" type="radio" checked="checked" disabled="">
+                                                <span>标准运费</span>
+                                                <span class="decount-box">
+                                            减免
+                                            <input id="decount-box-input-TOLL" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-TOLL" disabled="">
+                                            %
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-TOLL" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                            <div>
+                                                <input class="custom-logistic" id="custom-define-TOLL" name="freight-mode-TOLL" value="self_define" type="radio" logisticcompany="TOLL" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label class="custom-logistic-link" for="custom-define-TOLL">
+                                                    自定义运费
+                                                </label>
+                                                <textarea class="custom-logistic-content" name="freight-custom-setting-TOLL"></textarea>
+                                                <input type="hidden" class="no-send-country" value="" disabled="">
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-TOLL" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-TOLL" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-TOLL" value="27" disabled="">
+                                                天
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr id="SF" class="logistic-row  disabled-row" logisticcompany="SF" isdeliverycountryzone="COUNTRY" companydisplayname="					SF Express
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺丰速运
+					" logisticsmessage="顺丰速运新增运达国家，可根据您的实际情况编辑运费模板。<a href=http://bbs.seller.aliexpress.com/bbs/read.php?tid=294253&amp;page=1&amp;toread=1#tpc' target='_blanke'>点击了解详情</a>">
+                                        <td class="logistic-name" width="35%">
+                                            <input type="checkbox" class="logistic-checkbox" id="SF-check" name="logistic-name" value="SF">
+                                            <span id="SF">					SF Express
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺丰速运
+					</span>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="35%">
+                                            <div class="set-logistic">
+                                            </div>
+
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-SF" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                            </div>
+
+                                            <div>
+                                                <input class="custom-logistic" id="custom-define-SF" name="freight-mode-SF" value="self_define" type="radio" logisticcompany="SF" isdeliverycountryzone="COUNTRY" checked="checked" disabled="">
+                                                <label class="custom-logistic-link" for="custom-define-SF">
+                                                    自定义运费
+                                                </label>
+                                                <textarea class="custom-logistic-content" name="freight-custom-setting-SF"></textarea>
+                                                <input type="hidden" class="no-send-country" value="" disabled="">
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-SF" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-SF" class="time-box-input ui-textfield ui-textfield-system" size="2" maxlength="2" name="arrival-time-days-SF" value="23" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-SF" class="custom-commit-time" name="arrival-time-mode-SF" value="self_define" type="radio" logisticcompany="SF" isdeliverycountryzone="COUNTRY" disabled="">
+                                                <label for="custom-commit-time-SF" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-SF">  </textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="other-logistics-panel" class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="panel" data-series="cn-other" style="display: none;">
+                                <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                    提醒：请使用真实且物流信息可查询的物流方式发货，如果您使用无法核实物流跟踪信息的物流方式，速卖通有权不予认可。<a href="=#">查看纠纷裁决指引</a></div>
+                                <table width="100%" cellspacing="0" cellpadding="8" class="table table-bordered  table-list logistic-list ui-table">
+
+                                    <thead>
+                                    <tr>
+                                        <th width="20%">选择物流</th>
+                                        <th width="40%">运费设置
+                                            <span class="setting-help-icon ui-help ui-help-icon"></span>
+                                        </th>
+                                        <th width="40%">运达时间设置</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="logistic-row  disabled-row" isdeliverycountryzone="COUNTRY" logisticcompany="Other" companydisplayname="					Seller's Shipping Method
+									<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;卖家自定义-中国
+					" logisticsmessage="">
+                                        <td class="logistic-name">
+                                            <input type="checkbox" class="logistic-checkbox" id="Other-check" name="logistic-name" value="Other">
+                                            <span id="Other">					Seller's Shipping Method
+									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;卖家自定义-中国
+					</span>
+
+                                            <span class="logisticname-info ui-help ui-help-icon"></span>
+                                            <div class="tip-me logisticname-tip" style="display:none;">
+                                                <div class="help-content-wrap">
+                                                    如果运费模板没有您使用的物流方式，可以使用此选项设置运费，但您需要遵守速卖通物流网规选择物流。对于无法核实真伪的物流跟踪信息，速卖通有权不予认可。<a href="http://seller.aliexpress.com/education/rules/detail.html?tracelog=rules_homepage#logistics" target="_blank">了解详情</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="logistic-commit-standard" width="40%">
+                                            <div class="set-logistic">
+                                                <input class="no-logistic" name="freight-mode-Other" value="all_free" type="radio" disabled="">
+                                                卖家承担运费
+                                                <span class="freeshipping-box">Free Shipping</span>
+                                            </div>
+                                        </td>
+                                        <td width="20%">
+                                            <div class="set-commit-time">
+                                                <input class="standard-commit-time" name="arrival-time-mode-Other" value="all_standard" type="radio" checked="checked" disabled="">
+                                                承诺运达时间
+                                                <input id="time-box-input-Other" class="time-box-input" size="1" maxlength="2" name="arrival-time-days-Other" value="23" disabled="">
+                                                天
+                                            </div>
+
+                                            <div class="set-commit-time">
+                                                <input id="custom-commit-time-Other" class="custom-commit-time" name="arrival-time-mode-Other" value="self_define" type="radio" isdeliverycountryzone="COUNTRY" logisticcompany="Other" disabled="">
+                                                <label for="custom-commit-time-Other" class="custom-time">
+                                                    自定义运达时间
+                                                </label>
+                                                <textarea class="custom-commit-time-content" name="arrival-time-custom-setting-Other">  </textarea>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

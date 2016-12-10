@@ -1409,7 +1409,7 @@ router.post('/transport', (req, res, next)=> {
     var little_packet_price = 0;
     var little_packet_weight = 0;
     var ordinary_weight = 0;
-    let decimal_weight = weight - Math.floor(weight);
+    var decimal_weight = weight - Math.floor(weight);
     //特快处理
     if (weight < 0.5) {
         execution_weight = 0.5
