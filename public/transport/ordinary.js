@@ -1,4 +1,4 @@
-var ordinary={
+var ordinaries={
   "data": [
     {
       "zh": "澳门",
