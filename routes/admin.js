@@ -1392,12 +1392,15 @@ router.get('/shopping_template', function (req, res, next) {
  * @return [type]
  */
 router.post('/transport', (req, res, next)=> {
+
     if (req.body.weight == 'undefined' || req.body.area == 'undefined') {
-        return next(customError(404, "Invalid param"))
+        res.send(401, {code: 401, msg: "Params Error"})
+        return
     }
 
     if (req.body.weight == '' || req.body.area == '') {
-        return next(customError(404, "Invalid param"))
+        res.send(401, {code: 401, msg: "Params Error"})
+        return
     }
 
     var weight = Number(req.body.weight);
@@ -1456,6 +1459,8 @@ router.post('/transport', (req, res, next)=> {
         else if (weight < 21) {
             express_price = getTransportPrice(express_conf, execution_weight, area)
             ordinary_price = getTransportPrice(oridinary_conf, ordinary_weight, area)
+            console.log(ordinary_price)
+            console.log('-----')
             res.send(200, {
                 express: {price: express_price, msg: "特快快递"},
                 ordinary: {price: ordinary_price, msg: "普通快递"},
@@ -1483,10 +1488,9 @@ router.post('/transport', (req, res, next)=> {
             });
         }
     } catch (e) {
-        return next(customError(500, 'InternalError'))
+        console.log(e)
+        res.send(404, {code: 404, msg: "NOT FOUND"})
     }
-
-
 });
 
 /**
@@ -1530,6 +1534,7 @@ function getLittleTransportPrice(type, weight) {
         })[0]['fee']) * weight;
 }
 /*------------------------------------------------------------------------*/
+
 
 module.exports = router;
 
