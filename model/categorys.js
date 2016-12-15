@@ -7,6 +7,7 @@ var Schema = mongoose.Schema,
 var Schema = mongoose.Schema;
 var category = new Schema({
     firstCategory: String,
+    de_firstCategory: String,
     firstUrl: String,
     firstTimeStamp: Number,
     firstImages: [{
@@ -15,12 +16,14 @@ var category = new Schema({
     firstCount: Number,
     secondCategory: [{
         secondTitle: String,
+        de_secondTitle: String,
         secondUrl: String,
         secondTimeStamp: Number,
         secondImages: String,
         secondCount: Number,
         thirdTitles: [{
             thirdTitle: String,
+            de_thirdTitle: String,
             firstTimeStamp: Number,
             product: [{
                 belong_category: [{

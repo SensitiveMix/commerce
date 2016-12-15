@@ -626,6 +626,44 @@ router.get('/accessory_manage', function (req, res, next) {
 });
 
 //类目上传
+// router.post('/doAddCategory', checkLogin);
+// router.post('/doAddCategory', function (req, res) {
+//     console.log(req.body);
+//     console.log(JSON.parse(req.body.secondCategory));
+//
+//     var Categories = {
+//         firstCategory: req.body.firstCategory,
+//         firstUrl: req.body.firstUrl,
+//         firstCount: req.body.firstCount,
+//         secondCategory: JSON.parse(req.body.secondCategory)
+//     };
+//     //保存到产品属性表
+//     _.each(JSON.parse(req.body.secondCategory), function (second) {
+//         _.each(second.thirdTitles, function (third) {
+//             var spec = {
+//                 firstCategory: req.body.firstCategory,
+//                 secondCategory: second.secondTitle,
+//                 thirdCategory: third.thirdTitle,
+//                 specification: null,
+//                 addBy: ""
+//             };
+//             var specs = new db.specifications(spec);
+//             console.log(spec);
+//             specs.save();
+//         })
+//     });
+//
+//     var category = new db.categorys(Categories);
+//     category.save(function (err) {
+//         console.log(err);
+//         if (err) {
+//             res.send('fail')
+//         } else {
+//             res.send('success');
+//         }
+//     });
+// });
+
 router.post('/doAddCategory', checkLogin);
 router.post('/doAddCategory', function (req, res) {
     console.log(req.body);
@@ -633,6 +671,7 @@ router.post('/doAddCategory', function (req, res) {
 
     var Categories = {
         firstCategory: req.body.firstCategory,
+        de_firstCategory: req.body.de_firstCategory,
         firstUrl: req.body.firstUrl,
         firstCount: req.body.firstCount,
         secondCategory: JSON.parse(req.body.secondCategory)
@@ -644,6 +683,9 @@ router.post('/doAddCategory', function (req, res) {
                 firstCategory: req.body.firstCategory,
                 secondCategory: second.secondTitle,
                 thirdCategory: third.thirdTitle,
+                de_firstCategory: req.body.de_firstCategory,
+                de_secondCategory: second.de_secondTitle,
+                de_thirdCategory: third.de_thirdTitle,
                 specification: null,
                 addBy: ""
             };
@@ -1460,7 +1502,7 @@ router.post('/transport', (req, res, next)=> {
             express_price = getTransportPrice(express_conf, execution_weight, area)
             ordinary_price = getTransportPrice(oridinary_conf, ordinary_weight, area)
             console.log(ordinary_price)
-            console.log('-----')
+            console.log(express_price)
             res.send(200, {
                 express: {price: express_price, msg: "特快快递"},
                 ordinary: {price: ordinary_price, msg: "普通快递"},
