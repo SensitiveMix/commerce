@@ -1828,17 +1828,17 @@
                                                         $('#grossWeight').change(function(){
                                                             var grossWeight = $('#grossWeight').val();
                                                             if(grossWeight<2){
-                                                                $('#country').html();
+                                                                $('#country').html('');
                                                                 express.data.forEach(function(item){
                                                                     $('#country').append('<option>'+item.zh+'</option>')
                                                                 })
                                                             } else if(grossWeight < 21){    
-                                                                $('#country').html();
+                                                                $('#country').html('');
                                                                 ordinary.data.forEach(function(item){
                                                                     $('#country').append('<option>'+item.zh+'</option>')
                                                                 })
                                                             } else {
-                                                                $('#country').html();
+                                                                $('#country').html('');
                                                                 ordinary.data.forEach(function(item){
                                                                     $('#country').append('<option>'+item.zh+'</option>')
                                                                 })
@@ -1917,6 +1917,17 @@
                                                                        } 
                                                                    }
                                                                    $('#calculatorbox tbody').html(myhtml);
+                                                               },
+                                                               error:function(data){
+                                                                    if(data.status == 404){
+                                                                        $('#calculatorbox tbody').html('');
+                                                                        myjinggao = '<div id="weightTip" class="alert alert-warning alert-dismissible fade in" role="alert">'
+                                                                            +'<button style="right:-7px" type="button" class="close" data-dismiss="alert">'
+                                                                            +'<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'
+                                                                            +'暂时没有快递到该国家'
+                                                                        +'</div>';
+                                                                        $('.ccl-title').append(myjinggao);
+                                                                    }
                                                                }
                                                            });
                                                         })
