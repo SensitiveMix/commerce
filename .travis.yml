@@ -4,7 +4,7 @@ node_js:
 
 script:
   - npm install
-  - npm run build
+  - npm run test-build
   - npm run test
 after_success:
 - bash <(curl -s https://codecov.io/bash) -t 7e7082e9-fe6b-4a24-936c-b5c56708233b
