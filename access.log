@@ -567,6 +567,7 @@
 ::ffff:127.0.0.1 - - [18/Dec/2016:04:00:30 +0000] "POST /admin/transport HTTP/1.1" 200 137 "-" "node-superagent/2.3.0"
 ::ffff:127.0.0.1 - - [18/Dec/2016:04:00:30 +0000] "POST /admin/transport HTTP/1.1" 200 92 "-" "node-superagent/2.3.0"
 ::ffff:127.0.0.1 - - [18/Dec/2016:04:00:30 +0000] "POST /admin/transport HTTP/1.1" 200 47 "-" "node-superagent/2.3.0"
+<<<<<<< HEAD
 ::ffff:127.0.0.1 - - [18/Dec/2016:06:43:51 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
 ::ffff:127.0.0.1 - - [18/Dec/2016:06:43:52 +0000] "GET /getHeadBanner HTTP/1.1" 304 - "http://localhost:8081/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
 ::ffff:127.0.0.1 - - [18/Dec/2016:06:43:52 +0000] "GET /getBanner HTTP/1.1" 304 - "http://localhost:8081/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"

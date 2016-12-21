@@ -829,7 +829,7 @@
             console.log(product_attributes_type);
             product_attributes_compatibility.forEach(function (item_compatibility) {
                 product_attributes_Color.forEach(function (item_type) {
-                    var table_body_tr = '<tr><td>【' + item_compatibility + '】' + item_type + '</td><td><input type="text" class="form-control"></td><td><input type="text" class="form-control"></td></tr>';
+                    var table_body_tr = '<tr><td>【' + item_compatibility + '】' + item_type + '</td><td><input type="text" class="form-control vip-price-td1"></td><td><input type="text" class="form-control"></td><td><input type="file" class="filestyle" data-input="false" id="filestyle-0" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);"><div class="bootstrap-filestyle input-group"><span class="group-span-filestyle " tabindex="0"><label for="filestyle-0" class="btn btn-default "><span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span></label></span></div></td></tr>';
 
                     $('#product-attribute-table tbody').append(table_body_tr);
                 })
@@ -842,6 +842,73 @@
 //                    var eq_2 = $('input[name="count"]').val();
 //                    $(item).find('td').eq(2).text(eq_2);
                 })
+            })
+            $('.vip-price-td1').change(function(){
+                var eq_1 = $(this).val();
+                $(this).parent().next().find('input').val((parseInt(eq_1) + 0.5).toString());
+            })
+
+            $('.filestyle').on('change',function(){
+                var file = $(this)[0];
+                var formData = new FormData();
+                console.log(file)
+                console.log(file.files)
+                if (file.files.length > 1) {
+                    layer.alert('上传图片大于1张')
+                } else {
+                    for (var i = 0; i < file.files.length; i++) {
+                        if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpeg') {
+                            layer.alert('上传图片格式有误')
+                            return false
+                        } else if (file.files[i].size / 1024 > 2000) {
+                            layer.alert('上传图片大小不能超过2M')
+                            return false
+                        } else {
+                            formData.append('file', file.files[i]);
+                        }
+
+                        $('.limit_pic').text(8 - file.files.length)
+                    }
+
+                    $.ajax({
+                        url: '/admin/uploadSingle',
+                        type: 'POST',
+                        data: formData,
+                        async: false,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            var data = data.data;
+                            console.log(data)
+                            if (data.length != 0) {
+                                data.forEach(function (item, index) {
+                                    $parent = $(file).parent();
+                                    $parent.empty();
+                                    item = item.replace('public', '');
+                                    var li = '<li style="list-style: none;" class="' + index + '"><img style="width: 100%;height:100%" src="' + item + '"><span class="delete"></span></li><span class="exchange ' + index + '"></span>';
+                                    $parent.append(li);
+
+                                })
+                            }
+                            $('.delete').click(function () {
+                                var exchange = $(this).parents('li').attr('class')
+                                $('.' + exchange).remove();
+                                $('.limit_pic').text(parseInt($('.limit_pic').text()) + 1)
+                            })
+                            $('.exchange').click(function () {
+                                if ($(this).next().length && $(this).prev().length)
+                                    var prev = $(this).prev().html();
+                                var next = $(this).next().html();
+                                $(this).prev().html(next);
+                                $(this).next().html(prev);
+                            })
+                        },
+                        error: function () {
+                            layer.msg('上传文件格式错误')
+                        }
+                    });
+                }
             })
 
         })
@@ -1150,14 +1217,29 @@
                                                                                                  name="sortbyunit">件</span>）</span>
                 </label>
             </div>
+            <script>
+                $(function(){
+                    $('input[name="market_method"]').click(function(){
+                        var discount = $('input[name="market_method"]:checked').val();
+                        if($(this).val() == discount){
+                            if($(this).val() == 2){
+                                $('#packquantity').removeAttr('disabled');
+                            } else {
+                                $('#packquantity').attr('disabled','disabled');
+                            }
+                        }
+                    })
+                })
+            </script>
             <div class="marginbottom10 clearfix">
                 <label>
                     <input name="market_method" id="sortbyradio2" data-name="包" type="radio" value="2">
                     <span class="marginleft5">按包卖</span>
-                    <input type="text" class="form-control" placeholder="" name="sell-function-bao">
-                </label>/包
+                    <!--<input type="text" class="form-control" placeholder="" name="sell-function-bao">-->
+                </label>
+                <!--/包-->
                 <span>
-			<span class="j-sale-bao" style="display: none; ">
+			<span class="j-sale-bao">
                 （每包产品的数量：<input id="packquantity" name="packquantity" value="1" type="text" class="input2" size="6"
                                 maxlength="8">
 			<span class="j-unit-no" name="sortbyunit">件</span>）</span>
@@ -1176,7 +1258,7 @@
             <div class="marginbottom10 clearfix">
                 <label>
                     <input type="text" class="form-control" placeholder="" name="sell-function-mao">
-                </label>/KG
+                </label>kg/件
                 <span class="helpicon" title="产品毛重帮助" data-helpid="saleType"></span>
             </div>
         </div>
@@ -1236,6 +1318,7 @@
                                 <td class="col-sm-2 bktit addborderline">颜色分类</td>
                                 <td class="col-sm-2 bktit addborderline">VIP价格(美元)</td>
                                 <td class="col-sm-2 bktit addborderline">普通会员价格(美元)</td>
+                                <td class="col-sm-2 bktit addborderline">图片</td>
                             </tr>
                             </thead>
                             <tbody>
