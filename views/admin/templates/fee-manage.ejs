@@ -1,0 +1,327 @@
+<% layout('../master.ejs') %>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">运费费率管理</h3>
+        <input type="button" value="添加费率" id="addRobotBtn" style="margin-left: 50px" class='btn btn-primary'/>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <div class="box-body">
+        <table id="feeTab" class="table table-bordered " aria-describedby="example2_info">
+            <thead>
+            <tr>
+                <th></th>
+                <th>国家</th>
+                <th>费率</th>
+                <th>修改时间</th>
+                <th>修改操作</th>
+                <th>删除操作</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="form-horizontal  layer_notice hidden" id="recordDetail">
+        <table id="recordTb" class="table table-bordered " aria-describedby="example2_info">
+            <thead>
+            <tr>
+                <th>用户归属</th>
+                <th>操作人</th>
+                <th>更新时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+
+    <!--更新 form start -->
+    <div class="form-horizontal  layer_notice hidden" id="changeFeeForm">
+        <form class="" hidden="hidden" action="changeFee" method="post" style="margin-top: 50px" id="changeFee">
+
+            <div class="box-body">
+                <input type="hidden" class="form-control" name="change_id" id="change_id"/>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">国家</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="change-country" name="change-country">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">费率</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="change-fee" name="change-fee">
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" id="subRobotChange" class="btn btn-info pull-right closeBtn">确定</button>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+        <!-- /.box-body -->
+    </div>
+
+    <!--添加 form start -->
+    <div class="form-horizontal  layer_notice hidden" id="addFeeForm">
+        <form class="" hidden="hidden" action="addSupplier" style="margin-top: 50px" method="post" id="add-fee">
+            <div class="box-body">
+                <input type="text" style="display: none" class="form-control" name="id" id="id"/>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">国家</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="country-add" name="country-add">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">费率</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="fee-add" name="fee-add">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="box-footer">
+                <button type="button" id="subaddRobotBtn" class="btn btn-info pull-right closeBtn">添加</button>
+            </div>
+        </form>
+
+
+    </div>
+
+</div>
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.css">
+<script>
+    var trNodep;
+    $(document).ready(function () {
+
+        //commit add
+        $("#subaddRobotBtn").on('click', function () {
+            var date = new Date();
+            var payload = {
+                country_name: $("#country-add").val(),
+                country_fee: $("#fee-add").val(),
+                update_time: formatDate(),
+                update_time_sort: (date.getTime() / 1000).toFixed()
+            }
+
+            if (_isEmpty(payload.country_name, '请填写国家', '#country_name') && _isEmpty(payload.country_fee, '请填写费率', '#country_fee')) {
+                console.log(payload)
+                $.ajax({
+                    url: 'fee',
+                    type: 'POST',
+                    data: payload,
+                    success: function (retmsgurndata) {
+                        $("#form-signin").hide();
+                        setTimeout('location.reload()', 1000);
+                        layer.msg('添加成功');
+                        layer.closeAll();
+                        _emptyParam("#country-add");
+                        _emptyParam("#fee-add");
+                    }, error: function (returndata) {
+                        alert('添加失败，请检查是否有非法词汇！');
+                    }
+                });
+            }
+
+        });
+        //commit update
+        $('#subRobotChange').on('click', function () {
+            if ($("#change-country").val() == '') {
+                layer.tips('请选取供应商', "#change-country")
+            } else {
+                var payload = {
+                    id: $("#change_id").val(),
+                    country_name: $("#change-country").val(),
+                    country_fee: $("#change-fee").val(),
+                    update_time: formatDate(),
+                    update_time_sort: (new Date().getTime() / 1000).toFixed()
+                };
+                $.ajax({
+                    url: 'fee',
+                    type: 'put',
+                    data: payload,
+                    success: function () {
+                        trNodep.children().eq(1).html($("input[name=change-country]").val());
+                        trNodep.children().eq(2).html($("input[name=change-fee]").val());
+                        trNodep.children().eq(3).html(formatDate());
+                        layer.closeAll();
+                        layer.alert('修改成功');
+                    }, error: function (returndata) {
+                        alert('更新失败，请检查是否有非法词汇！');
+                    }
+                });
+            }
+        });
+
+
+        //add layer pages
+        $("#addRobotBtn").on('click', function () {
+            $('#addFeeForm').removeClass('hidden');
+            $('#add-fee').show();
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-rim',
+                shade: false,
+                title: false, //不显示标题
+                content: $('#addFeeForm'), //捕获的元素
+                area: ['420px', "400px"],
+                cancel: function (index) {
+                    layer.close(index);
+                },
+                scrollbar: false
+            });
+        });
+
+
+        //inital fee tables
+        $('#feeTab').DataTable({
+            "ajax": "feelist",//获取数据的url
+            "bFilter": false,                       //不使用过滤功能
+            "bLengthChange": false,                 //用户不可改变每页显示数量
+            "iDisplayLength": 9,                    //每页显示8条数据
+            "oLanguage": {                          //汉化
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "没有检索到数据",
+                "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
+                "sInfoEmtpy": "没有数据",
+                "sProcessing": "正在加载数据...",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前页",
+                    "sNext": "后页",
+                    "sLast": "尾页"
+                }
+            },
+            "columns": [
+                {"data": "_id"},
+                {"data": "country_name"},
+                {"data": "country_fee"},
+                {"data": "update_time"},
+                {"data": "update_time_sort"},
+                {"data": "update_time"}
+            ],
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "data": "_id",
+                    "render": function (data, type, full) {
+                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
+                    }
+                },
+                {
+                    "targets": [4],
+                    "data": "level",
+                    "render": function (data, type, full) {
+                        return "<button type='button' id='update' class='btn btn-primary updatess'>修改</button>";
+                    }
+                },
+                {
+                    "targets": [5],
+                    "data": "level",
+                    "render": function (data, type, full) {
+
+                        return "<button type='button' id='delete' class='btn btn-primary deletess'>删除</button>" + "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
+                    }
+                }
+            ], "fnDrawCallback": function (oSettings, json) {
+                $(".updatess").click(function () {
+                    $('#changeFeeForm').removeClass('hidden');
+                    $('#changeFee').show();
+                    var trNode = $(this).parent().parent();
+                    trNodep = trNode;
+                    var hiddenid = trNode.children().eq(0).find("input").val();
+                    $('#change_id').val(hiddenid);
+                    $("#change-country").val(trNode.children().eq(1).html());
+                    $("#change-fee").val(trNode.children().eq(2).html());
+
+
+                    layer.open({
+                        type: 1,
+                        skin: 'layui-layer-rim',
+                        shade: false,
+                        title: false, //不显示标题
+                        content: $('#changeFeeForm'), //捕获的元素
+                        area: ['420px', "400px"],
+                        cancel: function (index) {
+                            layer.close(index);
+
+                        },
+                        scrollbar: false
+                    });
+                });
+                //绑定删除事件
+                $(".deletess").on('click', function () {
+                    var trNode = $(this).parent().parent();
+                    var hide_id = trNode.children().eq(0).find("input").val();
+                    var payload = {
+                        id: hide_id
+                    }
+                    layer.confirm('您确定要删除吗？', {
+                        btn: ['确定', '返回'] //按钮
+                    }, function () {
+                        $.ajax({
+                            url: 'fee',
+                            type: 'delete',
+                            data: payload,
+                            success: function (feed) {
+                                console.log(feed)
+                                if (feed.succeed == true) {
+                                    layer.msg('删除成功');
+                                    trNode.children().hide();
+                                } else if (feed.succeed == false) {
+                                    layer.alert('更新失败，请检查是否有非法词汇！');
+                                }
+                            }, error: function (error) {
+                                if (error.succeed == false) {
+                                    layer.alert('删除失败，请检查是否有非法词汇！');
+                                }
+                            }
+                        });
+                    }, function () {
+                        layer.msg('已取消');
+                    });
+                });
+            }
+        });
+    });
+
+    // utils
+    function formatDate() {
+        var date = new Date();
+        var add_time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
+        return add_time
+    }
+
+    function _emptyParam(method) {
+        $(method).val('');
+    }
+
+
+    function _isEmpty(args, msg, method) {
+        if (args == '') {
+            layer.tips(msg, method)
+            return false
+        } else {
+            return true
+        }
+    }
+
+</script>

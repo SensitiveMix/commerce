@@ -18,3 +18,5 @@ exports.levels = mongoose.model('levels', require('./levels'));
 exports.specifications = mongoose.model('specifications', require('./specifications'));
 exports.suppliers = mongoose.model('suppliers', require('./suppliers'));
 exports.SEOS = mongoose.model('seos', require('./seo'));
+exports.fee = mongoose.model('fees', require('./fee'));
+exports.deltaPrice = mongoose.model('deltaPrices', require('./deltaPrice'));

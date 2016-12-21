@@ -1422,9 +1422,148 @@ router.get('/crawler_manage', function (req, res, next) {
 /*-------------------------------------------------------------------------*/
 
 /*---------------------------------运费模板管理------------------------------*/
-router.get('/shopping_template', function (req, res, next) {
+router.get('/shopping_template', (req, res) => {
     res.render('admin/templates/shopping-templates', {username: u.nick_name})
-});
+})
+
+/**
+ * ROUTER FEE  GET Method
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.get('/fee_manage', (req, res) => {
+    res.render('admin/templates/fee-manage', {username: u.nick_name})
+})
+
+/**
+ * ADD FEE POST Method
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.post('/fee', (req, res) => {
+    if (!req.body) res.end(401, {succeed: false, msg: 'Invalid Param Request'})
+    const fee = new db.fee(req.body);
+    fee.save(function (err) {
+        if (err) res.send(500, {succeed: false, msg: 'Internal Server Error'})
+    });
+    res.send(200, {succeed: true, msg: "success"})
+
+})
+
+/**
+ * ADD DELTA PRICE POST Method
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.post('/delta-price', (req, res)=> {
+    console.log(req.body)
+    if (!req.body) res.end(401, {succeed: false, msg: 'Invalid Param Request'})
+    const delta_price = new db.deltaPrice(req.body);
+    delta_price.save(function (err) {
+        if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
+    });
+    res.send(200, {succeed: true, msg: "success"})
+
+})
+
+/**
+ * Modify DELTA PRICE PUT Method
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.put('/delta-price', (req, res)=> {
+
+    if (!req.body) res.end(401, {succeed: false, msg: 'Invalid Param Request'})
+    db.deltaPrice.findOneAndUpdate({_id: req.body.id},
+        {
+            $set: {
+                delta_price: req.body.delta_price,
+                update_time: req.body.update_time
+            }
+        },
+        (err, data)=> {
+            if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
+            res.send({succeed: true, msg: "success"})
+        })
+})
+
+/**
+ * Delete FEE DEL Method
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.delete('/fee', (req, res)=> {
+    console.log(req.body)
+    db.fee.remove({
+        _id: req.body.id
+    }, (err, data)=> {
+        if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
+        res.send({succeed: true, msg: "success"})
+    })
+})
+
+/**
+ * Modify FEE PUT Method
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.put('/fee', (req, res)=> {
+    if (!req.body) res.end(401, {succeed: false, msg: 'Invalid Param Request'})
+    db.fee.findOneAndUpdate({_id: req.body.id},
+        {
+            $set: {
+                country_name: req.body.country_name,
+                country_fee: req.body.country_fee,
+                update_time: req.body.update_time,
+                update_time_sort: req.body.update_time_sort
+            }
+        },
+        (err, data)=> {
+            if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
+            res.send({succeed: true, msg: "success"})
+        })
+})
+
+/**
+ * GET FEE LIST
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.get('/feelist', (req, res, next)=> {
+    console.log(`current display page: ${req.query.iDisplayStart}`)
+    db.fee.find({}, null, {
+        sort: {
+            'update_time_sort': 1
+        }
+    }, function (err, result) {
+        if (err) next(customError(err.status, err, res))
+        var lista = {
+            "draw": 2,
+            "recordsTotal": "",
+            "recordsFiltered": "",
+            "data": []
+        };
+        lista.recordsTotal = result.length
+        lista.recordsFiltered = lista.recordsTotal
+        lista.data = result
+        res.send(lista)
+        res.end()
+    })
+})
 
 /**
  * [Description]
@@ -1433,7 +1572,7 @@ router.get('/shopping_template', function (req, res, next) {
  * @param next render value
  * @return [type]
  */
-router.post('/transport', (req, res, next)=> {
+router.post('/transport', (req, res)=> {
 
     if (req.body.weight == 'undefined' || req.body.area == 'undefined') {
         res.send(401, {code: 401, msg: "Params Error"})

@@ -60,14 +60,15 @@ app.use(function (req, res, next) {
 });
 
 // 自定义异常
-global.customError = (status, msg) => {
-    if(typeof status == 'string') {
+global.customError = (status, msg, res) => {
+    if (typeof status == 'string') {
         msg = status
         status = null
     }
     var error = new Error(msg || '未知异常')
     error.status = status || 500
-    return error
+
+    res.send({code: error.status, msg: error.msg})
 }
 
 var isDev = process.env.NODE_ENV !== 'production';
