@@ -1580,6 +1580,11 @@ router.get('/feelist', (req, res, next)=> {
         }
     }, function (err, result) {
         if (err) next(customError(err.status, err, res))
+        console.log(result)
+        result.forEach((item)=> {
+            return item.country_fee = "1 人民币 = " + item.country_fee + " " + item.country_name
+        })
+
         var lista = {
             "draw": 2,
             "recordsTotal": "",
