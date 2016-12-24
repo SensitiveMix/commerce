@@ -7,8 +7,8 @@ var Schema = mongoose.Schema,
 var Schema = mongoose.Schema;
 var supplierData = new Schema({
     name: String,
-    supplier_id: String,
-    add_by: String,
+    supplier_id: Number,
+    add_location: String,
     add_time: String,
     add_time_number: Number
 });

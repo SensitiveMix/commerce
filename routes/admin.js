@@ -1106,7 +1106,7 @@ router.post('/spec/property/delete', function (req, res, next) {
 //获取供应商
 router.get('/supplierList', function (req, res, next) {
     console.log("当前分页" + req.query.iDisplayStart);
-    db.suppliers.find({}, null, {
+    db.suppliers.find({name: {$ne: '请选择'}}, null, {
         sort: {
             'add_time_number': 1
         }
@@ -1133,45 +1133,65 @@ router.get('/supplier_manage', function (req, res, next) {
         }
     );
 });
+
+// check login state
 router.post('/doAddSupplier', checkLogin);
+/**
+ * add supplier infomation
+ * @param  {[type]} req           [description]
+ * @param  {[type]} res)          [description]
+ * @param  {[type]} options.$inc: {'supplier_id': 1}           [description]
+ * @param  {[type]} (err,         data)            [description]
+ * @return {[type]}               [description]
+ */
 router.post('/doAddSupplier', function (req, res) {
-    var suppliers = {
-        name: req.body.add_name,
-        add_by: req.body.add_by,
-        supplier_id: Math.floor(Math.random() * 1000 + 1),
-        add_time: req.body.add_time,
-        add_time_number: req.body.add_time_number
-    };
-    console.log(suppliers)
-    var supplier = new db.suppliers(suppliers);
-    supplier.save(function (err) {
-        if (err) res.send({
-            error_msg: ['FORMAT PARAM Error'],
-            info: "",
-            result: "FAILED",
-            code: "500",
-            username: u.nick_name
+    //query supplier id
+    db.suppliers.findOneAndUpdate(
+        {"name": "请选择"},
+        {$inc: {'supplier_id': 1}}, (err, data)=> {
+            var suppliers = {
+                name: req.body.add_name,
+                add_location: req.body.add_by,
+                supplier_id: data.supplier_id,
+                add_time: req.body.add_time,
+                add_time_number: req.body.add_time_number
+            };
+            var supplier = new db.suppliers(suppliers);
+            supplier.save(function (err) {
+                if (err) res.send({
+                    error_msg: ['FORMAT PARAM Error'],
+                    info: "",
+                    result: "FAILED",
+                    code: "500",
+                    username: u.nick_name
+                })
+            });
+            res.send({
+                error_msg: [''],
+                info: "",
+                result: "SUCCESS",
+                code: "200",
+                username: u.nick_name
+            })
         })
-    });
-    res.send({
-        error_msg: [''],
-        info: "",
-        result: "SUCCESS",
-        code: "200",
-        username: u.nick_name
-    })
 });
 
+// check login state
 router.post('/doChangeSupplier', checkLogin);
+/**
+ * change supplier status
+ * @param  {[type]} req           [description]
+ * @param  {String} res)          [description]
+ * @param  {[type]} options.$set: [description]
+ * @param  {[type]} function      [description]
+ * @return {[type]}               [description]
+ */
 router.post('/doChangeSupplier', function (req, res) {
-    console.log(req.body.add_name)
-    console.log(req.body.add_by)
-    console.log(req.body.id)
     if (req.body.add_name != '' && req.body.add_by != '') {
         db.suppliers.update({'_id': req.body.id}, {
             $set: {
                 name: req.body.add_name,
-                add_by: req.body.add_by,
+                add_location: req.body.add_by,
                 add_time: getDate()
             }
         }, function (err, result) {
@@ -1203,7 +1223,16 @@ router.post('/doChangeSupplier', function (req, res) {
         })
     }
 });
+// check login state
 router.post('/doDelSuppler', checkLogin);
+/**
+ * DEL supplier status
+ * @param  {[type]} req           [description]
+ * @param  {String} res)          [description]
+ * @param  {[type]} options.$set: [description]
+ * @param  {[type]} function      [description]
+ * @return {[type]}               [description]
+ */
 router.post('/doDelSuppler', function (req, res, next) {
     if (req.body.suppler_id != '') {
         db.suppliers.remove({'_id': req.body.suppler_id}, function (err, result) {
