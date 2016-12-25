@@ -264,6 +264,98 @@ router.post('/doChangeUser', function (req, res, next) {
 
 /*-------------------------------------------------------------------*/
 /* -----------------------------商城前台管理 -------------------------*/
+//网站语言管理
+router.get('/language_manage', (req, res)=> {
+    res.render('admin/mainsets/language_manage', {username: u.nick_name});
+})
+
+//获取用户
+router.get('/languagelist', (req, res)=> {
+    db.systems.find({}, (err, result)=> {
+        var lista = {
+            "draw": 2,
+            "recordsTotal": "",
+            "recordsFiltered": "",
+            "data": []
+        }
+        if (result[0].languages) {
+            result = result[0].languages
+        } else {
+            result = []
+        }
+        lista.recordsTotal = result.length
+        lista.recordsFiltered = lista.recordsTotal
+        lista.data = result
+        res.send(lista)
+        res.end()
+    })
+})
+
+// CURD
+router.post('/language', (req, res)=> {
+    if (req.body) {
+        db.systems.findOneAndUpdate({}, {
+            $push: {
+                languages: {
+                    language: req.body.language,
+                    isDefault: req.body.isDefault,
+                    update_time: req.body.update_time
+                }
+            }
+        }, (err, back)=> {
+            if (err) res.end({succeed: false, msg: 'fail'})
+            if (back) {
+                res.send({succeed: true, msg: 'ok'})
+            } else {
+                res.send({succeed: false, msg: 'fail'})
+            }
+        })
+    } else {
+        res.send({succeed: false, msg: 'fail'})
+    }
+})
+
+router.delete('/language', (req, res)=> {
+    if (req.body) {
+        db.systems.findOneAndUpdate({}, {
+            $pull: {
+                languages: {_id: req.body._id}
+            }
+        }, (err, back)=> {
+            if (err) res.end({succeed: false, msg: 'fail'})
+            if (back) {
+                res.send({succeed: true, msg: 'ok'})
+            } else {
+                res.send({succeed: false, msg: 'fail'})
+            }
+        })
+    }
+})
+
+router.put('/language', (req, res)=> {
+    if (req.body) {
+        db.systems.findOneAndUpdate({}, {
+            $set: {
+                languages: {
+                    language: req.body.language,
+                    isDefault: req.body.isDefault,
+                    update_time: req.body.update_time
+                }
+            }
+        }, (err, back)=> {
+            if (err) res.end({succeed: false, msg: 'fail'})
+            if (back) {
+                res.send({succeed: true, msg: 'ok'})
+            } else {
+                res.send({succeed: false, msg: 'fail'})
+            }
+
+        })
+    } else {
+        res.send({succeed: false, msg: 'fail'})
+    }
+})
+
 //上传文件接口
 router.post('/doupload', function (req, res) {
     var form = new formidable.IncomingForm();   //创建上传表单
@@ -909,7 +1001,6 @@ router.post('/uploadTemporary', function (req, res, next) {
                     }
 
                 }).limit(5);
-
             }
         });
     }
