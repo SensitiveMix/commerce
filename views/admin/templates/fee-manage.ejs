@@ -12,6 +12,9 @@
     </div>
     <!-- /.box-header -->
     <!-- form start -->
+    <div class="box-header">
+        <h4 class="box-title">人民币汇率</h4>
+    </div>
     <div class="box-body">
         <table id="feeTab" class="table table-bordered " aria-describedby="example2_info">
             <thead>
@@ -22,6 +25,29 @@
                 <th>修改时间</th>
                 <th>修改操作</th>
                 <th>删除操作</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="box-header">
+        <h4 class="box-title">美元汇率</h4>
+    </div>
+    <div class="box-body">
+        <table id="feeDollarTab" class="table table-bordered " aria-describedby="example2_info">
+            <thead>
+            <tr>
+                <th></th>
+                <th>币种</th>
+                <th>汇率</th>
                 <th></th>
             </tr>
             </thead>
@@ -252,6 +278,7 @@
                         trNodep.children().eq(2).html(formatCoin(coin, fee));
                         trNodep.children().eq(3).html(formatDate());
                         layer.closeAll();
+                        setTimeout('location.reload()', 1000);
                         layer.alert('修改成功');
                     }, error: function (returndata) {
                         alert('更新失败，请检查是否有非法词汇！');
@@ -279,6 +306,40 @@
                 scrollbar: false
             });
         });
+        //inital fee doller tables
+        $('#feeDollarTab').DataTable({
+            "ajax": "feedollarlist",//获取数据的url
+            "bFilter": false,                       //不使用过滤功能
+            "bLengthChange": false,                 //用户不可改变每页显示数量
+            "iDisplayLength": 9,                    //每页显示8条数据
+            "oLanguage": {                          //汉化
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "没有检索到数据",
+                "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
+                "sInfoEmtpy": "没有数据",
+                "sProcessing": "正在加载数据...",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前页",
+                    "sNext": "后页",
+                    "sLast": "尾页"
+                }
+            },
+            "columns": [
+                {"data": "_id"},
+                {"data": "country_name"},
+                {"data": "country_fee"}
+            ],
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "data": "_id",
+                    "render": function (data, type, full) {
+                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
+                    }
+                }
+            ]
+        })
 
 
         //inital fee tables
@@ -382,6 +443,7 @@
                                 console.log(feed)
                                 if (feed.succeed == true) {
                                     layer.msg('删除成功');
+                                    setTimeout('location.reload()', 1000);
                                     trNode.children().hide();
                                 } else if (feed.succeed == false) {
                                     layer.alert('更新失败，请检查是否有非法词汇！');
@@ -397,8 +459,9 @@
                     });
                 });
             }
-        });
+        })
     });
+
 
 
     function fee_change() {

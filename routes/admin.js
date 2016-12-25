@@ -1580,7 +1580,6 @@ router.get('/feelist', (req, res, next)=> {
         }
     }, function (err, result) {
         if (err) next(customError(err.status, err, res))
-        console.log(result)
         result.forEach((item)=> {
             return item.country_fee = "1 人民币 = " + item.country_fee + " " + item.country_name
         })
@@ -1594,6 +1593,48 @@ router.get('/feelist', (req, res, next)=> {
         lista.recordsTotal = result.length
         lista.recordsFiltered = lista.recordsTotal
         lista.data = result
+        res.send(lista)
+        res.end()
+    })
+})
+/**
+ * GET FEE LIST
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.get('/feedollarlist', (req, res, next)=> {
+    console.log(`current display page: ${req.query.iDisplayStart}`)
+    db.fee.find({}, null, {
+        sort: {
+            'update_time_sort': 1
+        }
+    }, function (err, result) {
+        if (err) next(customError(err.status, err, res))
+        var dollar_fee = result.filter((item)=> {
+            return item.country_name === "美元"
+        })[0].country_fee
+
+        var dollarArr = result
+            .filter((item)=> {
+                return item.country_name != "美元"
+            })
+        dollarArr
+            .forEach((item)=> {
+                item.country_fee = (1 / item.country_fee * dollar_fee).toFixed(2)
+                return item.country_fee = "1 美元 = " + item.country_fee + " " + item.country_name
+            })
+
+        var lista = {
+            "draw": 2,
+            "recordsTotal": "",
+            "recordsFiltered": "",
+            "data": []
+        };
+        lista.recordsTotal = result.length
+        lista.recordsFiltered = lista.recordsTotal
+        lista.data = dollarArr
         res.send(lista)
         res.end()
     })
