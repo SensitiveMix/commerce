@@ -257,7 +257,8 @@ router.post('/doChangeUser', function (req, res, next) {
             levelName: req.body.addLevelName
         }
 
-    }, function (err) {
+    }, function (err, data) {
+        if (err) return res.send(500, 'Error occurred: database Error')
         res.end();
     });
 });
@@ -272,6 +273,7 @@ router.get('/language_manage', (req, res)=> {
 //获取用户
 router.get('/languagelist', (req, res)=> {
     db.systems.find({}, (err, result)=> {
+        if (err) return res.send(500, 'Error occurred: database Error')
         var lista = {
             "draw": 2,
             "recordsTotal": "",
@@ -303,7 +305,7 @@ router.post('/language', (req, res)=> {
                 }
             }
         }, (err, back)=> {
-            if (err) res.end({succeed: false, msg: 'fail'})
+            if (err) return res.send(500, 'Error occurred: database Error')
             if (back) {
                 res.send({succeed: true, msg: 'ok'})
             } else {
@@ -322,7 +324,7 @@ router.delete('/language', (req, res)=> {
                 languages: {_id: req.body._id}
             }
         }, (err, back)=> {
-            if (err) res.end({succeed: false, msg: 'fail'})
+            if (err) return res.send(500, 'Error occurred: database Error')
             if (back) {
                 res.send({succeed: true, msg: 'ok'})
             } else {
@@ -343,7 +345,7 @@ router.put('/language', (req, res)=> {
                 }
             }
         }, (err, back)=> {
-            if (err) res.end({succeed: false, msg: 'fail'})
+            if (err) return res.send(500, 'Error occurred: database Error')
             if (back) {
                 res.send({succeed: true, msg: 'ok'})
             } else {
