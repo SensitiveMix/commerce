@@ -2,6 +2,7 @@
 <script src="/js/md5.js"></script>
 <script type="text/javascript" src="/transport/express.js"></script>
 <script type="text/javascript" src="/transport/ordinary.js"></script>
+<script src="/public_web_build/bundle.js"></script>
 <script type="text/javascript">
     function getTranslateTitle(param) {
         if ($(".demen").is(":checked")) {
@@ -496,6 +497,36 @@
         margin-left: 8px;
         vertical-align: middle;
     }
+    .file-upload-single li {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        margin-left: 8px;
+        position: relative;
+        overflow: hidden;
+        border: 1px dashed #d4d4d4;
+        background: #fff;
+    }
+
+    .file-upload-single li img {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    .file-upload-single li .delete {
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: url(/assets/img/icon/close.png) no-repeat 50% 50%;
+        background-size: 100% 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
 
     .upload-btn {
         width: 80px;
@@ -553,6 +584,11 @@
     }
     .alert-warning button{
         right: -2px!important;
+    }
+    .gridly
+    {
+        position: relative;
+        width: 200px;
     }
 </style>
 <script src="../plugins/pick-color/js/tinycolor-0.9.15.min.js"></script>
@@ -827,25 +863,30 @@
 
             console.log(product_attributes_compatibility);
             console.log(product_attributes_type);
-            product_attributes_compatibility.forEach(function (item_compatibility) {
-                product_attributes_Color.forEach(function (item_type) {
-                    var table_body_tr = '<tr><td>【' + item_compatibility + '】' + item_type + '</td><td><input type="text" class="form-control vip-price-td1"></td><td><input type="text" class="form-control"></td><td><input type="file" class="filestyle" data-input="false" id="filestyle-0" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);"><div class="bootstrap-filestyle input-group"><span class="group-span-filestyle " tabindex="0"><label for="filestyle-0" class="btn btn-default "><span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span></label></span></div></td></tr>';
+            product_attributes_compatibility.forEach(function (item_compatibility,index) {
+                product_attributes_Color.forEach(function (item_type,index_type) {
+                    var table_body_tr = '<tr class="'+index+index_type+'"><td>【' + item_compatibility + '】' + item_type + '</td><td><input type="text" class="form-control vip-price-td1"></td><td><input type="text" class="form-control"></td><td class="file-upload-single"><input type="file" class="filestyle" data-input="false" id="filestyle-0" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);"><div class="bootstrap-filestyle input-group"><span class="group-span-filestyle " tabindex="0"><label for="filestyle-0" class="btn btn-default "><span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span></label></span></div></td><td><button class="btn btn-default delete-compatibility">删除</button></td></tr>';
 
                     $('#product-attribute-table tbody').append(table_body_tr);
                 })
             })
             $('#bulk_operation').on('click', function () {
+                var product_increase = $('#product_increase').val();
                 $('#product-attribute-table tbody tr').each(function (index, item) {
                     var eq_1 = $('input[name="price"]').val();
                     $(item).find('td').eq(1).find('input').val(eq_1);
-                    $(item).find('td').eq(2).find('input').val((parseInt(eq_1) + 0.5).toString());
+                    $(item).find('td').eq(2).find('input').val((parseInt(eq_1) + parseFloat(product_increase)).toString());
 //                    var eq_2 = $('input[name="count"]').val();
 //                    $(item).find('td').eq(2).text(eq_2);
                 })
             })
+            $('.delete-compatibility').click(function(){
+                $(this).parents('tr').remove();
+            })
             $('.vip-price-td1').change(function(){
+                var product_increase = $('#product_increase').val();
                 var eq_1 = $(this).val();
-                $(this).parent().next().find('input').val((parseInt(eq_1) + 0.5).toString());
+                $(this).parent().next().find('input').val((parseInt(eq_1) + parseFloat(product_increase)).toString());
             })
 
             $('.filestyle').on('change',function(){
@@ -866,10 +907,7 @@
                         } else {
                             formData.append('file', file.files[i]);
                         }
-
-                        $('.limit_pic').text(8 - file.files.length)
                     }
-
                     $.ajax({
                         url: '/admin/uploadSingle',
                         type: 'POST',
@@ -882,26 +920,22 @@
                             var data = data.data;
                             console.log(data)
                             if (data.length != 0) {
-                                data.forEach(function (item, index) {
+                                data.forEach(function (item) {
                                     $parent = $(file).parent();
                                     $parent.empty();
                                     item = item.replace('public', '');
-                                    var li = '<li style="list-style: none;" class="' + index + '"><img style="width: 100%;height:100%" src="' + item + '"><span class="delete"></span></li><span class="exchange ' + index + '"></span>';
+                                    var li = '<li style="list-style: none;"><img src="' + item + '"><span class="delete"></span></li>';
                                     $parent.append(li);
 
                                 })
                             }
                             $('.delete').click(function () {
-                                var exchange = $(this).parents('li').attr('class')
-                                $('.' + exchange).remove();
-                                $('.limit_pic').text(parseInt($('.limit_pic').text()) + 1)
-                            })
-                            $('.exchange').click(function () {
-                                if ($(this).next().length && $(this).prev().length)
-                                    var prev = $(this).prev().html();
-                                var next = $(this).next().html();
-                                $(this).prev().html(next);
-                                $(this).next().html(prev);
+                                var index = $(this).parents('tr').attr('class');
+                                $(this).parent('li').remove();
+                                var $parent_li = $('.' + index).find('td').eq(3);
+                                var myhtml = '<input type="file" class="filestyle" data-input="false" id="filestyle-0" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);"><div class="bootstrap-filestyle input-group"><span class="group-span-filestyle " tabindex="0"><label for="filestyle-0" class="btn btn-default "><span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span></label></span></div>';
+                                $parent_li.append(myhtml);
+
                             })
                         },
                         error: function () {
@@ -1306,6 +1340,11 @@
                                                    id="exampleInputEmail2"
                                                    placeholder="ProductId">
                                         </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputEmail2">增量</label>
+                                            <input type="text" class="form-control" name="product_increase"
+                                                   id="product_increase" value="0.5">
+                                        </div>
                                         <a class="btn btn-default" id="bulk_operation">Confirm</a>
                                     </div>
                                 </td>
@@ -1319,6 +1358,7 @@
                                 <td class="col-sm-2 bktit addborderline">VIP价格(美元)</td>
                                 <td class="col-sm-2 bktit addborderline">普通会员价格(美元)</td>
                                 <td class="col-sm-2 bktit addborderline">图片</td>
+                                <td class="col-sm-2 bktit addborderline">操作</td>
                             </tr>
                             </thead>
                             <tbody>
@@ -1330,40 +1370,35 @@
 
             </div>
             <!--添加供应商 form start -->
-            <div class="form-horizontal  layer_notice hidden" id="addForm">
-                <form class="" hidden="hidden" action="addsupplier" style="margin-top: 50px"
-                      id="addsupplier" method="post">
-                    <div class="box-body" style="margin-top: 70px">
-                        <input type="text" style="display: none" class="form-control" name="id" id="id"/>
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-4 control-label">供应商名称</label>
-
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="supplier_name" name="supplier_name">
+            <div class="modal fade" id="addForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">添加供应商</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="addsupplier">
+                                <div class="form-group">
+                                    <label for="gongyingshang">供应商名称</label>
+                                    <input type="text" class="form-control" id="supplier_name" placeholder="供应商名称">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">供应商位置</label>
+                                    <input type="text" class="form-control" id="supplier_address" placeholder="供应商位置">
+                                </div>
                             </div>
                         </div>
-
-                        <input type="text" style="display: none" class="form-control" name="id" id="id"/>
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-4 control-label">添加人</label>
-
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="supplier_user" name="supplier_user">
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="addRobotBtn">添加</button>
                         </div>
                     </div>
-
-
-                    <div class="box-footer">
-                        <input type="button" value="添加" id="addRobotBtn"
-                               class='btn btn-info pull-right closeBtn'/>
-                    </div>
-                </form>
-
-
+                </div>
             </div>
+            <!--<div class="form-horizontal  layer_notice hidden" id="addForm">-->
+
+
+            <!--</div>-->
             <!-- 供应商 开始 -->
             <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
                 <div class="ml-title"><span class="required"></span>供应商：</div>
@@ -1373,8 +1408,9 @@
                     <option value="<%= supplier.name %>"><%= supplier.name %></option>
                     <% }) %>
                 </select>
-                <input type="button" value="添加供应商" style="margin-top: 10px" id="addSupplierBtn"
-                       class='btn btn-primary'/>
+                <button type="button" style="margin-top: 10px" class="btn btn-primary" data-toggle="modal" data-target="#addForm">
+                    添加供应商
+                </button>
             </div>
             <!-- 供应商 结束 -->
             <div class="mainlayout j-basic-standard-container clearfix">
@@ -1506,7 +1542,7 @@
                         相册上传：<input type="file" onchange="uploadFile()" id="file" name="file"
                                     multiple/><br/>
                         <div class="box-body">
-                            <ul class="fl-file-upload" id="file-upload"></ul>
+                            <ul class="fl-file-upload gridly" id="file-upload"></ul>
                         </div>
                     </div>
                     <span class="helptips">
@@ -2118,15 +2154,13 @@
 
     //提交添加
     $("#addRobotBtn").on('click', function () {
-
         var date = new Date();
         var parmets = {
             add_name: $("#supplier_name").val(),
-            add_by: $("#supplier_user").val(),
+            add_address: $("#supplier_address").val(),
             add_time: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes(),
             add_time_number: (date.getTime() / 1000).toFixed()
         }
-
         console.log(parmets)
         if (parmets.add_name == '') {
             layer.tips('请填写供应商', '#supplier_name')
@@ -2138,10 +2172,10 @@
                 data: parmets,
                 success: function (retmsgurndata) {
                     console.log(retmsgurndata)
-                    $("#addForm").hide();
+//                    $("#addForm").hide();
                     $("#supplier").append("<option value='" + $("#supplier_name").val() + "'>" + $("#supplier_name").val() + "</option>");
                     $("#supplier_name").val('');
-                    $("#add_by").val('');
+                    $("#supplier_address").val('');
                     layer.closeAll();
                     layer.msg('添加成功');
                 }, error: function (returndata) {
@@ -2149,24 +2183,6 @@
                 }
             });
         }
-    });
-
-    //添加用户显示层
-    $("#addSupplierBtn").on('click', function () {
-        $('#addForm').removeClass('hidden');
-        $('#addsupplier').show();
-        layer.open({
-            type: 1,
-            skin: 'layui-layer-rim',
-            shade: false,
-            title: false, //不显示标题
-            content: $('#addForm'), //捕获的元素
-            area: ['420px', "350px"],
-            cancel: function (index) {
-                layer.close(index);
-            },
-            scrollbar: false
-        });
     });
     function uploadFile() {
         var file = document.getElementById("file")
@@ -2204,10 +2220,12 @@
                     if (data.length != 0) {
                         data.forEach(function (item, index) {
                             item = item.replace('public', '');
-                            var li = '<li class="' + index + '"><img src="' + item + '"><span class="delete"></span></li><span class="exchange ' + index + '"></span>';
+                            var li = '<li class="brick ' + index + '"><img src="' + item + '"><span class="delete"></span></li><span class="exchange ' + index + '"></span>';
                             $('#file-upload').append(li);
                         })
                     }
+                    $('.gridly').gridly();
+
                     $('.delete').click(function () {
                         var exchange = $(this).parents('li').attr('class')
                         $('.' + exchange).remove();
