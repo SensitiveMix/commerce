@@ -257,13 +257,107 @@ router.post('/doChangeUser', function (req, res, next) {
             levelName: req.body.addLevelName
         }
 
-    }, function (err) {
+    }, function (err, data) {
+        if (err) return res.send(500, 'Error occurred: database Error')
         res.end();
     });
 });
 
 /*-------------------------------------------------------------------*/
 /* -----------------------------商城前台管理 -------------------------*/
+//网站语言管理
+router.get('/language_manage', (req, res)=> {
+    res.render('admin/mainsets/language_manage', {username: u.nick_name});
+})
+
+//获取用户
+router.get('/languagelist', (req, res)=> {
+    db.systems.find({}, (err, result)=> {
+        if (err) return res.send(500, 'Error occurred: database Error')
+        var lista = {
+            "draw": 2,
+            "recordsTotal": "",
+            "recordsFiltered": "",
+            "data": []
+        }
+        if (result[0].languages) {
+            result = result[0].languages
+        } else {
+            result = []
+        }
+        lista.recordsTotal = result.length
+        lista.recordsFiltered = lista.recordsTotal
+        lista.data = result
+        res.send(lista)
+        res.end()
+    })
+})
+
+// CURD
+router.post('/language', (req, res)=> {
+    if (req.body) {
+        db.systems.findOneAndUpdate({}, {
+            $push: {
+                languages: {
+                    language: req.body.language,
+                    isDefault: req.body.isDefault,
+                    update_time: req.body.update_time
+                }
+            }
+        }, (err, back)=> {
+            if (err) return res.send(500, 'Error occurred: database Error')
+            if (back) {
+                res.send({succeed: true, msg: 'ok'})
+            } else {
+                res.send({succeed: false, msg: 'fail'})
+            }
+        })
+    } else {
+        res.send({succeed: false, msg: 'fail'})
+    }
+})
+
+router.delete('/language', (req, res)=> {
+    if (req.body) {
+        db.systems.findOneAndUpdate({}, {
+            $pull: {
+                languages: {_id: req.body._id}
+            }
+        }, (err, back)=> {
+            if (err) return res.send(500, 'Error occurred: database Error')
+            if (back) {
+                res.send({succeed: true, msg: 'ok'})
+            } else {
+                res.send({succeed: false, msg: 'fail'})
+            }
+        })
+    }
+})
+
+router.put('/language', (req, res)=> {
+    if (req.body) {
+        db.systems.findOneAndUpdate({}, {
+            $set: {
+                languages: {
+                    language: req.body.language,
+                    isDefault: req.body.isDefault,
+                    update_time: req.body.update_time
+                }
+            }
+        }, (err, back)=> {
+            if (err) return res.send(500, 'Error occurred: database Error')
+            if (back) {
+                res.send({succeed: true, msg: 'ok'})
+            } else {
+                res.send({succeed: false, msg: 'fail'})
+            }
+
+        })
+    } else {
+        res.send({succeed: false, msg: 'fail'})
+    }
+})
+
 //上传文件接口
 router.post('/doupload', function (req, res) {
     var form = new formidable.IncomingForm();   //创建上传表单
@@ -909,7 +1003,6 @@ router.post('/uploadTemporary', function (req, res, next) {
                     }
 
                 }).limit(5);
-
             }
         });
     }
@@ -1106,7 +1199,7 @@ router.post('/spec/property/delete', function (req, res, next) {
 //获取供应商
 router.get('/supplierList', function (req, res, next) {
     console.log("当前分页" + req.query.iDisplayStart);
-    db.suppliers.find({}, null, {
+    db.suppliers.find({name: {$ne: '请选择'}}, null, {
         sort: {
             'add_time_number': 1
         }
@@ -1133,45 +1226,65 @@ router.get('/supplier_manage', function (req, res, next) {
         }
     );
 });
+
+// check login state
 router.post('/doAddSupplier', checkLogin);
+/**
+ * add supplier infomation
+ * @param  {[type]} req           [description]
+ * @param  {[type]} res)          [description]
+ * @param  {[type]} options.$inc: {'supplier_id': 1}           [description]
+ * @param  {[type]} (err,         data)            [description]
+ * @return {[type]}               [description]
+ */
 router.post('/doAddSupplier', function (req, res) {
-    var suppliers = {
-        name: req.body.add_name,
-        add_by: req.body.add_by,
-        supplier_id: Math.floor(Math.random() * 1000 + 1),
-        add_time: req.body.add_time,
-        add_time_number: req.body.add_time_number
-    };
-    console.log(suppliers)
-    var supplier = new db.suppliers(suppliers);
-    supplier.save(function (err) {
-        if (err) res.send({
-            error_msg: ['FORMAT PARAM Error'],
-            info: "",
-            result: "FAILED",
-            code: "500",
-            username: u.nick_name
+    //query supplier id
+    db.suppliers.findOneAndUpdate(
+        {"name": "请选择"},
+        {$inc: {'supplier_id': 1}}, (err, data)=> {
+            var suppliers = {
+                name: req.body.add_name,
+                add_location: req.body.add_by,
+                supplier_id: data.supplier_id,
+                add_time: req.body.add_time,
+                add_time_number: req.body.add_time_number
+            };
+            var supplier = new db.suppliers(suppliers);
+            supplier.save(function (err) {
+                if (err) res.send({
+                    error_msg: ['FORMAT PARAM Error'],
+                    info: "",
+                    result: "FAILED",
+                    code: "500",
+                    username: u.nick_name
+                })
+            });
+            res.send({
+                error_msg: [''],
+                info: "",
+                result: "SUCCESS",
+                code: "200",
+                username: u.nick_name
+            })
         })
-    });
-    res.send({
-        error_msg: [''],
-        info: "",
-        result: "SUCCESS",
-        code: "200",
-        username: u.nick_name
-    })
 });
 
+// check login state
 router.post('/doChangeSupplier', checkLogin);
+/**
+ * change supplier status
+ * @param  {[type]} req           [description]
+ * @param  {String} res)          [description]
+ * @param  {[type]} options.$set: [description]
+ * @param  {[type]} function      [description]
+ * @return {[type]}               [description]
+ */
 router.post('/doChangeSupplier', function (req, res) {
-    console.log(req.body.add_name)
-    console.log(req.body.add_by)
-    console.log(req.body.id)
     if (req.body.add_name != '' && req.body.add_by != '') {
         db.suppliers.update({'_id': req.body.id}, {
             $set: {
                 name: req.body.add_name,
-                add_by: req.body.add_by,
+                add_location: req.body.add_by,
                 add_time: getDate()
             }
         }, function (err, result) {
@@ -1203,7 +1316,16 @@ router.post('/doChangeSupplier', function (req, res) {
         })
     }
 });
+// check login state
 router.post('/doDelSuppler', checkLogin);
+/**
+ * DEL supplier status
+ * @param  {[type]} req           [description]
+ * @param  {String} res)          [description]
+ * @param  {[type]} options.$set: [description]
+ * @param  {[type]} function      [description]
+ * @return {[type]}               [description]
+ */
 router.post('/doDelSuppler', function (req, res, next) {
     if (req.body.suppler_id != '') {
         db.suppliers.remove({'_id': req.body.suppler_id}, function (err, result) {
@@ -1551,6 +1673,10 @@ router.get('/feelist', (req, res, next)=> {
         }
     }, function (err, result) {
         if (err) next(customError(err.status, err, res))
+        result.forEach((item)=> {
+            return item.country_fee = "1 人民币 = " + item.country_fee + " " + item.country_name
+        })
+
         var lista = {
             "draw": 2,
             "recordsTotal": "",
@@ -1560,6 +1686,48 @@ router.get('/feelist', (req, res, next)=> {
         lista.recordsTotal = result.length
         lista.recordsFiltered = lista.recordsTotal
         lista.data = result
+        res.send(lista)
+        res.end()
+    })
+})
+/**
+ * GET FEE LIST
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.get('/feedollarlist', (req, res, next)=> {
+    console.log(`current display page: ${req.query.iDisplayStart}`)
+    db.fee.find({}, null, {
+        sort: {
+            'update_time_sort': 1
+        }
+    }, function (err, result) {
+        if (err) next(customError(err.status, err, res))
+        var dollar_fee = result.filter((item)=> {
+            return item.country_name === "美元"
+        })[0].country_fee
+
+        var dollarArr = result
+            .filter((item)=> {
+                return item.country_name != "美元"
+            })
+        dollarArr
+            .forEach((item)=> {
+                item.country_fee = (1 / item.country_fee * dollar_fee).toFixed(2)
+                return item.country_fee = "1 美元 = " + item.country_fee + " " + item.country_name
+            })
+
+        var lista = {
+            "draw": 2,
+            "recordsTotal": "",
+            "recordsFiltered": "",
+            "data": []
+        };
+        lista.recordsTotal = result.length
+        lista.recordsFiltered = lista.recordsTotal
+        lista.data = dollarArr
         res.send(lista)
         res.end()
     })

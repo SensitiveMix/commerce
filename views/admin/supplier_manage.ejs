@@ -13,7 +13,7 @@
                 <th></th>
                 <th>供应商编号</th>
                 <th>供应商名称</th>
-                <th>添加人</th>
+                <th>供应商位置</th>
                 <th>修改时间</th>
                 <th>修改操作</th>
                 <th>删除操作</th>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">添加人</label>
+                    <label for="inputEmail3" class="col-sm-4 control-label">供应商位置</label>
 
                     <div class="col-sm-6">
                         <input type="text" class="form-control" id="change_add_by" name="change_add_by">
@@ -88,10 +88,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">添加人</label>
+                    <label for="inputEmail3" class="col-sm-4 control-label">供应商位置</label>
 
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="add_by" value="<%= username %>" name="add_by">
+                        <input type="text" class="form-control" id="add_by" name="add_by">
                     </div>
                 </div>
 
@@ -127,7 +127,7 @@
             if (parmets.add_name == '') {
                 layer.tips('请填写供应商', '#supplier_name')
             } else if (parmets.add_by == '') {
-                layer.tips('请填写添加人', '#add_by')
+                layer.tips('请填写供应商位置', '#add_by')
             } else {
                 console.log(parmets)
                 $.ajax({
@@ -221,7 +221,7 @@
                 {"data": "_id"},
                 {"data": "supplier_id"},
                 {"data": "name"},
-                {"data": "add_by"},
+                {"data": "add_location"},
                 {"data": "add_time"},
                 {"data": "add_time_number"},
                 {"data": "add_time_number"},

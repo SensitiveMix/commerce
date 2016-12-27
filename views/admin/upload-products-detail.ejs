@@ -3,6 +3,13 @@
 <script type="text/javascript" src="/transport/express.js"></script>
 <script type="text/javascript" src="/transport/ordinary.js"></script>
 <script src="/public_web_build/bundle.js"></script>
+
+<link href="/ueditor/themes/default/_css/umeditor.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="/ueditor/third-party/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/ueditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/ueditor/_examples/editor_api.js"></script>
+<script type="text/javascript" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
+
 <script type="text/javascript">
     function getTranslateTitle(param) {
         if ($(".demen").is(":checked")) {
@@ -58,12 +65,12 @@
     function getTranslate(param) {
         if ($(".demen_remark").is(":checked")) {
             if (param) {
-                $('.vadiourlTip_remark').append('<textarea name="product_de_remark" placeholder="默认德文" class="product_de_remark" id="" cols="50" rows="4"></textarea>')
+                $('.demon').css('display', 'block')
             }
             var appid = '20161031000031137';
             var key = '5pFIYl4t5Hi1oSXzRv1X';
             var salt = (new Date).getTime();
-            var query = $(".product_remark").val();
+            var query = um.getContentTxt();
             var from = 'en';
             var to = 'de';
             var str1 = appid + query + salt + key;
@@ -82,7 +89,7 @@
                 },
                 success: function (data) {
                     console.log(data)
-                    $('.product_de_remark').val(data.trans_result[0].dst);
+                    umdemon.setContent(data.trans_result[0].dst);
                 },
                 error: function (data) {
                     layer.msg('翻译服务已停用')
@@ -90,9 +97,11 @@
                 }
             });
         } else {
-            $('.product_remark').next().remove()
+            $('.demon').css('display', 'none')
         }
     }
+
+
 </script>
 <style>
     ul {
@@ -566,24 +575,28 @@
         font-size: 24px;
         margin-top: 120px;
     }
-    .syi-img-show{
+
+    .syi-img-show {
         display: none;
     }
+
     .alert-warning {
-        color: #c09853!important;
-        background-color: #fcf8e3!important;
-        border-color: #faebcc!important;
+        color: #c09853 !important;
+        background-color: #fcf8e3 !important;
+        border-color: #faebcc !important;
         padding: 8px;
         font-size: 9px;
         border-radius: 0;
-        margin: 10px 0!important;
+        margin: 10px 0 !important;
     }
+
     .alert-warning a {
         color: #3366cc;
         text-decoration: none;
     }
-    .alert-warning button{
-        right: -2px!important;
+
+    .alert-warning button {
+        right: -2px !important;
     }
     .gridly
     {
@@ -812,20 +825,20 @@
             }
         })
 
-        $('.logistics-panel-type').click(function(){
+        $('.logistics-panel-type').click(function () {
             var index = $(this).index();
             $('#logistic-list .logistics-panel').hide();
             $('#logistic-list .logistics-panel').eq(index).toggle();
         })
 
-        $('.logistic-checkbox').click(function(){
-            if($(this).is(':checked') == true){
+        $('.logistic-checkbox').click(function () {
+            if ($(this).is(':checked') == true) {
                 $(this).parents('tr').find('.standard-logistic').removeAttr("disabled");
                 $(this).parents('tr').find('.no-logistic').removeAttr("disabled");
             }
-            if($(this).is(':checked') == false){
-                $(this).parents('tr').find('.standard-logistic').attr("disabled","true");
-                $(this).parents('tr').find('.no-logistic').attr("disabled","true");
+            if ($(this).is(':checked') == false) {
+                $(this).parents('tr').find('.standard-logistic').attr("disabled", "true");
+                $(this).parents('tr').find('.no-logistic').attr("disabled", "true");
 
             }
         })
@@ -889,7 +902,7 @@
                 $(this).parent().next().find('input').val((parseInt(eq_1) + parseFloat(product_increase)).toString());
             })
 
-            $('.filestyle').on('change',function(){
+            $('.filestyle').on('change', function () {
                 var file = $(this)[0];
                 var formData = new FormData();
                 console.log(file)
@@ -1201,90 +1214,150 @@
         <!-- 产品购买属性 开始 -->
 
         <!-- 产品购买属性 结束 -->
-
-
-        <!-- title产品销售信息开始 -->
-        <!-- title产品包装信息 开始 -->
-        <div class="titlebox" id="a_productprice"><h3>2、产品销售信息</h3></div>
-        <!-- 销售计量单位 开始 -->
-        <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
-            <div class="ml-title"><span class="required">*</span>销售计量单位：</div>
-            <a id="a_measureid"></a>
-            <select class="attr-select j-select-unit form-control" name="measureid">
-                <option disabled="disabled" value="">-- 请选择销售单位 --</option>
-                <option data-name="打" value="1">打(Dozen)</option>
-                <option data-name="英尺" value="2">英尺(Feet)</option>
-                <option data-name="件" value="3" selected="">件(Piece)</option>
-                <option data-name="套" value="4">套(Set)</option>
-                <option data-name="克" value="5">克(Gram)</option>
-                <option data-name="英寸" value="6">英寸(Inch)</option>
-                <option data-name="千克" value="7">千克(Kilogram)</option>
-                <option data-name="千米" value="8">千米(Kilometre)</option>
-                <option data-name="升" value="9">升(Liter)</option>
-                <option data-name="吨" value="10">吨(Metric Tonne)</option>
-                <option data-name="米" value="11">米(Meter)</option>
-                <option data-name="毫升" value="12">毫升(Milliliter)</option>
-                <option data-name="盎司" value="13">盎司(Ounce)</option>
-                <option data-name="双" value="14">双(Pair)</option>
-                <option data-name="磅" value="15">磅(Pound)</option>
-                <option data-name="平方码" value="16">平方码(Square Yard)</option>
-                <option data-name="平方米" value="17">平方米(Square Meter)</option>
-                <option data-name="平方英尺" value="18">平方英尺(Square Feet)</option>
-                <option data-name="码" value="19">码(Yard)</option>
-                <option data-name="厘米" value="20">厘米(Centimeter)</option>
-                <option data-name="箱" value="21">箱(Carton)</option>
-            </select> 示例：12美元/<span class="j-unit-no" name="sortbyunit">件</span>
-            <span class="helpicon" title="销售计量单位帮助" data-helpid="saleUnit"></span>
-            <input type="hidden" id="measurename" value="件">
-
-            <div data-anchor="j-saleBox" data-id="tips-unit" class="tip-error" style="display:none;"
-                 data-name="销售计量单位"></div>
-        </div>
-        <!-- 销售计量单位 结束 -->
-
-        <!-- ----- 销售方式 开始 -----  -->
-        <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
-            <div class="ml-title"><span class="required">*</span>销售方式：</div>
-            <div class="marginbottom10 clearfix"><label>
-                    <input name="market_method" id="sortbyradio1" data-name="件" type="radio" checked="" value="1">
-                    <span class="marginleft5 marginright10"><label for="gg">按件卖</label>（单位：<span class="j-unit-no"
-                                                                                                 name="sortbyunit">件</span>）</span>
-                </label>
+        <!-- 产品备注 开始 -->
+        <div class="mainlayout clearfix j-list-item vadiourlTip_remark" id="vadiourlTip">
+            <div class="ml-title">产品备注：</div>
+            <div class="helptips" style="width:126px;margin-bottom: 5px;">
+                英文
+                <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
+                德文
+                <input type="checkbox" class="demen_remark" onclick="getTranslate(true)"
+                       data-group-cls="btn-group-lg">
+                <span class="helpicon" title="勾选语言" helptipval="vadiourlTip"></span>
             </div>
-            <script>
-                $(function(){
-                    $('input[name="market_method"]').click(function(){
-                        var discount = $('input[name="market_method"]:checked').val();
-                        if($(this).val() == discount){
-                            if($(this).val() == 2){
-                                $('#packquantity').removeAttr('disabled');
-                            } else {
-                                $('#packquantity').attr('disabled','disabled');
-                            }
-                        }
+            <div class="form-group">
+                <script type="text/plain" id="product_remark" style="width:685px;height:40%;">
+                </script>
+                <script type="text/javascript">
+                    var um = UM.getEditor('product_remark', {
+                        //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
+                        toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
+                        //focus时自动清空初始化时的内容
+                        autoClearinitialContent: true,
+                        //关闭字数统计
+                        wordCount: true,
+                        //关闭elementPath
+                        elementPathEnabled: false,
+                        //默认的编辑区域高度
+                        initialFrameHeight: 300
+                        //更多其他参数，请参考umeditor.config.js中的配置项
+                    });
+                    um.setContent('输入英文产品备注');
+                    um.addListener('selectionchange', function () {
+                        getTranslate(false)
                     })
+                </script>
+            </div>
+            <div class="form-group demon" style="display: none">
+                <script type="text/plain" id="de_product_remark" style="width:685px;height:40%;">
+                </script>
+                <script type="text/javascript">
+                    var umdemon = UM.getEditor('de_product_remark', {
+                        //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
+                        toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
+                        //focus时自动清空初始化时的内容
+                        autoClearinitialContent: true,
+                        //关闭字数统计
+                        wordCount: true,
+                        //关闭elementPath
+                        elementPathEnabled: false,
+                        //默认的编辑区域高度
+                        initialFrameHeight: 300
+                        //更多其他参数，请参考umeditor.config.js中的配置项
+                    });
+                    umdemon.setContent('输入德文产品备注');
+                </script>
+            </div>
+        </div>
+
+        <!--   <textarea name="product_remark" onchange="getTranslate(false)" placeholder="默认英文" class="product_remark"
+                    id="product_remark" cols="50"
+                    rows="4"></textarea> -->
+
+    </div>
+
+    <!-- title产品销售信息开始 -->
+    <!-- title产品包装信息 开始 -->
+    <div class="titlebox" id="a_productprice"><h3>2、产品销售信息</h3></div>
+    <!-- 销售计量单位 开始 -->
+    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
+        <div class="ml-title"><span class="required">*</span>销售计量单位：</div>
+        <a id="a_measureid"></a>
+        <select class="attr-select j-select-unit form-control" name="measureid">
+            <option disabled="disabled" value="">-- 请选择销售单位 --</option>
+            <option data-name="打" value="1">打(Dozen)</option>
+            <option data-name="英尺" value="2">英尺(Feet)</option>
+            <option data-name="件" value="3" selected="">件(Piece)</option>
+            <option data-name="套" value="4">套(Set)</option>
+            <option data-name="克" value="5">克(Gram)</option>
+            <option data-name="英寸" value="6">英寸(Inch)</option>
+            <option data-name="千克" value="7">千克(Kilogram)</option>
+            <option data-name="千米" value="8">千米(Kilometre)</option>
+            <option data-name="升" value="9">升(Liter)</option>
+            <option data-name="吨" value="10">吨(Metric Tonne)</option>
+            <option data-name="米" value="11">米(Meter)</option>
+            <option data-name="毫升" value="12">毫升(Milliliter)</option>
+            <option data-name="盎司" value="13">盎司(Ounce)</option>
+            <option data-name="双" value="14">双(Pair)</option>
+            <option data-name="磅" value="15">磅(Pound)</option>
+            <option data-name="平方码" value="16">平方码(Square Yard)</option>
+            <option data-name="平方米" value="17">平方米(Square Meter)</option>
+            <option data-name="平方英尺" value="18">平方英尺(Square Feet)</option>
+            <option data-name="码" value="19">码(Yard)</option>
+            <option data-name="厘米" value="20">厘米(Centimeter)</option>
+            <option data-name="箱" value="21">箱(Carton)</option>
+        </select> 示例：12美元/<span class="j-unit-no" name="sortbyunit">件</span>
+        <span class="helpicon" title="销售计量单位帮助" data-helpid="saleUnit"></span>
+        <input type="hidden" id="measurename" value="件">
+
+        <div data-anchor="j-saleBox" data-id="tips-unit" class="tip-error" style="display:none;"
+             data-name="销售计量单位"></div>
+    </div>
+    <!-- 销售计量单位 结束 -->
+
+    <!-- ----- 销售方式 开始 -----  -->
+    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
+        <div class="ml-title"><span class="required">*</span>销售方式：</div>
+        <div class="marginbottom10 clearfix"><label>
+                <input name="market_method" id="sortbyradio1" data-name="件" type="radio" checked="" value="1">
+                <span class="marginleft5 marginright10"><label for="gg">按件卖</label>（单位：<span class="j-unit-no"
+                                                                                             name="sortbyunit">件</span>）</span>
+            </label>
+        </div>
+        <script>
+            $(function () {
+                $('input[name="market_method"]').click(function () {
+                    var discount = $('input[name="market_method"]:checked').val();
+                    if ($(this).val() == discount) {
+                        if ($(this).val() == 2) {
+                            $('#packquantity').removeAttr('disabled');
+                        } else {
+                            $('#packquantity').attr('disabled', 'disabled');
+                        }
+                    }
                 })
-            </script>
-            <div class="marginbottom10 clearfix">
-                <label>
-                    <input name="market_method" id="sortbyradio2" data-name="包" type="radio" value="2">
-                    <span class="marginleft5">按包卖</span>
-                    <!--<input type="text" class="form-control" placeholder="" name="sell-function-bao">-->
-                </label>
-                <!--/包-->
-                <span>
+            })
+        </script>
+        <div class="marginbottom10 clearfix">
+            <label>
+                <input name="market_method" id="sortbyradio2" data-name="包" type="radio" value="2">
+                <span class="marginleft5">按包卖</span>
+                <!--<input type="text" class="form-control" placeholder="" name="sell-function-bao">-->
+            </label>
+            <!--/包-->
+            <span>
 			<span class="j-sale-bao">
                 （每包产品的数量：<input id="packquantity" name="packquantity" value="1" type="text" class="input2" size="6"
                                 maxlength="8">
 			<span class="j-unit-no" name="sortbyunit">件</span>）</span>
 		</span>
-                <span class="helpicon" title="销售方式帮助" data-helpid="saleType"></span>
-            </div>
-
-            <div style="display:none" class="tip-error" data-anchor="j-saleBox" data-id="tips-packquantity"
-                 data-name="销售方式"><p></p></div>
+            <span class="helpicon" title="销售方式帮助" data-helpid="saleType"></span>
         </div>
-        <!-- 销售方式 结束 -->
+
+        <div style="display:none" class="tip-error" data-anchor="j-saleBox" data-id="tips-packquantity"
+             data-name="销售方式"><p></p></div>
+    </div>
+    <!-- 销售方式 结束 -->
 
         <!-- ----- 产品毛重 开始 -----  -->
         <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
@@ -1365,8 +1438,8 @@
                             </tbody>
                         </table>
 
-                    </div>
                 </div>
+            </div>
 
             </div>
             <!--添加供应商 form start -->
@@ -1575,20 +1648,6 @@
             </div>
             <!-- 产品视频结束 -->
 
-            <!-- 产品备注 开始 -->
-            <div class="mainlayout clearfix j-list-item vadiourlTip_remark" id="vadiourlTip">
-                <div class="ml-title">产品备注：</div>
-                <div class="helptips" style="width:126px;margin-bottom: 5px;">
-                    英文
-                    <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
-                    德文
-                    <input type="checkbox" class="demen_remark" onclick="getTranslate(true)"
-                           data-group-cls="btn-group-lg">
-                    <span class="helpicon" title="勾选语言" helptipval="vadiourlTip"></span>
-                </div>
-                <textarea name="product_remark" onchange="getTranslate(false)" placeholder="默认英文" class="product_remark"
-                          id="" cols="50"
-                          rows="4"></textarea>
 
             </div>
             <!-- 产品视频结束 -->
