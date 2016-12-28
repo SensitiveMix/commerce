@@ -32,6 +32,13 @@ var notice = new Schema({
             main_content: String,
             addBy: String
         }
+    ],
+    register_notice: [
+        {
+            add_time: Number,
+            main_content: String,
+            addBy: String
+        }
     ]
 });
 

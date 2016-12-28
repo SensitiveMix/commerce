@@ -525,175 +525,425 @@ router.post('/saveHeadBanners', function (req, res) {
 });
 
 
-//更改注册须知
-router.post('/doChangeConditions', checkLogin);
-router.post('/doChangeConditions', function (req, res) {
-    console.log("更改注册须知" + req.body.mainContent + new Date());
-    db.systems.update({name: 'register_need_know'}, {$set: {mainContent: req.body.mainContent}}, function (err, system) {
-        if (err) {
-            res.send('failed');
-        } else {
-            res.send('success');
+//注册须知页面
+router.get('/register_notice', checkLogin);
+router.get('/register_notice', (req, res)=> {
+    async.parallel([
+        (done) => {
+            db.notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
+        },
+        (done) => {
+            db.de_notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
         }
-
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German) {
+            res.render('admin/notices/register_notice', {
+                registerNotice: English.register_notice,
+                de_registerNotice: German.register_notice,
+                username: u.nick_name
+            });
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
     })
-});
+})
+
+//注册须知页面
+router.post('/register-notice', checkLogin);
+router.post('/register-notice', (req, res)=> {
+    async.parallel([
+        (done) => {
+            db.notices.findOneAndUpdate({}, {
+                $set: {
+                    register_notice: [{
+                        main_content: req.body.mainContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, register_notice)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        },
+        (done) => {
+            db.de_notices.findOneAndUpdate({}, {
+                $set: {
+                    register_notice: [{
+                        main_content: req.body.mainGermanContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, register_notice)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        }
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German && German == true) {
+            res.send({succeed: true, msg: "ok"})
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
+    })
+})
 
 //关于我们管理页面
 router.get('/about_us', checkLogin);
-router.get('/about_us', function (req, res, next) {
-    console.log("关于我们管理" + new Date());
-    db.notices.findOne({}, function (err, allNotices) {
-        console.log(allNotices);
-        res.render('admin/notices/about_us', {aboutUs: allNotices.about_us, username: u.nick_name});
-    });
-    console.log("关于我们管理");
-});
-
-//更改我们管理页面
-router.post('/doChangeAboutUs', checkLogin);
-router.post('/doChangeAboutUs', function (req, res) {
-    console.log("更改注册须知" + req.body.mainContent + new Date());
-    db.notices.findOneAndUpdate({}, {
-        $set: {
-            about_us: [{
-                main_content: req.body.mainContent,
-                add_time: new Date().getTime(),
-                addBy: u.nick_name
-            }]
+router.get('/about_us', (req, res)=> {
+    async.parallel([
+        (done) => {
+            db.notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
+        },
+        (done) => {
+            db.de_notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
         }
-    }, function (err, aboutUs) {
-        if (err) {
-            res.send('failed');
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German) {
+            res.render('admin/notices/about_us', {
+                aboutUs: English.about_us,
+                de_aboutUs: German.about_us,
+                username: u.nick_name
+            });
         } else {
-            res.send('success');
+            res.send({succeed: false, msg: "DB Error"})
         }
     })
-});
+})
+
+//更改我们管理页面
+router.post('/about-us', checkLogin);
+router.post('/about-us', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOneAndUpdate({}, {
+                $set: {
+                    about_us: [{
+                        main_content: req.body.mainContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, aboutUs)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        },
+        (done) => {
+            db.de_notices.findOneAndUpdate({}, {
+                $set: {
+                    about_us: [{
+                        main_content: req.body.mainGermanContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, aboutUs)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        }
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German && German == true) {
+            res.send({succeed: true, msg: "ok"})
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
+    })
+})
 
 //联系我们管理页面
 router.get('/contact_us', checkLogin);
-router.get('/contact_us', function (req, res, next) {
-    console.log("关于我们管理" + new Date());
-    db.notices.findOne({}, function (err, allNotices) {
-        res.render('admin/notices/contact_us', {contactUs: allNotices.contact_us, username: u.nick_name});
-    });
-    console.log("关于我们管理");
-});
-
-//更改联系我们管理页面
-router.post('/doChangeContactUs', checkLogin);
-router.post('/doChangeContactUs', function (req, res) {
-    console.log("更改注册须知" + req.body.mainContent + new Date());
-    db.notices.findOneAndUpdate({}, {
-        $set: {
-            contact_us: [{
-                main_content: req.body.mainContent,
-                add_time: new Date().getTime(),
-                addBy: u.nick_name
-            }]
+router.get('/contact_us', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
+        },
+        (done) => {
+            db.de_notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
         }
-    }, function (err, contact) {
-        if (err) {
-            res.send('failed');
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German) {
+            res.render('admin/notices/contact_us', {
+                contactUs: English.contact_us,
+                de_contactUs: German.contact_us,
+                username: u.nick_name
+            });
         } else {
-            res.send('success');
+            res.send({succeed: false, msg: "DB Error"})
         }
     })
-});
+})
+
+//更改联系我们管理页面
+router.post('/contact-us', checkLogin);
+router.post('/contact-us', (req, res)=> {
+    async.parallel([
+        (done) => {
+            db.notices.findOneAndUpdate({}, {
+                $set: {
+                    contact_us: [{
+                        main_content: req.body.mainContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, aboutUs)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        },
+        (done) => {
+            db.de_notices.findOneAndUpdate({}, {
+                $set: {
+                    contact_us: [{
+                        main_content: req.body.mainGermanContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, aboutUs)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        }
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German && German == true) {
+            res.send({succeed: true, msg: "ok"})
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
+    })
+})
 
 //关于FAQ页面
 router.get('/FAQ', checkLogin);
-router.get('/FAQ', function (req, res, next) {
-    console.log("FAQ管理" + new Date());
-    db.notices.findOne({}, function (err, allNotices) {
-        res.render('admin/notices/faq', {faq: allNotices.FAQ, username: u.nick_name});
-    });
-    console.log("关于FAQ");
-});
-
-//更改FAQ页面
-router.post('/doChangeFAQ', checkLogin);
-router.post('/doChangeFAQ', function (req, res) {
-    console.log("FAQ须知" + req.body.mainContent + new Date());
-    db.notices.findOneAndUpdate({}, {
-        $set: {
-            FAQ: [{
-                main_content: req.body.mainContent,
-                add_time: new Date().getTime(),
-                addBy: u.nick_name
-            }]
+router.get('/FAQ', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
+        },
+        (done) => {
+            db.de_notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
         }
-    }, function (err, aboutUs) {
-        if (err) {
-            res.send('failed');
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German) {
+            res.render('admin/notices/faq', {
+                faq: English.FAQ,
+                de_faq: German.FAQ,
+                username: u.nick_name
+            });
         } else {
-            res.send('success');
+            res.send({succeed: false, msg: "DB Error"})
         }
     })
-});
+})
+
+//更改FAQ页面
+router.post('/faq', checkLogin);
+router.post('/faq', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOneAndUpdate({}, {
+                $set: {
+                    FAQ: [{
+                        main_content: req.body.mainContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, aboutUs)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        },
+        (done) => {
+            db.de_notices.findOneAndUpdate({}, {
+                $set: {
+                    FAQ: [{
+                        main_content: req.body.mainGermanContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, aboutUs)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        }
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German && German == true) {
+            res.send({succeed: true, msg: "ok"})
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
+    })
+})
 
 //关于attention页面
 router.get('/attention', checkLogin);
-router.get('/attention', function (req, res, next) {
-    console.log("attention管理" + new Date());
-    db.notices.findOne({}, function (err, allNotices) {
-        res.render('admin/notices/attention', {attention: allNotices.attention, username: u.nick_name});
-    });
-    console.log("关于attention");
-});
-
-//更改attention页面
-router.post('/doChangeAttention', checkLogin);
-router.post('/doChangeAttention', function (req, res) {
-    console.log("Attention须知" + req.body.mainContent + new Date());
-    db.notices.findOneAndUpdate({}, {
-        $set: {
-            attention: [{
-                main_content: req.body.mainContent,
-                add_time: new Date().getTime(),
-                addBy: u.nick_name
-            }]
+router.get('/attention', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
+        },
+        (done) => {
+            db.de_notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
         }
-    }, function (err, attention) {
-        if (err) {
-            res.send('failed');
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German) {
+            res.render('admin/notices/attention', {
+                attention: English.attention,
+                de_attention: German.attention,
+                username: u.nick_name
+            });
         } else {
-            res.send('success');
+            res.send({succeed: false, msg: "DB Error"})
         }
     })
-});
+})
+
+//更改attention页面
+router.post('/attention', checkLogin);
+router.post('/attention', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOneAndUpdate({}, {
+                $set: {
+                    attention: [{
+                        main_content: req.body.mainContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, attention)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        },
+        (done) => {
+            db.de_notices.findOneAndUpdate({}, {
+                $set: {
+                    attention: [{
+                        main_content: req.body.mainGermanContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, attention)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        }
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German && German == true) {
+            res.send({succeed: true, msg: "ok"})
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
+    })
+})
 
 //关于privacy页面
 router.get('/privacy', checkLogin);
-router.get('/privacy', function (req, res, next) {
-    console.log("FAQ管理" + new Date());
-    db.notices.findOne({}, function (err, allNotices) {
-        res.render('admin/notices/privacy', {privacy: allNotices.privacy_notice, username: u.nick_name});
-    });
-    console.log("关于FAQ");
-});
-
-//更改privacy页面
-router.post('/doChangePrivacy', checkLogin);
-router.post('/doChangePrivacy', function (req, res) {
-    console.log("Privacy须知" + req.body.mainContent + new Date());
-    db.notices.findOneAndUpdate({}, {
-        $set: {
-            privacy_notice: [{
-                main_content: req.body.mainContent,
-                add_time: new Date().getTime(),
-                addBy: u.nick_name
-            }]
+router.get('/privacy', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
+        },
+        (done) => {
+            db.de_notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
         }
-    }, function (err, privacy) {
-        if (err) {
-            res.send('failed');
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German) {
+            res.render('admin/notices/privacy', {
+                privacy: English.privacy_notice,
+                de_privacy: German.privacy_notice,
+                username: u.nick_name
+            });
         } else {
-            res.send('success');
+            res.send({succeed: false, msg: "DB Error"})
         }
     })
-});
+})
+
+//更改privacy页面
+router.post('/privacy', checkLogin);
+router.post('/privacy', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOneAndUpdate({}, {
+                $set: {
+                    privacy_notice: [{
+                        main_content: req.body.mainContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, attention)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        },
+        (done) => {
+            db.de_notices.findOneAndUpdate({}, {
+                $set: {
+                    privacy_notice: [{
+                        main_content: req.body.mainGermanContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, attention)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        }
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German && German == true) {
+            res.send({succeed: true, msg: "ok"})
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
+    })
+})
 
 //最热产品管理
 router.get('/hot_product_manage', checkLogin);

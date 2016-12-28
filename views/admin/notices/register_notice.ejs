@@ -6,7 +6,7 @@
 <script type="text/javascript" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
 <div class="box box-info">
     <div class="box-header with-border">
-        <h2 class="box-title">关于我们自定义</h2>
+        <h2 class="box-title">注册须知</h2>
         <!--<ol class="breadcrumb">-->
         <!--<li><a href="#"><i class="fa fa-dashboard"></i> 基本设置</a></li>-->
         <!--<li class="active">注册须知自定义</li>-->
@@ -22,6 +22,8 @@
         <div class="form-group">
             <script type="text/plain" id="myEditor" style="width:100%;height:auto;">
         <p>这里我可以写一些输入提示</p>
+
+
             </script>
             <script type="text/javascript">
                 var um = UM.getEditor('myEditor', {
@@ -37,7 +39,7 @@
                     initialFrameHeight: 500
                     //更多其他参数，请参考umeditor.config.js中的配置项
                 });
-                um.setContent('<%- aboutUs[0].main_content %>');
+                um.setContent('<%- registerNotice[0].main_content %>');
             </script>
         </div>
 
@@ -48,6 +50,8 @@
             </div>
             <script type="text/plain" id="myGermanEditor" style="width:100%;height:auto;">
         <p>这里我可以写一些输入提示</p>
+
+
             </script>
             <script type="text/javascript">
                 var umGerman = UM.getEditor('myGermanEditor', {
@@ -63,7 +67,7 @@
                     initialFrameHeight: 500
                     //更多其他参数，请参考umeditor.config.js中的配置项
                 });
-                umGerman.setContent('<%- de_aboutUs[0].main_content %>');
+                umGerman.setContent('<%- de_registerNotice[0].main_content %>');
             </script>
         </div>
         <div class="box-footer">
@@ -80,7 +84,7 @@
                 mainGermanContent: umGerman.getContent()
             };
             $.ajax({
-                url: 'about-us',
+                url: 'register-notice',
                 type: 'POST',
                 data: para,
                 success: function (result) {
