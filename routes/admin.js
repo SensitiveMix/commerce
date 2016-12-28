@@ -42,7 +42,7 @@ function getDate() {
 var checkLogin = function (req, res, next) {
     if (req.body.status != 'test') {
         if (u.length == 0) {
-            res.render('admin/404', {username: u.nick_name});
+            res.render('admin/mainsets/404', {username: u.nick_name});
         }
     }
     next();
@@ -52,22 +52,22 @@ var checkLogin = function (req, res, next) {
 /* -----------------------管理员登录 ---------------------------------*/
 //后台登录界面
 router.get('/', function (req, res) {
-    res.render('admin/login_1', {title: '电商网站后台'});
+    res.render('admin/backend-login', {title: '电商网站后台'});
 });
 
 //默认路径
 router.get('', function (req, res) {
-    res.render('admin/login_1', {title: '电商网站后台'});
+    res.render('admin/backend-login', {title: '电商网站后台'});
 });
 
 //进入主页
 router.get('/main', function (req, res) {
-    res.render('admin/land_page', {username: u.nick_name});
+    res.render('admin/backend-homepage', {username: u.nick_name});
 });
 
 //后台登录界面
 router.get('/adminlogin', function (req, res) {
-    res.render('admin/login_1', {title: '电商网站后台'});
+    res.render('admin/backend-login', {title: '电商网站后台'});
 });
 
 
@@ -106,10 +106,10 @@ router.post('/doadminlogin', function (req, res, next) {
                 if (user.length == 1) {
                     console.log(user.nick_name + ":登录成功" + new Date());
                     u = user[0];
-                    res.render('admin/land_page', {username: u.nick_name, system: system});
+                    res.render('admin/backend-homepage', {username: u.nick_name, system: system});
                 } else {
                     console.log(query.name + ":登录失败" + new Date());
-                    res.render('admin/login_1', {
+                    res.render('admin/backend-login', {
                         mes_info: 'login failed',
                         mes: '账号密码错误'
                     });
@@ -117,22 +117,6 @@ router.post('/doadminlogin', function (req, res, next) {
                 }
             }
         });
-});
-
-//跳转页面-基本设置
-router.get('/mainset', checkLogin);
-router.get('/mainset', function (req, res, next) {
-    console.log("基本设置页面" + new Date());
-
-    db.systems.findOne({}, null, {
-        sort: {
-            'updateTime': -1
-        }
-    }, function (err, system_info) {
-        res.render('admin/index', {username: u.nick_name, system: system_info});
-        console.log("基本设置成功" + u);
-    })
-
 });
 
 /*-------------------------------------------------------------------*/
@@ -192,9 +176,9 @@ router.get('/usermanage', function (req, res, next) {
                 console.log(leverlist);
                 if (user.length > 1) {
                     console.log("用户管理页面登陆成功");
-                    res.render('admin/user_manage', {users: user, username: u.nick_name, lvlist: leverlist});
+                    res.render('admin/user/user_manage', {users: user, username: u.nick_name, lvlist: leverlist});
                 } else {
-                    res.render('admin/login_1', {
+                    res.render('admin/backend-login', {
                         mes_info: 'login failed',
                         mes: '账号密码错误'
                     });
@@ -412,7 +396,7 @@ router.get('/banner_manage', checkLogin);
 router.get('/banner_manage', function (req, res, next) {
     console.log("图片轮播管理页面" + new Date());
 
-    res.render('admin/banner_manage', {username: u.nick_name});
+    res.render('admin/front/banner_manage', {username: u.nick_name});
     console.log("页面访问成功");
 });
 
@@ -498,7 +482,7 @@ router.get('/head_banner_manage', function (req, res, next) {
         if (err) throw  err;
         console.log('-------------');
         console.log(result);
-        res.render('admin/head_banner_manage', {image_url: result[0], username: u.nick_name});
+        res.render('admin/front/head_banner_manage', {image_url: result[0], username: u.nick_name});
     });
     console.log("头部广告轮播管理页面访问成功");
 });
@@ -951,7 +935,7 @@ router.get('/hot_product_manage', function (req, res, next) {
     console.log("最热产品管理" + new Date());
     db.users.find({}, function (err, result) {
         if (err) throw  err;
-        res.render('admin/hot_product_manage', {users: result, username: u.nick_name});
+        res.render('admin/front/hot_product_manage', {users: result, username: u.nick_name});
     });
     console.log("用户管理页面登陆成功");
 });
@@ -961,52 +945,9 @@ router.get('/hot_product_manage', function (req, res, next) {
 router.get('/accessory_manage', checkLogin);
 router.get('/accessory_manage', function (req, res, next) {
     console.log("类目管理" + new Date());
-    res.render('admin/accessory_manage', {upload: [], username: u.nick_name});
-    // db.users.find({}, function (err, result) {
-    //     if (err) throw  err;
-    //
-    // });
+    res.render('admin/product/accessory_manage', {upload: [], username: u.nick_name});
     console.log("类目管理页面登陆成功");
-});
-
-//类目上传
-// router.post('/doAddCategory', checkLogin);
-// router.post('/doAddCategory', function (req, res) {
-//     console.log(req.body);
-//     console.log(JSON.parse(req.body.secondCategory));
-//
-//     var Categories = {
-//         firstCategory: req.body.firstCategory,
-//         firstUrl: req.body.firstUrl,
-//         firstCount: req.body.firstCount,
-//         secondCategory: JSON.parse(req.body.secondCategory)
-//     };
-//     //保存到产品属性表
-//     _.each(JSON.parse(req.body.secondCategory), function (second) {
-//         _.each(second.thirdTitles, function (third) {
-//             var spec = {
-//                 firstCategory: req.body.firstCategory,
-//                 secondCategory: second.secondTitle,
-//                 thirdCategory: third.thirdTitle,
-//                 specification: null,
-//                 addBy: ""
-//             };
-//             var specs = new db.specifications(spec);
-//             console.log(spec);
-//             specs.save();
-//         })
-//     });
-//
-//     var category = new db.categorys(Categories);
-//     category.save(function (err) {
-//         console.log(err);
-//         if (err) {
-//             res.send('fail')
-//         } else {
-//             res.send('success');
-//         }
-//     });
-// });
+})
 
 router.post('/doAddCategory', checkLogin);
 router.post('/doAddCategory', function (req, res) {
@@ -1086,7 +1027,7 @@ router.get('/upload', function (req, res) {
     db.categorys.find({}, function (err, result) {
         if (err) res.send('404');
         console.log(result);
-        res.render('admin/upload_goods', {username: u.nick_name, upload: [], category: result});
+        res.render('admin/product/upload_goods', {username: u.nick_name, upload: [], category: result});
     });
 
 });
@@ -1174,7 +1115,7 @@ router.get('/upload-products-detail', function (req, res, next) {
 
                 console.log(product_spectication)
 
-                res.render('admin/upload-products-detail', {
+                res.render('admin/product/upload-products-detail', {
                     username: u.nick_name,
                     upload: [],
                     category: categorys,
@@ -1292,7 +1233,7 @@ router.post('/uploadProductDetail', function (req, res, next) {
         console.log(product_spectication);
         if (Categories.length != 0 && product_spectication.length != 0) {
             console.log({categories: Categories, product_specification: product_spectication})
-            res.render('admin/upload-products-detail', {
+            res.render('admin/product/upload-products-detail', {
                 error_msg: [],
                 info: {categories: Categories, product_specification: product_spectication},
                 result: "success",
@@ -1392,7 +1333,7 @@ router.get('/specification', function (req, res, next) {
             if (err) res.send('404');
 
             console.log(result.length)
-            res.render('admin/specifications_manage',
+            res.render('admin/product/specifications_manage',
                 {
                     username: u.nick_name,
                     category: data,
@@ -1470,7 +1411,7 @@ router.get('/supplierList', function (req, res, next) {
 });
 router.get('/supplier_manage', checkLogin);
 router.get('/supplier_manage', function (req, res, next) {
-    res.render('admin/supplier_manage',
+    res.render('admin/product/supplier_manage',
         {
             username: u.nick_name
         }
@@ -1787,7 +1728,7 @@ router.get('/crawler', function (req, res, next) {
 });
 
 router.get('/crawler_manage', function (req, res, next) {
-    res.render('admin/crawler', {
+    res.render('admin/product/crawler', {
         username: u.nick_name
     })
 })

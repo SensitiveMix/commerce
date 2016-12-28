@@ -5,4 +5,5 @@ coverage
 npm-debug.log
 .coveralls.yml
 /.gitignore
-model/index.js
+LICENSE
+tmp
