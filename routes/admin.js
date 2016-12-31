@@ -971,7 +971,7 @@ router.post('/doAddCategory', function (req, res) {
                 de_firstCategory: req.body.de_firstCategory,
                 de_secondCategory: second.de_secondTitle,
                 de_thirdCategory: third.de_thirdTitle,
-                specification: null,
+                specification: [],
                 addBy: ""
             };
             var specs = new db.specifications(spec);
