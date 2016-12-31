@@ -138,7 +138,6 @@
                                                                       style="height: 70px;"></a>
                             </div>
                             <div class="navbar-collapse collapse main-nav">
-
                                 <ul class="nav navbar-nav navbar-right">
                                     <li>
                                         <% if( status == 200) { %>
@@ -168,10 +167,16 @@
                                                    type="image/svg+xml"/>
                                             Customer Service </a>
                                     </li>
-                                    <li>
-                                        <div class="link-country-currency ctr-info ctr-track-a"
-                                             id="google_translate_element"></div>
-
+                                    <li onclick="test()" style="margin-top: 16px;">
+                                        <div class="btn-group">
+                                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        English <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu" role="menu">
+                                        <li><a href="">English</a></li>
+                                        <li><a href="">German</a></li>
+                                      </ul>
+                                    </div>
                                     </li>
                                 </ul>
                             </div>
@@ -281,6 +286,10 @@
             </div>
         </nav>
         <script>
+        function test() {
+                    // body...
+                    $('.dropdown-toggle').dropdown()
+                }
             $(function () {
                 $('#menu-master').on('mouseover', function () {
                     $('.submenu').show();

@@ -30,7 +30,7 @@ var checkCategories = function (req, res, next) {
 
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', (req, res, next) => {
     async.parallel([
             function (done) {
                 db.categorys.find({}, function (err, result) {
@@ -77,16 +77,16 @@ router.get('/', function (req, res, next) {
 
 })
 
-router.get('/login', function (req, res, next) {
+router.get('/login',  (req, res, next) => {
     async.parallel([
-            function (done) {
+             (done) => {
                 db.categorys.find({}, function (err, result) {
                     if (err) res.send('404');
                     categoryies = result;
                     done(err, result)
                 });
             },
-            function (done) {
+             (done) => {
                 db.hotLabels.find({}, null, {
                     sort: {
                         add_time: -1
@@ -97,7 +97,7 @@ router.get('/login', function (req, res, next) {
                 })
             }
         ],
-        function (err, results) {
+         (err, results) => {
             if (err) {
                 done(err)
             } else {
@@ -122,13 +122,13 @@ router.get('/login', function (req, res, next) {
 })
 
 //登出处理
-router.get('/logout', function (req, res, next) {
+router.get('/logout', (req, res, next) => {
     res.clearCookie("account");
     res.redirect('/login');
 });
 //验证邮件
-router.post('/validateEmail', function (req, res, next) {
-    db.users.find({name: req.body.email}, function (err, result) {
+router.post('/validateEmail', (req, res, next) => {
+    db.users.find({name: req.body.email}, (err, result) => {
         if (err) {
             res.end('500')
         } else {
@@ -141,8 +141,8 @@ router.post('/validateEmail', function (req, res, next) {
     })
 })
 //person center
-router.get('/personal-center', checkCategories);
-router.get('/personal-center', function (req, res, next) {
+router.get('/personal-center', checkCategories)
+router.get('/personal-center', (req, res, next) => {
     var statusCode = null;
     if (req.cookies["account"] != null) {
         statusCode = 200;
@@ -159,8 +159,8 @@ router.get('/personal-center', function (req, res, next) {
     })
 })
 
-router.get('/personal-Order', checkCategories);
-router.get('/personal-Order', function (req, res, next) {
+router.get('/personal-Order', checkCategories)
+router.get('/personal-Order', (req, res, next) => {
     var statusCode = null;
     if (req.cookies["account"] != null) {
         statusCode = 200;
@@ -177,7 +177,7 @@ router.get('/personal-Order', function (req, res, next) {
     })
 })
 
-router.post('/change-profile', function (req, res, next) {
+router.post('/change-profile', (req, res, next) => {
     console.log(req.body);
     db.users.update({"nick_name": req.body.origin_nick_name}, {
         $set: {
@@ -185,7 +185,7 @@ router.post('/change-profile', function (req, res, next) {
             company: req.body.customers_company,
             sex: req.body.gender
         }
-    }, function (err, result) {
+    }, (err, result) => {
         if (err) {
             res.send(404)
         } else {
@@ -219,8 +219,7 @@ router.post('/change-profile', function (req, res, next) {
     })
 })
 
-router.post('/change-email', function (req, res, next) {
-    console.log(req.body);
+router.post('/change-email', (req, res, next) => {
     db.users.update({name: req.body.old_name, password: md5(req.body.existing_password)}, {
         $set: {
             name: req.body.newEmail
@@ -256,7 +255,7 @@ router.post('/change-email', function (req, res, next) {
     })
 })
 
-router.post('/change-password', function (req, res, next) {
+router.post('/change-password', (req, res, next) => {
     console.log(req.body);
     db.users.update({name: req.body.old_name, password: md5(req.body.existing_password_1)}, {
         $set: {
@@ -266,8 +265,8 @@ router.post('/change-password', function (req, res, next) {
         if (err) {
             res.send(404)
         } else {
-            console.log(result);
-            var changeCode = null;
+            console.log(result)
+            var changeCode = null
             if (result.nModified == 0) {
                 res.send({account: '', code: 500, msg: 'CHANGE FAILED'})
             } else {
@@ -281,19 +280,19 @@ router.post('/change-password', function (req, res, next) {
     })
 })
 
-router.post('/change-address', function (req, res, next) {
+router.post('/change-address', (req, res, next) => {
     console.log(req.body);
     db.users.update({name: req.body.name}, {
         $set: {
             areaCode: req.body.areaCode,
             detailAddress: req.body.detail_address
         }
-    }, function (err, result) {
+    }, (err, result) => {
         if (err) {
             res.send(404)
         } else {
             console.log(result);
-            var changeCode = null;
+            var changeCode = null
             if (result.nModified == 0) {
                 res.send({account: '', code: 500, msg: 'CHANGE FAILED'})
             } else {
@@ -309,23 +308,23 @@ router.post('/change-address', function (req, res, next) {
     })
 })
 //获取轮播广告图
-router.get('/getBanner', function (req, res) {
-    db.banners.find({'type': 'carousel'}, function (err, result) {
+router.get('/getBanner', (req, res) => {
+    db.banners.find({'type': 'carousel'}, (err, result) => {
         if (err) throw err;
         res.send(result);
     })
 })
 //获取头部广告图
-router.get('/getHeadBanner', function (req, res) {
-    db.banners.findOne({'type': 'headBanner'}, function (err, result) {
+router.get('/getHeadBanner', (req, res) => {
+    db.banners.findOne({'type': 'headBanner'}, (err, result) => {
         if (err) throw err;
         res.send(result);
     }).sort({upload_time: -1})
 })
 //前台登陆处理
-router.post('/dologin', function (req, res) {
+router.post('/dologin', (req, res) => {
     var query = {name: req.body.name, password: md5(req.body.password)};
-    db.users.find(query, function (err, result) {
+    db.users.find(query, (err, result) => {
         if (err) {
             console.log(err);
             res.render("404");
@@ -338,12 +337,12 @@ router.post('/dologin', function (req, res) {
                 nick_name: result[0].nick_name,
                 company: result[0].company
             });
-            console.log(result[0].nick_name + ":登录成功" + new Date());
+            console.log(result[0].nick_name + ":登录成功" + new Date())
             db.hotLabels.find({}, null, {
                 sort: {
                     add_time: -1
                 }
-            }, function (err, labels) {
+            }, (err, labels) => {
                 res.render('assets/index', {
                     user: result[0],
                     categories: categoryies,
@@ -351,7 +350,7 @@ router.post('/dologin', function (req, res) {
                     title: 'ECSell',
                     status: 200
                 })
-            });
+            })
         } else {
             console.log(query.name + ":登录失败" + new Date());
             res.render('assets/login', {status: 500, user: null})
@@ -360,8 +359,8 @@ router.post('/dologin', function (req, res) {
 })
 //前台注册处理
 router.post('/doregister', checkCategories);
-router.post('/doregister', function (req, res) {
-    console.log("用户注册" + req.body.email + new Date());
+router.post('/doregister', (req, res) => {
+    console.log("用户注册" + req.body.email + new Date())
     var user = {
         name: req.body.email,
         password: md5(req.body.password),
@@ -369,18 +368,18 @@ router.post('/doregister', function (req, res) {
         level: '10',
         levelName: '会员',
         registerTime: new Date().getTime()
-    };
+    }
 
-    var robot = new db.users(user);
-    robot.save(function (err) {
+    var robot = new db.users(user)
+    robot.save((err) => {
         res.end('500')
     });
     res.json('200');
 })
 //前台注册须知界面
 router.get('/team-of-use', checkCategories);
-router.get('/team-of-use', function (req, res) {
-    db.systems.findOne({}, function (err, system) {
+router.get('/team-of-use', (req, res) => {
+    db.systems.findOne({}, (err, system) => {
         if (err) {
             res.send(404)
         } else {
@@ -403,8 +402,8 @@ router.get('/team-of-use', function (req, res) {
 })
 //关于我们界面
 router.get('/about-us', checkCategories);
-router.get('/about-us', function (req, res) {
-    db.notices.findOne({}, function (err, system) {
+router.get('/about-us', (req, res) => {
+    db.notices.findOne({}, (err, system) => {
         if (err) {
             res.send(404)
         } else {
@@ -427,8 +426,8 @@ router.get('/about-us', function (req, res) {
 })
 //Privacy Policy
 router.get('/privacy-policy', checkCategories);
-router.get('/privacy-policy', function (req, res) {
-    db.notices.findOne({}, function (err, system) {
+router.get('/privacy-policy', (req, res) => {
+    db.notices.findOne({}, (err, system) => {
         if (err) {
             res.send(404)
         } else {
@@ -451,16 +450,16 @@ router.get('/privacy-policy', function (req, res) {
     })
 })
 //FAQ
-router.get('/FAQ', function (req, res) {
-    db.notices.findOne({}, function (err, system) {
+router.get('/FAQ', (req, res) => {
+    db.notices.findOne({}, (err, system) => {
         if (err) {
             res.send(404)
         } else {
-            var statusCode = null;
+            var statusCode = null
             if (req.cookies["account"] != null) {
-                statusCode = 200;
+                statusCode = 200
             } else {
-                statusCode = 500;
+                statusCode = 500
             }
             res.render('assets/FAQ', {
                 system: system.FAQ[0],
@@ -474,9 +473,9 @@ router.get('/FAQ', function (req, res) {
     })
 })
 //attention
-router.get('/attention', checkCategories);
-router.get('/attention', function (req, res) {
-    db.notices.findOne({}, function (err, system) {
+router.get('/attention', checkCategories)
+router.get('/attention', (req, res) => {
+    db.notices.findOne({}, (err, system) => {
         if (err) {
             res.send(404)
         } else {
@@ -498,17 +497,17 @@ router.get('/attention', function (req, res) {
     })
 })
 //connect_us
-router.get('/contact-us', checkCategories);
-router.get('/contact-us', function (req, res) {
-    db.notices.findOne({}, function (err, system) {
+router.get('/contact-us', checkCategories)
+router.get('/contact-us', (req, res) => {
+    db.notices.findOne({}, (err, system) => {
         if (err) {
             res.send(404)
         } else {
             var statusCode = null;
             if (req.cookies["account"] != null) {
-                statusCode = 200;
+                statusCode = 200
             } else {
-                statusCode = 500;
+                statusCode = 500
             }
             res.render('assets/contact-us', {
                 system: system.contact_us[0],
@@ -523,11 +522,11 @@ router.get('/contact-us', function (req, res) {
 })
 
 //三级类目查找
-router.get('/product/:id', checkCategories);
-router.get('/product/:id', function (req, res, next) {
+router.get('/product/:id', checkCategories)
+router.get('/product/:id', (req, res, next) => {
     db.categorys.findOne({
         'secondCategory.thirdTitles.thirdUrl': '/product/' + req.params["id"]
-    }, function (err, result) {
+    }, (err, result) => {
         var arr = [];
         var secondParam = {};
 
@@ -594,16 +593,16 @@ router.get('/product/:id', function (req, res, next) {
     })
 })
 
-router.get('/single-product/:id', function (req, res, next) {
+router.get('/single-product/:id', (req, res, next) => {
     console.log('-------------')
     console.log(req.cookies["account"]);
     console.log('---***----')
     db.categorys.findOne({
         'secondCategory.thirdTitles.product.product_id': req.params["id"]
-    }, function (err, result) {
-        var arr = [];
-        var most_like = [];
-        var detail_params = {};
+    }, (err, result) => {
+        var arr = []
+        var most_like = []
+        var detail_params = {}
         console.log(result)
         if (result != null) {
             detail_params.firstTitle = result.firstCategory;
@@ -629,12 +628,12 @@ router.get('/single-product/:id', function (req, res, next) {
                 });
 
             });
-            console.log(detail_params);
-            var statusCode = null;
+            console.log(detail_params)
+            var statusCode = null
             if (req.cookies["account"] != null) {
-                statusCode = 200;
+                statusCode = 200
             } else {
-                statusCode = 500;
+                statusCode = 500
             }
             if (arr.length == 0) {
                 res.render('assets/product-detail', {
@@ -664,9 +663,9 @@ router.get('/single-product/:id', function (req, res, next) {
             }
         } else {
             if (req.cookies["account"] != null) {
-                statusCode = 200;
+                statusCode = 200
             } else {
-                statusCode = 500;
+                statusCode = 500
             }
             res.render('assets/404', {
                 product: [],
@@ -686,7 +685,7 @@ router.get('/single-product/:id', function (req, res, next) {
 
 //产品详情页查找
 router.get('/single-product/:id', checkCategories);
-router.get('/single-product/:id', function (req, res, next) {
+router.get('/single-product/:id', (req, res, next) => {
     console.log('-------------')
     console.log(req.cookies["account"]);
     console.log('---***----')
@@ -710,8 +709,8 @@ router.get('/single-product/:id', function (req, res, next) {
                 });
 
             });
-            console.log(detail_params);
-            console.log(arr);
+            console.log(detail_params)
+            console.log(arr)
             var statusCode = null;
             if (req.cookies["account"] != null) {
                 statusCode = 200;
@@ -764,7 +763,7 @@ router.get('/single-product/:id', function (req, res, next) {
 
 //一级&二级类目查找
 router.get('/:category/:id', checkCategories);
-router.get('/:category/:id', function (req, res, next) {
+router.get('/:category/:id', (req, res, next) => {
     if (req.params["id"].indexOf('_') == -1 && req.params["category"] != 'admin') {
         console.log('-------');
         //一级类目
@@ -870,8 +869,8 @@ router.get('/:category/:id', function (req, res, next) {
 })
 
 //SEO
-router.get('/SEO_Engine', function (req, res, next) {
-    db.SEOS.find({'SEO_Name': req.query.name}, function (err, result) {
+router.get('/SEO_Engine', (req, res, next) => {
+    db.SEOS.find({'SEO_Name': req.query.name}, (err, result) => {
         if (err) res.send(404)
         if (result.length != 0) {
             res.send(result)
