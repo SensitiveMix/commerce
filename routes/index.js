@@ -1,13 +1,13 @@
-﻿var express = require('express');
-var router = express.Router();
-var db = require('../model/index');
-var crypto = require('crypto');
-var async = require('async');
-var _ = require('lodash');
+﻿const express = require('express')
+const router = express.Router()
+const db = require('../model/index')
+const crypto = require('crypto')
+const async = require('async')
+const _ = require('lodash')
 
-var hotLabel = [];
-var categoryies = [];
-var u = [];
+var hotLabel = []
+var categoryies = []
+var u = []
 
 
 var checkCategories = function (req, res, next) {
@@ -26,7 +26,7 @@ var checkCategories = function (req, res, next) {
         })
     }
     next();
-};
+}
 
 
 /* GET home page. */
@@ -75,7 +75,7 @@ router.get('/', function (req, res, next) {
         });
 
 
-});
+})
 
 router.get('/login', function (req, res, next) {
     async.parallel([
@@ -119,7 +119,7 @@ router.get('/login', function (req, res, next) {
                 });
             }
         });
-});
+})
 
 //登出处理
 router.get('/logout', function (req, res, next) {
@@ -139,7 +139,7 @@ router.post('/validateEmail', function (req, res, next) {
             }
         }
     })
-});
+})
 //person center
 router.get('/personal-center', checkCategories);
 router.get('/personal-center', function (req, res, next) {
@@ -157,7 +157,7 @@ router.get('/personal-center', function (req, res, next) {
         user: req.cookies['account'],
         status: statusCode
     })
-});
+})
 
 router.get('/personal-Order', checkCategories);
 router.get('/personal-Order', function (req, res, next) {
@@ -175,7 +175,7 @@ router.get('/personal-Order', function (req, res, next) {
         user: req.cookies['account'],
         status: statusCode
     })
-});
+})
 
 router.post('/change-profile', function (req, res, next) {
     console.log(req.body);
@@ -217,7 +217,7 @@ router.post('/change-profile', function (req, res, next) {
 
         }
     })
-});
+})
 
 router.post('/change-email', function (req, res, next) {
     console.log(req.body);
@@ -314,14 +314,14 @@ router.get('/getBanner', function (req, res) {
         if (err) throw err;
         res.send(result);
     })
-});
+})
 //获取头部广告图
 router.get('/getHeadBanner', function (req, res) {
     db.banners.findOne({'type': 'headBanner'}, function (err, result) {
         if (err) throw err;
         res.send(result);
     }).sort({upload_time: -1})
-});
+})
 //前台登陆处理
 router.post('/dologin', function (req, res) {
     var query = {name: req.body.name, password: md5(req.body.password)};
@@ -357,7 +357,7 @@ router.post('/dologin', function (req, res) {
             res.render('assets/login', {status: 500, user: null})
         }
     });
-});
+})
 //前台注册处理
 router.post('/doregister', checkCategories);
 router.post('/doregister', function (req, res) {
@@ -376,7 +376,7 @@ router.post('/doregister', function (req, res) {
         res.end('500')
     });
     res.json('200');
-});
+})
 //前台注册须知界面
 router.get('/team-of-use', checkCategories);
 router.get('/team-of-use', function (req, res) {
@@ -400,7 +400,7 @@ router.get('/team-of-use', function (req, res) {
             })
         }
     })
-});
+})
 //关于我们界面
 router.get('/about-us', checkCategories);
 router.get('/about-us', function (req, res) {
@@ -424,7 +424,7 @@ router.get('/about-us', function (req, res) {
             })
         }
     })
-});
+})
 //Privacy Policy
 router.get('/privacy-policy', checkCategories);
 router.get('/privacy-policy', function (req, res) {
@@ -449,7 +449,7 @@ router.get('/privacy-policy', function (req, res) {
             })
         }
     })
-});
+})
 //FAQ
 router.get('/FAQ', function (req, res) {
     db.notices.findOne({}, function (err, system) {
@@ -472,7 +472,7 @@ router.get('/FAQ', function (req, res) {
             })
         }
     })
-});
+})
 //attention
 router.get('/attention', checkCategories);
 router.get('/attention', function (req, res) {
@@ -496,7 +496,7 @@ router.get('/attention', function (req, res) {
             })
         }
     })
-});
+})
 //connect_us
 router.get('/contact-us', checkCategories);
 router.get('/contact-us', function (req, res) {
@@ -520,7 +520,7 @@ router.get('/contact-us', function (req, res) {
             })
         }
     })
-});
+})
 
 //三级类目查找
 router.get('/product/:id', checkCategories);
@@ -592,7 +592,7 @@ router.get('/product/:id', function (req, res, next) {
             })
         }
     })
-});
+})
 
 router.get('/single-product/:id', function (req, res, next) {
     console.log('-------------')
@@ -682,7 +682,7 @@ router.get('/single-product/:id', function (req, res, next) {
             })
         }
     })
-});
+})
 
 //产品详情页查找
 router.get('/single-product/:id', checkCategories);
@@ -760,7 +760,7 @@ router.get('/single-product/:id', function (req, res, next) {
             })
         }
     })
-});
+})
 
 //一级&二级类目查找
 router.get('/:category/:id', checkCategories);
@@ -867,7 +867,7 @@ router.get('/:category/:id', function (req, res, next) {
         next();
     }
 
-});
+})
 
 //SEO
 router.get('/SEO_Engine', function (req, res, next) {
@@ -879,7 +879,7 @@ router.get('/SEO_Engine', function (req, res, next) {
             res.send({status: 500, msg: 'NOT FOUND'})
         }
     })
-});
+})
 
 //MD5加密
 function md5(text) {
