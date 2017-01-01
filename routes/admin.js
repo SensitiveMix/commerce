@@ -27,6 +27,8 @@ var u = [];
 var leverlist = [];
 var systems = [];
 var tempCategory = [];
+var temp_category = []
+var temp_product_specification = {}
 /*-------------------------------------------------------------------*/
 /* -------------------------实用工具 ---------------------------------*/
 //MD5加密
@@ -1106,6 +1108,8 @@ router.get('/upload-products-detail', function (req, res, next) {
                 });
             }
         ],
+
+
         function (err, results) {
             if (err) {
                 done(err)
@@ -1115,6 +1119,25 @@ router.get('/upload-products-detail', function (req, res, next) {
                 var suppliers = results[2];
 
                 console.log(product_spectication)
+                console.log(tempCategory.length)
+                if (tempCategory.length != 0) {
+                    temp_category = tempCategory
+
+                } else {
+                    tempCategory = temp_category
+                }
+                if (parseIsNull(product_spectication.compatibility)
+                    || parseIsNull(product_spectication.type)
+                    || parseIsNull(product_spectication.hardOrSoft)
+                    || parseIsNull(product_spectication.features)
+                    || parseIsNull(product_spectication.pattern
+                    || parseIsNull(product_spectication.Color
+                    || parseIsNull(product_spectication.material)))) {
+                    temp_product_specification = product_spectication
+                } else {
+                    product_spectication = temp_product_specification
+                }
+
 
                 res.render('admin/product/upload-products-detail', {
                     username: u.nick_name,
@@ -1134,8 +1157,16 @@ router.get('/upload-products-detail', function (req, res, next) {
                 });
                 tempCategory = [];
             }
-        });
-});
+        })
+})
+
+function parseIsNull(args) {
+    if (args.length == 0) {
+        return false
+    } else {
+        return true
+    }
+}
 
 function filterArr(spectication, tempCategory) {
     var newArr = _.filter(spectication, function (compatibility) {
