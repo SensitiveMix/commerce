@@ -86,41 +86,9 @@
 
                     <div class="col-sm-6">
                         <select name="pjname" onchange="change_fee()" class="form-control" id="change-country">
-                            <option value="0">选择货币</option>
-                            <option value="1314">英镑</option>
-                            <option value="1315">港币</option>
-                            <option value="1316">美元</option>
-                            <option value="1317">瑞士法郎</option>
-                            <option value="1318">德国马克</option>
-                            <option value="1319">法国法郎</option>
-                            <option value="1375">新加坡元</option>
-                            <option value="1320">瑞典克朗</option>
-                            <option value="1321">丹麦克朗</option>
-                            <option value="1322">挪威克朗</option>
-                            <option value="1323">日元</option>
-                            <option value="1324">加拿大元</option>
-                            <option value="1325">澳大利亚元</option>
-                            <option value="1326">欧元</option>
-                            <option value="1327">澳门元</option>
-                            <option value="1328">菲律宾比索</option>
-                            <option value="1329">泰国铢</option>
-                            <option value="1330">新西兰元</option>
-                            <option value="1331">韩元</option>
-                            <option value="1843">卢布</option>
-                            <option value="2890">林吉特</option>
-                            <option value="2895">新台币</option>
-                            <option value="1370">西班牙比塞塔</option>
-                            <option value="1371">意大利里拉</option>
-                            <option value="1372">荷兰盾</option>
-                            <option value="1373">比利时法郎</option>
-                            <option value="1373">芬兰马克</option>
-                            <option value="3030">印尼卢比</option>
-                            <option value="3253">巴西里亚尔</option>
-                            <option value="3899">阿联酋迪拉姆</option>
-                            <option value="3900">印度卢比</option>
-                            <option value="3901">南非兰特</option>
-                            <option value="4418">沙特里亚尔</option>
-                            <option value="4560">土耳其里拉</option>
+                            <% feeCountryList.forEach(function(country){ %>
+                            <option value="<%= country.country_value %>"><%= country.country_name %></option>
+                            <% }) %>
                         </select>
                     </div>
                 </div>
@@ -157,41 +125,9 @@
 
                     <div class="col-sm-6">
                         <select name="pjname" onchange="fee_change()" id="country-add" class="form-control">
-                            <option value="0">选择货币</option>
-                            <option value="1314">英镑</option>
-                            <option value="1315">港币</option>
-                            <option value="1316">美元</option>
-                            <option value="1317">瑞士法郎</option>
-                            <option value="1318">德国马克</option>
-                            <option value="1319">法国法郎</option>
-                            <option value="1375">新加坡元</option>
-                            <option value="1320">瑞典克朗</option>
-                            <option value="1321">丹麦克朗</option>
-                            <option value="1322">挪威克朗</option>
-                            <option value="1323">日元</option>
-                            <option value="1324">加拿大元</option>
-                            <option value="1325">澳大利亚元</option>
-                            <option value="1326">欧元</option>
-                            <option value="1327">澳门元</option>
-                            <option value="1328">菲律宾比索</option>
-                            <option value="1329">泰国铢</option>
-                            <option value="1330">新西兰元</option>
-                            <option value="1331">韩元</option>
-                            <option value="1843">卢布</option>
-                            <option value="2890">林吉特</option>
-                            <option value="2895">新台币</option>
-                            <option value="1370">西班牙比塞塔</option>
-                            <option value="1371">意大利里拉</option>
-                            <option value="1372">荷兰盾</option>
-                            <option value="1373">比利时法郎</option>
-                            <option value="1373">芬兰马克</option>
-                            <option value="3030">印尼卢比</option>
-                            <option value="3253">巴西里亚尔</option>
-                            <option value="3899">阿联酋迪拉姆</option>
-                            <option value="3900">印度卢比</option>
-                            <option value="3901">南非兰特</option>
-                            <option value="4418">沙特里亚尔</option>
-                            <option value="4560">土耳其里拉</option>
+                            <% feeCountryList.forEach(function(country){ %>
+                            <option value="<%= country.country_value %>"><%= country.country_name %></option>
+                            <% }) %>
                         </select>
                     </div>
                 </div>
@@ -229,7 +165,7 @@
             var date = new Date();
             var payload = {
                 country_name: $("#country-add").find("option:selected").text(),
-                country_fee: $("#fee-add").val(),
+                country_fee: formatFee($("#fee-add").val()),
                 update_time: formatDate(),
                 update_time_sort: (date.getTime() / 1000).toFixed()
             }
@@ -253,7 +189,7 @@
                 });
             }
 
-        });
+        })
         //commit update
         $('#subRobotChange').on('click', function () {
             if ($("#change-country").val() == '') {
@@ -262,7 +198,7 @@
                 var payload = {
                     id: $("#change_id").val(),
                     country_name: $("#change-country").find("option:selected").text(),
-                    country_fee: $("#change-fee").val(),
+                    country_fee: formatFee($("#change-fee").val()),
                     update_time: formatDate(),
                     update_time_sort: (new Date().getTime() / 1000).toFixed()
                 };
@@ -272,7 +208,7 @@
                     data: payload,
                     success: function () {
                         var coin = $("#change-country").find("option:selected").text()
-                        var fee = $("input[name=change-fee]").val()
+                        var fee = formatFee($("input[name=change-fee]").val())
 
                         trNodep.children().eq(1).html(coin);
                         trNodep.children().eq(2).html(formatCoin(coin, fee));
@@ -398,11 +334,12 @@
                     $('#changeFee').show();
                     var trNode = $(this).parent().parent();
                     trNodep = trNode;
-                    var hiddenid = trNode.children().eq(0).find("input").val();
+                    var hiddenid = trNode.children().eq(0).find("input").val()
                     $('#change_id').val(hiddenid);
 
                     var fee = trNode.children().eq(2).html()
                     fee = fee.substring(fee.indexOf("=") + 1, fee.length)
+                    console.log(fee)
                     console.log(fee.lastIndexOf(" "))
                     fee = fee.substring(0, fee.lastIndexOf(" "))
 //                    fee.replace(/^[\\u4e00-\\u9fa5]$/, '')
@@ -428,9 +365,11 @@
                 //绑定删除事件
                 $(".deletess").on('click', function () {
                     var trNode = $(this).parent().parent();
-                    var hide_id = trNode.children().eq(0).find("input").val();
+                    var hide_id = trNode.children().eq(0).find("input").val()
+                    var name = trNode.children().eq(1).find("input").val()
                     var payload = {
-                        id: hide_id
+                        id: hide_id,
+                        country_name: name
                     }
                     layer.confirm('您确定要删除吗？', {
                         btn: ['确定', '返回'] //按钮
@@ -463,7 +402,6 @@
     });
 
 
-
     function fee_change() {
         var coin = $("#country-add").find("option:selected").text()
         var fee = $('#fee-add').val()
@@ -489,11 +427,33 @@
 
     // utils
     function formatCoin(coin, fee) {
-        return "1 人民币 = " + fee + " " + coin
+        return "1" + coin + " = " + fee + " " + "人民币"
     }
+
+    function formatFee(args) {
+        var num = Number(args)
+        var bb = num + "";
+        var dian = bb.indexOf('.');
+        var result = "";
+        if (dian == -1) {
+            result = num.toFixed(4);
+        } else {
+            var cc = bb.substring(dian + 1, bb.length);
+            if (cc.length >= 5) {
+                result = (Number(num.toFixed(4)) + 0.01) * 100000000000 / 100000000000;//js小数计算小数点后显示多位小数
+            } else {
+                result = num.toFixed(4);
+            }
+        }
+        return result
+    }
+
 
     function formatDate() {
         var date = new Date();
+        if (data.minutes < 10) {
+            data.minutes = '0' + data.minutes
+        }
         var add_time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
         return add_time
     }
