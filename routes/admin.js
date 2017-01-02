@@ -9,7 +9,8 @@ var async = require('async');
 var multer = require('multer');
 var xlstojson = require("xls-to-json-lc");
 var xlsxtojson = require("xlsx-to-json-lc");
-var upload = multer({dest: './tmp'});
+// var upload = multer({dest: './tmp'});
+var upload = multer();
 var superagent = require('superagent');
 var cheerio = require('cheerio');
 var http_origin = require('http');
@@ -26,6 +27,8 @@ var u = [];
 var leverlist = [];
 var systems = [];
 var tempCategory = [];
+var temp_category = []
+var temp_product_specification = {}
 /*-------------------------------------------------------------------*/
 /* -------------------------实用工具 ---------------------------------*/
 //MD5加密
@@ -42,7 +45,7 @@ function getDate() {
 var checkLogin = function (req, res, next) {
     if (req.body.status != 'test') {
         if (u.length == 0) {
-            res.render('admin/404', {username: u.nick_name});
+            res.render('admin/mainsets/404', {username: u.nick_name});
         }
     }
     next();
@@ -52,27 +55,27 @@ var checkLogin = function (req, res, next) {
 /* -----------------------管理员登录 ---------------------------------*/
 //后台登录界面
 router.get('/', function (req, res) {
-    res.render('admin/login_1', {title: '电商网站后台'});
+    res.render('admin/backend-login', {title: '电商网站后台'});
 });
 
 //默认路径
 router.get('', function (req, res) {
-    res.render('admin/login_1', {title: '电商网站后台'});
+    res.render('admin/backend-login', {title: '电商网站后台'});
 });
 
 //进入主页
 router.get('/main', function (req, res) {
-    res.render('admin/land_page', {username: u.nick_name});
+    res.render('admin/backend-homepage', {username: u.nick_name});
 });
 
 //后台登录界面
 router.get('/adminlogin', function (req, res) {
-    res.render('admin/login_1', {title: '电商网站后台'});
+    res.render('admin/backend-login', {title: '电商网站后台'});
 });
 
 
 //后台登陆处理
-router.post('/doadminlogin', function (req, res, next) {
+router.post('/doadminlogin', function (req, res) {
     var query = {name: req.body.name, password: req.body.password, level: '66'};
     async.parallel([
             function (done) {
@@ -106,10 +109,10 @@ router.post('/doadminlogin', function (req, res, next) {
                 if (user.length == 1) {
                     console.log(user.nick_name + ":登录成功" + new Date());
                     u = user[0];
-                    res.render('admin/land_page', {username: u.nick_name, system: system});
+                    res.render('admin/backend-homepage', {username: u.nick_name, system: system});
                 } else {
                     console.log(query.name + ":登录失败" + new Date());
-                    res.render('admin/login_1', {
+                    res.render('admin/backend-homepage', {
                         mes_info: 'login failed',
                         mes: '账号密码错误'
                     });
@@ -117,22 +120,6 @@ router.post('/doadminlogin', function (req, res, next) {
                 }
             }
         });
-});
-
-//跳转页面-基本设置
-router.get('/mainset', checkLogin);
-router.get('/mainset', function (req, res, next) {
-    console.log("基本设置页面" + new Date());
-
-    db.systems.findOne({}, null, {
-        sort: {
-            'updateTime': -1
-        }
-    }, function (err, system_info) {
-        res.render('admin/index', {username: u.nick_name, system: system_info});
-        console.log("基本设置成功" + u);
-    })
-
 });
 
 /*-------------------------------------------------------------------*/
@@ -192,9 +179,9 @@ router.get('/usermanage', function (req, res, next) {
                 console.log(leverlist);
                 if (user.length > 1) {
                     console.log("用户管理页面登陆成功");
-                    res.render('admin/user_manage', {users: user, username: u.nick_name, lvlist: leverlist});
+                    res.render('admin/user/user-manage', {users: user, username: u.nick_name, lvlist: leverlist});
                 } else {
-                    res.render('admin/login_1', {
+                    res.render('admin/backend-login', {
                         mes_info: 'login failed',
                         mes: '账号密码错误'
                     });
@@ -257,13 +244,107 @@ router.post('/doChangeUser', function (req, res, next) {
             levelName: req.body.addLevelName
         }
 
-    }, function (err) {
+    }, function (err, data) {
+        if (err) return res.send(500, 'Error occurred: database Error')
         res.end();
     });
 });
 
 /*-------------------------------------------------------------------*/
 /* -----------------------------商城前台管理 -------------------------*/
+//网站语言管理
+router.get('/language_manage', (req, res)=> {
+    res.render('admin/mainsets/language-manage', {username: u.nick_name});
+})
+
+//获取用户
+router.get('/languagelist', (req, res)=> {
+    db.systems.find({}, (err, result)=> {
+        if (err) return res.send(500, 'Error occurred: database Error')
+        var lista = {
+            "draw": 2,
+            "recordsTotal": "",
+            "recordsFiltered": "",
+            "data": []
+        }
+        if (result[0].languages) {
+            result = result[0].languages
+        } else {
+            result = []
+        }
+        lista.recordsTotal = result.length
+        lista.recordsFiltered = lista.recordsTotal
+        lista.data = result
+        res.send(lista)
+        res.end()
+    })
+})
+
+// CURD
+router.post('/language', (req, res)=> {
+    if (req.body) {
+        db.systems.findOneAndUpdate({}, {
+            $push: {
+                languages: {
+                    language: req.body.language,
+                    isDefault: req.body.isDefault,
+                    update_time: req.body.update_time
+                }
+            }
+        }, (err, back)=> {
+            if (err) return res.send(500, 'Error occurred: database Error')
+            if (back) {
+                res.send({succeed: true, msg: 'ok'})
+            } else {
+                res.send({succeed: false, msg: 'fail'})
+            }
+        })
+    } else {
+        res.send({succeed: false, msg: 'fail'})
+    }
+})
+
+router.delete('/language', (req, res)=> {
+    if (req.body) {
+        db.systems.findOneAndUpdate({}, {
+            $pull: {
+                languages: {_id: req.body._id}
+            }
+        }, (err, back)=> {
+            if (err) return res.send(500, 'Error occurred: database Error')
+            if (back) {
+                res.send({succeed: true, msg: 'ok'})
+            } else {
+                res.send({succeed: false, msg: 'fail'})
+            }
+        })
+    }
+})
+
+router.put('/language', (req, res)=> {
+    if (req.body) {
+        db.systems.findOneAndUpdate({}, {
+            $set: {
+                languages: {
+                    language: req.body.language,
+                    isDefault: req.body.isDefault,
+                    update_time: req.body.update_time
+                }
+            }
+        }, (err, back)=> {
+            if (err) return res.send(500, 'Error occurred: database Error')
+            if (back) {
+                res.send({succeed: true, msg: 'ok'})
+            } else {
+                res.send({succeed: false, msg: 'fail'})
+            }
+
+        })
+    } else {
+        res.send({succeed: false, msg: 'fail'})
+    }
+})
+
 //上传文件接口
 router.post('/doupload', function (req, res) {
     var form = new formidable.IncomingForm();   //创建上传表单
@@ -318,7 +399,7 @@ router.get('/banner_manage', checkLogin);
 router.get('/banner_manage', function (req, res, next) {
     console.log("图片轮播管理页面" + new Date());
 
-    res.render('admin/banner_manage', {username: u.nick_name});
+    res.render('admin/front/banner-manage', {username: u.nick_name});
     console.log("页面访问成功");
 });
 
@@ -404,7 +485,7 @@ router.get('/head_banner_manage', function (req, res, next) {
         if (err) throw  err;
         console.log('-------------');
         console.log(result);
-        res.render('admin/head_banner_manage', {image_url: result[0], username: u.nick_name});
+        res.render('admin/front/head-banner-manage', {image_url: result[0], username: u.nick_name});
     });
     console.log("头部广告轮播管理页面访问成功");
 });
@@ -431,175 +512,425 @@ router.post('/saveHeadBanners', function (req, res) {
 });
 
 
-//更改注册须知
-router.post('/doChangeConditions', checkLogin);
-router.post('/doChangeConditions', function (req, res) {
-    console.log("更改注册须知" + req.body.mainContent + new Date());
-    db.systems.update({name: 'register_need_know'}, {$set: {mainContent: req.body.mainContent}}, function (err, system) {
-        if (err) {
-            res.send('failed');
-        } else {
-            res.send('success');
+//注册须知页面
+router.get('/register_notice', checkLogin);
+router.get('/register_notice', (req, res)=> {
+    async.parallel([
+        (done) => {
+            db.notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
+        },
+        (done) => {
+            db.de_notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
         }
-
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German) {
+            res.render('admin/notices/register-notice', {
+                registerNotice: English.register_notice,
+                de_registerNotice: German.register_notice,
+                username: u.nick_name
+            });
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
     })
-});
+})
+
+//注册须知页面
+router.post('/register-notice', checkLogin);
+router.post('/register-notice', (req, res)=> {
+    async.parallel([
+        (done) => {
+            db.notices.findOneAndUpdate({}, {
+                $set: {
+                    register_notice: [{
+                        main_content: req.body.mainContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, register_notice)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        },
+        (done) => {
+            db.de_notices.findOneAndUpdate({}, {
+                $set: {
+                    register_notice: [{
+                        main_content: req.body.mainGermanContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, register_notice)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        }
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German && German == true) {
+            res.send({succeed: true, msg: "ok"})
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
+    })
+})
 
 //关于我们管理页面
 router.get('/about_us', checkLogin);
-router.get('/about_us', function (req, res, next) {
-    console.log("关于我们管理" + new Date());
-    db.notices.findOne({}, function (err, allNotices) {
-        console.log(allNotices);
-        res.render('admin/notices/about_us', {aboutUs: allNotices.about_us, username: u.nick_name});
-    });
-    console.log("关于我们管理");
-});
-
-//更改我们管理页面
-router.post('/doChangeAboutUs', checkLogin);
-router.post('/doChangeAboutUs', function (req, res) {
-    console.log("更改注册须知" + req.body.mainContent + new Date());
-    db.notices.findOneAndUpdate({}, {
-        $set: {
-            about_us: [{
-                main_content: req.body.mainContent,
-                add_time: new Date().getTime(),
-                addBy: u.nick_name
-            }]
+router.get('/about_us', (req, res)=> {
+    async.parallel([
+        (done) => {
+            db.notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
+        },
+        (done) => {
+            db.de_notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
         }
-    }, function (err, aboutUs) {
-        if (err) {
-            res.send('failed');
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German) {
+            res.render('admin/notices/about-us', {
+                aboutUs: English.about_us,
+                de_aboutUs: German.about_us,
+                username: u.nick_name
+            });
         } else {
-            res.send('success');
+            res.send({succeed: false, msg: "DB Error"})
         }
     })
-});
+})
+
+//更改我们管理页面
+router.post('/about-us', checkLogin);
+router.post('/about-us', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOneAndUpdate({}, {
+                $set: {
+                    about_us: [{
+                        main_content: req.body.mainContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, aboutUs)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        },
+        (done) => {
+            db.de_notices.findOneAndUpdate({}, {
+                $set: {
+                    about_us: [{
+                        main_content: req.body.mainGermanContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, aboutUs)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        }
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German && German == true) {
+            res.send({succeed: true, msg: "ok"})
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
+    })
+})
 
 //联系我们管理页面
 router.get('/contact_us', checkLogin);
-router.get('/contact_us', function (req, res, next) {
-    console.log("关于我们管理" + new Date());
-    db.notices.findOne({}, function (err, allNotices) {
-        res.render('admin/notices/contact_us', {contactUs: allNotices.contact_us, username: u.nick_name});
-    });
-    console.log("关于我们管理");
-});
-
-//更改联系我们管理页面
-router.post('/doChangeContactUs', checkLogin);
-router.post('/doChangeContactUs', function (req, res) {
-    console.log("更改注册须知" + req.body.mainContent + new Date());
-    db.notices.findOneAndUpdate({}, {
-        $set: {
-            contact_us: [{
-                main_content: req.body.mainContent,
-                add_time: new Date().getTime(),
-                addBy: u.nick_name
-            }]
+router.get('/contact_us', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
+        },
+        (done) => {
+            db.de_notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
         }
-    }, function (err, contact) {
-        if (err) {
-            res.send('failed');
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German) {
+            res.render('admin/notices/contact-us', {
+                contactUs: English.contact_us,
+                de_contactUs: German.contact_us,
+                username: u.nick_name
+            });
         } else {
-            res.send('success');
+            res.send({succeed: false, msg: "DB Error"})
         }
     })
-});
+})
+
+//更改联系我们管理页面
+router.post('/contact-us', checkLogin);
+router.post('/contact-us', (req, res)=> {
+    async.parallel([
+        (done) => {
+            db.notices.findOneAndUpdate({}, {
+                $set: {
+                    contact_us: [{
+                        main_content: req.body.mainContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, aboutUs)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        },
+        (done) => {
+            db.de_notices.findOneAndUpdate({}, {
+                $set: {
+                    contact_us: [{
+                        main_content: req.body.mainGermanContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, aboutUs)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        }
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German && German == true) {
+            res.send({succeed: true, msg: "ok"})
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
+    })
+})
 
 //关于FAQ页面
 router.get('/FAQ', checkLogin);
-router.get('/FAQ', function (req, res, next) {
-    console.log("FAQ管理" + new Date());
-    db.notices.findOne({}, function (err, allNotices) {
-        res.render('admin/notices/faq', {faq: allNotices.FAQ, username: u.nick_name});
-    });
-    console.log("关于FAQ");
-});
-
-//更改FAQ页面
-router.post('/doChangeFAQ', checkLogin);
-router.post('/doChangeFAQ', function (req, res) {
-    console.log("FAQ须知" + req.body.mainContent + new Date());
-    db.notices.findOneAndUpdate({}, {
-        $set: {
-            FAQ: [{
-                main_content: req.body.mainContent,
-                add_time: new Date().getTime(),
-                addBy: u.nick_name
-            }]
+router.get('/FAQ', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
+        },
+        (done) => {
+            db.de_notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
         }
-    }, function (err, aboutUs) {
-        if (err) {
-            res.send('failed');
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German) {
+            res.render('admin/notices/faq', {
+                faq: English.FAQ,
+                de_faq: German.FAQ,
+                username: u.nick_name
+            });
         } else {
-            res.send('success');
+            res.send({succeed: false, msg: "DB Error"})
         }
     })
-});
+})
+
+//更改FAQ页面
+router.post('/faq', checkLogin);
+router.post('/faq', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOneAndUpdate({}, {
+                $set: {
+                    FAQ: [{
+                        main_content: req.body.mainContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, aboutUs)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        },
+        (done) => {
+            db.de_notices.findOneAndUpdate({}, {
+                $set: {
+                    FAQ: [{
+                        main_content: req.body.mainGermanContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, aboutUs)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        }
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German && German == true) {
+            res.send({succeed: true, msg: "ok"})
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
+    })
+})
 
 //关于attention页面
 router.get('/attention', checkLogin);
-router.get('/attention', function (req, res, next) {
-    console.log("attention管理" + new Date());
-    db.notices.findOne({}, function (err, allNotices) {
-        res.render('admin/notices/attention', {attention: allNotices.attention, username: u.nick_name});
-    });
-    console.log("关于attention");
-});
-
-//更改attention页面
-router.post('/doChangeAttention', checkLogin);
-router.post('/doChangeAttention', function (req, res) {
-    console.log("Attention须知" + req.body.mainContent + new Date());
-    db.notices.findOneAndUpdate({}, {
-        $set: {
-            attention: [{
-                main_content: req.body.mainContent,
-                add_time: new Date().getTime(),
-                addBy: u.nick_name
-            }]
+router.get('/attention', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
+        },
+        (done) => {
+            db.de_notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
         }
-    }, function (err, attention) {
-        if (err) {
-            res.send('failed');
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German) {
+            res.render('admin/notices/attention', {
+                attention: English.attention,
+                de_attention: German.attention,
+                username: u.nick_name
+            });
         } else {
-            res.send('success');
+            res.send({succeed: false, msg: "DB Error"})
         }
     })
-});
+})
+
+//更改attention页面
+router.post('/attention', checkLogin);
+router.post('/attention', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOneAndUpdate({}, {
+                $set: {
+                    attention: [{
+                        main_content: req.body.mainContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, attention)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        },
+        (done) => {
+            db.de_notices.findOneAndUpdate({}, {
+                $set: {
+                    attention: [{
+                        main_content: req.body.mainGermanContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, attention)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        }
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German && German == true) {
+            res.send({succeed: true, msg: "ok"})
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
+    })
+})
 
 //关于privacy页面
 router.get('/privacy', checkLogin);
-router.get('/privacy', function (req, res, next) {
-    console.log("FAQ管理" + new Date());
-    db.notices.findOne({}, function (err, allNotices) {
-        res.render('admin/notices/privacy', {privacy: allNotices.privacy_notice, username: u.nick_name});
-    });
-    console.log("关于FAQ");
-});
-
-//更改privacy页面
-router.post('/doChangePrivacy', checkLogin);
-router.post('/doChangePrivacy', function (req, res) {
-    console.log("Privacy须知" + req.body.mainContent + new Date());
-    db.notices.findOneAndUpdate({}, {
-        $set: {
-            privacy_notice: [{
-                main_content: req.body.mainContent,
-                add_time: new Date().getTime(),
-                addBy: u.nick_name
-            }]
+router.get('/privacy', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
+        },
+        (done) => {
+            db.de_notices.findOne({}, (err, allNotices)=> {
+                done(null, allNotices)
+            })
         }
-    }, function (err, privacy) {
-        if (err) {
-            res.send('failed');
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German) {
+            res.render('admin/notices/privacy', {
+                privacy: English.privacy_notice,
+                de_privacy: German.privacy_notice,
+                username: u.nick_name
+            });
         } else {
-            res.send('success');
+            res.send({succeed: false, msg: "DB Error"})
         }
     })
-});
+})
+
+//更改privacy页面
+router.post('/privacy', checkLogin);
+router.post('/privacy', (req, res) => {
+    async.parallel([
+        (done) => {
+            db.notices.findOneAndUpdate({}, {
+                $set: {
+                    privacy_notice: [{
+                        main_content: req.body.mainContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, attention)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        },
+        (done) => {
+            db.de_notices.findOneAndUpdate({}, {
+                $set: {
+                    privacy_notice: [{
+                        main_content: req.body.mainGermanContent,
+                        add_time: new Date().getTime(),
+                        addBy: u.nick_name
+                    }]
+                }
+            }, (err, attention)=> {
+                if (err) return done(null, false)
+                done(null, true)
+            })
+        }
+    ], (err, results)=> {
+        let [English,German] = results
+        if (English && German && German == true) {
+            res.send({succeed: true, msg: "ok"})
+        } else {
+            res.send({succeed: false, msg: "DB Error"})
+        }
+    })
+})
 
 //最热产品管理
 router.get('/hot_product_manage', checkLogin);
@@ -607,7 +938,7 @@ router.get('/hot_product_manage', function (req, res, next) {
     console.log("最热产品管理" + new Date());
     db.users.find({}, function (err, result) {
         if (err) throw  err;
-        res.render('admin/hot_product_manage', {users: result, username: u.nick_name});
+        res.render('admin/front/hot-product-manage', {users: result, username: u.nick_name});
     });
     console.log("用户管理页面登陆成功");
 });
@@ -617,52 +948,9 @@ router.get('/hot_product_manage', function (req, res, next) {
 router.get('/accessory_manage', checkLogin);
 router.get('/accessory_manage', function (req, res, next) {
     console.log("类目管理" + new Date());
-    res.render('admin/accessory_manage', {upload: [], username: u.nick_name});
-    // db.users.find({}, function (err, result) {
-    //     if (err) throw  err;
-    //
-    // });
+    res.render('admin/product/accessory-manage', {upload: [], username: u.nick_name});
     console.log("类目管理页面登陆成功");
-});
-
-//类目上传
-// router.post('/doAddCategory', checkLogin);
-// router.post('/doAddCategory', function (req, res) {
-//     console.log(req.body);
-//     console.log(JSON.parse(req.body.secondCategory));
-//
-//     var Categories = {
-//         firstCategory: req.body.firstCategory,
-//         firstUrl: req.body.firstUrl,
-//         firstCount: req.body.firstCount,
-//         secondCategory: JSON.parse(req.body.secondCategory)
-//     };
-//     //保存到产品属性表
-//     _.each(JSON.parse(req.body.secondCategory), function (second) {
-//         _.each(second.thirdTitles, function (third) {
-//             var spec = {
-//                 firstCategory: req.body.firstCategory,
-//                 secondCategory: second.secondTitle,
-//                 thirdCategory: third.thirdTitle,
-//                 specification: null,
-//                 addBy: ""
-//             };
-//             var specs = new db.specifications(spec);
-//             console.log(spec);
-//             specs.save();
-//         })
-//     });
-//
-//     var category = new db.categorys(Categories);
-//     category.save(function (err) {
-//         console.log(err);
-//         if (err) {
-//             res.send('fail')
-//         } else {
-//             res.send('success');
-//         }
-//     });
-// });
+})
 
 router.post('/doAddCategory', checkLogin);
 router.post('/doAddCategory', function (req, res) {
@@ -686,7 +974,7 @@ router.post('/doAddCategory', function (req, res) {
                 de_firstCategory: req.body.de_firstCategory,
                 de_secondCategory: second.de_secondTitle,
                 de_thirdCategory: third.de_thirdTitle,
-                specification: null,
+                specification: [],
                 addBy: ""
             };
             var specs = new db.specifications(spec);
@@ -742,7 +1030,7 @@ router.get('/upload', function (req, res) {
     db.categorys.find({}, function (err, result) {
         if (err) res.send('404');
         console.log(result);
-        res.render('admin/upload_goods', {username: u.nick_name, upload: [], category: result});
+        res.render('admin/product/upload-goods', {username: u.nick_name, upload: [], category: result});
     });
 
 });
@@ -820,6 +1108,8 @@ router.get('/upload-products-detail', function (req, res, next) {
                 });
             }
         ],
+
+
         function (err, results) {
             if (err) {
                 done(err)
@@ -829,8 +1119,27 @@ router.get('/upload-products-detail', function (req, res, next) {
                 var suppliers = results[2];
 
                 console.log(product_spectication)
+                console.log(tempCategory.length)
+                if (tempCategory.length != 0) {
+                    temp_category = tempCategory
 
-                res.render('admin/upload-products-detail', {
+                } else {
+                    tempCategory = temp_category
+                }
+                if (parseIsNull(product_spectication.compatibility)
+                    || parseIsNull(product_spectication.type)
+                    || parseIsNull(product_spectication.hardOrSoft)
+                    || parseIsNull(product_spectication.features)
+                    || parseIsNull(product_spectication.pattern
+                    || parseIsNull(product_spectication.Color
+                    || parseIsNull(product_spectication.material)))) {
+                    temp_product_specification = product_spectication
+                } else {
+                    product_spectication = temp_product_specification
+                }
+
+
+                res.render('admin/product/upload-products-detail', {
                     username: u.nick_name,
                     upload: [],
                     category: categorys,
@@ -848,8 +1157,16 @@ router.get('/upload-products-detail', function (req, res, next) {
                 });
                 tempCategory = [];
             }
-        });
-});
+        })
+})
+
+function parseIsNull(args) {
+    if (args.length == 0) {
+        return false
+    } else {
+        return true
+    }
+}
 
 function filterArr(spectication, tempCategory) {
     var newArr = _.filter(spectication, function (compatibility) {
@@ -909,7 +1226,6 @@ router.post('/uploadTemporary', function (req, res, next) {
                     }
 
                 }).limit(5);
-
             }
         });
     }
@@ -949,7 +1265,7 @@ router.post('/uploadProductDetail', function (req, res, next) {
         console.log(product_spectication);
         if (Categories.length != 0 && product_spectication.length != 0) {
             console.log({categories: Categories, product_specification: product_spectication})
-            res.render('admin/upload-products-detail', {
+            res.render('admin/product/upload-products-detail', {
                 error_msg: [],
                 info: {categories: Categories, product_specification: product_spectication},
                 result: "success",
@@ -1049,7 +1365,7 @@ router.get('/specification', function (req, res, next) {
             if (err) res.send('404');
 
             console.log(result.length)
-            res.render('admin/specifications_manage',
+            res.render('admin/product/specifications-manage',
                 {
                     username: u.nick_name,
                     category: data,
@@ -1106,7 +1422,7 @@ router.post('/spec/property/delete', function (req, res, next) {
 //获取供应商
 router.get('/supplierList', function (req, res, next) {
     console.log("当前分页" + req.query.iDisplayStart);
-    db.suppliers.find({}, null, {
+    db.suppliers.find({name: {$ne: '请选择'}}, null, {
         sort: {
             'add_time_number': 1
         }
@@ -1127,51 +1443,71 @@ router.get('/supplierList', function (req, res, next) {
 });
 router.get('/supplier_manage', checkLogin);
 router.get('/supplier_manage', function (req, res, next) {
-    res.render('admin/supplier_manage',
+    res.render('admin/product/supplier-manage',
         {
             username: u.nick_name
         }
     );
 });
+
+// check login state
 router.post('/doAddSupplier', checkLogin);
+/**
+ * add supplier infomation
+ * @param  {[type]} req           [description]
+ * @param  {[type]} res)          [description]
+ * @param  {[type]} options.$inc: {'supplier_id': 1}           [description]
+ * @param  {[type]} (err,         data)            [description]
+ * @return {[type]}               [description]
+ */
 router.post('/doAddSupplier', function (req, res) {
-    var suppliers = {
-        name: req.body.add_name,
-        add_by: req.body.add_by,
-        supplier_id: Math.floor(Math.random() * 1000 + 1),
-        add_time: req.body.add_time,
-        add_time_number: req.body.add_time_number
-    };
-    console.log(suppliers)
-    var supplier = new db.suppliers(suppliers);
-    supplier.save(function (err) {
-        if (err) res.send({
-            error_msg: ['FORMAT PARAM Error'],
-            info: "",
-            result: "FAILED",
-            code: "500",
-            username: u.nick_name
+    //query supplier id
+    db.suppliers.findOneAndUpdate(
+        {"name": "请选择"},
+        {$inc: {'supplier_id': 1}}, (err, data)=> {
+            var suppliers = {
+                name: req.body.add_name,
+                add_location: req.body.add_by,
+                supplier_id: data.supplier_id,
+                add_time: req.body.add_time,
+                add_time_number: req.body.add_time_number
+            };
+            var supplier = new db.suppliers(suppliers);
+            supplier.save(function (err) {
+                if (err) res.send({
+                    error_msg: ['FORMAT PARAM Error'],
+                    info: "",
+                    result: "FAILED",
+                    code: "500",
+                    username: u.nick_name
+                })
+            });
+            res.send({
+                error_msg: [''],
+                info: "",
+                result: "SUCCESS",
+                code: "200",
+                username: u.nick_name
+            })
         })
-    });
-    res.send({
-        error_msg: [''],
-        info: "",
-        result: "SUCCESS",
-        code: "200",
-        username: u.nick_name
-    })
 });
 
+// check login state
 router.post('/doChangeSupplier', checkLogin);
+/**
+ * change supplier status
+ * @param  {[type]} req           [description]
+ * @param  {String} res)          [description]
+ * @param  {[type]} options.$set: [description]
+ * @param  {[type]} function      [description]
+ * @return {[type]}               [description]
+ */
 router.post('/doChangeSupplier', function (req, res) {
-    console.log(req.body.add_name)
-    console.log(req.body.add_by)
-    console.log(req.body.id)
     if (req.body.add_name != '' && req.body.add_by != '') {
         db.suppliers.update({'_id': req.body.id}, {
             $set: {
                 name: req.body.add_name,
-                add_by: req.body.add_by,
+                add_location: req.body.add_by,
                 add_time: getDate()
             }
         }, function (err, result) {
@@ -1203,7 +1539,16 @@ router.post('/doChangeSupplier', function (req, res) {
         })
     }
 });
+// check login state
 router.post('/doDelSuppler', checkLogin);
+/**
+ * DEL supplier status
+ * @param  {[type]} req           [description]
+ * @param  {String} res)          [description]
+ * @param  {[type]} options.$set: [description]
+ * @param  {[type]} function      [description]
+ * @return {[type]}               [description]
+ */
 router.post('/doDelSuppler', function (req, res, next) {
     if (req.body.suppler_id != '') {
         db.suppliers.remove({'_id': req.body.suppler_id}, function (err, result) {
@@ -1415,16 +1760,201 @@ router.get('/crawler', function (req, res, next) {
 });
 
 router.get('/crawler_manage', function (req, res, next) {
-    res.render('admin/crawler', {
+    res.render('admin/product/crawler', {
         username: u.nick_name
     })
 })
 /*-------------------------------------------------------------------------*/
 
 /*---------------------------------运费模板管理------------------------------*/
-router.get('/shopping_template', function (req, res, next) {
+router.get('/shopping_template', (req, res) => {
     res.render('admin/templates/shopping-templates', {username: u.nick_name})
-});
+})
+
+/**
+ * ROUTER FEE  GET Method
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.get('/fee_manage', (req, res) => {
+    res.render('admin/templates/fee-manage', {username: u.nick_name})
+})
+
+/**
+ * ADD FEE POST Method
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.post('/fee', (req, res) => {
+    if (!req.body) res.end(401, {succeed: false, msg: 'Invalid Param Request'})
+    const fee = new db.fee(req.body);
+    fee.save(function (err) {
+        if (err) res.send(500, {succeed: false, msg: 'Internal Server Error'})
+    });
+    res.send(200, {succeed: true, msg: "success"})
+
+})
+
+/**
+ * ADD DELTA PRICE POST Method
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.post('/delta-price', (req, res)=> {
+    console.log(req.body)
+    if (!req.body) res.end(401, {succeed: false, msg: 'Invalid Param Request'})
+    const delta_price = new db.deltaPrice(req.body);
+    delta_price.save(function (err) {
+        if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
+    });
+    res.send(200, {succeed: true, msg: "success"})
+
+})
+
+/**
+ * Modify DELTA PRICE PUT Method
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.put('/delta-price', (req, res)=> {
+
+    if (!req.body) res.end(401, {succeed: false, msg: 'Invalid Param Request'})
+    db.deltaPrice.findOneAndUpdate({_id: req.body.id},
+        {
+            $set: {
+                delta_price: req.body.delta_price,
+                update_time: req.body.update_time
+            }
+        },
+        (err, data)=> {
+            if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
+            res.send({succeed: true, msg: "success"})
+        })
+})
+
+/**
+ * Delete FEE DEL Method
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.delete('/fee', (req, res)=> {
+    console.log(req.body)
+    db.fee.remove({
+        _id: req.body.id
+    }, (err, data)=> {
+        if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
+        res.send({succeed: true, msg: "success"})
+    })
+})
+
+/**
+ * Modify FEE PUT Method
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.put('/fee', (req, res)=> {
+    if (!req.body) res.end(401, {succeed: false, msg: 'Invalid Param Request'})
+    db.fee.findOneAndUpdate({_id: req.body.id},
+        {
+            $set: {
+                country_name: req.body.country_name,
+                country_fee: req.body.country_fee,
+                update_time: req.body.update_time,
+                update_time_sort: req.body.update_time_sort
+            }
+        },
+        (err, data)=> {
+            if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
+            res.send({succeed: true, msg: "success"})
+        })
+})
+
+/**
+ * GET FEE LIST
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.get('/feelist', (req, res, next)=> {
+    console.log(`current display page: ${req.query.iDisplayStart}`)
+    db.fee.find({}, null, {
+        sort: {
+            'update_time_sort': 1
+        }
+    }, function (err, result) {
+        if (err) next(customError(err.status, err, res))
+        result.forEach((item)=> {
+            return item.country_fee = "1 人民币 = " + item.country_fee + " " + item.country_name
+        })
+
+        var lista = {
+            "draw": 2,
+            "recordsTotal": "",
+            "recordsFiltered": "",
+            "data": []
+        };
+        lista.recordsTotal = result.length
+        lista.recordsFiltered = lista.recordsTotal
+        lista.data = result
+        res.send(lista)
+        res.end()
+    })
+})
+/**
+ * GET FEE LIST
+ * @param req  incoming request format
+ * @param res  incoming request format
+ * @param next render value
+ * @return [type]
+ */
+router.get('/feedollarlist', (req, res, next)=> {
+    console.log(`current display page: ${req.query.iDisplayStart}`)
+    db.fee.find({}, null, {
+        sort: {
+            'update_time_sort': 1
+        }
+    }, function (err, result) {
+        if (err) next(customError(err.status, err, res))
+        var dollar_fee = result.filter((item)=> {
+            return item.country_name === "美元"
+        })[0].country_fee
+
+        var dollarArr = result
+            .filter((item)=> {
+                return item.country_name != "美元"
+            })
+        dollarArr
+            .forEach((item)=> {
+                item.country_fee = (1 / item.country_fee * dollar_fee).toFixed(2)
+                return item.country_fee = "1 美元 = " + item.country_fee + " " + item.country_name
+            })
+
+        var lista = {
+            "draw": 2,
+            "recordsTotal": "",
+            "recordsFiltered": "",
+            "data": []
+        };
+        lista.recordsTotal = result.length
+        lista.recordsFiltered = lista.recordsTotal
+        lista.data = dollarArr
+        res.send(lista)
+        res.end()
+    })
+})
 
 /**
  * [Description]
@@ -1433,7 +1963,7 @@ router.get('/shopping_template', function (req, res, next) {
  * @param next render value
  * @return [type]
  */
-router.post('/transport', (req, res, next)=> {
+router.post('/transport', (req, res)=> {
 
     if (req.body.weight == 'undefined' || req.body.area == 'undefined') {
         res.send(401, {code: 401, msg: "Params Error"})

@@ -8,6 +8,7 @@ var hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
 var devConfig = {
     entry: {
         public_js_build: ['./public/js/', hotMiddlewareScript],
+        public_web_build: ['./public/js/jquery.gridly.js', hotMiddlewareScript],
         public_css_build: ['./public/stylesheets/', hotMiddlewareScript]
     },
     output: {

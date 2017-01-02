@@ -37,10 +37,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// create a write stream (in append mode)
-var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
-// setup the logger
-app.use(morgan('combined', {stream: accessLogStream}))
+if (process.env.NODE_ENV == 'production') {
+    // create a write stream (in append mode)
+    var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
+    // setup the logger
+    app.use(morgan('combined', {stream: accessLogStream}))
+}
 app.use(cors());
 
 //记录路由响应时间
@@ -60,14 +62,15 @@ app.use(function (req, res, next) {
 });
 
 // 自定义异常
-global.customError = (status, msg) => {
-    if(typeof status == 'string') {
+global.customError = (status, msg, res) => {
+    if (typeof status == 'string') {
         msg = status
         status = null
     }
     var error = new Error(msg || '未知异常')
     error.status = status || 500
-    return error
+
+    res.send({code: error.status, msg: error.msg})
 }
 
 var isDev = process.env.NODE_ENV !== 'production';

@@ -6,6 +6,7 @@
     "start": "cross-env NODE_ENV=dev node app_browsersync",
     "dev": "cross-env NODE_ENV=dev sudo nodemon app.js",
     "build": "webpack --progress --colors --watch",
+    "test-build": "webpack --progress --colors",
     "test": "mocha -t 80000 Mocha/ --bail",
     "browsersync": "cross-env NODE_ENV=dev node app_browsersync",
     "production": "webpack --watch --config webpack.production.config.js -p & cross-env NODE_ENV=production node app",

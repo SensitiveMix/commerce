@@ -1,0 +1,2444 @@
+﻿<% layout('../backend-master.ejs') %>
+<script src="/js/md5.js"></script>
+<script type="text/javascript" src="/transport/express.js"></script>
+<script type="text/javascript" src="/transport/ordinary.js"></script>
+<script type="text/javascript" src="/ueditor/third-party/jquery.min.js"></script>
+<script src="/public_web_build/bundle.js"></script>
+<script src='/js/storage.js'></script>
+<link href="/ueditor/themes/default/_css/umeditor.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" charset="utf-8" src="/ueditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/ueditor/_examples/editor_api.js"></script>
+<script type="text/javascript" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+
+<script type="text/javascript">
+    function getTranslateTitle(param) {
+        if ($(".demen").is(":checked")) {
+            if (param) {
+                $('.title_re').append('<input id="productname_de" name="productname_de" style="ime-mode:disabled;margin-left: 94px;" class="attr-text-input addwid402" maxlength="140" placeholder="德文" type="text" value="" autoComplete="off"><span id="productnameTip" style="padding-left:4px;" class="helptips marginleft10">您还可以输入<b class="color444" id="productNameLengthSpan_de">140</b><span class="color000">/<span>140</span></span>个字符</span>')
+            }
+            var productNameLength = $('#productname').val().length;
+            $('#productNameLengthSpan_de').text(140 - productNameLength);
+            $('#productname_de').bind('input propertychange', function () {
+                var productNameLength = $('#productname_de').val().length;
+                $('#productNameLengthSpan_de').text(140 - productNameLength);
+            });
+
+
+            var appid = '20161031000031137';
+            var key = '5pFIYl4t5Hi1oSXzRv1X';
+            var salt = (new Date).getTime();
+            var query = $("#productname").val();
+            var from = 'en';
+            var to = 'de';
+            var str1 = appid + query + salt + key;
+            var sign = MD5(str1);
+            $.ajax({
+                url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+                type: 'get',
+                dataType: 'jsonp',
+                data: {
+                    q: query,
+                    appid: appid,
+                    salt: salt,
+                    from: from,
+                    to: to,
+                    sign: sign
+                },
+                success: function (data) {
+                    console.log(data)
+                    $('#productname_de').val(data.trans_result[0].dst);
+                },
+                error: function (data) {
+                    layer.msg('翻译服务已停用')
+                    console.log(data)
+                }
+            });
+        } else {
+            if (param) {
+                $('#productname').next().next().remove()
+                $('#productname').next().remove()
+
+            }
+        }
+
+    }
+    function getTranslate(param) {
+        if ($(".demen_remark").is(":checked")) {
+            if (param) {
+                $('.demon').css('display', 'block')
+            }
+            var appid = '20161031000031137';
+            var key = '5pFIYl4t5Hi1oSXzRv1X';
+            var salt = (new Date).getTime();
+            var query = um.getContentTxt();
+            var from = 'en';
+            var to = 'de';
+            var str1 = appid + query + salt + key;
+            var sign = MD5(str1);
+            $.ajax({
+                url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+                type: 'get',
+                dataType: 'jsonp',
+                data: {
+                    q: query,
+                    appid: appid,
+                    salt: salt,
+                    from: from,
+                    to: to,
+                    sign: sign
+                },
+                success: function (data) {
+                    console.log(data)
+                    umdemon.setContent(data.trans_result[0].dst);
+                },
+                error: function (data) {
+                    layer.msg('翻译服务已停用')
+                    console.log(data)
+                }
+            });
+        } else {
+            $('.demon').css('display', 'none')
+        }
+    }
+
+
+</script>
+<style>
+    ul {
+        list-style: none;
+    }
+
+    .leave01 {
+        float: right;
+        background: url("/assets/img/icon/leve01.png") 0 no-repeat;
+    }
+
+    .leave-cat-lv span.first {
+        width: 100px;
+    }
+
+    .leave-cat-lv span {
+        float: left;
+        display: block;
+        width: 99px;
+        line-height: 22px !important;
+        line-height: 20px;
+        text-align: center;
+        color: #fff;
+    }
+
+    .leave-cat-lv span.middle {
+        width: 106px;
+    }
+
+    .leave-cat-lv span.last {
+        width: 90px;
+    }
+
+    .categorydicbox {
+        overflow: hidden;
+        margin-top: 10px;
+        margin-bottom: 1px;
+        border: 1px solid #e2eaf9;
+        border-bottom: 1px solid #f4f9ff;
+        min-width: 100%;
+    }
+
+    .categorydicbox .layer-b-bg {
+        position: relative;
+        margin-bottom: -1px;
+        border-top: 1px solid #fff;
+        background: url("/assets/img/catbg01.png") #f2f6fb 0 100% repeat-x;
+    }
+
+    .cat-titleconbox {
+        position: relative;
+        overflow: hidden;
+        line-height: 20px;
+        color: #c34802;
+        padding: 8px 13px 9px 145px;
+    }
+
+    .cat-titleconbox b {
+        margin-left: -132px;
+        font-weight: 300;
+        color: #000;
+        vertical-align: middle;
+    }
+
+    .cat-titleconbox span.nav {
+        padding: 0 6px;
+        color: #000;
+        font-family: Comic Sans MS;
+    }
+
+    .cat-titleconbox span.nav {
+        padding: 0 6px;
+        color: #000;
+        font-family: Comic Sans MS;
+    }
+
+    .cat-titleconbox a {
+        display: inline-block;
+    }
+
+    .marginleft20 {
+        margin-left: 20px;
+    }
+
+    .syi-all-error {
+        margin-top: 15px;
+        width: 80%;
+    }
+
+    .syi-all-error-lt {
+        background: url("/assets/img/icon/global-error.jpg") no-repeat 0px 0;
+        float: left;
+        padding-left: 40px;
+        width: 5px;
+        height: 34px;
+    }
+
+    .syi-all-error-ri {
+        float: left;
+    }
+
+    .syi-all-error-ri p.p1 {
+        line-height: 34px;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .syi-all-error-ri p.p1 {
+        color: #000;
+    }
+
+    .nav:after, .nav:before {
+        display: none;
+    }
+
+    #syi_form {
+        min-width: 100%;
+    }
+
+    .titlebox {
+        margin: 20px 0;
+        padding: 6px 10px 0px;
+        height: 30px;
+        line-height: 25px;
+        border-bottom: 1px solid #d4deee;
+        background-color: #eff4fb;
+    }
+
+    .titlebox h3 {
+        display: inline;
+        color: #000;
+        font-size: 14px;
+    }
+
+    .mainlayout {
+        position: relative;
+        max-width: 70%;
+        margin: 15px 0 10px 138px;
+        clear: both;
+    }
+
+    .ml-title {
+        position: absolute;
+        width: 20%;
+        left: -20%;
+        top: 0;
+        text-align: right;
+        color: #000000;
+    }
+
+    span.required {
+        color: #ff0000;
+        margin-right: 7px;
+        vertical-align: middle;
+    }
+
+    a {
+        color: #3366cc;
+        text-decoration: none;
+        outline: none;
+    }
+
+    .m-text {
+        color: #999;
+        padding-bottom: 7px;
+    }
+
+    .orgfont {
+        color: #fb5501;
+    }
+
+    .greenfont {
+        color: #257800;
+    }
+
+    .similarity-tip-txt {
+        background: url("/assets/img/icon/similarity-tag.jpg") no-repeat;
+        padding-left: 22px;
+        line-height: 16px;
+    }
+
+    .addwid402 {
+        width: 45%;
+    }
+
+    .attr-text-input {
+        overflow: hidden;
+        padding: 2px 0 2px 5px;
+        color: #444;
+        vertical-align: middle;
+    }
+
+    .helptips {
+        color: #949494;
+    }
+
+    .marginleft10 {
+        margin-left: 10px;
+    }
+
+    .helpicon {
+        display: inline-block;
+        margin-left: 9px;
+        vertical-align: middle;
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+        background: url("/assets/img/icon/help.png") 0 0 no-repeat;
+    }
+
+    .tip-error {
+        margin-top: 5px;
+        padding: 4px 10px 4px 30px;
+        width: 390px;
+        height: 18px;
+        line-height: 18px;
+        vertical-align: middle;
+        border: solid 1px #F7ACAC;
+        background: url("/assets/img/icon/global-small-error.jpg") #feeeee 10px 50% no-repeat;
+    }
+
+    .clearfix:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    .J_Items {
+        position: relative;
+        border-bottom: 1px solid #dedede;
+        margin: 0 8px;
+    }
+
+    .head-attributes {
+        position: absolute;
+        left: 11px;
+        top: 9px;
+        color: #999;
+    }
+
+    .body-attributes {
+        padding: 0 0 0 26%;
+        display: block;
+    }
+
+    .checkbox-inline-product-attributes {
+        /*float: left;*/
+        margin: 9px 40px 9px 0;
+        height: 18px;
+        color: #000;
+        text-decoration: none;
+        font-weight: 100;
+    }
+
+    .btns {
+        border-top: 1px dashed #dedede;
+        padding: 0 0 0 26%;
+    }
+
+    .btns span {
+        margin: 5px;
+        padding: 1px 12px;
+    }
+
+    .product-attributes {
+        border: 1px solid #dedede;
+    }
+
+    .checkbox-inline-product-attributes input[type=checkbox], input[type=radio] {
+        margin-right: 5px;
+    }
+
+    @media (min-width: 768px) {
+        .bkcon.addborderline .form-inline .form-group {
+            width: 24%;
+        }
+
+        .bkcon.addborderline .form-inline .form-group input {
+            width: 100%;
+        }
+
+        #div_self_defind_attr {
+            border: 1px solid #dedede;
+        }
+    }
+
+    .pick-a-color-markup {
+        float: left;
+        width: 10%;
+    }
+
+    .pro-img-picbox .pic {
+        border: 1px dashed #d4d4d4;
+        width: 82px;
+        height: 82px;
+    }
+
+    .addpiccolor2 .pic {
+        width: 102px;
+        height: 102px;
+    }
+
+    .addpiccolor2 {
+        width: 104px;
+        height: 104px;
+        margin-top: 0px;
+    }
+
+    .pro-img-picbox {
+        width: 22%;
+        display: block;
+        float: left;
+        margin-right: 5px;
+        margin-top: 20px;
+    }
+
+    .pro-img-box {
+        position: relative;
+        overflow: hidden;
+        height: 140px;
+    }
+
+    .chousexybox {
+        margin-top: 10px;
+        padding: 10px 20px;
+        border-top: 1px dashed #ddd;
+    }
+
+    .syi-submit {
+        text-align: center;
+        margin: 10px 0;
+        border-top: 1px dashed #ddd;
+    }
+
+    .marginleft5 {
+        margin-left: 5px;
+    }
+
+    .studybox {
+        padding: 10px 20px;
+    }
+
+    .studybox .studyicon {
+        padding: 0 0 0 20px;
+        background: url("/assets/img/icon/studyicon.png") 0 50% no-repeat;
+    }
+
+    .error-edit-text {
+        display: none;
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    .fl-file-upload {
+        float: left;
+        margin-left: 8px;
+        padding: 0;
+    }
+
+    .fl-file-upload li {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        margin-left: 8px;
+        position: relative;
+        overflow: hidden;
+        border: 1px dashed #d4d4d4;
+        background: #fff;
+    }
+
+    .fl-file-upload li img {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    .fl-file-upload li .delete {
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: url(/assets/img/icon/close.png) no-repeat 50% 50%;
+        background-size: 100% 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .fl-file-upload .exchange {
+        display: inline-block;
+        width: 15px;
+        height: 12px;
+        background: url(/assets/img/icon/exchange.png) no-repeat 50% 50%;
+        background-size: 100% 100%;
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-left: 8px;
+        vertical-align: middle;
+    }
+
+    .file-upload-single li {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        margin-left: 8px;
+        position: relative;
+        overflow: hidden;
+        border: 1px dashed #d4d4d4;
+        background: #fff;
+    }
+
+    .file-upload-single li img {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    .file-upload-single li .delete {
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: url(/assets/img/icon/close.png) no-repeat 50% 50%;
+        background-size: 100% 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .upload-btn {
+        width: 80px;
+        height: 80px;
+        border: 1px solid #000;
+        position: relative;
+        text-align: center;
+        font-size: 64px;
+        line-height: 72px;
+    }
+
+    .upload-btn input {
+        display: block;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    .uploadShow {
+        background: rgba(0, 0, 0, .8);
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 9;
+        display: none;
+    }
+
+    .uploadShow p {
+        text-align: center;
+        color: #fff;
+        font-size: 24px;
+        margin-top: 120px;
+    }
+
+    .syi-img-show {
+        display: none;
+    }
+
+    .alert-warning {
+        color: #c09853 !important;
+        background-color: #fcf8e3 !important;
+        border-color: #faebcc !important;
+        padding: 8px;
+        font-size: 9px;
+        border-radius: 0;
+        margin: 10px 0 !important;
+    }
+
+    .alert-warning a {
+        color: #3366cc;
+        text-decoration: none;
+    }
+
+    .alert-warning button {
+        right: -2px !important;
+    }
+
+    .gridly {
+        position: relative;
+        width: 400px;
+    }
+
+    .brick.small {
+        width: 140px;
+        height: 140px;
+        left: 100px;
+    }
+
+    .brick.small > img {
+        width: 140px;
+        height: 140px;
+    }
+
+    .brick.small > span {
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: url(/assets/img/icon/close.png) no-repeat 50% 50%;
+        background-size: 100% 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+
+</style>
+<script src="../plugins/pick-color/js/tinycolor-0.9.15.min.js"></script>
+<script src="../plugins/pick-color/js/pick-a-color-1.2.3.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".pick-a-color").pickAColor({
+            showSpectrum: false,
+            showSavedColors: false,
+            saveColorsPerElement: true,
+            fadeMenuToggle: true,
+            showAdvanced: false,
+            showBasicColors: true,
+            showHexInput: false,
+            allowBlank: true,
+            inlineDropdown: true
+        });
+
+    });
+
+</script>
+<script>
+    $(function () {
+        var formData = [];
+        formData['product'] = [];
+        var form = {};
+        var belong_category = [];
+        <% tempCategory.forEach(function (item) { %>
+        var belong_category_item = {};
+        belong_category_item.first = '<%= item.firstCategory %>';
+        belong_category_item.second = '<%= item.secondCategory %>';
+        belong_category_item.third = '<%= item.thirdCategory %>';
+        belong_category.push(belong_category_item)
+        <% }) %>
+        form.belong_category = belong_category;
+        $('#submitopt').click(function () {
+//            if ($('#productname').val() == '') {
+//                layer.alert('请输入产品标题')
+//            } else if ($('#vip_price').val().length == 0) {
+//                layer.alert('请输入VIP价格')
+//            } else if ($('#regular_price').val().length == 0) {
+//                layer.alert('请输入常规价格')
+//            } else if ($('#market_price').val().length == 0) {
+//                layer.alert('请输入市场价格')
+//            } else if ($('#promotion_vip_price').val().length == 0) {
+//                layer.alert('请输入促销VIP价格')
+//            } else if ($('#promotion_regular_price').val().length == 0) {
+//                layer.alert('请输入促销常规价格')
+//            } else if ($('input[name="freight_company"]').val().length == 0) {
+//                layer.alert('请输入快递公司')
+//            } else if ($('input[name="freight_price"]').val().length == 0) {
+//                layer.alert('请输入快递单价')
+//            } else {
+            form.product_title = $('#productname').val();
+
+            form.product_price = [];
+            form.product_danWei = [];
+            var danWei = {
+                danWei_key: $('select[name="measureid"]').find("option:selected").attr('data-name'),
+                danWei_value: $('select[name="measureid"]').val()
+            }
+            form.product_danWei.push(danWei)
+            form.product_supplier = $('select[name="supplier"]').val();
+            form.product_sell_status = $('.color-preview.current-color').eq(0).css('background-color');
+            form.product_stock_status = $('.color-preview.current-color').eq(1).css('background-color');
+
+            form.product_market = [];
+            var market = {};
+            market.market_method = $('input[name="market_method"]:checked').val();
+
+            if ($('input[name="market_method"]:checked').val() == 2) {
+                market.market_amount = $('input[name="sell-function-bao"]').val();
+            } else {
+                market.market_amount = '';
+            }
+            form.product_market.push(market)
+
+            form.product_origin_price = []
+            var origin_price = {
+                vip_price: $('#vip_price').val(),
+                regular_price: $('#regular_price').val(),
+                market_price: $('#market_price').val(),
+                sale_discount_vip_price: $('#promotion_vip_price').val(),
+                sale_discount_regular_price: $('#promotion_regular_price').val()
+            }
+            form.product_origin_price.push(origin_price)
+            form.product_video_link = $('#videourl').val();
+            form.product_images = [];
+
+            $('#file-upload li').each(function (index, item) {
+                var data_product_image = {};
+                data_product_image.title = '';
+                data_product_image.url = $(item).find('img').attr('src');
+                form.product_images.push(data_product_image);
+            })
+            form.product_freight = [];
+            var freight = {
+                product_freight_company: $('input[name="freight_company"]').val(),
+                product_freight_price: $('input[name="freight_price"]').val()
+            }
+            form.product_freight.push(freight)
+
+            $('#product-attribute-table tbody tr').each(function (index, item) {
+                var form_data_compile = {};
+                form_data_compile.compile_spec = $(item).find('td').eq(0).text();
+                form_data_compile.compile_vip_price = $(item).find('td').eq(1).text();
+                form_data_compile.compile_normal_price = $(item).find('td').eq(2).text();
+                form.product_price.push(form_data_compile);
+
+            })
+
+            var product_spec = {}
+            product_spec.compact = [];
+            product_spec.hardOrSoft = [];
+            product_spec.type = [];
+            product_spec.features = [];
+            product_spec.pattern = [];
+            product_spec.color = [];
+            product_spec.material = [];
+
+            $('input[name="compatibility"]:checked').each(function () {
+                product_spec.compact.push($(this).val());//向数组中添加元素
+            });
+            $('input[name="type"]:checked').each(function () {
+                product_spec.type.push($(this).val());//向数组中添加元素
+            });
+            $('input[name="hardOrSoft"]:checked').each(function () {
+                product_spec.hardOrSoft.push($(this).val());//向数组中添加元素
+            });
+            $('input[name="features"]:checked').each(function () {
+                product_spec.features.push($(this).val());//向数组中添加元素
+            });
+            $('input[name="pattern"]:checked').each(function () {
+                product_spec.pattern.push($(this).val());//向数组中添加元素
+            });
+            $('input[name="Color"]:checked').each(function () {
+                product_spec.color.push($(this).val());//向数组中添加元素
+            });
+            $('input[name="material"]:checked').each(function () {
+                product_spec.material.push($(this).val());//向数组中添加元素
+            });
+
+            form.product_spec = product_spec;
+            console.log(form)
+
+//
+//            $.ajax({
+//                url: '/admin/saveProductDetail',
+//                type: 'POST',
+//                data: {
+//                    product_title: form.product_title,
+//                    product_supplier: form.product_supplier,
+//                    product_sell_status: form.product_sell_status,
+//                    product_stock_status: form.product_stock_status,
+//                    product_video_link: form.product_video_link,
+//                    belong_category: JSON.stringify(form.belong_category),
+//                    product_price: JSON.stringify(form.product_price),
+//                    product_danWei: JSON.stringify(form.product_danWei),
+//                    product_market: JSON.stringify(form.product_market),
+//                    product_origin_price: JSON.stringify(form.product_origin_price),
+//                    product_images: JSON.stringify(form.product_images),
+//                    product_freight: JSON.stringify(form.product_freight),
+//                    product_spec: JSON.stringify(form.product_spec)
+//                },
+//
+//                dataType: 'json',
+//                cache: false,
+//                success: function (data) {
+//                    console.log(data)   //返回图片
+//                },
+//                error: function () {
+//                    console.log('err');
+//                }
+//            });
+
+
+        })
+        $('#cuxiao_price').change(function () {
+            if ($('input[name="cuxiao_price"]:checked').length == 1) {
+                $('#vip_price').attr('disabled', 'true');
+                $('#regular_price').attr('disabled', 'true');
+                $('#market_price').attr('disabled', 'true');
+
+            } else {
+                $('#vip_price').removeAttr('disabled')
+                $('#regular_price').removeAttr('disabled')
+                $('#market_price').removeAttr('disabled')
+            }
+        })
+
+        $('input[name="highlight-color"]').eq(0).change(function () {
+            if ($('input[name="highlight-color"]').eq(0).val() == '008000') {//绿色
+                $('#product-sell-status').val('库存确认可以采购');
+            }
+            if ($('input[name="highlight-color"]').eq(0).val() == 'ff0000') {//红色
+                $('#product-sell-status').val('停产');
+            }
+            if ($('input[name="highlight-color"]').eq(0).val() == 'ffff00') {//黄色
+                $('#product-sell-status').val('库存待确认');
+            }
+        })
+        $('input[name="highlight-color"]').eq(1).change(function () {
+            if ($('input[name="highlight-color"]').eq(1).val() == '008000') {//绿色
+                $('#product-stock-time').val('2天');
+            }
+            if ($('input[name="highlight-color"]').eq(1).val() == 'ffff00') {//黄色
+                $('#product-stock-time').val('3天');
+            }
+        })
+        $('#keywordbutton').click(function () {
+            var keyword2 = $("#keyword2");
+            var keyword3 = $("#keyword3");
+            if (keyword2.is(":hidden")) {
+                keyword2.show();
+            } else {
+                keyword3.show();
+                $("#keywordbutton").hide();
+            }
+        })
+
+        $('.logistics-panel-type').click(function () {
+            var index = $(this).index();
+            $('#logistic-list .logistics-panel').hide();
+            $('#logistic-list .logistics-panel').eq(index).toggle();
+        })
+
+        $('.logistic-checkbox').click(function () {
+            if ($(this).is(':checked') == true) {
+                $(this).parents('tr').find('.standard-logistic').removeAttr("disabled");
+                $(this).parents('tr').find('.no-logistic').removeAttr("disabled");
+            }
+            if ($(this).is(':checked') == false) {
+                $(this).parents('tr').find('.standard-logistic').attr("disabled", "true");
+                $(this).parents('tr').find('.no-logistic').attr("disabled", "true");
+
+            }
+        })
+
+
+        $('#productname').bind('input propertychange', function () {
+            var productNameLength = $('#productname').val().length;
+            $('#productNameLengthSpan').text(140 - productNameLength);
+        });
+        $('#submit-product-attributes').click(function () {
+            var product_attributes_type = new Array();
+            $('input[name="type"]:checked').each(function () {
+                product_attributes_type.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_compatibility = new Array();
+            $('input[name="compatibility"]:checked').each(function () {
+                product_attributes_compatibility.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_hardOrSoft = new Array();
+            $('input[name="hardOrSoft"]:checked').each(function () {
+                product_attributes_hardOrSoft.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_features = new Array();
+            $('input[name="features"]:checked').each(function () {
+                product_attributes_features.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_Color = new Array();
+            $('input[name="Color"]:checked').each(function () {
+                product_attributes_Color.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_material = new Array();
+            $('input[name="material"]:checked').each(function () {
+                product_attributes_material.push($(this).val());//向数组中添加元素
+            });
+
+            console.log(product_attributes_compatibility);
+            console.log(product_attributes_type);
+            product_attributes_compatibility.forEach(function (item_compatibility, index) {
+                product_attributes_Color.forEach(function (item_type, index_type) {
+                    var table_body_tr = '<tr class="' + index + index_type + '"><td>【' + item_compatibility + '】' + item_type + '</td><td><input type="text" class="form-control vip-price-td1"></td><td><input type="text" class="form-control"></td><td class="file-upload-single"><input type="file" class="filestyle" data-input="false" id="filestyle-0" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);"><div class="bootstrap-filestyle input-group"><span class="group-span-filestyle " tabindex="0"><label for="filestyle-0" class="btn btn-default "><span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span></label></span></div></td><td><button class="btn btn-default delete-compatibility">删除</button></td></tr>';
+
+                    $('#product-attribute-table tbody').append(table_body_tr);
+                })
+            })
+            $('#bulk_operation').on('click', function () {
+                var product_increase = $('#product_increase').val();
+                $('#product-attribute-table tbody tr').each(function (index, item) {
+                    var eq_1 = $('input[name="price"]').val();
+                    $(item).find('td').eq(1).find('input').val(eq_1);
+                    $(item).find('td').eq(2).find('input').val((parseInt(eq_1) + parseFloat(product_increase)).toString());
+//                    var eq_2 = $('input[name="count"]').val();
+//                    $(item).find('td').eq(2).text(eq_2);
+                })
+            })
+            $('.delete-compatibility').click(function () {
+                $(this).parents('tr').remove();
+            })
+            $('.vip-price-td1').change(function () {
+                var product_increase = $('#product_increase').val();
+                var eq_1 = $(this).val();
+                $(this).parent().next().find('input').val((parseInt(eq_1) + parseFloat(product_increase)).toString());
+            })
+
+            $('.filestyle').on('change', function () {
+                var file = $(this)[0];
+                var formData = new FormData();
+                console.log(file)
+                console.log(file.files)
+                if (file.files.length > 1) {
+                    layer.alert('上传图片大于1张')
+                } else {
+                    for (var i = 0; i < file.files.length; i++) {
+                        if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpeg') {
+                            layer.alert('上传图片格式有误')
+                            return false
+                        } else if (file.files[i].size / 1024 > 2000) {
+                            layer.alert('上传图片大小不能超过2M')
+                            return false
+                        } else {
+                            formData.append('file', file.files[i]);
+                        }
+                    }
+                    $.ajax({
+                        url: '/admin/uploadSingle',
+                        type: 'POST',
+                        data: formData,
+                        async: false,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            var data = data.data;
+                            console.log(data)
+                            if (data.length != 0) {
+                                data.forEach(function (item) {
+                                    $parent = $(file).parent();
+                                    $parent.empty();
+                                    item = item.replace('public', '');
+
+                                    var li = '<li style="list-style: none;"><img src="' + item + '"><span class="delete"></span></li>';
+                                    $parent.append(li);
+
+                                })
+                            }
+                            $('.delete').click(function () {
+                                var index = $(this).parents('tr').attr('class');
+                                $(this).parent('li').remove();
+                                var $parent_li = $('.' + index).find('td').eq(3);
+                                var myhtml = '<input type="file" class="filestyle" data-input="false" id="filestyle-0" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);"><div class="bootstrap-filestyle input-group"><span class="group-span-filestyle " tabindex="0"><label for="filestyle-0" class="btn btn-default "><span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span></label></span></div>';
+                                $parent_li.append(myhtml);
+
+                            })
+                        },
+                        error: function () {
+                            layer.msg('上传文件格式错误')
+                        }
+                    });
+                }
+            })
+
+        })
+    })
+</script>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">产品上传</h3>
+        <div class="leave-cat-lv leave01">
+            <span class="first">1. 选择类目</span>
+            <span class="middle current">2. 填写信息</span>
+            <span class="last">3. 提交审核</span>
+        </div>
+    </div>
+
+    <!-- 已选择类目 开始 -->
+    <div class="categorydicbox">
+        <div class="layer-b-bg">
+            <span class="layer-l"></span>
+            <span class="layer-r"></span>
+            <div class="cat-titleconbox">
+
+                <b>当前已选择的产品类目：</b>
+                <% tempCategory.forEach(function (item) { %>
+                <span class="navbox"><%= item.firstCategory %><span class="nav">&gt;</span><%= item.secondCategory %>
+                    <span class="nav">&gt;</span><%= item.thirdCategory %></span>
+                <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <% }) %>
+                <a class="marginleft20" href="#" onclick="javascript:history.go(-1);">«返回修改类目</a>
+            </div>
+        </div>
+
+    </div>
+    <!-- 已选择类目 结束 -->
+    <!-- 错误信息 开始 -->
+    <div id="errorMsgDiv" style="display: none;" class="syi-all-error clearfix">
+        <div class="syi-all-error-lt"></div>
+        <div class="syi-all-error-ri">
+            <p class="p1"><b>您还有下述表单项填写不正确，请点击相应链接进行修改。</b></p>
+            <ul id="errorUL">
+
+            </ul>
+        </div>
+    </div>
+    <!-- 错误信息 结束 -->
+    <div id="syi_form" name="SYIForm" method="post" enctype="multipart/form-data" target="_blank">
+
+        <!-- title产品基本信息 开始 -->
+        <div class="titlebox"><h3>1、产品基本信息</h3></div>
+        <!-- title产品基本信息 结束 -->
+
+        <!-- 产品标题 开始 -->
+        <div class="mainlayout clearfix" id="productnameTip">
+            <div class="ml-title"><span class="required">*</span>产品标题：</div>
+            <a id="a_productname"></a>
+            <div class="m-text">您的产品标题单词量为<b class="orgfont">0</b>，平台上此类目产品标题的单词量为<b class="greenfont">16-23</b>个，完整且清晰的描述有助于提升产品曝光率。<br>
+                （重复的单词堆积，和产品无关的介绍会被视为作弊，导致产品被搜索降序甚至屏蔽）
+            </div>
+            <div class="similarity-tip-txt" id="prodNameSimilTip" style="display:none;">
+                您填写的标题和短描的相似单词数已超过50%，信息重复会降低商品信息质量不利于产品曝光。
+            </div>
+
+            <div class="title_re">
+                英文
+                <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
+                德文
+                <input type="checkbox" class="demen" onclick="getTranslateTitle(true)"
+                       data-group-cls="btn-group-lg">
+                <input id="productname" onchange="getTranslateTitle(false)" name="productname"
+                       style="ime-mode:disabled;" class="attr-text-input addwid402"
+                       maxlength="140" placeholder="英文" type="text" value="" autoComplete='off'>
+                <span id="productnameTip productname_tip" class="helptips marginleft10">您还可以输入<b class="color444"
+                                                                                                 id="productNameLengthSpan">140</b><span
+                            class="color000">/<span>140</span></span>个字符</span>
+            </div>
+            <div id="productnameErrTip" class="tip-error" style="display:none;"></div>
+
+        </div>
+        <!-- 产品标题 结束 -->
+
+        <!-- 产品关键词 开始 -->
+        <!--<div class="mainlayout clearfix" id="keywordTip">-->
+        <!--<div class="ml-title">产品关键词：</div>-->
+        <!--<a id="a_keyword1"></a><a id="a_keyword2"></a><a id="a_keyword3"></a>-->
+        <!--<div>-->
+        <!--<input class="attr-text-input marginright10" style="ime-mode:disabled;" maxlength="40" name="keyword1"-->
+        <!--id="keyword1" type="text" value="">-->
+        <!--<input class="attr-text-input marginright10" maxlength="40" name="keyword2" id="keyword2" type="text"-->
+        <!--style="ime-mode:disabled;display: none;">-->
+        <!--<input class="attr-text-input marginright10" maxlength="40" name="keyword3" id="keyword3" type="text"-->
+        <!--style="ime-mode:disabled;display: none;">-->
+        <!--<span id="keywordbutton" class="tourBtn"><input type="button" value="添加多个关键词"-->
+        <!--onclick="showOtherKeywords();"></span>-->
+        <!--<span class="helpicon" title="产品关键词帮助" helptipval="keywordTip"></span>-->
+        <!--</div>-->
+        <!--<div id="keyword1ErrTip" class="tip-error" style="display:none;"></div>-->
+        <!--<div id="keyword2ErrTip" class="tip-error" style="display:none;"></div>-->
+        <!--<div id="keyword3ErrTip" class="tip-error" style="display:none;"></div>-->
+        <!--</div>-->
+
+        <!-- 产品关键词 结束 -->
+
+        <!-- 产品基本属性 开始 -->
+        <!-- 产品基本属性 开始 -->
+        <div id="product_cattr_container" class="j-basic-attr-container clearfix">
+            <div class="mainlayout clearfix">
+                <div class="ml-title">
+                    <span class="required">*</span>产品基本属性：<a id="a_productattr"></a>
+                </div>
+                <div class="m-text">您的产品在所在类目的非必填属性填写率为<b class="orgfont">0%</b>，平台上此类目的非必填属性填写率为<b class="greenfont">80%</b>，完整且清晰的描述有助于提升产品曝光率。<br>
+                    （请按产品实际情况正确填写参数，错误的参数会引起客户投诉，影响产品曝光率）
+                </div>
+                <p class="helptips">设置完整的产品属性有助于买家更容易找到您的产品<span helptipval="product_cattr_container"
+                                                                 class="helpicon"></span></p>
+                <div class="product-attributes">
+                    <% if(product_specification.compatibility.length != 0) { %>
+                    <div class="items J_Items">
+                        <div class="head-attributes">compatibility</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.compatibility.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="compatibility" name="compatibility"
+                                           value="<%= item %>"><%= item %>
+                                </label>
+                                <% }) %>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                    <% if(product_specification.type.length != 0) { %>
+                    <div class="items J_Items">
+                        <div class="head-attributes">type</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.type.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="type" name="type"
+                                           value="<%= item %>"><%= item %>
+                                </label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if(product_specification.hardOrSoft.length != 0) { %>
+                    <div class="items J_Items">
+                        <div class="head-attributes">hardOrSoft</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.hardOrSoft.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="hardOrSoft" name="hardOrSoft"
+                                           value="<%= item %>"><%= item %>
+                                </label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if(product_specification.features.length != 0) { %>
+                    <div class="items J_Items">
+                        <div class="head-attributes">features</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.features.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="features" name="features"
+                                           value="<%= item %>"><%= item %></label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if(product_specification.pattern.length != 0) { %>
+                    <div class="items J_Items">
+                        <div class="head-attributes">pattern</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.pattern.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="pattern" name="pattern"
+                                           value="<%= item %>"><%= item %></label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if(product_specification.Color.length != 0) { %>
+                    <div class="items J_Items">
+                        <div class="head-attributes">Color</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.Color.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="Color" name="Color"
+                                           value="<%= item %>"><%= item %>
+                                </label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if(product_specification.material.length != 0) { %>
+                    <div class="items J_Items" style="border-bottom: 0">
+                        <div class="head-attributes">material</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.material.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="material" name="material"
+                                           value="<%= item %>"><%= item %></label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <div class="btns">
+                        <span class="btn btn-default" id="submit-product-attributes">Confirm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="display_div_brand" style="display:none;">
+
+            <div class="syi-properties-ri syi-rposition" id="div_brand_id" style="display:none;">
+                <div class="posionrel clearfix">
+                    <div class="drop-down" id="selectBrandsDiv" onclick="onSelectBrandsClick();">
+                        <span class="drop-down-value text-indent" id="brandNameSpan">- 无品牌 -</span>
+                        <span class="drop-down-default"></span>
+                        <div class="chouse-down-box text-indent" id="brandsDiv" style="display: none;">
+                        </div>
+                        <!--<iframe></iframe>-->
+                    </div>
+
+                </div>
+            </div>
+            <input type="hidden" value="99" name="brandid" id="brandid">
+            <input type="hidden" value="" name="brandValid" id="brandValid">
+            <input type="hidden" value="" name="brandName" id="brandName">
+
+        </div>
+        <!-- 产品基本属性 结束 -->
+        <!--产品销售规格 开始-->
+
+        <!--产品销售规格 结束-->
+
+        <!-- 属性图片上传入口参数   -->
+        <input id="functionname_avim" name="functionname_avim" type="hidden" value="avim">  <!--功能名   	不可以为空-->
+        <input id="imagebannername_avim" name="imagebannername_avim" type="hidden" value="">    <!--水印名  现在是用户名-->
+
+
+        <!-- 产品基本属性 结束 -->
+
+        <!-- 产品购买属性 开始 -->
+
+        <!-- 产品购买属性 结束 -->
+        <!-- 产品备注 开始 -->
+        <div class="mainlayout clearfix j-list-item vadiourlTip_remark" id="vadiourlTip">
+            <div class="ml-title">产品备注：</div>
+            <div class="helptips" style="width:126px;margin-bottom: 5px;">
+                英文
+                <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
+                德文
+                <input type="checkbox" class="demen_remark" onclick="getTranslate(true)"
+                       data-group-cls="btn-group-lg">
+                <span class="helpicon" title="勾选语言" helptipval="vadiourlTip"></span>
+            </div>
+            <div class="form-group">
+                <script type="text/plain" id="product_remark" style="width:685px;height:40%;">
+                </script>
+                <script type="text/javascript">
+                    var um = UM.getEditor('product_remark', {
+                        //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
+                        toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
+                        //focus时自动清空初始化时的内容
+                        autoClearinitialContent: true,
+                        //关闭字数统计
+                        wordCount: true,
+                        //关闭elementPath
+                        elementPathEnabled: false,
+                        //默认的编辑区域高度
+                        initialFrameHeight: 300
+                        //更多其他参数，请参考umeditor.config.js中的配置项
+                    });
+                    um.setContent('输入产品备注');
+                    um.addListener('selectionchange', function () {
+                        getTranslate(false)
+                    })
+                </script>
+            </div>
+            <div class="form-group demon" style="display: none">
+                <script type="text/plain" id="de_product_remark" style="width:685px;height:40%;">
+                </script>
+                <script type="text/javascript">
+                    var umdemon = UM.getEditor('de_product_remark', {
+                        //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
+                        toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
+                        //focus时自动清空初始化时的内容
+                        autoClearinitialContent: true,
+                        //关闭字数统计
+                        wordCount: true,
+                        //关闭elementPath
+                        elementPathEnabled: false,
+                        //默认的编辑区域高度
+                        initialFrameHeight: 300
+                        //更多其他参数，请参考umeditor.config.js中的配置项
+                    });
+                    umdemon.setContent('输入德文产品备注');
+                </script>
+            </div>
+        </div>
+
+        <!--   <textarea name="product_remark" onchange="getTranslate(false)" placeholder="默认英文" class="product_remark"
+                    id="product_remark" cols="50"
+                    rows="4"></textarea> -->
+
+    </div>
+
+    <!-- title产品销售信息开始 -->
+    <!-- title产品包装信息 开始 -->
+    <div class="titlebox" id="a_productprice"><h3>2、产品销售信息</h3></div>
+    <!-- 销售计量单位 开始 -->
+    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
+        <div class="ml-title"><span class="required">*</span>销售计量单位：</div>
+        <a id="a_measureid"></a>
+        <select class="attr-select j-select-unit form-control" name="measureid">
+            <option disabled="disabled" value="">-- 请选择销售单位 --</option>
+            <option data-name="打" value="1">打(Dozen)</option>
+            <option data-name="英尺" value="2">英尺(Feet)</option>
+            <option data-name="件" value="3" selected="">件(Piece)</option>
+            <option data-name="套" value="4">套(Set)</option>
+            <option data-name="克" value="5">克(Gram)</option>
+            <option data-name="英寸" value="6">英寸(Inch)</option>
+            <option data-name="千克" value="7">千克(Kilogram)</option>
+            <option data-name="千米" value="8">千米(Kilometre)</option>
+            <option data-name="升" value="9">升(Liter)</option>
+            <option data-name="吨" value="10">吨(Metric Tonne)</option>
+            <option data-name="米" value="11">米(Meter)</option>
+            <option data-name="毫升" value="12">毫升(Milliliter)</option>
+            <option data-name="盎司" value="13">盎司(Ounce)</option>
+            <option data-name="双" value="14">双(Pair)</option>
+            <option data-name="磅" value="15">磅(Pound)</option>
+            <option data-name="平方码" value="16">平方码(Square Yard)</option>
+            <option data-name="平方米" value="17">平方米(Square Meter)</option>
+            <option data-name="平方英尺" value="18">平方英尺(Square Feet)</option>
+            <option data-name="码" value="19">码(Yard)</option>
+            <option data-name="厘米" value="20">厘米(Centimeter)</option>
+            <option data-name="箱" value="21">箱(Carton)</option>
+        </select> 示例：12美元/<span class="j-unit-no" name="sortbyunit">件</span>
+        <span class="helpicon" title="销售计量单位帮助" data-helpid="saleUnit"></span>
+        <input type="hidden" id="measurename" value="件">
+
+        <div data-anchor="j-saleBox" data-id="tips-unit" class="tip-error" style="display:none;"
+             data-name="销售计量单位"></div>
+    </div>
+    <!-- 销售计量单位 结束 -->
+
+    <!-- ----- 销售方式 开始 -----  -->
+    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
+        <div class="ml-title"><span class="required">*</span>销售方式：</div>
+        <div class="marginbottom10 clearfix"><label>
+                <input name="market_method" id="sortbyradio1" data-name="件" type="radio" checked="" value="1">
+                <span class="marginleft5 marginright10"><label for="gg">按件卖</label>（单位：<span class="j-unit-no"
+                                                                                             name="sortbyunit">件</span>）</span>
+            </label>
+        </div>
+        <script>
+            $(function () {
+                $('input[name="market_method"]').click(function () {
+                    var discount = $('input[name="market_method"]:checked').val();
+                    if ($(this).val() == discount) {
+                        if ($(this).val() == 2) {
+                            $('#packquantity').removeAttr('disabled');
+                        } else {
+                            $('#packquantity').attr('disabled', 'disabled');
+                        }
+                    }
+                })
+            })
+        </script>
+        <div class="marginbottom10 clearfix">
+            <label>
+                <input name="market_method" id="sortbyradio2" data-name="包" type="radio" value="2">
+                <span class="marginleft5">按包卖</span>
+                <!--<input type="text" class="form-control" placeholder="" name="sell-function-bao">-->
+            </label>
+            <!--/包-->
+            <span>
+			<span class="j-sale-bao">
+                （每包产品的数量：<input id="packquantity" name="packquantity" value="1" type="text" class="input2" size="6"
+                                maxlength="8">
+			<span class="j-unit-no" name="sortbyunit">件</span>）</span>
+		</span>
+            <span class="helpicon" title="销售方式帮助" data-helpid="saleType"></span>
+        </div>
+
+        <div style="display:none" class="tip-error" data-anchor="j-saleBox" data-id="tips-packquantity"
+             data-name="销售方式"><p></p></div>
+    </div>
+    <!-- 销售方式 结束 -->
+
+    <!-- ----- 产品毛重 开始 -----  -->
+    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
+        <div class="ml-title"><span class="required">*</span>产品毛重：</div>
+        <div class="marginbottom10 clearfix">
+            <label>
+                <input type="text" class="form-control" placeholder="" name="sell-function-mao">
+            </label>kg/件
+            <span class="helpicon" title="产品毛重帮助" data-helpid="saleType"></span>
+        </div>
+    </div>
+    <!-- ----- 产品毛重 结束 -----  -->
+    ﻿<input type="hidden" name="noSpecWholeSaleIncome" value="">
+    <input type="hidden" id="catePubDiscount" value="">
+    <input type="hidden" name="cateMinPrice" id="cateMinPrice" value="0.01">
+    <input type="hidden" name="noSpecPrice" id="noSpecPrice">
+    <input type="hidden" name="minAkPrice" id="minAkPrice" value="">
+    <input type="hidden" name="maxAkPrice" id="maxAkPrice" value="">
+    <!-- title产品包装信息 结束 -->
+    <a id="tips-sale-foot"></a>
+    <div class="j-sale-container">
+        <a id="a_saleinfo"></a>
+        <div class="mainlayout j-basic-standard-container clearfix">
+            <div class="ml-title">产品销售规格：</div>
+            <!-- ----- 产品基本属性结束 -----  -->
+            <div class="product-attributes2" id="j-attribute-list">
+                <div>
+                    <table class="table-property j-buy-attrs-list"></table>
+                </div>
+                <div>
+                    <table class="table-property j-sale-attrs-list"></table>
+                </div>
+                <div id="div_self_defind_attr" class="j-list-item">
+                    <table class="table-property">
+                        <tbody>
+                        <tr>
+                            <td class="col-sm-2 bktit addborderline">批量操作</td>
+                            <td class="bkcon addborderline">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputEmail2">Price</label>
+                                        <input type="text" class="form-control" name="price" id="exampleInputEmail2"
+                                               placeholder="Price">
+                                    </div>
+                                    <!--<div class="form-group">-->
+                                    <!--<label class="sr-only" for="exampleInputEmail2">Count</label>-->
+                                    <!--<input type="text" class="form-control" name="count" id="exampleInputEmail2"-->
+                                    <!--placeholder="Count">-->
+                                    <!--</div>-->
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputEmail2">ProductId</label>
+                                        <input type="text" class="form-control" name="productId"
+                                               id="exampleInputEmail2"
+                                               placeholder="ProductId">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputEmail2">增量</label>
+                                        <input type="text" class="form-control" name="product_increase"
+                                               id="product_increase" value="0.5">
+                                    </div>
+                                    <a class="btn btn-default" id="bulk_operation">Confirm</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered" id="product-attribute-table">
+                        <thead>
+                        <tr>
+                            <td class="col-sm-2 bktit addborderline">颜色分类</td>
+                            <td class="col-sm-2 bktit addborderline">VIP价格(美元)</td>
+                            <td class="col-sm-2 bktit addborderline">普通会员价格(美元)</td>
+                            <td class="col-sm-2 bktit addborderline">图片</td>
+                            <td class="col-sm-2 bktit addborderline">操作</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+        <!--添加供应商 form start -->
+        <div class="modal fade" id="addForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                                    class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">添加供应商</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="addsupplier">
+                            <div class="form-group">
+                                <label for="gongyingshang">供应商名称</label>
+                                <input type="text" class="form-control" id="supplier_name" placeholder="供应商名称">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">供应商位置</label>
+                                <input type="text" class="form-control" id="supplier_address" placeholder="供应商位置">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="addRobotBtn">添加</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="form-horizontal  layer_notice hidden" id="addForm">-->
+
+
+        <!--</div>-->
+        <!-- 供应商 开始 -->
+        <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
+            <div class="ml-title"><span class="required"></span>供应商：</div>
+            <a id="a_measureid"></a>
+            <select class="attr-select j-select-unit form-control" id="supplier" name="supplier">
+                <% suppliers.forEach(function(supplier){ %>
+                <option value="<%= supplier.name %>"><%= supplier.name %></option>
+                <% }) %>
+            </select>
+            <button type="button" style="margin-top: 10px" class="btn btn-primary" data-toggle="modal"
+                    data-target="#addForm">
+                添加供应商
+            </button>
+        </div>
+        <!-- 供应商 结束 -->
+        <div class="mainlayout j-basic-standard-container clearfix">
+            <div class="ml-title">
+                产品销售状态：
+            </div>
+            <p class="helptips">黄色(库存待确认)<br>
+                绿色(库存确认可以采购，后台输入供应商信息)<br>
+                红色(停产)
+            </p>
+            <!-- ----- 产品基本属性结束 -----  -->
+            <div class="product-attributes2" id="j-attribute-list">
+                <div>
+                    <table class="table-property j-buy-attrs-list"></table>
+                </div>
+                <div>
+                    <table class="table-property j-sale-attrs-list"></table>
+                </div>
+                <div id="product_sell_status_div" class="j-list-item">
+                    <div>
+                        <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
+                        <div class="form-group" style="float: left;width: 53%">
+                            <div class="input-group">
+                                <input class="form-control" id="product-sell-status" type="text" placeholder=""
+                                       style="height: 47px" value="库存确认可以采购">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- 产品备货期 开始 -->
+        <div class="mainlayout j-basic-standard-container clearfix">
+            <div class="ml-title">
+                产品备货期：
+            </div>
+            <p class="helptips">黄色(默认3天)<br>
+                绿色(默认2天)<br>
+            </p>
+
+            <div class="product-attributes2" id="j-attribute-list">
+                <div>
+                    <table class="table-property j-buy-attrs-list"></table>
+                </div>
+                <div>
+                    <table class="table-property j-sale-attrs-list"></table>
+                </div>
+                <div id="product_sell_status_div" class="j-list-item">
+                    <div>
+                        <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
+                        <div class="form-group" style="float: left;width: 53%">
+                            <div class="input-group" style="display: inline-block">
+                                <input class="form-control" id="product-stock-time" type="text" placeholder=""
+                                       value="2天"
+                                       style="height: 47px">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- ----- 产品备货期 结束 -----  -->
+
+
+        <!-- 产品价格 开始 -->
+        <!--<div id="tips-sale" class="mainlayout clearfix" style="position:relative;">-->
+        <!--<div class="ml-title"><span class="required">*</span>产品价格区间：</div>-->
+        <!--<div class="form-inline">-->
+        <!--<div class="form-group">-->
+        <!--&lt;!&ndash;<label for="exampleInputEmail2">VIP Price</label>&ndash;&gt;-->
+        <!--<input type="text" class="form-control" name="vip_price" id="vip_price" placeholder="VIP Price">-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--&lt;!&ndash;<label for="exampleInputEmail2">Regular Price</label>&ndash;&gt;-->
+        <!--<input type="text" class="form-control" name="regular_price" id="regular_price"-->
+        <!--placeholder="Regular Price">-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--&lt;!&ndash;<label for="exampleInputEmail2">Market Price</label>&ndash;&gt;-->
+        <!--<input type="text" class="form-control" name="market_price" id="market_price"-->
+        <!--placeholder="Market Price">-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="checkbox">-->
+        <!--<label>-->
+        <!--<input type="checkbox" id="cuxiao_price" name="cuxiao_price"> 促销价格:-->
+        <!--</label>-->
+        <!--</div>-->
+        <!--<div class="form-inline">-->
+        <!--<div class="form-group">-->
+        <!--&lt;!&ndash;<label for="exampleInputEmail2">VIP Price</label>&ndash;&gt;-->
+        <!--<input type="text" class="form-control" name="promotion_vip_price" id="promotion_vip_price"-->
+        <!--placeholder="VIP Price">-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--&lt;!&ndash;<label for="exampleInputEmail2">Regular Price</label>&ndash;&gt;-->
+        <!--<input type="text" class="form-control" name="promotion_regular_price"-->
+        <!--id="promotion_regular_price" placeholder="Regular Price">-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--&lt;!&ndash;<label for="exampleInputEmail2">Market Price</label>&ndash;&gt;-->
+        <!--<input type="text" class="form-control" name="promotion_market_price"-->
+        <!--id="promotion_market_price" placeholder="Market Price">-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--</div>-->
+        <!-- 产品价格 结束 -->
+
+        <!--</div>        &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;    &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;-->
+
+        <!-- title产品内容描述 开始 -->
+        <div class="titlebox"><h3>3、产品内容描述</h3></div>
+
+        <!-- 产品图片 开始 -->
+        <!-- 产品图片 开始 -->
+        <div class="mainlayout clearfix">
+            <div class="ml-title"><span class="required">*</span>产品图片：</div>
+            <a id="a_div_imgcontainer"></a>
+            <p class="helptips">图片格式<strong>JPEG</strong>，文件大小<strong>2M</strong>以内，切勿盗用他人图片，以免受网规处罚。<span
+                        class="helpicon" title="产品图片帮助" data-helpid="waterMark"></span></p>
+            <p class="helptips">上传优质产品图片会获得更多的站内外流量。<br>优质产品图片定义：产品原图，即无人为修改痕迹、无水印、无修饰边框和文字。</p>
+            <div class="margintop10">
+                <div id="uploadImages">
+                    相册上传：<input type="file" onchange="uploadFile()" id="file" name="file"
+                                multiple/><br/>
+                    <div class="box-body">
+                        <!--<ul class="fl-file-upload gridly" id="file-upload"></ul>-->
+                        <div class="gridly"></div>
+                    </div>
+                </div>
+                <span class="helptips">
+    			您还可以上传<b class="color444 limit_pic" id="photonum_b">8</b>
+    			          <span class="color000">/<span>8</span></span> 张
+    		</span>
+                <input type="hidden" id="inp_img_index" value="">
+            </div>
+
+        </div>
+
+        <input id="current_oper_index" name="current_oper_index" type="hidden" value="1">
+
+        <input id="current_oper_imgurls" name="current_oper_imgurls" type="hidden" value="">
+
+
+        <!--图片上传弹出窗口完-->
+
+        <!-- 产品视频 开始 -->
+        <div class="mainlayout clearfix j-list-item" id="vadiourlTip">
+            <div class="ml-title">产品视频链接：</div>
+            <a id="a_vadiourl"></a>
+            <p class="helptips">
+                只允许输入YOUTUBE网站视频链接地址,例如:http://www.youtube.com/watch?v=*****
+                <span class="helpicon" title="导入视频帮助" helptipval="vadiourlTip"></span>
+            </p>
+            <div class="margintop10"><input class="attr-text-input addwid402" type="text" id="videourl" size="120"
+                                            name="videourl" maxlength="300" value="">
+            </div>
+        </div>
+        <!-- 产品视频结束 -->
+
+
+    </div>
+    <!-- 产品视频结束 -->
+
+    <!-- 运费设置开始 -->
+    <!--<div class="titlebox" id="shippingmodelidTip_1">-->
+    <!--<h3>4、设置运费</h3><span class="helpicon" title="设置运费帮助" helptipval="shippingmodelidTip_1"></span>-->
+    <!--<a id="a_shippingmodelid"></a>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; 运费设置列表开始 &ndash;&gt;-->
+    <!--<div class="j-list-item">-->
+    <!--&lt;!&ndash; 大标题开始 &ndash;&gt;-->
+    <!--<div class="mainlayout clearfix j-shippingarea-container">-->
+    <!--<div class="ml-title"><span class="required">*</span>运费计算模板：</div>-->
+    <!--<div class="ui-tab ui-tab-normal tab-wrap logistics-container ui-switchable" data-name="loc-cn"-->
+    <!--data-country="CN" data-widget-cid="widget-5">-->
+    <!--<div class="btn-group" data-toggle="buttons">-->
+    <!--<label class="btn btn-primary active logistics-panel-type">-->
+    <!--<input type="radio" name="options" autocomplete="off" checked>小包类物流-->
+    <!--</label>-->
+    <!--<label class="btn btn-primary logistics-panel-type">-->
+    <!--<input type="radio" name="options" autocomplete="off">普通类物流-->
+    <!--</label>-->
+    <!--<label class="btn btn-primary logistics-panel-type">-->
+    <!--<input type="radio" name="options" autocomplete="off">特快类物流-->
+    <!--</label>-->
+    <!--<label class="btn btn-primary logistics-panel-type">-->
+    <!--<input type="radio" name="options" autocomplete="off">其他物流-->
+    <!--</label>-->
+    <!--</div>-->
+    <!--<div class="ui-tab-body ui-switchable-content" id="logistic-list">-->
+    <!--<div id="economy-logistics-panel"-->
+    <!--class="logistics-panel ui-tab-pane ui-tab-active series-wrap ui-switchable-panel"-->
+    <!--data-role="panel" data-series="cn-post" style="display: block;">-->
+    <!--<div class="alert alert-warning alert-dismissible fade in" role="alert">-->
+    <!--<button type="button" class="close" data-dismiss="alert"><span-->
+    <!--aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
+    <!--小包类物流运费优惠，但不提供目的国包裹妥投信息，仅适合货值低、重量轻的商品使用。-->
+    <!--</div>-->
+    <!--<table width="100%" cellspacing="0" cellpadding="8"-->
+    <!--class="table table-bordered table-list logistic-list ui-table">-->
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th width="20%">选择物流</th>-->
+    <!--<th width="40%">运费设置-->
+    <!--<span class="setting-help-icon ui-help ui-help-icon"></span>-->
+    <!--</th>-->
+    <!--<th width="40%">运达时间设置</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--&lt;!&ndash; 物流公司列表&ndash;&gt;-->
+    <!--<tr id="YANWEN_JYT" class="logistic-row" logisticcompany="YANWEN_JYT"-->
+    <!--isdeliverycountryzone="COUNTRY" companydisplayname="					China Post Ordinary Small Packet Plus-->
+    <!--<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国邮政平常小包+-->
+    <!--" logisticsmessage="">-->
+    <!--<td class="logistic-name" width="35%">-->
+    <!--<input type="checkbox" class="logistic-checkbox" id="YANWEN_JYT-check"-->
+    <!--name="logistic-name" value="YANWEN_JYT" checked="checked">-->
+    <!--<span id="YANWEN_JYT">小包快递-->
+    <!--</span>-->
+    <!--<span class="logisticname-info ui-help ui-help-icon"></span>-->
+    <!--<div class="tip-me logisticname-tip" style="display:none;">-->
+    <!--<div class="help-content-wrap">-->
+    <!--Ecsell线上发货渠道，无挂号费，适合运送货值低重量轻的商品，不提供目的国包裹妥投信息。<br>-->
+    <!--<a href="http://seller.aliexpress.com/so/onlinelogistics_postbj.php"-->
+    <!--target="_blank">了解详情</a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</td>-->
+    <!--<td class="logistic-commit-standard" width="35%">-->
+    <!--<div class="set-logistic">-->
+    <!--<input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"-->
+    <!--type="radio" checked="checked">-->
+    <!--<span>标准运费</span>-->
+    <!--<span class="decount-box">-->
+    <!--减免-->
+    <!--<input id="decount-box-input-CPAM" value="0" class="decount-box-input"-->
+    <!--size="2" maxlength="2" name="freight-reduce-count-CPAM">-->
+    <!--%-->
+    <!--<span class="decount-help-link ui-help ui-help-icon"></span>-->
+    <!--<span class="discountBox" style="">即<span-->
+    <!--class="discountHook">全</span>折</span>-->
+
+    <!--</span>-->
+    <!--</div>-->
+
+    <!--<div class="set-logistic">-->
+    <!--<input class="no-logistic" name="freight-mode-CPAM" value="all_free"-->
+    <!--type="radio">-->
+    <!--卖家承担运费-->
+    <!--<span class="freeshipping-box" style="display: none;">Free Shipping</span>-->
+    <!--</div>-->
+    <!--<label>燃油附加费:</label>-->
+    <!--<input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"-->
+    <!--name="ranyoufei">-->
+    <!--</td>-->
+    <!--<td width="30%">-->
+    <!--<div class="set-commit-time">-->
+    <!--<input class="standard-commit-time" name="arrival-time-mode-YANWEN_JYT"-->
+    <!--value="all_standard" type="radio">-->
+    <!--承诺运达时间-->
+    <!--<input id="time-box-input-YANWEN_JYT"-->
+    <!--class="time-box-input ui-textfield ui-textfield-system" size="2"-->
+    <!--maxlength="2" name="arrival-time-days-YANWEN_JYT" value="">-->
+    <!--天-->
+    <!--</div>-->
+
+    <!--<div class="set-commit-time">-->
+    <!--<input id="custom-commit-time-YANWEN_JYT" class="custom-commit-time"-->
+    <!--name="arrival-time-mode-YANWEN_JYT" value="self_define" type="radio"-->
+    <!--logisticcompany="YANWEN_JYT" isdeliverycountryzone="COUNTRY"-->
+    <!--checked="checked">-->
+    <!--<label for="custom-commit-time-YANWEN_JYT" class="custom-time">-->
+    <!--自定义运达时间-->
+    <!--</label>-->
+    <!--<textarea class="custom-commit-time-content"-->
+    <!--name="arrival-time-custom-setting-YANWEN_JYT"></textarea>-->
+    <!--</div>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+    <!--</table>-->
+    <!--</div>-->
+    <!--<div id="standard-logistics-panel"-->
+    <!--class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="panel"-->
+    <!--data-series="cn-business" style="display: none;">-->
+    <!--<div class="alert alert-warning alert-dismissible fade in" role="alert">-->
+    <!--<button type="button" class="close" data-dismiss="alert"><span-->
+    <!--aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
+    <!--普通类物流包括邮政挂号服务和专线类服务，全程物流追踪信息可查询。无忧物流的排他规则已取消，您可以如其他物流线路一样设置使用-->
+    <!--</div>-->
+    <!--<table width="100%" cellspacing="0" cellpadding="8"-->
+    <!--class="table table-bordered table-list logistic-list ui-table">-->
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th width="20%">选择物流</th>-->
+    <!--<th width="40%">运费设置-->
+    <!--<span class="setting-help-icon ui-help ui-help-icon"></span>-->
+    <!--</th>-->
+    <!--<th width="40%">运达时间设置</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+
+    <!--<tr class="logistic-row" logisticcompany="CPAM" isdeliverycountryzone="COUNTRY"-->
+    <!--companydisplayname="					China Post Registered Air Mail-->
+    <!--<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国邮政挂号小包-->
+    <!--">-->
+    <!--<td class="logistic-name" width="35%">-->
+    <!--<input type="checkbox" class="logistic-checkbox" id="CPAM-check"-->
+    <!--name="logistic-name" value="CPAM" checked="checked">-->
+    <!--<div id="CPAM-name-div" class="marginleft5 logistics-name-div">-->
+    <!--普通快递-->
+    <!--<span class="logisticname-info ui-help ui-help-icon"></span>-->
+    <!--<div class="tip-me logisticname-tip" style="display:none;">-->
+    <!--<div class="help-content-wrap">-->
+    <!--可寄送2kg以上的普通商品，运送范围为全球，可使用速卖通线上发货，专享线上发货合约价及服务保障！<br>-->
+    <!--<a href="#" target="_blank">了解详情</a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</td>-->
+    <!--<td class="logistic-commit-standard" width="35%">-->
+    <!--<div class="set-logistic">-->
+    <!--<input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"-->
+    <!--type="radio" checked="checked">-->
+    <!--<span>标准运费</span>-->
+    <!--<span class="decount-box">-->
+    <!--减免-->
+    <!--<input id="decount-box-input-CPAM" value="0" class="decount-box-input"-->
+    <!--size="2" maxlength="2" name="freight-reduce-count-CPAM">-->
+    <!--%-->
+    <!--<span class="decount-help-link ui-help ui-help-icon"></span>-->
+    <!--<span class="discountBox" style="">即<span-->
+    <!--class="discountHook">全</span>折</span>-->
+
+    <!--</span>-->
+    <!--</div>-->
+
+    <!--<div class="set-logistic">-->
+    <!--<input class="no-logistic" name="freight-mode-CPAM" value="all_free"-->
+    <!--type="radio">-->
+    <!--卖家承担运费-->
+    <!--<span class="freeshipping-box" style="display: none;">Free Shipping</span>-->
+    <!--</div>-->
+    <!--<label>燃油附加费:</label>-->
+    <!--<input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"-->
+    <!--name="ranyoufei">-->
+    <!--</td>-->
+    <!--<td width="30%">-->
+    <!--<div class="set-commit-time">-->
+    <!--<input class="standard-commit-time" name="arrival-time-mode-CPAM"-->
+    <!--value="all_standard" type="radio">-->
+    <!--承诺运达时间-->
+    <!--<input id="time-box-input-CPAM"-->
+    <!--class="time-box-input ui-textfield ui-textfield-system" size="2"-->
+    <!--maxlength="2" name="arrival-time-days-CPAM" value="">-->
+    <!--天-->
+    <!--</div>-->
+
+    <!--<div class="set-commit-time">-->
+    <!--<input id="custom-commit-time-CPAM" class="custom-commit-time"-->
+    <!--name="arrival-time-mode-CPAM" value="self_define" type="radio"-->
+    <!--logisticcompany="CPAM" isdeliverycountryzone="COUNTRY" checked="checked">-->
+    <!--<label for="custom-commit-time-CPAM" class="custom-time">-->
+    <!--自定义运达时间-->
+    <!--</label>-->
+    <!--<textarea class="custom-commit-time-content"-->
+    <!--name="arrival-time-custom-setting-CPAM"></textarea>-->
+    <!--</div>-->
+    <!--</td>-->
+
+    <!--</tr>-->
+    <!--</tbody>-->
+    <!--</table>-->
+    <!--</div>-->
+
+    <!--<div id="express-logistics-panel"-->
+    <!--class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="panel"-->
+    <!--data-series="cn-dedicated" style="display: none;">-->
+    <!--<div class="alert alert-warning alert-dismissible fade in" role="alert">-->
+    <!--<button type="button" class="close" data-dismiss="alert"><span-->
+    <!--aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
+    <!--特快类物流方案包含邮政快递、商业快递，时效快全程物流追踪信息可查询，适合高货值商品使用。-->
+    <!--</div>-->
+    <!--<table width="100%" cellspacing="0" cellpadding="8"-->
+    <!--class="table table-bordered  table-list logistic-list ui-table">-->
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th width="20%">选择物流</th>-->
+    <!--<th width="40%">运费设置-->
+    <!--<span class="setting-help-icon ui-help ui-help-icon"></span>-->
+    <!--</th>-->
+    <!--<th width="40%">运达时间设置</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--&lt;!&ndash; 物流公司列表&ndash;&gt;-->
+    <!--<tr id="SF" class="logistic-row  disabled-row" logisticcompany="SF"-->
+    <!--isdeliverycountryzone="COUNTRY" companydisplayname="					SF Express-->
+    <!--<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺丰速运-->
+    <!--"-->
+    <!--logisticsmessage="顺丰速运新增运达国家，可根据您的实际情况编辑运费模板。<a href=http://bbs.seller.aliexpress.com/bbs/read.php?tid=294253&amp;page=1&amp;toread=1#tpc' target='_blanke'>点击了解详情</a>">-->
+    <!--<td class="logistic-name" width="35%">-->
+    <!--<input type="checkbox" class="logistic-checkbox" id="SF-check" name="logistic-name"-->
+    <!--value="SF">-->
+    <!--<span id="SF">特快快递-->
+    <!--</span>-->
+    <!--</td>-->
+    <!--<td class="logistic-commit-standard" width="35%">-->
+    <!--<div class="set-logistic">-->
+    <!--<input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"-->
+    <!--type="radio" checked="checked">-->
+    <!--<span>标准运费</span>-->
+    <!--<span class="decount-box">-->
+    <!--减免-->
+    <!--<input id="decount-box-input-CPAM" value="0" class="decount-box-input"-->
+    <!--size="2" maxlength="2" name="freight-reduce-count-CPAM">-->
+    <!--%-->
+    <!--<span class="decount-help-link ui-help ui-help-icon"></span>-->
+    <!--<span class="discountBox" style="">即<span-->
+    <!--class="discountHook">全</span>折</span>-->
+
+    <!--</span>-->
+    <!--</div>-->
+
+    <!--<div class="set-logistic">-->
+    <!--<input class="no-logistic" name="freight-mode-CPAM" value="all_free"-->
+    <!--type="radio">-->
+    <!--卖家承担运费-->
+    <!--<span class="freeshipping-box" style="display: none;">Free Shipping</span>-->
+    <!--</div>-->
+    <!--<label>燃油附加费:</label>-->
+    <!--<input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"-->
+    <!--name="ranyoufei">-->
+    <!--</td>-->
+    <!--<td width="30%">-->
+    <!--<div class="set-commit-time">-->
+    <!--<input class="standard-commit-time" name="arrival-time-mode-SF"-->
+    <!--value="all_standard" type="radio">-->
+    <!--承诺运达时间-->
+    <!--<input id="time-box-input-SF"-->
+    <!--class="time-box-input ui-textfield ui-textfield-system" size="2"-->
+    <!--maxlength="2" name="arrival-time-days-SF" value="23">-->
+    <!--天-->
+    <!--</div>-->
+
+    <!--<div class="set-commit-time">-->
+    <!--<input id="custom-commit-time-SF" class="custom-commit-time"-->
+    <!--name="arrival-time-mode-SF" value="self_define" type="radio"-->
+    <!--logisticcompany="SF" isdeliverycountryzone="COUNTRY" disabled="">-->
+    <!--<label for="custom-commit-time-SF" class="custom-time">-->
+    <!--自定义运达时间-->
+    <!--</label>-->
+    <!--<textarea class="custom-commit-time-content"-->
+    <!--name="arrival-time-custom-setting-SF">  </textarea>-->
+    <!--</div>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+    <!--</table>-->
+    <!--</div>-->
+
+    <!--<div id="other-logistics-panel" class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel"-->
+    <!--data-role="panel" data-series="cn-other" style="display: none;">-->
+    <!--<div class="alert alert-warning alert-dismissible fade in" role="alert">-->
+    <!--<button type="button" class="close" data-dismiss="alert"><span-->
+    <!--aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
+    <!--提醒：请使用真实且物流信息可查询的物流方式发货，如果您使用无法核实物流跟踪信息的物流方式，Ecsell有权不予认可。-->
+    <!--</div>-->
+    <!--<table width="100%" cellspacing="0" cellpadding="8"-->
+    <!--class="table table-bordered  table-list logistic-list ui-table">-->
+
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th width="20%">选择物流</th>-->
+    <!--<th width="40%">运费设置-->
+    <!--<span class="setting-help-icon ui-help ui-help-icon"></span>-->
+    <!--</th>-->
+    <!--<th width="40%">运达时间设置</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--<tr class="logistic-row  disabled-row" isdeliverycountryzone="COUNTRY"-->
+    <!--logisticcompany="Other" companydisplayname="					Seller's Shipping Method-->
+    <!--<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;卖家自定义-中国-->
+    <!--" logisticsmessage="">-->
+    <!--<td class="logistic-name">-->
+    <!--<input type="checkbox" class="logistic-checkbox" id="Other-check"-->
+    <!--name="logistic-name" value="Other">-->
+    <!--<span id="Other">					Seller's Shipping Method-->
+    <!--<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;卖家自定义-中国-->
+    <!--</span>-->
+
+    <!--<span class="logisticname-info ui-help ui-help-icon"></span>-->
+    <!--<div class="tip-me logisticname-tip" style="display:none;">-->
+    <!--<div class="help-content-wrap">-->
+    <!--如果运费模板没有您使用的物流方式，可以使用此选项设置运费，但您需要遵守速卖通物流网规选择物流。对于无法核实真伪的物流跟踪信息，速卖通有权不予认可。<a-->
+    <!--href="#" target="_blank">了解详情</a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</td>-->
+    <!--<td class="logistic-commit-standard" width="35%">-->
+    <!--<div class="set-logistic">-->
+    <!--<input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"-->
+    <!--type="radio" checked="checked">-->
+    <!--<span>标准运费</span>-->
+    <!--<span class="decount-box">-->
+    <!--减免-->
+    <!--<input id="decount-box-input-CPAM" value="0" class="decount-box-input"-->
+    <!--size="2" maxlength="2" name="freight-reduce-count-CPAM">-->
+    <!--%-->
+    <!--<span class="decount-help-link ui-help ui-help-icon"></span>-->
+    <!--<span class="discountBox" style="">即<span-->
+    <!--class="discountHook">全</span>折</span>-->
+
+    <!--</span>-->
+    <!--</div>-->
+
+    <!--<div class="set-logistic">-->
+    <!--<input class="no-logistic" name="freight-mode-CPAM" value="all_free"-->
+    <!--type="radio">-->
+    <!--卖家承担运费-->
+    <!--<span class="freeshipping-box" style="display: none;">Free Shipping</span>-->
+    <!--</div>-->
+    <!--<label>燃油附加费:</label>-->
+    <!--<input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"-->
+    <!--name="ranyoufei">-->
+    <!--</td>-->
+    <!--<td width="20%">-->
+    <!--<div class="set-commit-time">-->
+    <!--<input class="standard-commit-time" name="arrival-time-mode-Other"-->
+    <!--value="all_standard" type="radio">-->
+    <!--承诺运达时间-->
+    <!--<input id="time-box-input-Other" class="time-box-input" size="1" maxlength="2"-->
+    <!--name="arrival-time-days-Other" value="23">-->
+    <!--天-->
+    <!--</div>-->
+
+    <!--<div class="set-commit-time">-->
+    <!--<input id="custom-commit-time-Other" class="custom-commit-time"-->
+    <!--name="arrival-time-mode-Other" value="self_define" type="radio"-->
+    <!--isdeliverycountryzone="COUNTRY" logisticcompany="Other" disabled="">-->
+    <!--<label for="custom-commit-time-Other" class="custom-time">-->
+    <!--自定义运达时间-->
+    <!--</label>-->
+    <!--<textarea class="custom-commit-time-content"-->
+    <!--name="arrival-time-custom-setting-Other">  </textarea>-->
+    <!--</div>-->
+    <!--</td>-->
+
+    <!--</tr>-->
+
+    <!--</tbody>-->
+    <!--</table>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<input type="button" value="标准运费计算器" id="calculate-yunfei" class="btn btn-primary" data-toggle="modal"-->
+    <!--data-target="#yunfei-table">-->
+
+    <!--<div class="modal fade" id="yunfei-table" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
+    <!--aria-hidden="true">-->
+    <!--<div class="modal-dialog">-->
+    <!--<div class="modal-content">-->
+    <!--<div class="modal-header">-->
+    <!--<button type="button" class="close" data-dismiss="modal"><span-->
+    <!--aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+    <!--<h4 class="modal-title" id="myModalLabel">计算标准运费</h4>-->
+    <!--</div>-->
+    <!--<div class="modal-body">-->
+    <!--<div class="deitbox">-->
+    <!--<div class="ccl-title">-->
+    <!--<p>-->
+    <!--包装信息：<br>-->
+    <!--<input type="text" class="inputtxt02" value="1.0" size="6" name="grossWeight"-->
+    <!--id="grossWeight">-->
+    <!--<span class="marginlfrl10">公斤(kg)</span>-->
+    <!--<label class="marginlf10">购买数量：</label>-->
+    <!--<input type="text" class="inputtxt01" size="6" id="quantity" name="quantity"-->
+    <!--value="1">-->
+    <!--<label class="marginlf10"> 送达国家：</label>-->
+    <!--<select style="width: 15%;display: inline-block;" id="country" name="country"-->
+    <!--class="form-control">-->
+    <!--</select>-->
+    <!--<script>-->
+    <!--$(function () {-->
+    <!--var express = expresses;-->
+    <!--var ordinary = ordinaries;-->
+    <!--express.data.forEach(function (item) {-->
+    <!--$('#country').append('<option>' + item.zh + '</option>')-->
+    <!--})-->
+    <!--$('#grossWeight').change(function () {-->
+    <!--var grossWeight = $('#grossWeight').val();-->
+    <!--if (grossWeight < 2) {-->
+    <!--$('#country').html('');-->
+    <!--express.data.forEach(function (item) {-->
+    <!--$('#country').append('<option>' + item.zh + '</option>')-->
+    <!--})-->
+    <!--} else if (grossWeight < 21) {-->
+    <!--$('#country').html('');-->
+    <!--ordinary.data.forEach(function (item) {-->
+    <!--$('#country').append('<option>' + item.zh + '</option>')-->
+    <!--})-->
+    <!--} else {-->
+    <!--$('#country').html('');-->
+    <!--ordinary.data.forEach(function (item) {-->
+    <!--$('#country').append('<option>' + item.zh + '</option>')-->
+    <!--})-->
+    <!--}-->
+    <!--})-->
+
+    <!--})-->
+    <!--$(function () {-->
+
+    <!--$('#calculate-yunfei-re').click(function () {-->
+    <!--var weight_for_jian = $('input[name="grossWeight"]').val();-->
+    <!--if (weight_for_jian.length == 0) {-->
+    <!--myjinggao = '<div id="weightTip" class="alert alert-danger alert-dismissible fade in" role="alert">'-->
+    <!--+ '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'-->
+    <!--+ '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'-->
+    <!--+ '必须输入包装重量'-->
+    <!--+ '</div>';-->
+    <!--$('.ccl-title').append(myjinggao);-->
+    <!--return false;-->
+    <!--}-->
+    <!--var weight = (weight_for_jian * $('#quantity').val()).toFixed(2);-->
+    <!--var area = $('#country').val();-->
+    <!--$.ajax({-->
+    <!--type: 'POST',-->
+    <!--url: '/admin/transport',-->
+    <!--data: {-->
+    <!--weight: weight,-->
+    <!--area: area-->
+    <!--},-->
+    <!--dataType: 'json',-->
+    <!--success: function (data) {-->
+    <!--var myhtml = '';-->
+    <!--if (data.express) {-->
+    <!--if (data.express.price) {-->
+    <!--myhtml = '<tr>'-->
+    <!--+ '<td class="padleft20" width="50%">'-->
+    <!--+ '<a target="_blank">'-->
+    <!--+ data.express.msg-->
+    <!--+ '</a>'-->
+    <!--+ '</td>'-->
+    <!--+ '<td class="tal-right" width="22%">3-8 days</td>'-->
+    <!--+ '<td class="tal-right" width="28%">'-->
+    <!--+ data.express.price-->
+    <!--+ '</td>'-->
+    <!--+ '</tr>';-->
+    <!--}-->
+    <!--}-->
+    <!--if (data.little_packet) {-->
+    <!--if (data.little_packet.price) {-->
+    <!--myhtml += '<tr>'-->
+    <!--+ '<td class="padleft20" width="50%">'-->
+    <!--+ '<a target="_blank">'-->
+    <!--+ data.little_packet.msg-->
+    <!--+ '</a>'-->
+    <!--+ '</td>'-->
+    <!--+ '<td class="tal-right" width="22%">3-8 days</td>'-->
+    <!--+ '<td class="tal-right" width="28%">'-->
+    <!--+ data.little_packet.price-->
+    <!--+ '</td>'-->
+    <!--+ '</tr>';-->
+    <!--}-->
+    <!--}-->
+    <!--if (data.ordinary) {-->
+    <!--if (data.ordinary.price) {-->
+    <!--myhtml += '<tr>'-->
+    <!--+ '<td class="padleft20" width="50%">'-->
+    <!--+ '<a target="_blank">'-->
+    <!--+ data.ordinary.msg-->
+    <!--+ '</a>'-->
+    <!--+ '</td>'-->
+    <!--+ '<td class="tal-right" width="22%">3-8 days</td>'-->
+    <!--+ '<td class="tal-right" width="28%">'-->
+    <!--+ data.ordinary.price-->
+    <!--+ '</td>'-->
+    <!--+ '</tr>';-->
+    <!--}-->
+    <!--}-->
+    <!--$('#calculatorbox tbody').html(myhtml);-->
+    <!--},-->
+    <!--error: function (data) {-->
+    <!--if (data.status == 404) {-->
+    <!--$('#calculatorbox tbody').html('');-->
+    <!--myjinggao = '<div id="weightTip" class="alert alert-warning alert-dismissible fade in" role="alert">'-->
+    <!--+ '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'-->
+    <!--+ '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'-->
+    <!--+ '暂时没有快递到该国家'-->
+    <!--+ '</div>';-->
+    <!--$('.ccl-title').append(myjinggao);-->
+    <!--}-->
+    <!--}-->
+    <!--});-->
+    <!--})-->
+    <!--})-->
+    <!--</script>-->
+    <!--<span class="yellowBtn valmiddle marginlf10">-->
+    <!--<input type="submit" class="btn btn-info" id="calculate-yunfei-re" value="计算">-->
+    <!--</span>-->
+    <!--</p>-->
+    <!--<p>-->
+    <!--<span class="red" style="display:none">必须输入包装重量</span>-->
+    <!--</p>-->
+    <!--</div>-->
+    <!--<div class="calculatorbox" id="calculatorbox">-->
+    <!--<table width="100%" class="table table-bordered">-->
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th width="50%" class="tal-left">物流公司</th>-->
+    <!--<th width="22%" class="tal-right">估计时间</th>-->
+    <!--<th width="28%" class="tal-right">标准运费含燃油费</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+
+    <!--</tbody>-->
+    <!--</table>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="modal-footer">-->
+    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div id="postAirMail20160218" class="similarity-tip-gantan" style="display:none;"><span-->
+    <!--style="color:red;">epacket、邮政小包类物流限重2KG，单件已超重禁止使用。</span></div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;-&#45;&#45;&#45;&#45; 大标题结束 -&#45;&#45;&#45;&#45;&ndash;&gt;-->
+    <!--&lt;!&ndash;-&#45;&#45;&#45;&#45; 运费设置列表开始 -&#45;&#45;&#45;&#45;&ndash;&gt;-->
+    <!--</div>-->
+    <!--对频繁上传产品的卖家显示验证码-->
+
+    <!-- title其他信息 结束 -->
+
+
+    <!-- 完成提交开始 -->
+    <div id="syi_submit_id" class="syi-submit" style="margin-bottom: 10px">
+        <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系ECSELL客服部门。</strong><br>
+        <button type="button" id="btn_submitproduct" class="btn btn-primary">
+			    <span id="loadingimg" class="submit-syi">
+                    <img src="/assets/img/icon/loadings.gif" class="syi-img-show">
+				<span id="submitopt">产品提交</span>
+				</span>
+        </button>
+        <!--<button type="button"  id="btn_previewproduct">
+            <span class="preview" id="previewopt"><span>预览</span></span>
+        </button>-->
+    </div>
+    <!-- 完成提交结束 -->
+
+    <!-- 翻译 开始 -->
+    <div id="translateBox" class="syi-translate" style="right: 26px;">
+        <div class="show-translabox"></div>
+
+        <div class="translabox">
+            <a href="http://fanyi.baidu.com/" target="_blank" class="jinshan"></a>
+            <a href="http://fanyi.youdao.com/" target="_blank" class="youdao"></a>
+            <a href="http://translate.google.cn/" target="_blank" class="google"></a>
+        </div>
+        <!-- 产品填写参考 开始 -->
+        <div class="syi-proreference-box" style="display:none;">
+            <div class="syi-proreference">
+                <a href="http://seller.dhgate.com/syi/showProdInfo.do?itemcode=" target="_blank"
+                   title="点此查看调整之前的产品信息" class="proreferencebox">产品填写参考</a>
+            </div>
+        </div>
+        <!-- 产品填写参考 结束 -->
+    </div>
+    <!-- 翻译 结束 -->
+
+
+    <div id="onLineChatBox" class="syi-onlinechat" style="top: 361px; right: 26px;">
+        <div class="show-onlinechat"></div>
+        <div class="onlinechatbox">
+            <a id="syi_chat_window" href="javascript:void(0);" class="onlinechat" target="_blank"></a>
+        </div>
+    </div>
+
+    <!-- footer文件调用开始 -->
+    <div class="headerlayout">
+        <!--[if IE 6]>
+        <div class="layoutmargin">
+            <div class="layoutpadding"><![endif]-->
+        <!--<iframe id="headiframe" name="head" src="http://seller.dhgate.com/syihtml/footer_syi.html" width="100%"-->
+        <!--height="81" frameborder="0" scrolling="no"></iframe>-->
+        <!--[if IE 6]></div></div><![endif]-->
+    </div>
+    <!-- footer文件调用结束 -->
+</div>
+</div>
+</div>
+<script>
+
+    if ($('.gridly').children().length == 0) {
+        window.LS.each(function (key, value) {    //遍历
+            if (/^brick_*/.test(key)) {
+                $('.gridly').append(value)
+                var reordering = function ($elements) {
+                    $('.gridly').gridly('draggable', 'on')
+                };
+                $('.gridly').gridly({
+                    callbacks: {reordering: reordering}
+                })
+            }
+        })
+    }
+    $('.delete').click(function () {
+        var div_brick = $(this).parents('div').attr('id')
+        console.log(div_brick)
+        $('#' + div_brick).remove();
+        window.LS.remove(div_brick)
+        $('.limit_pic').text(parseInt(8 - $('.gridly').children().length))
+    })
+    //提交添加
+    $("#addRobotBtn").on('click', function () {
+        var date = new Date();
+        var parmets = {
+            add_name: $("#supplier_name").val(),
+            add_address: $("#supplier_address").val(),
+            add_time: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes(),
+            add_time_number: (date.getTime() / 1000).toFixed()
+        }
+        console.log(parmets)
+        if (parmets.add_name == '') {
+            layer.tips('请填写供应商', '#supplier_name')
+        } else {
+            console.log(parmets)
+            $.ajax({
+                url: 'doAddSupplier',
+                type: 'POST',
+                data: parmets,
+                success: function (retmsgurndata) {
+                    console.log(retmsgurndata)
+                    $("#supplier").append("<option value='" + $("#supplier_name").val() + "'>" + $("#supplier_name").val() + "</option>");
+                    $("#supplier_name").val('');
+                    $("#supplier_address").val('');
+                    layer.closeAll();
+                    layer.msg('添加成功');
+                }, error: function (returndata) {
+                    alert('添加失败，请检查是否有非法词汇！');
+                }
+            });
+        }
+    })
+
+
+    function uploadFile() {
+        var file = document.getElementById("file")
+        var formData = new FormData();
+        console.log(file)
+        console.log(file.files)
+        if (file.files.length > 8) {
+            layer.alert('上传图片大于8张')
+        } else {
+            for (var i = 0; i < file.files.length; i++) {
+                if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpeg') {
+                    layer.alert('上传图片格式有误')
+                    return false
+                } else if (file.files[i].size / 1024 > 2000) {
+                    layer.alert('上传图片大小不能超过2M')
+                    return false
+                } else {
+                    formData.append('file', file.files[i]);
+                }
+
+                $('.limit_pic').text(8 - file.files.length)
+            }
+
+            $.ajax({
+                url: '/admin/uploadSingle',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var data = data.data;
+                    console.log(data)
+                    if (data.length != 0) {
+                        $('.gridly').gridly('draggable', 'on')
+                        data.forEach(function (item, index) {
+                            item = item.replace('public', '');
+                            var li = '<div class="brick small" id="brick_' + index + '"><img src="' + item + '"><span class="delete"></span></div>';
+                            window.LS.set("brick_" + index, li)
+                            $('.gridly').append(li);
+                        })
+                    }
+
+                    var reordering = function ($elements) {
+                        $('.gridly').gridly('draggable', 'on')
+                    };
+
+
+                    $('.gridly').gridly({
+                        callbacks: {reordering: reordering}
+                    });
+
+
+                    $('.delete').click(function () {
+                        var div_brick = $(this).parents('div').attr('id')
+                        $('#' + div_brick).remove();
+                        window.LS.remove(div_brick)
+                        $('.limit_pic').text(parseInt($('.limit_pic').text()) + 1)
+                    })
+                },
+                error: function () {
+                    layer.msg('上传文件格式错误')
+                }
+            });
+        }
+
+
+    }
+</script>

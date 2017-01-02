@@ -43,10 +43,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// create a write stream (in append mode)
-var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
-// setup the logger
-app.use(morgan('combined', {stream: accessLogStream}))
+if (process.env.NODE_ENV == 'production') {
+    // create a write stream (in append mode)
+    var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
+    // setup the logger
+    app.use(morgan('combined', {stream: accessLogStream}))
+}
 app.use(cors());
 
 //记录路由响应时间

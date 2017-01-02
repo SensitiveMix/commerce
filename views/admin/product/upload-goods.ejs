@@ -1,0 +1,609 @@
+<% layout('../backend-master.ejs') %>
+
+<style>
+    .categoryselectlist li.current, .categoryselectlist li.hover {
+        color: #fff;
+        background-color: #316ac5;
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 2px;
+    }
+
+    .leave01 {
+        float: right;
+        background: url("/assets/img/icon/leve01.png") 0 0 no-repeat;
+    }
+
+    .leave-cat-lv span.first {
+        width: 100px;
+    }
+
+    .leave-cat-lv span {
+        float: left;
+        display: block;
+        width: 99px;
+        line-height: 22px !important;
+        line-height: 20px;
+        text-align: center;
+        color: #fff;
+    }
+
+    .leave-cat-lv span.middle {
+        width: 106px;
+    }
+
+    .leave-cat-lv span.last {
+        width: 90px;
+    }
+
+    .catgoray-box {
+        width: 100%;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    .search-history {
+        position: relative;
+        z-index: 2;
+        height: 50px;
+        padding: 15px 10px 0;
+    }
+
+    .search-history .history-tit {
+        float: left;
+        color: #0b0b0b;
+        line-height: 24px;
+    }
+
+    .search-history .drop-down {
+        width: 65%;
+    }
+
+    .drop-down {
+        position: relative;
+        float: left;
+        padding-top: 1px;
+        height: 25px;
+        line-height: 22px;
+        border: 1px solid #8797b0;
+        background-color: #fff;
+    }
+
+    .drop-down-default {
+        display: block;
+        position: absolute;
+        right: 1px;
+        top: 0px;
+        height: 25px;
+        border-left: 1px solid #b9cbe7;
+        cursor: pointer;
+    }
+
+    .greay-cat-box {
+        border: 1px solid #f3f3f3;
+    }
+
+    .greay-cat-box .b-f-line {
+        margin: 0 auto;
+        width: 100%;
+        overflow: hidden;
+        padding: 8px;
+        border: 1px solid #fff;
+        background-color: #fafafa;
+    }
+
+    .categoryselectlistbox {
+        position: relative;
+        z-index: 0;
+        width: 100%;
+        padding: 0 0 0 1px;
+        height: 222px;
+        background: url("/assets/img/icon/category-bg.png") no-repeat;
+        background-size: 100% 100%;
+        overflow: hidden;
+    }
+
+    .categoryselectlist {
+        display: none;
+        overflow: hidden;
+        position: relative;
+        float: left;
+        width: 25%;
+        height: 220px;
+        border: 1px solid #b8c3d4;
+        margin-right: 9px;
+    }
+
+    .addscroll {
+        display: block;
+        overflow-y: scroll;
+    }
+
+    .categoryselectlist ul {
+        margin: 0 1px;
+    }
+
+    .categoryselectlist li.disable {
+        color: #bbb;
+    }
+
+    .categoryselectlist li {
+        padding-left: 0px;
+        line-height: 20px;
+        height: 20px;
+        text-indent: 10px;
+        cursor: pointer;
+    }
+
+    .categoryselectlist li .libox {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .categoryselectlist li .tipswrap {
+        position: relative;
+        padding-top: 6px;
+        z-index: 2;
+        display: none;
+    }
+
+    .limittips {
+        color: #000;
+        padding: 5px 10px;
+        background-color: #ffffe5;
+        border: 1px solid #efd491;
+        box-shadow: 2px 2px 0 #e5e5e5;
+        position: absolute;
+        top: 5px;
+        top: 3px \9;
+        left: 9px;
+        _left: 0;
+        text-indent: 0;
+    }
+
+    .limittips span {
+        display: block;
+        width: 0;
+        height: 0;
+        position: absolute;
+        left: 10px;
+        top: -6px;
+        border-color: transparent transparent #efd491;
+        border-width: 0 5px 5px;
+        border-style: dashed dashed solid;
+    }
+
+    .limittips span i {
+        display: block;
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: 1px;
+        left: -5px;
+        border-color: transparent transparent #ffffe5;
+        border-width: 0 5px 5px;
+        border-style: dashed dashed solid;
+        overflow: hidden;
+    }
+
+    .selected-category {
+        padding: 15px 0px;
+    }
+
+    .selected-category .chouseed-catrgory {
+        padding: 10px 10px 10px 10px;
+        border: 1px solid #fdcc7f;
+        background-color: #ffffe5;
+    }
+
+    .clearfix:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    .selected-category .chouseed-catrgory span.cate-title {
+        float: left;
+        color: #0b0b0b;
+    }
+
+    .selected-category .chouseed-catrgory span.cate-value {
+        float: left;
+    }
+
+    .selected-category .chouseed-catrgory span.cate-value b {
+        display: inline-block;
+        font-weight: 300;
+        color: #c34802;
+    }
+
+    .selected-category .chouseed-catrgory span.cate-value span {
+        padding: 0 6px;
+        color: #000;
+        font-family: Comic Sans MS;
+    }
+
+    .buttonbox .container {
+        width: 100% !important;
+    }
+
+    .buttonbox .container .form-group {
+        float: right;
+    }
+
+    .chouse-down-box {
+        display: none;
+        position: absolute;
+        left: -1px;
+        top: 24px;
+        border: 1px solid #8797b0;
+        padding: 1px 0;
+        width: 100%;
+        z-index: 999;
+        background-color: #fff;
+    }
+
+    .chouse-down-box span {
+        display: block;
+    }
+
+    .chouse-down-box span.hover, .chouse-down-box span.selected, .chouse-down-box span.sac_over {
+        color: #fff;
+        background-color: #316ac5;
+    }
+</style>
+<script>
+    $(function () {
+        $.ajax({
+            type: 'GET',
+            url: '/admin/uploadTemporary',
+            data: {
+                username: '<%= username %>'
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var info = data.info;
+//                console.log(info);
+                info.forEach(function (item) {
+                    console.log(item);
+                    var myhistory = '<span data-param="en" data-val="' + item.firstCategory + '">- ' + item.firstCategory + '>>' + item.secondCategory + '>>' + item.thirdCategory + ' -</span>'
+                    $('#recentCategoryDropdown').append(myhistory);
+                })
+                $('#div_history').click(function () {
+                    $('#recentCategoryDropdown').toggle();
+                })
+                $('#recentCategoryDropdown span').mouseover(function () {
+                    $('#recentCategoryDropdown span').removeClass('hover');
+                });
+                $('#recentCategoryDropdown span').mouseover(function () {
+                    $(this).addClass('hover');
+                })
+                $('#recentCategoryDropdown span').click(function () {
+                    var category = $(this).text();
+                    category = $.trim(category.split('-')[1]);
+                    category = category.split('>>');
+                    console.log(category);
+                    $('#catagory0 li').each(function (index, item) {
+                        console.log($(item).text());
+                        var firstC = $.trim($(item).text());
+                        if (firstC == $.trim(category[0])) {
+                            $('#catagory0 li').removeClass('current');
+                            $(this).addClass('current');
+                            $(this).click();
+                            if ($('#catagory1 li').length != 0 && category[1].length != 0) {
+                                $('#catagory1 li').each(function (index, item) {
+                                    console.log($(item).text());
+                                    var secondC = $.trim($(item).text());
+                                    if (secondC == $.trim(category[1])) {
+                                        $('#catagory1 li').removeClass('current');
+                                        $(this).addClass('current');
+                                        $(this).click();
+                                        if ($('#catagory2 li').length != 0 && category[2] != 0) {
+                                            $('#catagory2 li').each(function (index, item) {
+                                                console.log($(item).text());
+                                                var thirdC = $.trim($(item).text());
+                                                if (thirdC == $.trim(category[2])) {
+                                                    $('#catagory2 li').removeClass('current');
+                                                    $(this).addClass('current');
+                                                }
+                                            })
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    })
+                    showPath();
+                })
+
+            },
+        });
+
+
+        function showPath() {
+            $('#show_category_path').empty();
+            var categoryPath = [];
+            $('li.current').each(function (index, item) {
+                categoryPath[index] = '<b>' + $.trim($(item).text()) + '</b>';
+            })
+            var category_path = categoryPath.join('<span>>></span>');
+            $('#show_category_path').append(category_path + '<span class="color4">（请选择下级类目）</span>');
+        }
+
+        $('#catagory0 li[data-crosscate="0"]').click(function () {
+            $('#catagory0 li[data-crosscate="0"]').removeClass('current');
+            $(this).addClass('current');
+            $('#catagory1').empty();
+            $('#catagory2').empty();
+            $('#catagory3').empty();
+            var firstName = $(this).attr('title');
+
+            showPath();
+
+            <% if (category.length != 0){ %>
+            <% category.forEach(function (item) { %>
+            if ('<%= item.firstCategory %>' == firstName) {
+                if (<%= item.secondCategory.length %> !=
+                0
+            )
+                {
+                    $('#div_catagory1').addClass('addscroll');
+                    $('#catagory1').empty();
+                    <% item.secondCategory.forEach(function (secondItem) { %>
+                    var mysecondTitle = '<li data-crosscate="0" title="<%= secondItem.secondTitle %>" data-leaf="0" data-valid="1" data-param="catePubId=135005" data-en="<%= secondItem.secondTitle %>" data-cn="<%= secondItem.secondTitle %>"><%= secondItem.secondTitle %></li>'
+                    $('#catagory1').append(mysecondTitle);
+                    <% }) %>
+                }
+            }
+            <% }) %>
+            <% } %>
+
+            $('#catagory1 li[data-crosscate="0"]').on('click', function () {
+                $('#catagory1 li[data-crosscate="0"]').removeClass('current');
+                $('#catagory2').empty();
+                $(this).addClass('current');
+                var secondName = $(this).attr('title');
+                showPath();
+                $('#show_category_path').empty();
+                var categoryPath = [];
+                $('li.current').each(function (index, item) {
+                    categoryPath[index] = '<b>' + $.trim($(item).text()) + '</b>';
+                })
+                console.log(categoryPath);
+                var category_path = categoryPath.join('<span>>></span>');
+                $('#show_category_path').append(category_path + '<span class="color4">（请选择下级类目）</span>');
+
+                <% if (category.length != 0){ %>
+                <% category.forEach(function (item) { %>
+                if (<%= item.secondCategory.length %> !=
+                0
+                )
+                {
+                    <% item.secondCategory.forEach(function (secondItem) { %>
+                    if ('<%= secondItem.secondTitle %>' == secondName) {
+                        if (<%= secondItem.thirdTitles.length %> !=
+                        0
+                    )
+                        {
+                            $('#div_catagory2').addClass('addscroll');
+                            $('#catagory2').empty();
+                            <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
+                            var mythirdTitle = '<li data-crosscate="0" title="<%= thirdItem.thirdTitle %>" data-remark="读取3.5英寸软盘的设备可以读写1.44MB的3.5英寸软盘" data-leaf="1" data-valid="1" data-param="catePubId=009001007" data-en="Floppy Drives" data-cn="<%= thirdItem.thirdTitle %>"><%= thirdItem.thirdTitle %></li>'
+                            $('#catagory2').append(mythirdTitle);
+                            <% }) %>
+                        }
+                    }
+                    <% }) %>
+                }
+
+                <% }) %>
+                <% } %>
+
+                $('#catagory2 li[data-crosscate="0"]').on('click', function () {
+                    $('#catagory2 li[data-crosscate="0"]').removeClass('current');
+                    $(this).addClass('current');
+                    showPath();
+                })
+            })
+
+        })
+
+        $('.delete').click(function () {
+            console.log($(this))
+            $(this).prev().remove();
+        })
+
+        function deleteCategory() {
+            $('#deleteCategory').prev().remove();
+        }
+
+        var isSave = false;
+        var total_category = []
+        var total = {};
+        $('#save_history').click(function () {
+
+            if ($('#catagory2 li.current').text() == '') {
+                layer.msg('请选择三级类目')
+            } else {
+
+
+                var single = {
+                    firstCategory: $('#catagory0 li.current').text(),
+                    secondCategory: $('#catagory1 li.current').text(),
+                    thirdCategory: $('#catagory2 li.current').text()
+                }
+
+                var Length = total_category.filter(function (item) {
+                    return single.firstCategory == item.firstCategory && single.secondCategory == item.secondCategory && single.thirdCategory == item.thirdCategory
+                }).length
+
+                if (Length > 0) {
+                    layer.msg('该类目已存在');
+                } else {
+                    total_category.push(single);
+                    var myhistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + ' -</span>'
+                    $('#recentCategoryDropdown').append(myhistory);
+                    $('.save_category').css('display', 'block');
+                    var saveHistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + '</span><span class="delete">删除</span><br/>'
+                    $('.save_category_path').append(saveHistory)
+
+                    $('.delete').click(function () {
+                        var context = $(this).prev().text()
+                        var threeCategory = context.substring(context.lastIndexOf('>') + 1, context.length)
+                        total_category = total_category.filter(function (item) {
+                            return item.thirdCategory != threeCategory
+                        })
+                        if (threeCategory != '') {
+                            $.ajax({
+                                type: 'POST',
+                                url: 'deleteTemporary',
+                                data: {thirdCategory: threeCategory},
+                                dataType: 'json',
+                                success: function (data) {
+                                    if (data.status == 200) {
+                                        layer.msg('删除成功');
+                                    } else {
+                                        layer.msg('删除失败');
+                                    }
+
+                                }
+                            });
+                        } else {
+                            layer.msg('删除失败')
+                        }
+
+                        layer.msg('删除成功')
+                        $(this).prev().remove();
+                        $(this).next().remove();
+                        $(this).remove()
+                    })
+                    if ($('#catagory0 li.current').text().length != 0) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/uploadTemporary',
+                            data: {
+                                firstCategory: $('#catagory0 li.current').text(),
+                                secondCategory: $('#catagory1 li.current').text(),
+                                thirdCategory: $('#catagory2 li.current').text(),
+                                addBy: '<%= username %>',
+                                status: 'NEW'
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                isSave = true;
+                                layer.msg('收藏成功');
+                                console.log(data);
+                            }
+                        });
+
+                    } else {
+                        alert('请选择类目!');
+                    }
+                    console.log(total_category)
+                }
+
+            }
+        })
+
+        $('#product_detail').click(function () {
+            if ($('#catagory0 li.current').text() == '') {
+                layer.msg('请选择类目');
+            } else if (isSave == false) {
+                layer.msg('请先收藏类目');
+            } else {
+                window.location.href = '/admin/upload-products-detail';
+            }
+
+        })
+    })
+</script>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">产品上传</h3>
+        <div class="leave-cat-lv leave01">
+            <span class="first">1. 选择类目</span>
+            <span class="middle current">2. 填写信息</span>
+            <span class="last">3. 提交审核</span>
+        </div>
+    </div>
+    <div class="catgoray-box">
+        <div class="search-history" id="search-history">
+            <span class="history-tit">您曾经使用过的类目：</span>
+            <div class="drop-down" id="div_history">
+                <span class="drop-down-value" id="show_history">--请选择曾用产品类目-- </span>
+                <span class="drop-down-default"><i class="fa fa-angle-down pull-right"></i></span>
+                <!--内容  -->
+                <div class="chouse-down-box" id="recentCategoryDropdown"></div>
+            </div>
+        </div>
+    </div>
+    <div class="greay-cat-box" id="greay-cat-box">
+        <div class="b-f-line">
+            <div class="categoryselectlistbox clearfix">
+                <div class="categoryselectlist addscroll" id="div_catagory0">
+                    <ul id="catagory0">
+                        <% if(category.length != 0) { %>
+                        <% category.forEach(function (item) { %>
+                        <li data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="服装" data-en="Apparel"
+                            data-param="catePubId=014" data-valid="1"
+                            title="<%= item.firstCategory %>"><%= item.firstCategory %></li>
+                        <% }) %>
+                        <% } %>
+                    </ul>
+                </div>
+                <div class="categoryselectlist" id="div_catagory1">
+                    <ul id="catagory1">
+                    </ul>
+                </div>
+                <div class="categoryselectlist" id="div_catagory2">
+                    <ul id="catagory2">
+                    </ul>
+                </div>
+                <div class="categoryselectlist " id="div_catagory3">
+                    <ul id="catagory3">
+                    </ul>
+                </div>
+            </div>
+            <div class="selected-category">
+                <!--   -----------------------------当前已选择的产品类目 DIV----------------------------               -->
+                <div class="chouseed-catrgory clearfix">
+                    <div class="clearfix">
+                        <span class="cate-title">当前已选择的类目：</span>
+                        <span class="cate-value show_category_path" id="show_category_path"></span>
+                    </div>
+                    <div class="clearfix save_category" style="display: none;">
+                        <span class="cate-title">当前已保存的类目：</span>
+                        <!--<br/>-->
+                        <span class="cate-value save_category_path"
+                              id="save_category_path"></span>
+                    </div>
+                </div>
+                <!--   -----------------------------没有操作权限提醒 DIV----------------------------               -->
+                <div class="chousetips" id="div_show_admittance" style="display:none;">
+                </div>
+                <!--   -----------------------------类目介绍提醒DIV ----------------------------               -->
+                <div class="selected-category-tip clearfix" id="div_show_remark" style="display:none;">
+                    <span class="cate-title">类目介绍：</span>
+                    <span class="cate-value show_remark" id="show_remark"></span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="buttonbox">
+            <div class="container">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" id="save_history">保存并收藏类目</button>
+                    <button type="button" class="btn btn-primary" id="product_detail">立即发布新产品</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

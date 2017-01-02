@@ -1,0 +1,445 @@
+<% layout('../backend-master.ejs') %>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">用户管理</h3>
+        <input type="button" value="添加用户" id="addRobotBtn" style="margin-left: 50px" class='btn btn-primary'/>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <div class="box-body">
+        <table id="robotetable" class="table table-bordered " aria-describedby="example2_info">
+            <thead>
+            <tr>
+                <th></th>
+                <th>账号</th>
+                <th>用户昵称</th>
+                <th>密码</th>
+                <th>用户等级</th>
+                <th>修改操作</th>
+                <th>删除操作</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="form-horizontal  layer_notice hidden" id="recordDetail">
+        <table id="recordTb" class="table table-bordered " aria-describedby="example2_info">
+            <thead>
+            <tr>
+                <th>用户归属</th>
+                <th>操作人</th>
+                <th>更新时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+
+    <!--更新 form start -->
+    <div class="form-horizontal  layer_notice hidden" id="changeRobotForm">
+        <form class="" hidden="hidden" action="changeRobot" method="post" style="margin-top: 50px" id="changerot">
+
+            <div class="box-body">
+                <input type="hidden" class="form-control" name="id" id="id"/>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">邮箱</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="account" name="account">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">用户昵称</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="nick_name" name="nick_name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">密码</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="password" name="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-4 control-label">用户等级</label>
+
+                    <div class="col-sm-6">
+                        <select id="roleselect" name="roleselect" class="form-control" value="">
+                            <% lvlist.forEach(function(name){ %>
+                            <option value="<%= name.levlekey %>"><%= name.levlevalue %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" id="subRobotChange" class="btn btn-info pull-right closeBtn">确定</button>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+        <!-- /.box-body -->
+    </div>
+
+    <!--添加 form start -->
+    <div class="form-horizontal  layer_notice hidden" id="addRoboteForm">
+        <form class="" hidden="hidden" action="addRobote" style="margin-top: 50px" method="post" id="addRote">
+            <div class="box-body">
+                <input type="hidden" class="form-control" name="id" id="id"/>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">用户邮箱</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="add_email" name="add_email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">用户昵称</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="add_nick_name" name="add_nick_name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">密码</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="add_password" name="add_password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-4 control-label">用户等级</label>
+
+                    <div class="col-sm-6">
+                        <select id="addLevel" name="addLevel" class="form-control" value="">
+                            <% lvlist.forEach(function(name){ %>
+                            <option value="<%= name.levlekey %>"><%= name.levlevalue %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="box-footer">
+                <button type="button" id="subaddRobotBtn" class="btn btn-info pull-right closeBtn">添加</button>
+            </div>
+        </form>
+
+
+    </div>
+
+</div>
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.css">
+<script>
+    var trNodep;
+    $(document).ready(function () {
+
+        $("#roleselect").change(function () {//code...
+            if ($(this).val() == 66) {
+                $("#belonguser1").hide();
+                $("#TeacheLevel").show();
+                $("#change_introduce").show();
+                $("#form-signin1").show();
+                $("#Account").hide();
+            } else {
+                $("#belonguser1").show();
+                $("#TeacheLevel").hide();
+                $("#change_introduce").hide();
+                $("#form-signin1").hide();
+                $("#Account").show();
+            }
+        });
+        //添加logo
+        $('#updateLogo').on('click', function () {
+            var fulAvatarVal = $('#fulAvatar').val();
+
+            if (fulAvatarVal.length == 0) {
+                layer.alert('请选择文件！');
+                return false;
+            }
+
+            var extName = fulAvatarVal.substring(fulAvatarVal.lastIndexOf('.'), fulAvatarVal.length).toLowerCase();
+
+            if (extName != '.png' && extName != '.jpg') {
+                layer.alert("请选择JPG或者PNG图片！");
+                return false;
+            }
+            var formData = new FormData($("#form-signin")[0]);
+            // var formData=fulAvatarVal;
+            $.ajax({
+                url: 'doupload',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (returndata) {
+                    layer.alert('上传成功！');
+                    $("#logoimg").attr("src", returndata);
+                    $("#imgoflogo").val(returndata);
+                },
+                error: function (returndata) {
+                    layer.alert('上传失败，请检查文件后缀名是否正确！');
+                }
+            });
+        });
+        //更新logo
+        $('#updateLogo1').on('click', function () {
+            var fulAvatarVal = $('#fulAvatar1').val();
+
+            if (fulAvatarVal.length == 0) {
+                layer.alert('请选择文件！');
+                return false;
+            }
+
+            var extName = fulAvatarVal.substring(fulAvatarVal.lastIndexOf('.'), fulAvatarVal.length).toLowerCase();
+
+            if (extName != '.png' && extName != '.jpg') {
+                layer.alert("请选择JPG或者PNG图片！");
+                return false;
+            }
+            var formData = new FormData($("#form-signin1")[0]);
+            $.ajax({
+                url: 'doupload1',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (returndata) {
+                    layer.alert('上传成功！');
+                    $("#logoimg1").attr("src", returndata);
+                    $("#imgoflogo1").val(returndata);
+                },
+                error: function (returndata) {
+                    layer.alert('上传失败，请检查文件后缀名是否正确！');
+                }
+            });
+        });
+        //提交添加
+        $("#subaddRobotBtn").on('click', function () {
+
+            var parmets = {
+                addname: $("#add_email").val(),
+                addpassword: $("#add_password").val(),
+                addnickname: $("#add_nick_name").val(),
+                addLevel: $("#addLevel").find("option:selected").val(),
+                addLevelName: $("#addLevel").find("option:selected").text(),
+                registerTime: (new Date().getTime() / 1000).toFixed()
+            }
+            $.ajax({
+                url: 'doAddUser',
+                type: 'POST',
+                data: parmets,
+                success: function (retmsgurndata) {
+                    $("#form-signin").hide();
+                    setTimeout('location.reload()', 1000);
+                    layer.msg('添加成功');
+                    layer.closeAll();
+                    $("#add_email").val('');
+                    $("#add_password").val('');
+                    $("#add_nick_name").val();
+                    $("#addLevel").find("option:selected").val('0');
+
+                }, error: function (returndata) {
+                    alert('更新失败，请检查是否有非法词汇！');
+                }
+            });
+        });
+        //提交更新
+        $('#subRobotChange').on('click', function () {
+            var parmets = {
+                id: $(".update").val(),
+                addname: $("#account").val(),
+                addpassword: $("#password").val(),
+                oldPassword:$("#oldpass").val(),
+                addnickname: $("#nick_name").val(),
+                addLevel: $("#roleselect").find("option:selected").val(),
+                addLevelName: $("#roleselect").find("option:selected").text()
+            };
+            $.ajax({
+                url: 'doChangeUser',
+                type: 'POST',
+                data: parmets,
+                success: function (returndata) {
+                    trNodep.children().eq(1).html($("input[name=account]").val());
+                    trNodep.children().eq(2).html($("input[name=nick_name]").val());
+                    trNodep.children().eq(3).html('********');
+                    trNodep.children().eq(4).html($("#roleselect").find("option:selected").text());
+                    layer.closeAll();
+                    layer.alert('修改成功');
+                }, error: function (returndata) {
+                    alert('更新失败，请检查是否有非法词汇！');
+                }
+            });
+        });
+        //添加用户显示层
+        $("#addRobotBtn").on('click', function () {
+            $('#addRoboteForm').removeClass('hidden');
+            $('#addRote').removeClass('hidden');
+            $('#addRote').show();
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-rim',
+                shade: false,
+                title: false, //不显示标题
+                content: $('#addRoboteForm'), //捕获的元素
+                area: ['420px', "400px"],
+                cancel: function (index) {
+                    layer.close(index);
+                },
+                scrollbar: false
+            });
+        });
+        //初始化table
+        $('#robotetable').DataTable({
+            "ajax": "douserlist",//获取数据的url
+            "bFilter": false,                       //不使用过滤功能
+            "bLengthChange": false,                 //用户不可改变每页显示数量
+            "iDisplayLength": 9,                    //每页显示8条数据
+            "oLanguage": {                          //汉化
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "没有检索到数据",
+                "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
+                "sInfoEmtpy": "没有数据",
+                "sProcessing": "正在加载数据...",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前页",
+                    "sNext": "后页",
+                    "sLast": "尾页"
+                }
+            },
+            "columns": [
+                {"data": "_id"},
+                {"data": "name"},
+                {"data": "nick_name"},
+                {"data": "password"},
+                {"data": "levelName"},
+                {"data": "level"},
+                {"data": "registerTime"}
+            ],
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "data": "_id",
+                    "render": function (data, type, full) {
+                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
+                    }
+                },
+                {
+                    "targets": [5],
+                    "data": "level",
+                    "render": function (data, type, full) {
+                        return "<button type='button' id='update' class='btn btn-primary updatess'>修改</button>";
+                    }
+                },
+                {
+                    "targets": [6],
+                    "data": "level",
+                    "render": function (data, type, full) {
+
+                        return "<button type='button' id='delete' class='btn btn-primary deletess'>删除</button>" + "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
+                    }
+                },
+                {
+                    "targets": [7],
+                    "data": "level",
+                    "render": function (data, type, full) {
+
+                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
+                    }
+                }, {
+                    "targets": [3],
+                    "data": "password",
+                    "render": function (data, type, full) {
+                        return "********" + "<input id='oldpass' type='hidden' value=" + data + ">";
+                    }
+                }
+            ], "fnDrawCallback": function (oSettings, json) {
+                $(".updatess").click(function () {
+                    $('#changeRobotForm').removeClass('hidden');
+                    $('#changerot').show();
+                    var trNode = $(this).parent().parent();
+                    trNodep = trNode;
+                    $("#account").val(trNode.children().eq(1).html());
+                    var sletcval = trNode.children().eq(7).find('input').val();
+                    var hiddenid = trNode.children().eq(0).find("input").val();
+
+                    $("#robotid").val(hiddenid);
+
+                    $("#nick_name").val(trNode.children().eq(2).html());
+                    $("input[name=password]").val("********");
+                    $("input[name=level_name]").val(trNode.children().eq(4).html());
+
+                    console.log(sletcval);
+
+                    $("#roleselect").val(sletcval);
+
+                    layer.open({
+                        type: 1,
+                        skin: 'layui-layer-rim',
+                        shade: false,
+                        title: false, //不显示标题
+                        content: $('#changeRobotForm'), //捕获的元素
+                        area: ['420px', "400px"],
+                        cancel: function (index) {
+                            layer.close(index);
+
+                        },
+                        scrollbar: false
+                    });
+                });
+                //绑定删除事件
+                $(".deletess").on('click', function () {
+                    var trNode = $(this).parent().parent();
+                    var hiddenid = trNode.children().eq(0).find("input").val();
+                    var parmets = {
+                        user_id: hiddenid
+                    }
+                    layer.confirm('您确定要删除吗？', {
+                        btn: ['确定', '返回'] //按钮
+                    }, function () {
+                        $.ajax({
+                            url: 'doDelUer',
+                            type: 'POST',
+                            data: parmets,
+                            success: function (returndata) {
+                                if (returndata.code == '200') {
+                                    layer.msg('删除成功');
+                                    trNode.children().hide();
+//                                    setTimeout('location.reload()', 1000);
+                                }
+                            }, error: function (returndata) {
+                                if (returndata.code == '500') {
+                                    layer.alert('更新失败，请检查是否有非法词汇！');
+                                }
+                            }
+                        });
+                    }, function () {
+                        layer.msg('已取消');
+                    });
+                });
+            }
+        });
+    });
+
+</script>

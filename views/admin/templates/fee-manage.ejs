@@ -1,0 +1,515 @@
+<% layout('../backend-master.ejs') %>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <div class="col-lg-2">
+            <h3 class="box-title">我的汇率管理</h3>
+        </div>
+
+        <div class="col-lg-9">
+            <input type="button" value="添加汇率" id="addRobotBtn" style="margin-left: 50px"
+                   class='btn btn-primary pull-right'/>
+        </div>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <div class="box-header">
+        <h4 class="box-title">人民币汇率</h4>
+    </div>
+    <div class="box-body">
+        <table id="feeTab" class="table table-bordered " aria-describedby="example2_info">
+            <thead>
+            <tr>
+                <th></th>
+                <th>币种</th>
+                <th>汇率</th>
+                <th>修改时间</th>
+                <th>修改操作</th>
+                <th>删除操作</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="box-header">
+        <h4 class="box-title">美元汇率</h4>
+    </div>
+    <div class="box-body">
+        <table id="feeDollarTab" class="table table-bordered " aria-describedby="example2_info">
+            <thead>
+            <tr>
+                <th></th>
+                <th>币种</th>
+                <th>汇率</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="form-horizontal  layer_notice hidden" id="recordDetail">
+        <table id="recordTb" class="table table-bordered " aria-describedby="example2_info">
+            <thead>
+            <tr>
+                <th>用户归属</th>
+                <th>操作人</th>
+                <th>更新时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+
+    <!--更新 form start -->
+    <div class="form-horizontal  layer_notice hidden" id="changeFeeForm">
+        <form class="" hidden="hidden" action="changeFee" method="post" style="margin-top: 50px" id="changeFee">
+
+            <div class="box-body">
+                <input type="hidden" class="form-control" name="change_id" id="change_id"/>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">币种</label>
+
+                    <div class="col-sm-6">
+                        <select name="pjname" onchange="change_fee()" class="form-control" id="change-country">
+                            <option value="0">选择货币</option>
+                            <option value="1314">英镑</option>
+                            <option value="1315">港币</option>
+                            <option value="1316">美元</option>
+                            <option value="1317">瑞士法郎</option>
+                            <option value="1318">德国马克</option>
+                            <option value="1319">法国法郎</option>
+                            <option value="1375">新加坡元</option>
+                            <option value="1320">瑞典克朗</option>
+                            <option value="1321">丹麦克朗</option>
+                            <option value="1322">挪威克朗</option>
+                            <option value="1323">日元</option>
+                            <option value="1324">加拿大元</option>
+                            <option value="1325">澳大利亚元</option>
+                            <option value="1326">欧元</option>
+                            <option value="1327">澳门元</option>
+                            <option value="1328">菲律宾比索</option>
+                            <option value="1329">泰国铢</option>
+                            <option value="1330">新西兰元</option>
+                            <option value="1331">韩元</option>
+                            <option value="1843">卢布</option>
+                            <option value="2890">林吉特</option>
+                            <option value="2895">新台币</option>
+                            <option value="1370">西班牙比塞塔</option>
+                            <option value="1371">意大利里拉</option>
+                            <option value="1372">荷兰盾</option>
+                            <option value="1373">比利时法郎</option>
+                            <option value="1373">芬兰马克</option>
+                            <option value="3030">印尼卢比</option>
+                            <option value="3253">巴西里亚尔</option>
+                            <option value="3899">阿联酋迪拉姆</option>
+                            <option value="3900">印度卢比</option>
+                            <option value="3901">南非兰特</option>
+                            <option value="4418">沙特里亚尔</option>
+                            <option value="4560">土耳其里拉</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">汇率</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" onchange="change_fee()" id="change-fee"
+                               name="change-fee">
+                    </div>
+
+                    <div class="col-sm-10">
+                        <label class="pull-right" id="change_fee_to_cny"></label>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" id="subRobotChange" class="btn btn-info pull-right closeBtn">确定</button>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+        <!-- /.box-body -->
+    </div>
+
+    <!--添加 form start -->
+    <div class="form-horizontal  layer_notice hidden" id="addFeeForm">
+        <form class="" hidden="hidden" action="addSupplier" style="margin-top: 50px" method="post" id="add-fee">
+            <div class="box-body">
+                <input type="text" style="display: none" class="form-control" name="id" id="id"/>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">币种</label>
+
+                    <div class="col-sm-6">
+                        <select name="pjname" onchange="fee_change()" id="country-add" class="form-control">
+                            <option value="0">选择货币</option>
+                            <option value="1314">英镑</option>
+                            <option value="1315">港币</option>
+                            <option value="1316">美元</option>
+                            <option value="1317">瑞士法郎</option>
+                            <option value="1318">德国马克</option>
+                            <option value="1319">法国法郎</option>
+                            <option value="1375">新加坡元</option>
+                            <option value="1320">瑞典克朗</option>
+                            <option value="1321">丹麦克朗</option>
+                            <option value="1322">挪威克朗</option>
+                            <option value="1323">日元</option>
+                            <option value="1324">加拿大元</option>
+                            <option value="1325">澳大利亚元</option>
+                            <option value="1326">欧元</option>
+                            <option value="1327">澳门元</option>
+                            <option value="1328">菲律宾比索</option>
+                            <option value="1329">泰国铢</option>
+                            <option value="1330">新西兰元</option>
+                            <option value="1331">韩元</option>
+                            <option value="1843">卢布</option>
+                            <option value="2890">林吉特</option>
+                            <option value="2895">新台币</option>
+                            <option value="1370">西班牙比塞塔</option>
+                            <option value="1371">意大利里拉</option>
+                            <option value="1372">荷兰盾</option>
+                            <option value="1373">比利时法郎</option>
+                            <option value="1373">芬兰马克</option>
+                            <option value="3030">印尼卢比</option>
+                            <option value="3253">巴西里亚尔</option>
+                            <option value="3899">阿联酋迪拉姆</option>
+                            <option value="3900">印度卢比</option>
+                            <option value="3901">南非兰特</option>
+                            <option value="4418">沙特里亚尔</option>
+                            <option value="4560">土耳其里拉</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">汇率</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" onchange="fee_change()" class="form-control" id="fee-add" name="fee-add">
+                    </div>
+                    <div class="col-sm-10">
+                        <label class="pull-right" id="fee_to_cny"></label>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="box-footer">
+                <button type="button" id="subaddRobotBtn" class="btn btn-info pull-right closeBtn">添加</button>
+            </div>
+        </form>
+
+
+    </div>
+
+</div>
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.css">
+<script>
+    var trNodep;
+    $(document).ready(function () {
+
+        //commit add
+        $("#subaddRobotBtn").on('click', function () {
+            var date = new Date();
+            var payload = {
+                country_name: $("#country-add").find("option:selected").text(),
+                country_fee: $("#fee-add").val(),
+                update_time: formatDate(),
+                update_time_sort: (date.getTime() / 1000).toFixed()
+            }
+
+            if (_isEmpty(payload.country_name, '请填写币种', '#country_name') && _isEmpty(payload.country_fee, '请填写汇率', '#country_fee')) {
+                console.log(payload)
+                $.ajax({
+                    url: 'fee',
+                    type: 'POST',
+                    data: payload,
+                    success: function (retmsgurndata) {
+                        $("#form-signin").hide();
+                        setTimeout('location.reload()', 1000);
+                        layer.msg('添加成功');
+                        layer.closeAll();
+                        _emptyParam("#country-add");
+                        _emptyParam("#fee-add");
+                    }, error: function (returndata) {
+                        alert('添加失败，请检查是否有非法词汇！');
+                    }
+                });
+            }
+
+        });
+        //commit update
+        $('#subRobotChange').on('click', function () {
+            if ($("#change-country").val() == '') {
+                layer.tips('请选取币种', "#change-country")
+            } else {
+                var payload = {
+                    id: $("#change_id").val(),
+                    country_name: $("#change-country").find("option:selected").text(),
+                    country_fee: $("#change-fee").val(),
+                    update_time: formatDate(),
+                    update_time_sort: (new Date().getTime() / 1000).toFixed()
+                };
+                $.ajax({
+                    url: 'fee',
+                    type: 'put',
+                    data: payload,
+                    success: function () {
+                        var coin = $("#change-country").find("option:selected").text()
+                        var fee = $("input[name=change-fee]").val()
+
+                        trNodep.children().eq(1).html(coin);
+                        trNodep.children().eq(2).html(formatCoin(coin, fee));
+                        trNodep.children().eq(3).html(formatDate());
+                        layer.closeAll();
+                        setTimeout('location.reload()', 1000);
+                        layer.alert('修改成功');
+                    }, error: function (returndata) {
+                        alert('更新失败，请检查是否有非法词汇！');
+                    }
+                });
+            }
+        });
+
+
+        //add layer pages
+        $("#addRobotBtn").on('click', function () {
+            $('#addFeeForm').removeClass('hidden');
+            $('#add-fee').show();
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-rim',
+                shade: false,
+                title: false, //不显示标题
+                content: $('#addFeeForm'), //捕获的元素
+                area: ['420px', "400px"],
+                cancel: function (index) {
+                    $('#fee_to_cny').html('')
+                    layer.close(index);
+                },
+                scrollbar: false
+            });
+        });
+        //inital fee doller tables
+        $('#feeDollarTab').DataTable({
+            "ajax": "feedollarlist",//获取数据的url
+            "bFilter": false,                       //不使用过滤功能
+            "bLengthChange": false,                 //用户不可改变每页显示数量
+            "iDisplayLength": 9,                    //每页显示8条数据
+            "oLanguage": {                          //汉化
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "没有检索到数据",
+                "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
+                "sInfoEmtpy": "没有数据",
+                "sProcessing": "正在加载数据...",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前页",
+                    "sNext": "后页",
+                    "sLast": "尾页"
+                }
+            },
+            "columns": [
+                {"data": "_id"},
+                {"data": "country_name"},
+                {"data": "country_fee"}
+            ],
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "data": "_id",
+                    "render": function (data, type, full) {
+                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
+                    }
+                }
+            ]
+        })
+
+
+        //inital fee tables
+        $('#feeTab').DataTable({
+            "ajax": "feelist",//获取数据的url
+            "bFilter": false,                       //不使用过滤功能
+            "bLengthChange": false,                 //用户不可改变每页显示数量
+            "iDisplayLength": 9,                    //每页显示8条数据
+            "oLanguage": {                          //汉化
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "没有检索到数据",
+                "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
+                "sInfoEmtpy": "没有数据",
+                "sProcessing": "正在加载数据...",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前页",
+                    "sNext": "后页",
+                    "sLast": "尾页"
+                }
+            },
+            "columns": [
+                {"data": "_id"},
+                {"data": "country_name"},
+                {"data": "country_fee"},
+                {"data": "update_time"},
+                {"data": "update_time_sort"},
+                {"data": "update_time"}
+            ],
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "data": "_id",
+                    "render": function (data, type, full) {
+                        return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
+                    }
+                },
+                {
+                    "targets": [4],
+                    "data": "level",
+                    "render": function (data, type, full) {
+                        return "<button type='button' id='update' class='btn btn-primary updatess'>修改</button>";
+                    }
+                },
+                {
+                    "targets": [5],
+                    "data": "level",
+                    "render": function (data, type, full) {
+
+                        return "<button type='button' id='delete' class='btn btn-primary deletess'>删除</button>" + "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
+                    }
+                }
+            ], "fnDrawCallback": function (oSettings, json) {
+                $(".updatess").click(function () {
+                    $('#changeFeeForm').removeClass('hidden');
+                    $('#changeFee').show();
+                    var trNode = $(this).parent().parent();
+                    trNodep = trNode;
+                    var hiddenid = trNode.children().eq(0).find("input").val();
+                    $('#change_id').val(hiddenid);
+
+                    var fee = trNode.children().eq(2).html()
+                    fee = fee.substring(fee.indexOf("=") + 1, fee.length)
+                    console.log(fee.lastIndexOf(" "))
+                    fee = fee.substring(0, fee.lastIndexOf(" "))
+//                    fee.replace(/^[\\u4e00-\\u9fa5]$/, '')
+
+                    $("#change-country").find("option:selected").text(trNode.children().eq(1).html())
+                    $("#change-fee").val(fee.trim());
+
+
+                    layer.open({
+                        type: 1,
+                        skin: 'layui-layer-rim',
+                        shade: false,
+                        title: false, //不显示标题
+                        content: $('#changeFeeForm'), //捕获的元素
+                        area: ['420px', "400px"],
+                        cancel: function (index) {
+                            $('#change_fee_to_cny').html('')
+                            layer.close(index);
+                        },
+                        scrollbar: false
+                    });
+                });
+                //绑定删除事件
+                $(".deletess").on('click', function () {
+                    var trNode = $(this).parent().parent();
+                    var hide_id = trNode.children().eq(0).find("input").val();
+                    var payload = {
+                        id: hide_id
+                    }
+                    layer.confirm('您确定要删除吗？', {
+                        btn: ['确定', '返回'] //按钮
+                    }, function () {
+                        $.ajax({
+                            url: 'fee',
+                            type: 'delete',
+                            data: payload,
+                            success: function (feed) {
+                                console.log(feed)
+                                if (feed.succeed == true) {
+                                    layer.msg('删除成功');
+                                    setTimeout('location.reload()', 1000);
+                                    trNode.children().hide();
+                                } else if (feed.succeed == false) {
+                                    layer.alert('更新失败，请检查是否有非法词汇！');
+                                }
+                            }, error: function (error) {
+                                if (error.succeed == false) {
+                                    layer.alert('删除失败，请检查是否有非法词汇！');
+                                }
+                            }
+                        });
+                    }, function () {
+                        layer.msg('已取消');
+                    });
+                });
+            }
+        })
+    });
+
+
+
+    function fee_change() {
+        var coin = $("#country-add").find("option:selected").text()
+        var fee = $('#fee-add').val()
+        if (coin == "选择货币") {
+            layer.msg("请选择货币")
+        } else if (fee != "") {
+            var payload = "1 人民币 = " + fee + " " + coin
+            $('#fee_to_cny').html(payload)
+        }
+    }
+
+    function change_fee() {
+        var coin = $("#change-country").find("option:selected").text()
+        var fee = $('#change-fee').val()
+        if (coin == "选择货币") {
+            layer.msg("请选择货币")
+        } else if (fee != "") {
+            var payload = "1 人民币 = " + fee + " " + coin
+            $('#change_fee_to_cny').html(payload)
+        }
+    }
+
+
+    // utils
+    function formatCoin(coin, fee) {
+        return "1 人民币 = " + fee + " " + coin
+    }
+
+    function formatDate() {
+        var date = new Date();
+        var add_time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
+        return add_time
+    }
+
+    function _emptyParam(method) {
+        $(method).val('');
+    }
+
+
+    function _isEmpty(args, msg, method) {
+        if (args == '') {
+            layer.tips(msg, method)
+            return false
+        } else {
+            return true
+        }
+    }
+
+</script>

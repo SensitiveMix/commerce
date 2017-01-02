@@ -1,0 +1,323 @@
+<% layout('../backend-master.ejs') %>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">网站语音设置</h3>
+
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+
+    <div class="box-body">
+        <!-- Button to trigger modal -->
+        <button class="btn btn-info" onclick="addLanguage()">添加网站语言</button>
+
+        <div class="box-body">
+            <table id="langs" class="table table-bordered " aria-describedby="example2_info">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>网站语言</th>
+                    <th>设置默认</th>
+                    <th>修改时间</th>
+                    <th>修改操作</th>
+                    <th>删除操作</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="form-horizontal  layer_notice hidden" id="addRoboteForm">
+        <form class="" hidden="hidden" action="addRobote" style="margin-top: 50px" method="post" id="addRote">
+            <div class="box-body">
+                <input type="hidden" class="form-control" name="id" id="id"/>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">语言选择</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="add_language" name="add_language">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">默认设置</label>
+
+                    <div class="col-sm-6">
+                        <select id="roleselect" name="roleselect" class="form-control" value="">
+                            <option value="-1">请选择</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="box-footer">
+                <button type="button" id="subaddRobotBtn" class="btn btn-info pull-right closeBtn">添加
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+    <!--更新 form start -->
+    <div class="form-horizontal  layer_notice hidden" id="changeSupplerForm">
+        <form class="" hidden="hidden" action="changeSuppler" method="post" style="margin-top: 50px"
+              id="changeSuppler">
+            <div class="box-body">
+                <input type="hidden" class="form-control" name="id" id="id"/>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">语言选择</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="change_language" name="change_language">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">默认设置</label>
+
+                    <div class="col-sm-6">
+                        <select id="rolechangeselect" name="rolechangeselect" class="form-control" value="">
+                            <option value="-1">请选择</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" id="subRobotChange" class="btn btn-info pull-right closeBtn">确定</button>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box-body -->
+
+    <!-- /.box-footer -->
+
+</div>
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.css">
+<script type="text/javascript">
+    $('#langs').DataTable({
+        "ajax": "languagelist",//获取数据的url
+        "bFilter": false,                       //不使用过滤功能
+        "bLengthChange": false,                 //用户不可改变每页显示数量
+        "iDisplayLength": 9,                    //每页显示8条数据
+        "oLanguage": {                          //汉化
+            "sLengthMenu": "每页显示 _MENU_ 条记录",
+            "sZeroRecords": "没有检索到数据",
+            "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
+            "sInfoEmtpy": "没有数据",
+            "sProcessing": "正在加载数据...",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "前页",
+                "sNext": "后页",
+                "sLast": "尾页"
+            }
+        },
+        "columns": [
+            {"data": "_id"},
+            {"data": "language"},
+            {"data": "isDefault"},
+            {"data": "update_time"},
+            {"data": "language"},
+            {"data": "language"},
+            {"data": "language"}
+        ],
+        "columnDefs": [
+            {
+                "targets": [0],
+                "data": "_id",
+                "render": function (data, type, full) {
+                    return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
+                }
+            },
+            {
+                "targets": [4],
+                "data": "_id",
+                "render": function (data, type, full) {
+                    return "<button type='button' id='update' class='btn btn-primary updatess'>修改</button>";
+                }
+            },
+            {
+                "targets": [5],
+                "data": "_id",
+                "render": function (data, type, full) {
+
+                    return "<button type='button' id='delete' class='btn btn-primary deletess'>删除</button>" + "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
+                }
+            },
+            {
+                "targets": [6],
+                "data": "_id",
+                "render": function (data, type, full) {
+
+                    return "<input type='hidden' value='" + data + "' class='btn btn-primary update'>";
+                }
+            }
+        ], "fnDrawCallback": function (oSettings, json) {
+            $(".updatess").click(function () {
+                $('#changeSupplerForm').removeClass('hidden');
+                $('#changeSuppler').show();
+                var trNode = $(this).parent().parent();
+                trNodep = trNode;
+                var hiddenid = trNode.children().eq(0).find("input").val();
+                $('#change_id').val(hiddenid);
+                $("#change_language").val(trNode.children().eq(1).html());
+                $("#rolechangeselect").find("option:selected").text(trNode.children().eq(2).html())
+
+
+                layer.open({
+                    type: 1,
+                    skin: 'layui-layer-rim',
+                    shade: false,
+                    title: false, //不显示标题
+                    content: $('#changeSupplerForm'), //捕获的元素
+                    area: ['420px', "400px"],
+                    cancel: function (index) {
+                        layer.close(index);
+
+                    },
+                    scrollbar: false
+                });
+            });
+            //绑定删除事件
+            $(".deletess").on('click', function () {
+                var trNode = $(this).parent().parent();
+                var hiddenid = trNode.children().eq(0).find("input").val();
+                var parmets = {
+                    _id: hiddenid
+                }
+                layer.confirm('您确定要删除吗？', {
+                    btn: ['确定', '返回'] //按钮
+                }, function () {
+                    $.ajax({
+                        url: 'language',
+                        type: 'delete',
+                        data: parmets,
+                        success: function (returndata) {
+                            if (returndata.succeed == true) {
+                                layer.msg('删除成功');
+                                trNode.children().hide();
+                            } else if (returndata.succeed == false) {
+                                layer.alert('更新失败，请检查是否有非法词汇！');
+                            }
+                        }, error: function (returndata) {
+                            if (returndata.succeed == false) {
+                                layer.alert('更新失败，请检查是否有非法词汇！');
+                            }
+                        }
+                    });
+                }, function () {
+                    layer.msg('已取消');
+                });
+            });
+        }
+    });
+
+
+    function addLanguage() {
+        $('#addRoboteForm').removeClass('hidden');
+        $('#addRote').removeClass('hidden');
+        $('#addRote').show();
+        //自定页
+        layer.open({
+            type: 1,
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 0, //不显示关闭按钮
+            anim: 2,
+            cancel: function (index) {
+                layer.close(index);
+            },
+            shadeClose: true, //开启遮罩关闭
+            content: $('#addRoboteForm')
+        });
+    }
+
+    //提交添加
+    $("#subaddRobotBtn").on('click', function () {
+
+        var date = new Date();
+        var payload = {
+            language: $("#add_language").val(),
+            isDefault: $("#roleselect").find("option:selected").text(),
+            update_time: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(),
+        }
+
+        if (payload.language == '') {
+            layer.tips('请填写语言', '#add_language')
+        } else if (payload.isDefault == '') {
+            layer.tips('请设置默认值', '#roleselect')
+        } else {
+            $.ajax({
+                url: 'language',
+                type: 'POST',
+                data: payload,
+                success: function () {
+                    $("#form-signin").hide();
+                    layer.msg('添加成功');
+                    setTimeout('location.reload()', 1000);
+                    layer.closeAll();
+                    $("#add_language").val('');
+                }, error: function () {
+                    alert('更新失败，请检查是否有非法词汇！');
+                }
+            });
+        }
+    })
+
+    //关闭
+    $("#subcloseRobotBtn").on('click', function () {
+        layer.closeAll()
+    })
+
+
+    //提交更新
+    $('#subRobotChange').on('click', function () {
+        if ($("#change_language").val() == '') {
+            layer.tips('请选取网站语言', "#change_language")
+        } else {
+            var date = new Date();
+            var payload = {
+                language: $("#change_language").val(),
+                isDefault: $("#rolechangeselect").find("option:selected").text(),
+                update_time: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(),
+            }
+            $.ajax({
+                url: 'language',
+                type: 'PUT',
+                data: payload,
+                success: function () {
+                    trNodep.children().eq(1).html($("input[name=change_language]").val());
+                    trNodep.children().eq(2).html($("#rolechangeselect").find("option:selected").text());
+                    trNodep.children().eq(3).html(getDate());
+                    layer.closeAll();
+                    layer.alert('修改成功');
+                }, error: function () {
+                    alert('更新失败，请检查是否有非法词汇！');
+                }
+            });
+        }
+    })
+
+    function getDate() {
+        var date = new Date();
+        var add_time = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
+        return add_time
+    }
+
+</script>

@@ -1,0 +1,30 @@
+<% layout('../backend-master.ejs') %>
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">产品上传图</h3>
+    </div>
+    <h1>使用multer中间件上传文件</h1>
+    <form enctype="multipart/form-data" method="post" action="uploadImage">
+        请选择文件：<input type="file" id="file" name="file" multiple/><br/>
+        <input type="submit" value="上传文件"/>
+        <div class="box-body">
+
+            <% if (upload.length != 0) { %>
+            <% upload.forEach(function(load){ %>
+            <img src="<%= load %>" alt="">
+            <% }) %>
+            <% } %>
+        </div>
+    </form>
+
+    <form id        =  "uploadForm"
+          enctype   =  "multipart/form-data"
+          action    =  "uploadFile"
+          method    =  "post"
+    >
+        <input type="file" name="file" />Upload
+        <input type="submit" value="Upload" name="submit">
+    </form>
+
+</div>
