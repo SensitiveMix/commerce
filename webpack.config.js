@@ -9,6 +9,7 @@ var devConfig = {
     entry: {
         public_js_build: ['./public/js/', hotMiddlewareScript],
         public_web_build: ['./public/js/jquery.gridly.js', hotMiddlewareScript],
+        public_cookie_build: ['./public/js/web/jquery.cookie.js', hotMiddlewareScript],
         public_css_build: ['./public/stylesheets/', hotMiddlewareScript]
     },
     output: {

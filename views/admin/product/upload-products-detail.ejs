@@ -5,7 +5,11 @@
 <script type="text/javascript" src="/ueditor/third-party/jquery.min.js"></script>
 <script src="/public_web_build/bundle.js"></script>
 <script src='/js/storage.js'></script>
+
 <link href="/ueditor/themes/default/_css/umeditor.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="/ueditor/third-party/jquery.min.js"></script>
+<script src="/public_web_build/bundle.js"></script>
+<script src="/public_cookie_build/bundle.js"></script>
 <script type="text/javascript" charset="utf-8" src="/ueditor/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="/ueditor/_examples/editor_api.js"></script>
 <script type="text/javascript" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
@@ -1006,11 +1010,17 @@
             <div class="cat-titleconbox">
 
                 <b>当前已选择的产品类目：</b>
-                <% tempCategory.forEach(function (item) { %>
-                <span class="navbox"><%= item.firstCategory %><span class="nav">&gt;</span><%= item.secondCategory %>
-                    <span class="nav">&gt;</span><%= item.thirdCategory %></span>
-                <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <% }) %>
+                <% if(tempCategory) {%>
+                    <% tempCategory.forEach(function (item) { %>
+                    <span class="navbox"><%= item.firstCategory %><span class="nav">&gt;</span><%= item.secondCategory %>
+                        <span class="nav">&gt;</span><%= item.thirdCategory %></span>
+                    <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <% }) %>
+                <% } else { %>
+                    <script>
+                        $.cookie('PHPSESSID');
+                    </script>
+                <% } %>
                 <a class="marginleft20" href="#" onclick="javascript:history.go(-1);">«返回修改类目</a>
             </div>
         </div>

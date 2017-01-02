@@ -1,5 +1,6 @@
 <% layout('../backend-master.ejs') %>
-
+<script type="text/javascript" src="/ueditor/third-party/jquery.min.js"></script>
+<script src="/public_cookie_build/bundle.js"></script>
 <style>
     .categoryselectlist li.current, .categoryselectlist li.hover {
         color: #fff;
@@ -260,6 +261,7 @@
 </style>
 <script>
     $(function () {
+
         $.ajax({
             type: 'GET',
             url: '/admin/uploadTemporary',
@@ -513,6 +515,13 @@
         })
 
         $('#product_detail').click(function () {
+            var titleArray = [];
+            $('.save_category_path span[data-val]').each(function(index,item){
+                titleArray.push($(item).text());
+            })
+            var titleString = titleArray.join(';');
+            console.log(titleString);
+//            $.cookie('title',titleString);
             if ($('#catagory0 li.current').text() == '') {
                 layer.msg('请选择类目');
             } else if (isSave == false) {
