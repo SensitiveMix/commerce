@@ -171,7 +171,6 @@
             }
 
             if (_isEmpty(payload.country_name, '请填写币种', '#country_name') && _isEmpty(payload.country_fee, '请填写汇率', '#country_fee')) {
-                console.log(payload)
                 $.ajax({
                     url: 'fee',
                     type: 'POST',
@@ -339,8 +338,7 @@
 
                     var fee = trNode.children().eq(2).html()
                     fee = fee.substring(fee.indexOf("=") + 1, fee.length)
-                    console.log(fee)
-                    console.log(fee.lastIndexOf(" "))
+
                     fee = fee.substring(0, fee.lastIndexOf(" "))
 //                    fee.replace(/^[\\u4e00-\\u9fa5]$/, '')
 
@@ -379,7 +377,6 @@
                             type: 'delete',
                             data: payload,
                             success: function (feed) {
-                                console.log(feed)
                                 if (feed.succeed == true) {
                                     layer.msg('删除成功');
                                     setTimeout('location.reload()', 1000);
@@ -451,8 +448,8 @@
 
     function formatDate() {
         var date = new Date();
-        if (data.minutes < 10) {
-            data.minutes = '0' + data.minutes
+        if (date.minutes < 10) {
+            date.minutes = '0' + date.minutes
         }
         var add_time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
         return add_time
