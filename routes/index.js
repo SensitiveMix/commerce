@@ -29,6 +29,8 @@ var checkCategories = function (req, res, next) {
 }
 
 
+
+
 /* GET home page. */
 router.get('/', (req, res, next) => {
     async.parallel([

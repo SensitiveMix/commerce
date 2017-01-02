@@ -7,3 +7,7 @@ npm-debug.log
 /.gitignore
 LICENSE
 tmp
+public/public_css_build/
+public/public_web_build/
+public/public_js_build/
+public/public_cookie_build/

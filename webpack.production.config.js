@@ -5,7 +5,9 @@ var Ex = require('extract-text-webpack-plugin');
 var productionConfig = [{
     entry: {
         public_js_build: './public/js/',
-        public_css_build: './public/stylesheets/'
+        public_css_build: './public/stylesheets/',
+        public_cookie_build: './public/js/web/jquery.cookie.js',
+        public_web_build: './public/stylesheets/'
     },
     output: {
         filename: './[name]/bundle.js',
@@ -37,9 +39,9 @@ var productionConfig = [{
         }]
     },
     plugins: [
-        new CleanWebpackPlugin(['public/public_js_build', 'public/public_css_build']),
+        new CleanWebpackPlugin(['public/public_js_build', 'public/public_css_build','public/public_cookie_build','public/public_web_build']),
         new Ex("public_css_build/styles.css"),
     ]
 }];
 
-module.exports = productionConfig;
+module.exports = productionConfig

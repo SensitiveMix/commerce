@@ -1131,8 +1131,8 @@ router.get('/upload-products-detail', function (req, res, next) {
                     || parseIsNull(product_spectication.hardOrSoft)
                     || parseIsNull(product_spectication.features)
                     || parseIsNull(product_spectication.pattern
-                    || parseIsNull(product_spectication.Color
-                    || parseIsNull(product_spectication.material)))) {
+                        || parseIsNull(product_spectication.Color
+                            || parseIsNull(product_spectication.material)))) {
                     temp_product_specification = product_spectication
                 } else {
                     product_spectication = temp_product_specification
@@ -1779,7 +1779,13 @@ router.get('/shopping_template', (req, res) => {
  * @return [type]
  */
 router.get('/fee_manage', (req, res) => {
-    res.render('admin/templates/fee-manage', {username: u.nick_name})
+    db.feeCountrys.find({
+        country_status: true
+    }, (err, country)=> {
+        console.log(country)
+        if (err) res.end(500, {succeed: false, msg: 'DB Error'})
+        res.render('admin/templates/fee-manage', {username: u.nick_name, feeCountryList: country})
+    })
 })
 
 /**
@@ -1795,7 +1801,18 @@ router.post('/fee', (req, res) => {
     fee.save(function (err) {
         if (err) res.send(500, {succeed: false, msg: 'Internal Server Error'})
     });
-    res.send(200, {succeed: true, msg: "success"})
+    db.feeCountrys.update({
+        country_name: req.body.country_name
+    }, {
+        $set: {
+            country_status: false
+        }
+    }, (err, status)=> {
+        console.log(status)
+        console.log('---')
+        if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
+        res.send(200, {succeed: true, msg: "success"})
+    })
 
 })
 
@@ -1809,12 +1826,11 @@ router.post('/fee', (req, res) => {
 router.post('/delta-price', (req, res)=> {
     console.log(req.body)
     if (!req.body) res.end(401, {succeed: false, msg: 'Invalid Param Request'})
-    const delta_price = new db.deltaPrice(req.body);
+    const delta_price = new db.deltaPrice(req.body)
     delta_price.save(function (err) {
         if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
-    });
+    })
     res.send(200, {succeed: true, msg: "success"})
-
 })
 
 /**
@@ -1825,7 +1841,6 @@ router.post('/delta-price', (req, res)=> {
  * @return [type]
  */
 router.put('/delta-price', (req, res)=> {
-
     if (!req.body) res.end(401, {succeed: false, msg: 'Invalid Param Request'})
     db.deltaPrice.findOneAndUpdate({_id: req.body.id},
         {
@@ -1853,7 +1868,16 @@ router.delete('/fee', (req, res)=> {
         _id: req.body.id
     }, (err, data)=> {
         if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
-        res.send({succeed: true, msg: "success"})
+        db.feeCountrys.update({
+            country_name: req.body.country_name
+        }, {
+            $set: {
+                country_status: false
+            }
+        }, (err, result)=> {
+            if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
+            res.send({succeed: true, msg: "success"})
+        })
     })
 })
 
@@ -1892,12 +1916,12 @@ router.get('/feelist', (req, res, next)=> {
     console.log(`current display page: ${req.query.iDisplayStart}`)
     db.fee.find({}, null, {
         sort: {
-            'update_time_sort': 1
+            'update_time_sort': -1
         }
     }, function (err, result) {
         if (err) next(customError(err.status, err, res))
         result.forEach((item)=> {
-            return item.country_fee = "1 人民币 = " + item.country_fee + " " + item.country_name
+            return item.country_fee = "1" + item.country_name + " =" + item.country_fee + " 人民币"
         })
 
         var lista = {
@@ -1924,7 +1948,7 @@ router.get('/feedollarlist', (req, res, next)=> {
     console.log(`current display page: ${req.query.iDisplayStart}`)
     db.fee.find({}, null, {
         sort: {
-            'update_time_sort': 1
+            'update_time_sort': -1
         }
     }, function (err, result) {
         if (err) next(customError(err.status, err, res))
@@ -1938,7 +1962,7 @@ router.get('/feedollarlist', (req, res, next)=> {
             })
         dollarArr
             .forEach((item)=> {
-                item.country_fee = (1 / item.country_fee * dollar_fee).toFixed(2)
+                item.country_fee = formatFee(1 / item.country_fee * dollar_fee)
                 return item.country_fee = "1 美元 = " + item.country_fee + " " + item.country_name
             })
 
@@ -1955,6 +1979,25 @@ router.get('/feedollarlist', (req, res, next)=> {
         res.end()
     })
 })
+
+function formatFee(args) {
+    var num = Number(args)
+    var bb = num + "";
+    var dian = bb.indexOf('.');
+    var result = "";
+    if (dian == -1) {
+        result = num.toFixed(4);
+    } else {
+        var cc = bb.substring(dian + 1, bb.length);
+        if (cc.length >= 5) {
+            result = (Number(num.toFixed(4)) + 0.01) * 100000000000 / 100000000000;//js小数计算小数点后显示多位小数
+        } else {
+            result = num.toFixed(4);
+        }
+    }
+    return result
+}
+
 
 /**
  * [Description]
