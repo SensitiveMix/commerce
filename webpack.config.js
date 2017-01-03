@@ -17,6 +17,9 @@ var devConfig = {
         path: path.resolve(__dirname, './public'),
         publicPath: publicPath
     },
+    externals: {
+        jquery: 'jQuery'
+    },
     devtool: 'eval-source-map',
     module: {
         loaders: [{
@@ -43,6 +46,11 @@ var devConfig = {
         }]
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
+            "window.jQuery": "jquery"
+        }),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new Ex("public_css_build/styles.css"),
