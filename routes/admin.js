@@ -938,24 +938,340 @@ router.get('/hot_product_manage', function (req, res, next) {
     console.log("最热产品管理" + new Date());
     db.users.find({}, function (err, result) {
         if (err) throw  err;
-        res.render('admin/front/hot-product-manage', {users: result, username: u.nick_name});
+        res.render('admin/front/hot-product-manage', {users: result, username: u.nick_name})
     });
-    console.log("用户管理页面登陆成功");
+    console.log("用户管理页面登陆成功")
 });
 /*-------------------------------------------------------------------*/
 /* -------------------------------类目管理 ---------------------------*/
-//类目管理
-router.get('/accessory_manage', checkLogin);
-router.get('/accessory_manage', function (req, res, next) {
+router.get('/accessory_manage', checkLogin)
+router.get('/accessory_manage', (req, res)=> {
+    db.categorys.find({}, (err, categories) => {
+        if (err) res.send('404')
+        res.render('admin/product/accessory-manage', {
+            username: u.nick_name,
+            upload: [],
+            category: categories,
+            language: 'en'
+        })
+    })
+})
+
+router.get('/accessory_manage_german', checkLogin)
+router.get('/accessory_manage_german', (req, res)=> {
+    db.categorys.find({}, (err, categories) => {
+        if (err) res.send('404')
+        new Promise((resolve, reject)=> {
+            _.each(categories, (category)=> {
+                category.firstCategory = category.de_firstCategory || category.firstCategory
+                if (typeof category.secondCategory != 'undefined') {
+                    _.each(category.secondCategory, (second)=> {
+                        second.secondTitle = second.de_secondTitle || second.secondTitle
+                        if (typeof second.thirdTitles != 'undefined') {
+                            _.each(second.thirdTitles, (third)=> {
+                                third.thirdTitle = third.de_thirdTitle || third.thirdTitle
+                            })
+                        }
+                    })
+                }
+            })
+            resolve(categories)
+        })
+            .then((categories) => {
+                res.render('admin/product/accessory-manage', {
+                    username: u.nick_name,
+                    upload: [],
+                    category: categories,
+                    language: 'de'
+                })
+            })
+            .catch((err)=> {
+                res.send(err.statusCode, err.message)
+            })
+    })
+})
+//English category
+router.delete('/category_manage', (req, res)=> {
+    let [first,second,third]=[req.body.firstCategory, req.body.secondCategory, req.body.thirdCategory]
+    console.log(first)
+    console.log(second)
+    console.log(third)
+    let queryResult = new Promise((resolve, reject)=> {
+        db.categorys.findOne({firstCategory: first}, (err, result)=> {
+            if (err) reject(err)
+            resolve(result)
+        })
+    })
+    queryResult
+        .then((totalCategory)=> {
+            return new Promise((resolve, reject)=> {
+                if (first && second == '' && third == '') {
+                    totalCategory = ''
+                }
+                resolve(totalCategory)
+            })
+                .then((total_Category)=> {
+                    if (first && second && third == '') {
+                        _.each(total_Category.secondCategory, (item, key)=> {
+                            if (typeof item.secondTitle != 'undefined' && item.secondTitle == second) {
+                                totalCategory.secondCategory.splice(key, 1)
+                            }
+                        })
+                    }
+                    return total_Category
+                })
+                .then((total_Category)=> {
+                    if (first && second && third) {
+                        _.each(total_Category.secondCategory, (item)=> {
+                            if (item.secondTitle == second) {
+                                _.each(item.thirdTitles, (thirdItem, key)=> {
+                                    if (typeof thirdItem.thirdTitle != 'undefined' && thirdItem.thirdTitle == third) {
+                                        delete item.thirdTitles.splice(key, 1)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                    return total_Category
+                })
+                .then((total_Category)=> {
+                    return total_Category
+                })
+        })
+        .then((final)=> {
+            console.log(final)
+            console.log('final')
+            if (final == '') {
+                db.categorys.remove({
+                    firstCategory: first
+                }, (err, result)=> {
+                    if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                    res.send(200, {succeed: true, msg: "ok"})
+                })
+            } else {
+                db.categorys.update({
+                    firstCategory: first
+                }, {
+                    "$set": {
+                        secondCategory: final.secondCategory
+                    }
+                }, (err, result)=> {
+                    if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                    res.send(200, {succeed: true, msg: "ok"})
+                })
+            }
+        })
+        .catch(err=> {
+            console.log(err)
+        })
+})
+
+router.put('/category_manage', (req, res)=> {
+    let queryResult = new Promise((resolve, reject)=> {
+        db.categorys.findOne({firstCategory: req.body.originFirstCategory}, (err, result)=> {
+            if (err) reject(err)
+            resolve(result)
+        })
+    })
+    queryResult
+        .then((totalCategory)=> {
+            return new Promise((resolve, reject)=> {
+                if (req.body.first === 'true') {
+                    totalCategory.firstCategory = req.body.firstCategory
+                }
+                resolve(totalCategory)
+            })
+                .then((totalCategory)=> {
+                    if (req.body.second === 'true') {
+                        _.each(totalCategory.secondCategory, (item)=> {
+                            if (item.secondTitle == req.body.originSecondCategory) {
+                                item.secondTitle = req.body.secondCategory
+                            }
+                        })
+                    }
+                    return totalCategory
+                })
+                .then((totalCategory)=> {
+                    if (req.body.third === 'true') {
+                        _.each(totalCategory.secondCategory, (item)=> {
+                            if (item.secondTitle == req.body.secondCategory) {
+                                _.each(item.thirdTitles, (thirdItem)=> {
+                                    if (thirdItem.thirdTitle == req.body.originThirdCategory) {
+                                        thirdItem.thirdTitle = req.body.thirdCategory
+                                    }
+                                })
+                            }
+                        })
+                    }
+                    return totalCategory
+                })
+                .then((totalCategory)=> {
+                    return totalCategory
+                })
+        })
+        .then((final)=> {
+            console.log(final)
+            console.log('final')
+            db.categorys.update({
+                firstCategory: req.body.originFirstCategory
+            }, {
+                "$set": {
+                    firstCategory: final.firstCategory,
+                    secondCategory: final.secondCategory
+                }
+            }, (err, result)=> {
+                if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                res.send(200, {succeed: true, msg: "ok"})
+            })
+        })
+})
+//German category
+router.put('/category_manage_german', (req, res)=> {
+    console.log(req.body)
+    let queryResult = new Promise((resolve, reject)=> {
+        db.categorys.findOne({de_firstCategory: req.body.originFirstCategory}, (err, result)=> {
+            if (err) reject(err)
+            resolve(result)
+        })
+    })
+    queryResult
+        .then((totalCategory)=> {
+            if (totalCategory == null) throw {statusCode: 404, msg: 'Nut Found'}
+            return new Promise((resolve, reject)=> {
+                if (req.body.first === 'true') {
+                    totalCategory.de_firstCategory = req.body.firstCategory
+                }
+                resolve(totalCategory)
+            })
+                .then((total_Category)=> {
+                    if (req.body.second === 'true') {
+                        _.each(total_Category.secondCategory, (item)=> {
+                            if (item.de_secondTitle == req.body.originSecondCategory) {
+                                item.de_secondTitle = req.body.secondCategory
+                            }
+                        })
+                    }
+                    return total_Category
+                })
+                .then((total_Category)=> {
+                    if (req.body.third === 'true') {
+                        _.each(total_Category.secondCategory, (item)=> {
+                            if (item.de_secondTitle == req.body.secondCategory) {
+                                _.each(item.thirdTitles, (thirdItem)=> {
+                                    if (thirdItem.de_thirdTitle == req.body.originThirdCategory) {
+                                        thirdItem.de_thirdTitle = req.body.thirdCategory
+                                    }
+                                })
+                            }
+                        })
+                    }
+                    return total_Category
+                })
+                .then((total_Category)=> {
+                    return total_Category
+                })
+        })
+        .then((final)=> {
+            db.categorys.update({
+                de_firstCategory: req.body.originFirstCategory
+            }, {
+                "$set": {
+                    de_firstCategory: final.de_firstCategory,
+                    secondCategory: final.secondCategory
+                }
+            }, (err, result)=> {
+                if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                res.send(200, {succeed: true, msg: "ok"})
+            })
+        })
+        .catch((err)=> {
+            res.send(err.statusCode, err.msg)
+        })
+})
+
+router.delete('/category_manage_german', (req, res)=> {
+    let [first,second,third]=[req.body.firstCategory, req.body.secondCategory, req.body.thirdCategory]
+    let queryResult = new Promise((resolve, reject)=> {
+        db.categorys.findOne({de_firstCategory: first}, (err, result)=> {
+            if (err) reject(err)
+            resolve(result)
+        })
+    })
+    queryResult
+        .then((totalCategory)=> {
+            if (totalCategory == null) throw {statusCode: 404, msg: 'Nut Found'}
+            return new Promise((resolve, reject)=> {
+                if (first && second == '' && third == '') {
+                    totalCategory = ''
+                }
+                resolve(totalCategory)
+            })
+                .then((total_Category)=> {
+                    if (first && second && third == '') {
+                        _.each(total_Category.secondCategory, (item, key)=> {
+                            if (typeof item.de_secondTitle != 'undefined' && item.de_secondTitle == second) {
+                                totalCategory.secondCategory.splice(key, 1)
+                            }
+                        })
+                    }
+                    return total_Category
+                })
+                .then((total_Category)=> {
+                    if (first && second && third) {
+                        _.each(total_Category.secondCategory, (item)=> {
+                            if (item.de_secondTitle == second) {
+                                _.each(item.thirdTitles, (thirdItem, key)=> {
+                                    if (typeof thirdItem.de_thirdTitle != 'undefined' && thirdItem.de_thirdTitle == third) {
+                                        delete item.thirdTitles.splice(key, 1)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                    return total_Category
+                })
+                .then((total_Category)=> {
+                    return total_Category
+                })
+        })
+        .then((final)=> {
+            if (final == '') {
+                db.categorys.remove({
+                    firstCategory: first
+                }, (err, result)=> {
+                    if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                    res.send(200, {succeed: true, msg: "ok"})
+                })
+            } else {
+                db.categorys.update({
+                    de_firstCategory: first
+                }, {
+                    "$set": {
+                        secondCategory: final.secondCategory
+                    }
+                }, (err, result)=> {
+                    if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                    res.send(200, {succeed: true, msg: "ok"})
+                })
+            }
+        })
+        .catch(err=> {
+            res.send(err.statusCode, err.msg)
+        })
+})
+
+//类目上传
+router.get('/accessory_upload', checkLogin);
+router.get('/accessory_upload', function (req, res, next) {
     console.log("类目管理" + new Date());
-    res.render('admin/product/accessory-manage', {upload: [], username: u.nick_name});
-    console.log("类目管理页面登陆成功");
+    res.render('admin/product/accessory-upload', {upload: [], username: u.nick_name})
+    console.log("类目管理页面登陆成功")
 })
 
 router.post('/doAddCategory', checkLogin);
 router.post('/doAddCategory', function (req, res) {
     console.log(req.body);
-    console.log(JSON.parse(req.body.secondCategory));
+    console.log(JSON.parse(req.body.secondCategory))
 
     var Categories = {
         firstCategory: req.body.firstCategory,

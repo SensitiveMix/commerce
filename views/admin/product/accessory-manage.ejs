@@ -1,406 +1,517 @@
 <% layout('../backend-master.ejs') %>
-
-<style>
-    input {
-        width: 160px;
-        height: auto;
-    }
-</style>
-<script src="/js/md5.js"></script>
+<link rel="stylesheet" href="/stylesheets/accessory-manage.css">
+<script src='/js/storage.js'></script>
 <script>
-    var temp = [];
-    function getAllTranslate(src, dst) {
-        temp.push(dst);
-        console.log(temp.length)
-        if (temp.length > 1) {
-            src = temp[temp.length - 2];
-        }
 
-        $('table tr input[type=text]').each(function () {
-            console.log($(this).val())
-            var that = this;
-            var appid = '20161031000031137';
-            var key = '5pFIYl4t5Hi1oSXzRv1X';
-            var salt = (new Date).getTime();
-            var query = $(that).val();
-            var from = src;
-            var to = dst;
-            var str1 = appid + query + salt + key;
-            var sign = MD5(str1);
-            $.ajax({
-                url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
-                type: 'get',
-                dataType: 'jsonp',
-                data: {
-                    q: query,
-                    appid: appid,
-                    salt: salt,
-                    from: from,
-                    to: to,
-                    sign: sign
-                },
-                success: function (data) {
-                    $(that).val(data.trans_result[0].dst);
-                }
-            });
-        })
-    }
 </script>
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title">首页类目管理</h3>
-    </div>
-    <div class="col-md-2 pull-right" style="margin: 15px 0">
-        <select name="语言选择" class="form-control" onchange="getAllTranslate('zh',this.value)" id="">
-            <option value="zh">中文</option>
-            <option value="en">英文</option>
-            <option value="de">德文</option>
-        </select>
-    </div>
-    <!-- /.box-header -->
-    <!-- form start -->
-    <div class="col-md-12">
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">
-                    <!--<button class="btn btn-info">添加分类</button>-->
-                </h3>
-            </div><!-- /.box-header -->
-            <div class="box-body">
-                <table class="tb_total table table-bordered">
-                    <thead>
-                    <tr class="head_table">
-                        <th>分类名称</th>
-                        <th>分类图片</th>
-                        <th>默认展开</th>
-                        <th>创建时间</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="0_">
-                        <td>
-                            <i class="fa fa-caret-down pull-left"></i>
-                            <i style="display: none" class="fa fa-caret-right pull-left"></i>&nbsp;
-                            <input class="one" type="text" placeholder="一级英文类目">
-                            <input class="de_one" type="text" placeholder="一级德文类目">
-                        </td>
-                        <td>
-                            <!--<input type="file" id="file" name="file"/><br/>-->
-                            <!--<input type="button" id="upload" class="btn btn-info" value="上传图片"/>-->
-                        </td>
-                        <td>
-                            <img class="fa-toggle-on" src="/images/toggle-on.svg" onclick="toggle('off')"
-                                 style="display: none" alt="">
-                            <img class="fa-toggle-off" onclick="toggle('on')" src="/images/toggle-off.svg" alt="">
-                        </td>
-                        <td></td>
-                        <td>
-                            <!--<button class="btn btn-danger">删除</button>-->
-                        </td>
-                    </tr>
-                    <tr class="xyz">
-                        <td>&nbsp;<img src="/images/arrow.svg" alt="">&nbsp;
-                            <button class="btn btn-info add">添加二级子类</button>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div><!-- /.box-body -->
-            <div class="box-footer clearfix">
-                <ul class="pagination pagination-sm no-margin pull-right">
-                    <li><a href="#">«</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">»</a></li>
-                </ul>
-            </div>
-        </div><!-- /.box -->
-    </div>
-
-    <div class="box-footer">
-        <div class="pull-right">
-            <button id="updateName" onclick="saveAll()" class="btn btn-info" type="button">提 交</button>
+        <div class="leave-cat-lv leave01">
+            <span class="first">1. 商城首页类目</span>
+            <span class="middle current">2. 类目管理</span>
+            <span class="last">3. 修改成功</span>
         </div>
     </div>
-    <!-- /.box-body -->
+    <div class="col-md-2 col-md-offset-10">
+        <select class="form-control" id="choose-category">
+            <option value="English">英文类目</option>
+            <option value="German">德文类目</option>
+        </select>
+    </div>
+    <div class="greay-cat-box" id="greay-cat-box">
+        <div class="b-f-line">
+            <div class="categoryselectlistbox clearfix">
+                <div class="categoryselectlist addscroll" id="div_catagory0">
+                    <ul id="catagory0">
+                        <% if(category.length != 0) { %>
+                        <% category.forEach(function (item) { %>
+                        <li data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="服装" data-en="Apparel"
+                            data-param="catePubId=014" data-valid="1"
+                            title="<%= item.firstCategory %>"><%= item.firstCategory %></li>
+                        <% }) %>
+                        <% } %>
+                    </ul>
+                </div>
+                <div class="categoryselectlist" id="div_catagory1">
+                    <ul id="catagory1">
+                    </ul>
+                </div>
+                <div class="categoryselectlist" id="div_catagory2">
+                    <ul id="catagory2">
+                    </ul>
+                </div>
+                <div class="categoryselectlist " id="div_catagory3">
+                    <ul id="catagory3">
+                    </ul>
+                </div>
+            </div>
+            <div class="selected-category">
+                <!--   -----------------------------当前已选择的产品类目 DIV----------------------------               -->
+                <div class="chouseed-catrgory clearfix">
+                    <div class="clearfix">
+                        <span class="cate-title">当前已选择的类目：</span>
+                        <span class="cate-value show_category_path" id="show_category_path"></span>
+                    </div>
+                    <div class="clearfix save_category" style="display: none;">
+                        <span class="cate-title">当前已保存的类目：</span>
+                        <!--<br/>-->
+                        <span class="cate-value save_category_path"
+                              id="save_category_path"></span>
+                    </div>
+                </div>
+                <!--   -----------------------------没有操作权限提醒 DIV----------------------------               -->
+                <div class="chousetips" id="div_show_admittance" style="display:none;">
+                </div>
+                <!--   -----------------------------类目介绍提醒DIV ----------------------------               -->
+                <div class="selected-category-tip clearfix" id="div_show_remark" style="display:none;">
+                    <span class="cate-title">类目介绍：</span>
+                    <span class="cate-value show_remark" id="show_remark"></span>
+                </div>
 
-    <!-- /.box-footer -->
+            </div>
+        </div>
 
+        <div class="buttonbox">
+            <div class="container">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" id="showCategory">修改类目
+                    </button>
+                    <button type="button" class="btn btn-primary" id="deleteCategory">删除类目</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        修改产品类目
+                    </h4>
+                </div>
+                <div class="modal-body" style="height: 160px">
+                    <div class="form-group col-sm-12">
+                        <label for="category" class="col-sm-4 control-label">一级类目</label>
+
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="fst-category" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label for="category" class="col-sm-4 control-label">二级类目</label>
+
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="sed-category" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label for="category" class="col-sm-4 control-label">三级类目</label>
+
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="thd-category" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" id="save_change" class="btn btn-primary">
+                        提交更改
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
 </div>
-<script type="text/javascript">
-    var count_three = 0;
-    var count_two = 0;
-    var count_threes = 0;
-    var count = 0;
-    var deleteId = 0;
-    var CategoryALL = [];
-
-    function toggle(param) {
-        if (param == 'off') {
-            $('.fa-toggle-off').show();
-            $('.fa-caret-right').hide();
-            $('.fa-caret-down').show();
-            $('.fa-toggle-on').hide();
-            $('table').find('tr').not('.0_').show();
-        } else {
-            $('.fa-caret-right').show();
-            $('.fa-caret-down').hide();
-            $('.fa-toggle-off').hide();
-            $('.fa-toggle-on').show();
-            $('table').find('tr').not('.0_').hide();
-            $('table tr[class=head_table]').show();
-
-        }
-    }
-
-    function saveAll() {
-        var FirstCategory = $('table tr[class*=0_]').find('input:eq(0)').val().replace(/\s+/g, "");
-        var DEFirstCategory = $('table tr[class*=0_]').find('input:eq(1)').val().replace(/\s+/g, "");
-        for (var i = 1; i <= $('table tr[class*=cateGory]').length; i++) {
-            var n = i + '_';
-            var p = i + '_' + i;
-            CategoryALL.push(getCategory(n, p))
-        }
-        CategoryALL.forEach(function (item) {
-            item.secondUrl = ('/' + FirstCategory + item.secondUrl.replace(/\s+/g, "")).trim();
-        })
-        var timeStamps = (new Date().getTime() / 10000000).toFixed();
-        var Category = {
-            firstCategory: FirstCategory,
-            de_firstCategory: DEFirstCategory,
-            firstTimeStamp: timeStamps,
-            firstUrl: '/' + FirstCategory + '/' + timeStamps + Math.floor((Math.random() * 100) + 1),
-            firstCount: 0,
-            secondCategory: JSON.stringify(CategoryALL)
-        }
-
-        console.log(Category)
-        $.ajax({
-            url: 'doAddCategory',
-            type: 'POST',
-            data: Category,
-            dataType: "json",
-            traditional: true,
-            success: function (result) {
-                if (result == 'success') {
-                    layer.msg('添加成功');
-                } else if (result == 'failed') {
-                    layer.alert('添加失败，请检查是否有非法词汇！');
-                }
-            }, error: function (err) {
-                if (err.status == 200) {
-                    layer.msg('添加成功');
-                    location.reload();
-                } else {
-                    layer.alert('添加失败，请检查是否有非法词汇！');
-                }
-
-            }
-        });
-
-        CategoryALL = [];
-    }
-
-    function getCategory(param, p) {
-        console.log(p)
-        var twoArray = [];
-        var threeArray = [];
-        $('table tr[class*=' + param + ']').each(function () {
-            var val = {
-                url: $(this).find('a').attr("href"),
-                en_value: $(this).find('input:eq(0)').val(),
-                de_value: $(this).find('input:eq(1)').val() == '' ? $(this).find('input:eq(0)').val() : $(this).find('input:eq(1)').val()
-            }
-            twoArray.push(val)
-        })
-        twoArray.forEach(function (value, index) {
-            if (index > 0 && index < twoArray.length - 1) {
-                var timeStamp = (new Date().getTime() / 10000000).toFixed();
-                var third = {
-                    thirdTimeStamp: timeStamp,
-                    thirdUrl: '/product/' + timeStamp + Math.floor((Math.random() * 100) + 1) + index,
-                    thirdTitle: value.en_value.replace(/\s+/g, ""),
-                    de_thirdTitle: value.de_value.replace(/\s+/g, ""),
-                    thirdImages: value.url.trim()
-                }
-                threeArray.push(third);
-            }
-        })
-
-        var second_Category = twoArray[0].en_value.replace(/\s+/g, "");
-        var de_second_Category = twoArray[0].de_value.replace(/\s+/g, "");
-        var three_Category = threeArray;
-        var timeStamps = (new Date().getTime() / 100000000).toFixed();
-        var totalGate = {
-            secondTitle: second_Category,
-            de_secondTitle: de_second_Category,
-            secondTimeStamp: timeStamps,
-            secondUrl: '/' + second_Category + '_' + timeStamps + Math.floor((Math.random() * 100) + 1),
-            secondCount: 0,
-            thirdTitles: three_Category
-        }
-
-        return totalGate;
-    }
-
-    function addThree() {
-        count_three++;
-        var section = document.createElement('input');
-        section.placeholder = '三级类目';
-        section.className = 'three_' + count_three.toString();
-        document.getElementsByClassName('three')[0].appendChild(section);
-    }
-
-    function addThreeUnique(count_two, count_threes) {
-        var newSeq = count_two;
-        var Three = count_threes;
-        console.log(count_two)
-        console.log(count_threes)
-        Three++;
-        var section = document.createElement('input');
-        section.placeholder = '三级类目';
-        section.className = 'two_' + count_two + Three;
-        document.getElementsByClassName('three')[newSeq].appendChild(section);
-    }
-
-    function addTwo() {
-        count_two++;
-        count_threes++;
-        var div_head = document.createElement('div');
-        div_head.className = "col-sm-9 two";
-        var input = document.createElement('input');
-        input.placeholder = "二级类目";
-        input.className = 'two_' + count_two.toString();
-        div_head.appendChild(input);
-
-        var div_head_two = document.createElement('div');
-        div_head_two.className = "col-sm-9" + " " + 'two_' + count_two.toString();
-        var input_three = document.createElement('input');
-        input_three.placeholder = "三级类目";
-        input_three.className = 'two_' + count_two.toString() + '_' + count_threes.toString();
-        div_head_two.appendChild(input_three);
-
-        document.getElementsByClassName('total')[0].appendChild(div_head);
-        document.getElementsByClassName('total')[0].appendChild(div_head_two);
-
-        var div_head_two_img = document.createElement('div');
-        div_head_two_img.className = "col-sm-3";
-        var img = document.createElement('img');
-        img.className = count_two.toString();
-        img.src = "/images/add.svg";
-
-        img.onclick = function () {
-            console.log(count_two)
-            console.log(count_threes)
-            count_threes++;
-            var section = document.createElement('input');
-            section.placeholder = '三级类目';
-            section.className = 'two_' + count_two.toString() + '_' + count_threes.toString();
-            document.getElementsByClassName('two_' + count_two)[count_threes].appendChild(section);
-        };
-
-        var t = document.createTextNode("添加三级类目");
-        div_head_two_img.appendChild(img);
-        div_head_two_img.appendChild(t);
 
 
-        document.getElementsByClassName('total')[0].appendChild(div_head_two_img);
-
-    }
-
-    function add(currentRowID) {
-        //遍历每一行，找到指定id的行的位置i,然后在该行后添加新行
-        $.each($('table:first tbody tr'), function (i, tr) {
-
-            var newCurrentRowID = currentRowID + '_' + " " + 'cateGory';
-            var tr_new = currentRowID + '_';
-            if ($(this).attr('class') == newCurrentRowID) {
-                if ($('table tr[class*=' + tr_new + ']').find('input').val() == "") {
-                    layer.msg('请添加二级分类');
-                } else {
-                    deleteId++;
-                    //获取当前行
-                    var currentRow = $('table:first tbody tr:eq(' + i + ')');
-                    //获取当前时间
-                    var now = new Date();
-                    var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
-                    //要添加的行的id
-                    var addRowID = currentRowID + '_' + deleteId;
-                    var str = '<tr class="' + addRowID + '"><td><img  style="margin-left: 40px" src="/images/jiao.svg" alt="">&nbsp;<input type="text" placeholder="三级英文类目">&nbsp;<input type="text" placeholder="三级德文类目">&nbsp;</td><td> <input type="file" id="file' + addRowID + '" name="file"/><br/> <a id="' + addRowID + 'test" style="display: none" href=""></a><input type="button" onclick="upload(this.id)" id="' + addRowID + '" name="" class="btn btn-info" value="上传图片"/> </td><td></td> <td>' + date + '</td> <td> <button onclick="deleteThreeRow (this)" class="btn btn-danger">删除</button> </td></tr>';
-                    //当前行之后插入一行
-                    currentRow.after(str);
-                }
-            }
-        });
-
-    }
-
-    function deleteThreeRow(obj) {
-        $(obj).parents("tr").remove();
-    }
-
-    function deleteTwo(obj) {
-        var newOBJ = obj + '_';
-        $('table tr[class*=' + newOBJ + ']').remove();
-    }
-
-
+<script>
     $(function () {
-        $(".add").click(function () {
-            if ($('table tr[class*=0_]').find('input').val() == "") {
-                layer.msg('请添加一级分类');
+        $('select').on('change', function () {
+            let language = this.value
+            if (language == 'English') {
+                removeKey()
+                window.LS.set("language", "English")
+                window.location.href = '/admin/accessory_manage'
             } else {
-                count++;
-                var now = new Date();
-                var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
-                var cla = count + '_' + " " + 'cateGory';
-                var claBTN = count + '_btn';
-                $(".xyz").before('<tr class="' + cla + '"><td><img style="margin-left: 20px" src="/images/jiao.svg" alt="">&nbsp;<input type="text" placeholder="二级英文类目">&nbsp;<input type="text" placeholder="二级德文类目">&nbsp;<img class="' + cla + '" src="/images/arrow.svg" alt="">&nbsp; <button onclick="add(' + count + ')" class="btn btn-info add ' + cla + '">添加三级子类</button> </td><td></td><td> </td> <td>' + date + '</td> <td> <button onclick="deleteTwo(' + count + ')" class="btn btn-danger ' + cla + '">删除</button> </td> </tr><tr class="' + claBTN + '"></tr>');
+                removeKey()
+                window.LS.set("language", "German")
+                window.location.href = '/admin/accessory_manage_german'
             }
-        });
-    });
+        })
 
-    function uploadFile(file_id) {
-        var file = document.getElementById("file" + file_id)
-        var formData = new FormData();
-        for (var i = 0; i < file.files.length; i++) {
-            if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpg') {
-                layer.alert('上传图片格式有误')
-            } else {
-                formData.append('file', file.files[i]);
-                $.ajax({
-                    url: '/admin/uploadImage',
-                    type: 'POST',
-                    data: formData,
-                    // async: false,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function (data) {
-                        $('#' + file_id).val('上传成功');
-//                        $('#' + file_id).attr('name', data);
-                        $('#' + file_id + 'test').attr('href', data);
-                        console.log(file_id);
-                        console.log(data)   //返回图片
-                    },
-                    error: function () {
-                        console.log('err')
-                    }
-                });
+        function removeKey() {
+            if (window.LS.obj().hasOwnProperty('language')) {
+                window.LS.remove("language")
             }
         }
 
-    }
+        if ('<%= language %>' == 'en') {
+            $("#choose-category").val('English')
+        } else {
+            $("#choose-category").val('German')
+        }
 
-    function upload(id) {
-        uploadFile(id);
-    }
+        //Loading total category
+        $.ajax({
+            type: 'GET',
+            url: '/admin/uploadTemporary',
+            data: {
+                username: '<%= username %>'
+            },
+            dataType: 'json',
+            success: function (data) {
+                var info = data.info;
+                info.forEach(function (item) {
+                    var myhistory = '<span data-param="en" data-val="' + item.firstCategory + '">- ' + item.firstCategory + '>>' + item.secondCategory + '>>' + item.thirdCategory + ' -</span>'
+                    $('#recentCategoryDropdown').append(myhistory);
+                })
+                $('#div_history').click(function () {
+                    $('#recentCategoryDropdown').toggle();
+                })
+                $('#recentCategoryDropdown span').mouseover(function () {
+                    $('#recentCategoryDropdown span').removeClass('hover');
+                });
+                $('#recentCategoryDropdown span').mouseover(function () {
+                    $(this).addClass('hover');
+                })
+                $('#recentCategoryDropdown span').click(function () {
+                    var category = $(this).text();
+                    category = $.trim(category.split('-')[1]);
+                    category = category.split('>>');
+                    console.log(category);
+                    $('#catagory0 li').each(function (index, item) {
+                        console.log($(item).text());
+                        var firstC = $.trim($(item).text());
+                        if (firstC == $.trim(category[0])) {
+                            $('#catagory0 li').removeClass('current');
+                            $(this).addClass('current');
+                            $(this).click();
+                            if ($('#catagory1 li').length != 0 && category[1].length != 0) {
+                                $('#catagory1 li').each(function (index, item) {
+                                    console.log($(item).text());
+                                    var secondC = $.trim($(item).text());
+                                    if (secondC == $.trim(category[1])) {
+                                        $('#catagory1 li').removeClass('current');
+                                        $(this).addClass('current');
+                                        $(this).click();
+                                        if ($('#catagory2 li').length != 0 && category[2] != 0) {
+                                            $('#catagory2 li').each(function (index, item) {
+                                                console.log($(item).text());
+                                                var thirdC = $.trim($(item).text());
+                                                if (thirdC == $.trim(category[2])) {
+                                                    $('#catagory2 li').removeClass('current');
+                                                    $(this).addClass('current');
+                                                }
+                                            })
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    })
+                    showPath();
+                })
+
+            },
+        });
 
 
+        function showPath() {
+            $('#show_category_path').empty();
+            var categoryPath = [];
+            $('li.current').each(function (index, item) {
+                categoryPath[index] = '<b>' + $.trim($(item).text()) + '</b>';
+            })
+            var category_path = categoryPath.join('<span>>></span>');
+            $('#show_category_path').append(category_path + '<span class="color4">（请选择下级类目）</span>');
+        }
+
+        $('#catagory0 li[data-crosscate="0"]').click(function () {
+            $('#catagory0 li[data-crosscate="0"]').removeClass('current');
+            $(this).addClass('current');
+            $('#catagory1').empty();
+            $('#catagory2').empty();
+            $('#catagory3').empty();
+            var firstName = $(this).attr('title');
+
+            showPath();
+
+            <% if (category.length != 0){ %>
+            <% category.forEach(function (item) { %>
+            if ('<%= item.firstCategory %>' == firstName) {
+                if ('<%= item.secondCategory.length %>' != 0) {
+                    $('#div_catagory1').addClass('addscroll');
+                    $('#catagory1').empty();
+                    <% item.secondCategory.forEach(function (secondItem) { %>
+                    var mysecondTitle = '<li data-crosscate="0" title="<%= secondItem.secondTitle %>" data-leaf="0" data-valid="1" data-param="catePubId=135005" data-en="<%= secondItem.secondTitle %>" data-cn="<%= secondItem.secondTitle %>"><%= secondItem.secondTitle %></li>'
+                    $('#catagory1').append(mysecondTitle);
+                    <% }) %>
+                }
+            }
+            <% }) %>
+            <% } %>
+
+            $('#catagory1 li[data-crosscate="0"]').on('click', function () {
+                $('#catagory1 li[data-crosscate="0"]').removeClass('current');
+                $('#catagory2').empty();
+                $(this).addClass('current');
+                var secondName = $(this).attr('title');
+                showPath();
+                $('#show_category_path').empty();
+                var categoryPath = [];
+                $('li.current').each(function (index, item) {
+                    categoryPath[index] = '<b>' + $.trim($(item).text()) + '</b>';
+                })
+                console.log(categoryPath);
+                var category_path = categoryPath.join('<span>>></span>');
+                $('#show_category_path').append(category_path + '<span class="color4">（请选择下级类目）</span>');
+
+                <% if (category.length != 0){ %>
+                <% category.forEach(function (item) { %>
+                if (<%= item.secondCategory.length %> !=
+                0
+                )
+                {
+                    <% item.secondCategory.forEach(function (secondItem) { %>
+                    if ('<%= secondItem.secondTitle %>' == secondName) {
+                        if (<%= secondItem.thirdTitles.length %> !=
+                        0
+                    )
+                        {
+                            $('#div_catagory2').addClass('addscroll');
+                            $('#catagory2').empty();
+                            <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
+                            var mythirdTitle = '<li data-crosscate="0" title="<%= thirdItem.thirdTitle %>" data-remark="读取3.5英寸软盘的设备可以读写1.44MB的3.5英寸软盘" data-leaf="1" data-valid="1" data-param="catePubId=009001007" data-en="Floppy Drives" data-cn="<%= thirdItem.thirdTitle %>"><%= thirdItem.thirdTitle %></li>'
+                            $('#catagory2').append(mythirdTitle);
+                            <% }) %>
+                        }
+                    }
+                    <% }) %>
+                }
+
+                <% }) %>
+                <% } %>
+
+                $('#catagory2 li[data-crosscate="0"]').on('click', function () {
+                    $('#catagory2 li[data-crosscate="0"]').removeClass('current');
+                    $(this).addClass('current');
+                    showPath();
+                })
+            })
+
+        })
+
+        $('.delete').click(function () {
+            console.log($(this))
+            $(this).prev().remove();
+        })
+
+        function deleteCategory() {
+            $('#deleteCategory').prev().remove();
+        }
+
+        var isSave = false;
+        var total_category = []
+        var total = {};
+        $('#save_history').click(function () {
+
+            if ($('#catagory2 li.current').text() == '') {
+                layer.msg('请选择三级类目')
+            } else {
+
+
+                var single = {
+                    firstCategory: $('#catagory0 li.current').text(),
+                    secondCategory: $('#catagory1 li.current').text(),
+                    thirdCategory: $('#catagory2 li.current').text()
+                }
+
+                var Length = total_category.filter(function (item) {
+                    return single.firstCategory == item.firstCategory && single.secondCategory == item.secondCategory && single.thirdCategory == item.thirdCategory
+                }).length
+
+                if (Length > 0) {
+                    layer.msg('该类目已存在');
+                } else {
+                    total_category.push(single);
+                    var myhistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + ' -</span>'
+                    $('#recentCategoryDropdown').append(myhistory);
+                    $('.save_category').css('display', 'block');
+                    var saveHistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + '</span><span class="delete">删除</span><br/>'
+                    $('.save_category_path').append(saveHistory)
+
+                    $('.delete').click(function () {
+                        var context = $(this).prev().text()
+                        var threeCategory = context.substring(context.lastIndexOf('>') + 1, context.length)
+                        total_category = total_category.filter(function (item) {
+                            return item.thirdCategory != threeCategory
+                        })
+                        if (threeCategory != '') {
+                            $.ajax({
+                                type: 'POST',
+                                url: 'deleteTemporary',
+                                data: {thirdCategory: threeCategory},
+                                dataType: 'json',
+                                success: function (data) {
+                                    if (data.status == 200) {
+                                        layer.msg('删除成功');
+                                    } else {
+                                        layer.msg('删除失败');
+                                    }
+
+                                }
+                            });
+                        } else {
+                            layer.msg('删除失败')
+                        }
+
+                        layer.msg('删除成功')
+                        $(this).prev().remove();
+                        $(this).next().remove();
+                        $(this).remove()
+                    })
+                    if ($('#catagory0 li.current').text().length != 0) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/uploadTemporary',
+                            data: {
+                                firstCategory: $('#catagory0 li.current').text(),
+                                secondCategory: $('#catagory1 li.current').text(),
+                                thirdCategory: $('#catagory2 li.current').text(),
+                                addBy: '<%= username %>',
+                                status: 'NEW'
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                isSave = true;
+                                layer.msg('收藏成功');
+                                console.log(data);
+                            }
+                        });
+
+                    } else {
+                        alert('请选择类目!');
+                    }
+                }
+
+            }
+        })
+
+        $('#showCategory').click(function () {
+            if ($('#catagory2 li.current').text() == '') {
+                layer.msg('请选择类目')
+            } else {
+                $('#myModal').modal('toggle')
+                let payload = {
+                    firstCategory: $('#catagory0 li.current').text(),
+                    secondCategory: $('#catagory1 li.current').text(),
+                    thirdCategory: $('#catagory2 li.current').text()
+                }
+
+                $('#fst-category').val(payload.firstCategory)
+                $('#sed-category').val(payload.secondCategory)
+                $('#thd-category').val(payload.thirdCategory)
+            }
+        })
+
+        $('#save_change').click(function () {
+
+            let payload = {
+                originFirstCategory: $('#catagory0 li.current').text(),
+                originSecondCategory: $('#catagory1 li.current').text(),
+                originThirdCategory: $('#catagory2 li.current').text(),
+                firstCategory: $('#fst-category').val(),
+                secondCategory: $('#sed-category').val(),
+                thirdCategory: $('#thd-category').val(),
+                first: false,
+                second: false,
+                third: false
+            }
+
+            if (payload.originFirstCategory != payload.firstCategory) {
+                payload.first = true
+            }
+
+            if (payload.originSecondCategory != payload.secondCategory) {
+                payload.second = true
+            }
+
+            if (payload.originThirdCategory != payload.thirdCategory) {
+                payload.third = true
+            }
+
+            let language = $("#choose-category").val()
+            let uri = ''
+            if (language == 'German') {
+                uri = '/admin/category_manage_german'
+            } else {
+                uri = '/admin/category_manage'
+            }
+            $.ajax({
+                type: 'PUT',
+                url: uri,
+                data: payload,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.succeed) {
+                        $('#myModal').modal('hide')
+                        setTimeout('location.reload()', 1000)
+                        layer.msg('修改成功')
+                    } else {
+                        layer.msg('修改失败,请检查是否有非法词汇')
+                    }
+                },
+                error: function (error) {
+                    $('#myModal').modal('hide')
+                    layer.msg('修改失败,请检查是否有非法词汇')
+                }
+            })
+        })
+
+
+        $('#deleteCategory').click(function () {
+            if ($('#catagory0 li.current').text() == '') {
+                layer.msg('请选择类目')
+            } else {
+                let payload = {
+                    firstCategory: $('#catagory0 li.current').text(),
+                    secondCategory: $('#catagory1 li.current').text(),
+                    thirdCategory: $('#catagory2 li.current').text(),
+                }
+                console.log(payload)
+
+                let language = $("#choose-category").val()
+                let uri = ''
+                if (language == 'German') {
+                    uri = '/admin/category_manage_german'
+                } else {
+                    uri = '/admin/category_manage'
+                }
+
+                $.ajax({
+                    type: 'delete',
+                    url: uri,
+                    data: payload,
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.succeed) {
+                            $('#myModal').modal('hide')
+                            setTimeout('location.reload()', 1000)
+                            layer.msg('删除成功')
+                        } else {
+                            layer.msg('修改失败,请检查是否有非法词汇')
+                        }
+                    },
+                    error: function (error) {
+                        $('#myModal').modal('hide')
+                        layer.msg('修改失败,请检查是否有非法词汇')
+                    }
+                })
+            }
+        })
+    })
 </script>
