@@ -1809,13 +1809,27 @@ router.post('/spec/property/add', function (req, res, next) {
 router.post('/spec/property/delete', function (req, res, next) {
     console.log(req.body)
     var attribute = "specification." + req.body.name
-    db.specifications.update({'de_thirdCategory': req.body.belong},
+    let queryLoad = {}
+    let setLoad = {}
+    if (req.body.language == 'en') {
+        queryLoad = {'thirdCategory': req.body.belong}
+        setLoad = {
+            "name": req.body.name,
+            "value": req.body.value
+        }
+    } else {
+        queryLoad = {'de_thirdCategory': req.body.belong}
+        setLoad = {
+            "name": req.body.name,
+            "de_value": req.body.value
+        }
+    }
+    console.log(queryLoad)
+    console.log(setLoad)
+    db.specifications.update(queryLoad,
         {
             '$pull': {
-                [attribute]: {
-                    "name": req.body.name,
-                    "de_value": req.body.value
-                }
+                [attribute]: setLoad
             }
         }, function (err, data) {
             if (err) res.json('500')
