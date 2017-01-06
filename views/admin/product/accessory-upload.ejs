@@ -11,13 +11,11 @@
     var temp = [];
     function getAllTranslate(src, dst) {
         temp.push(dst);
-        console.log(temp.length)
         if (temp.length > 1) {
             src = temp[temp.length - 2];
         }
 
         $('table tr input[type=text]').each(function () {
-            console.log($(this).val())
             var that = this;
             var appid = '20161031000031137';
             var key = '5pFIYl4t5Hi1oSXzRv1X';
@@ -160,55 +158,60 @@
     }
 
     function saveAll() {
-        var FirstCategory = $('table tr[class*=0_]').find('input:eq(0)').val().replace(/\s+/g, "");
-        var DEFirstCategory = $('table tr[class*=0_]').find('input:eq(1)').val().replace(/\s+/g, "");
-        for (var i = 1; i <= $('table tr[class*=cateGory]').length; i++) {
-            var n = i + '_';
-            var p = i + '_' + i;
-            CategoryALL.push(getCategory(n, p))
-        }
-        CategoryALL.forEach(function (item) {
-            item.secondUrl = ('/' + FirstCategory + item.secondUrl.replace(/\s+/g, "")).trim();
-        })
-        var timeStamps = (new Date().getTime() / 10000000).toFixed();
-        var Category = {
-            firstCategory: FirstCategory,
-            de_firstCategory: DEFirstCategory,
-            firstTimeStamp: timeStamps,
-            firstUrl: '/' + FirstCategory + '/' + timeStamps + Math.floor((Math.random() * 100) + 1),
-            firstCount: 0,
-            secondCategory: JSON.stringify(CategoryALL)
-        }
-
-        console.log(Category)
-        $.ajax({
-            url: 'doAddCategory',
-            type: 'POST',
-            data: Category,
-            dataType: "json",
-            traditional: true,
-            success: function (result) {
-                if (result == 'success') {
-                    layer.msg('添加成功');
-                } else if (result == 'failed') {
-                    layer.alert('添加失败，请检查是否有非法词汇！');
-                }
-            }, error: function (err) {
-                if (err.status == 200) {
-                    layer.msg('添加成功');
-                    location.reload();
+        var FirstCategory = $('table tr[class*=0_]').find('input:eq(0)').val().replace(/\s+/g, "")
+        var DEFirstCategory = $('table tr[class*=0_]').find('input:eq(1)').val().replace(/\s+/g, "")
+        if (FirstCategory && DEFirstCategory) {
+            for (var i = 1; i <= $('table tr[class*=cateGory]').length; i++) {
+                var n = i + '_';
+                var p = i + '_' + i;
+                if (getCategory(n, p)) {
+                    CategoryALL.push(getCategory(n, p))
                 } else {
-                    layer.alert('添加失败，请检查是否有非法词汇！');
+                    return
                 }
-
             }
-        });
+            CategoryALL.forEach(function (item) {
+                item.secondUrl = ('/' + FirstCategory + item.secondUrl.replace(/\s+/g, "")).trim();
+            })
+            var timeStamps = (new Date().getTime() / 10000000).toFixed()
+            var Category = {
+                firstCategory: FirstCategory,
+                de_firstCategory: DEFirstCategory,
+                firstTimeStamp: timeStamps,
+                firstUrl: '/' + FirstCategory + '/' + timeStamps + Math.floor((Math.random() * 100) + 1),
+                firstCount: 0,
+                secondCategory: JSON.stringify(CategoryALL)
+            }
+            $.ajax({
+                url: 'doAddCategory',
+                type: 'POST',
+                data: Category,
+                dataType: "json",
+                traditional: true,
+                success: function (result) {
+                    if (result == 'success') {
+                        layer.msg('添加成功');
+                    } else if (result == 'failed') {
+                        layer.alert('添加失败，请检查是否有非法词汇！');
+                    }
+                }, error: function (err) {
+                    if (err.status == 200) {
+                        layer.msg('添加成功');
+                        location.reload();
+                    } else {
+                        layer.alert('添加失败，请检查是否有非法词汇！');
+                    }
 
-        CategoryALL = [];
+                }
+            });
+
+            CategoryALL = []
+        } else {
+            layer.msg('请添加一级类目')
+        }
     }
 
     function getCategory(param, p) {
-        console.log(p)
         var twoArray = [];
         var threeArray = [];
         $('table tr[class*=' + param + ']').each(function () {
@@ -236,17 +239,20 @@
         var second_Category = twoArray[0].en_value.replace(/\s+/g, "");
         var de_second_Category = twoArray[0].de_value.replace(/\s+/g, "");
         var three_Category = threeArray;
-        var timeStamps = (new Date().getTime() / 100000000).toFixed();
-        var totalGate = {
-            secondTitle: second_Category,
-            de_secondTitle: de_second_Category,
-            secondTimeStamp: timeStamps,
-            secondUrl: '/' + second_Category + '_' + timeStamps + Math.floor((Math.random() * 100) + 1),
-            secondCount: 0,
-            thirdTitles: three_Category
+        var timeStamps = (new Date().getTime() / 100000000).toFixed()
+        if (second_Category && de_second_Category) {
+            var totalGate = {
+                secondTitle: second_Category,
+                de_secondTitle: de_second_Category,
+                secondTimeStamp: timeStamps,
+                secondUrl: '/' + second_Category + '_' + timeStamps + Math.floor((Math.random() * 100) + 1),
+                secondCount: 0,
+                thirdTitles: three_Category
+            }
+            return totalGate
+        } else {
+            layer.msg('请添加二级类目')
         }
-
-        return totalGate;
     }
 
     function addThree() {
@@ -260,8 +266,6 @@
     function addThreeUnique(count_two, count_threes) {
         var newSeq = count_two;
         var Three = count_threes;
-        console.log(count_two)
-        console.log(count_threes)
         Three++;
         var section = document.createElement('input');
         section.placeholder = '三级类目';
@@ -296,8 +300,6 @@
         img.src = "/images/add.svg";
 
         img.onclick = function () {
-            console.log(count_two)
-            console.log(count_threes)
             count_threes++;
             var section = document.createElement('input');
             section.placeholder = '三级类目';
@@ -378,19 +380,14 @@
                     url: '/admin/uploadImage',
                     type: 'POST',
                     data: formData,
-                    // async: false,
                     cache: false,
                     contentType: false,
                     processData: false,
                     success: function (data) {
                         $('#' + file_id).val('上传成功');
-//                        $('#' + file_id).attr('name', data);
-                        $('#' + file_id + 'test').attr('href', data);
-                        console.log(file_id);
-                        console.log(data)   //返回图片
+                        $('#' + file_id + 'test').attr('href', data)
                     },
                     error: function () {
-                        console.log('err')
                     }
                 });
             }
