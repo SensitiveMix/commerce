@@ -2,6 +2,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var Ex = require('extract-text-webpack-plugin');
+var webpack = require('webpack');
 var productionConfig = [{
     entry: {
         public_js_build: './public/js/',
