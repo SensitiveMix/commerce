@@ -1007,11 +1007,26 @@ router.delete('/category_manage', (req, res)=> {
             return new Promise((resolve, reject)=> {
                 if (first && second == '' && third == '') {
                     totalCategory = ''
+                    db.specifications.remove({
+                        firstCategory: first
+                    }, (err, result)=> {
+                        if (err) throw Error()
+                    })
                 }
                 resolve(totalCategory)
             })
                 .then((total_Category)=> {
                     if (first && second && third == '') {
+                        db.specifications.remove({
+                            firstCategory: first,
+                            secondCategory: second
+                        }, {
+                            thirdCategory: {
+                                $ne: third
+                            }
+                        }, (err, result)=> {
+                            if (err) throw Error()
+                        })
                         _.each(total_Category.secondCategory, (item, key)=> {
                             if (typeof item.secondTitle != 'undefined' && item.secondTitle == second) {
                                 totalCategory.secondCategory.splice(key, 1)
@@ -1022,6 +1037,13 @@ router.delete('/category_manage', (req, res)=> {
                 })
                 .then((total_Category)=> {
                     if (first && second && third) {
+                        db.specifications.remove({
+                            firstCategory: first,
+                            secondCategory: second,
+                            thirdCategory: third
+                        }, (err, result)=> {
+                            if (err) throw Error()
+                        })
                         _.each(total_Category.secondCategory, (item)=> {
                             if (item.secondTitle == second) {
                                 _.each(item.thirdTitles, (thirdItem, key)=> {
@@ -1202,12 +1224,27 @@ router.delete('/category_manage_german', (req, res)=> {
             if (totalCategory == null) throw {statusCode: 404, msg: 'Nut Found'}
             return new Promise((resolve, reject)=> {
                 if (first && second == '' && third == '') {
+                    db.specifications.remove({
+                        de_firstCategory: first
+                    }, (err, result)=> {
+                        if (err) throw Error()
+                    })
                     totalCategory = ''
                 }
                 resolve(totalCategory)
             })
                 .then((total_Category)=> {
                     if (first && second && third == '') {
+                        db.specifications.remove({
+                            de_firstCategory: first,
+                            de_secondCategory: second,
+                        }, {
+                            de_thirdCategory: {
+                                $ne: third
+                            }
+                        }, (err, result)=> {
+                            if (err) throw Error()
+                        })
                         _.each(total_Category.secondCategory, (item, key)=> {
                             if (typeof item.de_secondTitle != 'undefined' && item.de_secondTitle == second) {
                                 totalCategory.secondCategory.splice(key, 1)
@@ -1218,6 +1255,13 @@ router.delete('/category_manage_german', (req, res)=> {
                 })
                 .then((total_Category)=> {
                     if (first && second && third) {
+                        db.specifications.remove({
+                            de_firstCategory: first,
+                            de_secondCategory: second,
+                            de_thirdCategory: third
+                        }, (err, result)=> {
+                            if (err) throw Error()
+                        })
                         _.each(total_Category.secondCategory, (item)=> {
                             if (item.de_secondTitle == second) {
                                 _.each(item.thirdTitles, (thirdItem, key)=> {
@@ -1290,14 +1334,14 @@ router.post('/doAddCategory', function (req, res) {
                 de_firstCategory: req.body.de_firstCategory,
                 de_secondCategory: second.de_secondTitle,
                 de_thirdCategory: third.de_thirdTitle,
-                specification: [],
+                specification: {},
                 addBy: ""
-            };
+            }
             var specs = new db.specifications(spec);
-            console.log(spec);
-            specs.save();
+            console.log(spec)
+            specs.save()
         })
-    });
+    })
 
     var category = new db.categorys(Categories);
     category.save(function (err) {
@@ -1680,19 +1724,65 @@ router.get('/specification', function (req, res, next) {
         db.categorys.find({}, function (err, data) {
             if (err) res.send('404');
 
-            console.log(result.length)
+            _.each(result, (i)=> {
+                if (typeof i.specification == 'undefined') {
+                    i.specification = {}
+                }
+            })
             res.render('admin/product/specifications-manage',
                 {
                     username: u.nick_name,
                     category: data,
-                    specification: result
+                    specification: result,
+                    language: 'en'
                 }
-            );
-        });
+            )
+        })
     })
 
     console.log("产品上传管理登陆成功");
-});
+})
+
+router.get('/specification_german', checkLogin);
+router.get('/specification_german', function (req, res, next) {
+    console.log("产品上传管理" + new Date());
+    db.specifications.find({}, function (err, result) {
+        db.categorys.find({}, function (err, data) {
+            if (err) res.send('404');
+
+            _.each(result, (i)=> {
+                i.firstCategory = i.de_firstCategory || i.firstCategory
+                i.secondCategory = i.de_secondCategory || i.secondCategory
+                i.thirdCategory = i.de_thirdCategory || i.thirdCategory
+                if (typeof i.specification == 'undefined') {
+                    i.specification = {}
+                } else {
+                    _.each(i.specification, (m)=> {
+                        if (typeof m.features != 'undefined' || typeof m.type != 'undefined'
+                            || typeof m.compatibility != 'undefined' || typeof m.hardOrSoft != 'undefined'
+                            || typeof m.pattern != 'undefined' || typeof  m.Color != 'undefined'
+                            || typeof m.material != 'undefined') {
+                            m.value = m.de_value || m.value
+                        }
+                    })
+                }
+            })
+
+            console.log(result)
+
+            res.render('admin/product/specifications-manage',
+                {
+                    username: u.nick_name,
+                    category: data,
+                    specification: result,
+                    language: 'de'
+                }
+            )
+        })
+    })
+
+    console.log("产品上传管理登陆成功");
+})
 
 //产品基本信息录入管理-添加属性
 router.post('/spec/property/add', function (req, res, next) {
@@ -1705,6 +1795,7 @@ router.post('/spec/property/add', function (req, res, next) {
                 [attribute]: [{
                     "name": req.body.addProperty,
                     "value": req.body.property,
+                    "de_value": req.body.de_property,
                     "addTime": add_time
                 }]
             }
@@ -1716,22 +1807,21 @@ router.post('/spec/property/add', function (req, res, next) {
 
 //产品基本信息录入管理-删除属性
 router.post('/spec/property/delete', function (req, res, next) {
-    console.log(req.body);
+    console.log(req.body)
     var attribute = "specification." + req.body.name
-    db.specifications.update({'thirdCategory': req.body.belong},
+    db.specifications.update({'de_thirdCategory': req.body.belong},
         {
             '$pull': {
                 [attribute]: {
                     "name": req.body.name,
-                    "value": req.body.value
+                    "de_value": req.body.value
                 }
             }
         }, function (err, data) {
             if (err) res.json('500')
-            console.log(data)
             res.send('200')
-        });
-});
+        })
+})
 
 /*-------------------------------------------------------------------*/
 /*----------------------------供应商管理------------------------------*/

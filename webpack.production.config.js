@@ -14,6 +14,9 @@ var productionConfig = [{
         path: path.resolve(__dirname, './public'),
         publicPath: '/'
     },
+    externals: {
+        jquery: 'jQuery'
+    },
     module: {
         loaders: [{
             test: /\.(png|jpg|gif)$/,
@@ -39,7 +42,12 @@ var productionConfig = [{
         }]
     },
     plugins: [
-        new CleanWebpackPlugin(['public/public_js_build', 'public/public_css_build','public/public_cookie_build','public/public_web_build']),
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
+            "window.jQuery": "jquery"
+        }),
+        new CleanWebpackPlugin(['public/public_js_build', 'public/public_css_build', 'public/public_cookie_build', 'public/public_web_build']),
         new Ex("public_css_build/styles.css"),
     ]
 }];

@@ -1,11 +1,18 @@
 <% layout('../backend-master.ejs') %>
 <link href="/stylesheets/lanrenzhijia.css" type="text/css" rel="stylesheet"/>
-<script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script src='/js/storage.js'></script>
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">产品规格管理</h3>
         <button class="btn btn-info" onclick="CompatibilityCLK()">添加</button>
     </div>
+    <div class="col-md-2 col-md-offset-10" style="margin-top: 10px;margin-bottom: 10px;">
+        <select class="form-control" id="choose-spec">
+            <option value="English">英文产品规格</option>
+            <option value="German">德文产品规格</option>
+        </select>
+    </div>
+
     <% if(specification.length != 0) { %>
     <% specification.forEach(function (single) { %>
     <div class="box-body">
@@ -33,7 +40,11 @@
                         <tr>
                             <th></th>
                             <th><%= secondItem.name %></th>
+                            <% if(language == 'en') { %>
                             <th><%= secondItem.value %></th>
+                            <% }else{ %>
+                            <th><%= secondItem.de_value %></th>
+                            <% } %>
                             <th><%= secondItem.addTime %></th>
                             <th>
                                 <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
@@ -50,7 +61,11 @@
                         <tr>
                             <th></th>
                             <th><%= secondItem.name %></th>
+                            <% if(language == 'en') { %>
                             <th><%= secondItem.value %></th>
+                            <% }else{ %>
+                            <th><%= secondItem.de_value %></th>
+                            <% } %>
                             <th><%= secondItem.addTime %></th>
                             <th>
                                 <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
@@ -67,7 +82,11 @@
                         <tr>
                             <th></th>
                             <th><%= secondItem.name %></th>
+                            <% if(language == 'en') { %>
                             <th><%= secondItem.value %></th>
+                            <% }else{ %>
+                            <th><%= secondItem.de_value %></th>
+                            <% } %>
                             <th><%= secondItem.addTime %></th>
                             <th>
                                 <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
@@ -84,7 +103,11 @@
                         <tr>
                             <th></th>
                             <th><%= secondItem.name %></th>
+                            <% if(language == 'en') { %>
                             <th><%= secondItem.value %></th>
+                            <% }else{ %>
+                            <th><%= secondItem.de_value %></th>
+                            <% } %>
                             <th><%= secondItem.addTime %></th>
                             <th>
                                 <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
@@ -101,7 +124,11 @@
                         <tr>
                             <th></th>
                             <th><%= secondItem.name %></th>
+                            <% if(language == 'en') { %>
                             <th><%= secondItem.value %></th>
+                            <% }else{ %>
+                            <th><%= secondItem.de_value %></th>
+                            <% } %>
                             <th><%= secondItem.addTime %></th>
                             <th>
                                 <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
@@ -118,7 +145,11 @@
                         <tr>
                             <th></th>
                             <th><%= secondItem.name %></th>
+                            <% if(language == 'en') { %>
                             <th><%= secondItem.value %></th>
+                            <% }else{ %>
+                            <th><%= secondItem.de_value %></th>
+                            <% } %>
                             <th><%= secondItem.addTime %></th>
                             <th>
                                 <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
@@ -135,7 +166,11 @@
                         <tr>
                             <th></th>
                             <th><%= secondItem.name %></th>
+                            <% if(language == 'en') { %>
                             <th><%= secondItem.value %></th>
+                            <% }else{ %>
+                            <th><%= secondItem.de_value %></th>
+                            <% } %>
                             <th><%= secondItem.addTime %></th>
                             <th>
                                 <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
@@ -215,17 +250,17 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">属性值</label>
+                    <label for="inputEmail3" class="col-sm-4 control-label">属性值(英文)*</label>
 
                     <div class="col-sm-6">
                         <input type="text" class="form-control" id="spec" name="spec">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">操作人</label>
+                    <label for="inputEmail3" class="col-sm-4 control-label">属性值(德文)</label>
 
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="add_by" name="add_by">
+                        <input type="text" class="form-control" id="spec_german" name="spec_german">
                     </div>
                 </div>
             </div>
@@ -242,6 +277,31 @@
 </div>
 
 <script>
+    $('#choose-spec').on('change', function () {
+        let language = this.value
+        if (language == 'English') {
+            removeKey()
+            window.LS.set("spec_language", "English")
+            window.location.href = '/admin/specification'
+        } else {
+            removeKey()
+            window.LS.set("spec_language", "German")
+            window.location.href = '/admin/specification_german'
+        }
+    })
+
+    function removeKey() {
+        if (window.LS.obj().hasOwnProperty('spec_language')) {
+            window.LS.remove("spec_language")
+        }
+    }
+
+    if ('<%= language %>' == 'en') {
+        $("#choose-spec").val('English')
+    } else {
+        $("#choose-spec").val('German')
+    }
+
     function CompatibilityCLK() {
         $('#addRoboteForm').removeClass('hidden');
         $('#addRote').removeClass('hidden');
@@ -263,11 +323,11 @@
     function addtobase() {
         var params = {
             property: $("#spec").val(),
-            addBy: $("#add_by").val(),
+            de_property: $("#spec_german").val() || $("#spec").val(),
+            addBy: 'admin',
             addProperty: $("#pd_select").find("option:selected").val(),
             belong: $("#default_category").find("option:selected").val()
         }
-        console.log(params)
         $.ajax({
             url: '/admin/spec/property/add',
             type: 'POST',
@@ -279,7 +339,6 @@
                 layer.msg('添加成功');
                 layer.closeAll();
                 $("#spec").val('');
-                $("#add_by").val('');
                 $("#default_category").find("option:selected").val('');
                 $("#pd_select").find("option:selected").val('Compatibility');
 
