@@ -1020,16 +1020,16 @@ router.delete('/category_manage', (req, res)=> {
                         db.specifications.remove({
                             firstCategory: first,
                             secondCategory: second
-                        }, {
-                            thirdCategory: {
-                                $ne: third
-                            }
+
                         }, (err, result)=> {
-                            if (err) throw Error()
+                            console.log(err)
+                            // if (err) throw Error()
                         })
                         _.each(total_Category.secondCategory, (item, key)=> {
-                            if (typeof item.secondTitle != 'undefined' && item.secondTitle == second) {
-                                totalCategory.secondCategory.splice(key, 1)
+                            if (typeof item != 'undefined') {
+                                if (typeof item.secondTitle != 'undefined' && item.secondTitle == second) {
+                                    totalCategory.secondCategory.splice(key, 1)
+                                }
                             }
                         })
                     }
@@ -1047,8 +1047,11 @@ router.delete('/category_manage', (req, res)=> {
                         _.each(total_Category.secondCategory, (item)=> {
                             if (item.secondTitle == second) {
                                 _.each(item.thirdTitles, (thirdItem, key)=> {
-                                    if (typeof thirdItem.thirdTitle != 'undefined' && thirdItem.thirdTitle == third) {
-                                        delete item.thirdTitles.splice(key, 1)
+                                    console.log(thirdItem)
+                                    if (typeof thirdItem != 'undefined') {
+                                        if (typeof thirdItem.thirdTitle != 'undefined' && thirdItem.thirdTitle == third) {
+                                            delete item.thirdTitles.splice(key, 1)
+                                        }
                                     }
                                 })
                             }
@@ -1067,7 +1070,7 @@ router.delete('/category_manage', (req, res)=> {
                 db.categorys.remove({
                     firstCategory: first
                 }, (err, result)=> {
-                    if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                    if (err || !result) return res.send(500, {succeed: false, msg: "DBError"})
                     res.send(200, {succeed: true, msg: "ok"})
                 })
             } else {
@@ -1078,7 +1081,7 @@ router.delete('/category_manage', (req, res)=> {
                         secondCategory: final.secondCategory
                     }
                 }, (err, result)=> {
-                    if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                    if (err || !result) return res.send(500, {succeed: false, msg: "DBError"})
                     res.send(200, {succeed: true, msg: "ok"})
                 })
             }
@@ -1089,126 +1092,175 @@ router.delete('/category_manage', (req, res)=> {
 })
 
 router.put('/category_manage', (req, res)=> {
-    let queryResult = new Promise((resolve, reject)=> {
-        db.categorys.findOne({firstCategory: req.body.originFirstCategory}, (err, result)=> {
-            if (err) reject(err)
-            resolve(result)
-        })
+    var specification = {}
+    let specPromise = new Promise((resolve, reject)=> {
+        db.specifications.findOne({
+                de_firstCategory: req.body.originFirstCategory
+            }, (err, specs)=> {
+                if (err) reject(err)
+                resolve(specs)
+            }
+        )
     })
-    queryResult
-        .then((totalCategory)=> {
-            return new Promise((resolve, reject)=> {
-                if (req.body.first === 'true') {
-                    totalCategory.firstCategory = req.body.firstCategory
-                }
-                resolve(totalCategory)
-            })
-                .then((totalCategory)=> {
-                    if (req.body.second === 'true') {
-                        _.each(totalCategory.secondCategory, (item)=> {
-                            if (item.secondTitle == req.body.originSecondCategory) {
-                                item.secondTitle = req.body.secondCategory
-                            }
-                        })
-                    }
-                    return totalCategory
+
+    specPromise
+        .then((specs)=> {
+            specification = specs
+            let queryResult = new Promise((resolve, reject)=> {
+                db.categorys.findOne({firstCategory: req.body.originFirstCategory}, (err, result)=> {
+                    if (err) reject(err)
+                    resolve(result)
                 })
+            })
+            queryResult
                 .then((totalCategory)=> {
-                    if (req.body.third === 'true') {
-                        _.each(totalCategory.secondCategory, (item)=> {
-                            if (item.secondTitle == req.body.secondCategory) {
-                                _.each(item.thirdTitles, (thirdItem)=> {
-                                    if (thirdItem.thirdTitle == req.body.originThirdCategory) {
-                                        thirdItem.thirdTitle = req.body.thirdCategory
+                    return new Promise((resolve, reject)=> {
+                        if (req.body.first === 'true') {
+                            totalCategory.firstCategory = req.body.firstCategory
+                            specification.firstCategory = req.body.firstCategory
+                        }
+                        resolve(totalCategory)
+                    })
+                        .then((totalCategory)=> {
+                            if (req.body.second === 'true') {
+                                specification.secondCategory = req.body.secondCategory
+                                _.each(totalCategory.secondCategory, (item)=> {
+                                    if (item.secondTitle == req.body.originSecondCategory) {
+                                        item.secondTitle = req.body.secondCategory
                                     }
                                 })
                             }
+                            return totalCategory
                         })
-                    }
-                    return totalCategory
+                        .then((totalCategory)=> {
+                            if (req.body.third === 'true') {
+                                specification.thirdCategory = req.body.thirdCategory
+                                _.each(totalCategory.secondCategory, (item)=> {
+                                    if (item.secondTitle == req.body.secondCategory) {
+                                        _.each(item.thirdTitles, (thirdItem)=> {
+                                            if (thirdItem.thirdTitle == req.body.originThirdCategory) {
+                                                thirdItem.thirdTitle = req.body.thirdCategory
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                            return totalCategory
+                        })
+                        .then((totalCategory)=> {
+                            return totalCategory
+                        })
                 })
-                .then((totalCategory)=> {
-                    return totalCategory
+                .then((final)=> {
+                    console.log(final)
+                    console.log('final')
+                    db.specifications.findOneAndUpdate({
+                        de_firstCategory: req.body.originFirstCategory
+                    }, {
+                        '$set': {
+                            firstCategory: specification.firstCategory,
+                            secondCategory: specification.secondCategory,
+                            thirdCategory: specification.thirdCategory
+                        }
+                    }, (err, r)=> {
+                        if (err || !r) return res.send(200, {succeed: false, msg: "DBError"})
+                    })
+                    db.categorys.update({
+                        firstCategory: req.body.originFirstCategory
+                    }, {
+                        "$set": {
+                            firstCategory: final.firstCategory,
+                            secondCategory: final.secondCategory
+                        }
+                    }, (err, result)=> {
+                        if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                        res.send(200, {succeed: true, msg: "ok"})
+                    })
                 })
-        })
-        .then((final)=> {
-            console.log(final)
-            console.log('final')
-            db.categorys.update({
-                firstCategory: req.body.originFirstCategory
-            }, {
-                "$set": {
-                    firstCategory: final.firstCategory,
-                    secondCategory: final.secondCategory
-                }
-            }, (err, result)=> {
-                if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
-                res.send(200, {succeed: true, msg: "ok"})
-            })
         })
 })
 //German category
 router.put('/category_manage_german', (req, res)=> {
     console.log(req.body)
-    let queryResult = new Promise((resolve, reject)=> {
-        db.categorys.findOne({de_firstCategory: req.body.originFirstCategory}, (err, result)=> {
-            if (err) reject(err)
-            resolve(result)
+    db.specifications.findOne({
+        de_firstCategory: req.body.originFirstCategory
+    }, (err, specs)=> {
+        if (err) return res.send(500)
+        let queryResult = new Promise((resolve, reject)=> {
+            db.categorys.findOne({de_firstCategory: req.body.originFirstCategory}, (err, result)=> {
+                if (err) reject(err)
+                resolve(result)
+            })
         })
+        queryResult
+            .then((totalCategory)=> {
+                if (totalCategory == null) throw {statusCode: 404, msg: 'Nut Found'}
+                return new Promise((resolve, reject)=> {
+                    if (req.body.first === 'true') {
+                        totalCategory.de_firstCategory = req.body.firstCategory
+                        specs.de_firstCategory = req.body.firstCategory
+                    }
+                    resolve(totalCategory)
+                })
+                    .then((total_Category)=> {
+                        if (req.body.second === 'true') {
+                            specs.de_secondTitle = req.body.secondCategory
+                            _.each(total_Category.secondCategory, (item)=> {
+                                if (item.de_secondTitle == req.body.originSecondCategory) {
+                                    item.de_secondTitle = req.body.secondCategory
+                                }
+                            })
+                        }
+                        return total_Category
+                    })
+                    .then((total_Category)=> {
+                        if (req.body.third === 'true') {
+                            specs.de_thirdTitle = req.body.thirdCategory
+                            _.each(total_Category.secondCategory, (item)=> {
+                                if (item.de_secondTitle == req.body.secondCategory) {
+                                    _.each(item.thirdTitles, (thirdItem)=> {
+                                        if (thirdItem.de_thirdTitle == req.body.originThirdCategory) {
+                                            thirdItem.de_thirdTitle = req.body.thirdCategory
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                        return total_Category
+                    })
+                    .then((total_Category)=> {
+                        return total_Category
+                    })
+            })
+            .then((final)=> {
+                db.specifications.findOneAndUpdate({
+                    de_firstCategory: req.body.originFirstCategory
+                }, {
+                    '$set': {
+                        de_firstCategory: specs.de_firstCategory,
+                        de_secondCategory: specs.de_secondCategory,
+                        de_thirdCategory: specs.de_thirdCategory
+                    }
+                }, (err, r)=> {
+                    if (err || !r) return res.send(200, {succeed: false, msg: "DBError"})
+                })
+                db.categorys.update({
+                    de_firstCategory: req.body.originFirstCategory
+                }, {
+                    "$set": {
+                        de_firstCategory: final.de_firstCategory,
+                        secondCategory: final.secondCategory
+                    }
+                }, (err, result)=> {
+                    if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                    res.send(200, {succeed: true, msg: "ok"})
+                })
+            })
+            .catch((err)=> {
+                res.send(err.statusCode, err.msg)
+            })
     })
-    queryResult
-        .then((totalCategory)=> {
-            if (totalCategory == null) throw {statusCode: 404, msg: 'Nut Found'}
-            return new Promise((resolve, reject)=> {
-                if (req.body.first === 'true') {
-                    totalCategory.de_firstCategory = req.body.firstCategory
-                }
-                resolve(totalCategory)
-            })
-                .then((total_Category)=> {
-                    if (req.body.second === 'true') {
-                        _.each(total_Category.secondCategory, (item)=> {
-                            if (item.de_secondTitle == req.body.originSecondCategory) {
-                                item.de_secondTitle = req.body.secondCategory
-                            }
-                        })
-                    }
-                    return total_Category
-                })
-                .then((total_Category)=> {
-                    if (req.body.third === 'true') {
-                        _.each(total_Category.secondCategory, (item)=> {
-                            if (item.de_secondTitle == req.body.secondCategory) {
-                                _.each(item.thirdTitles, (thirdItem)=> {
-                                    if (thirdItem.de_thirdTitle == req.body.originThirdCategory) {
-                                        thirdItem.de_thirdTitle = req.body.thirdCategory
-                                    }
-                                })
-                            }
-                        })
-                    }
-                    return total_Category
-                })
-                .then((total_Category)=> {
-                    return total_Category
-                })
-        })
-        .then((final)=> {
-            db.categorys.update({
-                de_firstCategory: req.body.originFirstCategory
-            }, {
-                "$set": {
-                    de_firstCategory: final.de_firstCategory,
-                    secondCategory: final.secondCategory
-                }
-            }, (err, result)=> {
-                if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
-                res.send(200, {succeed: true, msg: "ok"})
-            })
-        })
-        .catch((err)=> {
-            res.send(err.statusCode, err.msg)
-        })
+
 })
 
 router.delete('/category_manage_german', (req, res)=> {
@@ -1238,16 +1290,14 @@ router.delete('/category_manage_german', (req, res)=> {
                         db.specifications.remove({
                             de_firstCategory: first,
                             de_secondCategory: second,
-                        }, {
-                            de_thirdCategory: {
-                                $ne: third
-                            }
                         }, (err, result)=> {
                             if (err) throw Error()
                         })
                         _.each(total_Category.secondCategory, (item, key)=> {
-                            if (typeof item.de_secondTitle != 'undefined' && item.de_secondTitle == second) {
-                                totalCategory.secondCategory.splice(key, 1)
+                            if (typeof item != 'undefined') {
+                                if (typeof item.de_secondTitle != 'undefined' && item.de_secondTitle == second) {
+                                    totalCategory.secondCategory.splice(key, 1)
+                                }
                             }
                         })
                     }
@@ -1265,8 +1315,10 @@ router.delete('/category_manage_german', (req, res)=> {
                         _.each(total_Category.secondCategory, (item)=> {
                             if (item.de_secondTitle == second) {
                                 _.each(item.thirdTitles, (thirdItem, key)=> {
-                                    if (typeof thirdItem.de_thirdTitle != 'undefined' && thirdItem.de_thirdTitle == third) {
-                                        delete item.thirdTitles.splice(key, 1)
+                                    if (typeof thirdItem != 'undefined') {
+                                        if (typeof thirdItem.de_thirdTitle != 'undefined' && thirdItem.de_thirdTitle == third) {
+                                            delete item.thirdTitles.splice(key, 1)
+                                        }
                                     }
                                 })
                             }
@@ -1314,8 +1366,6 @@ router.get('/accessory_upload', function (req, res, next) {
 
 router.post('/doAddCategory', checkLogin);
 router.post('/doAddCategory', function (req, res) {
-    console.log(req.body);
-    console.log(JSON.parse(req.body.secondCategory))
 
     var Categories = {
         firstCategory: req.body.firstCategory,
@@ -1325,34 +1375,74 @@ router.post('/doAddCategory', function (req, res) {
         secondCategory: JSON.parse(req.body.secondCategory)
     };
     //保存到产品属性表
-    _.each(JSON.parse(req.body.secondCategory), function (second) {
-        _.each(second.thirdTitles, function (third) {
-            var spec = {
-                firstCategory: req.body.firstCategory,
-                secondCategory: second.secondTitle,
-                thirdCategory: third.thirdTitle,
-                de_firstCategory: req.body.de_firstCategory,
-                de_secondCategory: second.de_secondTitle,
-                de_thirdCategory: third.de_thirdTitle,
-                specification: {},
-                addBy: ""
+    var spec = {}
+    if (JSON.parse(req.body.secondCategory).length != 0) {
+        _.each(JSON.parse(req.body.secondCategory), function (second) {
+            if (second.thirdTitles.length != 0) {
+                _.each(second.thirdTitles, function (third) {
+                    spec = {
+                        firstCategory: req.body.firstCategory,
+                        secondCategory: second.secondTitle,
+                        thirdCategory: third.thirdTitle,
+                        de_firstCategory: req.body.de_firstCategory,
+                        de_secondCategory: second.de_secondTitle,
+                        de_thirdCategory: third.de_thirdTitle,
+                        specification: {},
+                        addBy: ""
+                    }
+                    let specs = new db.specifications(spec);
+                    console.log(spec)
+                    specs.save(err=> {
+                        console.log(err)
+                    })
+                })
+            } else {
+                spec = {
+                    firstCategory: req.body.firstCategory,
+                    secondCategory: second.secondTitle,
+                    thirdCategory: "",
+                    de_firstCategory: req.body.de_firstCategory,
+                    de_secondCategory: second.de_secondTitle,
+                    de_thirdCategory: "",
+                    specification: {},
+                    addBy: ""
+                }
+                let specs = new db.specifications(spec);
+                console.log(spec)
+                specs.save(err=> {
+                    console.log(err)
+                })
             }
-            var specs = new db.specifications(spec);
-            console.log(spec)
-            specs.save()
-        })
-    })
 
-    var category = new db.categorys(Categories);
-    category.save(function (err) {
-        console.log(err);
+        })
+    } else {
+        spec = {
+            firstCategory: req.body.firstCategory,
+            secondCategory: "",
+            thirdCategory: "",
+            de_firstCategory: req.body.de_firstCategory,
+            de_secondCategory: "",
+            de_thirdCategory: "",
+            specification: {},
+            addBy: ""
+        }
+        let specs = new db.specifications(spec);
+        console.log(spec)
+        specs.save(err=> {
+            console.log(err)
+        })
+    }
+
+
+    var category = new db.categorys(Categories)
+    category.save(err => {
         if (err) {
             res.send('fail')
         } else {
             res.send('success');
         }
-    });
-});
+    })
+})
 
 /*-------------------------------------------------------------------*/
 /* ----------------------------最热标签管理 -------------------------*/

@@ -235,7 +235,7 @@
                     de_thirdTitle: value.de_value,
                     thirdImages: value.url.trim()
                 }
-                threeArray.push(third);
+                threeArray.unshift(third);
             }
         })
 
@@ -334,7 +334,7 @@
                     deleteId++
                     //获取当前行
                     var currentRow = $('table:first tbody tr:eq(' + i + ')');
-                    console.log(currentRow)
+                    console.log('table:first tbody tr:eq(' + i + ')')
                     //获取当前时间
                     var now = new Date()
                     var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate()
