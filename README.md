@@ -9,7 +9,7 @@
 
 ![Build Status](https://travis-ci.org/sunNode/commerce.svg?branch=master)
 [![codecov](https://codecov.io/gh/sunNode/node-cluster-email/branch/master/graph/badge.svg)](https://codecov.io/gh/sunNode/node-cluster-email)
-![npm](https://img.shields.io/npm/v/npm.svg)[![Progress](http://progressed.io/bar/70?title=%E8%BF%9B%E5%BA%A6)](http://progressed.io)
+![npm](https://img.shields.io/npm/v/npm.svg)  [![Progress](http://progressed.io/bar/70?title=%E8%BF%9B%E5%BA%A6)](http://progressed.io)
 
 
 
