@@ -157,9 +157,12 @@
         }
     }
 
-    function saveAll() {
-        var FirstCategory = $('table tr[class*=0_]').find('input:eq(0)').val().replace(/\s+/g, "")
-        var DEFirstCategory = $('table tr[class*=0_]').find('input:eq(1)').val().replace(/\s+/g, "")
+    function saveAll(){
+
+        var FirstCategory = $('table tr[class*=0_]').find('input:eq(0)').val()
+        var DEFirstCategory = $('table tr[class*=0_]').find('input:eq(1)').val()
+        var FirstCategory_format = $('table tr[class*=0_]').find('input:eq(0)').val().replace(/\s+/g, "")
+        var DEFirstCategory_format = $('table tr[class*=0_]').find('input:eq(1)').val().replace(/\s+/g, "")
         if (FirstCategory && DEFirstCategory) {
             for (var i = 1; i <= $('table tr[class*=cateGory]').length; i++) {
                 var n = i + '_';
@@ -171,14 +174,14 @@
                 }
             }
             CategoryALL.forEach(function (item) {
-                item.secondUrl = ('/' + FirstCategory + item.secondUrl.replace(/\s+/g, "")).trim();
+                item.secondUrl = ('/' + FirstCategory_format + item.secondUrl.replace(/\s+/g, "")).trim();
             })
             var timeStamps = (new Date().getTime() / 10000000).toFixed()
             var Category = {
                 firstCategory: FirstCategory,
                 de_firstCategory: DEFirstCategory,
                 firstTimeStamp: timeStamps,
-                firstUrl: '/' + FirstCategory + '/' + timeStamps + Math.floor((Math.random() * 100) + 1),
+                firstUrl: '/' + FirstCategory_format + '/' + timeStamps + Math.floor((Math.random() * 100) + 1),
                 firstCount: 0,
                 secondCategory: JSON.stringify(CategoryALL)
             }
@@ -228,16 +231,18 @@
                 var third = {
                     thirdTimeStamp: timeStamp,
                     thirdUrl: '/product/' + timeStamp + Math.floor((Math.random() * 100) + 1) + index,
-                    thirdTitle: value.en_value.replace(/\s+/g, ""),
-                    de_thirdTitle: value.de_value.replace(/\s+/g, ""),
+                    thirdTitle: value.en_value,
+                    de_thirdTitle: value.de_value,
                     thirdImages: value.url.trim()
                 }
                 threeArray.push(third);
             }
         })
 
-        var second_Category = twoArray[0].en_value.replace(/\s+/g, "");
-        var de_second_Category = twoArray[0].de_value.replace(/\s+/g, "");
+        var second_Category = twoArray[0].en_value
+        var de_second_Category = twoArray[0].de_value
+        var second_Category_format = twoArray[0].en_value.replace(/\s+/g, "");
+        var de_second_Category_format = twoArray[0].de_value.replace(/\s+/g, "");
         var three_Category = threeArray;
         var timeStamps = (new Date().getTime() / 100000000).toFixed()
         if (second_Category && de_second_Category) {
@@ -245,7 +250,7 @@
                 secondTitle: second_Category,
                 de_secondTitle: de_second_Category,
                 secondTimeStamp: timeStamps,
-                secondUrl: '/' + second_Category + '_' + timeStamps + Math.floor((Math.random() * 100) + 1),
+                secondUrl: '/' + second_Category_format + '_' + timeStamps + Math.floor((Math.random() * 100) + 1),
                 secondCount: 0,
                 thirdTitles: three_Category
             }
@@ -326,20 +331,22 @@
                 if ($('table tr[class*=' + tr_new + ']').find('input').val() == "") {
                     layer.msg('请添加二级分类');
                 } else {
-                    deleteId++;
+                    deleteId++
                     //获取当前行
                     var currentRow = $('table:first tbody tr:eq(' + i + ')');
+                    console.log(currentRow)
                     //获取当前时间
-                    var now = new Date();
-                    var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
+                    var now = new Date()
+                    var date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate()
                     //要添加的行的id
-                    var addRowID = currentRowID + '_' + deleteId;
+                    var addRowID = currentRowID + '_' + deleteId
+
                     var str = '<tr class="' + addRowID + '"><td><img  style="margin-left: 40px" src="/images/jiao.svg" alt="">&nbsp;<input type="text" placeholder="三级英文类目">&nbsp;<input type="text" placeholder="三级德文类目">&nbsp;</td><td> <input type="file" id="file' + addRowID + '" name="file"/><br/> <a id="' + addRowID + 'test" style="display: none" href=""></a><input type="button" onclick="upload(this.id)" id="' + addRowID + '" name="" class="btn btn-info" value="上传图片"/> </td><td></td> <td>' + date + '</td> <td> <button onclick="deleteThreeRow (this)" class="btn btn-danger">删除</button> </td></tr>';
                     //当前行之后插入一行
-                    currentRow.after(str);
+                    currentRow.after(str)
                 }
             }
-        });
+        })
 
     }
 

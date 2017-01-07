@@ -81,7 +81,6 @@
 	display: block;
 	position: relative;
 	text-decoration: none;
-	text-transform: uppercase;
 	outline: 0;
 	padding: 0 22px;
 
@@ -130,7 +129,7 @@
 	text-decoration: none;
 	outline: none;
 	width: 25%;
-	text-transform: uppercase;
+
 	padding: 6px 22px;
 
 	-webkit-transition: all 0.3s ease;

@@ -318,12 +318,6 @@
         var total_category = []
         var total = {};
         $('#save_history').click(function () {
-
-            if ($('#catagory2 li.current').text() == '') {
-                layer.msg('请选择三级类目')
-            } else {
-
-
                 var single = {
                     firstCategory: $('#catagory0 li.current').text(),
                     secondCategory: $('#catagory1 li.current').text(),
@@ -397,14 +391,9 @@
                         alert('请选择类目!');
                     }
                 }
-
-            }
         })
 
         $('#showCategory').click(function () {
-            if ($('#catagory2 li.current').text() == '') {
-                layer.msg('请选择类目')
-            } else {
                 $('#myModal').modal('toggle')
                 let payload = {
                     firstCategory: $('#catagory0 li.current').text(),
@@ -415,7 +404,6 @@
                 $('#fst-category').val(payload.firstCategory)
                 $('#sed-category').val(payload.secondCategory)
                 $('#thd-category').val(payload.thirdCategory)
-            }
         })
 
         $('#save_change').click(function () {

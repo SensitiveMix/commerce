@@ -29,8 +29,6 @@ var checkCategories = function (req, res, next) {
 }
 
 
-
-
 /* GET home page. */
 router.get('/', (req, res, next) => {
     async.parallel([
@@ -65,6 +63,7 @@ router.get('/', (req, res, next) => {
                     account = req.cookies['account'];
                     statusCode = 200;
                 }
+                console.log(category)
                 res.render('assets/index', {
                     title: 'ECSell',
                     url: '/',
@@ -79,16 +78,16 @@ router.get('/', (req, res, next) => {
 
 })
 
-router.get('/login',  (req, res, next) => {
+router.get('/login', (req, res, next) => {
     async.parallel([
-             (done) => {
+            (done) => {
                 db.categorys.find({}, function (err, result) {
                     if (err) res.send('404');
                     categoryies = result;
                     done(err, result)
                 });
             },
-             (done) => {
+            (done) => {
                 db.hotLabels.find({}, null, {
                     sort: {
                         add_time: -1
@@ -99,7 +98,7 @@ router.get('/login',  (req, res, next) => {
                 })
             }
         ],
-         (err, results) => {
+        (err, results) => {
             if (err) {
                 done(err)
             } else {

@@ -1,6 +1,3 @@
-/**
- * Created by sunNode on 16/11/18.
- */
 window.$ = require("jquery");
 var $ = require('jquery');
 require('../assets/css/bootstrap.min.css')
