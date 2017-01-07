@@ -160,10 +160,10 @@
     function saveAll(){
 
         var FirstCategory = $('table tr[class*=0_]').find('input:eq(0)').val()
-        var DEFirstCategory = $('table tr[class*=0_]').find('input:eq(1)').val()
+        var DEFirstCategory = $('table tr[class*=0_]').find('input:eq(1)').val() ||  $('table tr[class*=0_]').find('input:eq(0)').val()
         var FirstCategory_format = $('table tr[class*=0_]').find('input:eq(0)').val().replace(/\s+/g, "")
         var DEFirstCategory_format = $('table tr[class*=0_]').find('input:eq(1)').val().replace(/\s+/g, "")
-        if (FirstCategory && DEFirstCategory) {
+        if (FirstCategory) {
             for (var i = 1; i <= $('table tr[class*=cateGory]').length; i++) {
                 var n = i + '_';
                 var p = i + '_' + i;
@@ -221,7 +221,7 @@
             var val = {
                 url: $(this).find('a').attr("href"),
                 en_value: $(this).find('input:eq(0)').val(),
-                de_value: $(this).find('input:eq(1)').val() == '' ? $(this).find('input:eq(0)').val() : $(this).find('input:eq(1)').val()
+                de_value: $(this).find('input:eq(1)').val() || $(this).find('input:eq(0)').val()
             }
             twoArray.push(val)
         })
@@ -240,12 +240,12 @@
         })
 
         var second_Category = twoArray[0].en_value
-        var de_second_Category = twoArray[0].de_value
+        var de_second_Category = twoArray[0].de_value || twoArray[0].en_value
         var second_Category_format = twoArray[0].en_value.replace(/\s+/g, "");
         var de_second_Category_format = twoArray[0].de_value.replace(/\s+/g, "");
         var three_Category = threeArray;
         var timeStamps = (new Date().getTime() / 100000000).toFixed()
-        if (second_Category && de_second_Category) {
+        if (second_Category) {
             var totalGate = {
                 secondTitle: second_Category,
                 de_secondTitle: de_second_Category,
