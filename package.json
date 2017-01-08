@@ -7,10 +7,10 @@
     "dev": "cross-env NODE_ENV=dev sudo nodemon app.js",
     "build": "webpack --progress --colors --watch",
     "test-build": "webpack --progress --colors",
-    "test": "mocha -t 80000 Mocha/ --bail",
+    "test": "mocha -t 80000 test/ --bail",
     "browsersync": "cross-env NODE_ENV=dev node app_browsersync",
     "production": "webpack --config webpack.production.config.js -p & cross-env NODE_ENV=production node app",
-    "test-cov": "node node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha  -- --timeout 500000 --recursive Mocha/"
+    "test-cov": "node node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha  -- --timeout 500000 --recursive test/"
   },
   "dependencies": {
     "assert": "^1.4.1",

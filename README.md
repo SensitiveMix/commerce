@@ -12,13 +12,32 @@
  [![Progress](http://progressed.io/bar/70?title=%E8%BF%9B%E5%BA%A6)](http://progressed.io)
 
 
+## Usage
+The commerce website is design by WeChat Pla, Focus on backend manage and Fronted show.
+Any Question,See [Wiki](https://github.com/sunNode/commerce/wiki)
+
+### Contains
+- [x] [Node.js](https://github.com/nodejs/node)
+- [x] [Express](https://github.com/expressjs/express)
+- [x] [EJS](https://github.com/tj/ejs)
+- [x] [JQuery Table](https://github.com/fooplugins/FooTable)
+- [x] [JQuery Cookie](https://github.com/jshttp/cookie)
+- [x] [Local Storage](https://github.com/search?utf8=%E2%9C%93&q=localStorage)
+- [x] [Webpack 2](https://webpack.js.org/?utm_source=github&utm_medium=readme&utm_campaign=top)
+- [x] [Babel](https://babeljs.io/)
+- [x] [Mongoose](https://github.com/Automattic/mongoose)
+
 
 ## Installation
+```bash
     git clone https://bitbucket.org/wechatpla/master.git
+```
 
 
 ## Install dependencies:
+```bash
     npm install
+```
 
 ## Start the server:
 

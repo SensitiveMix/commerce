@@ -1,8 +1,5 @@
-/**
- * Created by sunNode on 16/10/19.
- */
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 var notice = new Schema({
     about_us: [{
         add_time: Number,
@@ -40,6 +37,6 @@ var notice = new Schema({
             addBy: String
         }
     ]
-});
+})
 
 module.exports = notice;
