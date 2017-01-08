@@ -29,13 +29,13 @@ A Commerce website for taking advantage of the built-in commerce platform in nod
 
 ## Installation
 ```bash
-    git clone https://bitbucket.org/wechatpla/master.git
+git clone https://bitbucket.org/wechatpla/master.git
 ```
 
 
 ## Install dependencies:
 ```bash
-    npm install
+npm install
 ```
 
 ## Usage
@@ -66,13 +66,15 @@ manual package  : npm run build
 
 
 
-## run test
+## Test
+```bash
+npm test
+```
+```bash
+npm run test-cov
 
-* npm test
+```
 
-## run test-cov
-
-* npm run-script test-cov
 
 ## LICENSE
 
