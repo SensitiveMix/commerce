@@ -11,15 +11,14 @@
 [![codecov](https://codecov.io/gh/sunNode/node-cluster-email/branch/master/graph/badge.svg)](https://codecov.io/gh/sunNode/node-cluster-email)
  [![Progress](http://progressed.io/bar/70?title=%E8%BF%9B%E5%BA%A6)](http://progressed.io)
 
+A Commerce website for taking advantage of the built-in commerce platform in node v6.8.0.Focus on backend manage and Fronted show.
 
-## Usage
-The commerce website is design by WeChat Pla, Focus on backend manage and Fronted show.
-Any Question,See [Wiki](https://github.com/sunNode/commerce/wiki)
 
 ### Contains
 - [x] [Node.js](https://github.com/nodejs/node)
 - [x] [Express](https://github.com/expressjs/express)
 - [x] [EJS](https://github.com/tj/ejs)
+- [x] [BootStrap AdminLTE](http://www.hosdo.com/)
 - [x] [JQuery Table](https://github.com/fooplugins/FooTable)
 - [x] [JQuery Cookie](https://github.com/jshttp/cookie)
 - [x] [Local Storage](https://github.com/search?utf8=%E2%9C%93&q=localStorage)
@@ -39,7 +38,7 @@ Any Question,See [Wiki](https://github.com/sunNode/commerce/wiki)
     npm install
 ```
 
-## Start the server:
+## Usage
 
 ```bash
 
