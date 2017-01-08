@@ -2,6 +2,8 @@ language: node_js
 node_js:
   - "6.8.0"
 
+services: mongodb
+
 script:
   - npm install
   - npm run test-build
