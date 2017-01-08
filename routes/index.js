@@ -317,8 +317,9 @@ router.get('/getBanner', (req, res) => {
 })
 //获取头部广告图
 router.get('/getHeadBanner', (req, res) => {
-    db.banners.findOne({'type': 'headBanner'}, (err, result) => {
-        if (err) throw err;
+    db.banners.findOne({'type': 'headBanner', 'status': 'New'}, (err, result) => {
+        if (err) throw err
+        console.log(result)
         res.send(result);
     }).sort({upload_time: -1})
 })

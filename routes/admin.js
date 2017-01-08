@@ -481,10 +481,8 @@ router.post('/saveBanners', function (req, res) {
 router.get('/head_banner_manage', checkLogin);
 router.get('/head_banner_manage', function (req, res, next) {
     console.log("头部广告轮播管理页面" + new Date());
-    db.banners.find({'type': 'headBanner'}, function (err, result) {
+    db.banners.find({'type': 'headBanner', 'status': 'New'}, function (err, result) {
         if (err) throw  err;
-        console.log('-------------');
-        console.log(result);
         res.render('admin/front/head-banner-manage', {image_url: result[0], username: u.nick_name});
     });
     console.log("头部广告轮播管理页面访问成功");
@@ -493,23 +491,34 @@ router.get('/head_banner_manage', function (req, res, next) {
 //首页头部广告替换
 router.post('/saveHeadBanners', checkLogin);
 router.post('/saveHeadBanners', function (req, res) {
-    console.log("Head Banners add" + req.body.image_url + new Date());
-    var banner = {
-        image_url: req.body.image_url,
-        upload_time: req.body.upload_time,
-        status: req.body.status,
-        type: req.body.type
-    };
-    var banners = new db.banners(banner);
-    banners.save(function (err) {
-        if (err) {
-            res.send('fail')
-        } else {
-            res.send('success');
+    console.log("Head Banners add" + req.body.image_url + new Date())
+    db.banners.update({
+        type: "headBanner",
+        status: "New"
+    }, {
+        '$set': {
+            status: 'OFFLINE'
         }
+    }, (err, m)=> {
+        console.log(err)
+        console.log(m)
+        let banner = {
+            image_url: req.body.image_url,
+            upload_time: req.body.upload_time,
+            status: req.body.status,
+            type: req.body.type
+        }
+        let banners = new db.banners(banner);
+        banners.save(function (err) {
+            if (err) {
+                res.send('fail')
+            } else {
+                res.send('success');
+            }
 
-    });
-});
+        })
+    })
+})
 
 
 //注册须知页面

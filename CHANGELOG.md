@@ -139,3 +139,6 @@ views/services/
 # v0.2.3
 * 修改readme.md
 * 修改CI跑不过的问题
+
+# v0.2.4
+* 前端广告轮播图修复
