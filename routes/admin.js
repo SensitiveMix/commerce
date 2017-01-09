@@ -1,32 +1,32 @@
-﻿var express = require('express');
-var router = express.Router();
-var http = require('http').Server(express);
-var formidable = require('formidable');
-var fs = require('fs');
-var crypto = require('crypto');
-var db = require('../model/index');
-var async = require('async');
-var multer = require('multer');
-var xlstojson = require("xls-to-json-lc");
-var xlsxtojson = require("xlsx-to-json-lc");
+﻿const express = require('express')
+const router = express.Router()
+const http = require('http').Server(express)
+const formidable = require('formidable')
+const fs = require('fs')
+const crypto = require('crypto')
+const db = require('../model/index')
+const async = require('async')
+const multer = require('multer')
+const xlstojson = require("xls-to-json-lc")
+const xlsxtojson = require("xlsx-to-json-lc")
 // var upload = multer({dest: './tmp'});
-var upload = multer();
-var superagent = require('superagent');
-var cheerio = require('cheerio');
-var http_origin = require('http');
-var _ = require('lodash');
-var path = require('path');
-var config = require('../config')
-const express_conf = require('../public/transport/express_price.json');
-const oridinary_conf = require('../public/transport/ordinary_price.json');
-const little_pucket_conf = require('../public/transport/little_packet.json');
+var upload = multer()
+const superagent = require('superagent')
+const cheerio = require('cheerio')
+const http_origin = require('http')
+const _ = require('lodash')
+const path = require('path')
+const config = require('../config')
+const express_conf = require('../public/transport/express_price.json')
+const oridinary_conf = require('../public/transport/ordinary_price.json')
+const little_pucket_conf = require('../public/transport/little_packet.json')
 
 
-var r = [];
-var u = [];
-var leverlist = [];
-var systems = [];
-var tempCategory = [];
+var r = []
+var u = []
+var leverlist = []
+var systems = []
+var tempCategory = []
 var temp_category = []
 var temp_product_specification = {}
 /*-------------------------------------------------------------------*/
@@ -253,13 +253,13 @@ router.post('/doChangeUser', function (req, res, next) {
 /*-------------------------------------------------------------------*/
 /* -----------------------------商城前台管理 -------------------------*/
 //网站语言管理
-router.get('/language_manage', (req, res)=> {
+router.get('/language_manage', (req, res) => {
     res.render('admin/mainsets/language-manage', {username: u.nick_name});
 })
 
 //获取用户
-router.get('/languagelist', (req, res)=> {
-    db.systems.find({}, (err, result)=> {
+router.get('/languagelist', (req, res) => {
+    db.systems.find({}, (err, result) => {
         if (err) return res.send(500, 'Error occurred: database Error')
         var lista = {
             "draw": 2,
@@ -281,7 +281,7 @@ router.get('/languagelist', (req, res)=> {
 })
 
 // CURD
-router.post('/language', (req, res)=> {
+router.post('/language', (req, res) => {
     if (req.body) {
         db.systems.findOneAndUpdate({}, {
             $push: {
@@ -291,7 +291,7 @@ router.post('/language', (req, res)=> {
                     update_time: req.body.update_time
                 }
             }
-        }, (err, back)=> {
+        }, (err, back) => {
             if (err) return res.send(500, 'Error occurred: database Error')
             if (back) {
                 res.send({succeed: true, msg: 'ok'})
@@ -304,13 +304,13 @@ router.post('/language', (req, res)=> {
     }
 })
 
-router.delete('/language', (req, res)=> {
+router.delete('/language', (req, res) => {
     if (req.body) {
         db.systems.findOneAndUpdate({}, {
             $pull: {
                 languages: {_id: req.body._id}
             }
-        }, (err, back)=> {
+        }, (err, back) => {
             if (err) return res.send(500, 'Error occurred: database Error')
             if (back) {
                 res.send({succeed: true, msg: 'ok'})
@@ -321,7 +321,7 @@ router.delete('/language', (req, res)=> {
     }
 })
 
-router.put('/language', (req, res)=> {
+router.put('/language', (req, res) => {
     if (req.body) {
         db.systems.findOneAndUpdate({}, {
             $set: {
@@ -331,7 +331,7 @@ router.put('/language', (req, res)=> {
                     update_time: req.body.update_time
                 }
             }
-        }, (err, back)=> {
+        }, (err, back) => {
             if (err) return res.send(500, 'Error occurred: database Error')
             if (back) {
                 res.send({succeed: true, msg: 'ok'})
@@ -499,7 +499,7 @@ router.post('/saveHeadBanners', function (req, res) {
         '$set': {
             status: 'OFFLINE'
         }
-    }, (err, m)=> {
+    }, (err, m) => {
         console.log(err)
         console.log(m)
         let banner = {
@@ -523,20 +523,20 @@ router.post('/saveHeadBanners', function (req, res) {
 
 //注册须知页面
 router.get('/register_notice', checkLogin);
-router.get('/register_notice', (req, res)=> {
+router.get('/register_notice', (req, res) => {
     async.parallel([
         (done) => {
-            db.notices.findOne({}, (err, allNotices)=> {
+            db.notices.findOne({}, (err, allNotices) => {
                 done(null, allNotices)
             })
         },
         (done) => {
-            db.de_notices.findOne({}, (err, allNotices)=> {
+            db.de_notices.findOne({}, (err, allNotices) => {
                 done(null, allNotices)
             })
         }
-    ], (err, results)=> {
-        let [English,German] = results
+    ], (err, results) => {
+        let [English, German] = results
         if (English && German) {
             res.render('admin/notices/register-notice', {
                 registerNotice: English.register_notice,
@@ -551,7 +551,7 @@ router.get('/register_notice', (req, res)=> {
 
 //注册须知页面
 router.post('/register-notice', checkLogin);
-router.post('/register-notice', (req, res)=> {
+router.post('/register-notice', (req, res) => {
     async.parallel([
         (done) => {
             db.notices.findOneAndUpdate({}, {
@@ -562,7 +562,7 @@ router.post('/register-notice', (req, res)=> {
                         addBy: u.nick_name
                     }]
                 }
-            }, (err, register_notice)=> {
+            }, (err, register_notice) => {
                 if (err) return done(null, false)
                 done(null, true)
             })
@@ -576,13 +576,13 @@ router.post('/register-notice', (req, res)=> {
                         addBy: u.nick_name
                     }]
                 }
-            }, (err, register_notice)=> {
+            }, (err, register_notice) => {
                 if (err) return done(null, false)
                 done(null, true)
             })
         }
-    ], (err, results)=> {
-        let [English,German] = results
+    ], (err, results) => {
+        let [English, German] = results
         if (English && German && German == true) {
             res.send({succeed: true, msg: "ok"})
         } else {
@@ -593,20 +593,20 @@ router.post('/register-notice', (req, res)=> {
 
 //关于我们管理页面
 router.get('/about_us', checkLogin);
-router.get('/about_us', (req, res)=> {
+router.get('/about_us', (req, res) => {
     async.parallel([
         (done) => {
-            db.notices.findOne({}, (err, allNotices)=> {
+            db.notices.findOne({}, (err, allNotices) => {
                 done(null, allNotices)
             })
         },
         (done) => {
-            db.de_notices.findOne({}, (err, allNotices)=> {
+            db.de_notices.findOne({}, (err, allNotices) => {
                 done(null, allNotices)
             })
         }
-    ], (err, results)=> {
-        let [English,German] = results
+    ], (err, results) => {
+        let [English, German] = results
         if (English && German) {
             res.render('admin/notices/about-us', {
                 aboutUs: English.about_us,
@@ -632,7 +632,7 @@ router.post('/about-us', (req, res) => {
                         addBy: u.nick_name
                     }]
                 }
-            }, (err, aboutUs)=> {
+            }, (err, aboutUs) => {
                 if (err) return done(null, false)
                 done(null, true)
             })
@@ -646,13 +646,13 @@ router.post('/about-us', (req, res) => {
                         addBy: u.nick_name
                     }]
                 }
-            }, (err, aboutUs)=> {
+            }, (err, aboutUs) => {
                 if (err) return done(null, false)
                 done(null, true)
             })
         }
-    ], (err, results)=> {
-        let [English,German] = results
+    ], (err, results) => {
+        let [English, German] = results
         if (English && German && German == true) {
             res.send({succeed: true, msg: "ok"})
         } else {
@@ -666,17 +666,17 @@ router.get('/contact_us', checkLogin);
 router.get('/contact_us', (req, res) => {
     async.parallel([
         (done) => {
-            db.notices.findOne({}, (err, allNotices)=> {
+            db.notices.findOne({}, (err, allNotices) => {
                 done(null, allNotices)
             })
         },
         (done) => {
-            db.de_notices.findOne({}, (err, allNotices)=> {
+            db.de_notices.findOne({}, (err, allNotices) => {
                 done(null, allNotices)
             })
         }
-    ], (err, results)=> {
-        let [English,German] = results
+    ], (err, results) => {
+        let [English, German] = results
         if (English && German) {
             res.render('admin/notices/contact-us', {
                 contactUs: English.contact_us,
@@ -691,7 +691,7 @@ router.get('/contact_us', (req, res) => {
 
 //更改联系我们管理页面
 router.post('/contact-us', checkLogin);
-router.post('/contact-us', (req, res)=> {
+router.post('/contact-us', (req, res) => {
     async.parallel([
         (done) => {
             db.notices.findOneAndUpdate({}, {
@@ -702,7 +702,7 @@ router.post('/contact-us', (req, res)=> {
                         addBy: u.nick_name
                     }]
                 }
-            }, (err, aboutUs)=> {
+            }, (err, aboutUs) => {
                 if (err) return done(null, false)
                 done(null, true)
             })
@@ -716,13 +716,13 @@ router.post('/contact-us', (req, res)=> {
                         addBy: u.nick_name
                     }]
                 }
-            }, (err, aboutUs)=> {
+            }, (err, aboutUs) => {
                 if (err) return done(null, false)
                 done(null, true)
             })
         }
-    ], (err, results)=> {
-        let [English,German] = results
+    ], (err, results) => {
+        let [English, German] = results
         if (English && German && German == true) {
             res.send({succeed: true, msg: "ok"})
         } else {
@@ -736,17 +736,17 @@ router.get('/FAQ', checkLogin);
 router.get('/FAQ', (req, res) => {
     async.parallel([
         (done) => {
-            db.notices.findOne({}, (err, allNotices)=> {
+            db.notices.findOne({}, (err, allNotices) => {
                 done(null, allNotices)
             })
         },
         (done) => {
-            db.de_notices.findOne({}, (err, allNotices)=> {
+            db.de_notices.findOne({}, (err, allNotices) => {
                 done(null, allNotices)
             })
         }
-    ], (err, results)=> {
-        let [English,German] = results
+    ], (err, results) => {
+        let [English, German] = results
         if (English && German) {
             res.render('admin/notices/faq', {
                 faq: English.FAQ,
@@ -772,7 +772,7 @@ router.post('/faq', (req, res) => {
                         addBy: u.nick_name
                     }]
                 }
-            }, (err, aboutUs)=> {
+            }, (err, aboutUs) => {
                 if (err) return done(null, false)
                 done(null, true)
             })
@@ -786,13 +786,13 @@ router.post('/faq', (req, res) => {
                         addBy: u.nick_name
                     }]
                 }
-            }, (err, aboutUs)=> {
+            }, (err, aboutUs) => {
                 if (err) return done(null, false)
                 done(null, true)
             })
         }
-    ], (err, results)=> {
-        let [English,German] = results
+    ], (err, results) => {
+        let [English, German] = results
         if (English && German && German == true) {
             res.send({succeed: true, msg: "ok"})
         } else {
@@ -806,17 +806,17 @@ router.get('/attention', checkLogin);
 router.get('/attention', (req, res) => {
     async.parallel([
         (done) => {
-            db.notices.findOne({}, (err, allNotices)=> {
+            db.notices.findOne({}, (err, allNotices) => {
                 done(null, allNotices)
             })
         },
         (done) => {
-            db.de_notices.findOne({}, (err, allNotices)=> {
+            db.de_notices.findOne({}, (err, allNotices) => {
                 done(null, allNotices)
             })
         }
-    ], (err, results)=> {
-        let [English,German] = results
+    ], (err, results) => {
+        let [English, German] = results
         if (English && German) {
             res.render('admin/notices/attention', {
                 attention: English.attention,
@@ -842,7 +842,7 @@ router.post('/attention', (req, res) => {
                         addBy: u.nick_name
                     }]
                 }
-            }, (err, attention)=> {
+            }, (err, attention) => {
                 if (err) return done(null, false)
                 done(null, true)
             })
@@ -856,13 +856,13 @@ router.post('/attention', (req, res) => {
                         addBy: u.nick_name
                     }]
                 }
-            }, (err, attention)=> {
+            }, (err, attention) => {
                 if (err) return done(null, false)
                 done(null, true)
             })
         }
-    ], (err, results)=> {
-        let [English,German] = results
+    ], (err, results) => {
+        let [English, German] = results
         if (English && German && German == true) {
             res.send({succeed: true, msg: "ok"})
         } else {
@@ -876,17 +876,17 @@ router.get('/privacy', checkLogin);
 router.get('/privacy', (req, res) => {
     async.parallel([
         (done) => {
-            db.notices.findOne({}, (err, allNotices)=> {
+            db.notices.findOne({}, (err, allNotices) => {
                 done(null, allNotices)
             })
         },
         (done) => {
-            db.de_notices.findOne({}, (err, allNotices)=> {
+            db.de_notices.findOne({}, (err, allNotices) => {
                 done(null, allNotices)
             })
         }
-    ], (err, results)=> {
-        let [English,German] = results
+    ], (err, results) => {
+        let [English, German] = results
         if (English && German) {
             res.render('admin/notices/privacy', {
                 privacy: English.privacy_notice,
@@ -912,7 +912,7 @@ router.post('/privacy', (req, res) => {
                         addBy: u.nick_name
                     }]
                 }
-            }, (err, attention)=> {
+            }, (err, attention) => {
                 if (err) return done(null, false)
                 done(null, true)
             })
@@ -926,13 +926,13 @@ router.post('/privacy', (req, res) => {
                         addBy: u.nick_name
                     }]
                 }
-            }, (err, attention)=> {
+            }, (err, attention) => {
                 if (err) return done(null, false)
                 done(null, true)
             })
         }
-    ], (err, results)=> {
-        let [English,German] = results
+    ], (err, results) => {
+        let [English, German] = results
         if (English && German && German == true) {
             res.send({succeed: true, msg: "ok"})
         } else {
@@ -954,7 +954,7 @@ router.get('/hot_product_manage', function (req, res, next) {
 /*-------------------------------------------------------------------*/
 /* -------------------------------类目管理 ---------------------------*/
 router.get('/accessory_manage', checkLogin)
-router.get('/accessory_manage', (req, res)=> {
+router.get('/accessory_manage', (req, res) => {
     db.categorys.find({}, (err, categories) => {
         if (err) res.send('404')
         res.render('admin/product/accessory-manage', {
@@ -967,17 +967,17 @@ router.get('/accessory_manage', (req, res)=> {
 })
 
 router.get('/accessory_manage_german', checkLogin)
-router.get('/accessory_manage_german', (req, res)=> {
+router.get('/accessory_manage_german', (req, res) => {
     db.categorys.find({}, (err, categories) => {
         if (err) res.send('404')
-        new Promise((resolve, reject)=> {
-            _.each(categories, (category)=> {
+        new Promise((resolve, reject) => {
+            _.each(categories, (category) => {
                 category.firstCategory = category.de_firstCategory || category.firstCategory
                 if (typeof category.secondCategory != 'undefined') {
-                    _.each(category.secondCategory, (second)=> {
+                    _.each(category.secondCategory, (second) => {
                         second.secondTitle = second.de_secondTitle || second.secondTitle
                         if (typeof second.thirdTitles != 'undefined') {
-                            _.each(second.thirdTitles, (third)=> {
+                            _.each(second.thirdTitles, (third) => {
                                 third.thirdTitle = third.de_thirdTitle || third.thirdTitle
                             })
                         }
@@ -994,47 +994,47 @@ router.get('/accessory_manage_german', (req, res)=> {
                     language: 'de'
                 })
             })
-            .catch((err)=> {
+            .catch((err) => {
                 res.send(err.statusCode, err.message)
             })
     })
 })
 //English category
-router.delete('/category_manage', (req, res)=> {
-    let [first,second,third]=[req.body.firstCategory, req.body.secondCategory, req.body.thirdCategory]
+router.delete('/category_manage', (req, res) => {
+    let [first, second, third]=[req.body.firstCategory, req.body.secondCategory, req.body.thirdCategory]
     console.log(first)
     console.log(second)
     console.log(third)
-    let queryResult = new Promise((resolve, reject)=> {
-        db.categorys.findOne({firstCategory: first}, (err, result)=> {
+    let queryResult = new Promise((resolve, reject) => {
+        db.categorys.findOne({firstCategory: first}, (err, result) => {
             if (err) reject(err)
             resolve(result)
         })
     })
     queryResult
-        .then((totalCategory)=> {
-            return new Promise((resolve, reject)=> {
+        .then((totalCategory) => {
+            return new Promise((resolve, reject) => {
                 if (first && second == '' && third == '') {
                     totalCategory = ''
                     db.specifications.remove({
                         firstCategory: first
-                    }, (err, result)=> {
+                    }, (err, result) => {
                         if (err) throw Error()
                     })
                 }
                 resolve(totalCategory)
             })
-                .then((total_Category)=> {
+                .then((total_Category) => {
                     if (first && second && third == '') {
                         db.specifications.remove({
                             firstCategory: first,
                             secondCategory: second
 
-                        }, (err, result)=> {
+                        }, (err, result) => {
                             console.log(err)
                             // if (err) throw Error()
                         })
-                        _.each(total_Category.secondCategory, (item, key)=> {
+                        _.each(total_Category.secondCategory, (item, key) => {
                             if (typeof item != 'undefined') {
                                 if (typeof item.secondTitle != 'undefined' && item.secondTitle == second) {
                                     totalCategory.secondCategory.splice(key, 1)
@@ -1044,18 +1044,18 @@ router.delete('/category_manage', (req, res)=> {
                     }
                     return total_Category
                 })
-                .then((total_Category)=> {
+                .then((total_Category) => {
                     if (first && second && third) {
                         db.specifications.remove({
                             firstCategory: first,
                             secondCategory: second,
                             thirdCategory: third
-                        }, (err, result)=> {
+                        }, (err, result) => {
                             if (err) throw Error()
                         })
-                        _.each(total_Category.secondCategory, (item)=> {
+                        _.each(total_Category.secondCategory, (item) => {
                             if (item.secondTitle == second) {
-                                _.each(item.thirdTitles, (thirdItem, key)=> {
+                                _.each(item.thirdTitles, (thirdItem, key) => {
                                     console.log(thirdItem)
                                     if (typeof thirdItem != 'undefined') {
                                         if (typeof thirdItem.thirdTitle != 'undefined' && thirdItem.thirdTitle == third) {
@@ -1068,17 +1068,17 @@ router.delete('/category_manage', (req, res)=> {
                     }
                     return total_Category
                 })
-                .then((total_Category)=> {
+                .then((total_Category) => {
                     return total_Category
                 })
         })
-        .then((final)=> {
+        .then((final) => {
             console.log(final)
             console.log('final')
             if (final == '') {
                 db.categorys.remove({
                     firstCategory: first
-                }, (err, result)=> {
+                }, (err, result) => {
                     if (err || !result) return res.send(500, {succeed: false, msg: "DBError"})
                     res.send(200, {succeed: true, msg: "ok"})
                 })
@@ -1089,23 +1089,23 @@ router.delete('/category_manage', (req, res)=> {
                     "$set": {
                         secondCategory: final.secondCategory
                     }
-                }, (err, result)=> {
+                }, (err, result) => {
                     if (err || !result) return res.send(500, {succeed: false, msg: "DBError"})
                     res.send(200, {succeed: true, msg: "ok"})
                 })
             }
         })
-        .catch(err=> {
+        .catch(err => {
             console.log(err)
         })
 })
 
-router.put('/category_manage', (req, res)=> {
+router.put('/category_manage', (req, res) => {
     var specification = {}
-    let specPromise = new Promise((resolve, reject)=> {
+    let specPromise = new Promise((resolve, reject) => {
         db.specifications.findOne({
                 de_firstCategory: req.body.originFirstCategory
-            }, (err, specs)=> {
+            }, (err, specs) => {
                 if (err) reject(err)
                 resolve(specs)
             }
@@ -1113,27 +1113,27 @@ router.put('/category_manage', (req, res)=> {
     })
 
     specPromise
-        .then((specs)=> {
+        .then((specs) => {
             specification = specs
-            let queryResult = new Promise((resolve, reject)=> {
-                db.categorys.findOne({firstCategory: req.body.originFirstCategory}, (err, result)=> {
+            let queryResult = new Promise((resolve, reject) => {
+                db.categorys.findOne({firstCategory: req.body.originFirstCategory}, (err, result) => {
                     if (err) reject(err)
                     resolve(result)
                 })
             })
             queryResult
-                .then((totalCategory)=> {
-                    return new Promise((resolve, reject)=> {
+                .then((totalCategory) => {
+                    return new Promise((resolve, reject) => {
                         if (req.body.first === 'true') {
                             totalCategory.firstCategory = req.body.firstCategory
                             specification.firstCategory = req.body.firstCategory
                         }
                         resolve(totalCategory)
                     })
-                        .then((totalCategory)=> {
+                        .then((totalCategory) => {
                             if (req.body.second === 'true') {
                                 specification.secondCategory = req.body.secondCategory
-                                _.each(totalCategory.secondCategory, (item)=> {
+                                _.each(totalCategory.secondCategory, (item) => {
                                     if (item.secondTitle == req.body.originSecondCategory) {
                                         item.secondTitle = req.body.secondCategory
                                     }
@@ -1141,12 +1141,12 @@ router.put('/category_manage', (req, res)=> {
                             }
                             return totalCategory
                         })
-                        .then((totalCategory)=> {
+                        .then((totalCategory) => {
                             if (req.body.third === 'true') {
                                 specification.thirdCategory = req.body.thirdCategory
-                                _.each(totalCategory.secondCategory, (item)=> {
+                                _.each(totalCategory.secondCategory, (item) => {
                                     if (item.secondTitle == req.body.secondCategory) {
-                                        _.each(item.thirdTitles, (thirdItem)=> {
+                                        _.each(item.thirdTitles, (thirdItem) => {
                                             if (thirdItem.thirdTitle == req.body.originThirdCategory) {
                                                 thirdItem.thirdTitle = req.body.thirdCategory
                                             }
@@ -1156,11 +1156,11 @@ router.put('/category_manage', (req, res)=> {
                             }
                             return totalCategory
                         })
-                        .then((totalCategory)=> {
+                        .then((totalCategory) => {
                             return totalCategory
                         })
                 })
-                .then((final)=> {
+                .then((final) => {
                     console.log(final)
                     console.log('final')
                     db.specifications.findOneAndUpdate({
@@ -1171,7 +1171,7 @@ router.put('/category_manage', (req, res)=> {
                             secondCategory: specification.secondCategory,
                             thirdCategory: specification.thirdCategory
                         }
-                    }, (err, r)=> {
+                    }, (err, r) => {
                         if (err || !r) return res.send(200, {succeed: false, msg: "DBError"})
                     })
                     db.categorys.update({
@@ -1181,7 +1181,7 @@ router.put('/category_manage', (req, res)=> {
                             firstCategory: final.firstCategory,
                             secondCategory: final.secondCategory
                         }
-                    }, (err, result)=> {
+                    }, (err, result) => {
                         if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
                         res.send(200, {succeed: true, msg: "ok"})
                     })
@@ -1189,32 +1189,32 @@ router.put('/category_manage', (req, res)=> {
         })
 })
 //German category
-router.put('/category_manage_german', (req, res)=> {
+router.put('/category_manage_german', (req, res) => {
     console.log(req.body)
     db.specifications.findOne({
         de_firstCategory: req.body.originFirstCategory
-    }, (err, specs)=> {
+    }, (err, specs) => {
         if (err) return res.send(500)
-        let queryResult = new Promise((resolve, reject)=> {
-            db.categorys.findOne({de_firstCategory: req.body.originFirstCategory}, (err, result)=> {
+        let queryResult = new Promise((resolve, reject) => {
+            db.categorys.findOne({de_firstCategory: req.body.originFirstCategory}, (err, result) => {
                 if (err) reject(err)
                 resolve(result)
             })
         })
         queryResult
-            .then((totalCategory)=> {
+            .then((totalCategory) => {
                 if (totalCategory == null) throw {statusCode: 404, msg: 'Nut Found'}
-                return new Promise((resolve, reject)=> {
+                return new Promise((resolve, reject) => {
                     if (req.body.first === 'true') {
                         totalCategory.de_firstCategory = req.body.firstCategory
                         specs.de_firstCategory = req.body.firstCategory
                     }
                     resolve(totalCategory)
                 })
-                    .then((total_Category)=> {
+                    .then((total_Category) => {
                         if (req.body.second === 'true') {
                             specs.de_secondTitle = req.body.secondCategory
-                            _.each(total_Category.secondCategory, (item)=> {
+                            _.each(total_Category.secondCategory, (item) => {
                                 if (item.de_secondTitle == req.body.originSecondCategory) {
                                     item.de_secondTitle = req.body.secondCategory
                                 }
@@ -1222,12 +1222,12 @@ router.put('/category_manage_german', (req, res)=> {
                         }
                         return total_Category
                     })
-                    .then((total_Category)=> {
+                    .then((total_Category) => {
                         if (req.body.third === 'true') {
                             specs.de_thirdTitle = req.body.thirdCategory
-                            _.each(total_Category.secondCategory, (item)=> {
+                            _.each(total_Category.secondCategory, (item) => {
                                 if (item.de_secondTitle == req.body.secondCategory) {
-                                    _.each(item.thirdTitles, (thirdItem)=> {
+                                    _.each(item.thirdTitles, (thirdItem) => {
                                         if (thirdItem.de_thirdTitle == req.body.originThirdCategory) {
                                             thirdItem.de_thirdTitle = req.body.thirdCategory
                                         }
@@ -1237,11 +1237,11 @@ router.put('/category_manage_german', (req, res)=> {
                         }
                         return total_Category
                     })
-                    .then((total_Category)=> {
+                    .then((total_Category) => {
                         return total_Category
                     })
             })
-            .then((final)=> {
+            .then((final) => {
                 db.specifications.findOneAndUpdate({
                     de_firstCategory: req.body.originFirstCategory
                 }, {
@@ -1250,7 +1250,7 @@ router.put('/category_manage_german', (req, res)=> {
                         de_secondCategory: specs.de_secondCategory,
                         de_thirdCategory: specs.de_thirdCategory
                     }
-                }, (err, r)=> {
+                }, (err, r) => {
                     if (err || !r) return res.send(200, {succeed: false, msg: "DBError"})
                 })
                 db.categorys.update({
@@ -1260,49 +1260,49 @@ router.put('/category_manage_german', (req, res)=> {
                         de_firstCategory: final.de_firstCategory,
                         secondCategory: final.secondCategory
                     }
-                }, (err, result)=> {
+                }, (err, result) => {
                     if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
                     res.send(200, {succeed: true, msg: "ok"})
                 })
             })
-            .catch((err)=> {
+            .catch((err) => {
                 res.send(err.statusCode, err.msg)
             })
     })
 
 })
 
-router.delete('/category_manage_german', (req, res)=> {
-    let [first,second,third]=[req.body.firstCategory, req.body.secondCategory, req.body.thirdCategory]
-    let queryResult = new Promise((resolve, reject)=> {
-        db.categorys.findOne({de_firstCategory: first}, (err, result)=> {
+router.delete('/category_manage_german', (req, res) => {
+    let [first, second, third]=[req.body.firstCategory, req.body.secondCategory, req.body.thirdCategory]
+    let queryResult = new Promise((resolve, reject) => {
+        db.categorys.findOne({de_firstCategory: first}, (err, result) => {
             if (err) reject(err)
             resolve(result)
         })
     })
     queryResult
-        .then((totalCategory)=> {
+        .then((totalCategory) => {
             if (totalCategory == null) throw {statusCode: 404, msg: 'Nut Found'}
-            return new Promise((resolve, reject)=> {
+            return new Promise((resolve, reject) => {
                 if (first && second == '' && third == '') {
                     db.specifications.remove({
                         de_firstCategory: first
-                    }, (err, result)=> {
+                    }, (err, result) => {
                         if (err) throw Error()
                     })
                     totalCategory = ''
                 }
                 resolve(totalCategory)
             })
-                .then((total_Category)=> {
+                .then((total_Category) => {
                     if (first && second && third == '') {
                         db.specifications.remove({
                             de_firstCategory: first,
                             de_secondCategory: second,
-                        }, (err, result)=> {
+                        }, (err, result) => {
                             if (err) throw Error()
                         })
-                        _.each(total_Category.secondCategory, (item, key)=> {
+                        _.each(total_Category.secondCategory, (item, key) => {
                             if (typeof item != 'undefined') {
                                 if (typeof item.de_secondTitle != 'undefined' && item.de_secondTitle == second) {
                                     totalCategory.secondCategory.splice(key, 1)
@@ -1312,18 +1312,18 @@ router.delete('/category_manage_german', (req, res)=> {
                     }
                     return total_Category
                 })
-                .then((total_Category)=> {
+                .then((total_Category) => {
                     if (first && second && third) {
                         db.specifications.remove({
                             de_firstCategory: first,
                             de_secondCategory: second,
                             de_thirdCategory: third
-                        }, (err, result)=> {
+                        }, (err, result) => {
                             if (err) throw Error()
                         })
-                        _.each(total_Category.secondCategory, (item)=> {
+                        _.each(total_Category.secondCategory, (item) => {
                             if (item.de_secondTitle == second) {
-                                _.each(item.thirdTitles, (thirdItem, key)=> {
+                                _.each(item.thirdTitles, (thirdItem, key) => {
                                     if (typeof thirdItem != 'undefined') {
                                         if (typeof thirdItem.de_thirdTitle != 'undefined' && thirdItem.de_thirdTitle == third) {
                                             delete item.thirdTitles.splice(key, 1)
@@ -1335,15 +1335,15 @@ router.delete('/category_manage_german', (req, res)=> {
                     }
                     return total_Category
                 })
-                .then((total_Category)=> {
+                .then((total_Category) => {
                     return total_Category
                 })
         })
-        .then((final)=> {
+        .then((final) => {
             if (final == '') {
                 db.categorys.remove({
                     firstCategory: first
-                }, (err, result)=> {
+                }, (err, result) => {
                     if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
                     res.send(200, {succeed: true, msg: "ok"})
                 })
@@ -1354,13 +1354,13 @@ router.delete('/category_manage_german', (req, res)=> {
                     "$set": {
                         secondCategory: final.secondCategory
                     }
-                }, (err, result)=> {
+                }, (err, result) => {
                     if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
                     res.send(200, {succeed: true, msg: "ok"})
                 })
             }
         })
-        .catch(err=> {
+        .catch(err => {
             res.send(err.statusCode, err.msg)
         })
 })
@@ -1401,7 +1401,7 @@ router.post('/doAddCategory', function (req, res) {
                     }
                     let specs = new db.specifications(spec);
                     console.log(spec)
-                    specs.save(err=> {
+                    specs.save(err => {
                         console.log(err)
                     })
                 })
@@ -1418,7 +1418,7 @@ router.post('/doAddCategory', function (req, res) {
                 }
                 let specs = new db.specifications(spec);
                 console.log(spec)
-                specs.save(err=> {
+                specs.save(err => {
                     console.log(err)
                 })
             }
@@ -1437,7 +1437,7 @@ router.post('/doAddCategory', function (req, res) {
         }
         let specs = new db.specifications(spec);
         console.log(spec)
-        specs.save(err=> {
+        specs.save(err => {
             console.log(err)
         })
     }
@@ -1665,7 +1665,9 @@ router.post('/uploadTemporary', function (req, res, next) {
             upload_time: (new Date().getTime() / 1000).toFixed(),
             status: 'NEW'
         };
-        tempCategory.push(Categories);
+        tempCategory.push(Categories)
+        console.log('------')
+        console.log(tempCategory)
         var category = new db.uploadTemporarys(Categories);
         category.save(function (err) {
             console.log(err);
@@ -1739,8 +1741,12 @@ router.post('/uploadProductDetail', function (req, res, next) {
 
 //保存详细产品
 router.post('/saveProductDetail', function (req, res, next) {
-    var data = {
+    let data = {
         product_title: req.body.product_title,
+        product_title_de: req.body.product_title_german,
+        product_remark: req.body.product_remark,
+        product_remark_de: req.body.product_remark_german,
+        product_quantity: Number(req.body.product_quantity).toFixed(),
         product_id: (new Date().getTime()).toFixed(),
         product_supplier: req.body.product_supplier,
         product_sell_status: req.body.product_sell_status,
@@ -1750,25 +1756,22 @@ router.post('/saveProductDetail', function (req, res, next) {
         product_price: JSON.parse(req.body.product_price),
         product_danWei: JSON.parse(req.body.product_danWei)[0],
         product_market: JSON.parse(req.body.product_market)[0],
-        product_origin_price: JSON.parse(req.body.product_origin_price)[0],
         product_images: JSON.parse(req.body.product_images),
-        product_freight: JSON.parse(req.body.product_freight)[0],
         product_spec: JSON.parse(req.body.product_spec)
     };
 
     console.log(data)
 
-    var thirdCate = [];
+    let thirdCate = [];
     _.each(data.belong_category, function (item) {
         thirdCate.push(item.third)
-    });
+    })
 
-    _.each(data.belong_category, function (item) {
-        console.log(item);
+    _.each(data.belong_category, (item) => {
+        console.log(item)
         db.categorys.findOne({'secondCategory.thirdTitles.thirdTitle': item.third}, function (err, result) {
-            console.log(err)
-            console.log(result)
-            var newArr = _.filter(result.secondCategory, function (secondCategory) {
+
+            let newArr = _.filter(result.secondCategory, function (secondCategory) {
                 return secondCategory.secondTitle == item.second;
             });
 
@@ -1778,17 +1781,19 @@ router.post('/saveProductDetail', function (req, res, next) {
                 }
             });
 
-            console.log(newArr[0].thirdTitles);
-            var SEOS = {
+            console.log(newArr[0].thirdTitles)
+            console.log(newArr[0].thirdTitles[0].product)
+            console.log('---')
+            console.log(newArr[0]._id)
+            let SEOS = {
                 SEO_Name: data.product_title,
                 SEO_Url: '/single-product/' + data.product_id,
                 add_time: (new Date().getTime()).toFixed()
-            };
+            }
 
             //save product in seo engine
-            var SEO_V = new db.SEOS(SEOS);
-            SEO_V.save();
-
+            let SEO_V = new db.SEOS(SEOS)
+            SEO_V.save()
 
             db.categorys.update({
                     'secondCategory._id': newArr[0]._id
@@ -1802,15 +1807,17 @@ router.post('/saveProductDetail', function (req, res, next) {
                     $set: {
                         "secondCategory.$.thirdTitles": newArr[0].thirdTitles
                     }
-                },
-                function (err, result) {
-                    console.log(err);
+                }, (err, result) => {
+                    if (err) return res.send(500)
+                    console.log(err)
                     console.log(result)
+                    res.send({succeed: true, msg: "ok"})
                 })
-        });
-
+        })
     })
-});
+
+
+})
 
 
 /*-------------------------------------------------------------------*/
@@ -1823,7 +1830,7 @@ router.get('/specification', function (req, res, next) {
         db.categorys.find({}, function (err, data) {
             if (err) res.send('404');
 
-            _.each(result, (i)=> {
+            _.each(result, (i) => {
                 if (typeof i.specification == 'undefined') {
                     i.specification = {}
                 }
@@ -1849,14 +1856,14 @@ router.get('/specification_german', function (req, res, next) {
         db.categorys.find({}, function (err, data) {
             if (err) res.send('404');
 
-            _.each(result, (i)=> {
+            _.each(result, (i) => {
                 i.firstCategory = i.de_firstCategory || i.firstCategory
                 i.secondCategory = i.de_secondCategory || i.secondCategory
                 i.thirdCategory = i.de_thirdCategory || i.thirdCategory
                 if (typeof i.specification == 'undefined') {
                     i.specification = {}
                 } else {
-                    _.each(i.specification, (m)=> {
+                    _.each(i.specification, (m) => {
                         if (typeof m.features != 'undefined' || typeof m.type != 'undefined'
                             || typeof m.compatibility != 'undefined' || typeof m.hardOrSoft != 'undefined'
                             || typeof m.pattern != 'undefined' || typeof  m.Color != 'undefined'
@@ -1983,7 +1990,7 @@ router.post('/doAddSupplier', function (req, res) {
     //query supplier id
     db.suppliers.findOneAndUpdate(
         {"name": "请选择"},
-        {$inc: {'supplier_id': 1}}, (err, data)=> {
+        {$inc: {'supplier_id': 1}}, (err, data) => {
             var suppliers = {
                 name: req.body.add_name,
                 add_location: req.body.add_by,
@@ -2300,7 +2307,7 @@ router.get('/shopping_template', (req, res) => {
 router.get('/fee_manage', (req, res) => {
     db.feeCountrys.find({
         country_status: true
-    }, (err, country)=> {
+    }, (err, country) => {
         console.log(country)
         if (err) res.end(500, {succeed: false, msg: 'DB Error'})
         res.render('admin/templates/fee-manage', {username: u.nick_name, feeCountryList: country})
@@ -2326,7 +2333,7 @@ router.post('/fee', (req, res) => {
         $set: {
             country_status: false
         }
-    }, (err, status)=> {
+    }, (err, status) => {
         console.log(status)
         console.log('---')
         if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
@@ -2342,7 +2349,7 @@ router.post('/fee', (req, res) => {
  * @param next render value
  * @return [type]
  */
-router.post('/delta-price', (req, res)=> {
+router.post('/delta-price', (req, res) => {
     console.log(req.body)
     if (!req.body) res.end(401, {succeed: false, msg: 'Invalid Param Request'})
     const delta_price = new db.deltaPrice(req.body)
@@ -2359,7 +2366,7 @@ router.post('/delta-price', (req, res)=> {
  * @param next render value
  * @return [type]
  */
-router.put('/delta-price', (req, res)=> {
+router.put('/delta-price', (req, res) => {
     if (!req.body) res.end(401, {succeed: false, msg: 'Invalid Param Request'})
     db.deltaPrice.findOneAndUpdate({_id: req.body.id},
         {
@@ -2368,7 +2375,7 @@ router.put('/delta-price', (req, res)=> {
                 update_time: req.body.update_time
             }
         },
-        (err, data)=> {
+        (err, data) => {
             if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
             res.send({succeed: true, msg: "success"})
         })
@@ -2381,11 +2388,11 @@ router.put('/delta-price', (req, res)=> {
  * @param next render value
  * @return [type]
  */
-router.delete('/fee', (req, res)=> {
+router.delete('/fee', (req, res) => {
     console.log(req.body)
     db.fee.remove({
         _id: req.body.id
-    }, (err, data)=> {
+    }, (err, data) => {
         if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
         db.feeCountrys.update({
             country_name: req.body.country_name
@@ -2393,7 +2400,7 @@ router.delete('/fee', (req, res)=> {
             $set: {
                 country_status: false
             }
-        }, (err, result)=> {
+        }, (err, result) => {
             if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
             res.send({succeed: true, msg: "success"})
         })
@@ -2407,7 +2414,7 @@ router.delete('/fee', (req, res)=> {
  * @param next render value
  * @return [type]
  */
-router.put('/fee', (req, res)=> {
+router.put('/fee', (req, res) => {
     if (!req.body) res.end(401, {succeed: false, msg: 'Invalid Param Request'})
     db.fee.findOneAndUpdate({_id: req.body.id},
         {
@@ -2418,7 +2425,7 @@ router.put('/fee', (req, res)=> {
                 update_time_sort: req.body.update_time_sort
             }
         },
-        (err, data)=> {
+        (err, data) => {
             if (err) res.end(500, {succeed: false, msg: 'Internal Server Error'})
             res.send({succeed: true, msg: "success"})
         })
@@ -2431,7 +2438,7 @@ router.put('/fee', (req, res)=> {
  * @param next render value
  * @return [type]
  */
-router.get('/feelist', (req, res, next)=> {
+router.get('/feelist', (req, res, next) => {
     console.log(`current display page: ${req.query.iDisplayStart}`)
     db.fee.find({}, null, {
         sort: {
@@ -2439,7 +2446,7 @@ router.get('/feelist', (req, res, next)=> {
         }
     }, function (err, result) {
         if (err) next(customError(err.status, err, res))
-        result.forEach((item)=> {
+        result.forEach((item) => {
             return item.country_fee = "1" + item.country_name + " =" + item.country_fee + " 人民币"
         })
 
@@ -2463,7 +2470,7 @@ router.get('/feelist', (req, res, next)=> {
  * @param next render value
  * @return [type]
  */
-router.get('/feedollarlist', (req, res, next)=> {
+router.get('/feedollarlist', (req, res, next) => {
     console.log(`current display page: ${req.query.iDisplayStart}`)
     db.fee.find({}, null, {
         sort: {
@@ -2471,16 +2478,16 @@ router.get('/feedollarlist', (req, res, next)=> {
         }
     }, function (err, result) {
         if (err) next(customError(err.status, err, res))
-        var dollar_fee = result.filter((item)=> {
+        var dollar_fee = result.filter((item) => {
             return item.country_name === "美元"
         })[0].country_fee
 
         var dollarArr = result
-            .filter((item)=> {
+            .filter((item) => {
                 return item.country_name != "美元"
             })
         dollarArr
-            .forEach((item)=> {
+            .forEach((item) => {
                 item.country_fee = formatFee(1 / item.country_fee * dollar_fee)
                 return item.country_fee = "1 美元 = " + item.country_fee + " " + item.country_name
             })
@@ -2525,7 +2532,7 @@ function formatFee(args) {
  * @param next render value
  * @return [type]
  */
-router.post('/transport', (req, res)=> {
+router.post('/transport', (req, res) => {
 
     if (req.body.weight == 'undefined' || req.body.area == 'undefined') {
         res.send(401, {code: 401, msg: "Params Error"})
@@ -2636,7 +2643,7 @@ router.post('/transport', (req, res)=> {
 function getTransportPrice(type, weight, area) {
     console.log('area:' + area)
     console.log('type: %d,weight: %d', type, weight)
-    return parseInt(type.data.filter((item)=> {
+    return parseInt(type.data.filter((item) => {
             return item.zh.indexOf(area) > -1
         })[0][weight.toString()]) * weight;
 }
@@ -2651,7 +2658,7 @@ function getTransportPrice(type, weight, area) {
 function getOrdinaryTransportPrice(type, origin_weight, weight, area) {
     console.log('area:' + area)
     console.log('type: %d,weight: %d', type, weight)
-    return parseInt(type.data.filter((item)=> {
+    return parseInt(type.data.filter((item) => {
             return item.zh.indexOf(area) > -1
         })[0][origin_weight]) * weight;
 }
@@ -2663,13 +2670,13 @@ function getOrdinaryTransportPrice(type, origin_weight, weight, area) {
  */
 function getLittleTransportPrice(type, weight) {
     console.log('type: %d,weight: %d', '小包', weight)
-    return parseInt(type.data.filter((item)=> {
-            return item['kg'].indexOf(weight.toString()) > -1;
-        })[0]['fee']) * weight;
+    return parseInt(type.data.filter((item) => {
+            return item['kg'].indexOf(weight.toString()) > -1
+        })[0]['fee']) * weight
 }
 /*------------------------------------------------------------------------*/
 
 
-module.exports = router;
+module.exports = router
 
 

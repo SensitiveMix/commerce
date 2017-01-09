@@ -1,813 +1,167 @@
 ﻿<% layout('../backend-master.ejs') %>
 <script src="/js/md5.js"></script>
+<link href="/ueditor/themes/default/_css/umeditor.css" type="text/css" rel="stylesheet">
+<link href="/stylesheets/product-detail.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="/transport/express.js"></script>
 <script type="text/javascript" src="/transport/ordinary.js"></script>
 <script src='/js/storage.js'></script>
-<link href="/ueditor/themes/default/_css/umeditor.css" type="text/css" rel="stylesheet">
 <script src="/public_web_build/bundle.js"></script>
 <script src="/public_cookie_build/bundle.js"></script>
 <script type="text/javascript" charset="utf-8" src="/ueditor/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="/ueditor/_examples/editor_api.js"></script>
 <script type="text/javascript" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
-
-
-<script type="text/javascript">
-    function getTranslateTitle(param) {
-        if ($(".demen").is(":checked")) {
-            if (param) {
-                $('.title_re').append('<input id="productname_de" name="productname_de" style="ime-mode:disabled;margin-left: 94px;" class="attr-text-input addwid402" maxlength="140" placeholder="德文" type="text" value="" autoComplete="off"><span id="productnameTip" style="padding-left:4px;" class="helptips marginleft10">您还可以输入<b class="color444" id="productNameLengthSpan_de">140</b><span class="color000">/<span>140</span></span>个字符</span>')
-            }
-            var productNameLength = $('#productname').val().length;
-            $('#productNameLengthSpan_de').text(140 - productNameLength);
-            $('#productname_de').bind('input propertychange', function () {
-                var productNameLength = $('#productname_de').val().length;
-                $('#productNameLengthSpan_de').text(140 - productNameLength);
-            });
-
-
-            var appid = '20161031000031137';
-            var key = '5pFIYl4t5Hi1oSXzRv1X';
-            var salt = (new Date).getTime();
-            var query = $("#productname").val();
-            var from = 'en';
-            var to = 'de';
-            var str1 = appid + query + salt + key;
-            var sign = MD5(str1);
-            $.ajax({
-                url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
-                type: 'get',
-                dataType: 'jsonp',
-                data: {
-                    q: query,
-                    appid: appid,
-                    salt: salt,
-                    from: from,
-                    to: to,
-                    sign: sign
-                },
-                success: function (data) {
-                    console.log(data)
-                    $('#productname_de').val(data.trans_result[0].dst);
-                },
-                error: function (data) {
-                    layer.msg('翻译服务已停用')
-                    console.log(data)
-                }
-            });
-        } else {
-            if (param) {
-                $('#productname').next().next().remove()
-                $('#productname').next().remove()
-
-            }
-        }
-
-    }
-    function getTranslate(param) {
-        if ($(".demen_remark").is(":checked")) {
-            if (param) {
-                $('.demon').css('display', 'block')
-            }
-            var appid = '20161031000031137';
-            var key = '5pFIYl4t5Hi1oSXzRv1X';
-            var salt = (new Date).getTime();
-            var query = um.getContentTxt();
-            var from = 'en';
-            var to = 'de';
-            var str1 = appid + query + salt + key;
-            var sign = MD5(str1);
-            $.ajax({
-                url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
-                type: 'get',
-                dataType: 'jsonp',
-                data: {
-                    q: query,
-                    appid: appid,
-                    salt: salt,
-                    from: from,
-                    to: to,
-                    sign: sign
-                },
-                success: function (data) {
-                    console.log(data)
-                    umdemon.setContent(data.trans_result[0].dst);
-                },
-                error: function (data) {
-                    layer.msg('翻译服务已停用')
-                    console.log(data)
-                }
-            });
-        } else {
-            $('.demon').css('display', 'none')
-        }
-    }
-
-
-</script>
-<style>
-    ul {
-        list-style: none;
-    }
-
-    .leave01 {
-        float: right;
-        background: url("/assets/img/icon/leve01.png") 0 no-repeat;
-    }
-
-    .leave-cat-lv span.first {
-        width: 100px;
-    }
-
-    .leave-cat-lv span {
-        float: left;
-        display: block;
-        width: 99px;
-        line-height: 22px !important;
-        line-height: 20px;
-        text-align: center;
-        color: #fff;
-    }
-
-    .leave-cat-lv span.middle {
-        width: 106px;
-    }
-
-    .leave-cat-lv span.last {
-        width: 90px;
-    }
-
-    .categorydicbox {
-        overflow: hidden;
-        margin-top: 10px;
-        margin-bottom: 1px;
-        border: 1px solid #e2eaf9;
-        border-bottom: 1px solid #f4f9ff;
-        min-width: 100%;
-    }
-
-    .categorydicbox .layer-b-bg {
-        position: relative;
-        margin-bottom: -1px;
-        border-top: 1px solid #fff;
-        background: url("/assets/img/catbg01.png") #f2f6fb 0 100% repeat-x;
-    }
-
-    .cat-titleconbox {
-        position: relative;
-        overflow: hidden;
-        line-height: 20px;
-        color: #c34802;
-        padding: 8px 13px 9px 145px;
-    }
-
-    .cat-titleconbox b {
-        margin-left: -132px;
-        font-weight: 300;
-        color: #000;
-        vertical-align: middle;
-    }
-
-    .cat-titleconbox span.nav {
-        padding: 0 6px;
-        color: #000;
-        font-family: Comic Sans MS;
-    }
-
-    .cat-titleconbox span.nav {
-        padding: 0 6px;
-        color: #000;
-        font-family: Comic Sans MS;
-    }
-
-    .cat-titleconbox a {
-        display: inline-block;
-    }
-
-    .marginleft20 {
-        margin-left: 20px;
-    }
-
-    .syi-all-error {
-        margin-top: 15px;
-        width: 80%;
-    }
-
-    .syi-all-error-lt {
-        background: url("/assets/img/icon/global-error.jpg") no-repeat 0px 0;
-        float: left;
-        padding-left: 40px;
-        width: 5px;
-        height: 34px;
-    }
-
-    .syi-all-error-ri {
-        float: left;
-    }
-
-    .syi-all-error-ri p.p1 {
-        line-height: 34px;
-        font-size: 14px;
-        font-weight: 700;
-    }
-
-    .syi-all-error-ri p.p1 {
-        color: #000;
-    }
-
-    .nav:after, .nav:before {
-        display: none;
-    }
-
-    #syi_form {
-        min-width: 100%;
-    }
-
-    .titlebox {
-        margin: 20px 0;
-        padding: 6px 10px 0px;
-        height: 30px;
-        line-height: 25px;
-        border-bottom: 1px solid #d4deee;
-        background-color: #eff4fb;
-    }
-
-    .titlebox h3 {
-        display: inline;
-        color: #000;
-        font-size: 14px;
-    }
-
-    .mainlayout {
-        position: relative;
-        max-width: 70%;
-        margin: 15px 0 10px 138px;
-        clear: both;
-    }
-
-    .ml-title {
-        position: absolute;
-        width: 20%;
-        left: -20%;
-        top: 0;
-        text-align: right;
-        color: #000000;
-    }
-
-    span.required {
-        color: #ff0000;
-        margin-right: 7px;
-        vertical-align: middle;
-    }
-
-    a {
-        color: #3366cc;
-        text-decoration: none;
-        outline: none;
-    }
-
-    .m-text {
-        color: #999;
-        padding-bottom: 7px;
-    }
-
-    .orgfont {
-        color: #fb5501;
-    }
-
-    .greenfont {
-        color: #257800;
-    }
-
-    .similarity-tip-txt {
-        background: url("/assets/img/icon/similarity-tag.jpg") no-repeat;
-        padding-left: 22px;
-        line-height: 16px;
-    }
-
-    .addwid402 {
-        width: 45%;
-    }
-
-    .attr-text-input {
-        overflow: hidden;
-        padding: 2px 0 2px 5px;
-        color: #444;
-        vertical-align: middle;
-    }
-
-    .helptips {
-        color: #949494;
-    }
-
-    .marginleft10 {
-        margin-left: 10px;
-    }
-
-    .helpicon {
-        display: inline-block;
-        margin-left: 9px;
-        vertical-align: middle;
-        width: 15px;
-        height: 15px;
-        cursor: pointer;
-        background: url("/assets/img/icon/help.png") 0 0 no-repeat;
-    }
-
-    .tip-error {
-        margin-top: 5px;
-        padding: 4px 10px 4px 30px;
-        width: 390px;
-        height: 18px;
-        line-height: 18px;
-        vertical-align: middle;
-        border: solid 1px #F7ACAC;
-        background: url("/assets/img/icon/global-small-error.jpg") #feeeee 10px 50% no-repeat;
-    }
-
-    .clearfix:after {
-        content: ".";
-        display: block;
-        height: 0;
-        clear: both;
-        visibility: hidden;
-    }
-
-    .J_Items {
-        position: relative;
-        border-bottom: 1px solid #dedede;
-        margin: 0 8px;
-    }
-
-    .head-attributes {
-        position: absolute;
-        left: 11px;
-        top: 9px;
-        color: #999;
-    }
-
-    .body-attributes {
-        padding: 0 0 0 26%;
-        display: block;
-    }
-
-    .checkbox-inline-product-attributes {
-        /*float: left;*/
-        margin: 9px 40px 9px 0;
-        height: 18px;
-        color: #000;
-        text-decoration: none;
-        font-weight: 100;
-    }
-
-    .btns {
-        border-top: 1px dashed #dedede;
-        padding: 0 0 0 26%;
-    }
-
-    .btns span {
-        margin: 5px;
-        padding: 1px 12px;
-    }
-
-    .product-attributes {
-        border: 1px solid #dedede;
-    }
-
-    .checkbox-inline-product-attributes input[type=checkbox], input[type=radio] {
-        margin-right: 5px;
-    }
-
-    @media (min-width: 768px) {
-        .bkcon.addborderline .form-inline .form-group {
-            width: 24%;
-        }
-
-        .bkcon.addborderline .form-inline .form-group input {
-            width: 100%;
-        }
-
-        #div_self_defind_attr {
-            border: 1px solid #dedede;
-        }
-    }
-
-    .pick-a-color-markup {
-        float: left;
-        width: 10%;
-    }
-
-    .pro-img-picbox .pic {
-        border: 1px dashed #d4d4d4;
-        width: 82px;
-        height: 82px;
-    }
-
-    .addpiccolor2 .pic {
-        width: 102px;
-        height: 102px;
-    }
-
-    .addpiccolor2 {
-        width: 104px;
-        height: 104px;
-        margin-top: 0px;
-    }
-
-    .pro-img-picbox {
-        width: 22%;
-        display: block;
-        float: left;
-        margin-right: 5px;
-        margin-top: 20px;
-    }
-
-    .pro-img-box {
-        position: relative;
-        overflow: hidden;
-        height: 140px;
-    }
-
-    .chousexybox {
-        margin-top: 10px;
-        padding: 10px 20px;
-        border-top: 1px dashed #ddd;
-    }
-
-    .syi-submit {
-        text-align: center;
-        margin: 10px 0;
-        border-top: 1px dashed #ddd;
-    }
-
-    .marginleft5 {
-        margin-left: 5px;
-    }
-
-    .studybox {
-        padding: 10px 20px;
-    }
-
-    .studybox .studyicon {
-        padding: 0 0 0 20px;
-        background: url("/assets/img/icon/studyicon.png") 0 50% no-repeat;
-    }
-
-    .error-edit-text {
-        display: none;
-        font-size: 14px;
-        padding: 10px 20px;
-    }
-
-    .fl-file-upload {
-        float: left;
-        margin-left: 8px;
-        padding: 0;
-    }
-
-    .fl-file-upload li {
-        display: inline-block;
-        width: 100px;
-        height: 100px;
-        margin-left: 8px;
-        position: relative;
-        overflow: hidden;
-        border: 1px dashed #d4d4d4;
-        background: #fff;
-    }
-
-    .fl-file-upload li img {
-        width: 100%;
-        height: auto;
-        position: relative;
-        top: 50%;
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
-    }
-
-    .fl-file-upload li .delete {
-        display: block;
-        width: 24px;
-        height: 24px;
-        background: url(/assets/img/icon/close.png) no-repeat 50% 50%;
-        background-size: 100% 100%;
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-
-    .fl-file-upload .exchange {
-        display: inline-block;
-        width: 15px;
-        height: 12px;
-        background: url(/assets/img/icon/exchange.png) no-repeat 50% 50%;
-        background-size: 100% 100%;
-        position: relative;
-        top: 0;
-        right: 0;
-        margin-left: 8px;
-        vertical-align: middle;
-    }
-
-    .file-upload-single li {
-        display: inline-block;
-        width: 60px;
-        height: 60px;
-        margin-left: 8px;
-        position: relative;
-        overflow: hidden;
-        border: 1px dashed #d4d4d4;
-        background: #fff;
-    }
-
-    .file-upload-single li img {
-        width: 100%;
-        height: auto;
-        position: relative;
-        top: 50%;
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
-    }
-
-    .file-upload-single li .delete {
-        display: block;
-        width: 24px;
-        height: 24px;
-        background: url(/assets/img/icon/close.png) no-repeat 50% 50%;
-        background-size: 100% 100%;
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-
-    .upload-btn {
-        width: 80px;
-        height: 80px;
-        border: 1px solid #000;
-        position: relative;
-        text-align: center;
-        font-size: 64px;
-        line-height: 72px;
-    }
-
-    .upload-btn input {
-        display: block;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-    }
-
-    .uploadShow {
-        background: rgba(0, 0, 0, .8);
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 9;
-        display: none;
-    }
-
-    .uploadShow p {
-        text-align: center;
-        color: #fff;
-        font-size: 24px;
-        margin-top: 120px;
-    }
-
-    .syi-img-show {
-        display: none;
-    }
-
-    .alert-warning {
-        color: #c09853 !important;
-        background-color: #fcf8e3 !important;
-        border-color: #faebcc !important;
-        padding: 8px;
-        font-size: 9px;
-        border-radius: 0;
-        margin: 10px 0 !important;
-    }
-
-    .alert-warning a {
-        color: #3366cc;
-        text-decoration: none;
-    }
-
-    .alert-warning button {
-        right: -2px !important;
-    }
-
-    .gridly {
-        position: relative;
-        width: 400px;
-    }
-
-    .brick.small {
-        width: 140px;
-        height: 140px;
-        left: 100px;
-    }
-
-    .brick.small > img {
-        width: 140px;
-        height: 140px;
-    }
-
-    .brick.small > span {
-        display: block;
-        width: 24px;
-        height: 24px;
-        background: url(/assets/img/icon/close.png) no-repeat 50% 50%;
-        background-size: 100% 100%;
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-
-
-</style>
+<script type="text/javascript" src="/js/product-detail.js"></script>
 <script src="../plugins/pick-color/js/tinycolor-0.9.15.min.js"></script>
 <script src="../plugins/pick-color/js/pick-a-color-1.2.3.min.js"></script>
 
-<script type="text/javascript">
-
-    $(document).ready(function () {
-
-        $(".pick-a-color").pickAColor({
-            showSpectrum: false,
-            showSavedColors: false,
-            saveColorsPerElement: true,
-            fadeMenuToggle: true,
-            showAdvanced: false,
-            showBasicColors: true,
-            showHexInput: false,
-            allowBlank: true,
-            inlineDropdown: true
-        });
-
-    });
-
-</script>
 <script>
     $(function () {
-        var formData = [];
-        formData['product'] = [];
-        var form = {};
-        var belong_category = [];
+        let formData = []
+        formData['product'] = []
+        let form = {}
+        let belong_category = []
         <% tempCategory.forEach(function (item) { %>
-        var belong_category_item = {};
-        belong_category_item.first = '<%= item.firstCategory %>';
-        belong_category_item.second = '<%= item.secondCategory %>';
-        belong_category_item.third = '<%= item.thirdCategory %>';
+        var belong_category_item = {}
+        belong_category_item.first = '<%= item.firstCategory %>'
+        belong_category_item.second = '<%= item.secondCategory %>'
+        belong_category_item.third = '<%= item.thirdCategory %>'
         belong_category.push(belong_category_item)
         <% }) %>
-        form.belong_category = belong_category;
-        $('#submitopt').click(function () {
-//            if ($('#productname').val() == '') {
-//                layer.alert('请输入产品标题')
-//            } else if ($('#vip_price').val().length == 0) {
-//                layer.alert('请输入VIP价格')
-//            } else if ($('#regular_price').val().length == 0) {
-//                layer.alert('请输入常规价格')
-//            } else if ($('#market_price').val().length == 0) {
-//                layer.alert('请输入市场价格')
-//            } else if ($('#promotion_vip_price').val().length == 0) {
-//                layer.alert('请输入促销VIP价格')
-//            } else if ($('#promotion_regular_price').val().length == 0) {
-//                layer.alert('请输入促销常规价格')
-//            } else if ($('input[name="freight_company"]').val().length == 0) {
-//                layer.alert('请输入快递公司')
-//            } else if ($('input[name="freight_price"]').val().length == 0) {
-//                layer.alert('请输入快递单价')
-//            } else {
-            form.product_title = $('#productname').val();
 
-            form.product_price = [];
-            form.product_danWei = [];
-            var danWei = {
+        $('#submitopt').click(function () {
+            // 产品标题
+            form.product_title = $('#productname').val()
+            form.product_title_german = $('#productname_de').val() || $('#productname').val()
+
+            //产品备注
+            form.product_remark = um.getContent()
+            form.product_remark_german = umdemon.getContent()
+
+
+            form.product_price = []
+
+            //产品计量单位
+            form.product_danWei = []
+            let danWei = {
                 danWei_key: $('select[name="measureid"]').find("option:selected").attr('data-name'),
                 danWei_value: $('select[name="measureid"]').val()
             }
             form.product_danWei.push(danWei)
-            form.product_supplier = $('select[name="supplier"]').val();
-            form.product_sell_status = $('.color-preview.current-color').eq(0).css('background-color');
-            form.product_stock_status = $('.color-preview.current-color').eq(1).css('background-color');
 
-            form.product_market = [];
-            var market = {};
-            market.market_method = $('input[name="market_method"]:checked').val();
+            //产品供应商
+            form.product_supplier = $('select[name="supplier"]').val()
 
+            //产品销售状态
+            form.product_sell_status = $('.color-preview.current-color').eq(0).css('background-color')
+
+            //产品备货期
+            form.product_stock_status = $('.color-preview.current-color').eq(1).css('background-color')
+
+            form.product_market = []
+            let market = {}
+            market.market_method = $('input[name="market_method"]:checked').val()
+
+            //产品销售方式
             if ($('input[name="market_method"]:checked').val() == 2) {
-                market.market_amount = $('input[name="sell-function-bao"]').val();
+                market.market_amount = $('input[name="packquantity"]').val()
             } else {
-                market.market_amount = '';
+                market.market_amount = ''
             }
             form.product_market.push(market)
 
-            form.product_origin_price = []
-            var origin_price = {
-                vip_price: $('#vip_price').val(),
-                regular_price: $('#regular_price').val(),
-                market_price: $('#market_price').val(),
-                sale_discount_vip_price: $('#promotion_vip_price').val(),
-                sale_discount_regular_price: $('#promotion_regular_price').val()
-            }
-            form.product_origin_price.push(origin_price)
-            form.product_video_link = $('#videourl').val();
-            form.product_images = [];
+            //产品毛重
+            form.quantity = $('input[name="sell-function-mao"]').val()
 
-            $('#file-upload li').each(function (index, item) {
-                var data_product_image = {};
-                data_product_image.title = '';
-                data_product_image.url = $(item).find('img').attr('src');
-                form.product_images.push(data_product_image);
+            //产品视频连接
+            form.product_video_link = $('#videourl').val()
+            form.product_images = []
+
+            //产品图片
+            $('.gridly div').each(function (index, item) {
+                let data_product_image = {}
+                data_product_image.title = ''
+                data_product_image.url = $(item).find('img').attr('src')
+                form.product_images.push(data_product_image)
             })
-            form.product_freight = [];
-            var freight = {
-                product_freight_company: $('input[name="freight_company"]').val(),
-                product_freight_price: $('input[name="freight_price"]').val()
-            }
-            form.product_freight.push(freight)
 
             $('#product-attribute-table tbody tr').each(function (index, item) {
-                var form_data_compile = {};
-                form_data_compile.compile_spec = $(item).find('td').eq(0).text();
-                form_data_compile.compile_vip_price = $(item).find('td').eq(1).text();
-                form_data_compile.compile_normal_price = $(item).find('td').eq(2).text();
-                form.product_price.push(form_data_compile);
-
+                let form_data_compile = {}
+                form_data_compile.compile_vip_price = $(item).find('td').eq(1).find('input').val()
+                form_data_compile.compile_normal_price = $(item).find('td').eq(2).find('input').val()
+                form_data_compile.compile_image = $(item).find('img').attr('src')
+                form.product_price.push(form_data_compile)
             })
 
-            var product_spec = {}
-            product_spec.compact = [];
-            product_spec.hardOrSoft = [];
-            product_spec.type = [];
-            product_spec.features = [];
-            product_spec.pattern = [];
-            product_spec.color = [];
-            product_spec.material = [];
 
+            // 产品基本属性添加
+            let product_spec = {}
+            product_spec.compact = []
+            product_spec.hardOrSoft = []
+            product_spec.type = []
+            product_spec.features = []
+            product_spec.pattern = []
+            product_spec.color = []
+            product_spec.material = []
             $('input[name="compatibility"]:checked').each(function () {
-                product_spec.compact.push($(this).val());//向数组中添加元素
-            });
+                product_spec.compact.push($(this).val())
+            })
             $('input[name="type"]:checked').each(function () {
-                product_spec.type.push($(this).val());//向数组中添加元素
-            });
+                product_spec.type.push($(this).val())
+            })
             $('input[name="hardOrSoft"]:checked').each(function () {
-                product_spec.hardOrSoft.push($(this).val());//向数组中添加元素
-            });
+                product_spec.hardOrSoft.push($(this).val())
+            })
             $('input[name="features"]:checked').each(function () {
-                product_spec.features.push($(this).val());//向数组中添加元素
-            });
+                product_spec.features.push($(this).val())
+            })
             $('input[name="pattern"]:checked').each(function () {
-                product_spec.pattern.push($(this).val());//向数组中添加元素
-            });
+                product_spec.pattern.push($(this).val())
+            })
             $('input[name="Color"]:checked').each(function () {
-                product_spec.color.push($(this).val());//向数组中添加元素
-            });
+                product_spec.color.push($(this).val())
+            })
             $('input[name="material"]:checked').each(function () {
-                product_spec.material.push($(this).val());//向数组中添加元素
-            });
+                product_spec.material.push($(this).val())
+            })
 
-            form.product_spec = product_spec;
+            form.product_spec = product_spec
+            //产品归属类目
+            form.belong_category = belong_category
             console.log(form)
 
-//
-//            $.ajax({
-//                url: '/admin/saveProductDetail',
-//                type: 'POST',
-//                data: {
-//                    product_title: form.product_title,
-//                    product_supplier: form.product_supplier,
-//                    product_sell_status: form.product_sell_status,
-//                    product_stock_status: form.product_stock_status,
-//                    product_video_link: form.product_video_link,
-//                    belong_category: JSON.stringify(form.belong_category),
-//                    product_price: JSON.stringify(form.product_price),
-//                    product_danWei: JSON.stringify(form.product_danWei),
-//                    product_market: JSON.stringify(form.product_market),
-//                    product_origin_price: JSON.stringify(form.product_origin_price),
-//                    product_images: JSON.stringify(form.product_images),
-//                    product_freight: JSON.stringify(form.product_freight),
-//                    product_spec: JSON.stringify(form.product_spec)
-//                },
-//
-//                dataType: 'json',
-//                cache: false,
-//                success: function (data) {
-//                    console.log(data)   //返回图片
-//                },
-//                error: function () {
-//                    console.log('err');
-//                }
-//            });
 
+            $.ajax({
+                url: '/admin/saveProductDetail',
+                type: 'POST',
+                data: {
+                    product_title: form.product_title,
+                    product_title_german: form.product_title_german,
+                    product_remark: form.product_remark,
+                    product_remark_german: form.product_remark_german,
+                    product_quantity: form.quantity,
+                    product_supplier: form.product_supplier,
+                    product_sell_status: form.product_sell_status,
+                    product_stock_status: form.product_stock_status,
+                    product_video_link: form.product_video_link,
+                    belong_category: JSON.stringify(form.belong_category),
+                    product_price: JSON.stringify(form.product_price),
+                    product_danWei: JSON.stringify(form.product_danWei),
+                    product_market: JSON.stringify(form.product_market),
+                    product_images: JSON.stringify(form.product_images),
+                    product_spec: JSON.stringify(form.product_spec)
+                },
 
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+                    layer.msg("产品上传成功")
+                },
+                error: function () {
+                    layer.msg("产品上传失败")
+                }
+            })
         })
+
         $('#cuxiao_price').change(function () {
             if ($('input[name="cuxiao_price"]:checked').length == 1) {
                 $('#vip_price').attr('disabled', 'true');
@@ -900,8 +254,6 @@
                 product_attributes_material.push($(this).val());//向数组中添加元素
             });
 
-            console.log(product_attributes_compatibility);
-            console.log(product_attributes_type);
             product_attributes_compatibility.forEach(function (item_compatibility, index) {
                 product_attributes_Color.forEach(function (item_type, index_type) {
                     var table_body_tr = '<tr class="' + index + index_type + '"><td>【' + item_compatibility + '】' + item_type + '</td><td><input type="text" class="form-control vip-price-td1"></td><td><input type="text" class="form-control"></td><td class="file-upload-single"><input type="file" class="filestyle" data-input="false" id="filestyle-0" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);"><div class="bootstrap-filestyle input-group"><span class="group-span-filestyle " tabindex="0"><label for="filestyle-0" class="btn btn-default "><span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span></label></span></div></td><td><button class="btn btn-default delete-compatibility">删除</button></td></tr>';
@@ -936,7 +288,7 @@
                 if (file.files.length > 1) {
                     layer.alert('上传图片大于1张')
                 } else {
-                    for (var i = 0; i < file.files.length; i++) {
+                    for (let i = 0; i < file.files.length; i++) {
                         if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpeg') {
                             layer.alert('上传图片格式有误')
                             return false
@@ -956,16 +308,16 @@
                         contentType: false,
                         processData: false,
                         success: function (data) {
-                            var data = data.data;
+                            var data = data.data
                             console.log(data)
                             if (data.length != 0) {
                                 data.forEach(function (item) {
-                                    $parent = $(file).parent();
-                                    $parent.empty();
-                                    item = item.replace('public', '');
+                                    $parent = $(file).parent()
+                                    $parent.empty()
+                                    item = item.replace('public', '')
 
-                                    var li = '<li style="list-style: none;"><img src="' + item + '"><span class="delete"></span></li>';
-                                    $parent.append(li);
+                                    let li = '<li style="list-style: none;"><img src="' + item + '"><span class="delete"></span></li>'
+                                    $parent.append(li)
 
                                 })
                             }
@@ -1006,16 +358,16 @@
             <div class="cat-titleconbox">
 
                 <b>当前已选择的产品类目：</b>
-                <% if(tempCategory) {%>
-                    <% tempCategory.forEach(function (item) { %>
-                    <span class="navbox"><%= item.firstCategory %><span class="nav">&gt;</span><%= item.secondCategory %>
-                        <span class="nav">&gt;</span><%= item.thirdCategory %></span>
-                    <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <% }) %>
+                <% if(tempCategory) { %>
+                <% tempCategory.forEach(function (item) { %>
+                <span class="navbox"><%= item.firstCategory %><span class="nav">&gt;</span><%= item.secondCategory %>
+                    <span class="nav">&gt;</span><%= item.thirdCategory %></span>
+                <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <% }) %>
                 <% } else { %>
-                    <script>
-                        $.cookie('PHPSESSID');
-                    </script>
+                <script>
+                    $.cookie('PHPSESSID');
+                </script>
                 <% } %>
                 <a class="marginleft20" href="#" onclick="javascript:history.go(-1);">«返回修改类目</a>
             </div>
@@ -2325,7 +1677,6 @@
 </div>
 </div>
 <script>
-
     if ($('.gridly').children().length == 0) {
         window.LS.each(function (key, value) {    //遍历
             if (/^brick_*/.test(key)) {
@@ -2340,16 +1691,16 @@
         })
     }
     $('.delete').click(function () {
-        var div_brick = $(this).parents('div').attr('id')
+        let div_brick = $(this).parents('div').attr('id')
         console.log(div_brick)
-        $('#' + div_brick).remove();
+        $('#' + div_brick).remove()
         window.LS.remove(div_brick)
         $('.limit_pic').text(parseInt(8 - $('.gridly').children().length))
     })
     //提交添加
     $("#addRobotBtn").on('click', function () {
-        var date = new Date();
-        var parmets = {
+        let date = new Date()
+        let parmets = {
             add_name: $("#supplier_name").val(),
             add_address: $("#supplier_address").val(),
             add_time: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes(),
@@ -2366,22 +1717,22 @@
                 data: parmets,
                 success: function (retmsgurndata) {
                     console.log(retmsgurndata)
-                    $("#supplier").append("<option value='" + $("#supplier_name").val() + "'>" + $("#supplier_name").val() + "</option>");
-                    $("#supplier_name").val('');
-                    $("#supplier_address").val('');
-                    layer.closeAll();
-                    layer.msg('添加成功');
+                    $("#supplier").append("<option value='" + $("#supplier_name").val() + "'>" + $("#supplier_name").val() + "</option>")
+                    $("#supplier_name").val('')
+                    $("#supplier_address").val('')
+                    layer.closeAll()
+                    layer.msg('添加成功')
                 }, error: function (returndata) {
-                    alert('添加失败，请检查是否有非法词汇！');
+                    alert('添加失败，请检查是否有非法词汇！')
                 }
-            });
+            })
         }
     })
 
 
     function uploadFile() {
-        var file = document.getElementById("file")
-        var formData = new FormData();
+        let file = document.getElementById("file")
+        let formData = new FormData()
         console.log(file)
         console.log(file.files)
         if (file.files.length > 8) {
@@ -2395,7 +1746,7 @@
                     layer.alert('上传图片大小不能超过2M')
                     return false
                 } else {
-                    formData.append('file', file.files[i]);
+                    formData.append('file', file.files[i])
                 }
 
                 $('.limit_pic').text(8 - file.files.length)
@@ -2429,7 +1780,7 @@
 
                     $('.gridly').gridly({
                         callbacks: {reordering: reordering}
-                    });
+                    })
 
 
                     $('.delete').click(function () {

@@ -5,6 +5,8 @@
  * Copyright 2013 Klaus Hartl
  * Released under the MIT license
  */
+window.$ = require("jquery");
+var $ = require('jquery');
 (function (factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD

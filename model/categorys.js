@@ -31,8 +31,6 @@ var category = new Schema({
                     second: String,
                     third: String
                 }],
-                product_id: String,
-                product_title: String,
                 product_spec: {
                     compact: [],
                     hardOrSoft: [],
@@ -43,36 +41,33 @@ var category = new Schema({
                     material: []
                 },
                 product_price: [{
-                    compile_spec: String,
-                    compile_price: String
+                    compile_vip_price: String,
+                    compile_normal_price: String,
+                    compile_image: String
                 }],
                 product_danWei: {
                     danWei_key: String,
                     danWei_value: String
                 },
-                product_supplier: String,
-                product_sell_status: String,
-                product_stock_status: String,
                 product_market: {
                     market_method: String,
                     market_amount: String
-                },
-                product_origin_price: {
-                    vip_price: String,
-                    regular_price: String,
-                    market_price: String,
-                    sale_discount_vip_price: String,
-                    sale_discount_regular_price: String
                 },
                 product_images: [{
                     title: String,
                     url: String
                 }],
                 product_video_link: String,
-                product_freight: {
-                    product_freight_company: String,
-                    product_freight_price: String
-                }
+                product_stock_status: String,
+                product_sell_status: String,
+                product_supplier: String,
+                product_id: String,
+                product_remark: String,
+                product_remark_de: String,
+                product_title: String,
+                product_title_de: String,
+                product_quantity: Number,
+
             }],
             thirdImages: String,
             thirdUrl: String
