@@ -22,7 +22,7 @@ var superagent = require('superagent');
 var ppconfig = require('./payment/ppconfig/sandbox');
 var paypal = require('paypal-rest-sdk');
 var async = require('async');
-
+var session = require('express-session')
 var app = express();
 
 // view engine setup
@@ -34,6 +34,11 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}))
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -57,9 +62,9 @@ app.use(function (req, res, next) {
         res.set('X-Execution-Time', String(Date.now() - exec_start_at));
         // 调用原始处理函数:
         return _send.apply(res, arguments);
-    };
-    next();
-});
+    }
+    next()
+})
 
 // 自定义异常
 global.customError = (status, msg, res) => {

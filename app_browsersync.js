@@ -24,6 +24,7 @@ var morgan = require('morgan');
 var fs = require('fs')
 var app = express();
 var port = 3000;
+var session = require('express-session')
 
 
 var allowCrossDomain = function (req, res, next) {
@@ -40,6 +41,11 @@ app.set('view engine', 'ejs');
 app.use(allowCrossDomain);
 app.use(logger('dev'));
 app.use(bodyParser.json());
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}))
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -69,7 +75,7 @@ app.use(function (req, res, next) {
 
 // 自定义异常
 global.customError = (status, msg) => {
-    if(typeof status == 'string') {
+    if (typeof status == 'string') {
         msg = status
         status = null
     }

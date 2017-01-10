@@ -1487,140 +1487,154 @@ router.get('/hotlabel', function (req, res, next) {
 router.get('/upload', checkLogin);
 router.get('/upload', function (req, res) {
     db.categorys.find({}, function (err, result) {
-        if (err) res.send('404');
-        console.log(result);
-        res.render('admin/product/upload-goods', {username: u.nick_name, upload: [], category: result});
-    });
-
-});
+        if (err) res.send('404')
+        res.render('admin/product/upload-goods', {
+            username: u.nick_name,
+            upload: [],
+            category: result,
+            specStatus: true
+        })
+    })
+})
 
 //上传产品详细信息
-router.get('/upload-products-detail', function (req, res, next) {
-    async.parallel([
-            function (done) {
-                db.categorys.find({}, function (err, result) {
-                    if (err) res.send('404');
-                    done(err, result)
-                });
+router.get('/upload-products-detail', (req, res, next) => {
 
-            },
-            function (done) {
-                var compatibility = [],
-                    type = [],
-                    hardOrSoft = [],
-                    features = [],
-                    pattern = [],
-                    Color = [],
-                    material = [];
-                _.each(tempCategory, function (temp) {
-                    db.specifications.findOne({
-                        'thirdCategory': temp.thirdCategory,
-                        'secondCategory': temp.secondCategory
-                    }, function (err, result) {
-                        if (err) {
-                            res.send(500)
-                        } else {
-                            console.log(result)
-                            if (result != null) {
-                                _.each(result.specification.compatibility, function (item) {
-                                    compatibility.push(item.value)
-                                });
-                                _.each(result.specification.type, function (item) {
-                                    type.push(item.value)
-                                });
-                                _.each(result.specification.hardOrSoft, function (item) {
-                                    hardOrSoft.push(item.value)
-                                });
-                                _.each(result.specification.features, function (item) {
-                                    features.push(item.value)
-                                });
-                                _.each(result.specification.Color, function (item) {
-                                    Color.push(item.value)
-                                });
-                                _.each(result.specification.pattern, function (item) {
-                                    pattern.push(item.value)
-                                });
-                                _.each(result.specification.material, function (item) {
-                                    material.push(item.value)
-                                });
-                            }
-
-                        }
-                    })
-                });
-
-                var product_spectication = {
-                    compatibility: compatibility,
-                    type: type,
-                    hardOrSoft: hardOrSoft,
-                    features: features,
-                    pattern: pattern,
-                    Color: Color,
-                    material: material
-                }
-
-                done(null, product_spectication)
-            },
-            function (done) {
-                db.suppliers.find({}, function (err, suppliers) {
-                    done(err, suppliers)
-                });
-            }
-        ],
-
-
-        function (err, results) {
+    let spec_status = false
+    let product_spec = {
+        compatibility: [],
+        type: [],
+        hardOrSoft: [],
+        features: [],
+        Color: [],
+        pattern: [],
+        material: []
+    }
+    console.log(req.session.tempCategory)
+    async.forEachOf(req.session.tempCategory, (item, key, callback) => {
+        console.log(key)
+        console.log(item)
+        db.specifications.findOne({
+            'thirdCategory': item.thirdCategory,
+            'secondCategory': item.secondCategory
+        }, (err, result) => {
             if (err) {
-                done(err)
+                res.send(500)
             } else {
-                var categorys = results[0];
-                var product_spectication = results[1];
-                var suppliers = results[2];
-
-                console.log(product_spectication)
-                console.log(tempCategory.length)
-                if (tempCategory.length != 0) {
-                    temp_category = tempCategory
-
+                if (typeof result.specification != 'undefined') {
+                    spec_status = true
+                    _.each(result.specification.compatibility, (item) => {
+                        product_spec.compatibility.push(item.value)
+                    })
+                    _.each(result.specification.type, (item) => {
+                        product_spec.type.push(item.value)
+                    })
+                    _.each(result.specification.hardOrSoft, (item) => {
+                        product_spec.hardOrSoft.push(item.value)
+                    })
+                    _.each(result.specification.features, (item) => {
+                        product_spec.features.push(item.value)
+                    })
+                    _.each(result.specification.Color, (item) => {
+                        product_spec.Color.push(item.value)
+                    })
+                    _.each(result.specification.pattern, (item) => {
+                        product_spec.pattern.push(item.value)
+                    })
+                    _.each(result.specification.material, function (item) {
+                        product_spec.material.push(item.value)
+                    })
                 } else {
-                    tempCategory = temp_category
+                    spec_status &= false
+                    req.session.tempCategory.splice(key, 1)
                 }
-                if (parseIsNull(product_spectication.compatibility)
-                    || parseIsNull(product_spectication.type)
-                    || parseIsNull(product_spectication.hardOrSoft)
-                    || parseIsNull(product_spectication.features)
-                    || parseIsNull(product_spectication.pattern
-                        || parseIsNull(product_spectication.Color
-                            || parseIsNull(product_spectication.material)))) {
-                    temp_product_specification = product_spectication
-                } else {
-                    product_spectication = temp_product_specification
-                }
-
-
-                res.render('admin/product/upload-products-detail', {
-                    username: u.nick_name,
-                    upload: [],
-                    category: categorys,
-                    tempCategory: tempCategory,
-                    suppliers: suppliers,
-                    product_specification: {
-                        compatibility: product_spectication.compatibility,
-                        type: product_spectication.type,
-                        hardOrSoft: product_spectication.hardOrSoft,
-                        features: product_spectication.features,
-                        pattern: product_spectication.pattern,
-                        Color: product_spectication.Color,
-                        material: product_spectication.material
-                    }
-                });
-                tempCategory = [];
+                callback()
             }
         })
+
+    }, function (err) {
+        // if any of the file processing produced an error, err would equal that error
+        if (err) {
+            res.send(500)
+        } else {
+            let spec = new Promise((resolve, reject) => {
+                resolve({spec_status: spec_status, product_specs: product_spec})
+            })
+
+            let category = new Promise((resolve, reject) => {
+                db.categorys.find({}, function (err, result) {
+                    if (err) reject(err)
+                    resolve(result)
+                })
+            })
+
+            let suppliers = new Promise((resolve, reject) => {
+                db.suppliers.find({}, (err, suppliers) => {
+                    if (err) reject(err)
+                    resolve(suppliers)
+                })
+            })
+
+            Promise.all([spec, category, suppliers])
+                .then(values => {
+                    let [product_specs, category, suppliers] = values
+                    let product_spec = product_specs.product_specs
+
+                    if (!product_specs.spec_status) {
+                        db.categorys.find({}, function (err, result) {
+                            if (err) res.send('404')
+                            return res.render('admin/product/upload-goods', {
+                                username: u.nick_name,
+                                upload: [],
+                                category: result,
+                                specStatus: false
+                            })
+                        })
+                    } else {
+
+                        res.render('admin/product/upload-products-detail', {
+                            username: u.nick_name,
+                            upload: [],
+                            category: category,
+                            tempCategory: req.session.tempCategory,
+                            suppliers: suppliers,
+                            product_specification: {
+                                compatibility: product_spec.compatibility,
+                                type: product_spec.type,
+                                hardOrSoft: product_spec.hardOrSoft,
+                                features: product_spec.features,
+                                pattern: product_spec.pattern,
+                                Color: product_spec.Color,
+                                material: product_spec.material
+                            }
+                        })
+                        tempCategory = []
+                    }
+                })
+                .catch((e) => {
+                    console.log(e)
+                    res.send(500, {succeed: false})
+                })
+        }
+    })
 })
 
 function parseIsNull(args) {
     if (args.length == 0) {
+        return false
+    } else {
+        return true
+    }
+}
+
+function parseIsExist(arg) {
+    if (typeof arg["compatibility"] == "undefined" &&
+        typeof arg["type"] == "undefined" &&
+        typeof arg["hardOrSoft"] == "undefined" &&
+        typeof arg["features"] == "undefined" &&
+        typeof arg["pattern"] == "undefined" &&
+        typeof arg["Color"] == "undefined" &&
+        typeof arg["material"] == "undefined") {
         return false
     } else {
         return true
@@ -1665,30 +1679,80 @@ router.post('/uploadTemporary', function (req, res, next) {
             upload_time: (new Date().getTime() / 1000).toFixed(),
             status: 'NEW'
         };
-        tempCategory.push(Categories)
-        console.log('------')
-        console.log(tempCategory)
-        var category = new db.uploadTemporarys(Categories);
-        category.save(function (err) {
-            console.log(err);
-            if (err) {
+        if (typeof req.session.tempCategory == 'undefined') {
+            tempCategory.push(Categories)
+            req.session.tempCategory = tempCategory
+            let category = new db.uploadTemporarys(Categories)
+            category.save(function (err) {
                 console.log(err);
-                res.send({error_msg: ['INTERNAL SERVER ERROR'], info: "", result: "fail", code: "500"})
-            } else {
-                db.uploadTemporarys.find({'addBy': req.body.addBy}, null, {
-                    sort: {
-                        upload_time: -1
-                    }
-                }, function (err, result) {
-                    if (err) {
-                        res.send({error_msg: ['INTERNAL SERVER ERROR'], info: "", result: "fail", code: "500"});
-                    } else {
-                        res.send({error_msg: [], info: result, result: "success", code: "200"});
-                    }
+                if (err) {
+                    console.log(err);
+                    res.send({error_msg: ['INTERNAL SERVER ERROR'], info: "", result: "fail", code: "500"})
+                } else {
+                    db.uploadTemporarys.find({'addBy': req.body.addBy}, null, {
+                        sort: {
+                            upload_time: -1
+                        }
+                    }, function (err, result) {
+                        if (err) {
+                            res.send({
+                                error_msg: ['INTERNAL SERVER ERROR'],
+                                info: "",
+                                result: "fail",
+                                code: "500"
+                            });
+                        } else {
+                            res.send({error_msg: [], info: result, result: "success", code: "200"});
+                        }
 
-                }).limit(5);
-            }
-        });
+                    }).limit(5);
+                }
+            })
+        } else {
+            async.each(req.session.tempCategory, (i, callback) => {
+                console.log(i.firstCategory != req.body.firstCategory)
+                console.log(i.secondCategory != req.body.secondCategory)
+                console.log(i.thirdCategory != req.body.thirdCategory)
+                if (i.firstCategory != req.body.firstCategory
+                    || i.secondCategory != req.body.secondCategory
+                    || i.thirdCategory != req.body.thirdCategory) {
+                    req.session.tempCategory.push(Categories)
+                }
+
+
+                callback()
+            }, (err) => {
+                if (!err) {
+                    let category = new db.uploadTemporarys(Categories)
+                    category.save(function (err) {
+                        console.log(err);
+                        if (err) {
+                            console.log(err);
+                            res.send({error_msg: ['INTERNAL SERVER ERROR'], info: "", result: "fail", code: "500"})
+                        } else {
+                            db.uploadTemporarys.find({'addBy': req.body.addBy}, null, {
+                                sort: {
+                                    upload_time: -1
+                                }
+                            }, function (err, result) {
+                                if (err) {
+                                    res.send({
+                                        error_msg: ['INTERNAL SERVER ERROR'],
+                                        info: "",
+                                        result: "fail",
+                                        code: "500"
+                                    });
+                                } else {
+                                    res.send({error_msg: [], info: result, result: "success", code: "200"});
+                                }
+
+                            }).limit(5);
+                        }
+                    })
+                }
+            })
+        }
+
     }
 });
 
@@ -1762,58 +1826,66 @@ router.post('/saveProductDetail', function (req, res, next) {
 
     console.log(data)
 
-    let thirdCate = [];
+    let thirdCate = []
     _.each(data.belong_category, function (item) {
         thirdCate.push(item.third)
     })
 
-    _.each(data.belong_category, (item) => {
-        console.log(item)
-        db.categorys.findOne({'secondCategory.thirdTitles.thirdTitle': item.third}, function (err, result) {
-
+    async.each(data.belong_category, (item, callback) => {
+        db.categorys.findOne({'secondCategory.thirdTitles.thirdTitle': item.third}, (err, result) => {
+            if (err || !result) return res.send(500)
             let newArr = _.filter(result.secondCategory, function (secondCategory) {
-                return secondCategory.secondTitle == item.second;
-            });
+                return secondCategory.secondTitle == item.second
+            })
 
-            _.each(newArr[0].thirdTitles, function (thirdCategory) {
+            _.each(newArr[0].thirdTitles, (thirdCategory) => {
                 if (thirdCategory.thirdTitle == item.third) {
                     thirdCategory.product.push(data)
                 }
-            });
+            })
 
             console.log(newArr[0].thirdTitles)
             console.log(newArr[0].thirdTitles[0].product)
-            console.log('---')
             console.log(newArr[0]._id)
-            let SEOS = {
-                SEO_Name: data.product_title,
-                SEO_Url: '/single-product/' + data.product_id,
-                add_time: (new Date().getTime()).toFixed()
-            }
 
-            //save product in seo engine
-            let SEO_V = new db.SEOS(SEOS)
-            SEO_V.save()
-
-            db.categorys.update({
-                    'secondCategory._id': newArr[0]._id
-                }, {
-                    $inc: {
-                        "firstCount": 1,
-                        "secondCategory.$.secondCount": 1
-                    }
+            let _seoProcess = new Promise((resolve, reject) => {
+                let seo = {
+                    SEO_Name: data.product_title,
+                    SEO_Url: '/single-product/' + data.product_id,
+                    add_time: (new Date().getTime()).toFixed()
                 }
-                , {
-                    $set: {
-                        "secondCategory.$.thirdTitles": newArr[0].thirdTitles
+
+                let SEO_V = new db.SEOS(seo)
+                SEO_V.save((err) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(true)
                     }
-                }, (err, result) => {
-                    if (err) return res.send(500)
-                    console.log(err)
-                    console.log(result)
-                    res.send({succeed: true, msg: "ok"})
+                })
+            })
+
+            _seoProcess
+                .then(() => {
+                    db.categorys.findOneAndUpdate({
+                            'secondCategory._id': newArr[0]._id
+                        }
+                        , {
+                            $set: {
+                                "secondCategory.$.thirdTitles": newArr[0].thirdTitles
+                            }
+                        }, (err, result) => {
+                            if (err || !result) throw err
+                            callback()
+                        })
                 })
         })
+    }, (err) => {
+        if (err) {
+            res.send(500)
+        } else {
+            res.send({succeed: true, msg: "ok"})
+        }
     })
 
 
@@ -1887,7 +1959,7 @@ router.get('/specification_german', function (req, res, next) {
         })
     })
 
-    console.log("产品上传管理登陆成功");
+    console.log("产品上传管理登陆成功")
 })
 
 //产品基本信息录入管理-添加属性

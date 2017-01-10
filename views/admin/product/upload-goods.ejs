@@ -261,6 +261,9 @@
     }
 </style>
 <script>
+    if ('<%= specStatus %>' == 'false') {
+        layer.alert("请上传该类目产品属性")
+    }
     $(function () {
 
         $.ajax({
@@ -328,7 +331,6 @@
 
             },
         });
-
 
         function showPath() {
             $('#show_category_path').empty();
