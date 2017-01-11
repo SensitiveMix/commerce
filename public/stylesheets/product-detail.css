@@ -401,6 +401,10 @@ a {
     vertical-align: middle;
 }
 
+#submitopt {
+    margin-bottom: 13px;
+}
+
 .file-upload-single li {
     display: inline-block;
     width: 60px;

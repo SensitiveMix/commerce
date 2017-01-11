@@ -300,7 +300,7 @@
                         console.log($(item).text());
                         var firstC = $.trim($(item).text());
                         if (firstC == $.trim(category[0])) {
-                            $('#catagory0 li').removeClass('current');
+                            $('#catagory0 li').removeClass('current')
                             $(this).addClass('current');
                             $(this).click();
                             if ($('#catagory1 li').length != 0 && category[1].length != 0) {
@@ -330,7 +330,7 @@
                 })
 
             },
-        });
+        })
 
         function showPath() {
             $('#show_category_path').empty();
@@ -431,31 +431,28 @@
 
         var isSave = false;
         var total_category = []
-        var total = {};
-        $('#save_history').click(function () {
+        var total = {}
 
+        $('#save_history').click(function () {
             if ($('#catagory2 li.current').text() == '') {
                 layer.msg('请选择三级类目')
             } else {
-
-
-                var single = {
+                let single = {
                     firstCategory: $('#catagory0 li.current').text(),
                     secondCategory: $('#catagory1 li.current').text(),
                     thirdCategory: $('#catagory2 li.current').text()
                 }
-
-                var Length = total_category.filter(function (item) {
+                let Length = total_category.filter(function (item) {
                     return single.firstCategory == item.firstCategory && single.secondCategory == item.secondCategory && single.thirdCategory == item.thirdCategory
                 }).length
 
                 if (Length > 0) {
-                    layer.msg('该类目已存在');
+                    layer.msg('该类目已存在')
                 } else {
-                    total_category.push(single);
+                    total_category.push(single)
                     var myhistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + ' -</span>'
-                    $('#recentCategoryDropdown').append(myhistory);
-                    $('.save_category').css('display', 'block');
+                    $('#recentCategoryDropdown').append(myhistory)
+                    $('.save_category').css('display', 'block')
                     var saveHistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + '</span><span class="delete">删除</span><br/>'
                     $('.save_category_path').append(saveHistory)
 
@@ -483,37 +480,36 @@
                         } else {
                             layer.msg('删除失败')
                         }
-
                         layer.msg('删除成功')
-                        $(this).prev().remove();
-                        $(this).next().remove();
+                        $(this).prev().remove()
+                        $(this).next().remove()
                         $(this).remove()
                     })
+
+
                     if ($('#catagory0 li.current').text().length != 0) {
+                        let payload = {
+                            firstCategory: $('#catagory0 li.current').text(),
+                            secondCategory: $('#catagory1 li.current').text(),
+                            thirdCategory: $('#catagory2 li.current').text(),
+                            addBy: '<%= username %>',
+                            status: 'NEW'
+                        }
                         $.ajax({
                             type: 'POST',
                             url: '/admin/uploadTemporary',
-                            data: {
-                                firstCategory: $('#catagory0 li.current').text(),
-                                secondCategory: $('#catagory1 li.current').text(),
-                                thirdCategory: $('#catagory2 li.current').text(),
-                                addBy: '<%= username %>',
-                                status: 'NEW'
-                            },
+                            data: payload,
                             dataType: 'json',
                             success: function (data) {
                                 isSave = true;
                                 layer.msg('收藏成功');
                                 console.log(data);
                             }
-                        });
-
+                        })
                     } else {
                         alert('请选择类目!');
                     }
-                    console.log(total_category)
                 }
-
             }
         })
 

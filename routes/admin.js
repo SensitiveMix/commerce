@@ -1667,21 +1667,22 @@ router.get('/uploadTemporary', function (req, res, next) {
 
 //产品页面POST保存最近上传类目接口
 router.post('/uploadTemporary', function (req, res, next) {
-
     if (req.body.firstCategory == '' && req.body.secondCategory != '') {
         res.send({error_msg: ['FORMAT PARAM Error'], info: "", result: "fail", code: "400"})
     } else {
-        var Categories = {
+        let Categories = {
             firstCategory: req.body.firstCategory,
             secondCategory: req.body.secondCategory,
             thirdCategory: req.body.thirdCategory,
             addBy: req.body.addBy,
             upload_time: (new Date().getTime() / 1000).toFixed(),
             status: 'NEW'
-        };
+        }
         if (typeof req.session.tempCategory == 'undefined') {
             tempCategory.push(Categories)
             req.session.tempCategory = tempCategory
+            console.log('first')
+            console.log(Categories)
             let category = new db.uploadTemporarys(Categories)
             category.save(function (err) {
                 console.log(err);
@@ -1705,24 +1706,22 @@ router.post('/uploadTemporary', function (req, res, next) {
                             res.send({error_msg: [], info: result, result: "success", code: "200"});
                         }
 
-                    }).limit(5);
+                    }).limit(5)
                 }
             })
         } else {
-            async.each(req.session.tempCategory, (i, callback) => {
-                console.log(i.firstCategory != req.body.firstCategory)
-                console.log(i.secondCategory != req.body.secondCategory)
-                console.log(i.thirdCategory != req.body.thirdCategory)
+            let temp = req.session.tempCategory
+            async.forEachOf(temp, (i, index, callback) => {
                 if (i.firstCategory != req.body.firstCategory
                     || i.secondCategory != req.body.secondCategory
                     || i.thirdCategory != req.body.thirdCategory) {
-                    req.session.tempCategory.push(Categories)
+                    callback()
                 }
-
-
-                callback()
+                console.log(req.session.tempCategory)
             }, (err) => {
                 if (!err) {
+                    req.session.tempCategory.push(Categories)
+                    console.log(req.session.tempCategory)
                     let category = new db.uploadTemporarys(Categories)
                     category.save(function (err) {
                         console.log(err);

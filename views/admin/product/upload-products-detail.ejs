@@ -28,7 +28,7 @@
         belong_category.push(belong_category_item)
         <% }) %>
 
-        $('#submitopt').click(function () {
+        $('#submitopt').on('click', function () {
             // 产品标题
             form.product_title = $('#productname').val()
             form.product_title_german = $('#productname_de').val() || $('#productname').val()
@@ -129,38 +129,58 @@
             form.belong_category = belong_category
             console.log(form)
 
+            let payload = {
+                product_title: form.product_title,
+                product_title_german: form.product_title_german,
+                product_remark: form.product_remark,
+                product_remark_german: form.product_remark_german,
+                product_quantity: form.quantity,
+                product_supplier: form.product_supplier,
+                product_sell_status: form.product_sell_status,
+                product_stock_status: form.product_stock_status,
+                product_video_link: form.product_video_link,
+                belong_category: JSON.stringify(form.belong_category),
+                product_price: JSON.stringify(form.product_price),
+                product_danWei: JSON.stringify(form.product_danWei),
+                product_market: JSON.stringify(form.product_market),
+                product_images: JSON.stringify(form.product_images),
+                product_spec: JSON.stringify(form.product_spec)
+            }
 
-            $.ajax({
-                url: '/admin/saveProductDetail',
-                type: 'POST',
-                data: {
-                    product_title: form.product_title,
-                    product_title_german: form.product_title_german,
-                    product_remark: form.product_remark,
-                    product_remark_german: form.product_remark_german,
-                    product_quantity: form.quantity,
-                    product_supplier: form.product_supplier,
-                    product_sell_status: form.product_sell_status,
-                    product_stock_status: form.product_stock_status,
-                    product_video_link: form.product_video_link,
-                    belong_category: JSON.stringify(form.belong_category),
-                    product_price: JSON.stringify(form.product_price),
-                    product_danWei: JSON.stringify(form.product_danWei),
-                    product_market: JSON.stringify(form.product_market),
-                    product_images: JSON.stringify(form.product_images),
-                    product_spec: JSON.stringify(form.product_spec)
-                },
+            if (parseFormat('#productname', payload.product_title, '请输入产品标题')
+                && parseFormat('#productname_de', payload.product_title_german, '请输入产品标题')
+                && parseFormat('#sell-function-mao', payload.product_quantity, '请输入产品质量')
+                && parseFormat('select[name="supplier"]', payload.product_supplier, '请输入产品供应商')) {
+                $.ajax({
+                    url: '/admin/saveProductDetail',
+                    type: 'POST',
+                    data: payload,
+                    dataType: 'json',
+                    cache: false,
+                    success: function (data) {
+                        location.hash = '#ml-title'
+                        layer.msg("产品上传成功")
+                    },
+                    error: function () {
+                        layer.msg("产品上传失败")
+                    }
+                })
 
-                dataType: 'json',
-                cache: false,
-                success: function (data) {
-                    layer.msg("产品上传成功")
-                },
-                error: function () {
-                    layer.msg("产品上传失败")
-                }
-            })
+            }
         })
+
+
+        function parseFormat(key, val, tip) {
+            if (val == "") {
+                console.log(tip)
+                location.hash = key
+                layer.tips(tip, key)
+//                layer.alert(tip)
+                return false
+            } else {
+                return true
+            }
+        }
 
         $('#cuxiao_price').change(function () {
             if ($('input[name="cuxiao_price"]:checked').length == 1) {
@@ -394,7 +414,7 @@
 
         <!-- 产品标题 开始 -->
         <div class="mainlayout clearfix" id="productnameTip">
-            <div class="ml-title"><span class="required">*</span>产品标题：</div>
+            <div class="ml-title" id="ml-title"><span class="required">*</span>产品标题：</div>
             <a id="a_productname"></a>
             <div class="m-text">您的产品标题单词量为<b class="orgfont">0</b>，平台上此类目产品标题的单词量为<b class="greenfont">16-23</b>个，完整且清晰的描述有助于提升产品曝光率。<br>
                 （重复的单词堆积，和产品无关的介绍会被视为作弊，导致产品被搜索降序甚至屏蔽）
@@ -420,28 +440,6 @@
 
         </div>
         <!-- 产品标题 结束 -->
-
-        <!-- 产品关键词 开始 -->
-        <!--<div class="mainlayout clearfix" id="keywordTip">-->
-        <!--<div class="ml-title">产品关键词：</div>-->
-        <!--<a id="a_keyword1"></a><a id="a_keyword2"></a><a id="a_keyword3"></a>-->
-        <!--<div>-->
-        <!--<input class="attr-text-input marginright10" style="ime-mode:disabled;" maxlength="40" name="keyword1"-->
-        <!--id="keyword1" type="text" value="">-->
-        <!--<input class="attr-text-input marginright10" maxlength="40" name="keyword2" id="keyword2" type="text"-->
-        <!--style="ime-mode:disabled;display: none;">-->
-        <!--<input class="attr-text-input marginright10" maxlength="40" name="keyword3" id="keyword3" type="text"-->
-        <!--style="ime-mode:disabled;display: none;">-->
-        <!--<span id="keywordbutton" class="tourBtn"><input type="button" value="添加多个关键词"-->
-        <!--onclick="showOtherKeywords();"></span>-->
-        <!--<span class="helpicon" title="产品关键词帮助" helptipval="keywordTip"></span>-->
-        <!--</div>-->
-        <!--<div id="keyword1ErrTip" class="tip-error" style="display:none;"></div>-->
-        <!--<div id="keyword2ErrTip" class="tip-error" style="display:none;"></div>-->
-        <!--<div id="keyword3ErrTip" class="tip-error" style="display:none;"></div>-->
-        <!--</div>-->
-
-        <!-- 产品关键词 结束 -->
 
         <!-- 产品基本属性 开始 -->
         <!-- 产品基本属性 开始 -->
@@ -749,7 +747,7 @@
         <div class="ml-title"><span class="required">*</span>产品毛重：</div>
         <div class="marginbottom10 clearfix">
             <label>
-                <input type="text" class="form-control" placeholder="" name="sell-function-mao">
+                <input type="text" class="form-control" placeholder="" id="sell-function-mao" name="sell-function-mao">
             </label>kg/件
             <span class="helpicon" title="产品毛重帮助" data-helpid="saleType"></span>
         </div>
@@ -939,50 +937,6 @@
         </div>
         <!-- ----- 产品备货期 结束 -----  -->
 
-
-        <!-- 产品价格 开始 -->
-        <!--<div id="tips-sale" class="mainlayout clearfix" style="position:relative;">-->
-        <!--<div class="ml-title"><span class="required">*</span>产品价格区间：</div>-->
-        <!--<div class="form-inline">-->
-        <!--<div class="form-group">-->
-        <!--&lt;!&ndash;<label for="exampleInputEmail2">VIP Price</label>&ndash;&gt;-->
-        <!--<input type="text" class="form-control" name="vip_price" id="vip_price" placeholder="VIP Price">-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-        <!--&lt;!&ndash;<label for="exampleInputEmail2">Regular Price</label>&ndash;&gt;-->
-        <!--<input type="text" class="form-control" name="regular_price" id="regular_price"-->
-        <!--placeholder="Regular Price">-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-        <!--&lt;!&ndash;<label for="exampleInputEmail2">Market Price</label>&ndash;&gt;-->
-        <!--<input type="text" class="form-control" name="market_price" id="market_price"-->
-        <!--placeholder="Market Price">-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="checkbox">-->
-        <!--<label>-->
-        <!--<input type="checkbox" id="cuxiao_price" name="cuxiao_price"> 促销价格:-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--<div class="form-inline">-->
-        <!--<div class="form-group">-->
-        <!--&lt;!&ndash;<label for="exampleInputEmail2">VIP Price</label>&ndash;&gt;-->
-        <!--<input type="text" class="form-control" name="promotion_vip_price" id="promotion_vip_price"-->
-        <!--placeholder="VIP Price">-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-        <!--&lt;!&ndash;<label for="exampleInputEmail2">Regular Price</label>&ndash;&gt;-->
-        <!--<input type="text" class="form-control" name="promotion_regular_price"-->
-        <!--id="promotion_regular_price" placeholder="Regular Price">-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-        <!--&lt;!&ndash;<label for="exampleInputEmail2">Market Price</label>&ndash;&gt;-->
-        <!--<input type="text" class="form-control" name="promotion_market_price"-->
-        <!--id="promotion_market_price" placeholder="Market Price">-->
-        <!--</div>-->
-        <!--</div>-->
-
-        <!--</div>-->
         <!-- 产品价格 结束 -->
 
         <!--</div>        &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;    &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;-->
@@ -1623,15 +1577,7 @@
     <!-- 完成提交开始 -->
     <div id="syi_submit_id" class="syi-submit" style="margin-bottom: 10px">
         <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系ECSELL客服部门。</strong><br>
-        <button type="button" id="btn_submitproduct" class="btn btn-primary">
-			    <span id="loadingimg" class="submit-syi">
-                    <img src="/assets/img/icon/loadings.gif" class="syi-img-show">
-				<span id="submitopt">产品提交</span>
-				</span>
-        </button>
-        <!--<button type="button"  id="btn_previewproduct">
-            <span class="preview" id="previewopt"><span>预览</span></span>
-        </button>-->
+        <button id="submitopt" class="btn btn-info">产品提交</button>
     </div>
     <!-- 完成提交结束 -->
 
