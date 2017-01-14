@@ -2368,6 +2368,10 @@ router.get('/shopping_template', (req, res) => {
     res.render('admin/templates/shopping-templates', {username: u.nick_name})
 })
 
+router.get('/express_fee_template',(req, res) => {
+    res.render('admin/templates/express-fee-templates', {username: u.nick_name})
+})
+
 /**
  * ROUTER FEE  GET Method
  * @param req  incoming request format

@@ -34,6 +34,7 @@
     "express": "~4.13.4",
     "express-ejs-layouts": "^2.2.0",
     "express-partials": "^0.3.0",
+    "express-session": "^1.14.2",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "formidable": "^1.0.17",

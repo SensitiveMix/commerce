@@ -1,0 +1,944 @@
+﻿<% layout('../backend-master.ejs') %>
+<script src="/js/md5.js"></script>
+<link href="/ueditor/themes/default/_css/umeditor.css" type="text/css" rel="stylesheet">
+<link href="/stylesheets/product-detail.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="/transport/express.js"></script>
+<script type="text/javascript" src="/transport/ordinary.js"></script>
+<script src='/js/storage.js'></script>
+<script src="/public_web_build/bundle.js"></script>
+<script src="/public_cookie_build/bundle.js"></script>
+<script type="text/javascript" charset="utf-8" src="/ueditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/ueditor/_examples/editor_api.js"></script>
+<script type="text/javascript" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="/js/product-detail.js"></script>
+<script src="../plugins/pick-color/js/tinycolor-0.9.15.min.js"></script>
+<script src="../plugins/pick-color/js/pick-a-color-1.2.3.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('.logistics-panel-type').click(function () {
+            var index = $(this).index();
+            $('#logistic-list .logistics-panel').hide();
+            $('#logistic-list .logistics-panel').eq(index).toggle();
+        })
+
+        $('.logistic-checkbox').click(function () {
+            if ($(this).is(':checked') == true) {
+                $(this).parents('tr').find('.standard-logistic').removeAttr("disabled");
+                $(this).parents('tr').find('.no-logistic').removeAttr("disabled");
+            }
+            if ($(this).is(':checked') == false) {
+                $(this).parents('tr').find('.standard-logistic').attr("disabled", "true");
+                $(this).parents('tr').find('.no-logistic').attr("disabled", "true");
+
+            }
+        })
+})
+</script>
+<style type="text/css">
+    .input-group-addon{
+        border-top-right-radius: 4px!important;
+        border-bottom-right-radius: 4px!important;
+    }
+    .mainlayout{
+        max-width: 84%;
+        margin: 0 auto;
+    }
+</style>
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">创建运费模板</h3>
+    </div>
+
+    <!-- 运费设置开始 -->
+    <div class="titlebox" id="shippingmodelidTip_1">
+        <a id="a_shippingmodelid"></a>
+    </div>
+    <!-- 运费设置列表开始 -->
+    <div class="j-list-item">
+        <!-- 大标题开始 -->
+        <div class="mainlayout clearfix j-shippingarea-container">
+            <div class="ui-tab ui-tab-normal tab-wrap logistics-container ui-switchable" data-name="loc-cn"
+                 data-country="CN" data-widget-cid="widget-5">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary active logistics-panel-type">
+                        <input type="radio" name="options" autocomplete="off" checked>小包类物流
+                    </label>
+                    <label class="btn btn-primary logistics-panel-type">
+                        <input type="radio" name="options" autocomplete="off">普通类物流
+                    </label>
+                    <label class="btn btn-primary logistics-panel-type">
+                        <input type="radio" name="options" autocomplete="off">特快类物流
+                    </label>
+                </div>
+                <div class="ui-tab-body ui-switchable-content" id="logistic-list">
+                    <div id="economy-logistics-panel"
+                         class="logistics-panel ui-tab-pane ui-tab-active series-wrap ui-switchable-panel"
+                         data-role="panel" data-series="cn-post" style="display: block;">
+                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert"><span
+                                        aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                            小包类物流运费优惠，但不提供目的国包裹妥投信息，仅适合货值低、重量轻的商品使用。
+                        </div>
+                        <table width="100%" cellspacing="0" cellpadding="8"
+                               class="table table-bordered table-list logistic-list ui-table">
+                            <thead>
+                            <tr>
+                                <th width="20%">选择物流</th>
+                                <th width="40%">运费设置
+                                    <span class="setting-help-icon ui-help ui-help-icon"></span>
+                                </th>
+                                <th width="40%">运达时间设置  <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#create-country">新增国家</button></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- 物流公司列表-->
+                            <tr id="YANWEN_JYT" class="logistic-row" logisticcompany="YANWEN_JYT"
+                                isdeliverycountryzone="COUNTRY" companydisplayname="" logisticsmessage="">
+                                <td class="logistic-name" width="35%">
+                                    <input type="checkbox" class="logistic-checkbox" id="YANWEN_JYT-check"
+                                           name="logistic-name" value="YANWEN_JYT" checked="checked">
+                                    <span id="YANWEN_JYT">小包运输</span>
+                                    <span class="logisticname-info ui-help ui-help-icon"></span>
+                                    <div class="tip-me logisticname-tip" style="display:none;">
+                                        <div class="help-content-wrap">
+                                            Ecsell线上发货渠道，无挂号费，适合运送货值低重量轻的商品，不提供目的国包裹妥投信息。<br>
+                                            <a href="http://seller.aliexpress.com/so/onlinelogistics_postbj.php"
+                                               target="_blank">了解详情</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="logistic-commit-standard" width="35%">
+                                    <div class="set-logistic">
+                                        <input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"
+                                               type="radio" checked="checked">
+                                        <span>标准运费</span>
+                                        <span class="decount-box">减免
+                                            <input id="decount-box-input-CPAM" value="0" class="decount-box-input" size="2" maxlength="2" name="freight-reduce-count-CPAM">%
+                                            <span class="decount-help-link ui-help ui-help-icon"></span>
+                                            <span class="discountBox" style="">即<span class="discountHook">全</span>折</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="set-logistic">
+                                        <input class="no-logistic" name="freight-mode-CPAM" value="all_free"
+                                               type="radio">
+                                        卖家承担运费
+                                        <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                    </div>
+                                    <label>燃油附加费:</label>
+                                    <input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"
+                                           name="ranyoufei">
+                                </td>
+                                <td width="30%">
+                                    <div class="set-commit-time">
+                                        <input class="standard-commit-time" name="arrival-time-mode-YANWEN_JYT"
+                                               value="all_standard" type="radio">
+                                        承诺运达时间
+                                        <input id="time-box-input-YANWEN_JYT"
+                                               class="time-box-input ui-textfield ui-textfield-system" size="2"
+                                               maxlength="2" name="arrival-time-days-YANWEN_JYT" value="">
+                                        天
+                                    </div>
+
+                                    <div class="set-commit-time">
+                                        <input id="custom-commit-time-YANWEN_JYT" class="custom-commit-time"
+                                               name="arrival-time-mode-YANWEN_JYT" value="self_define" type="radio"
+                                               logisticcompany="YANWEN_JYT" isdeliverycountryzone="COUNTRY"
+                                               checked="checked">
+                                        <label for="custom-commit-time-YANWEN_JYT" class="custom-time">
+                                            自定义运达时间
+                                        </label>
+                                        <textarea class="custom-commit-time-content"
+                                                  name="arrival-time-custom-setting-YANWEN_JYT"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal fade in" id="create-country" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">设置国家运费规则</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="deitbox">
+                                        <div class="ccl-title">
+                                            <p>
+                                            <div class="form-group">
+                                                <label  class="col-sm-3 control-label"> 选择国家：<button class="btn btn-warning btn-xs add-create-seleted">添加国家</button></label>
+                                                <div class="form-group">
+                                                    <select style="width: 15%;display: inline-block;" id="country-select" name="country" class="form-control">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <script type="text/javascript">
+                                                $(function () {
+                                                        var express = expresses;
+                                                        var ordinary = ordinaries;
+                                                        express.data.forEach(function (item) {
+                                                            $('#country-select').append('<option>' + item.zh + '</option>')
+                                                        })
+                                                        $('#grossWeight').change(function () {
+                                                            var grossWeight = $('#grossWeight').val();
+                                                            if (grossWeight < 2) {
+                                                                $('#country-select').html('');
+                                                                express.data.forEach(function (item) {
+                                                                    $('#country-select').append('<option>' + item.zh + '</option>')
+                                                                })
+                                                            } else if (grossWeight < 21) {
+                                                                $('#country-select').html('');
+                                                                ordinary.data.forEach(function (item) {
+                                                                    $('#country-select').append('<option>' + item.zh + '</option>')
+                                                                })
+                                                            } else {
+                                                                $('#country-select').html('');
+                                                                ordinary.data.forEach(function (item) {
+                                                                    $('#country-select').append('<option>' + item.zh + '</option>')
+                                                                })
+                                                            }
+                                                        })
+                                                        //新增国家提交
+                                                        $('#create-contry-submit').click(function(){
+                                                            var country = $('#country-select').val(),
+                                                                expressFee = $('input[name="create-country-express-fee"]').val(),
+                                                                expressGuahaoFee = $('input[name="create-country-express-guahao-fee"]').val(),
+                                                                expressBetweenFrom = $('input[name="create-country-express-day-between"]').val(),
+                                                                expressBetweenTo = $('input[name="create-country-express-day-to"]').val(),
+                                                                formData = {
+                                                                'country':country,
+                                                                'express_fee':expressFee,
+                                                                'express_guahao_fee' :expressGuahaoFee,
+                                                                'express_day_from':expressBetweenFrom,
+                                                                'express_day_to':expressBetweenTo
+                                                                };
+                                                            console.log(formData);
+                                                            $.ajax({
+                                                                type: 'POST',
+                                                                url: '/',
+                                                                data: {
+                                                                    data: formData,
+                                                                },
+                                                                dataType: 'json',
+                                                                beforeSend:function(){
+                                                                    $('#create-contry-submit').attr('disabled','true');
+                                                                },
+                                                                success: function (data) {
+                                                                    var myhtml = '';
+                                                                },
+                                                                error: function (data) {
+                                                                }
+                                                            });
+
+                                                        })
+
+                                                    })
+                                            </script>
+                                            <div class="form-group">
+                                                <div class="form-inline">
+                                                    <label class="col-sm-3 control-label"> 运费：</label>
+                                                    <div class="input-group col-sm-9">
+                                                        <input class="form-control" type="text" name="create-country-express-fee">
+                                                        <div class="input-group-addon">RMB/KG</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-inline">
+                                                    <label class="col-sm-3 control-label"> 挂号费：</label>
+                                                    <div class="input-group col-sm-9">
+                                                        <input class="form-control" type="text" name="create-country-express-guahao-fee">
+                                                        <div class="input-group-addon">RMB</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-inline">
+                                                    <label class="col-sm-3 control-label"> 预计运达时间</label>
+                                                    <div class="input-group col-sm-9">
+                                                        <input class="form-control" type="text" name="create-country-express-day-between">
+                                                        <div class="input-group-addon" style="border-radius: 0px!important;border-right: 0;border-left: 0;">到</div>
+                                                        <input class="form-control" type="text" name="create-country-express-day-to">
+                                                        <div class="input-group-addon">工作日</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="alert alert-danger" role="alert">小包运输, 最高运输为2.00KG</div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="create-contry-submit">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="standard-logistics-panel"
+                         class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="panel"
+                         data-series="cn-business" style="display: none;">
+                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert"><span
+                                        aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                            普通类物流包括邮政挂号服务和专线类服务，全程物流追踪信息可查询。无忧物流的排他规则已取消，您可以如其他物流线路一样设置使用
+                        </div>
+                        <table width="100%" cellspacing="0" cellpadding="8"
+                               class="table table-bordered table-list logistic-list ui-table">
+                            <thead>
+                            <tr>
+                                <th width="20%">选择物流</th>
+                                <th width="40%">运费设置
+                                    <span class="setting-help-icon ui-help ui-help-icon"></span>
+                                </th>
+                                <th width="40%">运达时间设置 <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#create-country-standard">新增国家</button></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr class="logistic-row" logisticcompany="CPAM" isdeliverycountryzone="COUNTRY"
+                                companydisplayname="">
+                                <td class="logistic-name" width="35%">
+                                    <input type="checkbox" class="logistic-checkbox" id="CPAM-check"
+                                           name="logistic-name" value="CPAM" checked="checked">
+                                    <span id="standard-title">普通快递</span>
+                                    <span class="logisticname-info ui-help ui-help-icon"></span>
+                                    <div class="tip-me logisticname-tip" style="display:none;">
+                                        <div class="help-content-wrap">
+                                            可寄送2kg以上的普通商品，运送范围为全球，可使用速卖通线上发货，专享线上发货合约价及服务保障！<br>
+                                            <a href="#" target="_blank">了解详情</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="logistic-commit-standard" width="35%">
+                                    <div class="set-logistic">
+                                        <input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"
+                                               type="radio" checked="checked">
+                                        <span>标准运费</span>
+                                        <span class="decount-box">
+    减免
+    <input id="decount-box-input-CPAM" value="0" class="decount-box-input"
+           size="2" maxlength="2" name="freight-reduce-count-CPAM">
+    %
+    <span class="decount-help-link ui-help ui-help-icon"></span>
+    <span class="discountBox" style="">即<span
+                class="discountHook">全</span>折</span>
+
+    </span>
+                                    </div>
+
+                                    <div class="set-logistic">
+                                        <input class="no-logistic" name="freight-mode-CPAM" value="all_free"
+                                               type="radio">
+                                        卖家承担运费
+                                        <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                    </div>
+                                    <label>燃油附加费:</label>
+                                    <input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"
+                                           name="ranyoufei">
+                                </td>
+                                <td width="30%">
+                                    <div class="set-commit-time">
+                                        <input class="standard-commit-time" name="arrival-time-mode-CPAM"
+                                               value="all_standard" type="radio">
+                                        承诺运达时间
+                                        <input id="time-box-input-CPAM"
+                                               class="time-box-input ui-textfield ui-textfield-system" size="2"
+                                               maxlength="2" name="arrival-time-days-CPAM" value="">
+                                        天
+                                    </div>
+
+                                    <div class="set-commit-time">
+                                        <input id="custom-commit-time-CPAM" class="custom-commit-time"
+                                               name="arrival-time-mode-CPAM" value="self_define" type="radio"
+                                               logisticcompany="CPAM" isdeliverycountryzone="COUNTRY" checked="checked">
+                                        <label for="custom-commit-time-CPAM" class="custom-time">
+                                            自定义运达时间
+                                        </label>
+                                        <textarea class="custom-commit-time-content"
+                                                  name="arrival-time-custom-setting-CPAM"></textarea>
+                                    </div>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal fade in" id="create-country-standard" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">设置国家运费规则</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="deitbox">
+                                                            <div class="ccl-title">
+                                                                <p>
+                                                                <div class="form-group">
+                                                                    <label  class="col-sm-3 control-label"> 选择国家：
+                                                                        <button class="btn btn-warning btn-xs add-create-seleted">添加国家</button>
+                                                                    </label>
+                                                                    <div class="form-group" id="standard-select-country">
+                                                                        <select style="width: 15%;display: inline-block;" name="country" class="form-control country-select-standard">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <script type="text/javascript">
+                                                                    $(function () {
+                                                                        $('.add-create-seleted').on('click',function(){
+                                                                            var div = $(this).parent().parent().find('div');
+                                                                            div.append('<select style="width: 15%;display: inline-block;" name="country" class="form-control country-select-standard">'
+                                                                                +'</select>');
+                                                                            var express = expresses;
+                                                                            var ordinary = ordinaries;
+                                                                            express.data.forEach(function (item) {
+                                                                                $('.country-select-standard').append('<option>' + item.zh + '</option>')
+                                                                            })
+                                                                        })
+                                                                            var express = expresses;
+                                                                            var ordinary = ordinaries;
+                                                                            express.data.forEach(function (item) {
+                                                                                $('.country-select-standard').append('<option>' + item.zh + '</option>')
+                                                                            })
+                                                                            $('#grossWeight').change(function () {
+                                                                                var grossWeight = $('#grossWeight').val();
+                                                                                if (grossWeight < 2) {
+                                                                                    $('.country-select-standard').html('');
+                                                                                    express.data.forEach(function (item) {
+                                                                                        $('.country-select-standard').append('<option>' + item.zh + '</option>')
+                                                                                    })
+                                                                                } else if (grossWeight < 21) {
+                                                                                    $('.country-select-standard').html('');
+                                                                                    ordinary.data.forEach(function (item) {
+                                                                                        $('.country-select-standard').append('<option>' + item.zh + '</option>')
+                                                                                    })
+                                                                                } else {
+                                                                                    $('.country-select-standard').html('');
+                                                                                    ordinary.data.forEach(function (item) {
+                                                                                        $('.country-select-standard').append('<option>' + item.zh + '</option>')
+                                                                                    })
+                                                                                }
+                                                                            })
+                                                                            //新增国家提交
+                                                                            $('#country-select-standard').click(function(){
+                                                                                var country = $('#country-select-standard').val(),
+                                                                                    expressFee = $('input[name="create-country-express-fee"]').val(),
+                                                                                    expressGuahaoFee = $('input[name="create-country-express-guahao-fee"]').val(),
+                                                                                    expressBetweenFrom = $('input[name="create-country-express-day-between"]').val(),
+                                                                                    expressBetweenTo = $('input[name="create-country-express-day-to"]').val(),
+                                                                                    formData = {
+                                                                                    'country':country,
+                                                                                    'express_fee':expressFee,
+                                                                                    'express_guahao_fee' :expressGuahaoFee,
+                                                                                    'express_day_from':expressBetweenFrom,
+                                                                                    'express_day_to':expressBetweenTo
+                                                                                    };
+                                                                                console.log(formData);
+                                                                                $.ajax({
+                                                                                    type: 'POST',
+                                                                                    url: '/',
+                                                                                    data: {
+                                                                                        data: formData,
+                                                                                    },
+                                                                                    dataType: 'json',
+                                                                                    beforeSend:function(){
+                                                                                        $('#create-contry-submit').attr('disabled','true');
+                                                                                    },
+                                                                                    success: function (data) {
+                                                                                        var myhtml = '';
+                                                                                    },
+                                                                                    error: function (data) {
+                                                                                    }
+                                                                                });
+
+                                                                            })
+
+                                                                        })
+                                                                </script>
+                                                                <div class="form-group">
+                                                                    <div class="form-inline">
+                                                                        <label class="col-sm-3 control-label"> 运费：</label>
+                                                                        <div class="input-group col-sm-9">
+                                                                            <input class="form-control" type="text" name="create-country-express-fee">
+                                                                            <div class="input-group-addon">RMB/KG</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="form-inline">
+                                                                        <label class="col-sm-3 control-label"> 挂号费：</label>
+                                                                        <div class="input-group col-sm-9">
+                                                                            <input class="form-control" type="text" name="create-country-express-guahao-fee">
+                                                                            <div class="input-group-addon">RMB</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="form-inline">
+                                                                        <label class="col-sm-3 control-label"> 预计运达时间</label>
+                                                                        <div class="input-group col-sm-9">
+                                                                            <input class="form-control" type="text" name="create-country-express-day-between">
+                                                                            <div class="input-group-addon" style="border-radius: 0px!important;border-right: 0;border-left: 0;">到</div>
+                                                                            <input class="form-control" type="text" name="create-country-express-day-to">
+                                                                            <div class="input-group-addon">工作日</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="alert alert-danger" role="alert">小包运输, 最高运输为2.00KG</div>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary" id="country-select-standard">Save changes</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                    </div>
+                    <div id="express-logistics-panel"
+                         class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="panel"
+                         data-series="cn-dedicated" style="display: none;">
+                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert"><span
+                                        aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                            特快类物流方案包含邮政快递、商业快递，时效快全程物流追踪信息可查询，适合高货值商品使用。
+                        </div>
+                        <table width="100%" cellspacing="0" cellpadding="8"
+                               class="table table-bordered  table-list logistic-list ui-table">
+                            <thead>
+                            <tr>
+                                <th width="20%">选择物流</th>
+                                <th width="40%">运费设置
+                                    <span class="setting-help-icon ui-help ui-help-icon"></span>
+                                </th>
+                                <th width="40%">运达时间设置</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- 物流公司列表-->
+                            <tr id="SF" class="logistic-row  disabled-row" logisticcompany="SF"
+                                isdeliverycountryzone="COUNTRY" companydisplayname="					SF Express
+    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺丰速运
+    "
+                                logisticsmessage="顺丰速运新增运达国家，可根据您的实际情况编辑运费模板。<a href=http://bbs.seller.aliexpress.com/bbs/read.php?tid=294253&amp;page=1&amp;toread=1#tpc' target='_blanke'>点击了解详情</a>">
+                                <td class="logistic-name" width="35%">
+                                    <input type="checkbox" class="logistic-checkbox" id="SF-check" name="logistic-name"
+                                           value="SF" checked="checked">
+                                    <span id="SF">特快快递</span>
+                                </td>
+                                <td class="logistic-commit-standard" width="35%">
+                                    <div class="set-logistic">
+                                        <input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"
+                                               type="radio" checked="checked">
+                                        <span>标准运费</span>
+                                        <span class="decount-box">
+    减免
+    <input id="decount-box-input-CPAM" value="0" class="decount-box-input"
+           size="2" maxlength="2" name="freight-reduce-count-CPAM">
+    %
+    <span class="decount-help-link ui-help ui-help-icon"></span>
+    <span class="discountBox" style="">即<span
+                class="discountHook">全</span>折</span>
+
+    </span>
+                                    </div>
+
+                                    <div class="set-logistic">
+                                        <input class="no-logistic" name="freight-mode-CPAM" value="all_free"
+                                               type="radio">
+                                        卖家承担运费
+                                        <span class="freeshipping-box" style="display: none;">Free Shipping</span>
+                                    </div>
+                                    <label>燃油附加费:</label>
+                                    <input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"
+                                           name="ranyoufei">
+                                </td>
+                                <td width="30%">
+                                    <div class="set-commit-time">
+                                        <input class="standard-commit-time" name="arrival-time-mode-SF"
+                                               value="all_standard" type="radio">
+                                        承诺运达时间
+                                        <input id="time-box-input-SF"
+                                               class="time-box-input ui-textfield ui-textfield-system" size="2"
+                                               maxlength="2" name="arrival-time-days-SF" value="23">
+                                        天
+                                    </div>
+
+                                    <div class="set-commit-time">
+                                        <input id="custom-commit-time-SF" class="custom-commit-time"
+                                               name="arrival-time-mode-SF" value="self_define" type="radio"
+                                               logisticcompany="SF" isdeliverycountryzone="COUNTRY" disabled="">
+                                        <label for="custom-commit-time-SF" class="custom-time">
+                                            自定义运达时间
+                                        </label>
+                                        <textarea class="custom-commit-time-content"
+                                                  name="arrival-time-custom-setting-SF">  </textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="标准运费计算器" id="calculate-yunfei" class="btn btn-primary" data-toggle="modal"
+                   data-target="#yunfei-table">
+
+            <div class="modal fade" id="yunfei-table" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">计算标准运费</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="deitbox">
+                                <div class="ccl-title">
+                                    <p>
+                                        包装信息：<br>
+                                        <input type="text" class="inputtxt02" value="1.0" size="6" name="grossWeight"
+                                               id="grossWeight">
+                                        <span class="marginlfrl10">公斤(kg)</span>
+                                        <label class="marginlf10">购买数量：</label>
+                                        <input type="text" class="inputtxt01" size="6" id="quantity" name="quantity"
+                                               value="1">
+                                        <label class="marginlf10"> 送达国家：</label>
+                                        <select style="width: 15%;display: inline-block;" id="country" name="country"
+                                                class="form-control">
+                                        </select>
+                                        <script>
+                                            $(function () {
+                                                var express = expresses;
+                                                var ordinary = ordinaries;
+                                                express.data.forEach(function (item) {
+                                                    $('#country').append('<option>' + item.zh + '</option>')
+                                                })
+                                                $('#grossWeight').change(function () {
+                                                    var grossWeight = $('#grossWeight').val();
+                                                    if (grossWeight < 2) {
+                                                        $('#country').html('');
+                                                        express.data.forEach(function (item) {
+                                                            $('#country').append('<option>' + item.zh + '</option>')
+                                                        })
+                                                    } else if (grossWeight < 21) {
+                                                        $('#country').html('');
+                                                        ordinary.data.forEach(function (item) {
+                                                            $('#country').append('<option>' + item.zh + '</option>')
+                                                        })
+                                                    } else {
+                                                        $('#country').html('');
+                                                        ordinary.data.forEach(function (item) {
+                                                            $('#country').append('<option>' + item.zh + '</option>')
+                                                        })
+                                                    }
+                                                })
+
+                                            })
+                                            $(function () {
+
+                                                $('#calculate-yunfei-re').click(function () {
+                                                    var weight_for_jian = $('input[name="grossWeight"]').val();
+                                                    if (weight_for_jian.length == 0) {
+
+                                                        myjinggao = '<div id="weightTip" class="alert alert-danger alert-dismissible fade in" role="alert">'
+                                                                + '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'
+                                                                + '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'
+                                                                + '必须输入包装重量'
+                                                                + '</div>';
+                                                        $('.ccl-title').append(myjinggao);
+                                                        return false;
+                                                    }
+                                                    var weight = (weight_for_jian * $('#quantity').val()).toFixed(2);
+                                                    var area = $('#country').val();
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: '/admin/transport',
+                                                        data: {
+                                                            weight: weight,
+                                                            area: area
+                                                        },
+                                                        dataType: 'json',
+                                                        success: function (data) {
+                                                            var myhtml = '';
+                                                            if (data.express) {
+                                                                if (data.express.price) {
+                                                                    myhtml = '<tr>'
+                                                                            + '<td class="padleft20" width="50%">'
+                                                                            + '<a target="_blank">'
+                                                                            + data.express.msg
+                                                                            + '</a>'
+                                                                            + '</td>'
+                                                                            + '<td class="tal-right" width="22%">3-8 days</td>'
+                                                                            + '<td class="tal-right" width="28%">'
+                                                                            + data.express.price
+                                                                            + '</td>'
+                                                                            + '</tr>';
+                                                                }
+                                                            }
+                                                            if (data.little_packet) {
+                                                                if (data.little_packet.price) {
+                                                                    myhtml += '<tr>'
+                                                                            + '<td class="padleft20" width="50%">'
+                                                                            + '<a target="_blank">'
+                                                                            + data.little_packet.msg
+                                                                            + '</a>'
+                                                                            + '</td>'
+                                                                            + '<td class="tal-right" width="22%">3-8 days</td>'
+                                                                            + '<td class="tal-right" width="28%">'
+                                                                            + data.little_packet.price
+                                                                            + '</td>'
+                                                                            + '</tr>';
+                                                                }
+                                                            }
+                                                            if (data.ordinary) {
+                                                                if (data.ordinary.price) {
+                                                                    myhtml += '<tr>'
+                                                                            + '<td class="padleft20" width="50%">'
+                                                                            + '<a target="_blank">'
+                                                                            + data.ordinary.msg
+                                                                            + '</a>'
+                                                                            + '</td>'
+                                                                            + '<td class="tal-right" width="22%">3-8 days</td>'
+                                                                            + '<td class="tal-right" width="28%">'
+                                                                            + data.ordinary.price
+                                                                            + '</td>'
+                                                                            + '</tr>';
+                                                                }
+                                                            }
+                                                            $('#calculatorbox tbody').html(myhtml);
+                                                        },
+                                                        error: function (data) {
+                                                            if (data.status == 404) {
+                                                                $('#weightTip').remove();
+                                                                $('#calculatorbox tbody').html('');
+                                                                myjinggao = '<div id="weightTip" class="alert alert-warning alert-dismissible fade in" role="alert">'
+                                                                        + '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'
+                                                                        + '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'
+                                                                        + '暂时没有快递到该国家'
+                                                                        + '</div>';
+                                                                $('.ccl-title').append(myjinggao);
+                                                            }
+                                                        }
+                                                    });
+                                                })
+                                            })
+                                        </script>
+                                        <span class="yellowBtn valmiddle marginlf10">
+                                            <input type="submit" class="btn btn-info" id="calculate-yunfei-re" value="计算">
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <span class="red" style="display:none">必须输入包装重量</span>
+                                    </p>
+                                </div>
+                                <div class="calculatorbox" id="calculatorbox">
+                                    <table width="100%" class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th width="50%" class="tal-left">物流公司</th>
+                                            <th width="22%" class="tal-right">估计时间</th>
+                                            <th width="28%" class="tal-right">标准运费含燃油费</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="postAirMail20160218" class="similarity-tip-gantan" style="display:none;"><span
+                        style="color:red;">epacket、邮政小包类物流限重2KG，单件已超重禁止使用。</span></div>
+        </div>
+        <!------- 大标题结束 ------->
+        <!------- 运费设置列表开始 ------->
+    </div>
+
+    <!-- title其他信息 结束 -->
+
+
+    <!-- 完成提交开始 -->
+    <div id="syi_submit_id" class="syi-submit" style="margin-bottom: 10px">
+        <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系ECSELL客服部门。</strong><br>
+        <button id="submitopt" class="btn btn-info">确定提交</button>
+    </div>
+    <!-- 完成提交结束 -->
+
+    <!-- 翻译 开始 -->
+    <div id="translateBox" class="syi-translate" style="right: 26px;">
+        <div class="show-translabox"></div>
+
+        <div class="translabox">
+            <a href="http://fanyi.baidu.com/" target="_blank" class="jinshan"></a>
+            <a href="http://fanyi.youdao.com/" target="_blank" class="youdao"></a>
+            <a href="http://translate.google.cn/" target="_blank" class="google"></a>
+        </div>
+        <!-- 产品填写参考 开始 -->
+        <div class="syi-proreference-box" style="display:none;">
+            <div class="syi-proreference">
+                <a href="http://seller.dhgate.com/syi/showProdInfo.do?itemcode=" target="_blank"
+                   title="点此查看调整之前的产品信息" class="proreferencebox">产品填写参考</a>
+            </div>
+        </div>
+        <!-- 产品填写参考 结束 -->
+    </div>
+    <!-- 翻译 结束 -->
+
+
+    <div id="onLineChatBox" class="syi-onlinechat" style="top: 361px; right: 26px;">
+        <div class="show-onlinechat"></div>
+        <div class="onlinechatbox">
+            <a id="syi_chat_window" href="javascript:void(0);" class="onlinechat" target="_blank"></a>
+        </div>
+    </div>
+
+    <!-- footer文件调用开始 -->
+    <div class="headerlayout">
+        <!--[if IE 6]>
+        <div class="layoutmargin">
+            <div class="layoutpadding"><![endif]-->
+        <!--<iframe id="headiframe" name="head" src="http://seller.dhgate.com/syihtml/footer_syi.html" width="100%"-->
+        <!--height="81" frameborder="0" scrolling="no"></iframe>-->
+        <!--[if IE 6]></div></div><![endif]-->
+    </div>
+    <!-- footer文件调用结束 -->
+</div>
+</div>
+</div>
+<script>
+    if ($('.gridly').children().length == 0) {
+        window.LS.each(function (key, value) {    //遍历
+            if (/^brick_*/.test(key)) {
+                $('.gridly').append(value)
+                var reordering = function ($elements) {
+                    $('.gridly').gridly('draggable', 'on')
+                };
+                $('.gridly').gridly({
+                    callbacks: {reordering: reordering}
+                })
+            }
+        })
+    }
+    $('.delete').click(function () {
+        let div_brick = $(this).parents('div').attr('id')
+        console.log(div_brick)
+        $('#' + div_brick).remove()
+        window.LS.remove(div_brick)
+        $('.limit_pic').text(parseInt(8 - $('.gridly').children().length))
+    })
+    //提交添加
+    $("#addRobotBtn").on('click', function () {
+        let date = new Date()
+        let parmets = {
+            add_name: $("#supplier_name").val(),
+            add_address: $("#supplier_address").val(),
+            add_time: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes(),
+            add_time_number: (date.getTime() / 1000).toFixed()
+        }
+        console.log(parmets)
+        if (parmets.add_name == '') {
+            layer.tips('请填写供应商', '#supplier_name')
+        } else {
+            console.log(parmets)
+            $.ajax({
+                url: 'doAddSupplier',
+                type: 'POST',
+                data: parmets,
+                success: function (retmsgurndata) {
+                    console.log(retmsgurndata)
+                    $("#supplier").append("<option value='" + $("#supplier_name").val() + "'>" + $("#supplier_name").val() + "</option>")
+                    $("#supplier_name").val('')
+                    $("#supplier_address").val('')
+                    layer.closeAll()
+                    layer.msg('添加成功')
+                }, error: function (returndata) {
+                    alert('添加失败，请检查是否有非法词汇！')
+                }
+            })
+        }
+    })
+
+
+    function uploadFile() {
+        let file = document.getElementById("file")
+        let formData = new FormData()
+        console.log(file)
+        console.log(file.files)
+        if (file.files.length > 8) {
+            layer.alert('上传图片大于8张')
+        } else {
+            for (var i = 0; i < file.files.length; i++) {
+                if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpeg') {
+                    layer.alert('上传图片格式有误')
+                    return false
+                } else if (file.files[i].size / 1024 > 2000) {
+                    layer.alert('上传图片大小不能超过2M')
+                    return false
+                } else {
+                    formData.append('file', file.files[i])
+                }
+
+                $('.limit_pic').text(8 - file.files.length)
+            }
+
+            $.ajax({
+                url: '/admin/uploadSingle',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var data = data.data;
+                    console.log(data)
+                    if (data.length != 0) {
+                        $('.gridly').gridly('draggable', 'on')
+                        data.forEach(function (item, index) {
+                            item = item.replace('public', '');
+                            var li = '<div class="brick small" id="brick_' + index + '"><img src="' + item + '"><span class="delete"></span></div>';
+                            window.LS.set("brick_" + index, li)
+                            $('.gridly').append(li);
+                        })
+                    }
+
+                    var reordering = function ($elements) {
+                        $('.gridly').gridly('draggable', 'on')
+                    };
+
+
+                    $('.gridly').gridly({
+                        callbacks: {reordering: reordering}
+                    })
+
+
+                    $('.delete').click(function () {
+                        var div_brick = $(this).parents('div').attr('id')
+                        $('#' + div_brick).remove();
+                        window.LS.remove(div_brick)
+                        $('.limit_pic').text(parseInt($('.limit_pic').text()) + 1)
+                    })
+                },
+                error: function () {
+                    layer.msg('上传文件格式错误')
+                }
+            });
+        }
+
+
+    }
+</script>
