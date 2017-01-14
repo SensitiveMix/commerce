@@ -2355,10 +2355,8 @@ router.get('/crawler', (req, res, next) => {
         })
 })
 
-router.get('/crawler_manage', function (req, res, next) {
-    res.render('admin/crawler/crawler', {
-        username: u.nick_name
-    })
+router.get('/crawler_manage', (req, res) => {
+    res.render('admin/crawler/crawler', {username: u.nick_name})
 })
 /*-------------------------------------------------------------------------*/
 
@@ -2366,6 +2364,23 @@ router.get('/crawler_manage', function (req, res, next) {
 router.get('/shopping_template', (req, res) => {
     res.render('admin/templates/shopping-templates', {username: u.nick_name})
 })
+
+router.get('/express_fee_template', (req, res) => {
+    res.render('admin/templates/express-fee-templates', {username: u.nick_name})
+})
+
+router.post('fee-template', (req, res) => {
+    res.send(200, {succeed: true, msg: 'add success'})
+})
+
+router.put('fee-template', (req, res) => {
+    res.send(200, {succeed: true, msg: 'put success'})
+})
+
+router.delete('fee-template', (req, res) => {
+    res.send(200, {succeed: true, msg: 'delete success'})
+})
+
 
 /**
  * ROUTER FEE  GET Method
@@ -2577,14 +2592,14 @@ router.get('/feedollarlist', (req, res, next) => {
 })
 
 function formatFee(args) {
-    var num = Number(args)
-    var bb = num + "";
-    var dian = bb.indexOf('.');
-    var result = "";
+    let num = Number(args)
+    let bb = num + "";
+    let dian = bb.indexOf('.');
+    let result = "";
     if (dian == -1) {
         result = num.toFixed(4);
     } else {
-        var cc = bb.substring(dian + 1, bb.length);
+        let cc = bb.substring(dian + 1, bb.length);
         if (cc.length >= 5) {
             result = (Number(num.toFixed(4)) + 0.01) * 100000000000 / 100000000000;//js小数计算小数点后显示多位小数
         } else {
@@ -2744,6 +2759,8 @@ function getLittleTransportPrice(type, weight) {
             return item['kg'].indexOf(weight.toString()) > -1
         })[0]['fee']) * weight
 }
+
+
 /*------------------------------------------------------------------------*/
 
 
