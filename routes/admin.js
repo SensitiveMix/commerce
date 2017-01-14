@@ -1751,9 +1751,8 @@ router.post('/uploadTemporary', function (req, res, next) {
                 }
             })
         }
-
     }
-});
+})
 
 router.post('/deleteTemporary', function (req, res, next) {
 
@@ -2290,71 +2289,71 @@ router.post('/uploadFile', function (req, res, next) {
 
 /*-----------------------------------爬虫管理--------------------------------*/
 /* 爬虫 */
-router.get('/crawler', function (req, res, next) {
+router.get('/crawler', (req, res, next) => {
     superagent.get(req.query.link)
         .end(function (err, result) {
             if (err) {
-                return next(err);
+                return next(err)
             }
-            var $ = cheerio.load(result.text);
-            var items = [];
-            var img = [];
-            var property = [];
-            var title = null;
+            let $ = cheerio.load(result.text)
+            let items = []
+            let img = []
+            let property = []
+            let title = null
+
+            /*
+             handle image obj
+             */
             $('.list').find('li').each(function (idx, element) {
-                var url = $(this).find('img').attr('src');
-                var uniqueUrl = url.substring(url.lastIndexOf('/') + 1);
+                let url = $(this).find('img').attr('src')
+                let uniqueUrl = url.substring(url.lastIndexOf('/') + 1)
                 http_origin.get(url, function (res) {
-                    var imgData = "";
+                    let imgData = ""
 
-                    res.setEncoding("binary"); //一定要设置response的编码为binary否则会下载下来的图片打不开
+                    res.setEncoding("binary")
 
-                    res.on("data", function (chunk) {
-                        imgData += chunk;
-                    });
+                    res.on("data", (chunk) => {
+                        imgData += chunk
+                    })
 
-                    var Rand = Math.random();
-                    var save_url = config.savePath + uniqueUrl;
-                    img.push(save_url);
+                    let Rand = Math.random()
+                    let save_url = config.savePath + uniqueUrl
+                    img.push(save_url)
                     res.on("end", function () {
                         fs.writeFile(save_url, imgData, "binary", function (err) {
                             // console.log(save_url);
                             if (err) {
                                 console.log(err);
                             }
-                        });
-                    });
-                });
+                        })
+                    })
+                })
 
                 items.push({
                     image_id: idx,
-                    image_url: uniqueUrl,
+                    image_url: '/images/crawler_image/' + uniqueUrl,
                     image_title: $(this).find('img').attr('title')
                 })
-            });
+            })
 
 
-            $('.specTitle').find('tr').each(function (idx, element) {
+            $('.specTitle').find('tr').each((idx, element) => {
                 property.push({
-                    pro: $(this).find('th').html(),
-                    value: $(this).find('td').html()
+                    pro: $(element).find('th').text(),
+                    value: $(element).find('td').text()
                 })
-            });
+            })
 
-            $('.prod-info-title').find('h1').each(function (idx, element) {
-                title = $(this).html()
-            });
+            title = $('.prod-info-title').find('h1').text()
 
-
-            var allItems = {
-                title: title,
+            let allItems = {
+                title: title.substring(0, title.indexOf('#')),
                 img: items,
                 property: property
             }
-
-            res.send(allItems);
-        });
-});
+            res.send(allItems)
+        })
+})
 
 router.get('/crawler_manage', function (req, res, next) {
     res.render('admin/product/crawler', {

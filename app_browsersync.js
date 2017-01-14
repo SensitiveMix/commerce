@@ -24,7 +24,7 @@ var morgan = require('morgan');
 var fs = require('fs')
 var app = express();
 var port = 3000;
-var session = require('express-session')
+var session =   require('express-session')
 
 
 var allowCrossDomain = function (req, res, next) {
