@@ -2356,7 +2356,7 @@ router.get('/crawler', (req, res, next) => {
 })
 
 router.get('/crawler_manage', function (req, res, next) {
-    res.render('admin/product/crawler', {
+    res.render('admin/crawler/crawler', {
         username: u.nick_name
     })
 })
