@@ -113,6 +113,7 @@
 <link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.css">
 <script>
 
+    let count = 0
     //单条爬取
     function start_crawler(link) {
         if (link == 'start_crawel') {
@@ -136,7 +137,7 @@
                     let imgArrayQuery = []
                     img.forEach(function (item, index) {
                         imgArrayQuery.push(item.image_url)
-                        imgArray.push('<a data-url="'+ item.image_url + '" class="view-crawel_img btn btn-link" data-toggle="modal" data-target="#mycrawel_img">图片' + (index + 1) + '</a>')
+                        imgArray.push('<a data-url="' + item.image_url + '" class="view-crawel_img btn btn-link" data-toggle="modal" data-target="#mycrawel_img">图片' + (index + 1) + '</a>')
                     })
                     let imgQuery = imgArray.join('')
                     let property = res.property
@@ -150,16 +151,17 @@
                         if (typeof this[e] == "undefined" || this[e] == "undefined") {
                             this[e] = ""
                         }
-
-                        console.log(this[e])
                     })
+                    count++
+                    let delClass = "delete-crawel-detail" + '-' + count
+                    let uploadClass = "upload-crawel-detail" + '-' + count
                     let my_html = '<tr>' +
                         '<td>' + title + '</td>' +
                         '<td>' + imgQuery + '</td>' +
                         '<td><a class="property-detail btn btn-xs btn-info" data-toggle="modal" data-target="#property-detail">详情</a></td>' +
-                        '<td style="display: none" class="for">' + this["For"] + '</td>' +
+                        '<td style="display: none" class="forSpec">' + this["For"] + '</td>' +
                         '<td style="display: none" class="compatibility">' + this["Compatibility"] + '</td>' +
-                        '<td style="display: none" class="type">' + this.Type + '</td>' +
+                        '<td style="display: none" class="type">' + this["Type"] + '</td>' +
                         '<td style="display: none" class="hardOrSoft">' + this["Hard / Soft"] + '</td>' +
                         '<td style="display: none" class="features">' + this["Features"] + '</td>' +
                         '<td style="display: none" class="pattern">' + this["Pattern"] + '</td>' +
@@ -169,52 +171,62 @@
                         '<td style="display: none" class="netWeight">' + this["netWeight"] + '</td>' +
                         '<td style="display: none" class="customization">' + this["customization"] + '</td>' +
                         '<td style="display: none" class="additionalMaterial">' + this["Additional Material"] + '</td>' +
-                        '<td><a class="btn btn-danger delete-crawel-detail">删除</a></td>' +
-                        '<td><a class="btn btn-primary upload-crawel-detail">上传</a></td>' +
+                        '<td><a class="btn btn-danger ' + delClass + ' delete-crawel-detail">删除</a></td>' +
+                        '<td><a class="btn btn-primary ' + uploadClass + ' upload-crawel-detail">上传</a></td>' +
                         '</tr>'
+
                     $('#robotetable tbody').append(my_html)
 
                     $('.view-crawel_img').click(function () {
                         var src = $(this).attr('data-url');
                         $('#mycrawel_img').find('.modal-body img').attr('src', src)
                     })
-                    $('.delete-crawel-detail').click(function () {
+
+                    function _processOutPut(arg) {
+                        let arr = []
+                        if (arg.indexOf(',') > 0) {
+                            arr = arg.split(",")
+                        }
+                        return arr
+                    }
+
+
+                    $('.' + delClass).click(function () {
                         $(this).parent().parent().remove()
                     })
-                    $('.upload-crawel-detail').click(function () {
-                        let data = []
-                        data['title'] = title
-                        data['img'] = imgArrayQuery
-                        data['propertyArray'] = []
-                        data['propertyArray']['compatibility'] = []
-                        $(this).parent().parent().find('.compatibility span').each(function (index, item) {
-                            data['propertyArray']['compatibility'][index] = $(item).text()
-                        })
-                        data['propertyArray']['type'] = $(this).parent().parent().find('.type a').html()
-                        data['propertyArray']['hardOrSoft'] = $.trim($(this).parent().parent().find('.hardOrSoft').text())
-                        data['propertyArray']['features'] = $.trim($(this).parent().parent().find('.features').text())
-                        data['propertyArray']['pattern'] = $.trim($(this).parent().parent().find('.pattern').text())
-                        data['propertyArray']['color'] = $.trim($(this).parent().parent().find('.color').text())
-                        data['propertyArray']['material'] = $.trim($(this).parent().parent().find('.material').text())
-                        data['propertyArray']['dimensions'] = $.trim($(this).parent().parent().find('.dimensions').text())
-                        data['propertyArray']['netWeight'] = $.trim($(this).parent().parent().find('.netWeight').text())
-                        data['propertyArray']['customization'] = $.trim($(this).parent().parent().find('.customization').text())
-                        console.log(data)
-//                        $.ajax({
-//                            url: '/',
-//                            type: 'POST',
-//                            data: data,
-//                            cache: false,
-//                            contentType: false,
-//                            processData: false,
-//                            success: function (res) {
-//                                console.log(res)
-//                            },
-//                            error: function () {
-//                                layer.msg('内部服务器错误');
-//                            }
-//                        });
+                    $('.' + uploadClass).click(function () {
+                        let payload = {}
+                        let that = $(this).parent().parent()
+                        payload.title = title
+                        payload.img = imgArrayQuery
+                        payload.forSpec = _processOutPut(that.find('.forSpec').text())
+                        payload.compatibility = _processOutPut(that.find('.compatibility').text())
+                        payload.type = _processOutPut(that.find('.type').text())
+                        payload.hardOrSoft = _processOutPut(that.find('.hardOrSoft').text())
+                        payload.pattern = _processOutPut(that.find('.pattern').text())
+                        payload.features = _processOutPut(that.find('.features').text())
+                        payload.color = _processOutPut(that.find('.color').text())
+                        payload.material = _processOutPut(that.find('.material').text())
+                        payload.dimensions = _processOutPut(that.find('.dimensions').text())
+                        payload.netWeight = _processOutPut(that.find('.netWeight').text())
+                        payload.customization = _processOutPut(that.find('.customization').text())
+                        payload.additionalMaterial = _processOutPut(that.find('.additionalMaterial').text())
 
+                        $.ajax({
+                            url: '/admin/crawler_manage',
+                            type: 'POST',
+                            data: payload,
+                            cache: false,
+                            dataType: 'json',
+                            success: function (res) {
+                                $('.' + uploadClass).text('已上传')
+                                $('.' + uploadClass).attr('disabled',"true")
+                                window.open(res.page)
+                            },
+                            error: function (err) {
+                                layer.msg('网络错误')
+                            }
+                        })
                     })
 
                     $('.property-detail').click(function () {
@@ -310,6 +322,12 @@
         payload.addEventListener("click", function () {
             uploadFile()
         }, false)
+    }
+
+    function _formatArr(array) {
+        return array.filter((arr, index) => {
+            array[index] = array[index].replace(/(^\s*)|(\s*$)|(\t*$)|(\n*$)/g, "")
+        })
     }
 
     window.onload = function () {

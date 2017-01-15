@@ -1,10 +1,5 @@
-/**
- * Created by sunNode on 16/10/12.
- */
-var mongoose = require('mongoose');
-var db = mongoose.connect('mongodb://127.0.0.1:27017/livetest', function (err) {
-    console.log(err)
-})
+let mongoose = require('mongoose');
+let db = mongoose.connect('mongodb://139.224.30.16:27017/livetest', err => {console.log(err)})
 
 exports.users = mongoose.model('users', require('./user'))
 exports.banners = mongoose.model('banners', require('./banner'))
@@ -21,4 +16,6 @@ exports.suppliers = mongoose.model('suppliers', require('./suppliers'))
 exports.SEOS = mongoose.model('seos', require('./seo'))
 exports.fee = mongoose.model('fees', require('./fee'))
 exports.feeCountrys = mongoose.model('fee_cns', require('./feeCountrys'))
+exports.feeExpress = mongoose.model('feeExpresses', require('./feeExpress'))
+exports.countryFlags = mongoose.model('country_flags', require('./country_flags'))
 exports.deltaPrice = mongoose.model('deltaPrices', require('./deltaPrice'))

@@ -2358,6 +2358,41 @@ router.get('/crawler', (req, res, next) => {
 router.get('/crawler_manage', (req, res) => {
     res.render('admin/crawler/crawler', {username: u.nick_name})
 })
+
+router.post('/crawler_manage', (req, res) => {
+    console.log(req.body)
+    let payload = {
+        username: u.nick_name,
+        title: req.body.title,
+        upload: [],
+        images: req.body["img[]"],
+        category: req.session.category,
+        product_specification: {
+            compatibility: req.body["compatibility[]"],
+            type: req.body["type[]"],
+            hardOrSoft: req.body["hardOrSoft[]"],
+            features: req.body["features[]"] || [],
+            pattern: req.body["pattern[]"],
+            Color: req.body["color[]"],
+            material: req.body["material[]"]
+        }
+    }
+
+    req.session.payload = payload
+    res.send(200, {succeed: true, page: '/admin/crawler-products-detail'})
+})
+
+router.get('/crawler-products-detail', (req, res) => {
+    let payload = req.session.payload
+    db.suppliers.find({}, (err, data) => {
+        payload.suppliers = data
+        console.log(payload)
+        res.render('admin/crawler/crawler-products-detail', payload)
+    })
+
+})
+
+
 /*-------------------------------------------------------------------------*/
 
 /*---------------------------------运费模板管理------------------------------*/
@@ -2369,15 +2404,27 @@ router.get('/express_fee_template', (req, res) => {
     res.render('admin/templates/express-fee-templates', {username: u.nick_name})
 })
 
-router.post('fee-template', (req, res) => {
-    res.send(200, {succeed: true, msg: 'add success'})
+router.get('/fee-template', (req, res) => {
+    db.feeExpress.find({}, (err, data) => {
+        if (err) return res.send(500, {succeed: false, msg: "internal error"})
+        res.send(200, {succeed: true, msg: {templates: data}})
+    })
 })
 
-router.put('fee-template', (req, res) => {
+router.post('/fee-template', (req, res) => {
+    let payload = req.body
+    let fee = new db.feeExpress(payload)
+    fee.save((err) => {
+        if (err) return res.send(500, {succeed: false, msg: "internal error"})
+        res.send(200, {succeed: true, msg: 'add success'})
+    })
+})
+
+router.put('/fee-template', (req, res) => {
     res.send(200, {succeed: true, msg: 'put success'})
 })
 
-router.delete('fee-template', (req, res) => {
+router.delete('/fee-template', (req, res) => {
     res.send(200, {succeed: true, msg: 'delete success'})
 })
 
@@ -2759,6 +2806,45 @@ function getLittleTransportPrice(type, weight) {
             return item['kg'].indexOf(weight.toString()) > -1
         })[0]['fee']) * weight
 }
+
+router.get('/country', (req, res) => {
+    if (!req.query.type) return res.send(401, {succeed: false, msg: 'invalid params'})
+    let status = req.query.status === 'true'
+    db.countryFlags.find({type: req.query.type}, (err, data) => {
+        if (err) return res.send(500, {succeed: true, msg: 'internal error'})
+        if (data.length == 0) return res.send(404, {succeed: false, msg: 'NOT EXIST'})
+        let payload = data[0].countryLists.filter((i) => {
+            return i.country_status == status || false
+        })
+        res.send(200, {succeed: true, msg: payload})
+    })
+})
+
+router.put('/country', (req, res) => {
+    db.countryFlags.find({
+        type: req.body.type
+    }, (err, data) => {
+        data[0].countryLists.forEach((e) => {
+            req.body.code.forEach((c) => {
+                if (e.country_code == c) {
+                    e.country_status = true
+                }
+            })
+        })
+        db.countryFlags.update({type: req.body.type}, {
+            $set: {
+                countryLists: data[0].countryLists
+            }
+        }, (err, data) => {
+            if (err) return res.send(500, {succeed: true, msg: 'internal error'})
+            res.send(200, {succeed: true, msg: 'ok'})
+        })
+    })
+})
+
+router.get('/demo', (req, res) => {
+    res.render('admin/product/product-national-flags-demo', {username: u.nick_name})
+})
 
 
 /*------------------------------------------------------------------------*/

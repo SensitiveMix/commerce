@@ -1,0 +1,36 @@
+<% layout('../backend-master.ejs') %>
+<link rel="stylesheet" href="/stylesheets/country.css">
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">国旗模板</h3>
+    </div>
+
+</div>
+
+<div id="country_container"></div>
+<script>
+    $.ajax({
+        type: 'GET',
+        url: '/admin/country',
+        data:{
+            type:"express"
+        },
+        dataType: 'json',
+        success: function (data) {
+            console.log(data)
+            data.msg.forEach((d) => {
+                inputCountry(d)
+            })
+        }
+    })
+
+    function inputCountry(d) {
+        let icon = document.createElement('a')
+
+        //设置class,title
+        icon.className = 'country-icon country-' + d.country_code
+        icon.setAttribute('title', d.country_code)
+
+        document.getElementById('country_container').appendChild(icon)
+    }
+</script>
