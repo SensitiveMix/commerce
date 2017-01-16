@@ -7,7 +7,7 @@
                                                                   /_/
 ```
 
-![Build Status](https://travis-ci.org/sunNode/commerce.svg?branch=master)
+[![Build Status](https://travis-ci.org/SensitiveMix/commerce.svg?branch=master)](https://travis-ci.org/SensitiveMix/commerce)
 [![codecov](https://codecov.io/gh/sunNode/node-cluster-email/branch/master/graph/badge.svg)](https://codecov.io/gh/sunNode/node-cluster-email)
  [![Progress](http://progressed.io/bar/70?title=%E8%BF%9B%E5%BA%A6)](http://progressed.io)
 
