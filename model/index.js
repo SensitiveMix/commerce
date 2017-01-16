@@ -1,5 +1,5 @@
 let mongoose = require('mongoose');
-let db = mongoose.connect('mongodb://127.0.0.1:27017/livetest', err => {console.log(err)})
+let db = mongoose.connect('mongodb://139.224.30.16:27017/livetest', err => {console.log(err)})
 
 exports.users = mongoose.model('users', require('./user'))
 exports.banners = mongoose.model('banners', require('./banner'))
