@@ -3,20 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>电商网站后台</title>
+    <title>ECSELL管理后台</title>
     <link href="/stylesheets/index-1.css" rel="stylesheet" type="text/css"/>
-    <!--<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>-->
     <script type="text/javascript" src="/ueditor/third-party/jquery.min.js"></script>
     <script src="../layer-v2.2/layer/layer.js"></script>
     <script src="/js/teacher.js"></script>
 </head>
 <body>
-<!--header star-->
-
-<!--header end-->
-<!--main-register star-->
 <div class="main-register">
-    <!--form star-->
     <form id="login_frm" method="post" action="doadminlogin">
         <div class="form">
             <div class="form-ctn">
@@ -40,7 +34,6 @@
         layer.tips('密码错误！', $("#Moblie1"))
     }
 
-
     function checkForm() {
         if ($("#Name1").val() == "" || $("#Name1").val() == "如name@example.com") {
             layer.tips('账户不能为空！', $("#Name1"))
@@ -57,6 +50,5 @@
         document.getElementById('login_frm').submit()
     }
 </script>
-<!--main-register end-->
 </body>
 </html>

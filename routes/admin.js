@@ -55,12 +55,12 @@ var checkLogin = function (req, res, next) {
 /* -----------------------管理员登录 ---------------------------------*/
 //后台登录界面
 router.get('/', function (req, res) {
-    res.render('admin/backend-login', {title: '电商网站后台', login_status: 'false'});
+    res.render('admin/backend-login', {title: '电商网站后台', login_status: true})
 });
 
 //默认路径
 router.get('', function (req, res) {
-    res.render('admin/backend-login', {title: '电商网站后台', login_status: 'false'});
+    res.render('admin/backend-login', {title: '电商网站后台', login_status: true})
 });
 
 //进入主页
