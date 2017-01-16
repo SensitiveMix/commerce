@@ -1,78 +1,75 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var http = require('http').Server(express);
-var partials = require('express-partials');
-var engine = require('ejs-locals');
-var https = require('http');
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var admins = require('./routes/admin');
-var services = require('./routes/services');
-var cheerio = require('cheerio');
-var superagent = require('superagent');
-var ppconfig = require('./payment/ppconfig/sandbox');
-var paypal = require('paypal-rest-sdk');
-var async = require('async');
-var consolidate = require('consolidate');
-var cors = require('cors');
-var isDev = process.env.NODE_ENV !== 'production';
-var morgan = require('morgan');
-var fs = require('fs')
-var app = express();
-var port = 3000;
-var session =   require('express-session')
+const express = require('express')
+const path = require('path')
+const favicon = require('serve-favicon')
+const logger = require('morgan')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const http = require('http').Server(express)
+const partials = require('express-partials')
+const engine = require('ejs-locals')
+const https = require('http')
+const routes = require('./routes/index')
+const users = require('./routes/users')
+const admins = require('./routes/admin')
+const services = require('./routes/services')
+const async = require('async')
+const app = express()
+const fs = require('fs')
+const morgan = require('morgan')
+const session = require('express-session')
+const cors = require('cors')
+
+var ppconfig = require('./payment/ppconfig/sandbox')
+var paypal = require('paypal-rest-sdk')
+var consolidate = require('consolidate')
+var isDev = process.env.NODE_ENV !== 'production'
+var port = 3000
 
 
-var allowCrossDomain = function (req, res, next) {
+
+let allowCrossDomain = function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    next();
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    next()
 }
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.engine('ejs', engine);
-app.set('view engine', 'ejs');
-
-app.use(allowCrossDomain);
-app.use(logger('dev'));
-app.use(bodyParser.json());
+app.set('views', path.join(__dirname, 'views'))
+app.engine('ejs', engine)
+app.set('view engine', 'ejs')
+app.use(allowCrossDomain)
+app.use(logger('dev'))
+app.use(bodyParser.json())
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true
 }))
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(cookieParser())
+app.use(express.static(path.join(__dirname, 'public')))
 if (process.env.NODE_ENV == 'production') {
     // create a write stream (in append mode)
     var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
     // setup the logger
     app.use(morgan('combined', {stream: accessLogStream}))
 }
-app.use(cors());
-
+app.use(cors())
 //记录路由响应时间
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     // 记录start time:
-    var exec_start_at = Date.now();
+    let exec_start_at = Date.now()
     // 保存原始处理函数:
-    var _send = res.send;
+    let _send = res.send
     // 绑定我们自己的处理函数:
     res.send = function () {
         // 发送Header:
-        res.set('X-Execution-Time', String(Date.now() - exec_start_at));
+        res.set('X-Execution-Time', String(Date.now() - exec_start_at))
         // 调用原始处理函数:
-        return _send.apply(res, arguments);
-    };
-    next();
-});
-
+        return _send.apply(res, arguments)
+    }
+    next()
+})
 // 自定义异常
 global.customError = (status, msg) => {
     if (typeof status == 'string') {
@@ -85,8 +82,8 @@ global.customError = (status, msg) => {
 }
 
 
-app.locals.env = process.env.NODE_ENV || 'dev';
-app.locals.reload = false;
+app.locals.env = process.env.NODE_ENV || 'dev'
+app.locals.reload = false
 
 
 if (isDev) {
@@ -106,10 +103,10 @@ if (isDev) {
     }));
     app.use(webpackHotMiddleware(compiler));
 
-    app.use('/', routes);
-    app.use('/users', users);
-    app.use('/admin', admins);
-    app.use('/service', services);
+    app.use('/', routes)
+    app.use('/users', users)
+    app.use('/admin', admins)
+    app.use('/service', services)
     // production error handler
 
     paypal.configure({
@@ -118,8 +115,7 @@ if (isDev) {
         'client_secret': ppconfig.client_secret,
         'grant_type': 'client_credentials',
         'content_type': 'application/x-www-form-urlencoded'
-    });
-
+    })
     //payment
     app.get('/checkout', function (req, res) {
         console.log('-------------------------')
@@ -199,8 +195,7 @@ if (isDev) {
                 res.redirect(result.redirectUrl);
             }
         });
-    });
-
+    })
     app.get('/return', function (req, res) {
         console.log('----------------------------------------------------------');
         console.log('----------       RETURN WITH QUERY PARAMS       ----------');
@@ -234,15 +229,15 @@ if (isDev) {
                 })
             }
         })
-    });
+    })
 
     app.get('/cancel', function (req, res) {
         console.log(req.query)
-        res.redirect('/');
-    });
+        res.redirect('/')
+    })
 
     // browsersync is a nice choice when modifying only views (with their css & js)
-    var bs = require('browser-sync').create();
+    let bs = require('browser-sync').create()
     app.listen(port, function () {
         bs.init({
             open: true,
@@ -251,9 +246,9 @@ if (isDev) {
             proxy: 'localhost:3000',
             files: ['./views/**'],
             port: 8080
-        });
+        })
         console.log('App (dev) is going to be running on port 8080 (by browsersync).');
-    });
+    })
 
 } else {
     app.use(express.static(path.join(__dirname, 'public')));
@@ -261,7 +256,7 @@ if (isDev) {
     app.use('/users', users);
     app.use('/admin', admins);
     app.use('/service', services);
-    app.listen(port, function () {
-        console.log('App (production) is now running on port 3000!');
-    });
+    app.listen(port, () => {
+        console.log('App (production) is now running on port 3000!')
+    })
 }

@@ -29,7 +29,7 @@ A Commerce website for taking advantage of the built-in commerce platform in nod
 
 ## Installation
 ```bash
-git clone https://bitbucket.org/wechatpla/master.git
+git clone https://github.com/SensitiveMix/commerce
 ```
 
 

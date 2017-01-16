@@ -1,4 +1,12 @@
 <% layout('backend-master.ejs') %>
+<script type="text/javascript">
+    layer.load()
+
+    window.onload = function(){
+        layer.closeAll('loading')
+    }
+
+</script>
 <link href="/ueditor/themes/default/_css/umeditor.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="/ueditor/third-party/jquery.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="/ueditor/umeditor.config.js"></script>
@@ -100,7 +108,3 @@
         </section>
     </div>
 </div>
-<script type="text/javascript">
-
-
-</script>
