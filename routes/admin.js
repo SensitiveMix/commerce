@@ -2416,19 +2416,72 @@ router.get('/express_fee_template', (req, res) => {
     res.render('admin/templates/express-fee-templates', {username: u.nick_name})
 })
 
-router.get('/fee-template', (req, res) => {
-    db.feeExpress.find({}, (err, data) => {
-        if (err) return res.send(500, {succeed: false, msg: "internal error"})
-        res.send(200, {succeed: true, msg: {templates: data}})
+router.get('/fee-express', (req, res) => {
+    let country = []
+    let payload = {}
+    if (req.query.type) {
+        payload.type = req.query.type
+    }
+    db.feeExpress.find(payload, (err, data) => {
+        async.forEach(data, (d, cb) => {
+            async.forEach(d.country, (e, callback) => {
+                db.feeExpressCountry.find({_id: e}, (err, result) => {
+                    if (result) {
+                        country.push(result[0])
+                    }
+                    callback()
+                })
+            }, (err) => {
+                d.country = country
+                cb()
+            })
+        }, (err) => {
+            if (err) return res.send(500, {succeed: false, msg: "internal error"})
+            res.send(200, {succeed: true, msg: data})
+        })
     })
 })
 
-router.post('/fee-template', (req, res) => {
+router.post('/fee-express', (req, res) => {
     let payload = req.body
-    let fee = new db.feeExpress(payload)
-    fee.save((err) => {
+    let opts = new Promise((resolve, reject) => {
+        db.feeExpress.find({type: payload.type}, (err, data) => {
+            if (err) return res.send(500, {succeed: false, msg: "internal error"})
+            resolve(data)
+        })
+    })
+    opts
+        .then((d) => {
+            if (d.length == 0) {
+                let fee = new db.feeExpress(payload)
+                fee.save((err) => {
+                    if (err) return res.send(500, {succeed: false, msg: "internal error"})
+                    res.send(200, {succeed: true, msg: 'add success'})
+                })
+            } else {
+                async.forEach(req.body.country, (item, callback) => {
+                    db.feeExpress.update({type: payload.type}, {
+                        $push: {
+                            country: item
+                        }
+                    }, (err, d) => {
+                        callback()
+                    })
+                }, (err) => {
+                    if (err) return res.send(500, {succeed: false, msg: "internal error"})
+                    res.send(200, {succeed: true, msg: 'add success'})
+                })
+
+            }
+        })
+})
+
+router.post('/fee-express-country', (req, res) => {
+    let payload = req.body
+    let fee = new db.feeExpressCountry(payload)
+    fee.save((err, docsInserted) => {
         if (err) return res.send(500, {succeed: false, msg: "internal error"})
-        res.send(200, {succeed: true, msg: 'add success'})
+        res.send(200, {succeed: true, msg: {countryId: docsInserted._id}})
     })
 })
 
