@@ -43,6 +43,26 @@ $(function(){
         max-width: 84%;
         margin: 0 auto;
     }
+    .yunfei-form-group{
+        margin-bottom: 5px!important;
+    }
+    .standard-select-country {
+            height: 200px;
+            overflow: scroll;
+            margin-bottom: 30px;
+    }
+    .standard-select-country label{
+            margin-left: 0!important;
+            width: 50%;
+    }
+    .modal-body {
+        padding-top: 10px;
+    }
+    .modal-body .control-label {
+        background: #ddd;
+        padding: 5px; 
+        width: 100%  
+    }
 </style>
 
 <div class="box box-info">
@@ -170,7 +190,7 @@ $(function(){
                                             <p>
                                             <div class="form-group">
                                                 <label  class="col-sm-3 control-label"> 选择国家：<button class="btn btn-warning btn-xs add-create-seleted">添加国家</button></label>
-                                                <div class="form-group">
+                                                <div class="col-sm-9 form-group" style="padding: 0">
                                                     <select style="width: 15%;display: inline-block;" id="country-select" name="country" class="form-control">
                                                     </select>
                                                 </div>
@@ -375,53 +395,31 @@ $(function(){
                                                         <h4 class="modal-title" id="myModalLabel">设置国家运费规则</h4>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <div class="deitbox">
-                                                            <div class="ccl-title">
-                                                                <p>
                                                                 <div class="form-group">
-                                                                    <label  class="col-sm-3 control-label"> 选择国家：
-                                                                        <button class="btn btn-warning btn-xs add-create-seleted">添加国家</button>
+                                                                    <label  class="control-label"> 选择国家：
                                                                     </label>
-                                                                    <div class="form-group" id="standard-select-country">
-                                                                        <select style="width: 15%;display: inline-block;" name="country" class="form-control country-select-standard">
-                                                                        </select>
+                                                                    <div class="form-group standard-select-country" style="padding: 0" id="standard-select-country">
                                                                     </div>
                                                                 </div>
                                                                 <script type="text/javascript">
                                                                     $(function () {
+                                                                        //继续添加
                                                                         $('.add-create-seleted').on('click',function(){
                                                                             var div = $(this).parent().parent().find('div');
-                                                                            div.append('<select style="width: 15%;display: inline-block;" name="country" class="form-control country-select-standard">'
-                                                                                +'</select>');
-                                                                            var express = expresses;
-                                                                            var ordinary = ordinaries;
-                                                                            express.data.forEach(function (item) {
-                                                                                $('.country-select-standard').append('<option>' + item.zh + '</option>')
-                                                                            })
+                                                                            div.append('<div class="form-group">'
+                                                                            +'<div class="form-group yunfei-form-group">'
+                                                                                +'<input style="width: 13%;" type="text" name="create-country-express-fee-range">KG以内,'
+                                                                                +'<input style="width: 13%;" type="text" name="create-country-express-fee">RMB,'
+                                                                                +'每增加<input style="width: 13%;" type="text" name="create-country-express-fee-range">KG,增加运费'
+                                                                                +'<input style="width: 13%;" type="text" name="create-country-express-fee">RMB'
+                                                                            +'</div>'
+                                                                        +'</div>');
                                                                         })
+                                                                        //国家
                                                                             var express = expresses;
                                                                             var ordinary = ordinaries;
                                                                             express.data.forEach(function (item) {
-                                                                                $('.country-select-standard').append('<option>' + item.zh + '</option>')
-                                                                            })
-                                                                            $('#grossWeight').change(function () {
-                                                                                var grossWeight = $('#grossWeight').val();
-                                                                                if (grossWeight < 2) {
-                                                                                    $('.country-select-standard').html('');
-                                                                                    express.data.forEach(function (item) {
-                                                                                        $('.country-select-standard').append('<option>' + item.zh + '</option>')
-                                                                                    })
-                                                                                } else if (grossWeight < 21) {
-                                                                                    $('.country-select-standard').html('');
-                                                                                    ordinary.data.forEach(function (item) {
-                                                                                        $('.country-select-standard').append('<option>' + item.zh + '</option>')
-                                                                                    })
-                                                                                } else {
-                                                                                    $('.country-select-standard').html('');
-                                                                                    ordinary.data.forEach(function (item) {
-                                                                                        $('.country-select-standard').append('<option>' + item.zh + '</option>')
-                                                                                    })
-                                                                                }
+                                                                                $('.standard-select-country').append('<label class="checkbox-inline"><input type="checkbox" name="country" class="country-select-standard">'+ item.zh+'</label>');
                                                                             })
                                                                             //新增国家提交
                                                                             $('#country-select-standard').click(function(){
@@ -460,38 +458,30 @@ $(function(){
                                                                         })
                                                                 </script>
                                                                 <div class="form-group">
-                                                                    <div class="form-inline">
-                                                                        <label class="col-sm-3 control-label"> 运费：</label>
-                                                                        <div class="input-group col-sm-9">
-                                                                            <input class="form-control" type="text" name="create-country-express-fee">
-                                                                            <div class="input-group-addon">RMB/KG</div>
+                                                                        <label class="control-label"> 运费设置：
+                                                                        <button type="button" class="btn btn-default btn-xs add-create-seleted">
+                                                                          <span class="glyphicon glyphicon-plus"></span>
+                                                                        </button></label>
+                                                                        <div class="form-group">
+                                                                            <div class="form-group yunfei-form-group">
+                                                                                <input style="width: 13%;" type="text" name="create-country-express-fee-range">KG以内,
+                                                                                <input style="width: 13%;" type="text" name="create-country-express-fee">RMB,
+                                                                                每增加<input style="width: 13%;" type="text" name="create-country-express-fee-range">KG,增加运费
+                                                                                <input style="width: 13%;" type="text" name="create-country-express-fee">RMB
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
                                                                 </div>
+                                                                
                                                                 <div class="form-group">
-                                                                    <div class="form-inline">
-                                                                        <label class="col-sm-3 control-label"> 挂号费：</label>
-                                                                        <div class="input-group col-sm-9">
-                                                                            <input class="form-control" type="text" name="create-country-express-guahao-fee">
-                                                                            <div class="input-group-addon">RMB</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <div class="form-inline">
-                                                                        <label class="col-sm-3 control-label"> 预计运达时间</label>
-                                                                        <div class="input-group col-sm-9">
+                                                                        <label class="control-label"> 预计运达时间</label>
+                                                                        <div class="input-group">
                                                                             <input class="form-control" type="text" name="create-country-express-day-between">
                                                                             <div class="input-group-addon" style="border-radius: 0px!important;border-right: 0;border-left: 0;">到</div>
                                                                             <input class="form-control" type="text" name="create-country-express-day-to">
                                                                             <div class="input-group-addon">工作日</div>
                                                                         </div>
-                                                                    </div>
                                                                 </div>
                                                                 <div class="alert alert-danger" role="alert">小包运输, 最高运输为2.00KG</div>
-                                                                </p>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
