@@ -55,12 +55,12 @@ var checkLogin = function (req, res, next) {
 /* -----------------------管理员登录 ---------------------------------*/
 //后台登录界面
 router.get('/', function (req, res) {
-    res.render('admin/backend-login', {title: '电商网站后台'});
+    res.render('admin/backend-login', {title: '电商网站后台', login_status: 'false'});
 });
 
 //默认路径
 router.get('', function (req, res) {
-    res.render('admin/backend-login', {title: '电商网站后台'});
+    res.render('admin/backend-login', {title: '电商网站后台', login_status: 'false'});
 });
 
 //进入主页
@@ -76,7 +76,7 @@ router.get('/adminlogin', function (req, res) {
 
 //后台登陆处理
 router.post('/doadminlogin', function (req, res) {
-    var query = {name: req.body.name, password: req.body.password, level: '66'};
+    let query = {name: req.body.name, password: req.body.password, level: '66'}
     async.parallel([
             function (done) {
                 db.users.find(query, function (err, users) {
@@ -85,7 +85,7 @@ router.post('/doadminlogin', function (req, res) {
 
                     }
                     done(err, users)
-                });
+                })
             },
             function (done) {
                 db.systems.findOne({}, null, {
@@ -95,28 +95,40 @@ router.post('/doadminlogin', function (req, res) {
                 }, function (err, system_info) {
                     done(err, system_info)
                 })
+            },
+            function (done) {
+                db.users.find({name: req.body.name}, function (err, users) {
+                    if (err) {
+                        console.log(err)
+                    }
+                    done(err, users)
+                })
             }
         ],
         function (err, results) {
             if (err) {
                 done(err)
             } else {
-                var user = results[0];
-                var system = results[1];
-                console.log(user);
-                console.log(system);
-                systems = system;
+                let user = results[0]
+                let system = results[1]
+                let user_name = results[2]
+                console.log(user_name)
+                console.log(user)
+                systems = system
                 if (user.length == 1) {
-                    console.log(user.nick_name + ":登录成功" + new Date());
-                    u = user[0];
-                    res.render('admin/backend-homepage', {username: u.nick_name, system: system});
+                    console.log(user.nick_name + ":登录成功" + new Date())
+                    u = user[0]
+                    res.render('admin/backend-homepage', {username: u.nick_name, system: system})
                 } else {
-                    console.log(query.name + ":登录失败" + new Date());
-                    res.render('admin/backend-homepage', {
-                        mes_info: 'login failed',
-                        mes: '账号密码错误'
-                    });
-                    // res.send('login failed');
+                    console.log(query.name + ":登录失败" + new Date())
+                    let payload = {}
+                    if (user_name.length == 0) {
+                        payload.mes_info = '用户名错误'
+                    } else {
+                        payload.mes_info = '密码错误'
+                    }
+                    payload.login_status = false
+                    res.render('admin/backend-login', payload)
                 }
             }
         });

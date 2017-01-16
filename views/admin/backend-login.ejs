@@ -32,23 +32,29 @@
         </div>
     </form>
     <!--form end-->
-    <p>@2016&nbsp;&nbsp;&nbsp;&nbsp;电商网站平台 --- 一个专业做电商的可靠平台 </p>
+    <p>@2017&nbsp;&nbsp;&nbsp;&nbsp;ECSELL电商网站平台 --- 一个专业做电商的平台 </p>
 </div>
 <script>
+
+    if ('<%= login_status %>' == 'false') {
+        layer.tips('密码错误！', $("#Moblie1"))
+    }
+
+
     function checkForm() {
         if ($("#Name1").val() == "" || $("#Name1").val() == "如name@example.com") {
-            layer.tips('账户不能为空！', $("#Name1"));
+            layer.tips('账户不能为空！', $("#Name1"))
             return false;
         }
         else if ($("#Moblie1").val() == "") {
-            layer.tips('密码不能为空！', $("#Moblie1"));
-            return false;
+            layer.tips('密码不能为空！', $("#Moblie1"))
+            return false
         }
         else if ($("#Moblie1").val() == "") {
-            layer.tips('密码不能为空！', $("#Moblie1"));
-            return false;
+            layer.tips('密码不能为空！', $("#Moblie1"))
+            return false
         }
-        document.getElementById('login_frm').submit();
+        document.getElementById('login_frm').submit()
     }
 </script>
 <!--main-register end-->
