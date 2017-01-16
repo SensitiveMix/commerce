@@ -13,10 +13,34 @@
 <script type="text/javascript" src="/js/product-detail.js"></script>
 <script src="../plugins/pick-color/js/tinycolor-0.9.15.min.js"></script>
 <script src="../plugins/pick-color/js/pick-a-color-1.2.3.min.js"></script>
+<script type="text/javascript">
+    layer.load()
 
+    window.onload = function(){
+        layer.closeAll('loading')
+    }
+
+</script>
+<style>
+    .brick.small {
+        width: 55px;
+        height: 55px;
+    }
+
+    .brick.large {
+        width: 100px;
+        height: 100px;
+    }
+</style>
 <script>
     $(function () {
         $('#productname').val('<%= title %>')
+        let productNameLength = $('#productname').val().length
+        let payload_len = 140 - productNameLength
+        if (payload_len < 0) {
+            payload_len = 0
+        }
+        $('#productNameLengthSpan').text(payload_len)
 
         let formData = []
         formData['product'] = []
@@ -245,7 +269,10 @@
 
         $('#productname').bind('input propertychange', function () {
             var productNameLength = $('#productname').val().length;
-            $('#productNameLengthSpan').text(140 - productNameLength);
+            $('#productNameLengthSpan').text(140 - productNameLength)
+            if (140 - productNameLength < 0) {
+                layer.tips('标题长度过长', "#productNameLengthSpan")
+            }
         });
         $('#submit-product-attributes').click(function () {
             var product_attributes_type = new Array();
@@ -1170,7 +1197,12 @@
 
     $('.gridly').gridly('draggable', 'on')
     <% images.forEach(function (item, index) { %>
-    $('.gridly').append('<div class="brick small" id="brick_' + <%= index %> +'"><img src="<%= item %>"><span class="delete"></span></div>')
+    if (<%= index %> <
+    8
+    )
+    {
+        $('.gridly').append('<div class="brick small" style="height:58px;width:65px" id="brick_' + <%= index %> +'"><img style="height:50px;width:50px" src="<%= item %>"><span class="delete" style="top:-12px"></span></div>')
+    }
     <% }) %>
 
     var reordering = function ($elements) {

@@ -9,13 +9,16 @@
           method="post">
         <div class="box-body">
             <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label">导入表格:</label>
+                <label for="inputEmail3" class="col-sm-4 control-label">导入爬取表格:</label>
 
                 <div class="col-sm-6">
                     <input type="file" id="file" name="file"/>
                 </div>
-            </div>
+                <div class="col-sm-2">
 
+                    <img src="/images/crawler_prob.svg" alt="表格格式只存在一列，列名为link" title="表格格式只存在一列，列名为link">
+                </div>
+            </div>
         </div>
         <div class="box-footer">
             <input type="button" class="btn btn-info pull-right closeBtn" id="file_sub" value="导入" name="submit">
@@ -25,15 +28,23 @@
     <!-- form start -->
     <div class="box-body">
         <div class="row" style="margin: 15px;">
-            <div class="col-md-8">
-                <input class="form-control" type="text" id="crawler" placeholder="请输入爬取链接">
+            <div class="col-md-12">
+                <div class="col-md-12  input-group">
+                    <input class="form-control" type="text" id="crawler" placeholder="请输入爬取链接">
+                    <span class="input-group-btn">
+                            <button id="start_crawel" type="button" class="btn btn-warning btn-flat"
+                                    onclick="start_crawler(this.id)">爬取</button>
+                          </span>
+                </div>
             </div>
-            <div class="col-md-1">
-                <button id="start_crawel" class="btn btn-info" onclick="start_crawler(this.id)">单条爬取</button>
+            <div class="col-md-12  input-group">
+                <button id="start_batch_crawler" style="margin: 10px 14px 0 0;" class="btn btn-info pull-right"
+                        onclick="start_batch_crawler()">批量爬取
+                </button>
             </div>
-            <div class="col-md-3">
-                <button id="start_batch_crawler" class="btn btn-info" onclick="start_batch_crawler()">批量爬取</button>
-            </div>
+            <!--<div class="col-md-3">-->
+            <!---->
+            <!--</div>-->
         </div>
         <table id="robotetable" class="table table-bordered " aria-describedby="example2_info">
             <thead>
@@ -73,7 +84,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                                     class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">图片详情</h4>
+                        <h4 class="modal-title" id="myModalLabel">产品属性详情</h4>
                     </div>
                     <div class="modal-body">
                         <table class="table table-bordered " aria-describedby="example2_info">
@@ -122,6 +133,10 @@
         if (link == '') {
             layer.tips('请输入爬取链接', '#crawler')
         } else {
+            layer.msg('抓取中', {
+                icon: 16
+                , shade: 0.01
+            })
             $.ajax({
                 url: 'crawler',
                 type: 'GET',
@@ -131,6 +146,11 @@
                 dataType: 'json',
                 success: function (res) {
                     console.log(res)
+
+                    setTimeout(function () {
+                        layer.closeAll('loading')
+                        layer.msg('抓取成功')
+                    }, 700)
                     let title = res.title
                     let img = res.img
                     let imgArray = []
@@ -186,7 +206,9 @@
                         let arr = []
                         if (arg.indexOf(',') > 0) {
                             arr = arg.split(",")
+                            arr.pop()
                         }
+                        console.log(arr)
                         return arr
                     }
 
@@ -211,7 +233,6 @@
                         payload.netWeight = _processOutPut(that.find('.netWeight').text())
                         payload.customization = _processOutPut(that.find('.customization').text())
                         payload.additionalMaterial = _processOutPut(that.find('.additionalMaterial').text())
-
                         $.ajax({
                             url: '/admin/crawler_manage',
                             type: 'POST',
@@ -220,7 +241,7 @@
                             dataType: 'json',
                             success: function (res) {
                                 $('.' + uploadClass).text('已上传')
-                                $('.' + uploadClass).attr('disabled',"true")
+                                $('.' + uploadClass).attr('disabled', "true")
                                 window.open(res.page)
                             },
                             error: function (err) {
@@ -306,6 +327,10 @@
                     layer.msg('请选取表格')
                 } else {
                     layer.msg('上传成功')
+                    setTimeout(() => {
+                        layer.closeAll()
+                    }, 1000)
+
                     res.data.forEach(function (item) {
                         start_crawler(item.link)
                     })
@@ -318,7 +343,7 @@
     }
 
     function postPage() {
-        let payload = document.getElementById('file_sub');
+        let payload = document.getElementById('file_sub')
         payload.addEventListener("click", function () {
             uploadFile()
         }, false)

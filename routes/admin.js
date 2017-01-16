@@ -9,7 +9,7 @@ const async = require('async')
 const multer = require('multer')
 const xlstojson = require("xls-to-json-lc")
 const xlsxtojson = require("xlsx-to-json-lc")
-// var upload = multer({dest: './tmp'});
+var upload = multer({dest: './tmp'});
 var upload = multer()
 const superagent = require('superagent')
 const cheerio = require('cheerio')
@@ -55,12 +55,12 @@ var checkLogin = function (req, res, next) {
 /* -----------------------管理员登录 ---------------------------------*/
 //后台登录界面
 router.get('/', function (req, res) {
-    res.render('admin/backend-login', {title: '电商网站后台'});
+    res.render('admin/backend-login', {title: '电商网站后台', login_status: true})
 });
 
 //默认路径
 router.get('', function (req, res) {
-    res.render('admin/backend-login', {title: '电商网站后台'});
+    res.render('admin/backend-login', {title: '电商网站后台', login_status: true})
 });
 
 //进入主页
@@ -76,7 +76,7 @@ router.get('/adminlogin', function (req, res) {
 
 //后台登陆处理
 router.post('/doadminlogin', function (req, res) {
-    var query = {name: req.body.name, password: req.body.password, level: '66'};
+    let query = {name: req.body.name, password: req.body.password, level: '66'}
     async.parallel([
             function (done) {
                 db.users.find(query, function (err, users) {
@@ -85,7 +85,7 @@ router.post('/doadminlogin', function (req, res) {
 
                     }
                     done(err, users)
-                });
+                })
             },
             function (done) {
                 db.systems.findOne({}, null, {
@@ -95,28 +95,40 @@ router.post('/doadminlogin', function (req, res) {
                 }, function (err, system_info) {
                     done(err, system_info)
                 })
+            },
+            function (done) {
+                db.users.find({name: req.body.name}, function (err, users) {
+                    if (err) {
+                        console.log(err)
+                    }
+                    done(err, users)
+                })
             }
         ],
         function (err, results) {
             if (err) {
                 done(err)
             } else {
-                var user = results[0];
-                var system = results[1];
-                console.log(user);
-                console.log(system);
-                systems = system;
+                let user = results[0]
+                let system = results[1]
+                let user_name = results[2]
+                console.log(user_name)
+                console.log(user)
+                systems = system
                 if (user.length == 1) {
-                    console.log(user.nick_name + ":登录成功" + new Date());
-                    u = user[0];
-                    res.render('admin/backend-homepage', {username: u.nick_name, system: system});
+                    console.log(user.nick_name + ":登录成功" + new Date())
+                    u = user[0]
+                    res.render('admin/backend-homepage', {username: u.nick_name, system: system})
                 } else {
-                    console.log(query.name + ":登录失败" + new Date());
-                    res.render('admin/backend-homepage', {
-                        mes_info: 'login failed',
-                        mes: '账号密码错误'
-                    });
-                    // res.send('login failed');
+                    console.log(query.name + ":登录失败" + new Date())
+                    let payload = {}
+                    if (user_name.length == 0) {
+                        payload.mes_info = '用户名错误'
+                    } else {
+                        payload.mes_info = '密码错误'
+                    }
+                    payload.login_status = false
+                    res.render('admin/backend-login', payload)
                 }
             }
         });
@@ -2247,7 +2259,7 @@ var uploads = multer({ //multer settings
 }).single('file');
 router.post('/uploadFile', function (req, res, next) {
 
-    var exceltojson;
+    let exceltojson
     uploads(req, res, function (err) {
         if (err) {
             res.json({error_code: 1, err_desc: err});
@@ -2262,11 +2274,12 @@ router.post('/uploadFile', function (req, res, next) {
          *  use the appropriate module
          */
         if (req.file.originalname.split('.')[req.file.originalname.split('.').length - 1] === 'xlsx') {
-            exceltojson = xlsxtojson;
+            exceltojson = xlsxtojson
         } else {
-            exceltojson = xlstojson;
+            exceltojson = xlstojson
         }
-        console.log(req.file.path);
+        console.log(exceltojson)
+        console.log(req.file.path)
         try {
             exceltojson({
                 input: req.file.path,
@@ -2274,12 +2287,13 @@ router.post('/uploadFile', function (req, res, next) {
                 lowerCaseHeaders: true
             }, function (err, result) {
                 if (err) {
-                    return res.json({error_code: 1, err_desc: err, data: null});
+                    return res.json({error_code: 1, err_desc: err, data: null})
                 }
-                res.json({error_code: 0, err_desc: null, data: result});
+                console.log(result)
+                res.json({error_code: 0, err_desc: null, data: result})
             });
         } catch (e) {
-            res.json({error_code: 1, err_desc: "Corupted excel file"});
+            res.json({error_code: 1, err_desc: "Corupted excel file"})
         }
     })
 
@@ -2368,13 +2382,13 @@ router.post('/crawler_manage', (req, res) => {
         images: req.body["img[]"],
         category: req.session.category,
         product_specification: {
-            compatibility: req.body["compatibility[]"],
-            type: req.body["type[]"],
-            hardOrSoft: req.body["hardOrSoft[]"],
-            features: req.body["features[]"] || [],
-            pattern: req.body["pattern[]"],
-            Color: req.body["color[]"],
-            material: req.body["material[]"]
+            compatibility: typeof req.body["compatibility[]"] == "string" ? req.body["compatibility[]"].split(',') : req.body["compatibility[]"],
+            type: typeof req.body["type[]"] == "string" ? req.body["type[]"].split(',') : req.body["type[]"],
+            hardOrSoft: typeof req.body["hardOrSoft[]"] == "string" ? req.body["hardOrSoft[]"].split(',') : req.body["hardOrSoft[]"],
+            features: typeof req.body["features[]"] == "string" ? req.body["features[]"].split(',') : req.body["features[]"],
+            pattern: typeof req.body["pattern[]"] == "string" ? req.body["pattern[]"].split(',') : req.body["pattern[]"],
+            Color: typeof req.body["color[]"] == "string" ? req.body["color[]"].split(',') : req.body["color[]"],
+            material: typeof req.body["material[]"] == "string" ? req.body["material[]"].split(',') : req.body["material[]"],
         }
     }
 
@@ -2404,19 +2418,72 @@ router.get('/express_fee_template', (req, res) => {
     res.render('admin/templates/express-fee-templates', {username: u.nick_name})
 })
 
-router.get('/fee-template', (req, res) => {
-    db.feeExpress.find({}, (err, data) => {
-        if (err) return res.send(500, {succeed: false, msg: "internal error"})
-        res.send(200, {succeed: true, msg: {templates: data}})
+router.get('/fee-express', (req, res) => {
+    let country = []
+    let payload = {}
+    if (req.query.type) {
+        payload.type = req.query.type
+    }
+    db.feeExpress.find(payload, (err, data) => {
+        async.forEach(data, (d, cb) => {
+            async.forEach(d.country, (e, callback) => {
+                db.feeExpressCountry.find({_id: e}, (err, result) => {
+                    if (result) {
+                        country.push(result[0])
+                    }
+                    callback()
+                })
+            }, (err) => {
+                d.country = country
+                cb()
+            })
+        }, (err) => {
+            if (err) return res.send(500, {succeed: false, msg: "internal error"})
+            res.send(200, {succeed: true, msg: data})
+        })
     })
 })
 
-router.post('/fee-template', (req, res) => {
+router.post('/fee-express', (req, res) => {
     let payload = req.body
-    let fee = new db.feeExpress(payload)
-    fee.save((err) => {
+    let opts = new Promise((resolve, reject) => {
+        db.feeExpress.find({type: payload.type}, (err, data) => {
+            if (err) return res.send(500, {succeed: false, msg: "internal error"})
+            resolve(data)
+        })
+    })
+    opts
+        .then((d) => {
+            if (d.length == 0) {
+                let fee = new db.feeExpress(payload)
+                fee.save((err) => {
+                    if (err) return res.send(500, {succeed: false, msg: "internal error"})
+                    res.send(200, {succeed: true, msg: 'add success'})
+                })
+            } else {
+                async.forEach(req.body.country, (item, callback) => {
+                    db.feeExpress.update({type: payload.type}, {
+                        $push: {
+                            country: item
+                        }
+                    }, (err, d) => {
+                        callback()
+                    })
+                }, (err) => {
+                    if (err) return res.send(500, {succeed: false, msg: "internal error"})
+                    res.send(200, {succeed: true, msg: 'add success'})
+                })
+
+            }
+        })
+})
+
+router.post('/fee-express-country', (req, res) => {
+    let payload = req.body
+    let fee = new db.feeExpressCountry(payload)
+    fee.save((err, docsInserted) => {
         if (err) return res.send(500, {succeed: false, msg: "internal error"})
-        res.send(200, {succeed: true, msg: 'add success'})
+        res.send(200, {succeed: true, msg: {countryId: docsInserted._id}})
     })
 })
 

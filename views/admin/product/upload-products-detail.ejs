@@ -13,8 +13,13 @@
 <script type="text/javascript" src="/js/product-detail.js"></script>
 <script src="../plugins/pick-color/js/tinycolor-0.9.15.min.js"></script>
 <script src="../plugins/pick-color/js/pick-a-color-1.2.3.min.js"></script>
-
 <script>
+    layer.load()
+
+    window.onload = function () {
+        layer.closeAll('loading')
+    }
+
     $(function () {
         let formData = []
         formData['product'] = []
