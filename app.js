@@ -11,11 +11,12 @@ const https = require('http')
 const morgan = require('morgan')
 const fs = require('fs')
 const cors = require('cors')
-
+const db = require('./model/index')
 const routes = require('./routes/index')
 const users = require('./routes/users')
 const admins = require('./routes/admin')
 const services = require('./routes/services')
+const products = require('./routes/admin/product')
 
 const ppconfig = require('./payment/ppconfig/sandbox')
 const paypal = require('paypal-rest-sdk')
@@ -43,8 +44,12 @@ if (process.env.NODE_ENV == 'production') {
 }
 app.use(cors())
 
+
+global.db = db
+
 //记录路由响应时间
 app.use((req, res, next) => {
+    console.log(req.url)
     // 记录start time:
     let exec_start_at = Date.now()
     // 保存原始处理函数:
@@ -114,10 +119,11 @@ if (isDev) {
     // var reload = require('reload');
 
 
-    app.use('/', routes);
-    app.use('/users', users);
-    app.use('/admin', admins);
-    app.use('/service', services);
+    app.use('/', routes)
+    app.use('/users', users)
+    app.use('/admin', admins)
+    app.use('/service', services)
+    app.use('/api/v1/admin', products)
 
     //catch 404 and forward to error handler
     app.use(function (req, res, next) {
@@ -276,10 +282,11 @@ if (isDev) {
     app.use(express.static(path.join(__dirname, 'public')));
     // add "reload" to express, see: https://www.npmjs.com/package/reload
     // var reload = require('reload');
-    app.use('/', routes);
-    app.use('/users', users);
-    app.use('/admin', admins);
-    app.use('/service', services);
+    app.use('/', routes)
+    app.use('/users', users)
+    app.use('/admin', admins)
+    app.use('/service', services)
+    app.use('/api/v1/admin', products)
 
     //catch 404 and forward to error handler
     app.use(function (req, res, next) {
