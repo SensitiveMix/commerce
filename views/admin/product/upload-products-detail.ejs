@@ -1624,6 +1624,25 @@
         <!--[if IE 6]></div></div><![endif]-->
     </div>
     <!-- footer文件调用结束 -->
+    <!--添加 form start -->
+    <div class="form-horizontal  layer_notice hidden" id="addRoboteForm">
+        <form class="" hidden="hidden" action="addRobote" style="margin-top: 50px" method="post" id="addRote">
+            <div class="box-body">
+                恭喜您，您的产品已经成功提交！
+                <div class="bod-line-btom btom-none">
+                    <p class="color000">现在您可以：</p>
+                    <p><span class="addwid90"><a href="/">添加新产品</a></span>发布一个全新的产品</p>
+                    <p><span class="addwid90"><a href="/upload">添加类似产品</a></span>附带刚提交的产品信息，只需修改差异内容，操作更便捷</p>
+                    <p><span class="addwid90"><a href="http://www.dhgate.com/product/productdisplay.do?from=product_preview&amp;itemcode=395710282" target="_blank">查看发布结果</a></span>查看刚发布的产品购买页面</p>
+                    <p class="padtop10">
+		            <span class="tourBtn">
+			        <input name="name1" type="button" value="返回我的产品列表" onclick="">
+					</span>
+                    </p>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 </div>
 </div>
@@ -1672,7 +1691,13 @@
                     $("#supplier_name").val('')
                     $("#supplier_address").val('')
                     layer.closeAll()
-                    layer.msg('添加成功')
+                    layer.open({
+                        type: 2,
+                        area: ['700px', '530px'],
+                        fixed: false, //不固定
+                        maxmin: true,
+                        content: $('#addRoboteForm')
+                    })
                 }, error: function (returndata) {
                     alert('添加失败，请检查是否有非法词汇！')
                 }
