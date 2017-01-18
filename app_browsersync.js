@@ -15,6 +15,7 @@ const services = require('./routes/services')
 const products = require('./routes/admin/product')
 const async = require('async')
 const app = express()
+const db = require('./model/index')
 const fs = require('fs')
 const morgan = require('morgan')
 const session = require('express-session')
@@ -81,7 +82,7 @@ global.customError = (status, msg) => {
     return error
 }
 
-
+global.db = db
 app.locals.env = process.env.NODE_ENV || 'dev'
 app.locals.reload = false
 
