@@ -4,13 +4,10 @@ const http = require('http').Server(express)
 const formidable = require('formidable')
 const fs = require('fs')
 const crypto = require('crypto')
-const db = require('../model/index')
 const async = require('async')
 const multer = require('multer')
 const xlstojson = require("xls-to-json-lc")
 const xlsxtojson = require("xlsx-to-json-lc")
-var upload = multer({dest: './tmp'});
-var upload = multer()
 const superagent = require('superagent')
 const cheerio = require('cheerio')
 const http_origin = require('http')
@@ -27,8 +24,6 @@ var u = []
 var leverlist = []
 var systems = []
 var tempCategory = []
-var temp_category = []
-var temp_product_specification = {}
 /*-------------------------------------------------------------------*/
 /* -------------------------实用工具 ---------------------------------*/
 //MD5加密
@@ -42,14 +37,14 @@ function getDate() {
     return add_time
 }
 //验证登录
-var checkLogin = function (req, res, next) {
+let checkLogin = (req, res, next) => {
     if (req.body.status != 'test') {
         if (u.length == 0) {
             res.render('admin/mainsets/404', {username: u.nick_name});
         }
     }
-    next();
-};
+    next()
+}
 
 /*-------------------------------------------------------------------*/
 /* -----------------------管理员登录 ---------------------------------*/
@@ -118,6 +113,7 @@ router.post('/doadminlogin', function (req, res) {
                 if (user.length == 1) {
                     console.log(user.nick_name + ":登录成功" + new Date())
                     u = user[0]
+                    global.u = user[0]
                     res.render('admin/backend-homepage', {username: u.nick_name, system: system})
                 } else {
                     console.log(query.name + ":登录失败" + new Date())
@@ -359,13 +355,12 @@ router.put('/language', (req, res) => {
 
 //上传文件接口
 router.post('/doupload', function (req, res) {
-    var form = new formidable.IncomingForm();   //创建上传表单
-    form.encoding = 'utf-8';		//设置编辑
-    form.uploadDir = './public/upload/';	 //设置上传目录
-    form.keepExtensions = true;	 //保留后缀
-    form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
+    let form = new formidable.IncomingForm()   //创建上传表单
+    form.encoding = 'utf-8'		//设置编辑
+    form.uploadDir = './public/upload/'	 //设置上传目录
+    form.keepExtensions = true	 //保留后缀
+    form.maxFieldsSize = 2 * 1024 * 1024   //文件大小
     form.parse(req, function (err, fields, files) {
-
         if (err) {
             res.locals.error = err;
             res.end();
@@ -1831,74 +1826,74 @@ router.post('/saveProductDetail', function (req, res, next) {
         product_danWei: JSON.parse(req.body.product_danWei)[0],
         product_market: JSON.parse(req.body.product_market)[0],
         product_images: JSON.parse(req.body.product_images),
-        product_spec: JSON.parse(req.body.product_spec)
-    };
+        product_spec: JSON.parse(req.body.product_spec),
+        update_time: new Date().getTime(),
+        status: 'pending',
+        operator:'admin'
+    }
 
-    console.log(data)
-
-    let thirdCate = []
-    _.each(data.belong_category, function (item) {
-        thirdCate.push(item.third)
-    })
-
-    async.each(data.belong_category, (item, callback) => {
-        db.categorys.findOne({'secondCategory.thirdTitles.thirdTitle': item.third}, (err, result) => {
-            if (err || !result) return res.send(500)
-            let newArr = _.filter(result.secondCategory, function (secondCategory) {
-                return secondCategory.secondTitle == item.second
+    new db.products(data)
+        .save((err, obj) => {
+            if (err) return res.send(400, {succeed: false})
+            let thirdCate = []
+            _.each(data.belong_category, function (item) {
+                thirdCate.push(item.third)
             })
 
-            _.each(newArr[0].thirdTitles, (thirdCategory) => {
-                if (thirdCategory.thirdTitle == item.third) {
-                    thirdCategory.product.push(data)
-                }
-            })
+            async.each(data.belong_category, (item, callback) => {
+                db.categorys.findOne({'secondCategory.thirdTitles.thirdTitle': item.third}, (err, result) => {
+                    if (err || !result) return res.send(500)
+                    let newArr = _.filter(result.secondCategory, (secondCategory) => {
+                        return secondCategory.secondTitle == item.second
+                    })
 
-            console.log(newArr[0].thirdTitles)
-            console.log(newArr[0].thirdTitles[0].product)
-            console.log(newArr[0]._id)
-
-            let _seoProcess = new Promise((resolve, reject) => {
-                let seo = {
-                    SEO_Name: data.product_title,
-                    SEO_Url: '/single-product/' + data.product_id,
-                    add_time: (new Date().getTime()).toFixed()
-                }
-
-                let SEO_V = new db.SEOS(seo)
-                SEO_V.save((err) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(true)
-                    }
-                })
-            })
-
-            _seoProcess
-                .then(() => {
-                    db.categorys.findOneAndUpdate({
-                            'secondCategory._id': newArr[0]._id
+                    _.each(newArr[0].thirdTitles, (thirdCategory) => {
+                        if (thirdCategory.thirdTitle == item.third) {
+                            thirdCategory.product.push(obj._id)
                         }
-                        , {
-                            $set: {
-                                "secondCategory.$.thirdTitles": newArr[0].thirdTitles
+                    })
+
+                    console.log(newArr[0].thirdTitles)
+                    console.log(newArr[0].thirdTitles[0].product)
+                    console.log(newArr[0]._id)
+
+                    let _seoProcess = new Promise((resolve, reject) => {
+                        let seo = {
+                            SEO_Name: data.product_title,
+                            SEO_Url: '/single-product/' + data.product_id,
+                            add_time: (new Date().getTime()).toFixed()
+                        }
+
+                        let SEO_V = new db.SEOS(seo)
+                        SEO_V.save((err) => {
+                            if (err) {
+                                reject(err)
+                            } else {
+                                resolve(true)
                             }
-                        }, (err, result) => {
-                            if (err || !result) throw err
-                            callback()
+                        })
+                    })
+
+                    _seoProcess
+                        .then(() => {
+                            db.categorys.findOneAndUpdate({
+                                    'secondCategory._id': newArr[0]._id
+                                }
+                                , {
+                                    $set: {
+                                        "secondCategory.$.thirdTitles": newArr[0].thirdTitles
+                                    }
+                                }, (err, result) => {
+                                    if (err || !result) throw err
+                                    callback()
+                                })
                         })
                 })
+            }, (err) => {
+                if (err) return res.send(500)
+                res.send({succeed: true, msg: "ok"})
+            })
         })
-    }, (err) => {
-        if (err) {
-            res.send(500)
-        } else {
-            res.send({succeed: true, msg: "ok"})
-        }
-    })
-
-
 })
 
 
@@ -2410,6 +2405,7 @@ router.get('/crawler-products-detail', (req, res) => {
 /*-------------------------------------------------------------------------*/
 
 /*---------------------------------运费模板管理------------------------------*/
+
 router.get('/shopping_template', (req, res) => {
     res.render('admin/templates/shopping-templates', {username: u.nick_name})
 })
@@ -2494,7 +2490,6 @@ router.put('/fee-template', (req, res) => {
 router.delete('/fee-template', (req, res) => {
     res.send(200, {succeed: true, msg: 'delete success'})
 })
-
 
 /**
  * ROUTER FEE  GET Method

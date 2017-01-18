@@ -12,6 +12,7 @@ const routes = require('./routes/index')
 const users = require('./routes/users')
 const admins = require('./routes/admin')
 const services = require('./routes/services')
+const products = require('./routes/admin/product')
 const async = require('async')
 const app = express()
 const fs = require('fs')
@@ -24,7 +25,6 @@ var paypal = require('paypal-rest-sdk')
 var consolidate = require('consolidate')
 var isDev = process.env.NODE_ENV !== 'production'
 var port = 3000
-
 
 
 let allowCrossDomain = function (req, res, next) {
@@ -107,6 +107,7 @@ if (isDev) {
     app.use('/users', users)
     app.use('/admin', admins)
     app.use('/service', services)
+    app.use('/api/v1/admin', products)
     // production error handler
 
     paypal.configure({
@@ -252,10 +253,11 @@ if (isDev) {
 
 } else {
     app.use(express.static(path.join(__dirname, 'public')));
-    app.use('/', routes);
-    app.use('/users', users);
-    app.use('/admin', admins);
-    app.use('/service', services);
+    app.use('/', routes)
+    app.use('/users', users)
+    app.use('/admin', admins)
+    app.use('/service', services)
+    app.use('/api/v1/admin', products)
     app.listen(port, () => {
         console.log('App (production) is now running on port 3000!')
     })

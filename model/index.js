@@ -1,7 +1,5 @@
-let mongoose = require('mongoose');
-let db = mongoose.connect('mongodb://139.224.30.16:27017/livetest', err => {
-    console.log(err)
-})
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://139.224.30.16:27017/livetest', err => console.log(err))
 
 exports.users = mongoose.model('users', require('./user'))
 exports.banners = mongoose.model('banners', require('./banner'))
@@ -22,3 +20,4 @@ exports.feeExpress = mongoose.model('feeExpresses', require('./feeExpress'))
 exports.feeExpressCountry = mongoose.model('feeExpressCountries', require('./feeExpressCountry'))
 exports.countryFlags = mongoose.model('country_flags', require('./country_flags'))
 exports.deltaPrice = mongoose.model('deltaPrices', require('./deltaPrice'))
+exports.products = mongoose.model('products', require('./product'))
