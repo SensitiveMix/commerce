@@ -88,19 +88,19 @@
                  data-country="CN" data-widget-cid="widget-5">
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-primary active logistics-panel-type">
-                        <input type="radio" name="options" autocomplete="off" checked>小包类物流
+                        <input type="radio" name="options" autocomplete="off" checked value="Parcel">小包类物流
                     </label>
                     <label class="btn btn-primary logistics-panel-type">
-                        <input type="radio" name="options" autocomplete="off">普通类物流
+                        <input type="radio" name="options" autocomplete="off" value="Orindary">普通类物流
                     </label>
                     <label class="btn btn-primary logistics-panel-type">
-                        <input type="radio" name="options" autocomplete="off">特快类物流
+                        <input type="radio" name="options" autocomplete="off" value="Express">特快类物流
                     </label>
                 </div>
                 <div class="ui-tab-body ui-switchable-content" id="logistic-list">
                     <div id="economy-logistics-panel"
                          class="logistics-panel ui-tab-pane ui-tab-active series-wrap ui-switchable-panel"
-                         data-role="panel" data-series="cn-post" style="display: block;">
+                         data-role="Parcel" data-series="cn-post" style="display: block;">
                         <div class="alert alert-warning alert-dismissible fade in" role="alert">
                             <button type="button" class="close" data-dismiss="alert"><span
                                         aria-hidden="true">×</span><span class="sr-only">Close</span></button>
@@ -216,21 +216,21 @@
                                                         expressBetweenTo = $('#create-country input[name="create-country-express-day-to"]').val(),
                                                         expressBaoyou = $('#create-country input[name="create-country-baoyou"]').val(),
                                                         formData = [];
-                                                    $('#create-country input[name="country"]:checked').each(function(){
-                                                        country.push($(this).val());
-                                                    })
-                                                    formData = {
-                                                            'country_name': country,//国家名称
-                                                            'registered_fee': expressGuahaoFee,//挂号费
-                                                            'expected_delivery': expressBetweenFrom+'~'+expressBetweenTo,
-                                                        };
-                                                    formData['transport_fees'] = {
-                                                        'transport_fee':expressFee
-                                                    }
-                                                    formData['free_ship'] = {
-                                                        "fee_quantity" : expressBaoyou,
-                                                        "fee_status" : expressBaoyou?true:false
-                                                    }
+                                                $('#create-country input[name="country"]:checked').each(function () {
+                                                    country.push($(this).val());
+                                                })
+                                                formData = {
+                                                    'country_name': country,//国家名称
+                                                    'registered_fee': expressGuahaoFee,//挂号费
+                                                    'expected_delivery': expressBetweenFrom + '~' + expressBetweenTo,
+                                                };
+                                                formData['transport_fees'] = {
+                                                    'transport_fee': expressFee
+                                                }
+                                                formData['free_ship'] = {
+                                                    "fee_quantity": expressBaoyou,
+                                                    "fee_status": expressBaoyou ? true : false
+                                                }
                                                 console.log(formData);
                                                 $.ajax({
                                                     type: 'POST',
@@ -239,12 +239,11 @@
                                                         data: formData,
                                                     },
                                                     dataType: 'json',
-                                                    beforeSend: function () {
-                                                        $('#create-country-submit-xiaobao').attr('disabled', 'true');
-                                                    },
                                                     success: function (data) {
-                                                        if(data.succeed == 'true'){
+                                                        console.log(data.succeed);
+                                                        if (data.succeed == true) {
                                                             alert('创建成功！');
+                                                            $('#economy-logistics-panel').append('<input type="hidden" name="country_id" value="' + data.msg.countryId + '">')
                                                         }
                                                     },
                                                     error: function (data) {
@@ -288,7 +287,8 @@
                                     <div class="alert alert-danger" role="alert">小包运输, 最高运输为2.00KG</div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="create-country-submit-xiaobao">Save
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            id="create-country-submit-xiaobao">Save
                                         changes
                                     </button>
                                 </div>
@@ -296,7 +296,7 @@
                         </div>
                     </div>
                     <div id="standard-logistics-panel"
-                         class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="panel"
+                         class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="Orindary"
                          data-series="cn-business" style="display: none;">
                         <div class="alert alert-warning alert-dismissible fade in" role="alert">
                             <button type="button" class="close" data-dismiss="alert"><span
@@ -432,29 +432,29 @@
                                                         expressBetweenTo = $('#create-country-standard input[name="create-country-express-day-to"]').val(),
                                                         expressBaoyou = $('#create-country-standard input[name="create-country-baoyou"]').val(),
                                                         formData = [];
-                                                    $('#create-country-standard input[name="country"]:checked').each(function(){
-                                                        country.push($(this).val());
-                                                    })
-                                                    formData['transport_fees'] = [];
-                                                    $('#create-country-standard .yunfei-form-group').each(function(){
-                                                        var fee = {
-                                                                    "transport_default_quantity":$(this).children('input[name="create-country-express-fee-range"]').val(),    
-                                                                    "transport_default_fee":$(this).children('input[name="create-country-express-fee"]').val(),              
-                                                                    "transport_add_quantity":$(this).children('input[name="create-country-express-fee-add-quantity"]').val(),              
-                                                                    "transport_add_fee":$(this).children('input[name="create-country-express-fee-add"]').val()                               
-                                                                }
-                                                        formData['transport_fees'].push(fee);
-                                                    })
-
-                                                    formData = {
-                                                            'country_name': country,//国家名称
-                                                            'registered_fee': expressGuahaoFee,//挂号费
-                                                            'expected_delivery': expressBetweenFrom+'~'+expressBetweenTo,
-                                                        };
-                                                    formData['free_ship'] = {
-                                                        "fee_quantity" : expressBaoyou,
-                                                        "fee_status" : expressBaoyou?true:false
+                                                $('#create-country-standard input[name="country"]:checked').each(function () {
+                                                    country.push($(this).val());
+                                                })
+                                                formData['transport_fees'] = [];
+                                                $('#create-country-standard .yunfei-form-group').each(function () {
+                                                    var fee = {
+                                                        "transport_default_quantity": $(this).children('input[name="create-country-express-fee-range"]').val(),
+                                                        "transport_default_fee": $(this).children('input[name="create-country-express-fee"]').val(),
+                                                        "transport_add_quantity": $(this).children('input[name="create-country-express-fee-add-quantity"]').val(),
+                                                        "transport_add_fee": $(this).children('input[name="create-country-express-fee-add"]').val()
                                                     }
+                                                    formData['transport_fees'].push(fee);
+                                                })
+
+                                                formData = {
+                                                    'country_name': country,//国家名称
+                                                    'registered_fee': expressGuahaoFee,//挂号费
+                                                    'expected_delivery': expressBetweenFrom + '~' + expressBetweenTo,
+                                                };
+                                                formData['free_ship'] = {
+                                                    "fee_quantity": expressBaoyou,
+                                                    "fee_status": expressBaoyou ? true : false
+                                                }
                                                 console.log(formData);
                                                 $.ajax({
                                                     type: 'POST',
@@ -463,12 +463,10 @@
                                                         data: formData,
                                                     },
                                                     dataType: 'json',
-                                                    beforeSend: function () {
-                                                        $('#create-country-standard').attr('disabled', 'true');
-                                                    },
                                                     success: function (data) {
-                                                        if(data.succeed == 'true'){
+                                                        if (data.succeed == true) {
                                                             alert('创建成功！');
+                                                            $('#standard-logistics-panel').append('<input type="hidden" name="country_id" value="' + data.msg.countryId + '">')
                                                         }
                                                     },
                                                     error: function (data) {
@@ -513,10 +511,10 @@
                                             <div class="input-group-addon">工作日</div>
                                         </div>
                                     </div>
-                                    <div class="alert alert-danger" role="alert">小包运输, 最高运输为2.00KG</div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="country-select-standard">Save
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            id="country-select-standard">Save
                                         changes
                                     </button>
                                 </div>
@@ -524,7 +522,7 @@
                         </div>
                     </div>
                     <div id="express-logistics-panel"
-                         class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="panel"
+                         class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="Express"
                          data-series="cn-dedicated" style="display: none;">
                         <div class="alert alert-warning alert-dismissible fade in" role="alert">
                             <button type="button" class="close" data-dismiss="alert"><span
@@ -629,37 +627,63 @@
                                     </div>
                                     <script type="text/javascript">
                                         $(function () {
-                                            $('#country-select-standard').click(function () {
-                                                var country = $('#country-select-standard').val(),
-                                                        expressFee = $('input[name="create-country-express-fee"]').val(),
-                                                        expressGuahaoFee = $('input[name="create-country-express-guahao-fee"]').val(),
-                                                        expressBetweenFrom = $('input[name="create-country-express-day-between"]').val(),
-                                                        expressBetweenTo = $('input[name="create-country-express-day-to"]').val(),
-                                                        formData = {
-                                                            'country': country,
-                                                            'express_fee': expressFee,
-                                                            'express_guahao_fee': expressGuahaoFee,
-                                                            'express_day_from': expressBetweenFrom,
-                                                            'express_day_to': expressBetweenTo
-                                                        };
+                                            $('#country-select-fast').click(function () {
+                                                var country = [],
+                                                        transportFee = [],
+                                                        expressGuahaoFee = $('#create-country-logistics input[name="create-country-express-guahao-fee"]').val(),
+                                                        expressBetweenFrom = $('#create-country-logistics input[name="create-country-express-day-between"]').val(),
+                                                        expressBetweenTo = $('#create-country-logistics input[name="create-country-express-day-to"]').val(),
+                                                        expressBaoyou = $('#create-country-logistics input[name="create-country-baoyou"]').val(),
+                                                        formData = new Array();
+                                                $('#create-country-logistics input[name="country"]:checked').each(function () {
+                                                    country.push($(this).val());
+                                                })
+                                                formData = {
+                                                    'country_name': country,//国家名称
+                                                    'registered_fee': expressGuahaoFee,//挂号费
+                                                    'expected_delivery': expressBetweenFrom + '~' + expressBetweenTo,
+                                                };
+                                                formData['transport_fees'] = [];
+                                                var fee = [];
+                                                $('#create-country-logistics .yunfei-form-group').each(function () {
+                                                    formData['transport_fees'][$(this).index()] = [];
+                                                    formData['transport_fees'][$(this).index()]['transport_default_quantity'] = '';
+                                                    formData['transport_fees'][$(this).index()]['transport_default_fee'] = ''
+                                                    formData['transport_fees'][$(this).index()]['transport_add_quantity'] = ''
+                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = ''
+                                                    formData['transport_fees'][$(this).index()]['transport_default_quantity'] = $(this).children('input[name="create-country-express-fee-range"]').val();
+                                                    formData['transport_fees'][$(this).index()]['transport_default_fee'] = $(this).children('input[name="create-country-express-fee"]').val();
+                                                    formData['transport_fees'][$(this).index()]['transport_add_quantity'] = $(this).children('input[name="create-country-express-fee-add-quantity"]').val();
+                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = $(this).children('input[name="create-country-express-fee-add"]').val();
+                                                    // var index = $(this).index();
+                                                    // fee[index] = {
+                                                    //     'transport_default_quantity':$(this).children('input[name="create-country-express-fee-range"]').val(),
+                                                    //     'transport_default_fee':$(this).children('input[name="create-country-express-fee"]').val(),
+                                                    //     'transport_add_quantity':$(this).children('input[name="create-country-express-fee-add-quantity"]').val(),
+                                                    //     'transport_add_fee':$(this).children('input[name="create-country-express-fee-add"]').val()
+                                                    // };
+                                                })
+                                                formData['free_ship'] = {
+                                                    "fee_quantity": expressBaoyou,
+                                                    "fee_status": expressBaoyou ? true : false
+                                                }
                                                 console.log(formData);
                                                 $.ajax({
                                                     type: 'POST',
-                                                    url: '/',
+                                                    url: '/admin/fee-express-country',
                                                     data: {
                                                         data: formData,
                                                     },
                                                     dataType: 'json',
-                                                    beforeSend: function () {
-                                                        $('#create-contry-submit').attr('disabled', 'true');
-                                                    },
                                                     success: function (data) {
-                                                        var myhtml = '';
+                                                        if (data.succeed == true) {
+                                                            alert('创建成功！');
+                                                            $('#express-logistics-panel').append('<input type="hidden" name="country_id" value="' + data.msg.countryId + '">')
+                                                        }
                                                     },
                                                     error: function (data) {
                                                     }
-                                                })
-
+                                                });
                                             })
 
                                         })
@@ -677,11 +701,12 @@
                                                         style="width: 13%;" type="text"
                                                         name="create-country-express-fee">RMB,每增加<input
                                                         style="width: 13%;" type="text"
-                                                        name="create-country-express-fee-range">KG,增加运费<input
+                                                        name="create-country-express-fee-add-quantity">KG,增加运费<input
                                                         style="width: 13%;" type="text"
-                                                        name="create-country-express-fee">RMB
+                                                        name="create-country-express-fee-add">RMB
                                             </div>
                                         </div>
+                                        订单总重量达到<input type="text" name="create-country-baoyou">KG以上包邮
                                     </div>
 
                                     <div class="form-group">
@@ -697,10 +722,10 @@
                                             <div class="input-group-addon">工作日</div>
                                         </div>
                                     </div>
-                                    <div class="alert alert-danger" role="alert">小包运输, 最高运输为2.00KG</div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="country-select-standard">Save
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            id="country-select-fast">Save
                                         changes
                                     </button>
                                 </div>
@@ -901,168 +926,37 @@
         <button id="submitopt" class="btn btn-info">确定提交</button>
     </div>
     <!-- 完成提交结束 -->
-
-    <!-- 翻译 开始 -->
-    <div id="translateBox" class="syi-translate" style="right: 26px;">
-        <div class="show-translabox"></div>
-
-        <div class="translabox">
-            <a href="http://fanyi.baidu.com/" target="_blank" class="jinshan"></a>
-            <a href="http://fanyi.youdao.com/" target="_blank" class="youdao"></a>
-            <a href="http://translate.google.cn/" target="_blank" class="google"></a>
-        </div>
-        <!-- 产品填写参考 开始 -->
-        <div class="syi-proreference-box" style="display:none;">
-            <div class="syi-proreference">
-                <a href="http://seller.dhgate.com/syi/showProdInfo.do?itemcode=" target="_blank"
-                   title="点此查看调整之前的产品信息" class="proreferencebox">产品填写参考</a>
-            </div>
-        </div>
-        <!-- 产品填写参考 结束 -->
-    </div>
-    <!-- 翻译 结束 -->
-
-
-    <div id="onLineChatBox" class="syi-onlinechat" style="top: 361px; right: 26px;">
-        <div class="show-onlinechat"></div>
-        <div class="onlinechatbox">
-            <a id="syi_chat_window" href="javascript:void(0);" class="onlinechat" target="_blank"></a>
-        </div>
-    </div>
-
-    <!-- footer文件调用开始 -->
-    <div class="headerlayout">
-        <!--[if IE 6]>
-        <div class="layoutmargin">
-            <div class="layoutpadding"><![endif]-->
-        <!--<iframe id="headiframe" name="head" src="http://seller.dhgate.com/syihtml/footer_syi.html" width="100%"-->
-        <!--height="81" frameborder="0" scrolling="no"></iframe>-->
-        <!--[if IE 6]></div></div><![endif]-->
-    </div>
-    <!-- footer文件调用结束 -->
 </div>
 </div>
 </div>
 <script>
-    if ($('.gridly').children().length == 0) {
-        window.LS.each(function (key, value) {    //遍历
-            if (/^brick_*/.test(key)) {
-                $('.gridly').append(value)
-                var reordering = function ($elements) {
-                    $('.gridly').gridly('draggable', 'on')
-                };
-                $('.gridly').gridly({
-                    callbacks: {reordering: reordering}
-                })
-            }
-        })
-    }
-    $('.delete').click(function () {
-        let div_brick = $(this).parents('div').attr('id')
-        console.log(div_brick)
-        $('#' + div_brick).remove()
-        window.LS.remove(div_brick)
-        $('.limit_pic').text(parseInt(8 - $('.gridly').children().length))
-    })
     //提交添加
-    $("#addRobotBtn").on('click', function () {
-        let date = new Date()
-        let parmets = {
-            add_name: $("#supplier_name").val(),
-            add_address: $("#supplier_address").val(),
-            add_time: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes(),
-            add_time_number: (date.getTime() / 1000).toFixed()
+    $("#submitopt").on('click', function () {
+        var type = $('.logistics-panel-type.active input').val();
+        var country = [];
+        $('div[data-role="'+type+'"]').find('input[name="country_id"]').each(function(){
+            country.push($(this).val());
+        })
+        if(!country){
+            alert('未设置国家运费规则！');
         }
-        console.log(parmets)
-        if (parmets.add_name == '') {
-            layer.tips('请填写供应商', '#supplier_name')
-        } else {
-            console.log(parmets)
-            $.ajax({
-                url: 'doAddSupplier',
-                type: 'POST',
-                data: parmets,
-                success: function (retmsgurndata) {
-                    console.log(retmsgurndata)
-                    $("#supplier").append("<option value='" + $("#supplier_name").val() + "'>" + $("#supplier_name").val() + "</option>")
-                    $("#supplier_name").val('')
-                    $("#supplier_address").val('')
-                    layer.closeAll()
-                    layer.msg('添加成功')
-                }, error: function (returndata) {
-                    alert('添加失败，请检查是否有非法词汇！')
-                }
-            })
-        }
-    })
-
-
-    function uploadFile() {
-        let file = document.getElementById("file")
-        let formData = new FormData()
-        console.log(file)
-        console.log(file.files)
-        if (file.files.length > 8) {
-            layer.alert('上传图片大于8张')
-        } else {
-            for (var i = 0; i < file.files.length; i++) {
-                if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpeg') {
-                    layer.alert('上传图片格式有误')
-                    return false
-                } else if (file.files[i].size / 1024 > 2000) {
-                    layer.alert('上传图片大小不能超过2M')
-                    return false
-                } else {
-                    formData.append('file', file.files[i])
-                }
-
-                $('.limit_pic').text(8 - file.files.length)
+         $.ajax({
+            type: 'POST',
+            url: '/admin/fee-template',
+            data: {
+                type: type,
+                country: country
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
             }
-
-            $.ajax({
-                url: '/admin/uploadSingle',
-                type: 'POST',
-                data: formData,
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    var data = data.data;
-                    console.log(data)
-                    if (data.length != 0) {
-                        $('.gridly').gridly('draggable', 'on')
-                        data.forEach(function (item, index) {
-                            item = item.replace('public', '');
-                            var li = '<div class="brick small" id="brick_' + index + '"><img src="' + item + '"><span class="delete"></span></div>';
-                            window.LS.set("brick_" + index, li)
-                            $('.gridly').append(li);
-                        })
-                    }
-
-                    var reordering = function ($elements) {
-                        $('.gridly').gridly('draggable', 'on')
-                    };
+    })
+     })
 
 
-                    $('.gridly').gridly({
-                        callbacks: {reordering: reordering}
-                    })
+    
 
 
-                    $('.delete').click(function () {
-                        var div_brick = $(this).parents('div').attr('id')
-                        $('#' + div_brick).remove();
-                        window.LS.remove(div_brick)
-                        $('.limit_pic').text(parseInt($('.limit_pic').text()) + 1)
-                    })
-                },
-                error: function () {
-                    layer.msg('上传文件格式错误')
-                }
-            });
-        }
-
-
-    }
+    
 </script>

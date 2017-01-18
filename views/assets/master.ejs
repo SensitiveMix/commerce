@@ -327,7 +327,9 @@
 
 <script src="http://polypartake.com/assets/javascript/go-top-btn.js"></script>
 <!-- ========== FOOTER START ========== -->
-
+<% if(language == 'English'){ %>
+<% include ./footer/footer-english.ejs %>
+<% } %>
 
 </body>
 <script src="/js/ejs.js"></script>
@@ -335,15 +337,6 @@
 <script>
     function check_out(opt) {
         window.LS.set('fronted-language', opt)
-        let html = ''
-        if (window.LS.get('fronted-language') === 'English') {
-            html = new EJS({url: "./footer/footer-english.ejs"}).render()
-
-        } else {
-            html = new EJS({url: "./footer/footer-german.ejs"}).render()
-        }
-        console.log(html)
-        $("body").append(html)
 
     }
 </script>

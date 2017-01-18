@@ -12,6 +12,7 @@ const routes = require('./routes/index')
 const users = require('./routes/users')
 const admins = require('./routes/admin')
 const services = require('./routes/services')
+const db = require('./model/index')
 const products = require('./routes/admin/product')
 const async = require('async')
 const app = express()
@@ -33,6 +34,7 @@ let allowCrossDomain = function (req, res, next) {
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
     next()
 }
+global.db = db
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))

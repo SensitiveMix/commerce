@@ -30,6 +30,54 @@ var checkCategories = function (req, res, next) {
 
 
 /* GET home page. */
+// router.get('/:language/', (req, res, next) => {
+//     async.parallel([
+//             function (done) {
+//                 db.categorys.find({}, function (err, result) {
+//                     if (err) res.send('404');
+//                     categoryies = result;
+//                     // console.log(result);
+//                     done(err, result)
+//                 });
+//             },
+//             function (done) {
+//                 db.hotLabels.find({}, null, {
+//                     sort: {
+//                         add_time: -1
+//                     }
+//                 }, function (err, labels) {
+//                     hotLabel = labels;
+//                     done(err, labels)
+//                 })
+//             }
+//         ],
+//         function (err, results) {
+//             if (err) {
+//                 done(err)
+//             } else {
+//                 var category = results[0];
+//                 var labels = results[1];
+//                 var account = null;
+//                 var statusCode = 500;
+//                 if (req.cookies["account"] != null) {
+//                     account = req.cookies['account'];
+//                     statusCode = 200;
+//                 }
+//                 console.log(category)
+//                 res.render('assets/index', {
+//                     title: 'ECSell',
+//                     url: '/',
+//                     categories: category,
+//                     hotLabels: labels,
+//                     user: account,
+//                     status: statusCode,
+//                     language: req.query.language || 'English'
+//                 });
+//             }
+//         })
+// })
+
+/* GET home page. */
 router.get('/', (req, res, next) => {
     async.parallel([
             function (done) {
@@ -70,12 +118,11 @@ router.get('/', (req, res, next) => {
                     categories: category,
                     hotLabels: labels,
                     user: account,
-                    status: statusCode
+                    status: statusCode,
+                    language: 'English'
                 });
             }
-        });
-
-
+        })
 })
 
 router.get('/login', (req, res, next) => {

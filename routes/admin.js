@@ -2475,8 +2475,11 @@ router.post('/fee-express', (req, res) => {
 })
 
 router.post('/fee-express-country', (req, res) => {
+    console.log(req.body)
     let payload = req.body
+
     let fee = new db.feeExpressCountry(payload)
+
     fee.save((err, docsInserted) => {
         if (err) return res.send(500, {succeed: false, msg: "internal error"})
         res.send(200, {succeed: true, msg: {countryId: docsInserted._id}})
