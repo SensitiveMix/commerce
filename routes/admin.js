@@ -1828,7 +1828,8 @@ router.post('/saveProductDetail', function (req, res, next) {
         product_images: JSON.parse(req.body.product_images),
         product_spec: JSON.parse(req.body.product_spec),
         update_time: new Date().getTime(),
-        online: true
+        status: 'pending',
+        operator:'admin'
     }
 
     new db.products(data)

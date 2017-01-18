@@ -42,8 +42,12 @@ let product = new Schema({
     product_title: String,
     product_title_de: String,
     product_quantity: Number,
-    update_time: Number,
-    online: Boolean
+    update_time: Date,
+    outline_time: Date,
+    online_time: Date,
+    expiration_time:Date,
+    operator:String,
+    status: {type:String,enum:['reject','pending','outline','online']}
 })
 
 
