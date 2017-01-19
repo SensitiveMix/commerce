@@ -1,6 +1,3 @@
-/**
- * Created by sunNode on 16/10/17.
- */
 var express = require('express');
 var router = express.Router();
 var http = require('http').Server(express);

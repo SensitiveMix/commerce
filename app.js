@@ -17,6 +17,8 @@ const users = require('./routes/users')
 const admins = require('./routes/admin')
 const services = require('./routes/services')
 const products = require('./routes/admin/product')
+const english = require('./routes/fronted/english')
+const german = require('./routes/fronted/german')
 
 const ppconfig = require('./payment/ppconfig/sandbox')
 const paypal = require('paypal-rest-sdk')
@@ -73,8 +75,9 @@ global.customError = (status, msg, res) => {
     let error = new Error(msg || '未知异常')
     error.status = status || 500
 
-    res.send({code: error.status, msg: error.msg})
+    return res.send({code: error.status, msg: error.msg})
 }
+
 
 let isDev = process.env.NODE_ENV !== 'production'
 app.locals.env = process.env.NODE_ENV || 'dev'
@@ -124,13 +127,15 @@ if (isDev) {
     app.use('/admin', admins)
     app.use('/service', services)
     app.use('/api/v1/admin', products)
+    app.use('/en', english)
+    app.use('/de', german)
 
     //catch 404 and forward to error handler
     app.use(function (req, res, next) {
-        var err = new Error('Not Found');
-        err.status = 404;
-        next(err);
-    });
+        var err = new Error('Not Found')
+        err.status = 404
+        next(err)
+    })
 
 
     // production error handler
@@ -287,6 +292,9 @@ if (isDev) {
     app.use('/admin', admins)
     app.use('/service', services)
     app.use('/api/v1/admin', products)
+    app.use('/en', english)
+    app.use('/de', german)
+
 
     //catch 404 and forward to error handler
     app.use(function (req, res, next) {

@@ -28,100 +28,61 @@ var checkCategories = function (req, res, next) {
     next();
 }
 
+router.get('/test', (req, res) => {
+    db.hotLabels.find({}, (err, data) => {
+        res.send(data)
+    })
+    // let labels = db.hotLabels.find({}).exec()
+    // labels
+    //     .then((label) => {
+    //
+    //     })
+})
+
 
 /* GET home page. */
-// router.get('/:language/', (req, res, next) => {
-//     async.parallel([
-//             function (done) {
-//                 db.categorys.find({}, function (err, result) {
-//                     if (err) res.send('404');
-//                     categoryies = result;
-//                     // console.log(result);
-//                     done(err, result)
-//                 });
-//             },
-//             function (done) {
-//                 db.hotLabels.find({}, null, {
-//                     sort: {
-//                         add_time: -1
-//                     }
-//                 }, function (err, labels) {
-//                     hotLabel = labels;
-//                     done(err, labels)
-//                 })
-//             }
-//         ],
-//         function (err, results) {
-//             if (err) {
-//                 done(err)
-//             } else {
-//                 var category = results[0];
-//                 var labels = results[1];
-//                 var account = null;
-//                 var statusCode = 500;
-//                 if (req.cookies["account"] != null) {
-//                     account = req.cookies['account'];
-//                     statusCode = 200;
-//                 }
-//                 console.log(category)
-//                 res.render('assets/index', {
-//                     title: 'ECSell',
-//                     url: '/',
-//                     categories: category,
-//                     hotLabels: labels,
-//                     user: account,
-//                     status: statusCode,
-//                     language: req.query.language || 'English'
-//                 });
-//             }
-//         })
-// })
-
-/* GET home page. */
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
     async.parallel([
-            function (done) {
-                db.categorys.find({}, function (err, result) {
-                    if (err) res.send('404');
-                    categoryies = result;
-                    // console.log(result);
-                    done(err, result)
-                });
+            done => {
+                db.categorys
+                    .find({})
+                    .populate('secondCategory.thirdTitles.product')
+                    .exec((err, data) => {
+                        if (err) return customError(500, '数据库查询错误', res)
+                        categoryies = data
+                        done(err, data)
+                    })
             },
-            function (done) {
-                db.hotLabels.find({}, null, {
-                    sort: {
-                        add_time: -1
-                    }
-                }, function (err, labels) {
-                    hotLabel = labels;
-                    done(err, labels)
-                })
+            done => {
+                db.hotLabels
+                    .find({})
+                    .exec((err, label) => {
+                        if (err) return customError(500, '数据库查询错误', res)
+                        done(err, label)
+                    })
             }
         ],
-        function (err, results) {
-            if (err) {
-                done(err)
-            } else {
-                var category = results[0];
-                var labels = results[1];
-                var account = null;
-                var statusCode = 500;
-                if (req.cookies["account"] != null) {
-                    account = req.cookies['account'];
-                    statusCode = 200;
-                }
-                console.log(category)
-                res.render('assets/index', {
-                    title: 'ECSell',
-                    url: '/',
-                    categories: category,
-                    hotLabels: labels,
-                    user: account,
-                    status: statusCode,
-                    language: 'English'
-                });
+        (err, response) => {
+            if (err) return customError(500, '数据库查询错误', res)
+            let category = response[0]
+            let labels = response[1]
+            let account = null
+            let statusCode = 500
+            if (req.cookies["account"] != null) {
+                account = req.cookies['account']
+                statusCode = 200
             }
+
+            console.log(labels)
+            res.render('assets/index', {
+                title: 'ECSell',
+                url: '/',
+                categories: category,
+                hotLabels: labels,
+                user: account,
+                status: statusCode,
+                language: 'English'
+            })
         })
 })
 

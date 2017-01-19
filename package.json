@@ -48,6 +48,7 @@
     "mochawesome": "^1.5.3",
     "moment": "^2.15.1",
     "mongoose": "^4.6.4",
+    "mongoose-dbref": "0.0.2",
     "morgan": "~1.7.0",
     "multer": "^1.2.0",
     "node-sass": "^3.9.3",

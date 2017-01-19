@@ -1,0 +1,161 @@
+<% layout('../master.ejs') %>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+        <style>
+            .product {
+                margin-bottom: 0 !important;
+                border: 1px solid #dedede;
+            }
+
+            .title {
+                width: 61%;
+                position: relative;
+            }
+
+            .title p {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
+            }
+        </style>
+        <script>
+            $(function () {
+                $('#menu-master').off();
+                $('.nav-top').off();
+                $('.submenu').show();
+                $('.slide-fa').show();
+                $('.caret').remove();
+                <% banners.forEach(function (item, index) { %>
+                var mybannerHtml = '<div class="item"><a href="#"><img src=" <%= item.image_url %> " alt=""></a></div>'
+                $('.carousel-inner').append(mybannerHtml);
+                var olBanner = '<li data-target="#bs-carousel" data-slide-to="<%= index %> "></li>'
+                $('.carousel-indicators').append(olBanner);
+                <% }) %>
+                $('.carousel-inner .item').eq(0).addClass('active')
+                $('.carousel-indicators li').eq(0).addClass('active')
+                $('.carousel').carousel()
+            })
+        </script>
+
+        <!-- ========== SLIDER END ========== -->
+
+        <!-- ========== CONTENT START ========== -->
+
+        <section id="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-10 col-md-10" style="margin: 0 auto;float: none">
+                        <div class="products-carousel products-small products">
+
+                            <div class="banner">
+                                <img src="../assets/img/images/30-off.png" alt="">
+                            </div>
+
+                            <div class="carousel">
+                                <% if(categories.length != 0){ %>
+                                <% categories.forEach(function (item) { %>
+                                <% if(item.secondCategory.length != 0) { %>
+                                <% item.secondCategory.forEach(function(secondItem) { %>
+                                <% if(secondItem.thirdTitles.length != 0) { %>
+                                <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
+                                <% if(thirdItem.product.length != 0) { %>
+                                <% thirdItem.product.forEach(function (productItem, index) { %>
+
+                                <div>
+                                    <div class="product" style="display: block">
+                                        <div class="thumbnail">
+                                            <a href="/single-product/<%= productItem.product_id %>"><img
+                                                        class="product_images"
+                                                        src="<%= productItem.product_images[0].url %>" alt=""></a>
+                                        </div>
+                                        <hr>
+                                        <div class="title">
+                                            <h5><a href="#">
+                                                    <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"><%= productItem.product_title_de %></p>
+                                                </a></h5>
+                                            <!--<p>123</p>-->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <% }) %>
+                                <% } %>
+                                <% }) %>
+                                <% } %>
+
+                                <% }) %>
+                                <% } %>
+                                <% }) %>
+                                <% } %>
+
+                            </div>
+
+                        </div>
+                        <% if(categories.length != 0){ %>
+                        <% categories.forEach(function (item) { %>
+                        <a href="<%= item.firstUrl %>"><h2
+                                    class="align-center unbranded"><%= item.de_firstCategory %></h2>
+                        </a>
+                        <!--<p class="bar-line"></p>-->
+                        <div class="gap-25"></div>
+                        <ul class="products row">
+                            <% if(item.secondCategory.length != 0) { %>
+                            <% item.secondCategory.forEach(function(secondItem) { %>
+                            <% if(secondItem.thirdTitles.length != 0) { %>
+                            <% secondItem.thirdTitles.forEach(function (thirdItem, index) { %>
+                            <% if(index < 4) { %>
+                            <li class="col-sm-3 product-show">
+                                <div class="product">
+                                    <div class="thumbnail">
+                                        <a href="<%= thirdItem.thirdUrl %>">
+                                            <img class="product_images" src="images/<%= thirdItem.thirdImages %>"
+                                                 alt=""></a>
+                                        <a href="#" class="add-to-cart" title="Add to Cart">
+                                  <span class="fa-stack fa-2x">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
+                                  </span>
+                                        </a>
+                                    </div>
+                                    <hr>
+                                    <div class="title">
+                                        <p style="font-weight: 900;font-size: 18px;">
+                                            <a href="<%= thirdItem.thirdUrl %>">
+                                                <%= thirdItem.de_thirdTitle %>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <% } else { %>
+                            <% return false; %>
+                            <% } %>
+
+                            <% }) %>
+                            <% } %>
+
+                            <% }) %>
+                            <% } %>
+                        </ul>
+                        <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+    <!-- Main content -->
+
+</div>
+
+<script>
+    $(function () {
+        $('#zlight-nav').zlightMenu();
+    });
+</script>
+<!-- ========== CONTENT END ========== -->

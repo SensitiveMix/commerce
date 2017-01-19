@@ -12,11 +12,11 @@ const routes = require('./routes/index')
 const users = require('./routes/users')
 const admins = require('./routes/admin')
 const services = require('./routes/services')
-const db = require('./model/index')
+const english = require('./routes/fronted/english')
+const german = require('./routes/fronted/german')
 const products = require('./routes/admin/product')
 const async = require('async')
 const app = express()
-const db = require('./model/index')
 const fs = require('fs')
 const morgan = require('morgan')
 const session = require('express-session')
@@ -34,7 +34,6 @@ let allowCrossDomain = function (req, res, next) {
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
     next()
 }
-global.db = db
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -111,6 +110,8 @@ if (isDev) {
     app.use('/admin', admins)
     app.use('/service', services)
     app.use('/api/v1/admin', products)
+    app.use('/en', english)
+    app.use('/de', german)
     // production error handler
 
     paypal.configure({
@@ -261,6 +262,8 @@ if (isDev) {
     app.use('/admin', admins)
     app.use('/service', services)
     app.use('/api/v1/admin', products)
+    app.use('/en', english)
+    app.use('/de', german)
     app.listen(port, () => {
         console.log('App (production) is now running on port 3000!')
     })

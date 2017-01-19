@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 const category = new Schema({
     firstCategory: String,
     de_firstCategory: String,
@@ -20,7 +20,7 @@ const category = new Schema({
             thirdTitle: String,
             de_thirdTitle: String,
             firstTimeStamp: Number,
-            product: [],
+            product: [{type: Schema.Types.ObjectId, ref: 'products'}],
             thirdImages: String,
             thirdUrl: String
         }]
