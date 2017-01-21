@@ -1,0 +1,415 @@
+<% layout('../master/en.ejs') %>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+        <script>
+            $(function () {
+                $('body').addClass('single-product');
+                $('.color-detail span').click(function () {
+                    $('.color-detail span').removeClass('selected');
+                    $(this).addClass('selected');
+                })
+                $('.plus').click(function () {
+                    var num = parseInt($('input[type="number"]').val());
+                    $('input[type="number"]').val((num+1));
+                })
+                $('.minus').click(function () {
+                    var num = $('input[type="number"]').val();
+                    if(num > 0){
+                        $('input[type="number"]').val((num-1));
+                    }
+
+                })
+            })
+        </script>
+        <style>
+            .specifications {
+                min-width: 70%;
+                clear: both;
+                position: relative;
+            }
+
+            .product {
+                margin-bottom: 0;
+                border: 1px solid #dedede;
+            }
+
+            .btn-primary {
+                color: #fff !important;
+                background-color: #fd638f !important;
+                border-color: #fd4a7d !important;
+            }
+
+            .synced .item {
+                border: 2px solid #000;
+            }
+            input[type="number"]{
+                -moz-appearance:textfield;
+            }
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button{
+                -webkit-appearance: none !important;
+                margin: 0;
+            }
+        </style>
+
+        <!-- ========== SLIDER END ========== -->
+
+        <!-- ========== CONTENT START ========== -->
+
+        <section id="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-10 col-md-10" style="margin: 0 auto;float: none">
+                <ol class="breadcrumb">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="<%= prev_category.firstUrl %>"><%= prev_category.firstTitle %></a></li>
+                    <li><a href="<%= prev_category.secondUrl %>"><%= prev_category.secondTitle %></a></li>
+                    <li><a href="<%= prev_category.thirdUrl %>"><%= prev_category.thirdTitle %></a></li>
+                    <li><%= product[0].product_title %></li>
+                </ol>
+
+                <div class="row">
+                    <div class="col-sm-5">
+
+                        <div id="product-large" class="owl-carousel">
+                            <% product[0].product_images.forEach(function(item){ %>
+                            <div class="item" style="border: 1px solid rgba(0,0,0,.05);"><img src="<%= item.url %>">
+                            </div>
+                            <% }) %>
+                            <!--<div class="item"><img src="http://placehold.it/458x480"></div>-->
+                        </div>
+                        <div id="product-thumb" class="owl-carousel">
+                            <% product[0].product_images.forEach(function(item){ %>
+                            <div class="item" style="margin: 0 8px;"><img src="<%= item.url %>"></div>
+                            <% }) %>
+                            <!--<div class="item"><img src="http://placehold.it/78x78"></div>-->
+                        </div>
+
+                    </div>
+                    <div class="col-sm-7 summary entry-summary">
+
+                        <h1 class="product_title"><%= product[0].product_title %><span class="item-id">#<%= product[0].product_id %></span></h1>
+
+                        <p class="price">
+                            <span class="amount">111</span><sup>00</sup>
+                        </p>
+
+                        <h3>Color</h3>
+                        <div class="color-detail">
+                            <% product[0].product_price.forEach(function(item){ %>
+                            <span data-value="6916" data-id="attr_4819169_6916" class="value-6916" image-id="29980083"
+                                  data-color="Red">
+								<em class="litb-icon-selected"></em>
+                                <em class="litb-icon-selected-disabled"></em><%= item.compile_color %>
+							</span>
+                            <% }) %>
+                        </div>
+
+                        <hr>
+
+                        <!--<h3>Very Few Items Left!</h3>-->
+
+                        <!--<div class="variations">-->
+                        <!--<div class="row">-->
+                        <!---->
+                        <!--<div class="col-sm-6">-->
+                        <!--<select class="form-control col-sm-6" name="size" id="size">-->
+                        <!--<option value="0">Size</option>-->
+                        <!--<option value="red">M</option>-->
+                        <!--<option value="blue">L</option>-->
+                        <!--<option value="green">XL</option>-->
+                        <!--</select>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+                        <div class="quantity buttons_added">
+                            <button class="minus"><i class="fa fa-minus"></i></button>
+                            <input type="number" id="number" size="4" class="qty text form-control" title="Qty"
+                                   value="1" name="qty"
+                                   step="1">
+                            <button class="plus"><i class="fa fa-plus"></i></button>
+                        </div>
+
+                        <input type="button" onclick="check_out()" class="btn btn-primary btn-lg" id="add-to-cart"
+                               value="Add to Cart">
+
+                    </div>
+                </div>
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs product-tabs">
+                    <li class="active"><a href="#description" data-toggle="tab">Product Details</a></li>
+                    <li><a href="#reviews" data-toggle="tab">Reviews (3)</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="description">
+                        <div class="specifications">
+                            <h4>Specifications</h4>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td>Compatibility</td>
+                                    <td>
+                                        <% if(product[0].product_spec[0].compact.length != 0) { %>
+                                        <% product[0].product_spec[0].compact.forEach(function(item){ %>
+                                        <%= item %>
+                                        <% }) %>
+                                        <% } else { %>
+                                        null
+                                        <% } %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Type</td>
+                                    <td>
+                                        <% if(product[0].product_spec[0].type.length != 0) { %>
+                                        <% product[0].product_spec[0].type.forEach(function(item){ %>
+                                        <%= item %>
+                                        <% }) %>
+                                        <% } else { %>
+                                        null
+                                        <% } %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Features</td>
+                                    <td>
+                                        <% if(product[0].product_spec[0].features.length != 0) { %>
+                                        <% product[0].product_spec[0].features.forEach(function(item){ %>
+                                        <%= item %>
+                                        <% }) %>
+                                        <% } else { %>
+                                        null
+                                        <% } %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Pattern</td>
+                                    <td>
+                                        <% if(product[0].product_spec[0].pattern.length != 0) { %>
+                                        <% product[0].product_spec[0].pattern.forEach(function(item){ %>
+                                        <%= item %>
+                                        <% }) %>
+                                        <% } else { %>
+                                        null
+                                        <% } %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Material</td>
+                                    <td>
+                                        <% if(product[0].product_spec[0].material.length != 0) { %>
+                                        <% product[0].product_spec[0].material.forEach(function(item){ %>
+                                        <%= item %>
+                                        <% }) %>
+                                        <% } else { %>
+                                        null
+                                        <% } %>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="photos">
+                            <h4>Video</h4>
+                            <div id="item-flash">
+                                <embed style="width: 100%" type="application/x-shockwave-flash"
+                                       src="//cloud.video.taobao.com/play/u/735994334/p/2/e/1/t/3/43850387.swf"
+                                       width="480" height="388" id="itemFlashObject" name="itemFlashObject"
+                                       quality="high" wmode="opaque" allowfullscreen="true" menu="false"
+                                       flashvars="MMplayerType=PlugInn&amp;reservelt=false&amp;showplayinglogo=false">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="reviews">
+
+                        <div id="reviews">
+                            <ol class="commentlist">
+
+                                <li class="comment">
+                                    <div class="comment_container">
+                                        <!--<img src="http://placehold.it/64x64" class="avatar">-->
+                                        <div class="comment-text">
+                                            <div class="start-rating">
+                                                <span class="glyphicon glyphicon-star"></span>
+                                                <span class="glyphicon glyphicon-star"></span>
+                                                <span class="glyphicon glyphicon-star"></span>
+                                                <span class="glyphicon glyphicon-star"></span>
+                                                <span class="glyphicon glyphicon-star"></span>
+                                            </div>
+                                            <h5 class="meta">James Koster <span>— June 7, 2013</span></h5>
+                                            <p>Really happy with this print. The colors are great, and the paper quality
+                                                is good too.</p>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="comment">
+                                    <div class="comment_container">
+                                        <!--<img src="http://placehold.it/64x64" class="avatar">-->
+                                        <div class="comment-text">
+                                            <div class="start-rating">
+                                                <span class="glyphicon glyphicon-star"></span>
+                                                <span class="glyphicon glyphicon-star"></span>
+                                                <span class="glyphicon glyphicon-star"></span>
+                                                <span class="glyphicon glyphicon-star"></span>
+                                                <span class="glyphicon glyphicon-star"></span>
+                                            </div>
+                                            <h5 class="meta">Cobus Bester <span>— June 7, 2013</span></h5>
+                                            <p>You only get the picture, not the person holding it, something they don’t
+                                                mention in the description, now I’ve got to find my own person.</p>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="comment">
+                                    <div class="comment_container">
+                                        <!--<img src="http://placehold.it/64x64" class="avatar">-->
+                                        <div class="comment-text">
+                                            <div class="start-rating">
+                                                <span class="glyphicon glyphicon-star"></span>
+                                                <span class="glyphicon glyphicon-star"></span>
+                                                <span class="glyphicon glyphicon-star"></span>
+                                                <span class="glyphicon glyphicon-star"></span>
+                                                <span class="glyphicon glyphicon-star"></span>
+                                            </div>
+                                            <h5 class="meta">Stuart <span>— June 7, 2013</span></h5>
+                                            <p>This is a fantastic quality print and is happily hanging framed on my
+                                                wall now.</p>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ol>
+                        </div>
+
+                        <hr>
+
+                        <div id="review_form">
+                            <h3 id="reply-title" class="comment-reply-title">Add a Review</h3>
+                            <form action="#" id="commentform" class="comment-form">
+                                <div class="row">
+                                    <p class="comment-form-author col-sm-4">
+                                        <input type="text" placeholder="Author *" class="form-control">
+                                    </p>
+                                    <p class="comment-form-email col-sm-4">
+                                        <input type="email" placeholder="Email *" class="form-control">
+                                    </p>
+                                    <p class="comment-form-rating col-sm-4">
+                                        <select class="form-control">
+                                            <option value="0">Your Rating</option>
+                                            <option value="0">Perfect — 5*</option>
+                                            <option value="0">Good — 4*</option>
+                                            <option value="0">Average — 3*</option>
+                                            <option value="0">Not That Bad — 2*</option>
+                                            <option value="0">Very Poor — 1*</option>
+                                        </select>
+                                    </p>
+                                </div>
+                                <p class="comment-form-comment"><textarea name="review" id="review" class="form-control"
+                                                                          cols="30" rows="5"
+                                                                          placeholder="Your Review"></textarea></p>
+                                <p class="form-submit"><input type="submit" class="btn btn-primary btn-lg"
+                                                              name="proceed" value="Post Review"></p>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="related">
+                    <h2>You May Also Like</h2>
+                    <ul class="products row">
+                        <% if(like_product.length != 0 ) { %>
+                        <% like_product.forEach(function(item, index){ %>
+                        <% if(index < 4) { %>
+                        <li class="col-sm-3">
+                            <div class="product">
+                                <div class="thumbnail">
+                                    <a href="/single-product/<%= item.product_id %>"><img class="product_images"
+                                                src="<%= item.product_images[0].url %>" alt=""></a>
+                                    <a href="#" class="add-to-cart" title="Add to Cart">
+                                          <span class="fa-stack fa-2x">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
+                                          </span>
+                                    </a>
+                                </div>
+                                <hr>
+                                <div class="title">
+                                    <h3><a id="product_images_title" href="#"><%= item.product_images[0].title %></a>
+                                    </h3>
+                                    <!--<p>by Jack &amp; Jones</p>-->
+                                </div>
+                                <% if( status == 200) { %>
+                                <% if( user.level == '10' ) { %>
+                                <% if( item.product_origin_price.sale_discount_regular_price.length == 0 ) { %>
+                                <span class="price"><%= item.product_origin_price.regular_price %></span>
+                                <% } else { %>
+                                <span class="price"><%= item.product_origin_price.sale_discount_regular_price %></span>
+                                <% } %>
+                                <% } %>
+                                <% if( user.level == '66' ) { %>
+                                <% if( item.product_origin_price.sale_discount_vip_price.length == 0 ) { %>
+                                <span class="price"><%= item.product_origin_price.regular_price %></span>
+                                <% } else { %>
+                                <span class="price"><%= item.product_origin_price.sale_discount_vip_price %></span>
+                                <% } %>
+                                <% } %>
+                                <% } %>
+                                <% if( status == 500 ) { %>
+                                <span class="price"><%= item.product_origin_price.market_price %></span>
+                                <% } %>
+
+                            </div>
+                        </li>
+                        <% }else{ %>
+                        <% return false; %>
+                        <% } %>
+
+                        <% }) %>
+                        <% } %>
+                    </ul>
+                </div>
+                </div>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+    <!-- Main content -->
+
+</div>
+
+<script>
+    $(function () {
+        $('#zlight-nav').zlightMenu();
+    });
+</script>
+<!-- ========== CONTENT END ========== -->
+
+<!-- ========== CONTENT START ========== -->
+
+<!-- ========== CONTENT END ========== -->
+
+<script>
+    function check_out() {
+        console.log($('.amount').html())
+        console.log($('#number').val())
+        console.log($('.product_title').html())
+        if ("<%= status %>" == '500') {
+            layer.msg('Please Login')
+        }
+        else {
+            self.location.href = "/checkout?price=" + $('.amount').html() + "&amount=" + $('#number').val() + "&title=" + $('.product_title').html() + ""
+        }
+    }
+
+
+</script>

@@ -91,10 +91,14 @@
 
             $('#product-attribute-table tbody tr').each(function (index, item) {
                 let form_data_compile = {}
+                let color = $(item).find('td').eq(0).text()
+                console.log(color)
+                color = color.substring(color.lastIndexOf('】')+1, color.length)
                 form_data_compile.compile_vip_price = $(item).find('td').eq(1).find('input').val()
+                form_data_compile.compile_color = color
                 form_data_compile.compile_normal_price = $(item).find('td').eq(2).find('input').val()
                 form_data_compile.compile_image = $(item).find('img').attr('src')
-                form.product_price.push(form_data_compile)
+                form.product_price.push(form_data_compile)ß
             })
 
 
@@ -1633,7 +1637,9 @@
                     <p class="color000">现在您可以：</p>
                     <p><span class="addwid90"><a href="/">添加新产品</a></span>发布一个全新的产品</p>
                     <p><span class="addwid90"><a href="/upload">添加类似产品</a></span>附带刚提交的产品信息，只需修改差异内容，操作更便捷</p>
-                    <p><span class="addwid90"><a href="http://www.dhgate.com/product/productdisplay.do?from=product_preview&amp;itemcode=395710282" target="_blank">查看发布结果</a></span>查看刚发布的产品购买页面</p>
+                    <p><span class="addwid90"><a
+                                    href="http://www.dhgate.com/product/productdisplay.do?from=product_preview&amp;itemcode=395710282"
+                                    target="_blank">查看发布结果</a></span>查看刚发布的产品购买页面</p>
                     <p class="padtop10">
 		            <span class="tourBtn">
 			        <input name="name1" type="button" value="返回我的产品列表" onclick="">

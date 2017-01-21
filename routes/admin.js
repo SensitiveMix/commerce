@@ -1388,9 +1388,10 @@ router.post('/doAddCategory', function (req, res) {
         firstCategory: req.body.firstCategory,
         de_firstCategory: req.body.de_firstCategory,
         firstUrl: req.body.firstUrl,
+        de_firstUrl: req.body.de_firstUrl,
         firstCount: req.body.firstCount,
         secondCategory: JSON.parse(req.body.secondCategory)
-    };
+    }
     //保存到产品属性表
     var spec = {}
     if (JSON.parse(req.body.secondCategory).length != 0) {
@@ -1830,7 +1831,7 @@ router.post('/saveProductDetail', function (req, res, next) {
         product_spec: JSON.parse(req.body.product_spec),
         update_time: new Date().getTime(),
         status: 'pending',
-        operator:'admin'
+        operator: 'admin'
     }
 
     new db.products(data)

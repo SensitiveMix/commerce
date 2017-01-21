@@ -157,10 +157,10 @@
         }
     }
 
-    function saveAll(){
+    function saveAll() {
 
         var FirstCategory = $('table tr[class*=0_]').find('input:eq(0)').val()
-        var DEFirstCategory = $('table tr[class*=0_]').find('input:eq(1)').val() ||  $('table tr[class*=0_]').find('input:eq(0)').val()
+        var DEFirstCategory = $('table tr[class*=0_]').find('input:eq(1)').val() || $('table tr[class*=0_]').find('input:eq(0)').val()
         var FirstCategory_format = $('table tr[class*=0_]').find('input:eq(0)').val().replace(/\s+/g, "")
         var DEFirstCategory_format = $('table tr[class*=0_]').find('input:eq(1)').val().replace(/\s+/g, "")
         if (FirstCategory) {
@@ -174,14 +174,18 @@
                 }
             }
             CategoryALL.forEach(function (item) {
-                item.secondUrl = ('/' + FirstCategory_format + item.secondUrl.replace(/\s+/g, "")).trim();
+                let opt = ('/' + FirstCategory_format + item.secondUrl.replace(/\s+/g, "")).trim()
+                item.secondUrl = '/en' + opt
+                item.de_secondUrl = '/de' + opt
             })
             var timeStamps = (new Date().getTime() / 10000000).toFixed()
+            let rand = FirstCategory_format + '/' + timeStamps + Math.floor((Math.random() * 100) + 1)
             var Category = {
                 firstCategory: FirstCategory,
                 de_firstCategory: DEFirstCategory,
                 firstTimeStamp: timeStamps,
-                firstUrl: '/' + FirstCategory_format + '/' + timeStamps + Math.floor((Math.random() * 100) + 1),
+                firstUrl: '/en/' + rand,
+                de_firstUrl: '/de/' + rand,
                 firstCount: 0,
                 secondCategory: JSON.stringify(CategoryALL)
             }
@@ -227,10 +231,12 @@
         })
         twoArray.forEach(function (value, index) {
             if (index > 0 && index < twoArray.length - 1) {
-                var timeStamp = (new Date().getTime() / 10000000).toFixed();
-                var third = {
+                let timeStamp = (new Date().getTime() / 10000000).toFixed()
+                let rand = "product/" + timeStamp + Math.floor((Math.random() * 100) + 1) + index
+                let third = {
                     thirdTimeStamp: timeStamp,
-                    thirdUrl: '/product/' + timeStamp + Math.floor((Math.random() * 100) + 1) + index,
+                    thirdUrl: '/en/' + rand,
+                    de_thirdUrl: '/de/' + rand,
                     thirdTitle: value.en_value,
                     de_thirdTitle: value.de_value,
                     thirdImages: value.url.trim()

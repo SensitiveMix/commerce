@@ -17,8 +17,8 @@ const users = require('./routes/users')
 const admins = require('./routes/admin')
 const services = require('./routes/services')
 const products = require('./routes/admin/product')
-const english = require('./routes/fronted/english')
-const german = require('./routes/fronted/german')
+const english = require('./routes/fronted/front-en')
+const german = require('./routes/fronted/front-de')
 
 const ppconfig = require('./payment/ppconfig/sandbox')
 const paypal = require('paypal-rest-sdk')
@@ -122,7 +122,7 @@ if (isDev) {
     // var reload = require('reload');
 
 
-    app.use('/', routes)
+    app.use('/', english)
     app.use('/users', users)
     app.use('/admin', admins)
     app.use('/service', services)

@@ -1,0 +1,193 @@
+<% layout('../master/de.ejs') %>
+
+<!-- ========== CONTENT START ========== -->
+
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-10 col-md-10" style="margin: 0 auto;float: none">
+                <h1 class="page-title">Anmelden oder Ein Konto Erstellen.</h1>
+                <div class="gap-10"></div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+
+                        <h3>Log In</h3>
+                        <div class="gap-20"></div>
+                        <form role="form" action="/dologin" method="post">
+                            <div class="form-group">
+                                <input type="email" class="form-control input-lg" name="name" id="login_email"
+                                       placeholder="Enter">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control input-lg" name="password" id="login_password"
+                                       placeholder="Password">
+                            </div>
+                            <a href="#" class="pull-left" id="forgot-password">Forgot Your Passwort?</a>
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary btn-lg" id="login">Log In</button>
+                            </div>
+                        </form>
+                        <div class="gap-30"></div>
+
+                    </div>
+                    <div class="col-sm-6">
+
+                        <h3>Register a New Account</h3>
+                        <div class="gap-20"></div>
+                        <p>* Erforderliche Felder.</p>
+                        <div role="form">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">*</div>
+                                    <input class="form-control input-lg" type="email"
+                                           onblur="validateIsExist(this.value)"
+                                           id="register_email" name="email"
+                                           placeholder="Enter email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">*</div>
+                                    <input class="form-control input-lg" type="email" onblur="validateName()"
+                                           id="re_register_email"
+                                           placeholder="Confirm Enter">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">*</div>
+                                    <input class="form-control input-lg" type="password" id="register_password"
+                                           name="password"
+                                           placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">*</div>
+                                    <input class="form-control input-lg" onblur="validatePwd()"
+                                           id="re_register_password"
+                                           type="password"
+                                           placeholder="Confirm Password">
+                                </div>
+                            </div>
+                            <div class="checkbox pull-left">
+                                <label>
+                                    *<input type="checkbox" id="register-checkbox"> I agree to MiniInTheBox.com <a
+                                            href="/team-of-use">Terms and Conditions</a>.
+                                </label>
+                            </div>
+                            <div class="pull-right">
+                                <a href="#" class="btn btn-primary btn-lg" id="register-btn" disabled="true">Sign Up</a>
+                            </div>
+                        </div>
+                        <div class="gap-30"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== CONTENT END ========== -->
+
+<script>
+    function validatePwd() {
+        if ($('#register_password').val() == '') {
+//            layer.msg('Please Enter Password');
+            $('#register_password').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                + '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                + '<strong>Warning!</strong>Please Enter Password!</div>');
+        } else if ($('#register_password').val().trim() != $('#re_register_password').val().trim() || $('#re_register_password').val().trim() == "") {
+            layer.msg('passwords are not consistent');
+            $('#register_password').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                + '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                + '<strong>Warning!</strong>Passwords are not consistent!</div>');
+        }
+    }
+
+    function validateName() {
+        if ($('#register_email').val() == '') {
+//            layer.msg('Please Enter Email');
+            $('#register_email').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                + '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                + '<strong>Warning!</strong>Please Enter Email!</div>');
+        } else if ($('#register_email').val().trim() != $('#re_register_email').val().trim() || $('#re_register_email').val().trim() == '') {
+//            layer.msg('Email are not consistent');
+            $('#register_email').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                + '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                + '<strong>Warning!</strong>Email are not consistent!</div>');
+        }
+    }
+
+    function validateIsExist(email) {
+        $.ajax({
+            type: 'POST',
+            url: '/validateEmail',
+            data: {email: email},
+            dataType: 'json',
+            success: function (data) {
+                if (data == '401') {
+                    $('#register_email').val('')
+                    $('#register_email').parents('.form-group').addClass('has-error');
+                    $('#register_email').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                        + '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                        + '<strong>Warning!</strong>' + 'Email has been registered!</div>');
+//                    layer.msg('Email has been registered')
+                }
+            },
+            error: function (err) {
+                if (err == '500') {
+                    layer.msg('NetWork Error');
+                }
+            }
+        });
+    }
+
+    $('#register-checkbox').change(function () {
+        if (document.getElementById("register-checkbox").checked == true) {
+            $('#register-btn').removeAttr('disabled');
+            $('#register-btn').on('click', function () {
+                if ($('#register_email').val().trim() == '' || $('#re_register_email').val().trim() == '') {
+//                    layer.msg('Please Enter Email!')
+                    $('#re_register_email').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                        + '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                        + '<strong>Warning!</strong>Please Enter Email!</div>');
+                } else if ($('#register_password').val().trim() == '' || $('#re_register_password').val().trim() == '') {
+//                    layer.msg('Please Enter Password!')
+                    $('#register_password').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                        + '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                        + '<strong>Warning!</strong>Please Enter Password!</div>');
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/doregister',
+                        data: {
+                            email: $('#register_email').val().trim(),
+                            password: $('#register_password').val().trim()
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data == '200') {
+                                $('#register_password').val('')
+                                $('#re_register_password').val('')
+                                $('#register_email').val('')
+                                $('#re_register_email').val('')
+                                layer.msg('Register Success,Please Login!');
+                            }
+                            console.log(data);
+                        },
+                        error: function (err) {
+                            layer.msg('Register Failed');
+                        }
+                    });
+                }
+            })
+        } else {
+            $('#register-btn').off();
+            $('#register-btn').attr('disabled', 'true');
+        }
+    })
+
+</script>

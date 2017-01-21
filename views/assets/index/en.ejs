@@ -1,4 +1,19 @@
-<% layout('master.ejs') %>
+<% layout('../master/en.ejs') %>
+<script src='/js/storage.js'></script>
+<script>
+    if (window.location.pathname == "/") {
+        var judge_language = "English"
+        if (window.LS.obj().hasOwnProperty("fronted-language")) {
+            judge_language = window.LS.get('fronted-language')
+        }
+        if (judge_language == "English") {
+            window.location = "/en/"
+        } else if (judge_language == "German") {
+            window.location = "/de/"
+        }
+
+    }
+</script>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -29,7 +44,7 @@
                 $('.slide-fa').show();
                 $('.caret').remove();
                 <% banners.forEach(function (item, index) { %>
-                var mybannerHtml = '<div class="item"><a href="#"><img src=" <%= item.image_url %> " alt=""></a></div>'
+                var mybannerHtml = '<div class="item"><a href="#"><img src="<%= item.image_url %> " alt=""></a></div>'
                 $('.carousel-inner').append(mybannerHtml);
                 var olBanner = '<li data-target="#bs-carousel" data-slide-to="<%= index %> "></li>'
                 $('.carousel-indicators').append(olBanner);
@@ -51,7 +66,7 @@
                         <div class="products-carousel products-small products">
 
                             <div class="banner">
-                                <img src="../assets/img/images/30-off.png" alt="">
+                                <img src="/assets/img/images/30-off.png" alt="">
                             </div>
 
                             <div class="carousel">
@@ -67,7 +82,7 @@
                                 <div>
                                     <div class="product" style="display: block">
                                         <div class="thumbnail">
-                                            <a href="/single-product/<%= productItem.product_id %>"><img
+                                            <a href="/en/<%= item.firstCategory %>/<%= secondItem.secondTitle %>/<%= thirdItem.thirdTitle %>/single-product/<%= productItem.product_id %>"><img
                                                         class="product_images"
                                                         src="<%= productItem.product_images[0].url %>" alt=""></a>
                                         </div>
@@ -110,7 +125,7 @@
                                 <div class="product">
                                     <div class="thumbnail">
                                         <a href="<%= thirdItem.thirdUrl %>">
-                                            <img class="product_images" src="images/<%= thirdItem.thirdImages %>"
+                                            <img class="product_images" src="/images/<%= thirdItem.thirdImages %>"
                                                  alt=""></a>
                                         <a href="#" class="add-to-cart" title="Add to Cart">
                                   <span class="fa-stack fa-2x">

@@ -1,4 +1,4 @@
-<% layout('../master.ejs') %>
+<% layout('../master/de.ejs') %>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -51,7 +51,7 @@
                         <div class="products-carousel products-small products">
 
                             <div class="banner">
-                                <img src="../assets/img/images/30-off.png" alt="">
+                                <img src="/assets/img/images/30-off.png" alt="">
                             </div>
 
                             <div class="carousel">
@@ -67,7 +67,7 @@
                                 <div>
                                     <div class="product" style="display: block">
                                         <div class="thumbnail">
-                                            <a href="/single-product/<%= productItem.product_id %>"><img
+                                            <a href="/de/<%= item.de_firstCategory %>/<%= secondItem.de_secondTitle %>/<%= thirdItem.de_thirdTitle %>/single-product/<%= productItem.product_id %>"><img
                                                         class="product_images"
                                                         src="<%= productItem.product_images[0].url %>" alt=""></a>
                                         </div>
@@ -110,8 +110,8 @@
                             <li class="col-sm-3 product-show">
                                 <div class="product">
                                     <div class="thumbnail">
-                                        <a href="<%= thirdItem.thirdUrl %>">
-                                            <img class="product_images" src="images/<%= thirdItem.thirdImages %>"
+                                        <a href="<%= thirdItem.de_thirdUrl %>">
+                                            <img class="product_images" src="/images/<%= thirdItem.thirdImages %>"
                                                  alt=""></a>
                                         <a href="#" class="add-to-cart" title="Add to Cart">
                                   <span class="fa-stack fa-2x">

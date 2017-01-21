@@ -2,8 +2,9 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const category = new Schema({
     firstCategory: String,
-    de_firstCategory: String,
     firstUrl: String,
+    de_firstUrl: String,
+    de_firstCategory: String,
     firstTimeStamp: Number,
     firstImages: [{
         imageUrl: String
@@ -13,16 +14,18 @@ const category = new Schema({
         secondTitle: String,
         de_secondTitle: String,
         secondUrl: String,
+        de_secondUrl: String,
         secondTimeStamp: Number,
         secondImages: String,
         secondCount: Number,
         thirdTitles: [{
             thirdTitle: String,
-            de_thirdTitle: String,
             firstTimeStamp: Number,
             product: [{type: Schema.Types.ObjectId, ref: 'products'}],
             thirdImages: String,
-            thirdUrl: String
+            thirdUrl: String,
+            de_thirdTitle: String,
+            de_thirdUrl: String
         }]
     }]
 })

@@ -1,0 +1,378 @@
+<% layout('../master/en.ejs') %>
+<style>
+    .w-bp-a, .w-bp, .w-b, .w-p, .widget, .clearfix, .section {
+        clear: both;
+        zoom: 1;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    .w-bp-a, .w-bp, .w-b, .w-p, .widget, .clearfix, .section {
+        clear: both;
+        zoom: 1;
+        margin-bottom: 10px;
+    }
+
+    .w-bp-a:after, .w-bp:after, .w-b:after, .w-p:after, .widget:after, .clearfix:after, .section:after {
+        content: ".";
+        clear: both;
+        display: block;
+        height: 0;
+        font: 0/0 arial;
+        visibility: hidden;
+    }
+
+    #breadcrumb ul.w-breadcrumb {
+        display: inline-block;
+        margin-right: 45px;
+    }
+
+    .clearfix {
+        margin-bottom: 0;
+    }
+
+    .w-bp-a, .w-bp, .w-b, .w-p, .widget, .clearfix, .section {
+        clear: both;
+        zoom: 1;
+        margin-bottom: 10px;
+    }
+
+    ol, ul {
+        list-style: none;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    .w-breadcrumb li {
+        float: left;
+        position: relative;
+    }
+
+    .w-breadcrumb li, .w-breadcrumb a, .w-breadcrumb .home span, #rootsub dt i {
+        height: 29px;
+        line-height: 28px;
+        text-decoration: none;
+    }
+
+    .w-breadcrumb li, .w-breadcrumb a, .w-breadcrumb .home span, .w-breadcrumb li i {
+        color: #0076c1;
+    }
+
+    .accountMenu dd.selected a {
+        color: #900;
+    }
+
+    li {
+        display: list-item;
+        text-align: -webkit-match-parent;
+    }
+
+    .w-breadcrumb .root a {
+        color: #fff;
+        text-shadow: 0 1px 0 #666;
+    }
+
+    .w-breadcrumb .root a, #rootsub dt a {
+        background-position: 0px -61px;
+    }
+
+    .w-breadcrumb a:hover {
+        color: #036;
+        text-decoration: underline;
+    }
+
+    .w-breadcrumb li a {
+        padding: 0 8px 0 12px;
+        display: inline-block;
+    }
+
+    .w-breadcrumb .home span {
+        float: left;
+        overflow: hidden;
+        margin-top: 5px;
+    }
+
+    .w-breadcrumb .home span {
+        width: 16px;
+        height: 17px;
+        background-position: 1px 2px;
+    }
+
+    .w-breadcrumb li i, .w-breadcrumb .home span, .w-breadcrumb .root a, .w-breadcrumb .rootChild a span, #breadcrumb #rootsub dt span, #breadcrumb #rootsub dt i, #breadcrumb #rootsub.over dt a, #uniUtility .home {
+        background-image: url(/images/main-breadcrumb_lang.png);
+    }
+
+    #wrapper {
+        width: 1142px;
+        margin: 0 auto;
+        height: 553px;
+        font-family: verdana;
+    }
+
+    #breadcrumb {
+        z-index: 1000;
+        position: relative;
+        display: block;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    #wrapper-l {
+        width: 208px;
+        float: left;
+        font: 14px/150% Verdana, Helvetica, sans-serif;
+    }
+
+    .accountMenu {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        margin-bottom: 40px;
+    }
+
+    dl {
+        margin: 0;
+        padding: 0;
+        display: block;
+        -webkit-margin-before: 1em;
+        -webkit-margin-after: 1em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+    }
+
+    .clearfix:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    .accountMenu dt {
+        font-size: 12px;
+        color: #333;
+        font-weight: bold;
+        line-height: 100%;
+        border-bottom: 2px solid #cb2027;
+        padding-bottom: 7px;
+        margin-bottom: 10px;
+    }
+
+    .accountMenu dt {
+        border-color: #1988ce !important;
+    }
+
+    dt {
+        display: block;
+    }
+
+    dd {
+        display: block;
+        -webkit-margin-start: 40px;
+        margin-left: -2px;
+    }
+
+    .accountMenu a {
+        font-weight: bold;
+        line-height: 18px;
+        color: #036;
+    }
+
+    .helpBg {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .w-b, .w-bp {
+        border: 1px solid #DDD;
+    }
+
+    .w-bp-a, .w-bp, .w-b, .w-p, .widget, .clearfix, .section {
+        clear: both;
+        zoom: 1;
+        margin-bottom: 10px;
+    }
+
+    .w-bp {
+        border: 1px solid #DDD;
+        padding: 0 10px 10px;
+    }
+
+    .helpBg h3 {
+        font-size: 12px;
+        color: #333;
+        font-weight: bold;
+        line-height: 100%;
+        padding-bottom: 7px;
+    }
+
+    .w-bp h3, .w-b h3, .w-p h3, .widget h3 {
+        padding: 6px 0;
+    }
+
+    #wrapper-r {
+        float: right;
+        width: 752px;
+        font: 11px/150% Verdana, Helvetica, sans-serif;
+    }
+
+    #wrapper-r-t {
+        margin-bottom: 16px;
+    }
+
+    .w-b[class$="-b"] {
+        font-weight: normal;
+    }
+
+    .w-b, .w-bp {
+        border: 1px solid #DDD;
+    }
+
+    #wrapper-r .accountSetting {
+        width: 750px;
+    }
+
+    .accountSetting {
+        overflow: hidden;
+    }
+
+    .w-b[class$="-b"] {
+        font-weight: normal;
+    }
+
+    #wrapper-r .accountSetting .boxswitch {
+        margin: 0 auto;
+        width: 750px;
+    }
+
+    .accountSetting .boxswitch {
+        width: 931px;
+        overflow: hidden;
+        margin-top: 0;
+    }
+
+    .clearfix {
+        margin-bottom: 0;
+    }
+
+    #wrapper-r .accountSetting .boxswitch div:first-child {
+        width: 252px;
+    }
+
+    .accountSetting .boxswitch div.on {
+        background: none repeat scroll 0 0 #FFF;
+        color: #A72D2C;
+        border-bottom: none;
+        cursor: auto;
+    }
+
+    .accountSetting .boxswitch div {
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 27px;
+        line-height: 27px;
+        text-align: center;
+        width: 220px;
+        background-color: #F7F6F2;
+        border-bottom: 1px solid #DDD;
+        color: #000;
+        cursor: pointer;
+    }
+
+    #wrapper-r .accountSetting .boxswitch div {
+        width: 249px;
+    }
+
+    .accountSetting .boxswitch div.forBorder {
+        border-width: 0 1px 1px;
+    }
+
+    .accountSetting .contentBlock form {
+        margin-top: 10px;
+    }
+
+    .accountSetting input {
+        border: 1px solid #DDD;
+        height: 27px;
+        margin-top: 8px;
+        line-height: 14px;
+        padding: 5px;
+        width: 250px;
+    }
+
+    .accountSetting .red {
+        color: #A72D2C;
+    }
+
+    .accountSetting table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    .accountSetting .contentBlock form {
+        margin-top: 10px;
+    }
+</style>
+
+<link rel="stylesheet" href="/chineseRegion/lib/bootstrap-chinese-region/bootstrap-chinese-region.css">
+<script type="text/javascript" src="/chineseRegion/lib/bootstrap-chinese-region/bootstrap-chinese-region.js"></script>
+<script type="text/javascript" src="/chineseRegion/lib/bootstrap/bootstrap.js"></script>
+<script type="text/javascript" src="/chineseRegion/lib/bootstrap-chinese-region/bootstrap-chinese-region.js"></script>
+<script type="text/javascript">
+    $.getJSON('/chineseRegion/lib/bootstrap-chinese-region/sql_areas.json', function (data) {
+
+        for (var i = 0; i < data.length; i++) {
+            var area = {id: data[i].id, name: data[i].cname, level: data[i].level, parentId: data[i].upid};
+            data[i] = area;
+        }
+
+        $('.bs-chinese-region').chineseRegion('source', data);
+    });
+</script>
+<!-- ========== CONTENT START ========== -->
+
+<!-- ========== CONTENT END ========== -->
+<section id="content" style="padding-top: 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-10 col-md-10" style="margin: 0 auto;float: none">
+        <ol class="breadcrumb">
+            <li><a href="http://www.miniinthebox.com/">Home</a></li>
+            <li><a href="/personal-center">Personal Center</a></li>
+            <li  class="active"><a href="Personal-Order">Order</a></li>
+        </ol>
+        <div class="row">
+            <div class="col-md-3">
+
+                <!-- widget-account-menu_1 -->
+                <dl class="accountMenu">
+                    <dt>Personal Center</dt>
+                    <dd class="selected"><a href="/personal-Order">My Orders</a></dd>
+
+                    <dd><a href="/personal-center">Account
+                            Settings</a>
+                    </dd>
+                </dl>
+                <dl class="accountMenu">
+                    <!-- widget-account-menu_1_eof -->            <!-- widget-review-help -->
+                    <div class="w-bp helpBg">
+                        <h3>Need help</h3>
+                        <p>
+                            If you have questions or need help with your account, you may <a
+                                    href="/contact-us" alt="" title="" class="u black">contact
+                                us</a> to assist you.
+                        </p>
+                    </div>
+                    <!-- widget-review-help_eof -->
+                </dl>
+            </div>
+
+
+        </div>
+        </div>
+        </div>
+    </div>
+
+</section>
+

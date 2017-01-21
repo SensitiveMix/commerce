@@ -16,6 +16,7 @@ let product = new Schema({
         material: []
     },
     product_price: [{
+        compile_color: String,
         compile_vip_price: String,
         compile_normal_price: String,
         compile_image: String
@@ -45,9 +46,9 @@ let product = new Schema({
     update_time: Date,
     outline_time: Date,
     online_time: Date,
-    expiration_time:Date,
-    operator:String,
-    status: {type:String,enum:['reject','pending','outline','online']}
+    expiration_time: Date,
+    operator: String,
+    status: {type: String, enum: ['reject', 'pending', 'outline', 'online']}
 })
 
 

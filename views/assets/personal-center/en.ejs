@@ -1,0 +1,890 @@
+<% layout('../master/en.ejs') %>
+<style>
+    .w-bp-a, .w-bp, .w-b, .w-p, .widget, .clearfix, .section {
+        clear: both;
+        zoom: 1;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    .w-bp-a, .w-bp, .w-b, .w-p, .widget, .clearfix, .section {
+        clear: both;
+        zoom: 1;
+        margin-bottom: 10px;
+    }
+
+    .w-bp-a:after, .w-bp:after, .w-b:after, .w-p:after, .widget:after, .clearfix:after, .section:after {
+        content: ".";
+        clear: both;
+        display: block;
+        height: 0;
+        font: 0/0 arial;
+        visibility: hidden;
+    }
+
+    #breadcrumb ul.w-breadcrumb {
+        display: inline-block;
+        margin-right: 45px;
+    }
+
+    .clearfix {
+        margin-bottom: 0;
+    }
+
+    .w-bp-a, .w-bp, .w-b, .w-p, .widget, .clearfix, .section {
+        clear: both;
+        zoom: 1;
+        margin-bottom: 10px;
+    }
+
+    ol, ul {
+        list-style: none;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    .w-breadcrumb li {
+        float: left;
+        position: relative;
+    }
+
+    .w-breadcrumb li, .w-breadcrumb a, .w-breadcrumb .home span, #rootsub dt i {
+        height: 29px;
+        line-height: 28px;
+        text-decoration: none;
+    }
+
+    .w-breadcrumb li, .w-breadcrumb a, .w-breadcrumb .home span, .w-breadcrumb li i {
+        color: #0076c1;
+    }
+
+    .accountMenu dd.selected a {
+        color: #900;
+    }
+
+    li {
+        display: list-item;
+        text-align: -webkit-match-parent;
+    }
+
+    .w-breadcrumb .root a {
+        color: #fff;
+        text-shadow: 0 1px 0 #666;
+    }
+
+    .w-breadcrumb .root a, #rootsub dt a {
+        background-position: 0px -61px;
+    }
+
+    .w-breadcrumb a:hover {
+        color: #036;
+        text-decoration: underline;
+    }
+
+    .w-breadcrumb li a {
+        padding: 0 8px 0 12px;
+        display: inline-block;
+    }
+
+    .w-breadcrumb .home span {
+        float: left;
+        overflow: hidden;
+        margin-top: 5px;
+    }
+
+    .w-breadcrumb .home span {
+        width: 16px;
+        height: 17px;
+        background-position: 1px 2px;
+    }
+
+    .w-breadcrumb li i, .w-breadcrumb .home span, .w-breadcrumb .root a, .w-breadcrumb .rootChild a span, #breadcrumb #rootsub dt span, #breadcrumb #rootsub dt i, #breadcrumb #rootsub.over dt a, #uniUtility .home {
+        background-image: url(/images/main-breadcrumb_lang.png);
+    }
+
+    #wrapper {
+        width: 1142px;
+        margin: 0 auto;
+        height: 553px;
+        font-family: verdana;
+    }
+
+    #breadcrumb {
+        z-index: 1000;
+        position: relative;
+        display: block;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    #wrapper-l {
+        width: 208px;
+        float: left;
+        font: 14px/150% Verdana, Helvetica, sans-serif;
+    }
+
+    .accountMenu {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        margin-bottom: 40px;
+    }
+
+    dl {
+        margin: 0;
+        padding: 0;
+        display: block;
+        -webkit-margin-before: 1em;
+        -webkit-margin-after: 1em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+    }
+
+    .clearfix:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    .accountMenu dt {
+        font-size: 12px;
+        color: #333;
+        font-weight: bold;
+        line-height: 100%;
+        border-bottom: 2px solid #cb2027;
+        padding-bottom: 7px;
+        margin-bottom: 10px;
+    }
+
+    .accountMenu dt {
+        border-color: #1988ce !important;
+    }
+
+    dt {
+        display: block;
+    }
+
+    dd {
+        display: block;
+        -webkit-margin-start: 40px;
+        margin-left: -2px;
+    }
+
+    .accountMenu a {
+        font-weight: bold;
+        line-height: 18px;
+        color: #036;
+    }
+
+    .helpBg {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .w-b, .w-bp {
+        border: 1px solid #DDD;
+    }
+
+    .w-bp-a, .w-bp, .w-b, .w-p, .widget, .clearfix, .section {
+        clear: both;
+        zoom: 1;
+        margin-bottom: 10px;
+    }
+
+    .w-bp {
+        border: 1px solid #DDD;
+        padding: 0 10px 10px;
+    }
+
+    .helpBg h3 {
+        font-size: 12px;
+        color: #333;
+        font-weight: bold;
+        line-height: 100%;
+        padding-bottom: 7px;
+    }
+
+    .w-bp h3, .w-b h3, .w-p h3, .widget h3 {
+        padding: 6px 0;
+    }
+
+    #wrapper-r {
+        float: right;
+        width: 752px;
+        font: 11px/150% Verdana, Helvetica, sans-serif;
+    }
+
+    #wrapper-r-t {
+        margin-bottom: 16px;
+    }
+
+    .w-b[class$="-b"] {
+        font-weight: normal;
+    }
+
+    .w-b, .w-bp {
+        border: 1px solid #DDD;
+    }
+
+    #wrapper-r .accountSetting {
+        width: 750px;
+    }
+
+    .accountSetting {
+        overflow: hidden;
+    }
+
+    .w-b[class$="-b"] {
+        font-weight: normal;
+    }
+
+    #wrapper-r .accountSetting .boxswitch {
+        margin: 0 auto;
+        width: 750px;
+    }
+
+    .accountSetting .boxswitch {
+        width: 931px;
+        overflow: hidden;
+        margin-top: 0;
+    }
+
+    .clearfix {
+        margin-bottom: 0;
+    }
+
+    #wrapper-r .accountSetting .boxswitch div:first-child {
+        width: 252px;
+    }
+
+    .accountSetting .boxswitch div.on {
+        background: none repeat scroll 0 0 #FFF;
+        color: #A72D2C;
+        border-bottom: none;
+        cursor: auto;
+    }
+
+    .accountSetting .boxswitch div {
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 27px;
+        line-height: 27px;
+        text-align: center;
+        width: 220px;
+        background-color: #F7F6F2;
+        border-bottom: 1px solid #DDD;
+        color: #000;
+        cursor: pointer;
+    }
+
+    #wrapper-r .accountSetting .boxswitch div {
+        width: 249px;
+    }
+
+    .accountSetting .boxswitch div.forBorder {
+        border-width: 0 1px 1px;
+    }
+
+    .accountSetting .contentBlock form {
+        margin-top: 10px;
+    }
+
+    .accountSetting input {
+        border: 1px solid #DDD;
+        height: 27px;
+        margin-top: 8px;
+        line-height: 14px;
+        padding: 5px;
+        width: 250px;
+    }
+
+    .accountSetting .red {
+        color: #A72D2C;
+    }
+
+    .accountSetting table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    .accountSetting .contentBlock form {
+        margin-top: 10px;
+    }
+</style>
+
+<link rel="stylesheet" href="/chineseRegion/lib/bootstrap-chinese-region/bootstrap-chinese-region.css">
+<script type="text/javascript" src="/chineseRegion/lib/bootstrap-chinese-region/bootstrap-chinese-region.js"></script>
+<script type="text/javascript" src="/chineseRegion/lib/bootstrap/bootstrap.js"></script>
+<script type="text/javascript" src="/chineseRegion/lib/bootstrap-chinese-region/bootstrap-chinese-region.js"></script>
+<script type="text/javascript">
+    $.getJSON('/chineseRegion/lib/bootstrap-chinese-region/sql_areas.json', function (data) {
+
+        for (var i = 0; i < data.length; i++) {
+            var area = {id: data[i].id, name: data[i].cname, level: data[i].level, parentId: data[i].upid};
+            data[i] = area;
+        }
+
+        $('.bs-chinese-region').chineseRegion('source', data);
+    });
+</script>
+<!-- ========== CONTENT START ========== -->
+
+<!-- ========== CONTENT END ========== -->
+<section id="content" style="padding-top: 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-10 col-md-10" style="margin: 0 auto;float: none">
+                <ol class="breadcrumb">
+                    <li><a href="http://www.miniinthebox.com/">Home</a></li>
+                    <li><a href="#">Personal Center</a></li>
+                    <li class="active">Account Settings</li>
+                </ol>
+                <div class="row">
+                    <div class="col-md-3">
+
+                        <!-- widget-account-menu_1 -->
+                        <dl class="accountMenu">
+                            <dt>Personal Center</dt>
+                            <dd><a href="/Personal-Order">My Orders</a></dd>
+
+                            <dd class="selected"><a href="#">Account
+                                    Settings</a>
+                            </dd>
+                        </dl>
+                        <dl class="accountMenu">
+                            <!-- widget-account-menu_1_eof -->            <!-- widget-review-help -->
+                            <div class="w-bp helpBg">
+                                <h3>Need help</h3>
+                                <p>
+                                    If you have questions or need help with your account, you may <a
+                                            href="/contact-us" alt="" title="" class="u black">contact
+                                        us</a> to assist you.
+                                </p>
+                            </div>
+                            <!-- widget-review-help_eof -->
+                        </dl>
+                    </div>
+
+                    <div class="col-md-9 col-offset-1">
+                        <div class="w-b" id="wrapper-r-t">
+
+                            <!-- widget-account-account-setting -->
+                            <div class="accountSetting">
+                                <div class="boxswitch clearfix">
+                                    <div class="on" title="Change Information!">
+                                        <span>Change your Profile</span>
+                                    </div>
+                                    <div class="forBorder" title="Change Mail!">
+                                        <span>Change your e-mail address</span>
+                                    </div>
+                                    <div class="" title="Change Password!">
+                                        <span>Change your password</span>
+                                    </div>
+                                    <div class="" title="address">
+                                        <span>Address</span>
+                                    </div>
+                                </div>
+                                <div class="contentBlock">
+                                    <div id="ChangeInformation" style="display: block;">
+                                        <div name="profileForm"
+                                             id="profileForm"><input type="hidden" name="action" id="action"
+                                                                     value="account_profile_edit"><input type="hidden"
+                                                                                                         name="token"
+                                                                                                         id="token"
+                                                                                                         value="e638c59adc5efe6b170b37a1113e44430d5defa3b44de7e6ca21cbb464381f1c">
+                                            <strong>Update your ECSELL.com profile</strong>
+                                            <br>
+                                            <br>
+                                            <span class="red">*</span>Indicates required fields
+                                            <table width="590" cellspacing="0" cellpadding="0" border="0">
+                                                <tbody>
+                                                <tr>
+                                                    <td width="230" align="right">Title:&nbsp;</td>
+                                                    <td class="dialogueBox">
+                                                        <select name="gender" id="gender" chkname="Gender">
+                                                            <option value="-1">Please select ...</option>
+                                                            <option value="m">Mr.</option>
+                                                            <option value="f">Ms.</option>
+                                                        </select></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">
+                                                        origin Name:&nbsp;
+                                                        <span class="red">*</span>
+                                                    </td>
+                                                    <td class="dialogueBox ">
+                                                        <input id="origin_nick_name" readonly type="text" maxlength="34"
+                                                               name="v"
+                                                               value="<%= user.nick_name %>">
+                                                        <p class="errorInfo"></p>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">
+                                                        Full name:&nbsp;
+                                                        <span class="red">*</span>
+                                                    </td>
+                                                    <td class="dialogueBox ">
+                                                        <input id="new_nick_name" type="text" maxlength="34"
+                                                               name="new_nick_name"
+                                                               value="">
+                                                        <p class="errorInfo"></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">Which one describes you the best?</td>
+                                                    <td class="dialogueBox">
+                                                        <select name="describes" id="describes"
+                                                                chkname="Which one describes you the best?">
+                                                            <option value="-1" selected="selected">Please select---
+                                                            </option>
+                                                            <option value="6">Consumer</option>
+                                                            <option value="2">Wholesaler</option>
+                                                            <option value="3">Offline Retailer</option>
+                                                            <option value="4">Online Retailer</option>
+                                                            <option value="5">Dropshipper</option>
+                                                            <option value="1">Auction Seller</option>
+                                                            <option value="0">Others</option>
+                                                        </select></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">Your Company:&nbsp;</td>
+                                                    <td class="dialogueBox">
+                                                        <input id="customers_company" type="text"
+                                                               name="customers_company"
+                                                               value="<%= user.company %>">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <button class="textbtn" onclick="profile_submit()">Save</button>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="ChangeMail" style="display: none;">
+
+                                        <div name="emailForm"
+                                             id="emailForm"><input type="hidden" name="action" id="action"
+                                                                   value="account_email_edit">
+                                            <div class="color333 widget"><strong><%= user.name %></strong><span
+                                                        class="confirmOk">&nbsp;</span></div>
+                                            <strong>Update your ECSELL.com account</strong>
+                                            <br>
+                                            <br>
+                                            <span class="red">*</span>Indicates required fields
+                                            <table width="590" cellspacing="0" cellpadding="0" border="0">
+                                                <tbody>
+                                                <tr style="display: none">
+                                                    <td width="196" valign="top" align="right" style="padding-top:8px;">
+                                                        Existing password:&nbsp;
+                                                        <span class="red">*</span>
+                                                    </td>
+                                                    <td class="dialogueBox">
+                                                        <input type="password" id="old_name" name="old_name"
+                                                               value="<%= user.name %>">
+                                                        <p class="errorInfo"></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="196" valign="top" align="right" style="padding-top:8px;">
+                                                        Existing password:&nbsp;
+                                                        <span class="red">*</span>
+                                                    </td>
+                                                    <td class="dialogueBox">
+                                                        <input type="password" id="existing_password"
+                                                               name="existing_password">
+                                                        <p class="errorInfo"></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="196" valign="top" align="right" style="padding-top:8px;">
+                                                        New e-mail address:&nbsp;
+                                                        <span class="red">*</span>
+                                                    </td>
+                                                    <td class="dialogueBox">
+                                                        <input id="login-email-address1" type="text"
+                                                               value="<%= user.name %>"
+                                                               name="newEmail" autocomplete="off">
+                                                        <p class="errorInfo"></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <button class="textbtn  email_submit" onclick="email_submit()">
+                                                            Save
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="ChangePassword" style="display: none;">
+                                        <div name="passwordForm"
+                                             action="/change-password" method="post"
+                                             id="passwordForm"><input type="hidden" name="action" id="action"
+                                                                      value="account_password_edit"> <strong>Update your
+                                                ECSELL.com password</strong>
+                                            <br>
+                                            <br>
+                                            <span class="red">*</span> Indicates required fields
+                                            <table width="590" cellspacing="0" cellpadding="0" border="0">
+                                                <tbody>
+                                                <tr>
+                                                    <td width="196" valign="top" align="right" style="padding-top:8px;">
+                                                        Existing password:&nbsp;
+                                                        <span class="red">*</span>
+                                                    </td>
+                                                    <td class="dialogueBox">
+                                                        <input type="password" id="existing_password_1"
+                                                               name="existing_password_1">
+                                                        <p class="errorInfo"></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="196" valign="top" align="right" style="padding-top:8px;">
+                                                        New password:&nbsp;
+                                                        <span class="red">*</span>
+                                                    </td>
+                                                    <td class="dialogueBox">
+                                                        <input id="login-password1" type="password" name="password">
+                                                        <p class="errorInfo"></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="196" valign="top" align="right" style="padding-top:8px;">
+                                                        Re-enter password:&nbsp;
+                                                        <span class="red">*</span>
+                                                    </td>
+                                                    <td class="dialogueBox">
+                                                        <input type="password" id="login_password_twice"
+                                                               name="confirmation">
+                                                        <p class="errorInfo"></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <button class="textbtn" onclick="password_submit()">Save
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="ChangePassword" style="display: none;">
+                                        <div name="passwordForm"
+                                             action="/change-password" method="post"
+                                             id="passwordForm"><input type="hidden" name="action" id="action"
+                                                                      value="account_password_edit"> <strong>Enter your
+                                                order address</strong>
+                                            <br>
+                                            <br>
+                                            <span class="red">*</span> Indicates required fields
+                                            <table width="590" style="height:250px" cellspacing="0" cellpadding="0"
+                                                   border="0">
+                                                <tbody>
+                                                <tr>
+                                                    <td width="196" valign="top" align="right"
+                                                        style="padding-top: 27px;padding-right: 8px;">
+                                                        area:&nbsp;
+                                                        <span class="red">*</span>
+                                                    </td>
+                                                    <td class="dialogueBox">
+                                                        <div>
+                                                            <form class="form-group">
+                                                                <div class="bs-chinese-region flat dropdown"
+                                                                     data-submit-type="id" data-min-level="1"
+                                                                     data-max-level="3">
+                                                                    <input type="text" class="form-control"
+                                                                           name="address"
+                                                                           id="address" placeholder="选择你的地区"
+                                                                           data-toggle="dropdown" readonly="" value="">
+                                                                    <div class="dropdown-menu" role="menu"
+                                                                         aria-labelledby="dLabel">
+                                                                        <div>
+                                                                            <ul class="nav nav-tabs" role="tablist">
+                                                                                <li role="presentation" class="active">
+                                                                                    <a
+                                                                                            href="#province"
+                                                                                            data-next="city"
+                                                                                            role="tab"
+                                                                                            data-toggle="tab">省份</a>
+                                                                                </li>
+                                                                                <li role="presentation"><a href="#city"
+                                                                                                           data-next="district"
+                                                                                                           role="tab"
+                                                                                                           data-toggle="tab">城市</a>
+                                                                                </li>
+                                                                                <li role="presentation"><a
+                                                                                            href="#district"
+                                                                                            data-next="street"
+                                                                                            role="tab"
+                                                                                            data-toggle="tab">县区</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                            <div class="tab-content">
+                                                                                <div role="tabpanel"
+                                                                                     class="tab-pane active"
+                                                                                     id="province">--
+                                                                                </div>
+                                                                                <div role="tabpanel" class="tab-pane"
+                                                                                     id="city">
+                                                                                    --
+                                                                                </div>
+                                                                                <div role="tabpanel" class="tab-pane"
+                                                                                     id="district">--
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <p class="errorInfo"></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="196" valign="top" align="right"
+                                                        style="padding-top: 27px;padding-right: 8px;">
+                                                        Detail Address:&nbsp;
+                                                        <span class="red">*</span>
+                                                    </td>
+                                                    <td class="dialogueBox">
+                                                        <input id="detail_address" type="text" name="detail_address">
+                                                        <p class="errorInfo"></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <button class="textbtn" onclick="address_submit()">Save</button>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script>
+                                    function address_submit() {
+                                        if ($('#address').val() == '') {
+                                            layer.tip('Please enter area', '#address')
+                                        } else if ($('#detail_address').val() == '') {
+                                            layer.tip('Please enter detail address', '#detail_address')
+                                        }
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/change-address',
+                                            data: {
+                                                name: $('#old_name').val(),
+                                                areaCode: $('#address').val(),
+                                                detail_address: $('#detail_address').val()
+                                            },
+                                            dataType: 'json',
+                                            success: function (data) {
+                                                if (data.code == '200') {
+                                                    $('#areaCode').val(data.account.areaCode)
+                                                    $('#detail_address').val(data.account.detail_address)
+                                                    layer.msg('CHANGE SUCCESS')
+                                                } else if (data.code == '500') {
+                                                    layer.msg('CHANGE FAILED,PASSWORD INCORRECT')
+                                                }
+                                            },
+                                            error: function (err) {
+                                                if (err == '500') {
+                                                    layer.msg('NETWORK ERROR');
+                                                }
+                                            }
+                                        });
+                                    }
+                                    function profile_submit() {
+                                        if ($('#new_nick_name').val() == '') {
+                                            layer.msg('Please Enter New Name')
+                                        } else {
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '/change-profile',
+                                                data: {
+                                                    gender: $('#gender').find("option:selected").val(),
+                                                    origin_nick_name: $('#origin_nick_name').val(),
+                                                    new_nick_name: $('#new_nick_name').val(),
+                                                    describes: $('#describes').val(),
+                                                    customers_company: $('#customers_company').val()
+                                                },
+                                                dataType: 'json',
+                                                success: function (data) {
+                                                    if (data.code == '200') {
+                                                        $('#new_nick_name').val('')
+                                                        $('#origin_nick_name').val(data.account.nick_name)
+                                                        $('#customers_company').val(data.account.company)
+                                                        $('#gender').find("option:selected").val(data.account.sex)
+                                                        layer.msg('CHANGE SUCCESS')
+                                                    } else if (data.code == '500') {
+                                                        $('#new_nick_name').val('')
+                                                        $('#existing_password').val('')
+                                                        layer.msg('CHANGE FAILED,PASSWORD INCORRECT')
+                                                    }
+                                                },
+                                                error: function (err) {
+                                                    if (err == '500') {
+                                                        $('#new_nick_name').val('')
+                                                        $('#existing_password').val('')
+                                                        layer.msg('NETWORK ERROR');
+                                                    }
+                                                }
+                                            });
+                                        }
+
+                                    }
+
+
+                                    function email_submit() {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/change-email',
+                                            data: {
+                                                old_name: $('#old_name').val(),
+                                                existing_password: $('#existing_password').val(),
+                                                newEmail: $('#login-email-address1').val()
+                                            },
+                                            dataType: 'json',
+                                            success: function (data) {
+                                                if (data.code == '200') {
+                                                    $('#existing_password').val('')
+                                                    $('#login-email-address1').val(data.account.name)
+                                                    layer.msg('CHANGE SUCCESS')
+                                                } else if (data.code == '500') {
+                                                    $('#existing_password').val('')
+                                                    layer.msg('CHANGE FAILED,PASSWORD INCORRECT')
+                                                }
+                                            },
+                                            error: function (err) {
+                                                if (err == '500') {
+                                                    $('#existing_password').val('')
+                                                    layer.msg('NETWORK ERROR');
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                    function password_submit() {
+                                        if ($('#login-password1').val() != $('#login_password_twice').val()) {
+                                            layer.msg('passwords are not consistent')
+                                        } else if ($('#existing_password_1').val() == '') {
+                                            layer.msg('Please Enter Old Password')
+                                        } else if ($('#login-password1').val() == '' || $('#login_password_twice').val() == '') {
+                                            layer.msg('Please Enter New Password')
+                                        } else {
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '/change-password',
+                                                data: {
+                                                    old_name: $('#old_name').val(),
+                                                    existing_password_1: $('#existing_password_1').val(),
+                                                    login_password_one: $('#login-password1').val(),
+                                                    login_password_twice: $('#login_password_twice').val()
+                                                },
+                                                dataType: 'json',
+                                                success: function (data) {
+                                                    if (data.code == '200') {
+                                                        $('#login_password_twice').val('')
+                                                        $('#login-password1').val('')
+                                                        $('#existing_password_1').val('')
+                                                        layer.msg('CHANGE SUCCESS')
+                                                    } else if (data.code == '500') {
+                                                        layer.msg('CHANGE FAILED,Old PASSWORD INCORRECT')
+                                                    }
+                                                },
+                                                error: function (err) {
+                                                    if (err == '500') {
+                                                        layer.msg('NETWORK ERROR');
+                                                    }
+                                                }
+                                            });
+                                        }
+
+                                    }
+
+                                    (function layerswitch() {
+                                        var switches = $(".boxswitch div");
+                                        switches.click(function () {
+                                            $(this).addClass('on').siblings().removeClass('on');
+                                            $('.contentBlock>div:eq(' + switches.index(this) + ')').show().siblings().hide();
+                                        });
+                                    })();
+
+                                    $("#profileForm").form("submit", {
+                                        success: function (data) {
+                                            console.log(data)
+                                        }
+                                    });
+
+
+                                    $('#passwordForm').submit(function () {
+                                        var items = {
+                                            existing_password_1: [{
+                                                type: 'null',
+                                                errMsg: litb.langs.account.noExistPassword
+                                            }, {
+                                                type: 'minlength',
+                                                minlength: 5,
+                                                errMsg: litb.langs.ckReg.invalidPassword.stringFormat('5')
+                                            }],
+                                            password: [{type: 'null', errMsg: litb.langs.account.noNewPassword}, {
+                                                type: 'patternCheck',
+                                                errMsg: litb.langs.ckReg.registerInvalidPassword.stringFormat('7')
+                                            }],
+                                            confirmation: [{
+                                                type: 'null',
+                                                errMsg: litb.langs.account.reEnterNewPassword
+                                            }, {type: 'matchPassword', errMsg: litb.langs.ckReg.passwordNotMatch}]
+                                        };
+                                        return $(this).formCheck(items, {
+                                            errinfoFinder: function (obj) {
+                                                return obj.next();
+                                            },
+                                            rules: {
+                                                patternCheck: function (obj, checks) {
+                                                    return $(obj).val() != '' && $(obj).val().match(/\d/) && $(obj).val().match(/[a-zA-Z]/) && $(obj).val().length >= 7;
+                                                },
+                                                matchPassword: function (obj, checks) {
+                                                    return $(obj).val() == $('#login-password1').val();
+                                                }
+                                            }
+                                        });
+                                    });
+
+                                    $("#login-email-address1").autocompleteEmail({width: 10});
+                                </script>
+                            </div>
+                            <!-- widget-account-account-setting_eof -->            </div>
+
+
+                        <!-- widget-unsubscribe-newsletter -->
+                        <div class="widget w-unsubscribeNewsletter">
+                            <h4>Newsletter Subscription</h4>
+                            <p>
+                                <span>Your email address <strong></strong> is currently subscribed to ECSELL.com's newsletter.</span>
+                                <a href="http://www.miniinthebox.com/index.php?main_page=account_settings&amp;action=unsub"
+                                   class="u">Unsubscribe</a>
+                            </p>
+                        </div>
+                        <!-- widget-unsubscribe-newsletter_eof -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

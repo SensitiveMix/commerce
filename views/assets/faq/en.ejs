@@ -1,0 +1,35 @@
+<% layout('../master/en.ejs') %>
+
+<!-- ========== CONTENT START ========== -->
+<section id="content" style="padding-top: 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-10 col-md-10" style="margin: 0 auto;float: none">
+                <ol class="breadcrumb">
+                    <li><a href="/en/">Home</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ol>
+                <div class="mainContent"></div>
+
+                <div class="col-md-2 submenu">
+                </div>
+                <div class="col-md-10 submenu">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== CONTENT END ========== -->
+
+<script>
+    function HTMLDecode(text) {
+        var temp = document.createElement("div");
+        temp.innerHTML = text;
+        var output = temp.innerText || temp.textContent;
+        temp = null;
+        return output;
+    }
+    var content = HTMLDecode("<%= system.main_content %>");
+    $('.mainContent').append(content);
+</script>

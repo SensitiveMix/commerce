@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ECSELL</title>
+    <link rel="stylesheet" href="/public_css_build/styles.css">
+    <link rel="stylesheet" href="/layer-v2.2/layer/skin/layer.css">
+    <link rel="shortcut icon" href="/images/favicon.ico"/>
+    <script src="/assets/js/jquery-1.9.1.min.js"></script>
+    <script src="/layer-v2.2/layer/layer.js"></script>
+    <![endif]-->
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <!-- Header -->
+    <header id="header">
+
+        <!-- ========== TOP BAR START ========== -->
+
+        <div id="top-bar">
+            <div class="swiper-button-prev swiper-button-white"></div>
+            <div class="swiper-button-next swiper-button-white"></div>
+            <div class="container">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <% if(hotLabels.length != 0) { %>
+                        <% hotLabels.forEach(function (item) { %>
+                        <div class="swiper-slide"><a href="<%= item.belong_category %>"><%= item.label_name %></a></div>
+                        <% }) %>
+                        <% } %>
+                    </div>
+
+                </div>
+                <script src="/plugins/swiper/js/swiper.min.js"></script>
+
+                <!-- Initialize Swiper -->
+                <script>
+                    $(function () {
+                        let swiper = new Swiper('.swiper-container', {
+                            slidesPerView: 8,
+                            paginationClickable: true,
+                            spaceBetween: 30,
+                            freeMode: true,
+                            prevButton: '.swiper-button-prev',
+                            nextButton: '.swiper-button-next',
+                        });
+                    })
+
+                </script>
+                <nav id="top-nav" role="navigation" class="navbar">
+                    <div class="navbar-header">
+                        <button data-target=".top-nav" data-toggle="collapse" class="navbar-toggle" type="button">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse top-nav container">
+                        <ul class="nav navbar-nav top-nav-ul">
+                            <% if(hotLabels.length != 0) { %>
+                            <% hotLabels.forEach(function (item) { %>
+                            <li class="top-nav-li"><a href="<%= item.belong_category %>"><%= item.label_name %></a></li>
+                            <% }) %>
+                            <% } %>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </nav>
+
+            </div>
+        </div><!-- / #top-bar -->
+
+        <!-- ========== TOP BAR START ========== -->
+
+        <!-- ========== KV =========== -->
+        <script>
+            $(function () {
+                if ($(window).width() >= 970) {
+                    var width = $('.top-nav-ul').width();
+                    $('#top-nav').css('width', width + 100);
+                }
+                if ($.cookie('top-kv') != 'false') {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/getHeadBanner',
+                        data: {},
+                        dataType: 'json',
+                        success: function (data) {
+                            $("#kv-img").height("80px");
+                            $('#kv-img').attr('src', data.image_url);
+                        }
+                    })
+                } else {
+                    $('.j-banner').hide();
+                }
+
+            })
+        </script>
+        <div id="top-banner" class="widget min-widih-992 j-banner">
+            <div class="ctr-track-a ctr-track-show ctr-info ctrTrackA ctrTrackShow ctrInfo"
+                 ctr="{area:'ad_postion_107',entity:'global_image',ad_type:'public'}" style="width: 100%">
+                <div style="text-align:center; position:relative;width: 100%;">
+                    <!--<img id="kv-img" src="http://litbimg.rightinthebox.com/images/dfp/201610/mini_81191_bg_en.jpg">-->
+                    <img id="kv-img" src="">
+                    <div class="j-wraper" style="position:absolute;top:0;right:0;width: 1000px;padding-top: 18px;">
+                        <i id="j-close"
+                           style="position: absolute;display: inline-block;width: 16px;height: 16px;background: #9395a4;top: 3px;right: 3px;cursor: pointer;transition: all .2s;-moz-transition: all .2s;-webkit-transition: all .2s;-o-transition: all .2s;"></i>
+                    </div>
+                    <script type="text/javascript">
+                        $('#j-close').on('click', function () {
+                            $('.j-banner').slideUp();
+                            $.cookie('top-kv', false, {expires: 1});
+                        });
+                    </script>
+                </div>
+            </div>
+            <style>.height-28 {
+                    height: auto;
+                }</style>
+        </div>
+        <!-- ========== MENU START ========== -->
+        <nav id="main-nav">
+            <div class="navbar">
+                <div class="container nav-top">
+                    <div class="row">
+                        <div class="col-xs-10 col-md-10" style="margin: 0 auto;float: none">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                        data-target=".main-nav">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="/"><img src="/assets/img/logo.png" alt="Garbini"
+                                                                      class="img-responsive"
+                                                                      style="height: 70px;"></a>
+                            </div>
+                            <div class="navbar-collapse collapse main-nav">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li>
+                                        <% if( status == 200) { %>
+                                        <div class="btn-group dropdown-language">
+                                            <button type="button" class="btn btn-default dropdown-toggle person"
+                                                    data-toggle="dropdown">
+                                                Personal Center <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a onclick="check_out('English')">English</a></li>
+                                                <li><a onclick="check_out('German')">German</a></li>
+                                            </ul>
+                                            <ul class="person_ul dropdown-menu" role="menu">
+                                                <li><a ref="nofollow" href="/Personal-Order">Auftrag anschauen</a></li>
+                                                <li><a ref="nofollow" href="/personal-center">Mein Konto</a></li>
+                                                <li class=""><a ref="nofollow" href="/logout">Ausloggen</a></li>
+                                            </ul>
+                                        </div>
+                                        <% } else { %>
+                                        <a href="/login" class="">
+                                            <embed src="/assets/img/icon/user.svg" type="image/svg+xml"/>
+                                            Anmelden</a>
+                                        <% } %>
+                                    </li>
+                                    <li>
+                                        <a href="/contact-us" class="">
+                                            <embed style="width: 13px;" src="/assets/img/icon/warning.svg"
+                                                   type="image/svg+xml"/>
+                                            Customer Service </a>
+                                    </li>
+                                    <li style="margin-top: 16px;">
+                                        <div class="btn-group dropdown-language">
+                                            <button type="button"
+                                                    class="btn btn-default dropdown-toggle language-toggle"
+                                                    data-toggle="dropdown">
+                                                German
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a onclick="check_out('English')">English</a></li>
+                                                <li><a onclick="check_out('German')">German</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="btn-group btn-group-justified btn-search-add-cart">
+                                <div class="btn-group" style="width: 0.6%;" id="menu-master">
+                                    <button style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"
+                                            type="button" class="btn btn-primary dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        SHOP ALL CATEGORIES
+                                        <span class="caret"></span>
+                                    </button>
+                                </div>
+                                <div class="btn-group">
+                                    <div class="input-group">
+                                        <input type="text" id="search_engine" class="form-control"
+                                               placeholder="Search"/>
+                                        <span class="input-group-addon search" onclick="search_product()"><embed
+                                                    src="/assets/img/icon/search.svg"
+                                                    type="image/svg+xml"/></span>
+                                    </div>
+                                </div>
+                                <div class="btn-group btn-group-justified">
+                                    <nav class="shopping-cart">
+                                        <a href="/Personal-Order">
+                                            <i class="fa fa-shopping-cart fa-lg"></i> Cart
+                                            <span class="fa-stack">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-stack-1x fa-inverse">0</i>
+                                    </span>
+                                        </a>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="col-md-3 submenu" style="display: none;padding: 0;height: auto;z-index: 999">
+                                <nav id="zlight-nav">
+                                    <ul id="zlight-main-nav" style="border:0;width:100%;">
+                                        <% if(categories.length != 0){ %>
+                                        <% categories.forEach(function (item) { %>
+                                        <li class="zlight-dropdown" style="width: 100%">
+                                            <a href="<%= item.de_firstUrl %>" style="border: 0px;padding-right: 0;">
+                                                <p><%= item.de_firstCategory %></p>
+                                                <i class="icon-angle-right"></i>
+                                                <span style="float: right">(<%= item.firstCount %>)</span>
+                                            </a>
+                                            <ul class="zlight-submenu" style="top: 0;left: 100%;background: #fff;">
+                                                <% if(item.secondCategory.length != 0) { %>
+                                                <% item.secondCategory.forEach(function(secondItem) { %>
+                                                <li class="zlight-dropdown">
+                                                    <a href="<%= secondItem.de_secondUrl %>">
+                                                        <p><%= secondItem.de_secondTitle %></p>
+                                                        <span style="float: right">(<%= secondItem.secondCount %>
+                                                            )</span>
+                                                    </a>
+                                                    <ul class="zlight-dropdown">
+                                                        <% if(secondItem.thirdTitles.length != 0) { %>
+                                                        <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
+                                                        <li class="zlight-dropdown">
+                                                            <a href="<%= thirdItem.de_thirdUrl %>">
+                                                                <div><%= thirdItem.de_thirdTitle %></div>
+                                                            </a>
+                                                        </li>
+                                                        <% }) %>
+                                                        <% } %>
+                                                    </ul>
+                                                </li>
+                                                <% }) %>
+                                                <% } %>
+                                            </ul>
+                                        </li>
+                                        <% }) %>
+
+                                        <% } %>
+                                    </ul>
+                                    <!-- MOBILE NAV -->
+                                    <div id="zlight-mobile-nav"><span>Menu</span> <i
+                                                class="icon-reorder zlight-icon"></i>
+                                        <select>
+                                        </select>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="col-md-9 slide-fa" style="display:none;padding: 0">
+                                <section id="slider">
+                                    <div id="bs-carousel" class="carousel slide" data-ride="carousel">
+                                        <!-- Indicators -->
+                                        <ol class="carousel-indicators">
+                                        </ol>
+                                        <!-- Wrapper for slides -->
+                                        <div class="carousel-inner">
+                                        </div>
+
+                                        <!-- Controls -->
+                                        <a class="left carousel-control" href="#bs-carousel" data-slide="prev">
+                                            <i class="fa fa-angle-left"></i>
+                                            <!--span class="glyphicon glyphicon-chevron-left"></span-->
+                                        </a>
+                                        <a class="right carousel-control" href="#bs-carousel" data-slide="next">
+                                            <i class="fa fa-angle-right"></i>
+                                            <!--span class="glyphicon glyphicon-chevron-right"></span-->
+                                        </a>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <script>
+            $(function(){
+                // 默认显示
+                $(".dropdown-toggle").dropdown('toggle')
+            })
+            $(function () {
+                $('#menu-master').on('mouseover', function () {
+                    $('.submenu').show();
+                    $('.submenu').css('position', 'absolute');
+                    $('#zlight-nav').zlightMenu();
+                })
+                $('.nav-top').on('mouseleave', function () {
+                    $('#slider-menu').hide();
+                    $('.submenu').hide();
+                })
+            })
+        </script>
+    </header>
+
+    <%- body %>
+
+    <!-- Content Wrapper. Contains page content -->
+
+    <!-- /.content-wrapper -->
+
+
+</div><!-- /.tab-pane -->
+<!-- Stats tab content -->
+</div>
+</aside><!-- /.control-sidebar -->
+<!-- Add the sidebar's background. This div must be placed
+     immediately after the control sidebar -->
+<div class="control-sidebar-bg"></div>
+</div><!-- ./wrapper -->
+<!--TOP-->
+<div class="goTop" style="display: block;">
+    <a style="color: #fff" href="#"><img src="http://polypartake.com/assets/images/icon/up.png" width="69%"></a>
+</div>
+
+<script src="http://polypartake.com/assets/javascript/go-top-btn.js"></script>
+<!-- ========== FOOTER START ========== -->
+
+<% include ../footer/de.ejs %>
+
+</body>
+<script src="/js/ejs.js"></script>
+<script src='/js/storage.js'></script>
+<script>
+    let language = window.LS.get('fronted-language') || "German"
+    $('.language-toggle').text(language)
+    function check_out(opt) {
+        window.LS.set('fronted-language', opt)
+        let path = window.location.pathname
+        switch (opt) {
+            case 'English':
+                window.location = _processPath(path, 'de', 'en', 'English', /de/)
+                break
+            case 'German':
+                window.location = _processPath(path, 'en', 'de', 'German', /en/)
+                break
+        }
+    }
+
+    function _processPath(path, type, tsType, flag, regex) {
+        if (path.indexOf(type) > -1) {
+            path = path.replace(regex, tsType)
+        } else if (path.indexOf(tsType) <= -1 && $('.language-toggle').text() != flag) {
+            path = tsType + path
+        }
+        return path
+    }
+</script>
+<script src="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script src="/plugins/morris/morris.min.js"></script>
+<script src="/public_js_build/bundle.js"></script>
+<script src="/public_cookie_build/bundle.js"></script>
+</html>
