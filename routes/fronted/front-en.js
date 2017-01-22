@@ -730,7 +730,7 @@ router.get('/:first/:second/:third/single-product/:id', (req, res, next) => {
 
 //一级&二级类目查找
 router.get('/:category/:id', checkCategories);
-router.get('/:category/:id', (req, res, next) => {
+router.get('/en/:category/:id', (req, res, next) => {
     if (req.params["id"].indexOf('_') == -1 && req.params["category"] != 'admin') {
         //一级类目
         db.categorys
