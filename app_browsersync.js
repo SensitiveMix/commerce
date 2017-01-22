@@ -83,7 +83,6 @@ global.customError = (status, msg) => {
     return error
 }
 
-global.db = db
 app.locals.env = process.env.NODE_ENV || 'dev'
 app.locals.reload = false
 
@@ -105,7 +104,7 @@ if (isDev) {
     }));
     app.use(webpackHotMiddleware(compiler));
 
-    app.use('/', routes)
+    app.use('/', english)
     app.use('/users', users)
     app.use('/admin', admins)
     app.use('/service', services)
@@ -257,7 +256,7 @@ if (isDev) {
 
 } else {
     app.use(express.static(path.join(__dirname, 'public')));
-    app.use('/', routes)
+    app.use('/', english)
     app.use('/users', users)
     app.use('/admin', admins)
     app.use('/service', services)

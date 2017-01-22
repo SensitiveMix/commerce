@@ -9,15 +9,24 @@ var categoryies = []
 var u = []
 
 
+//排序
 router.get('/test/:id', (req, res) => {
+    console.log(req.query)
+    console.log(req.params["id"])
+    let orderType = req.query['orderby'] || ""
+    let payload = {}
+    if (!_.isEmpty(orderType)) {
+        payload[orderType] = 1
+    }
+    console.log(payload)
     db.categorys
-        .findOne({
-            firstCategory: first,
-            'secondCategory.secondTitle': second,
-            'secondCategory.secondTitle.thirdTitle': third
+        .findOne({})
+        .populate({
+            path: "secondCategory.thirdTitles.product",
+            options: {sort: payload}
         })
         .exec((err, result) => {
-
+            res.send(result)
         })
 })
 //utils
@@ -717,7 +726,6 @@ router.get('/:first/:second/:third/single-product/:id', (req, res, next) => {
             }
         })
 })
-
 
 
 //一级&二级类目查找
