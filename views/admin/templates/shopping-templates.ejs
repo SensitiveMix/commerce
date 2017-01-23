@@ -109,15 +109,29 @@
                 </ul>
             </div>
         </div>
+        <table class="table table-bordered">
+            ...
+        </table>
     </div>
 
 </div>
 
-<script type="text/javascript" src="/transport/express.js">
+<!--<script type="text/javascript" src="/transport/express.js"></script>-->
 
 
 <script>
-console.log(express)
+    $(function(){
+        $.ajax({
+            type: 'GET',
+            url: '/admin/fee-express',
+            data: {
+            },
+            dataType: 'json',
+            success: function(data){
+                console.log(data);
+            }
+        });
+    })
     function showLine(name) {
         if (name == "true") {
             $('#freight-fullname').css('display', 'block')
