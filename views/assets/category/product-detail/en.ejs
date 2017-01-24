@@ -1,4 +1,4 @@
-<% layout('../master/en.ejs') %>
+<% layout('../../master/en.ejs') %>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -63,7 +63,7 @@
                 <div class="row">
                     <div class="col-xs-10 col-md-10" style="margin: 0 auto;float: none">
                 <ol class="breadcrumb">
-                    <li><a href="/">Home</a></li>
+                    <li><a href="/en">Home</a></li>
                     <li><a href="<%= prev_category.firstUrl %>"><%= prev_category.firstTitle %></a></li>
                     <li><a href="<%= prev_category.secondUrl %>"><%= prev_category.secondTitle %></a></li>
                     <li><a href="<%= prev_category.thirdUrl %>"><%= prev_category.thirdTitle %></a></li>
@@ -400,6 +400,8 @@
 
 <script>
     function check_out() {
+        alert('1112')
+        alert('<%= status %>')
         console.log($('.amount').html())
         console.log($('#number').val())
         console.log($('.product_title').html())

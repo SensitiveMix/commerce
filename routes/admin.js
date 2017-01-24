@@ -428,7 +428,7 @@ router.post('/doChangeConditions', function (req, res) {
 //上传产品
 // router.get('/upload', checkLogin);
 // router.get('/upload', function (req, res) {
-//     db.categorys.find({}, function (err, category) {
+//     db.category.find({}, function (err, category) {
 //         if (err) res.send('404');
 //         db.uploadTemporarys.find({}, null, {
 //             sort: {
@@ -2409,6 +2409,7 @@ router.get('/crawler-products-detail', (req, res) => {
 /*---------------------------------运费模板管理------------------------------*/
 
 router.get('/shopping_template', (req, res) => {
+    console.log('22222')
     res.render('admin/templates/shopping-templates', {username: u.nick_name})
 })
 

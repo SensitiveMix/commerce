@@ -63,11 +63,10 @@
                                 <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
                                 <% if(thirdItem.product.length != 0) { %>
                                 <% thirdItem.product.forEach(function (productItem, index) { %>
-
                                 <div>
                                     <div class="product" style="display: block">
                                         <div class="thumbnail">
-                                            <a href="/de/<%= item.de_firstCategory %>/<%= secondItem.de_secondTitle %>/<%= thirdItem.de_thirdTitle %>/single-product/<%= productItem.product_id %>"><img
+                                            <a href="/de/category/<%= item.de_firstCategory %>/<%= secondItem.de_secondTitle %>/<%= thirdItem.de_thirdTitle %>/single-product/<%= productItem.product_id %>"><img
                                                         class="product_images"
                                                         src="<%= productItem.product_images[0].url %>" alt=""></a>
                                         </div>

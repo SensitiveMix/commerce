@@ -1,12 +1,17 @@
-<% layout('../master/en.ejs') %>
+<% layout('../../master/en.ejs') %>
+
+<!-- ========== CONTENT START ========== -->
+<!--点击二级类目进入的产品页面-->
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
 
         <script>
+
             $(document).ready(function () {
                 $('#zlight-nav-second').zlightMenu();
-                var width = 100 / '<%= product.length %>' + '%';
+                var width = 100 / '<%= product[0].thirdTitles.length %>' + '%';
                 $('#zlight-main-nav-second').children('li').css('width', width);
             });
         </script>
@@ -46,7 +51,7 @@
             }
 
             .third-menu > ul > li {
-                padding: 15px 7px !important;
+                /*padding: 15px 7px!important;*/
             }
 
             .third-menu > ul > li > .product {
@@ -59,7 +64,7 @@
                 height: 3px;
                 background-color: #999;
                 position: absolute;
-                top: 21%;
+                top: 17%;
                 z-index: 1;
                 display: block;
             }
@@ -95,33 +100,22 @@
                 <div class="row">
                     <div class="col-xs-10 col-md-10" style="margin: 0 auto;float: none">
                         <ol class="breadcrumb">
-                            <li><a href="/">Home</a></li>
-                            <li class="active"><%= prev_category.firstTitle %></li>
+                            <li><a href="/en">Home</a></li>
+                            <li><a href="<%= prev_category.firstUrl %>"><%= prev_category.firstTitle %></a></li>
+                            <li class="active"><%= product[0].secondTitle %></li>
                         </ol>
 
                         <div class="row" style="position: relative">
 
                             <div class="col-sm-12 second-menu">
-                                <nav id="zlight-nav-second" style="margin-bottom: 18px">
+                                <nav id="zlight-nav-second">
                                     <ul id="zlight-main-nav-second" class="btn-group" style="border:0;width:100%;">
-                                        <% if(product.length != 0){ %>
-                                        <% product.forEach(function (item) { %>
-                                        <li class="zlight-dropdown btn btn-info"><a href="<%= item.secondUrl %>"
-                                                                                    style="border: 0px"><%= item.secondTitle %>
-                                                <i class="icon-angle-down"></i></a>
-                                            </a>
-                                            <ul class="zlight-submenu" style="background: #fff;">
-                                                <% if(item.thirdTitles.length != 0) { %>
-                                                <% item.thirdTitles.forEach(function(thirdItem) { %>
-                                                <li class="zlight-dropdown" style="width: 100% !important;">
-                                                    <a href="<%= thirdItem.thirdUrl %>"><%= thirdItem.thirdTitle %></a>
-                                                </li>
-                                                <% }) %>
-                                                <% } %>
-                                            </ul>
+                                        <% if(product[0].thirdTitles.length != 0) { %>
+                                        <% product[0].thirdTitles.forEach(function(thirdItem) { %>
+                                        <li class="zlight-dropdown btn btn-info" style="width: 100% !important;">
+                                            <a href="<%= thirdItem.thirdUrl %>"><%= thirdItem.thirdTitle %></a>
                                         </li>
                                         <% }) %>
-
                                         <% } %>
                                     </ul>
                                     <!-- MOBILE NAV -->
@@ -132,21 +126,19 @@
                                     </div>
                                 </nav>
                             </div>
-                            <!--<p class="bar-line"></p>-->
                             <div class="col-sm-12 third-menu">
 
                                 <ul class="products row">
-                                    <% if(product.length != 0 ) { %>
-                                    <% product.forEach(function(item){ %>
-                                    <% item.thirdTitles.forEach(function(thirdItem){ %>
+                                    <% if(product[0].thirdTitles.length != 0) { %>
+                                    <% product[0].thirdTitles.forEach(function(thirdItem) { %>
+
                                     <% thirdItem.product.forEach(function(thirdProductItem){ %>
                                     <li class="col-sm-3">
                                         <div class="product">
                                             <div class="thumbnail">
-                                                <a href="/<%= prev_category.firstTitle %>/single-product/<%= thirdProductItem.product_id %>">
-                                                    <img class="product_images"
-                                                         src="<%= thirdProductItem.product_images[0].url %>" alt="">
-                                                </a>
+                                                <a href="/en/<%= prev_category.firstTitle %>/<%= product[0].secondTitle %>/single-product/<%= thirdProductItem.product_id %>"><img
+                                                            src="<%= thirdProductItem.product_images[0].url %>" alt=""
+                                                            class="product_images"></a>
                                                 <a href="#" class="add-to-cart" title="Add to Cart">
                                           <span class="fa-stack fa-2x">
                                             <i class="fa fa-circle fa-stack-2x"></i>
@@ -160,40 +152,23 @@
                                                 <!--<p>by Jack &amp; Jones</p>-->
                                             </div>
                                             <% if( status == 200) { %>
-                                            <span class="price">123</span>
                                             <% if( user.level == '10' ) { %>
-                                            <span class="price">123</span>
+                                            <span class="price">111</span>
                                             <% } %>
                                             <% if( user.level == '66' ) { %>
-                                            <span class="price">123</span>
+                                            <span class="price">111</span>
                                             <% } %>
                                             <% } %>
-
                                             <% if( status == 500 ) { %>
-                                            <span class="price">123</span>
+                                            <span class="price">111</span>
                                             <% } %>
                                         </div>
                                     </li>
                                     <% }) %>
                                     <% }) %>
-
-                                    <% }) %>
                                     <% } %>
-
                                 </ul>
-
-                                <!--<ul class="pagination">-->
-                                <!--<li><a href="#">&laquo;</a></li>-->
-                                <!--<li><a href="#">1</a></li>-->
-                                <!--<li><a href="#">2</a></li>-->
-                                <!--<li><a href="#">3</a></li>-->
-                                <!--<li><a href="#">4</a></li>-->
-                                <!--<li><a href="#">5</a></li>-->
-                                <!--<li><a href="#">&raquo;</a></li>-->
-                                <!--</ul>-->
-
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -211,6 +186,7 @@
         $('#zlight-nav').zlightMenu();
     });
 </script>
+
 <!-- ========== CONTENT END ========== -->
 
 <!-- ========== CONTENT START ========== -->

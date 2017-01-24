@@ -1,19 +1,15 @@
-<% layout('../master/en.ejs') %>
-
+<% layout('../../master/de.ejs') %>
 <!-- ========== CONTENT START ========== -->
 <!--点击二级类目进入的产品页面-->
-
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-
         <script>
-
             $(document).ready(function () {
                 $('#zlight-nav-second').zlightMenu();
-                var width = 100 / '<%= product[0].thirdTitles.length %>' + '%';
-                $('#zlight-main-nav-second').children('li').css('width', width);
-            });
+                let width = 100 / '<%= product[0].thirdTitles.length %>' + '%'
+                $('#zlight-main-nav-second').children('li').css('width', width)
+            })
         </script>
         <style>
             #zlight-main-nav-second {
@@ -100,7 +96,7 @@
                 <div class="row">
                     <div class="col-xs-10 col-md-10" style="margin: 0 auto;float: none">
                         <ol class="breadcrumb">
-                            <li><a href="/">Home</a></li>
+                            <li><a href="/de">Home</a></li>
                             <li><a href="<%= prev_category.firstUrl %>"><%= prev_category.firstTitle %></a></li>
                             <li class="active"><%= product[0].secondTitle %></li>
                         </ol>
@@ -136,7 +132,7 @@
                                     <li class="col-sm-3">
                                         <div class="product">
                                             <div class="thumbnail">
-                                                <a href="/<%= prev_category.firstTitle %>/<%= product[0].secondTitle %>/single-product/<%= thirdProductItem.product_id %>"><img
+                                                <a href="/de/<%= prev_category.firstTitle %>/<%= product[0].secondTitle %>/single-product/<%= thirdProductItem.product_id %>"><img
                                                             src="<%= thirdProductItem.product_images[0].url %>" alt=""
                                                             class="product_images"></a>
                                                 <a href="#" class="add-to-cart" title="Add to Cart">
@@ -174,11 +170,8 @@
                 </div>
             </div>
         </section>
-
     </section>
-
     <!-- Main content -->
-
 </div>
 
 <script>

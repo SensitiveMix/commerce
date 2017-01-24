@@ -2,6 +2,9 @@ const _ = require('lodash')
 const express = require('express')
 const router = express.Router()
 const async = require('async')
+const crypto = require('crypto')
+const ppconfig = require('../../payment/ppconfig/sandbox')
+const paypal = require('paypal-rest-sdk')
 const db = require('../../model/index')
 
 var hotLabel = []
@@ -27,6 +30,11 @@ let checkCategories = function (req, res, next) {
     next()
 }
 
+//MD5加密
+function md5(text) {
+    return crypto.createHash('md5').update(text).digest('hex')
+}
+
 router.get('/', (req, res) => {
     async.parallel([
             done => {
@@ -44,6 +52,7 @@ router.get('/', (req, res) => {
                     .find({})
                     .exec((err, label) => {
                         if (err) return customError(500, '数据库查询错误', res)
+                        hotLabel = label
                         done(err, label)
                     })
             },
@@ -111,7 +120,7 @@ router.get('/login', (req, res) => {
                     account = req.cookies['account'];
                     statusCode = 200;
                 }
-                res.render('assets/login', {
+                res.render('assets/login/de', {
                     title: 'ECSell',
                     categories: category,
                     hotLabels: labels,
@@ -122,10 +131,98 @@ router.get('/login', (req, res) => {
         });
 })
 
+//前台登陆处理
+router.post('/dologin', (req, res) => {
+    let payload = {name: req.body.name, password: md5(req.body.password)}
+    console.log(payload)
+    async.parallel([
+        done => {
+            db.categorys
+                .find({})
+                .populate('secondCategory.thirdTitles.product')
+                .exec((err, data) => {
+                    if (err) return customError(500, '数据库查询错误', res)
+                    categoryies = data
+                    done(err, data)
+                })
+        },
+        done => {
+            db.hotLabels
+                .find({})
+                .exec((err, label) => {
+                    if (err) return customError(500, '数据库查询错误', res)
+                    hotLabel = label
+                    done(err, label)
+                })
+        },
+        done => {
+            db.banners.find({'type': 'carousel'}, (err, banners) => {
+                if (err) return customError(500, '数据库查询错误', res)
+                done(err, banners)
+            })
+        },
+        done => {
+            db.users.findOne(payload, (err, user) => {
+                if (err) return customError(500, '数据库查询错误', res)
+                console.log(user)
+                done(err, user)
+            })
+        }
+    ], (err, data) => {
+        if (err) return customError(500, '登录失败', res)
+        let [category, label, banner, user] = data
+        if (user == null) {
+            return res.render('assets/login/de', {
+                status: 500,
+                hotLabels: label,
+                banners: banner,
+                categories: category,
+                user: null
+            })
+        }
+        u = user
+        res.cookie("account", {
+            name: user.name,
+            level: user.level,
+            nick_name: user.nick_name,
+            company: user.company
+        })
+
+        res.render('assets/index/de', {
+            user: user,
+            categories: category,
+            hotLabels: label,
+            banners: banner,
+            title: 'ECSell',
+            status: 200
+        })
+
+    })
+})
+//前台注册处理
+router.post('/doregister', checkCategories)
+router.post('/doregister', (req, res) => {
+    console.log("用户注册" + req.body.email + new Date())
+    var user = {
+        name: req.body.email,
+        password: md5(req.body.password),
+        nick_name: req.body.email.toString().substring(0, req.body.email.indexOf('@')),
+        level: '10',
+        levelName: '会员',
+        registerTime: new Date().getTime()
+    }
+
+    var robot = new db.users(user)
+    robot.save((err) => {
+        res.end('500')
+    });
+    res.json('200');
+})
+
 //登出处理
 router.get('/logout', (req, res) => {
     res.clearCookie("account");
-    res.redirect('/login');
+    res.redirect('/de/login');
 });
 //验证邮件
 router.post('/validateEmail', (req, res) => {
@@ -151,7 +248,7 @@ router.get('/personal-center', (req, res) => {
         statusCode = 500;
     }
     console.log(req.cookies["account"]);
-    res.render('assets/personal-center', {
+    res.render('assets/personal-center/de', {
         title: 'ECSell',
         categories: categoryies,
         hotLabels: hotLabel,
@@ -169,7 +266,7 @@ router.get('/personal-Order', (req, res) => {
         statusCode = 500;
     }
     console.log(req.cookies["account"]);
-    res.render('assets/Personal-Order', {
+    res.render('assets/Personal-Order/de', {
         title: 'ECSell',
         categories: categoryies,
         hotLabels: hotLabel,
@@ -532,7 +629,7 @@ router.get('/product/:id', (req, res) => {
 
                 console.log(secondParam)
                 if (arr.length == 0) {
-                    res.render('assets/category/de', {
+                    res.render('assets/category/three-category/de', {
                         product: [],
                         title: 'ECSell',
                         prev_category: secondParam,
@@ -543,7 +640,7 @@ router.get('/product/:id', (req, res) => {
                     })
                 } else {
                     console.log(arr)
-                    res.render('assets/category/de', {
+                    res.render('assets/category/three-category/de', {
                         product: arr,
                         title: 'ECSell',
                         prev_category: secondParam,
@@ -575,17 +672,26 @@ router.get('/product/:id', (req, res) => {
 
 
 //一级类目产品详情页查找
-router.get('/single-product/:id', checkCategories)
+router.get('/:first/single-product/:id', checkCategories)
 router.get('/:first/single-product/:id', (req, res, next) => {
     let first = req.params["first"]
     db.products
         .find({product_id: req.params["id"]})
         .exec((err, products) => {
             let detail_params = {}
-            detail_params.thirdTitle = ''
-            detail_params.thirdUrl = ''
-            detail_params.secondTitle = ''
-            detail_params.secondUrl = ''
+            new Promise((resolve, reject) => {
+                _.each(categoryies, (f) => {
+                    if (f.de_firstCategory == first) {
+                        detail_params.firstTitle = f.firstCategory
+                        resolve()
+                    }
+                })
+            })
+
+            console.log('wdeadaadadasasd')
+            console.log(detail_params)
+
+
             let statusCode = null
             if (req.cookies["account"] != null) {
                 statusCode = 200
@@ -593,7 +699,7 @@ router.get('/:first/single-product/:id', (req, res, next) => {
                 statusCode = 500
             }
             if (products.length == 0) {
-                res.render('assets/product-detail/de', {
+                res.render('assets/category/product-detail/de', {
                     product: [],
                     title: 'ECSell',
                     like_product: [],
@@ -606,7 +712,7 @@ router.get('/:first/single-product/:id', (req, res, next) => {
                     msg: 'NOT FOUND'
                 })
             } else {
-                res.render('assets/product-detail/de', {
+                res.render('assets/category/product-detail/de', {
                     product: products,
                     like_product: [],
                     prev_category: detail_params,
@@ -622,18 +728,36 @@ router.get('/:first/single-product/:id', (req, res, next) => {
 
 
 //二级类目产品详情页查找
-router.get('/single-product/:id', checkCategories)
-router.get('/:first/:second/single-product/:id', (req, res, next) => {
+router.get('/:first/:second/single-product/:id', checkCategories)
+router.get(':first/:second/single-product/:id', (req, res, next) => {
     let first = req.params["first"]
     let second = req.params["second"]
     db.products
         .find({product_id: req.params["id"]})
         .exec((err, products) => {
             let detail_params = {}
-            detail_params.thirdTitle = ''
-            detail_params.thirdUrl = ''
-            detail_params.secondTitle = ''
-            detail_params.secondUrl = ''
+            _.each(categoryies, (f) => {
+                if (f.de_firstCategory == first) {
+                    _.each(f.secondCategory, (s) => {
+                        if (s.de_secondTitle == second) {
+                            _.each(s.thirdTitles, (t) => {
+                                _.each(t.product, (p) => {
+                                    if (p.product_id == products[0]._id) {
+                                        detail_params.firstTitle = f.firstCategory
+                                        detail_params.secondTitle = t.secondTitle
+                                        detail_params.thirdTitle = s.thirdTitle
+                                        detail_params.thirdUrl = t.de_thirdUrl || ""
+                                        detail_params.secondUrl = s.de_secondUrl || ""
+                                        detail_params.firstUrl = f.de_firstUrl || ""
+                                    }
+                                })
+                            })
+                        }
+                    })
+                }
+            })
+
+
             let statusCode = null
             if (req.cookies["account"] != null) {
                 statusCode = 200
@@ -641,7 +765,7 @@ router.get('/:first/:second/single-product/:id', (req, res, next) => {
                 statusCode = 500
             }
             if (products.length == 0) {
-                res.render('assets/product-detail/de', {
+                res.render('assets/category/product-detail/de', {
                     product: [],
                     title: 'ECSell',
                     like_product: [],
@@ -654,7 +778,7 @@ router.get('/:first/:second/single-product/:id', (req, res, next) => {
                     msg: 'NOT FOUND'
                 })
             } else {
-                res.render('assets/product-detail/de', {
+                res.render('assets/category/product-detail/de', {
                     product: products,
                     like_product: [],
                     prev_category: detail_params,
@@ -669,7 +793,7 @@ router.get('/:first/:second/single-product/:id', (req, res, next) => {
 })
 
 //三级类目产品详情页查找
-router.get('/single-product/:id', checkCategories)
+router.get('/:first/:second/:third/single-product/:id', checkCategories)
 router.get('/:first/:second/:third/single-product/:id', (req, res, next) => {
     let first = req.params["first"]
     let second = req.params["second"]
@@ -678,10 +802,26 @@ router.get('/:first/:second/:third/single-product/:id', (req, res, next) => {
         .find({product_id: req.params["id"]})
         .exec((err, products) => {
             let detail_params = {}
-            detail_params.thirdTitle = ''
-            detail_params.thirdUrl = ''
-            detail_params.secondTitle = ''
-            detail_params.secondUrl = ''
+            _.each(categoryies, (f) => {
+                if (f.firstCategory == first) {
+                    detail_params.firstUrl = f.thirdUrl
+                    _.each(f.secondCategory, (s) => {
+                        if (s.secondTitle == second) {
+                            detail_params.secondUrl = s.secondUrl
+                            _.each(s.thirdTitles, (t) => {
+                                if (t.thirdTitle == third) {
+                                    detail_params.thirdUrl = t.thirdUrl
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            detail_params.thirdTitle = third
+            detail_params.firstTitle = first
+            detail_params.secondTitle = second
+
+
             let statusCode = null
             if (req.cookies["account"] != null) {
                 statusCode = 200
@@ -689,7 +829,7 @@ router.get('/:first/:second/:third/single-product/:id', (req, res, next) => {
                 statusCode = 500
             }
             if (products.length == 0) {
-                res.render('assets/product-detail/de', {
+                res.render('assets/category/product-detail/de', {
                     product: [],
                     title: 'ECSell',
                     like_product: [],
@@ -702,7 +842,7 @@ router.get('/:first/:second/:third/single-product/:id', (req, res, next) => {
                     msg: 'NOT FOUND'
                 })
             } else {
-                res.render('assets/product-detail/de', {
+                res.render('assets/category/product-detail/de', {
                     product: products,
                     like_product: [],
                     prev_category: detail_params,
@@ -713,12 +853,15 @@ router.get('/:first/:second/:third/single-product/:id', (req, res, next) => {
                     status: statusCode
                 })
             }
+
+
         })
 })
 
 //一级&二级类目查找
 router.get('/:category/:id', checkCategories);
 router.get('/:category/:id', (req, res, next) => {
+    console.log('----------------')
     if (req.params["id"].indexOf('_') == -1 && req.params["category"] != 'admin') {
         //一级类目
         db.categorys
@@ -743,7 +886,7 @@ router.get('/:category/:id', (req, res, next) => {
                     console.log(typeof req.cookies["account"] != "undefined")
                     console.log(statusCode)
                     if (secondCategory.length == 0) {
-                        res.render('assets/first-category/de', {
+                        res.render('assets/category/first-category/de', {
                             product: [],
                             title: 'ECSell',
                             prev_category: detail_params,
@@ -755,7 +898,7 @@ router.get('/:category/:id', (req, res, next) => {
                             msg: 'NOT FOUND'
                         })
                     } else {
-                        res.render('assets/first-category/de', {
+                        res.render('assets/category/first-category/de', {
                             product: secondCategory,
                             title: 'ECSell',
                             prev_category: detail_params,
@@ -813,7 +956,7 @@ router.get('/:category/:id', (req, res, next) => {
                     statusCode = 500
                 }
                 console.log(detail_params)
-                res.render('assets/second-category/de', {
+                res.render('assets/category/second-category/de', {
                     product: products,
                     title: 'ECSell',
                     prev_category: detail_params,
@@ -825,6 +968,135 @@ router.get('/:category/:id', (req, res, next) => {
             })
 
     }
+})
+
+
+paypal.configure({
+    'mode': 'sandbox',
+    'client_id': ppconfig.client_id,
+    'client_secret': ppconfig.client_secret,
+    'grant_type': 'client_credentials',
+    'content_type': 'application/x-www-form-urlencoded'
+});
+
+router.get('/checkout', function (req, res) {
+    console.log('-------------------------')
+    //build PayPal payment request
+    var payReq = {
+        intent: 'sale',
+        redirect_urls: {
+            return_url: 'http://localhost:3000/return',
+            cancel_url: 'http://localhost:3000/cancel'
+        },
+        payer: {
+            payment_method: 'paypal'
+        },
+        transactions: [{
+            amount: {
+                total: parseInt(req.query.amount) * parseInt(req.query.price),
+                currency: 'USD'
+            },
+            description: req.query.title
+        }]
+    };
+
+    async.waterfall([
+        function (callback) {
+            paypal.generate_token(function (err, token) {
+                if (err) {
+                    console.log('generate_token ERROR: ');
+                    console.log(err);
+                    callback(err);
+                } else {
+                    console.log('----------------------------------------------------------');
+                    console.log('----------       ACCESS TOKEN RESPONSE          ----------');
+                    console.log('----------------------------------------------------------');
+                    console.log(JSON.stringify(token));
+                    callback(null, token);
+                }
+            });
+        },
+        function (token, callback) {
+            console.log('----------------------------------------------------------');
+            console.log('----------             CREATE PAYMENT           ----------');
+            console.log('----------------------------------------------------------');
+            console.log(JSON.stringify(payReq));
+
+            paypal.payment.create(payReq, function (err, response) {
+                if (err) {
+                    console.log('create payment ERROR: ');
+                    console.log(err);
+                    callback(err);
+                } else {
+                    console.log('----------------------------------------------------------');
+                    console.log('----------     CREATE PAYMENT RESPONSE          ----------');
+                    console.log('----------------------------------------------------------');
+                    console.log(JSON.stringify(response));
+
+                    var url = response.links[1].href;
+                    var tmpAr = url.split('EC-');
+                    var token = {};
+                    token.redirectUrl = 'https://www.sandbox.paypal.com/checkoutnow?useraction=commit&token=EC-' + tmpAr[1];
+                    token.token = 'EC-' + tmpAr[1];
+                    console.log('------ Token Split ------');
+                    console.log(token);
+
+                    callback(null, token);
+                }
+            });
+        }], function (err, result) {
+        if (err) {
+            console.log('An ERROR occured!');
+            console.log(err);
+            res.json(err);
+        } else {
+            console.log('----------------------------------------------------------');
+            console.log('----------          REDIRECTING USER            ----------');
+            console.log('----------------------------------------------------------');
+            console.log(result.redirectUrl);
+            res.redirect(result.redirectUrl);
+        }
+    });
+})
+
+router.get('/return', function (req, res) {
+    console.log('----------------------------------------------------------');
+    console.log('----------       RETURN WITH QUERY PARAMS       ----------');
+    console.log('----------------------------------------------------------');
+    console.log(JSON.stringify(req.query));
+    console.log('-------------------------')
+    paypal.payment.get(req.query.paymentId, function (err, payment) {
+        if (err !== null) {
+            console.log('ERROR');
+            console.log(err);
+            res.json(err);
+        } else {
+            console.log('----------------------------------------------------------');
+            console.log('----------             PAYMENT DETAILS          ----------');
+            console.log('----------------------------------------------------------');
+            console.log(JSON.stringify(payment));
+            var execute_details = {'payer_id': payment.payer.payer_info.payer_id};
+            paypal.payment.execute(payment.id, execute_details, function (err, response) {
+                if (err !== null) {
+                    console.log('ERROR');
+                    console.log(err);
+                    res.json(err);
+                } else {
+                    console.log('----------------------------------------------------------');
+                    console.log('----------      PAYMENT COMPLETED DETAILS       ----------');
+                    console.log('----------------------------------------------------------');
+                    console.log(JSON.stringify(response));
+                    var displayData = "ID: " + response.id + "<br />State: " + response.state + "<br />";
+                    res.send(displayData);
+                }
+            })
+        }
+    })
+})
+
+router.get('/cancel', function (req, res) {
+    console.log(req.query)
+    res.redirect('/');
 })
 
 

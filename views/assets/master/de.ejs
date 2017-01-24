@@ -141,23 +141,19 @@
                                 <ul class="nav navbar-nav navbar-right">
                                     <li>
                                         <% if( status == 200) { %>
-                                        <div class="btn-group dropdown-language">
+                                        <div class="btn-group dropdown-language" style="margin-top: 17px">
                                             <button type="button" class="btn btn-default dropdown-toggle person"
                                                     data-toggle="dropdown">
                                                 Personal Center <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" role="menu">
-                                                <li><a onclick="check_out('English')">English</a></li>
-                                                <li><a onclick="check_out('German')">German</a></li>
-                                            </ul>
-                                            <ul class="person_ul dropdown-menu" role="menu">
-                                                <li><a ref="nofollow" href="/Personal-Order">Auftrag anschauen</a></li>
-                                                <li><a ref="nofollow" href="/personal-center">Mein Konto</a></li>
-                                                <li class=""><a ref="nofollow" href="/logout">Ausloggen</a></li>
+                                                <li><a  href="/de/Personal-Order">Auftrag anschauen</a></li>
+                                                <li><a  href="/de/personal-center">Mein Konto</a></li>
+                                                <li class=""><a  href="/de/logout">Ausloggen</a></li>
                                             </ul>
                                         </div>
                                         <% } else { %>
-                                        <a href="/login" class="">
+                                        <a href="/de/login" class="">
                                             <embed src="/assets/img/icon/user.svg" type="image/svg+xml"/>
                                             Anmelden</a>
                                         <% } %>

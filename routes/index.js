@@ -29,7 +29,7 @@ var checkCategories = function (req, res, next) {
 }
 
 router.get('/test/:id', (req, res) => {
-    // db.categorys.findOne({
+    // db.category.findOne({
     //     'secondCategory.thirdTitles.thirdUrl': '/product/' + req.params["id"]
     // }, (err, result) => {
     //     let arr = []

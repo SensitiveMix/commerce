@@ -14,9 +14,10 @@
 
                         <h3>Log In</h3>
                         <div class="gap-20"></div>
-                        <form role="form" action="/dologin" method="post">
+                        <form role="form" action="/en/dologin" method="post">
                             <div class="form-group">
-                                <input type="email" class="form-control input-lg" name="name" id="login_email"
+                                <input type="email" onblur="validateEmail(this.value)" class="form-control input-lg"
+                                       name="name" id="login_email"
                                        placeholder="Enter">
                             </div>
                             <div class="form-group">
@@ -162,7 +163,7 @@
                 } else {
                     $.ajax({
                         type: 'POST',
-                        url: '/doregister',
+                        url: '/en/doregister',
                         data: {
                             email: $('#register_email').val().trim(),
                             password: $('#register_password').val().trim()
@@ -189,5 +190,29 @@
             $('#register-btn').attr('disabled', 'true');
         }
     })
+
+    function validateEmail(email) {
+        $.ajax({
+            type: 'POST',
+            url: '/validateEmail',
+            data: {email: email},
+            dataType: 'json',
+            success: function (data) {
+                if (data == '200') {
+                    $('#login_email').val('')
+                    $('#login_email').parents('.form-group').addClass('has-error');
+                    $('#login_email').parents('.form-group').prepend('<div class="alert alert-danger alert-dismissible" role="alert">'
+                        + '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>'
+                        + '<strong>Warning!</strong>' + 'Email not exist</div>');
+                    layer.msg('Email has been registered')
+                }
+            },
+            error: function (err) {
+                if (err == '500') {
+                    layer.msg('NetWork Error');
+                }
+            }
+        });
+    }
 
 </script>

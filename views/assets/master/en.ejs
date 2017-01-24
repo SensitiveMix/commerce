@@ -144,23 +144,19 @@
                                         <!--<a class="dropdown-toggle"><i-->
                                         <!--class="fa fa-user-circle"></i>Hi! <%= user.name %>-->
                                         <!--</a>-->
-                                        <div class="btn-group dropdown-language">
+                                        <div class="btn-group dropdown-language" style="margin-top: 17px">
                                             <button type="button" class="btn btn-default dropdown-toggle person"
                                                     data-toggle="dropdown">
                                                 Personal Center <span class="caret"></span>
                                             </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a onclick="check_out('English')">English</a></li>
-                                                <li><a onclick="check_out('German')">German</a></li>
-                                            </ul>
-                                            <ul class="person_ul dropdown-menu" role="menu">
-                                                <li><a ref="nofollow" href="/Personal-Order">My Orders</a></li>
-                                                <li><a ref="nofollow" href="/personal-center">My Account</a></li>
-                                                <li class=""><a ref="nofollow" href="/logout">Sign out</a></li>
+                                            <ul class=" dropdown-menu" role="menu">
+                                                <li><a href="/en/Personal-Order">My Orders</a></li>
+                                                <li><a href="/en/personal-center">My Account</a></li>
+                                                <li class=""><a href="/en/logout">Sign out</a></li>
                                             </ul>
                                         </div>
                                         <% } else { %>
-                                        <a href="/login" class="">
+                                        <a href="/en/login" class="">
                                             <embed src="/assets/img/icon/user.svg" type="image/svg+xml"/>
                                             Login</a>
                                         <% } %>
@@ -171,11 +167,12 @@
                                                    type="image/svg+xml"/>
                                             Customer Service </a>
                                     </li>
-                                    <li  style="margin-top: 16px;">
+                                    <li style="margin-top: 16px;">
                                         <div class="btn-group dropdown-language">
-                                            <button type="button" class="btn btn-default dropdown-toggle language-toggle"
+                                            <button type="button"
+                                                    class="btn btn-default dropdown-toggle language-toggle"
                                                     data-toggle="dropdown">
-                                                 English
+                                                English
                                             </button>
                                             <ul class="dropdown-menu" role="menu">
                                                 <li><a onclick="check_out('English')">English</a></li>
@@ -332,7 +329,7 @@
 <script src="/js/ejs.js"></script>
 <script src='/js/storage.js'></script>
 <script>
-    $(function(){
+    $(function () {
         // 默认显示
         $(".dropdown-toggle").dropdown('toggle')
     })
