@@ -91,7 +91,9 @@
                         <input type="radio" name="options" autocomplete="off" checked value="parcel">小包类物流
                     </label>
                     <label class="btn btn-primary logistics-panel-type">
+
                         <input type="radio" name="options" autocomplete="off" value="ordinary">普通类物流
+
                     </label>
                     <label class="btn btn-primary logistics-panel-type">
                         <input type="radio" name="options" autocomplete="off" value="express">特快类物流
@@ -440,16 +442,9 @@
                                                 })
                                                 formData['transport_fees'] = [];
                                                 var fee = [];
+
                                                 $('.yunfei-oridinary-form-group').each(function () {
-//                                                    formData['transport_fees'][$(this).index()] = [];
-//                                                    formData['transport_fees'][$(this).index()]['transport_default_quantity'] = '';
-//                                                    formData['transport_fees'][$(this).index()]['transport_default_fee'] = ''
-//                                                    formData['transport_fees'][$(this).index()]['transport_add_quantity'] = ''
-//                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = ''
-//                                                    formData['transport_fees'][$(this).index()]['transport_default_quantity'] = $(this).children('input[name="create-country-express-fee-range"]').val();
-//                                                    formData['transport_fees'][$(this).index()]['transport_default_fee'] = $(this).children('input[name="create-country-express-fee"]').val();
-//                                                    formData['transport_fees'][$(this).index()]['transport_add_quantity'] = $(this).children('input[name="create-country-express-fee-add-quantity"]').val();
-//                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = $(this).children('input[name="create-country-express-fee-add"]').val();
+                                                  formData['transport_fees'][$(this).index()]['transport_add_fee'] = $(this).children('input[name="create-country-express-fee-add"]').val();
                                                     var index = $(this).index();
                                                     fee[index] = {
                                                         'transport_default_quantity': $(this).children('input[name="create-country-oridinary-fee-range"]').val(),
