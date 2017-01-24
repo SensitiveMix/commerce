@@ -101,12 +101,14 @@
                 type: 'POST',
                 data: para,
                 success: function (res) {
-                    if (res == 'success') {
-                        layer.alert('更新成功！');
+                    if (res.succeed) {
+                        layer.alert('更新成功！')
+                    } else {
+                        layer.alert('更新失败，请检查是否有非法词汇！')
                     }
                 }, error: function (err) {
                     if (err) {
-                        layer.alert('更新失败，请检查是否有非法词汇！');
+                        layer.alert('更新失败，请检查是否有非法词汇！')
                     }
                 }
             });

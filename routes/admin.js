@@ -2369,7 +2369,9 @@ router.get('/crawler', (req, res, next) => {
 router.get('/crawler_manage', (req, res) => {
     res.render('admin/crawler/crawler', {username: u.nick_name})
 })
-
+router.get('/product-manage', (req, res) => {
+    res.render('admin/product/product-manage', {username: u.nick_name})
+})
 router.post('/crawler_manage', (req, res) => {
     console.log(req.body)
     let payload = {
@@ -2444,7 +2446,8 @@ router.get('/fee-express', (req, res) => {
 })
 
 router.post('/fee-express', (req, res) => {
-    let payload = req.body
+    let payload = JSON.parse(req.body.data)
+    console.log(payload)
     let opts = new Promise((resolve, reject) => {
         db.feeExpress.find({type: payload.type}, (err, data) => {
             if (err) return res.send(500, {succeed: false, msg: "internal error"})
@@ -2453,6 +2456,7 @@ router.post('/fee-express', (req, res) => {
     })
     opts
         .then((d) => {
+            console.log(d)
             if (d.length == 0) {
                 let fee = new db.feeExpress(payload)
                 fee.save((err) => {
@@ -2460,7 +2464,7 @@ router.post('/fee-express', (req, res) => {
                     res.send(200, {succeed: true, msg: 'add success'})
                 })
             } else {
-                async.forEach(req.body.country, (item, callback) => {
+                async.forEach(payload.country, (item, callback) => {
                     db.feeExpress.update({type: payload.type}, {
                         $push: {
                             country: item
@@ -2479,12 +2483,12 @@ router.post('/fee-express', (req, res) => {
 
 router.post('/fee-express-country', (req, res) => {
     console.log(req.body)
-    let payload = req.body
 
+    let payload = JSON.parse(req.body.data)
+    if (!payload) return new customError(500, "param error", res)
     let fee = new db.feeExpressCountry(payload)
-
     fee.save((err, docsInserted) => {
-        if (err) return res.send(500, {succeed: false, msg: "internal error"})
+        if (err || !docsInserted) return res.send(500, {succeed: false, msg: "internal error"})
         res.send(200, {succeed: true, msg: {countryId: docsInserted._id}})
     })
 })
