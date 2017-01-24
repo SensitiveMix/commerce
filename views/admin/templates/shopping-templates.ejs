@@ -165,7 +165,7 @@
                             + '<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#country_detail_' + item._id + '">查看国家详细</button>'
                             + '</td>'
                             + '<td width="30%">'
-                            + '<button class="btn btn-primary">修改</button>'
+                            + '<button class="btn btn-primary btn-xs">修改</button>'
                             + '</td>'
                             + '</tr>';
                     $('#express-template').append(myhtml);
@@ -191,10 +191,16 @@
                             + '</thead>'
                             + '<tbody>';
                     item.country.forEach(function (country_item) {
+                        var fee_status = country_item.free_ship.fee_status?country_item.free_ship.fee_quantity +'KG以上包邮':"否";
                         mycountry += '<tr>'
                                 + '<td>' + country_item._id
                                 + '</td>'
-                                + '<td>' + country_item.country_name.join(',')
+                                + '<td>国家包括:' + country_item.country_name.join(',')+'<br>'
+                                + '预计<span>'+ country_item.expected_delivery +'</span>天运达<br>'
+                                + '包邮:<span>'+ fee_status +'</span>天运达'                       
+                                + '</td>'
+                                + '<td>'
+                                + '<button class="btn btn-primary btn-xs" id="' + country_item._id + '">修改</button>'
                                 + '</td>'
                                 + '</tr>'
                     });
@@ -204,7 +210,6 @@
                             + '</div>'
                             + '<div class="modal-footer">'
                             + '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-                            + '<button type="button" class="btn btn-primary">Save changes</button>'
                             + '</div>'
                             + '</div>'
                             + '</div>'
