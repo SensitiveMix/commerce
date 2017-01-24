@@ -2444,7 +2444,7 @@ router.get('/fee-express', (req, res) => {
 })
 
 router.post('/fee-express', (req, res) => {
-    let payload = req.body
+    let payload = JSON.parse(req.body.data)
     console.log(payload)
     let opts = new Promise((resolve, reject) => {
         db.feeExpress.find({type: payload.type}, (err, data) => {
@@ -2454,7 +2454,7 @@ router.post('/fee-express', (req, res) => {
     })
     opts
         .then((d) => {
-        console.log(d)
+            console.log(d)
             if (d.length == 0) {
                 let fee = new db.feeExpress(payload)
                 fee.save((err) => {
@@ -2462,7 +2462,7 @@ router.post('/fee-express', (req, res) => {
                     res.send(200, {succeed: true, msg: 'add success'})
                 })
             } else {
-                async.forEach(req.body.country, (item, callback) => {
+                async.forEach(payload.country, (item, callback) => {
                     db.feeExpress.update({type: payload.type}, {
                         $push: {
                             country: item
@@ -2480,22 +2480,13 @@ router.post('/fee-express', (req, res) => {
 })
 
 router.post('/fee-express-country', (req, res) => {
-    // console.log(req.body);
-    let payload = {
-        country_name:req.body['data[country_name][]'],
-        expected_delivery:req.body['data[expected_delivery]'],
-        free_ship:{
-            fee_quantity:req.body['data[free_ship][fee_quantity]'],
-            fee_status:req.body['data[free_ship][fee_status]']
-        },
-        transport_fees:JSON.parse(req.body['data[transport_fees]'])
-    }
-    console.log(payload);
+    console.log(req.body)
 
+    let payload = JSON.parse(req.body.data)
+    if (!payload) return new customError(500, "param error", res)
     let fee = new db.feeExpressCountry(payload)
-
     fee.save((err, docsInserted) => {
-        if (err) return res.send(500, {succeed: false, msg: "internal error"})
+        if (err || !docsInserted) return res.send(500, {succeed: false, msg: "internal error"})
         res.send(200, {succeed: true, msg: {countryId: docsInserted._id}})
     })
 })

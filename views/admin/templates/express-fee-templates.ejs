@@ -88,19 +88,19 @@
                  data-country="CN" data-widget-cid="widget-5">
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-primary active logistics-panel-type">
-                        <input type="radio" name="options" autocomplete="off" checked value="Parcel">小包类物流
+                        <input type="radio" name="options" autocomplete="off" checked value="parcel">小包类物流
                     </label>
                     <label class="btn btn-primary logistics-panel-type">
-                        <input type="radio" name="options" autocomplete="off" value="Orindary">普通类物流
+                        <input type="radio" name="options" autocomplete="off" value="ordinary">普通类物流
                     </label>
                     <label class="btn btn-primary logistics-panel-type">
-                        <input type="radio" name="options" autocomplete="off" value="Express">特快类物流
+                        <input type="radio" name="options" autocomplete="off" value="express">特快类物流
                     </label>
                 </div>
                 <div class="ui-tab-body ui-switchable-content" id="logistic-list">
                     <div id="economy-logistics-panel"
                          class="logistics-panel ui-tab-pane ui-tab-active series-wrap ui-switchable-panel"
-                         data-role="Parcel" data-series="cn-post" style="display: block;">
+                         data-role="parcel" data-series="cn-post" style="display: block;">
                         <div class="alert alert-warning alert-dismissible fade in" role="alert">
                             <button type="button" class="close" data-dismiss="alert"><span
                                         aria-hidden="true">×</span><span class="sr-only">Close</span></button>
@@ -210,12 +210,12 @@
                                             //新增国家提交(小包)
                                             $('#create-country-submit-xiaobao').click(function () {
                                                 var country = [],
-                                                        expressFee = $('#create-country input[name="create-country-express-fee"]').val(),
-                                                        expressGuahaoFee = $('#create-country input[name="create-country-express-guahao-fee"]').val(),
-                                                        expressBetweenFrom = $('#create-country input[name="create-country-express-day-between"]').val(),
-                                                        expressBetweenTo = $('#create-country input[name="create-country-express-day-to"]').val(),
-                                                        expressBaoyou = $('#create-country input[name="create-country-baoyou"]').val(),
-                                                        formData = [];
+                                                    expressFee = $('#create-country input[name="create-country-express-fee"]').val(),
+                                                    expressGuahaoFee = $('#create-country input[name="create-country-express-guahao-fee"]').val(),
+                                                    expressBetweenFrom = $('#create-country input[name="create-country-express-day-between"]').val(),
+                                                    expressBetweenTo = $('#create-country input[name="create-country-express-day-to"]').val(),
+                                                    expressBaoyou = $('#create-country input[name="create-country-baoyou"]').val(),
+                                                    formData = [];
                                                 $('#create-country input[name="country"]:checked').each(function () {
                                                     country.push($(this).val());
                                                 })
@@ -224,9 +224,9 @@
                                                     'registered_fee': expressGuahaoFee,//挂号费
                                                     'expected_delivery': expressBetweenFrom + '~' + expressBetweenTo,
                                                 };
-                                                formData['transport_fees'] = {
+                                                formData['transport_fees'] = [{
                                                     'transport_fee': expressFee
-                                                }
+                                                }]
                                                 formData['free_ship'] = {
                                                     "fee_quantity": expressBaoyou,
                                                     "fee_status": expressBaoyou ? true : false
@@ -236,7 +236,7 @@
                                                     type: 'POST',
                                                     url: '/admin/fee-express-country',
                                                     data: {
-                                                        data: formData,
+                                                        data: JSON.stringify(formData)
                                                     },
                                                     dataType: 'json',
                                                     success: function (data) {
@@ -244,9 +244,12 @@
                                                         if (data.succeed == true) {
                                                             alert('创建成功！');
                                                             $('#economy-logistics-panel').append('<input type="hidden" name="country_id" value="' + data.msg.countryId + '">')
+                                                        } else {
+                                                            alert('参数有误，创建失败！')
                                                         }
                                                     },
                                                     error: function (data) {
+                                                        alert('参数有误，创建失败！')
                                                     }
                                                 });
 
@@ -296,7 +299,7 @@
                         </div>
                     </div>
                     <div id="standard-logistics-panel"
-                         class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="Orindary"
+                         class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="ordinary"
                          data-series="cn-business" style="display: none;">
                         <div class="alert alert-warning alert-dismissible fade in" role="alert">
                             <button type="button" class="close" data-dismiss="alert"><span
@@ -410,11 +413,11 @@
                                             $('.add-create-seleted').on('click', function () {
                                                 var div = $(this).parent().parent().find('div').eq(0);
                                                 div.append('<div class="form-group yunfei-form-group">'
-                                                        + '<input style="width: 13%;" type="text" name="create-country-express-fee-range">KG以内，'
-                                                        + '<input style="width: 13%;" type="text" name="create-country-express-fee">RMB,'
-                                                        + '每增加<input style="width: 13%;" type="text" name="create-country-express-fee-range">KG,增加运费'
-                                                        + '<input style="width: 13%;" type="text" name="create-country-express-fee">RMB'
-                                                        + '</div>'
+                                                    + '<input style="width: 13%;" type="text" name="create-country-express-fee-range">KG以内，'
+                                                    + '<input style="width: 13%;" type="text" name="create-country-express-fee">RMB,'
+                                                    + '每增加<input style="width: 13%;" type="text" name="create-country-express-fee-range">KG,增加运费'
+                                                    + '<input style="width: 13%;" type="text" name="create-country-express-fee">RMB'
+                                                    + '</div>'
                                                 );
                                             })
                                             //国家
@@ -426,27 +429,18 @@
                                             //新增国家提交
                                             $('#country-select-standard').click(function () {
                                                 var country = [],
-                                                        transportFee = [],
-                                                        expressGuahaoFee = $('#create-country-standard input[name="create-country-express-guahao-fee"]').val(),
-                                                        expressBetweenFrom = $('#create-country-standard input[name="create-country-express-day-between"]').val(),
-                                                        expressBetweenTo = $('#create-country-standard input[name="create-country-express-day-to"]').val(),
-                                                        expressBaoyou = $('#create-country-standard input[name="create-country-baoyou"]').val(),
-                                                        formData = [];
+                                                    transportFee = [],
+                                                    expressGuahaoFee = $('#create-country-standard input[name="create-country-express-guahao-fee"]').val(),
+                                                    expressBetweenFrom = $('#create-country-standard input[name="create-country-express-day-between"]').val(),
+                                                    expressBetweenTo = $('#create-country-standard input[name="create-country-express-day-to"]').val(),
+                                                    expressBaoyou = $('#create-country-standard input[name="create-country-baoyou"]').val(),
+                                                    formData = [];
                                                 $('#create-country-standard input[name="country"]:checked').each(function () {
                                                     country.push($(this).val());
                                                 })
                                                 formData['transport_fees'] = [];
-                                                $('#create-country-standard .yunfei-form-group').each(function () {
-                                                    var fee = {
-                                                        "transport_default_quantity": $(this).children('input[name="create-country-express-fee-range"]').val(),
-                                                        "transport_default_fee": $(this).children('input[name="create-country-express-fee"]').val(),
-                                                        "transport_add_quantity": $(this).children('input[name="create-country-express-fee-add-quantity"]').val(),
-                                                        "transport_add_fee": $(this).children('input[name="create-country-express-fee-add"]').val()
-                                                    }
-                                                    formData['transport_fees'].push(fee);
-                                                })
                                                 var fee = [];
-                                                $('#create-country-logistics .yunfei-form-group').each(function () {
+                                                $('.yunfei-oridinary-form-group').each(function () {
 //                                                    formData['transport_fees'][$(this).index()] = [];
 //                                                    formData['transport_fees'][$(this).index()]['transport_default_quantity'] = '';
 //                                                    formData['transport_fees'][$(this).index()]['transport_default_fee'] = ''
@@ -458,18 +452,22 @@
 //                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = $(this).children('input[name="create-country-express-fee-add"]').val();
                                                     var index = $(this).index();
                                                     fee[index] = {
-                                                        'transport_default_quantity':$(this).children('input[name="create-country-express-fee-range"]').val(),
-                                                        'transport_default_fee':$(this).children('input[name="create-country-express-fee"]').val(),
-                                                        'transport_add_quantity':$(this).children('input[name="create-country-express-fee-add-quantity"]').val(),
-                                                        'transport_add_fee':$(this).children('input[name="create-country-express-fee-add"]').val()
+                                                        'transport_default_quantity': $(this).children('input[name="create-country-oridinary-fee-range"]').val(),
+                                                        'transport_default_fee': $(this).children('input[name="create-country-oridinary-fee"]').val(),
+                                                        'transport_add_quantity': $(this).children('input[name="create-country-oridinary-fee-add-quantity"]').val(),
+                                                        'transport_add_fee': $(this).children('input[name="create-country-oridinary-fee-add"]').val()
                                                     };
                                                 })
-                                                formData['transport_fees'] = JSON.stringify(fee);
+                                                formData['transport_fees'] = fee
+                                                console.log('------')
+                                                console.log(fee)
+                                                console.log(formData['transport_fees'])
 
                                                 formData = {
                                                     'country_name': country,//国家名称
                                                     'registered_fee': expressGuahaoFee,//挂号费
                                                     'expected_delivery': expressBetweenFrom + '~' + expressBetweenTo,
+                                                    'transport_fees': fee
                                                 };
                                                 formData['free_ship'] = {
                                                     "fee_quantity": expressBaoyou,
@@ -480,16 +478,19 @@
                                                     type: 'POST',
                                                     url: '/admin/fee-express-country',
                                                     data: {
-                                                        data: formData,
+                                                        data: JSON.stringify(formData)
                                                     },
                                                     dataType: 'json',
                                                     success: function (data) {
                                                         if (data.succeed == true) {
                                                             alert('创建成功！');
                                                             $('#standard-logistics-panel').append('<input type="hidden" name="country_id" value="' + data.msg.countryId + '">')
+                                                        } else {
+                                                            alert('参数有误，创建失败！')
                                                         }
                                                     },
                                                     error: function (data) {
+                                                        alert('参数有误，创建失败！')
                                                     }
                                                 });
 
@@ -504,15 +505,15 @@
                                             </button>
                                         </label>
                                         <div class="form-group">
-                                            <div class="form-group yunfei-form-group">
+                                            <div class="form-group yunfei-oridinary-form-group">
                                                 <input style="width: 13%;" type="text"
-                                                       name="create-country-express-fee-range">KG以内，<input
+                                                       name="create-country-oridinary-fee-range">KG以内，<input
                                                         style="width: 13%;" type="text"
-                                                        name="create-country-express-fee">RMB,每增加<input
+                                                        name="create-country-oridinary-fee">RMB,每增加<input
                                                         style="width: 13%;" type="text"
-                                                        name="create-country-express-fee-add-quantity">KG,增加运费<input
+                                                        name="create-country-oridinary-fee-add-quantity">KG,增加运费<input
                                                         style="width: 13%;" type="text"
-                                                        name="create-country-express-fee-add">RMB
+                                                        name="create-country-oridinary-fee-add">RMB
                                             </div>
                                         </div>
                                         订单总重量达到<input type="text" name="create-country-baoyou">KG以上包邮
@@ -542,7 +543,7 @@
                         </div>
                     </div>
                     <div id="express-logistics-panel"
-                         class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="Express"
+                         class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="express"
                          data-series="cn-dedicated" style="display: none;">
                         <div class="alert alert-warning alert-dismissible fade in" role="alert">
                             <button type="button" class="close" data-dismiss="alert"><span
@@ -649,12 +650,12 @@
                                         $(function () {
                                             $('#country-select-fast').click(function () {
                                                 var country = [],
-                                                        transportFee = [],
-                                                        expressGuahaoFee = $('#create-country-logistics input[name="create-country-express-guahao-fee"]').val(),
-                                                        expressBetweenFrom = $('#create-country-logistics input[name="create-country-express-day-between"]').val(),
-                                                        expressBetweenTo = $('#create-country-logistics input[name="create-country-express-day-to"]').val(),
-                                                        expressBaoyou = $('#create-country-logistics input[name="create-country-baoyou"]').val(),
-                                                        formData = new Array();
+                                                    transportFee = [],
+                                                    expressGuahaoFee = $('#create-country-logistics input[name="create-country-express-guahao-fee"]').val(),
+                                                    expressBetweenFrom = $('#create-country-logistics input[name="create-country-express-day-between"]').val(),
+                                                    expressBetweenTo = $('#create-country-logistics input[name="create-country-express-day-to"]').val(),
+                                                    expressBaoyou = $('#create-country-logistics input[name="create-country-baoyou"]').val(),
+                                                    formData = new Array();
                                                 $('#create-country-logistics input[name="country"]:checked').each(function () {
                                                     country.push($(this).val());
                                                 })
@@ -675,15 +676,15 @@
 //                                                    formData['transport_fees'][$(this).index()]['transport_default_fee'] = $(this).children('input[name="create-country-express-fee"]').val();
 //                                                    formData['transport_fees'][$(this).index()]['transport_add_quantity'] = $(this).children('input[name="create-country-express-fee-add-quantity"]').val();
 //                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = $(this).children('input[name="create-country-express-fee-add"]').val();
-                                                     var index = $(this).index();
-                                                     fee[index] = {
-                                                         'transport_default_quantity':$(this).children('input[name="create-country-express-fee-range"]').val(),
-                                                         'transport_default_fee':$(this).children('input[name="create-country-express-fee"]').val(),
-                                                         'transport_add_quantity':$(this).children('input[name="create-country-express-fee-add-quantity"]').val(),
-                                                         'transport_add_fee':$(this).children('input[name="create-country-express-fee-add"]').val()
-                                                     };
+                                                    var index = $(this).index();
+                                                    fee[index] = {
+                                                        'transport_default_quantity': $(this).children('input[name="create-country-express-fee-range"]').val(),
+                                                        'transport_default_fee': $(this).children('input[name="create-country-express-fee"]').val(),
+                                                        'transport_add_quantity': $(this).children('input[name="create-country-express-fee-add-quantity"]').val(),
+                                                        'transport_add_fee': $(this).children('input[name="create-country-express-fee-add"]').val()
+                                                    };
                                                 })
-                                                formData['transport_fees'] = JSON.stringify(fee);
+                                                formData['transport_fees'] = fee
                                                 formData['free_ship'] = {
                                                     "fee_quantity": expressBaoyou,
                                                     "fee_status": expressBaoyou ? true : false
@@ -693,16 +694,19 @@
                                                     type: 'POST',
                                                     url: '/admin/fee-express-country',
                                                     data: {
-                                                        data: formData,
+                                                        data: JSON.stringify(formData)
                                                     },
                                                     dataType: 'json',
                                                     success: function (data) {
                                                         if (data.succeed == true) {
                                                             alert('创建成功！');
                                                             $('#express-logistics-panel').append('<input type="hidden" name="country_id" value="' + data.msg.countryId + '">')
+                                                        } else {
+                                                            alert('参数有误，创建失败！')
                                                         }
                                                     },
                                                     error: function (data) {
+                                                        alert('参数有误，创建失败！')
                                                     }
                                                 });
                                             })
@@ -817,10 +821,10 @@
                                                     if (weight_for_jian.length == 0) {
 
                                                         myjinggao = '<div id="weightTip" class="alert alert-danger alert-dismissible fade in" role="alert">'
-                                                                + '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'
-                                                                + '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'
-                                                                + '必须输入包装重量'
-                                                                + '</div>';
+                                                            + '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'
+                                                            + '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'
+                                                            + '必须输入包装重量'
+                                                            + '</div>';
                                                         $('.ccl-title').append(myjinggao);
                                                         return false;
                                                     }
@@ -839,46 +843,46 @@
                                                             if (data.express) {
                                                                 if (data.express.price) {
                                                                     myhtml = '<tr>'
-                                                                            + '<td class="padleft20" width="50%">'
-                                                                            + '<a target="_blank">'
-                                                                            + data.express.msg
-                                                                            + '</a>'
-                                                                            + '</td>'
-                                                                            + '<td class="tal-right" width="22%">3-8 days</td>'
-                                                                            + '<td class="tal-right" width="28%">'
-                                                                            + data.express.price
-                                                                            + '</td>'
-                                                                            + '</tr>';
+                                                                        + '<td class="padleft20" width="50%">'
+                                                                        + '<a target="_blank">'
+                                                                        + data.express.msg
+                                                                        + '</a>'
+                                                                        + '</td>'
+                                                                        + '<td class="tal-right" width="22%">3-8 days</td>'
+                                                                        + '<td class="tal-right" width="28%">'
+                                                                        + data.express.price
+                                                                        + '</td>'
+                                                                        + '</tr>';
                                                                 }
                                                             }
                                                             if (data.little_packet) {
                                                                 if (data.little_packet.price) {
                                                                     myhtml += '<tr>'
-                                                                            + '<td class="padleft20" width="50%">'
-                                                                            + '<a target="_blank">'
-                                                                            + data.little_packet.msg
-                                                                            + '</a>'
-                                                                            + '</td>'
-                                                                            + '<td class="tal-right" width="22%">3-8 days</td>'
-                                                                            + '<td class="tal-right" width="28%">'
-                                                                            + data.little_packet.price
-                                                                            + '</td>'
-                                                                            + '</tr>';
+                                                                        + '<td class="padleft20" width="50%">'
+                                                                        + '<a target="_blank">'
+                                                                        + data.little_packet.msg
+                                                                        + '</a>'
+                                                                        + '</td>'
+                                                                        + '<td class="tal-right" width="22%">3-8 days</td>'
+                                                                        + '<td class="tal-right" width="28%">'
+                                                                        + data.little_packet.price
+                                                                        + '</td>'
+                                                                        + '</tr>';
                                                                 }
                                                             }
                                                             if (data.ordinary) {
                                                                 if (data.ordinary.price) {
                                                                     myhtml += '<tr>'
-                                                                            + '<td class="padleft20" width="50%">'
-                                                                            + '<a target="_blank">'
-                                                                            + data.ordinary.msg
-                                                                            + '</a>'
-                                                                            + '</td>'
-                                                                            + '<td class="tal-right" width="22%">3-8 days</td>'
-                                                                            + '<td class="tal-right" width="28%">'
-                                                                            + data.ordinary.price
-                                                                            + '</td>'
-                                                                            + '</tr>';
+                                                                        + '<td class="padleft20" width="50%">'
+                                                                        + '<a target="_blank">'
+                                                                        + data.ordinary.msg
+                                                                        + '</a>'
+                                                                        + '</td>'
+                                                                        + '<td class="tal-right" width="22%">3-8 days</td>'
+                                                                        + '<td class="tal-right" width="28%">'
+                                                                        + data.ordinary.price
+                                                                        + '</td>'
+                                                                        + '</tr>';
                                                                 }
                                                             }
                                                             $('#calculatorbox tbody').html(myhtml);
@@ -888,10 +892,10 @@
                                                                 $('#weightTip').remove();
                                                                 $('#calculatorbox tbody').html('');
                                                                 myjinggao = '<div id="weightTip" class="alert alert-warning alert-dismissible fade in" role="alert">'
-                                                                        + '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'
-                                                                        + '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'
-                                                                        + '暂时没有快递到该国家'
-                                                                        + '</div>';
+                                                                    + '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'
+                                                                    + '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'
+                                                                    + '暂时没有快递到该国家'
+                                                                    + '</div>';
                                                                 $('.ccl-title').append(myjinggao);
                                                             }
                                                         }
@@ -955,33 +959,37 @@
     $("#submitopt").on('click', function () {
         var type = $('.logistics-panel-type.active input').val();
         var country = [];
-        $('div[data-role="'+type+'"]').find('input[name="country_id"]').each(function(){
+        $('div[data-role="' + type + '"]').find('input[name="country_id"]').each(function () {
             country.push($(this).val());
         })
-        var discount = $('div[data-role="'+type+'"]').find('input[name="freight-reduce-count-CPAM"]').val();
-        if(!country){
+        var discount = $('div[data-role="' + type + '"]').find('input[name="freight-reduce-count-CPAM"]').val();
+        if (!country) {
             alert('未设置国家运费规则！');
         }
-        var fuel_cost = $('div[data-role="'+type+'"]').find('input[name="ranyoufei"]').val();
-         $.ajax({
+        var fuel_cost = $('div[data-role="' + type + '"]').find('input[name="ranyoufei"]').val()
+        let payload = {
+            type: type,
+            country: country,
+            discount: discount,
+            fuel_cost: fuel_cost
+        }
+        console.log(payload)
+        $.ajax({
             type: 'POST',
             url: '/admin/fee-express',
             data: {
-                type: type,
-                country: country,
-                discount: discount,
-                fuel_cost: fuel_cost
+                data: JSON.stringify(payload)
             },
             dataType: 'json',
             success: function (data) {
-                console.log(data);
+                if (data.succeed) {
+                    layer.msg("添加成功")
+                } else {
+                    layer.msg("添加失败")
+                }
             }
+        })
     })
-     })
 
 
-    
-
-
-    
 </script>
