@@ -2480,8 +2480,17 @@ router.post('/fee-express', (req, res) => {
 })
 
 router.post('/fee-express-country', (req, res) => {
-    console.log(req.body)
-    let payload = req.body
+    // console.log(req.body);
+    let payload = {
+        country_name:req.body['data[country_name][]'],
+        expected_delivery:req.body['data[expected_delivery]'],
+        free_ship:{
+            fee_quantity:req.body['data[free_ship][fee_quantity]'],
+            fee_status:req.body['data[free_ship][fee_status]']
+        },
+        transport_fees:JSON.parse(req.body['data[transport_fees]'])
+    }
+    console.log(payload);
 
     let fee = new db.feeExpressCountry(payload)
 

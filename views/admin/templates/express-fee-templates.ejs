@@ -159,8 +159,8 @@
                                         <span class="freeshipping-box" style="display: none;">Free Shipping</span>
                                     </div>
                                     <label>燃油附加费:</label>
-                                    <input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"
-                                           name="ranyoufei">
+                                    <input placeholder="燃油附加费" value="12" class="" size="10" maxlength="10"
+                                           name="ranyoufei">%
                                 </td>
                                 <td width="30%">
                                     <div class="set-commit-time">
@@ -358,8 +358,8 @@
                                         <span class="freeshipping-box" style="display: none;">Free Shipping</span>
                                     </div>
                                     <label>燃油附加费:</label>
-                                    <input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"
-                                           name="ranyoufei">
+                                    <input placeholder="燃油附加费" value="12" class="" size="10" maxlength="10"
+                                           name="ranyoufei">%
                                 </td>
                                 <td width="30%">
                                     <div class="set-commit-time">
@@ -445,6 +445,26 @@
                                                     }
                                                     formData['transport_fees'].push(fee);
                                                 })
+                                                var fee = [];
+                                                $('#create-country-logistics .yunfei-form-group').each(function () {
+//                                                    formData['transport_fees'][$(this).index()] = [];
+//                                                    formData['transport_fees'][$(this).index()]['transport_default_quantity'] = '';
+//                                                    formData['transport_fees'][$(this).index()]['transport_default_fee'] = ''
+//                                                    formData['transport_fees'][$(this).index()]['transport_add_quantity'] = ''
+//                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = ''
+//                                                    formData['transport_fees'][$(this).index()]['transport_default_quantity'] = $(this).children('input[name="create-country-express-fee-range"]').val();
+//                                                    formData['transport_fees'][$(this).index()]['transport_default_fee'] = $(this).children('input[name="create-country-express-fee"]').val();
+//                                                    formData['transport_fees'][$(this).index()]['transport_add_quantity'] = $(this).children('input[name="create-country-express-fee-add-quantity"]').val();
+//                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = $(this).children('input[name="create-country-express-fee-add"]').val();
+                                                    var index = $(this).index();
+                                                    fee[index] = {
+                                                        'transport_default_quantity':$(this).children('input[name="create-country-express-fee-range"]').val(),
+                                                        'transport_default_fee':$(this).children('input[name="create-country-express-fee"]').val(),
+                                                        'transport_add_quantity':$(this).children('input[name="create-country-express-fee-add-quantity"]').val(),
+                                                        'transport_add_fee':$(this).children('input[name="create-country-express-fee-add"]').val()
+                                                    };
+                                                })
+                                                formData['transport_fees'] = JSON.stringify(fee);
 
                                                 formData = {
                                                     'country_name': country,//国家名称
@@ -580,8 +600,8 @@
                                         <span class="freeshipping-box" style="display: none;">Free Shipping</span>
                                     </div>
                                     <label>燃油附加费:</label>
-                                    <input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"
-                                           name="ranyoufei">
+                                    <input placeholder="燃油附加费" value="12" class="" size="10" maxlength="10"
+                                           name="ranyoufei">%
                                 </td>
                                 <td width="30%">
                                     <div class="set-commit-time">
@@ -646,23 +666,24 @@
                                                 formData['transport_fees'] = [];
                                                 var fee = [];
                                                 $('#create-country-logistics .yunfei-form-group').each(function () {
-                                                    formData['transport_fees'][$(this).index()] = [];
-                                                    formData['transport_fees'][$(this).index()]['transport_default_quantity'] = '';
-                                                    formData['transport_fees'][$(this).index()]['transport_default_fee'] = ''
-                                                    formData['transport_fees'][$(this).index()]['transport_add_quantity'] = ''
-                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = ''
-                                                    formData['transport_fees'][$(this).index()]['transport_default_quantity'] = $(this).children('input[name="create-country-express-fee-range"]').val();
-                                                    formData['transport_fees'][$(this).index()]['transport_default_fee'] = $(this).children('input[name="create-country-express-fee"]').val();
-                                                    formData['transport_fees'][$(this).index()]['transport_add_quantity'] = $(this).children('input[name="create-country-express-fee-add-quantity"]').val();
-                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = $(this).children('input[name="create-country-express-fee-add"]').val();
-                                                    // var index = $(this).index();
-                                                    // fee[index] = {
-                                                    //     'transport_default_quantity':$(this).children('input[name="create-country-express-fee-range"]').val(),
-                                                    //     'transport_default_fee':$(this).children('input[name="create-country-express-fee"]').val(),
-                                                    //     'transport_add_quantity':$(this).children('input[name="create-country-express-fee-add-quantity"]').val(),
-                                                    //     'transport_add_fee':$(this).children('input[name="create-country-express-fee-add"]').val()
-                                                    // };
+//                                                    formData['transport_fees'][$(this).index()] = [];
+//                                                    formData['transport_fees'][$(this).index()]['transport_default_quantity'] = '';
+//                                                    formData['transport_fees'][$(this).index()]['transport_default_fee'] = ''
+//                                                    formData['transport_fees'][$(this).index()]['transport_add_quantity'] = ''
+//                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = ''
+//                                                    formData['transport_fees'][$(this).index()]['transport_default_quantity'] = $(this).children('input[name="create-country-express-fee-range"]').val();
+//                                                    formData['transport_fees'][$(this).index()]['transport_default_fee'] = $(this).children('input[name="create-country-express-fee"]').val();
+//                                                    formData['transport_fees'][$(this).index()]['transport_add_quantity'] = $(this).children('input[name="create-country-express-fee-add-quantity"]').val();
+//                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = $(this).children('input[name="create-country-express-fee-add"]').val();
+                                                     var index = $(this).index();
+                                                     fee[index] = {
+                                                         'transport_default_quantity':$(this).children('input[name="create-country-express-fee-range"]').val(),
+                                                         'transport_default_fee':$(this).children('input[name="create-country-express-fee"]').val(),
+                                                         'transport_add_quantity':$(this).children('input[name="create-country-express-fee-add-quantity"]').val(),
+                                                         'transport_add_fee':$(this).children('input[name="create-country-express-fee-add"]').val()
+                                                     };
                                                 })
+                                                formData['transport_fees'] = JSON.stringify(fee);
                                                 formData['free_ship'] = {
                                                     "fee_quantity": expressBaoyou,
                                                     "fee_status": expressBaoyou ? true : false
@@ -930,22 +951,26 @@
 </div>
 </div>
 <script>
-    //提交添加
+    //提交添加f
     $("#submitopt").on('click', function () {
         var type = $('.logistics-panel-type.active input').val();
         var country = [];
         $('div[data-role="'+type+'"]').find('input[name="country_id"]').each(function(){
             country.push($(this).val());
         })
+        var discount = $('div[data-role="'+type+'"]').find('input[name="freight-reduce-count-CPAM"]').val();
         if(!country){
             alert('未设置国家运费规则！');
         }
+        var fuel_cost = $('div[data-role="'+type+'"]').find('input[name="ranyoufei"]').val();
          $.ajax({
             type: 'POST',
-            url: '/admin/fee-template',
+            url: '/admin/fee-express',
             data: {
                 type: type,
-                country: country
+                country: country,
+                discount: discount,
+                fuel_cost: fuel_cost
             },
             dataType: 'json',
             success: function (data) {

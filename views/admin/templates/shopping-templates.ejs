@@ -81,7 +81,9 @@
     </div>
     <div class="box-body">
         <div class="col-lg-4">
-            <a href="/admin/express_fee_template"><button class="btn btn-info">新增运费模板</button></a>
+            <a href="/admin/express_fee_template">
+                <button class="btn btn-info">新增运费模板</button>
+            </a>
         </div>
         <div class="pull-right">
             <a id="wuliu" style="text-decoration: none" name="true" onclick="showLine(this.name)">了解物流方式缩写展开</a>
@@ -109,15 +111,71 @@
                 </ul>
             </div>
         </div>
+        <table class="table table-bordered" id="express-template">
+            <thead>
+            <tr>
+                <th width="20%">模板ID</th>
+                <th width="40%">运费设置
+                    <span class="setting-help-icon ui-help ui-help-icon"></span>
+                </th>
+                <th width="40%">
+                    操作
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- 物流公司列表-->
+
+            </tbody>
+        </table>
     </div>
 
 </div>
 
-<script type="text/javascript" src="/transport/express.js">
+<!--<script type="text/javascript" src="/transport/express.js"></script>-->
 
 
 <script>
-console.log(express)
+    $(function () {
+        $.ajax({
+            type: 'GET',
+            url: '/admin/fee-express',
+            data: {},
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                data.msg.forEach(function(item){
+                    var type = '';
+                    switch (item.type) {
+                        case 'parcel':
+                            type = '小包运输';
+                            break;
+                        case 'orindary':
+                            type = '普通运输';
+                            break;
+                        case 'express':
+                            type = '特快运输';
+                            break;
+                    }
+                    var myhtml = '<tr>'
+                            + '<td class="logistic-name" width="35%">'+item._id
+                            + '</td>'
+                            + '<td class="logistic-commit-standard" width="35%">'
+                            + '<span>'+type+'</span>'
+                            + '<span>燃油附加费:</span>'
+                            + '</td>'
+                            + '<td width="30%">'
+                            + '<button class="btn btn-primary">修改</button>'
+                            + '<button class="btn btn-warning">查看详细</button>'
+                            + '</td>'
+                            + '</tr>';
+                    $('#express-template').append(myhtml);
+                })
+
+
+            }
+        });
+    })
     function showLine(name) {
         if (name == "true") {
             $('#freight-fullname').css('display', 'block')
