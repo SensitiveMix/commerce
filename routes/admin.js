@@ -2445,6 +2445,7 @@ router.get('/fee-express', (req, res) => {
 
 router.post('/fee-express', (req, res) => {
     let payload = req.body
+    console.log(payload)
     let opts = new Promise((resolve, reject) => {
         db.feeExpress.find({type: payload.type}, (err, data) => {
             if (err) return res.send(500, {succeed: false, msg: "internal error"})
@@ -2453,6 +2454,7 @@ router.post('/fee-express', (req, res) => {
     })
     opts
         .then((d) => {
+        console.log(d)
             if (d.length == 0) {
                 let fee = new db.feeExpress(payload)
                 fee.save((err) => {
