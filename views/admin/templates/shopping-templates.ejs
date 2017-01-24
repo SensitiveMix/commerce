@@ -158,62 +158,62 @@
                             break;
                     }
                     var myhtml = '<tr>'
-                            + '<td class="logistic-name" width="35%">' + item._id
-                            + '</td>'
-                            + '<td class="logistic-commit-standard" width="35%">'
-                            + '<span>' + type + '   </span>'
-                            + '<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#country_detail_' + item._id + '">查看国家详细</button>'
-                            + '</td>'
-                            + '<td width="30%">'
-                            + '<button class="btn btn-primary btn-xs" id="' + item._id + '">修改</button>'
-                            + '</td>'
-                            + '</tr>';
+                        + '<td class="logistic-name" width="35%">' + item._id
+                        + '</td>'
+                        + '<td class="logistic-commit-standard" width="35%">'
+                        + '<span>' + type + '   </span>'
+                        + '<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#country_detail_' + item._id + '">查看国家详细</button>'
+                        + '</td>'
+                        + '<td width="30%">'
+                        + '<button class="btn btn-primary btn-xs" onclick="changeCountry(this.id)" id="' + item._id + '">修改</button>'
+                        + '</td>'
+                        + '</tr>';
                     $('#express-template').append(myhtml);
 
 
                     var mycountry = '<div class="modal fade" id="country_detail_' + item._id + '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">'
-                            + '<div class="modal-dialog" role="document">'
-                            + '<div class="modal-content">'
-                            + '<div class="modal-header">'
-                            + '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
-                            + '<h4 class="modal-title" id="myModalLabel">国家运费规则</h4>'
-                            + '</div>'
-                            + '<div class="modal-body">'
-                            + '<table class="table table-bordered" id="express-template">'
-                            + '<thead>'
-                            + '<tr>'
-                            + '<th width="20%">规则ID</th>'
-                            + '<th width="40%">规则详细'
-                            + '<span class="setting-help-icon ui-help ui-help-icon"></span>'
-                            + '</th>'
-                            + '<th width="40%">操作</th>'
-                            + '</tr>'
-                            + '</thead>'
-                            + '<tbody>';
+                        + '<div class="modal-dialog" role="document">'
+                        + '<div class="modal-content">'
+                        + '<div class="modal-header">'
+                        + '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+                        + '<h4 class="modal-title" id="myModalLabel">国家运费规则</h4>'
+                        + '</div>'
+                        + '<div class="modal-body">'
+                        + '<table class="table table-bordered" id="express-template">'
+                        + '<thead>'
+                        + '<tr>'
+                        + '<th width="20%">规则ID</th>'
+                        + '<th width="40%">规则详细'
+                        + '<span class="setting-help-icon ui-help ui-help-icon"></span>'
+                        + '</th>'
+                        + '<th width="40%">操作</th>'
+                        + '</tr>'
+                        + '</thead>'
+                        + '<tbody>';
                     item.country.forEach(function (country_item) {
-                        var fee_status = country_item.free_ship.fee_status?country_item.free_ship.fee_quantity +'KG以上包邮':"否";
+                        var fee_status = country_item.free_ship.fee_status ? country_item.free_ship.fee_quantity + 'KG以上包邮' : "否";
                         mycountry += '<tr>'
-                                + '<td>' + country_item._id
-                                + '</td>'
-                                + '<td>国家包括:' + country_item.country_name.join(',')+'<br>'
-                                + '预计<span>'+ country_item.expected_delivery +'</span>天运达<br>'
-                                + '包邮:<span>'+ fee_status +'</span>天运达'                       
-                                + '</td>'
-                                + '<td>'
-                                + '<button class="btn btn-primary btn-xs" id="' + country_item._id + '">修改</button>'
-                                + '</td>'
-                                + '</tr>'
+                            + '<td>' + country_item._id
+                            + '</td>'
+                            + '<td>国家包括:' + country_item.country_name.join(',') + '<br>'
+                            + '预计<span>' + country_item.expected_delivery + '</span>天运达<br>'
+                            + '包邮:<span>' + fee_status + '</span>天运达'
+                            + '</td>'
+                            + '<td>'
+                            + '<button class="btn btn-primary btn-xs" onclick="changeTemplate(this.id)" id="' + country_item._id + '">修改</button>'
+                            + '</td>'
+                            + '</tr>'
                     });
 
                     mycountry += '</tbody>'
-                            + '</table>'
-                            + '</div>'
-                            + '<div class="modal-footer">'
-                            + '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-                            + '</div>'
-                            + '</div>'
-                            + '</div>'
-                            + '</div>';
+                        + '</table>'
+                        + '</div>'
+                        + '<div class="modal-footer">'
+                        + '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>';
                     $('.box-body').append(mycountry);
 
                 })
@@ -230,6 +230,14 @@
             $('#freight-fullname').css('display', 'none')
             $('#wuliu').attr("name", "true")
         }
+    }
+
+    function changeTemplate(id) {
+
+    }
+
+    function changeCountry(id) {
+
     }
 </script>
 
