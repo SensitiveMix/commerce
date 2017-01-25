@@ -2411,8 +2411,20 @@ router.get('/crawler-products-detail', (req, res) => {
 /*---------------------------------运费模板管理------------------------------*/
 
 router.get('/shopping_template', (req, res) => {
-    console.log('22222')
     res.render('admin/templates/shopping-templates', {username: u.nick_name})
+})
+
+router.get('/template', (req, res) => {
+    let payload = {_id: req.query.id || ""}
+    db.feeExpress.findOne(payload, (err, data) => {
+        req.session.express_tempalte = data
+        res.send(200, {succeed: true, page: '/admin/express-fee-template'})
+    })
+})
+
+router.get('/express-fee-template', (req, res) => {
+    console.log(req.session.express_tempalte)
+    res.render('admin/templates/express-change-templates', {username: u.nick_name})
 })
 
 router.get('/express_fee_template', (req, res) => {

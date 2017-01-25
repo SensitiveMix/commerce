@@ -233,11 +233,42 @@
     }
 
     function changeTemplate(id) {
+        console.log(id)
+        $.ajax({
+            url: '/admin/template',
+            type: 'get',
+            data: {
+                id: id
+            },
+            success: function (data) {
+                if (data.succeed) {
+                    console.log(data)
+                    window.location = data.page
+                }
+            },
+            error: function () {
 
+            }
+        })
     }
 
     function changeCountry(id) {
+        $.ajax({
+            url: '/admin/template',
+            type: 'get',
+            data: {
+                id: id
+            },
+            success: function (data) {
+                if (data.succeed) {
+                    console.log(data)
+                    window.location = data.page
+                }
+            },
+            error: function () {
 
+            }
+        })
     }
 </script>
 
