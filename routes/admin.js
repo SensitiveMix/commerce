@@ -2416,15 +2416,29 @@ router.get('/shopping_template', (req, res) => {
 
 router.get('/template', (req, res) => {
     let payload = {_id: req.query.id || ""}
+    let country = []
     db.feeExpress.findOne(payload, (err, data) => {
-        req.session.express_tempalte = data
-        res.send(200, {succeed: true, page: '/admin/express-fee-template'})
+        console.log(data)
+        async.forEach(data.country, (e, callback) => {
+            db.feeExpressCountry.find({_id: e}, (err, result) => {
+                if (result) {
+                    country.push(result[0])
+                }
+                callback()
+            })
+        }, (err) => {
+            data.country = country
+            if (err) return res.send(500, {succeed: false, msg: "internal error"})
+            req.session.express_tempalte = data
+            res.send(200, {succeed: true, page: '/admin/express-fee-template'})
+        })
     })
 })
 
 router.get('/express-fee-template', (req, res) => {
+    req.session.express_tempalte.username = u.nick_name
     console.log(req.session.express_tempalte)
-    res.render('admin/templates/express-change-templates', {username: u.nick_name})
+    res.render('admin/templates/express-change-templates', req.session.express_tempalte)
 })
 
 router.get('/express_fee_template', (req, res) => {

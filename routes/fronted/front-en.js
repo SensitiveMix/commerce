@@ -30,6 +30,27 @@ router.get('/test/:id', (req, res) => {
             res.send(result)
         })
 })
+
+router.get('/hello', (req, res) => {
+    db.feeExpress.find({_id:"588462e7379409aeb2c4086f"}, (err, data) => {
+        async.forEach(data, (d, cb) => {
+            async.forEach(d.country, (e, callback) => {
+                db.feeExpressCountry.find({_id: e}, (err, result) => {
+                    if (result) {
+                        country.push(result[0])
+                    }
+                    callback()
+                })
+            }, (err) => {
+                d.country = country
+                cb()
+            })
+        }, (err) => {
+            if (err) return res.send(500, {succeed: false, msg: "internal error"})
+            res.send(200, {succeed: true, msg: data})
+        })
+    })
+})
 //utils
 let checkCategories = function (req, res, next) {
     if (categoryies.length == 0) {
