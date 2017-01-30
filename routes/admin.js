@@ -2473,37 +2473,50 @@ router.get('/fee-express', (req, res) => {
 
 router.post('/fee-express', (req, res) => {
     let payload = JSON.parse(req.body.data)
-    console.log(payload)
+    let query = {
+        type: payload.type,
+        country: payload.country,
+        discount: Number(payload.discount) || 0,
+        fuel_cost: Number(payload.fuel_cost) || 0
+    }
+
     let opts = new Promise((resolve, reject) => {
-        db.feeExpress.find({type: payload.type}, (err, data) => {
-            if (err) return res.send(500, {succeed: false, msg: "internal error"})
+        db.feeExpress.find({
+            type: payload.type
+        }, (err, data) => {
+            if (err) reject(data)
             resolve(data)
         })
     })
+
     opts
         .then((d) => {
-            console.log(d)
             if (d.length == 0) {
-                let fee = new db.feeExpress(payload)
+                let fee = new db.feeExpress(query)
                 fee.save((err) => {
-                    if (err) return res.send(500, {succeed: false, msg: "internal error"})
-                    res.send(200, {succeed: true, msg: 'add success'})
+                    if (err) throw {status: 500}
+                    res.send(201, {succeed: true, msg: 'add success'})
                 })
             } else {
-                async.forEach(payload.country, (item, callback) => {
-                    db.feeExpress.update({type: payload.type}, {
+                async.forEach(query.country, (item, callback) => {
+                    db.feeExpress.findOneAndUpdate({
+                        type: payload.type
+                    }, {
                         $push: {
                             country: item
                         }
                     }, (err, d) => {
-                        callback()
+                        if (err) callback()
+                        callback(d)
                     })
                 }, (err) => {
-                    if (err) return res.send(500, {succeed: false, msg: "internal error"})
+                    if (err) throw {status: 500}
                     res.send(200, {succeed: true, msg: 'add success'})
                 })
-
             }
+        })
+        .catch(() => {
+            return res.send(500, {succeed: false, msg: "internal error"})
         })
 })
 
@@ -2919,17 +2932,18 @@ router.get('/country', (req, res) => {
 })
 
 router.put('/country', (req, res) => {
+    let payload = JSON.parse(req.body.data)
     db.countryFlags.find({
-        type: req.body.type
+        type: payload.type
     }, (err, data) => {
         data[0].countryLists.forEach((e) => {
-            req.body.code.forEach((c) => {
-                if (e.country_code == c) {
+            payload.code.forEach((c) => {
+                if (e.country_cn_name == c) {
                     e.country_status = true
                 }
             })
         })
-        db.countryFlags.update({type: req.body.type}, {
+        db.countryFlags.update({type: payload.type}, {
             $set: {
                 countryLists: data[0].countryLists
             }

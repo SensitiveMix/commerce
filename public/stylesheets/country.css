@@ -1,7 +1,7 @@
 /* Zhengzheng ZHANG [tychio@yeahmobi.com]
  * 2013.9.6
  */
-.country-icon{display:inline-block;overflow:hidden;width:30px;height:30px;background-image:url("../icons/icon.png");background-repeat:no-repeat;margin:0 2px}
+.country-icon{display:inline-block;overflow:hidden;width:20px;height:20px;background-image:url("../icons/icon.png");background-repeat:no-repeat;margin:0 2px}
 .country-CN{background-position:0 0}
 .country-AF{background-position:-30px 0}
 .country-AZ{background-position:-60px 0}

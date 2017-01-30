@@ -34,6 +34,7 @@
         })
     })
 </script>
+<link rel="stylesheet" href="/stylesheets/country.css">
 <style type="text/css">
     .input-group-addon {
         border-top-right-radius: 4px !important;
@@ -55,7 +56,29 @@
         margin-bottom: 30px;
     }
 
+    .standard-select-country-parcel {
+        height: 200px;
+        overflow: scroll;
+        margin-bottom: 30px;
+    }
+
+    .standard-select-country-express {
+        height: 200px;
+        overflow: scroll;
+        margin-bottom: 30px;
+    }
+
     .standard-select-country label {
+        margin-left: 0 !important;
+        width: 50%;
+    }
+
+    .standard-select-country-parcel label {
+        margin-left: 0 !important;
+        width: 50%;
+    }
+
+    .standard-select-country-express label {
         margin-left: 0 !important;
         width: 50%;
     }
@@ -204,11 +227,31 @@
                                     <div class="form-group">
                                         <label class="control-label"> 选择国家：
                                         </label>
-                                        <div class="form-group standard-select-country" style="padding: 0">
+                                        <div class="form-group standard-select-country-parcel" style="padding: 0">
                                         </div>
                                     </div>
                                     <script type="text/javascript">
                                         $(function () {
+                                            $.ajax({
+                                                type: 'get',
+                                                url: '/admin/country?type=parcel&status=false',
+                                                dataType: 'json',
+                                                success: function (data) {
+                                                    console.log(data)
+                                                    if (data.succeed == true) {
+                                                        data.msg.forEach(function (item) {
+                                                            $('.standard-select-country-parcel').append('<label class="checkbox-inline"><input  type="checkbox" name="country" class="country-select-standard" value="' + item.country_cn_name + '"><a title="' + item.country_code + '" class="country-icon country-' + item.country_code + '"></a>' + item.country_cn_name + '</label>');
+                                                        })
+                                                    } else {
+                                                        alert('参数有误，创建失败！')
+                                                    }
+                                                },
+                                                error: function (data) {
+                                                    alert('参数有误，创建失败！')
+                                                }
+                                            })
+
+
                                             //新增国家提交(小包)
                                             $('#create-country-submit-xiaobao').click(function () {
                                                 var country = [],
@@ -240,6 +283,26 @@
                                                         "fee_status": expressBaoyou ? true : false
                                                     }
 
+                                                    let putCountry = {
+                                                        type: "parcel",
+                                                        code: country
+                                                    }
+                                                    //更新国家
+                                                    $.ajax({
+                                                        type: 'put',
+                                                        url: '/admin/country',
+                                                        data: {
+                                                            data: JSON.stringify(putCountry)
+                                                        },
+                                                        dataType: 'json',
+                                                        success: function () {
+
+                                                        },
+                                                        error: function () {
+                                                            alert('参数有误，创建失败！')
+                                                        }
+                                                    })
+
                                                     console.log(formData);
                                                     $.ajax({
                                                         type: 'POST',
@@ -251,8 +314,9 @@
                                                         success: function (data) {
                                                             console.log(data.succeed);
                                                             if (data.succeed == true) {
-                                                                alert('创建成功！');
+                                                                layer.alert("新建成功")
                                                                 $('#economy-logistics-panel').append('<input type="hidden" name="country_id" value="' + data.msg.countryId + '">')
+                                                                setTimeout('location.reload()', 1000)
                                                             } else {
                                                                 alert('参数有误，创建失败！')
                                                             }
@@ -260,7 +324,7 @@
                                                         error: function (data) {
                                                             alert('参数有误，创建失败！')
                                                         }
-                                                    });
+                                                    })
                                                 }
                                             })
 
@@ -418,6 +482,26 @@
                                     </div>
                                     <script type="text/javascript">
                                         $(function () {
+                                            $.ajax({
+                                                type: 'get',
+                                                url: '/admin/country?type=ordinary&status=false',
+                                                dataType: 'json',
+                                                success: function (data) {
+                                                    console.log(data)
+                                                    if (data.succeed == true) {
+                                                        data.msg.forEach(function (item) {
+                                                            $('.standard-select-country').append('<label class="checkbox-inline"><input  type="checkbox" name="country" class="country-select-standard" value="' + item.country_cn_name + '"><a title="' + item.country_code + '" class="country-icon country-' + item.country_code + '"></a>' + item.country_cn_name + '</label>');
+                                                        })
+                                                    } else {
+                                                        alert('参数有误，创建失败！')
+                                                    }
+                                                },
+                                                error: function (data) {
+                                                    alert('参数有误，创建失败！')
+                                                }
+                                            })
+
+
                                             //继续添加
                                             $('.add-create-seleted').on('click', function () {
                                                 var div = $(this).parent().parent().find('div').eq(0);
@@ -429,12 +513,7 @@
                                                     + '</div>'
                                                 );
                                             })
-                                            //国家
-                                            var express = expresses;
-                                            var ordinary = ordinaries;
-                                            express.data.forEach(function (item) {
-                                                $('.standard-select-country').append('<label class="checkbox-inline"><input type="checkbox" name="country" class="country-select-standard" value="' + item.zh + '">' + item.zh + '</label>');
-                                            })
+
                                             //新增国家提交
                                             $('#country-select-standard').click(function () {
                                                 var country = [],
@@ -480,7 +559,25 @@
                                                         "fee_quantity": expressBaoyou,
                                                         "fee_status": expressBaoyou ? true : false
                                                     }
-                                                    console.log(formData);
+                                                    console.log(formData)
+
+                                                    let putCountry = {
+                                                        type: "ordinary",
+                                                        code: country
+                                                    }
+                                                    //更新国家
+                                                    $.ajax({
+                                                        type: 'put',
+                                                        url: '/admin/country',
+                                                        data: putCountry,
+                                                        dataType: 'json',
+                                                        success: function () {
+                                                        },
+                                                        error: function () {
+                                                            alert('参数有误，创建失败！')
+                                                        }
+                                                    })
+
                                                     $.ajax({
                                                         type: 'POST',
                                                         url: '/admin/fee-express-country',
@@ -490,8 +587,9 @@
                                                         dataType: 'json',
                                                         success: function (data) {
                                                             if (data.succeed == true) {
-                                                                alert('创建成功！');
+                                                                layer.alert("新建成功")
                                                                 $('#standard-logistics-panel').append('<input type="hidden" name="country_id" value="' + data.msg.countryId + '">')
+                                                                setTimeout('location.reload()', 1000)
                                                             } else {
                                                                 alert('参数有误，创建失败！')
                                                             }
@@ -652,11 +750,31 @@
                                     <div class="form-group">
                                         <label class="control-label"> 选择国家：
                                         </label>
-                                        <div class="form-group standard-select-country" style="padding: 0">
+                                        <div class="form-group standard-select-country-express" style="padding: 0">
                                         </div>
                                     </div>
                                     <script type="text/javascript">
                                         $(function () {
+                                            $.ajax({
+                                                type: 'get',
+                                                url: '/admin/country?type=express&status=false',
+                                                dataType: 'json',
+                                                success: function (data) {
+                                                    console.log(data)
+                                                    if (data.succeed == true) {
+                                                        data.msg.forEach(function (item) {
+                                                            $('.standard-select-country-express').append('<label class="checkbox-inline"><input  type="checkbox" name="country" class="country-select-standard" value="' + item.country_cn_name + '"><a title="' + item.country_code + '" class="country-icon country-' + item.country_code + '"></a>' + item.country_cn_name + '</label>');
+                                                        })
+                                                    } else {
+                                                        alert('参数有误，创建失败！')
+                                                    }
+                                                },
+                                                error: function (data) {
+                                                    alert('参数有误，创建失败！')
+                                                }
+                                            })
+
+
                                             $('#country-select-fast').click(function () {
                                                 var country = [],
                                                     transportFee = [],
@@ -705,6 +823,24 @@
                                                         "fee_status": expressBaoyou ? true : false
                                                     }
                                                     console.log(formData);
+
+                                                    let putCountry = {
+                                                        type: "express",
+                                                        code: country
+                                                    }
+                                                    //更新国家
+                                                    $.ajax({
+                                                        type: 'put',
+                                                        url: '/admin/country',
+                                                        data: putCountry,
+                                                        dataType: 'json',
+                                                        success: function () {
+                                                        },
+                                                        error: function () {
+                                                            alert('参数有误，创建失败！')
+                                                        }
+                                                    })
+
                                                     $.ajax({
                                                         type: 'POST',
                                                         url: '/admin/fee-express-country',
@@ -714,8 +850,9 @@
                                                         dataType: 'json',
                                                         success: function (data) {
                                                             if (data.succeed == true) {
-                                                                alert('创建成功！');
+                                                                layer.alert("新建成功")
                                                                 $('#express-logistics-panel').append('<input type="hidden" name="country_id" value="' + data.msg.countryId + '">')
+                                                                setTimeout('location.reload()', 1000)
                                                             } else {
                                                                 alert('参数有误，创建失败！')
                                                             }
@@ -978,11 +1115,11 @@
         $('div[data-role="' + type + '"]').find('input[name="country_id"]').each(function () {
             country.push($(this).val());
         })
-        var discount = $('div[data-role="' + type + '"]').find('input[name="freight-reduce-count-CPAM"]').val();
+        var discount = Number($('div[data-role="' + type + '"]').find('input[name="freight-reduce-count-CPAM"]').val()).toFixed();
         if (!country) {
             alert('未设置国家运费规则！');
         }
-        var fuel_cost = $('div[data-role="' + type + '"]').find('input[name="ranyoufei"]').val()
+        var fuel_cost = Number($('div[data-role="' + type + '"]').find('input[name="ranyoufei"]').val()).toFixed()
         let payload = {
             type: type,
             country: country,
