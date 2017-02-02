@@ -14,6 +14,12 @@
 <script src="../plugins/pick-color/js/tinycolor-0.9.15.min.js"></script>
 <script src="../plugins/pick-color/js/pick-a-color-1.2.3.min.js"></script>
 <script type="text/javascript">
+
+    layer.load()
+
+    window.onload = function () {
+        layer.closeAll('loading')
+    }
     $(function () {
         $('.logistics-panel-type').click(function () {
             var index = $(this).index();
@@ -34,6 +40,7 @@
         })
     })
 </script>
+<link rel="stylesheet" href="/stylesheets/country.css">
 <style type="text/css">
     .input-group-addon {
         border-top-right-radius: 4px !important;
@@ -88,14 +95,7 @@
                  data-country="CN" data-widget-cid="widget-5">
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-primary active logistics-panel-type">
-                        <input type="radio" name="options" autocomplete="off" checked value="parcel">
-                        <% if(type == 'parcel'){ %>
-                        小包类物流
-                        <% } else if( type == 'ordinary'){ %>
-                        普快类物流
-                        <% } else if ( type == 'express'){ %>
-                        特快类物流
-                        <% } %>
+                        <input type="radio" name="options" autocomplete="off" checked value="parcel">小包类物流
                     </label>
                 </div>
                 <div class="ui-tab-body ui-switchable-content" id="logistic-list">
@@ -117,7 +117,7 @@
                                 </th>
                                 <th width="40%">运达时间设置
                                     <button class="btn btn-warning btn-xs" data-toggle="modal"
-                                            data-target="#create-country">新增国家
+                                            data-target="#create-country">修改运费国家
                                     </button>
                                 </th>
                             </tr>
@@ -208,7 +208,51 @@
                                     </div>
                                     <script type="text/javascript">
                                         $(function () {
-                                            
+                                            let expect = '<%= expected_delivery %>'
+                                            let country = '<%= country_name %>'
+                                            let fees = '<%= transport_fees %>'
+                                            console.log(fees)
+                                            console.log(typeof country)
+                                            var expect_fromd = expect.split('~')
+                                            $('#create-country input[name="create-country-express-guahao-fee"]').val('<%= registered_fee %>')
+                                            $('#create-country input[name="create-country-express-day-between"]').val(expect_fromd[0])
+                                            $('#create-country input[name="create-country-express-day-to"]').val(expect_fromd[1])
+                                            $('#create-country input[name="create-country-baoyou"]').val('<%= free_ship.fee_quantity %>')
+
+
+
+
+                                            <% transport_fees.forEach(function(cn){ %>
+                                            $('#create-country input[name="create-country-express-fee"]').val(<%= cn.transport_fee %>)
+                                            <% }) %>
+
+
+
+                                            //获取国家
+                                            $.ajax({
+                                                type: 'get',
+                                                url: '/admin/country?type=parcel',
+                                                dataType: 'json',
+                                                success: function (data) {
+                                                    console.log(data)
+                                                    if (data.succeed == true) {
+                                                        data.msg.forEach(function (item) {
+                                                            $('.standard-select-country').append('<label class="checkbox-inline"><input  type="checkbox" id="' + item.country_cn_name + '" name="country" class="country-select-standard" value="' + item.country_cn_name + '"><a title="' + item.country_code + '" class="country-icon country-' + item.country_code + '"></a>' + item.country_cn_name + '</label>');
+                                                        })
+
+                                                        setTimeout(() => {
+                                                            <% country_name.forEach(function(name){ %>
+                                                            $('#' + '<%= name %>').attr('checked', true)
+                                                            <% }) %>
+                                                        }, 1000)
+                                                    } else {
+                                                        alert('参数有误，创建失败！')
+                                                    }
+                                                },
+                                                error: function (data) {
+                                                    alert('参数有误，创建失败！')
+                                                }
+                                            })
 
 
                                             //新增国家提交(小包)
@@ -242,9 +286,31 @@
                                                         "fee_status": expressBaoyou ? true : false
                                                     }
 
+                                                    formData['_id'] = '<%= _id %>'
+
+                                                    let putCountry = {
+                                                        type: "parcel",
+                                                        code: country
+                                                    }
+                                                    //更新国家
+                                                    $.ajax({
+                                                        type: 'put',
+                                                        url: '/admin/country',
+                                                        data: {
+                                                            data: JSON.stringify(putCountry)
+                                                        },
+                                                        dataType: 'json',
+                                                        success: function () {
+
+                                                        },
+                                                        error: function () {
+                                                            alert('参数有误，创建失败！')
+                                                        }
+                                                    })
+
                                                     console.log(formData);
                                                     $.ajax({
-                                                        type: 'POST',
+                                                        type: 'put',
                                                         url: '/admin/fee-express-country',
                                                         data: {
                                                             data: JSON.stringify(formData)
@@ -263,6 +329,8 @@
                                                             alert('参数有误，创建失败！')
                                                         }
                                                     });
+
+
                                                 }
                                             })
 
@@ -302,8 +370,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                            id="create-country-submit-xiaobao">Save
-                                        changes
+                                            id="create-country-submit-xiaobao">保存修改
                                     </button>
                                 </div>
                             </div>
@@ -635,6 +702,5 @@
             }
         })
     })
-
 
 </script>
