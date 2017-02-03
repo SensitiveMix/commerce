@@ -2468,24 +2468,13 @@ router.get('/fee-express', (req, res) => {
     if (req.query.type) {
         payload.type = req.query.type
     }
-    db.feeExpress.find(payload, (err, data) => {
-        async.forEach(data, (d, cb) => {
-            async.forEach(d.country, (e, callback) => {
-                db.feeExpressCountry.find({_id: e}, (err, result) => {
-                    if (result) {
-                        country.push(result[0])
-                    }
-                    callback()
-                })
-            }, (err) => {
-                d.country = country
-                cb()
-            })
-        }, (err) => {
-            if (err) return res.send(500, {succeed: false, msg: "internal error"})
+    db.feeExpress
+        .find(payload)
+        .populate('country')
+        .exec((err, data) => {
+            if (err) return customError(500, '数据库查询错误', res)
             res.send(200, {succeed: true, msg: data})
         })
-    })
 })
 
 router.post('/fee-express', (req, res) => {
@@ -2544,7 +2533,7 @@ router.post('/fee-express', (req, res) => {
 router.post('/fee-express-country', (req, res) => {
     console.log(req.body)
     let payload = JSON.parse(req.body.data)
-    if (!payload) return new customError(500, "param error", res)
+    if (!payload) return res.send(500, {succeed: false, msg: "param error"})
     let fee = new db.feeExpressCountry(payload)
     fee.save((err, docsInserted) => {
         console.log(err)
@@ -2556,7 +2545,7 @@ router.post('/fee-express-country', (req, res) => {
 router.put('/fee-express-country', (req, res) => {
     console.log(req.body)
     let payload = JSON.parse(req.body.data)
-    if (!payload) return new customError(500, "param error", res)
+    if (!payload) return res.send(500, {succeed: false, msg: "param error"})
     db.feeExpressCountry.remove({_id: payload._id}, (err, d_data) => {
         console.log(d_data)
         if (err) return new customError(500, "param error", res)
@@ -2566,6 +2555,23 @@ router.put('/fee-express-country', (req, res) => {
             if (err || !docsInserted) return res.send(500, {succeed: false, msg: "internal error"})
             res.send(200, {succeed: true, msg: {countryId: docsInserted._id}})
         })
+    })
+})
+router.put('/fee-parcel-country', (req, res) => {
+    console.log(req.body)
+    let payload = JSON.parse(req.body.data)
+    if (!payload) return res.send(500, {succeed: false, msg: "param error"})
+    db.feeExpressCountry.findOneAndUpdate({_id: payload._id}, {
+        $set: {
+            country_name: payload.country_name,
+            transport_fees: payload.transport_fees,
+            registered_fee: payload.registered_fee,
+            free_ship: payload.free_ship,
+            expected_delivery: payload.expected_delivery
+        }
+    }, (err, d_data) => {
+        if (err) return res.send(500, {succeed: false, msg: "param error"})
+        res.send(200, {succeed: true, msg: 'ok'})
     })
 })
 

@@ -364,8 +364,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                            id="create-country-submit-xiaobao">Save
-                                        changes
+                                            id="create-country-submit-xiaobao">保存修改
                                     </button>
                                 </div>
                             </div>
@@ -643,8 +642,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                            id="country-select-standard">Save
-                                        changes
+                                            id="country-select-standard">保存修改
                                     </button>
                                 </div>
                             </div>
@@ -906,8 +904,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                            id="country-select-fast">Save
-                                        changes
+                                            id="country-select-fast">保存修改
                                     </button>
                                 </div>
                             </div>
@@ -1086,7 +1083,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-primary">保存修改</button>
                         </div>
                     </div>
                 </div>
@@ -1140,6 +1137,7 @@
             success: function (data) {
                 if (data.succeed) {
                     layer.msg("添加成功")
+                    window.location = '/admin/shopping_template'
                 } else {
                     layer.msg("添加失败")
                 }

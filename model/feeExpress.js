@@ -3,7 +3,7 @@ let Schema = mongoose.Schema
 
 let feeExpress = new Schema({
     type: String,
-    country: [],
+    country: [{type: Schema.Types.ObjectId, ref: 'feeExpressCountries'}],
     discount: Number,
     fuel_cost: Number
 })

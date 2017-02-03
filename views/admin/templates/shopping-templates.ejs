@@ -282,7 +282,7 @@
     }
 
     function deleteTemplate(id, type) {
-        console.log(id)
+
         $.ajax({
             url: '/admin/template',
             type: 'put',
@@ -292,7 +292,7 @@
             },
             success: function (data) {
                 if (data.succeed) {
-
+                    $('#' + id).parent().parent().remove()
                 }
             },
             error: function () {
@@ -304,7 +304,7 @@
     function changeCountry(id, type) {
         $.ajax({
             url: '/admin/fee/template',
-            type: 'delete',
+            type: 'put',
             data: {
                 id: id,
                 type: type
@@ -312,6 +312,7 @@
             success: function (data) {
                 if (data.succeed) {
                     layer.msg("删除成功")
+                    $('#' + id).parent().parent().remove()
                 } else {
                     layer.msg("删除失败")
                 }

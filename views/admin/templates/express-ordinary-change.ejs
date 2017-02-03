@@ -93,111 +93,8 @@
         <div class="mainlayout clearfix j-shippingarea-container">
             <div class="ui-tab ui-tab-normal tab-wrap logistics-container ui-switchable" data-name="loc-cn"
                  data-country="CN" data-widget-cid="widget-5">
-                <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary active logistics-panel-type">
-                        <input type="radio" name="options" autocomplete="off" checked value="parcel">
-                        <% if(type == 'parcel'){ %>
-                        小包类物流
-                        <% } else if( type == 'ordinary'){ %>
-                        普快类物流
-                        <% } else if ( type == 'express'){ %>
-                        特快类物流
-                        <% } %>
-                    </label>
-                </div>
+
                 <div class="ui-tab-body ui-switchable-content" id="logistic-list">
-                    <div id="standard-logistics-panel"
-                         class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="ordinary"
-                         data-series="cn-business">
-                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
-                            <button type="button" class="close" data-dismiss="alert"><span
-                                        aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                            普通类物流包括邮政挂号服务和专线类服务，全程物流追踪信息可查询。无忧物流的排他规则已取消，您可以如其他物流线路一样设置使用
-                        </div>
-                        <table width="100%" cellspacing="0" cellpadding="8"
-                               class="table table-bordered table-list logistic-list ui-table">
-                            <thead>
-                            <tr>
-                                <th width="20%">选择物流</th>
-                                <th width="40%">运费设置
-                                    <span class="setting-help-icon ui-help ui-help-icon"></span>
-                                </th>
-                                <th width="40%">运达时间设置
-                                    <button class="btn btn-warning btn-xs" data-toggle="modal"
-                                            data-target="#create-country-standard">修改运费国家
-                                    </button>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="logistic-row" logisticcompany="CPAM" isdeliverycountryzone="COUNTRY"
-                                companydisplayname="">
-                                <td class="logistic-name" width="35%">
-                                    <input type="checkbox" class="logistic-checkbox" id="CPAM-check"
-                                           name="logistic-name" value="CPAM" checked="checked">
-                                    <span id="standard-title">普通快递</span>
-                                    <span class="logisticname-info ui-help ui-help-icon"></span>
-                                    <div class="tip-me logisticname-tip" style="display:none;">
-                                        <div class="help-content-wrap">
-                                            可寄送2kg以上的普通商品，运送范围为全球，可使用速卖通线上发货，专享线上发货合约价及服务保障！<br>
-                                            <a href="#" target="_blank">了解详情</a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="logistic-commit-standard" width="35%">
-                                    <div class="set-logistic">
-                                        <input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"
-                                               type="radio" checked="checked">
-                                        <span>标准运费</span>
-                                        <span class="decount-box">
-    减免
-    <input id="decount-box-input-CPAM" value="0" class="decount-box-input"
-           size="2" maxlength="2" name="freight-reduce-count-CPAM">
-    %
-    <span class="decount-help-link ui-help ui-help-icon"></span>
-    <span class="discountBox" style="">即<span
-                class="discountHook">全</span>折</span>
-
-    </span>
-                                    </div>
-
-                                    <div class="set-logistic">
-                                        <input class="no-logistic" name="freight-mode-CPAM" value="all_free"
-                                               type="radio">
-                                        卖家承担运费
-                                        <span class="freeshipping-box" style="display: none;">Free Shipping</span>
-                                    </div>
-                                    <label>燃油附加费:</label>
-                                    <input placeholder="燃油附加费" value="12" class="" size="10" maxlength="10"
-                                           name="ranyoufei">%
-                                </td>
-                                <td width="30%">
-                                    <div class="set-commit-time">
-                                        <input class="standard-commit-time" name="arrival-time-mode-CPAM"
-                                               value="all_standard" type="radio">
-                                        承诺运达时间
-                                        <input id="time-box-input-CPAM"
-                                               class="time-box-input ui-textfield ui-textfield-system" size="2"
-                                               maxlength="2" name="arrival-time-days-CPAM" value="">
-                                        天
-                                    </div>
-
-                                    <div class="set-commit-time">
-                                        <input id="custom-commit-time-CPAM" class="custom-commit-time"
-                                               name="arrival-time-mode-CPAM" value="self_define" type="radio"
-                                               logisticcompany="CPAM" isdeliverycountryzone="COUNTRY" checked="checked">
-                                        <label for="custom-commit-time-CPAM" class="custom-time">
-                                            自定义运达时间
-                                        </label>
-                                        <textarea class="custom-commit-time-content"
-                                                  name="arrival-time-custom-setting-CPAM"></textarea>
-                                    </div>
-                                </td>
-
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
                     <div class="modal fade in" id="create-country-standard" tabindex="-1" role="dialog"
                          aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
                         <div class="modal-dialog">
@@ -216,15 +113,18 @@
                                     </div>
                                     <script type="text/javascript">
                                         $(function () {
-
+                                            $('#create-country-standard').modal({
+                                                keyboard: true
+                                            })
                                             let expect = '<%= expected_delivery %>'
                                             let country = '<%= country_name %>'
                                             let fees = '<%= transport_fees %>'
+                                            let type = '<%= type %>'
                                             console.log(fees)
                                             console.log(typeof country)
                                             var expect_fromd = expect.split('~')
 
-                                            $('#create-country input[name="create-country-express-guahao-fee"]').val('<%= registered_fee %>')
+
                                             $('#create-country-standard input[name="create-country-express-day-between"]').val(expect_fromd[0])
                                             $('#create-country-standard input[name="create-country-express-day-to"]').val(expect_fromd[1])
                                             $('#create-country-standard input[name="create-country-baoyou"]').val('<%= free_ship.fee_quantity %>')
@@ -283,7 +183,7 @@
                                                 var fee = [];
 
                                                 $('.yunfei-oridinary-form-group').each(function () {
-                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = $(this).children('input[name="create-country-express-fee-add"]').val();
+//                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = $(this).children('input[name="create-country-express-fee-add"]').val();
                                                     var index = $(this).index();
                                                     fee[index] = {
                                                         'transport_default_quantity': $(this).children('input[name="create-country-oridinary-fee-range"]').val(),
@@ -293,9 +193,6 @@
                                                     };
                                                 })
                                                 formData['transport_fees'] = fee
-                                                console.log('------')
-                                                console.log(fee)
-                                                console.log(formData['transport_fees'])
 
                                                 if (country.length == 0) {
                                                     layer.tips("#create-country-standard", "请选择国家")
@@ -304,7 +201,7 @@
                                                 } else {
                                                     formData = {
                                                         'country_name': country,//国家名称
-                                                        'registered_fee': expressGuahaoFee,//挂号费
+                                                        'registered_fee': expressGuahaoFee || "",//挂号费
                                                         'expected_delivery': expressBetweenFrom + '~' + expressBetweenTo,
                                                         'transport_fees': fee
                                                     };
@@ -314,15 +211,19 @@
                                                     }
                                                     console.log(formData)
 
+                                                    formData['_id'] = '<%= _id %>'
+
                                                     let putCountry = {
-                                                        type: "ordinary",
+                                                        type: type == "ordinary" ? "ordinary" : "express",
                                                         code: country
                                                     }
                                                     //更新国家
                                                     $.ajax({
                                                         type: 'put',
                                                         url: '/admin/country',
-                                                        data: putCountry,
+                                                        data: {
+                                                            data: JSON.stringify(putCountry)
+                                                        },
                                                         dataType: 'json',
                                                         success: function () {
                                                         },
@@ -332,17 +233,16 @@
                                                     })
 
                                                     $.ajax({
-                                                        type: 'POST',
-                                                        url: '/admin/fee-express-country',
+                                                        type: 'put',
+                                                        url: '/admin/fee-parcel-country',
                                                         data: {
                                                             data: JSON.stringify(formData)
                                                         },
                                                         dataType: 'json',
                                                         success: function (data) {
                                                             if (data.succeed == true) {
-                                                                layer.alert("新建成功")
-                                                                $('#standard-logistics-panel').append('<input type="hidden" name="country_id" value="' + data.msg.countryId + '">')
-                                                                setTimeout('location.reload()', 1000)
+                                                                layer.alert("修改成功")
+                                                                window.location = '/admin/shopping_template'
                                                             } else {
                                                                 alert('参数有误，创建失败！')
                                                             }
@@ -350,10 +250,8 @@
                                                         error: function (data) {
                                                             alert('参数有误，创建失败！')
                                                         }
-                                                    });
+                                                    })
                                                 }
-
-
                                             })
 
                                         })
@@ -496,236 +394,12 @@
                     </div>
                 </div>
             </div>
-            <input type="button" value="标准运费计算器" id="calculate-yunfei" class="btn btn-primary" data-toggle="modal"
-                   data-target="#yunfei-table">
 
-            <div class="modal fade" id="yunfei-table" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span
-                                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title" id="myModalLabel">计算标准运费</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="deitbox">
-                                <div class="ccl-title">
-                                    <p>
-                                        包装信息：<br>
-                                        <input type="text" class="inputtxt02" value="1.0" size="6" name="grossWeight"
-                                               id="grossWeight">
-                                        <span class="marginlfrl10">公斤(kg)</span>
-                                        <label class="marginlf10">购买数量：</label>
-                                        <input type="text" class="inputtxt01" size="6" id="quantity" name="quantity"
-                                               value="1">
-                                        <label class="marginlf10"> 送达国家：</label>
-                                        <select style="width: 15%;display: inline-block;" id="country" name="country"
-                                                class="form-control">
-                                        </select>
-                                        <script>
-                                            $(function () {
-                                                var express = expresses;
-                                                var ordinary = ordinaries;
-                                                express.data.forEach(function (item) {
-                                                    $('#country').append('<option>' + item.zh + '</option>')
-                                                })
-                                                $('#grossWeight').change(function () {
-                                                    var grossWeight = $('#grossWeight').val();
-                                                    if (grossWeight < 2) {
-                                                        $('#country').html('');
-                                                        express.data.forEach(function (item) {
-                                                            $('#country').append('<option>' + item.zh + '</option>')
-                                                        })
-                                                    } else if (grossWeight < 21) {
-                                                        $('#country').html('');
-                                                        ordinary.data.forEach(function (item) {
-                                                            $('#country').append('<option>' + item.zh + '</option>')
-                                                        })
-                                                    } else {
-                                                        $('#country').html('');
-                                                        ordinary.data.forEach(function (item) {
-                                                            $('#country').append('<option>' + item.zh + '</option>')
-                                                        })
-                                                    }
-                                                })
-
-                                            })
-                                            $(function () {
-
-                                                $('#calculate-yunfei-re').click(function () {
-                                                    var weight_for_jian = $('input[name="grossWeight"]').val();
-                                                    if (weight_for_jian.length == 0) {
-
-                                                        myjinggao = '<div id="weightTip" class="alert alert-danger alert-dismissible fade in" role="alert">'
-                                                            + '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'
-                                                            + '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'
-                                                            + '必须输入包装重量'
-                                                            + '</div>';
-                                                        $('.ccl-title').append(myjinggao);
-                                                        return false;
-                                                    }
-                                                    var weight = (weight_for_jian * $('#quantity').val()).toFixed(2);
-                                                    var area = $('#country').val();
-                                                    $.ajax({
-                                                        type: 'POST',
-                                                        url: '/admin/transport',
-                                                        data: {
-                                                            weight: weight,
-                                                            area: area
-                                                        },
-                                                        dataType: 'json',
-                                                        success: function (data) {
-                                                            var myhtml = '';
-                                                            if (data.express) {
-                                                                if (data.express.price) {
-                                                                    myhtml = '<tr>'
-                                                                        + '<td class="padleft20" width="50%">'
-                                                                        + '<a target="_blank">'
-                                                                        + data.express.msg
-                                                                        + '</a>'
-                                                                        + '</td>'
-                                                                        + '<td class="tal-right" width="22%">3-8 days</td>'
-                                                                        + '<td class="tal-right" width="28%">'
-                                                                        + data.express.price
-                                                                        + '</td>'
-                                                                        + '</tr>';
-                                                                }
-                                                            }
-                                                            if (data.little_packet) {
-                                                                if (data.little_packet.price) {
-                                                                    myhtml += '<tr>'
-                                                                        + '<td class="padleft20" width="50%">'
-                                                                        + '<a target="_blank">'
-                                                                        + data.little_packet.msg
-                                                                        + '</a>'
-                                                                        + '</td>'
-                                                                        + '<td class="tal-right" width="22%">3-8 days</td>'
-                                                                        + '<td class="tal-right" width="28%">'
-                                                                        + data.little_packet.price
-                                                                        + '</td>'
-                                                                        + '</tr>';
-                                                                }
-                                                            }
-                                                            if (data.ordinary) {
-                                                                if (data.ordinary.price) {
-                                                                    myhtml += '<tr>'
-                                                                        + '<td class="padleft20" width="50%">'
-                                                                        + '<a target="_blank">'
-                                                                        + data.ordinary.msg
-                                                                        + '</a>'
-                                                                        + '</td>'
-                                                                        + '<td class="tal-right" width="22%">3-8 days</td>'
-                                                                        + '<td class="tal-right" width="28%">'
-                                                                        + data.ordinary.price
-                                                                        + '</td>'
-                                                                        + '</tr>';
-                                                                }
-                                                            }
-                                                            $('#calculatorbox tbody').html(myhtml);
-                                                        },
-                                                        error: function (data) {
-                                                            if (data.status == 404) {
-                                                                $('#weightTip').remove();
-                                                                $('#calculatorbox tbody').html('');
-                                                                myjinggao = '<div id="weightTip" class="alert alert-warning alert-dismissible fade in" role="alert">'
-                                                                    + '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'
-                                                                    + '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'
-                                                                    + '暂时没有快递到该国家'
-                                                                    + '</div>';
-                                                                $('.ccl-title').append(myjinggao);
-                                                            }
-                                                        }
-                                                    });
-                                                })
-                                            })
-                                        </script>
-                                        <span class="yellowBtn valmiddle marginlf10">
-                                            <input type="submit" class="btn btn-info" id="calculate-yunfei-re"
-                                                   value="计算">
-                                        </span>
-                                    </p>
-                                    <p>
-                                        <span class="red" style="display:none">必须输入包装重量</span>
-                                    </p>
-                                </div>
-                                <div class="calculatorbox" id="calculatorbox">
-                                    <table width="100%" class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th width="50%" class="tal-left">物流公司</th>
-                                            <th width="22%" class="tal-right">估计时间</th>
-                                            <th width="28%" class="tal-right">标准运费含燃油费</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="postAirMail20160218" class="similarity-tip-gantan" style="display:none;"><span
-                        style="color:red;">epacket、邮政小包类物流限重2KG，单件已超重禁止使用。</span></div>
         </div>
         <!------- 大标题结束 ------->
         <!------- 运费设置列表开始 ------->
     </div>
 
-    <!-- title其他信息 结束 -->
+</div>
 
 
-    <!-- 完成提交开始 -->
-    <div id="syi_submit_id" class="syi-submit" style="margin-bottom: 10px">
-        <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系ECSELL客服部门。</strong><br>
-        <button id="submitopt" class="btn btn-info">确定提交</button>
-    </div>
-    <!-- 完成提交结束 -->
-</div>
-</div>
-</div>
-<script>
-    //提交添加f
-    $("#submitopt").on('click', function () {
-        var type = $('.logistics-panel-type.active input').val();
-        var country = [];
-        $('div[data-role="' + type + '"]').find('input[name="country_id"]').each(function () {
-            country.push($(this).val());
-        })
-        var discount = $('div[data-role="' + type + '"]').find('input[name="freight-reduce-count-CPAM"]').val();
-        if (!country) {
-            alert('未设置国家运费规则！');
-        }
-        var fuel_cost = $('div[data-role="' + type + '"]').find('input[name="ranyoufei"]').val()
-        let payload = {
-            type: type,
-            country: country,
-            discount: discount,
-            fuel_cost: fuel_cost
-        }
-        console.log(payload)
-        $.ajax({
-            type: 'POST',
-            url: '/admin/fee-express',
-            data: {
-                data: JSON.stringify(payload)
-            },
-            dataType: 'json',
-            success: function (data) {
-                if (data.succeed) {
-                    layer.msg("添加成功")
-                } else {
-                    layer.msg("添加失败")
-                }
-            }
-        })
-    })
-
-</script>
