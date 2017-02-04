@@ -65,9 +65,9 @@ router.get('/main', function (req, res) {
 });
 
 //后台登录界面
-router.get('/adminlogin', function (req, res) {
-    res.render('admin/backend-login', {title: '电商网站后台'});
-});
+router.get('/adminlogin', (req, res) => {
+    res.render('admin/backend-login', {title: '电商网站后台', login_status: true})
+})
 
 
 //后台登陆处理
