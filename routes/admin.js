@@ -2416,29 +2416,46 @@ router.get('/shopping_template', (req, res) => {
 
 router.get('/template', (req, res) => {
     let payload = {_id: req.query.id || ""}
-    let country = []
-    db.feeExpress.findOne(payload, (err, data) => {
-        console.log(data)
-        async.forEach(data.country, (e, callback) => {
-            db.feeExpressCountry.find({_id: e}, (err, result) => {
-                if (result) {
-                    country.push(result[0])
-                }
-                callback()
-            })
-        }, (err) => {
-            data.country = country
-            if (err) return res.send(500, {succeed: false, msg: "internal error"})
-            req.session.express_tempalte = data
-            res.send(200, {succeed: true, page: '/admin/express-fee-template'})
-        })
+    let type = req.query.type || "parcel"
+    db.feeExpressCountry.findOne(payload, (err, data) => {
+        if (err) return res.send(500, {succeed: false, msg: "internal error"})
+        req.session.express_tempalte = data
+        req.session.express_tempalte_type = type
+
+        res.send(200, {succeed: true, page: '/admin/express-fee-template'})
     })
 })
 
+router.put('/template', (req, res) => {
+    let payload = {_id: req.body.id || ""}
+    if (!payload._id) return res.send(400, {succeed: false, msg: "internal error"})
+    db.feeExpressCountry.remove(payload, (err, data) => {
+        if (err) return res.send(500, {succeed: false, msg: "internal error"})
+        res.send(200, {succeed: true, msg: 'ok'})
+    })
+})
+
+router.put('/fee/template', (req, res) => {
+    let payload = {_id: req.body.id || ""}
+    if (!payload._id || !req.body.type) return res.send(400, {succeed: false, msg: "internal error"})
+    payload.type = req.body.type
+    db.feeExpress.remove(payload, (err, data) => {
+        if (err) return res.send(500, {succeed: false, msg: "internal error"})
+        res.send(200, {succeed: true, msg: 'ok'})
+    })
+})
+
+
 router.get('/express-fee-template', (req, res) => {
-    req.session.express_tempalte.username = u.nick_name
+    console.log(u.nick_name)
+    req.session.express_tempalte.username = u.nick_name || 'admin'
+    req.session.express_tempalte.type = req.session.express_tempalte_type
     console.log(req.session.express_tempalte)
-    res.render('admin/templates/express-change-templates', req.session.express_tempalte)
+    if (req.session.express_tempalte_type == 'parcel') {
+        res.render('admin/templates/parcel-change', req.session.express_tempalte)
+    } else {
+        res.render('admin/templates/express-ordinary-change', req.session.express_tempalte)
+    }
 })
 
 router.get('/express_fee_template', (req, res) => {
@@ -2451,24 +2468,13 @@ router.get('/fee-express', (req, res) => {
     if (req.query.type) {
         payload.type = req.query.type
     }
-    db.feeExpress.find(payload, (err, data) => {
-        async.forEach(data, (d, cb) => {
-            async.forEach(d.country, (e, callback) => {
-                db.feeExpressCountry.find({_id: e}, (err, result) => {
-                    if (result) {
-                        country.push(result[0])
-                    }
-                    callback()
-                })
-            }, (err) => {
-                d.country = country
-                cb()
-            })
-        }, (err) => {
-            if (err) return res.send(500, {succeed: false, msg: "internal error"})
+    db.feeExpress
+        .find(payload)
+        .populate('country')
+        .exec((err, data) => {
+            if (err) return customError(500, '数据库查询错误', res)
             res.send(200, {succeed: true, msg: data})
         })
-    })
 })
 
 router.post('/fee-express', (req, res) => {
@@ -2498,6 +2504,7 @@ router.post('/fee-express', (req, res) => {
                     res.send(201, {succeed: true, msg: 'add success'})
                 })
             } else {
+                console.log(query.country)
                 async.forEach(query.country, (item, callback) => {
                     db.feeExpress.findOneAndUpdate({
                         type: payload.type
@@ -2505,30 +2512,66 @@ router.post('/fee-express', (req, res) => {
                         $push: {
                             country: item
                         }
-                    }, (err, d) => {
-                        if (err) callback()
-                        callback(d)
+                    }, (err, data) => {
+                        console.log(err)
+                        console.log(data)
+                        callback()
                     })
                 }, (err) => {
+                    console.log(err)
                     if (err) throw {status: 500}
                     res.send(200, {succeed: true, msg: 'add success'})
                 })
             }
         })
-        .catch(() => {
+        .catch((err) => {
+            console.log(err)
             return res.send(500, {succeed: false, msg: "internal error"})
         })
 })
 
 router.post('/fee-express-country', (req, res) => {
     console.log(req.body)
-
     let payload = JSON.parse(req.body.data)
-    if (!payload) return new customError(500, "param error", res)
+    if (!payload) return res.send(500, {succeed: false, msg: "param error"})
     let fee = new db.feeExpressCountry(payload)
     fee.save((err, docsInserted) => {
+        console.log(err)
         if (err || !docsInserted) return res.send(500, {succeed: false, msg: "internal error"})
         res.send(200, {succeed: true, msg: {countryId: docsInserted._id}})
+    })
+})
+
+router.put('/fee-express-country', (req, res) => {
+    console.log(req.body)
+    let payload = JSON.parse(req.body.data)
+    if (!payload) return res.send(500, {succeed: false, msg: "param error"})
+    db.feeExpressCountry.remove({_id: payload._id}, (err, d_data) => {
+        console.log(d_data)
+        if (err) return new customError(500, "param error", res)
+        delete payload._id
+        let fee = new db.feeExpressCountry(payload)
+        fee.save((err, docsInserted) => {
+            if (err || !docsInserted) return res.send(500, {succeed: false, msg: "internal error"})
+            res.send(200, {succeed: true, msg: {countryId: docsInserted._id}})
+        })
+    })
+})
+router.put('/fee-parcel-country', (req, res) => {
+    console.log(req.body)
+    let payload = JSON.parse(req.body.data)
+    if (!payload) return res.send(500, {succeed: false, msg: "param error"})
+    db.feeExpressCountry.findOneAndUpdate({_id: payload._id}, {
+        $set: {
+            country_name: payload.country_name,
+            transport_fees: payload.transport_fees,
+            registered_fee: payload.registered_fee,
+            free_ship: payload.free_ship,
+            expected_delivery: payload.expected_delivery
+        }
+    }, (err, d_data) => {
+        if (err) return res.send(500, {succeed: false, msg: "param error"})
+        res.send(200, {succeed: true, msg: 'ok'})
     })
 })
 
@@ -2920,14 +2963,16 @@ function getLittleTransportPrice(type, weight) {
 
 router.get('/country', (req, res) => {
     if (!req.query.type) return res.send(401, {succeed: false, msg: 'invalid params'})
-    let status = req.query.status === 'true'
-    db.countryFlags.find({type: req.query.type}, (err, data) => {
+    let status = req.query.status || 'all'
+    let payload = {type: req.query.type}
+    if (status != 'all') {
+        payload['countryLists.country_status'] = status == 'true'
+    }
+    console.log(payload)
+    db.countryFlags.findOne(payload, (err, data) => {
         if (err) return res.send(500, {succeed: true, msg: 'internal error'})
         if (data.length == 0) return res.send(404, {succeed: false, msg: 'NOT EXIST'})
-        let payload = data[0].countryLists.filter((i) => {
-            return i.country_status == status || false
-        })
-        res.send(200, {succeed: true, msg: payload})
+        res.send(200, {succeed: true, msg: data.countryLists})
     })
 })
 
@@ -2953,6 +2998,7 @@ router.put('/country', (req, res) => {
         })
     })
 })
+
 
 router.get('/demo', (req, res) => {
     res.render('admin/product/product-national-flags-demo', {username: u.nick_name})

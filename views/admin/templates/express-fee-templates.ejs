@@ -316,7 +316,7 @@
                                                             if (data.succeed == true) {
                                                                 layer.alert("新建成功")
                                                                 $('#economy-logistics-panel').append('<input type="hidden" name="country_id" value="' + data.msg.countryId + '">')
-                                                                setTimeout('location.reload()', 1000)
+//                                                                setTimeout('location.reload()', 1000)
                                                             } else {
                                                                 alert('参数有误，创建失败！')
                                                             }
@@ -364,8 +364,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                            id="create-country-submit-xiaobao">Save
-                                        changes
+                                            id="create-country-submit-xiaobao">保存修改
                                     </button>
                                 </div>
                             </div>
@@ -530,7 +529,6 @@
                                                 var fee = [];
 
                                                 $('.yunfei-oridinary-form-group').each(function () {
-                                                    formData['transport_fees'][$(this).index()]['transport_add_fee'] = $(this).children('input[name="create-country-express-fee-add"]').val();
                                                     var index = $(this).index();
                                                     fee[index] = {
                                                         'transport_default_quantity': $(this).children('input[name="create-country-oridinary-fee-range"]').val(),
@@ -569,7 +567,9 @@
                                                     $.ajax({
                                                         type: 'put',
                                                         url: '/admin/country',
-                                                        data: putCountry,
+                                                        data: {
+                                                            data: JSON.stringify(putCountry)
+                                                        },
                                                         dataType: 'json',
                                                         success: function () {
                                                         },
@@ -589,7 +589,7 @@
                                                             if (data.succeed == true) {
                                                                 layer.alert("新建成功")
                                                                 $('#standard-logistics-panel').append('<input type="hidden" name="country_id" value="' + data.msg.countryId + '">')
-                                                                setTimeout('location.reload()', 1000)
+//                                                                setTimeout('location.reload()', 1000)
                                                             } else {
                                                                 alert('参数有误，创建失败！')
                                                             }
@@ -642,8 +642,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                            id="country-select-standard">Save
-                                        changes
+                                            id="country-select-standard">保存修改
                                     </button>
                                 </div>
                             </div>
@@ -832,7 +831,9 @@
                                                     $.ajax({
                                                         type: 'put',
                                                         url: '/admin/country',
-                                                        data: putCountry,
+                                                        data: {
+                                                            data: JSON.stringify(putCountry)
+                                                        },
                                                         dataType: 'json',
                                                         success: function () {
                                                         },
@@ -852,7 +853,7 @@
                                                             if (data.succeed == true) {
                                                                 layer.alert("新建成功")
                                                                 $('#express-logistics-panel').append('<input type="hidden" name="country_id" value="' + data.msg.countryId + '">')
-                                                                setTimeout('location.reload()', 1000)
+//                                                                setTimeout('location.reload()', 1000)
                                                             } else {
                                                                 alert('参数有误，创建失败！')
                                                             }
@@ -903,8 +904,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                            id="country-select-fast">Save
-                                        changes
+                                            id="country-select-fast">保存修改
                                     </button>
                                 </div>
                             </div>
@@ -1083,7 +1083,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-primary">保存修改</button>
                         </div>
                     </div>
                 </div>
@@ -1137,9 +1137,14 @@
             success: function (data) {
                 if (data.succeed) {
                     layer.msg("添加成功")
+                    window.location = '/admin/shopping_template'
                 } else {
                     layer.msg("添加失败")
                 }
+            },
+            error: function (err) {
+                console.log(err)
+                layer.msg("添加失败")
             }
         })
     })
