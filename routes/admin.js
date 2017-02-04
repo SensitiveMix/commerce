@@ -1110,9 +1110,10 @@ router.delete('/category_manage', (req, res) => {
 
 router.put('/category_manage', (req, res) => {
     var specification = {}
+    console.log(req.body)
     let specPromise = new Promise((resolve, reject) => {
         db.specifications.findOne({
-                de_firstCategory: req.body.originFirstCategory
+                firstCategory: req.body.originFirstCategory
             }, (err, specs) => {
                 if (err) reject(err)
                 resolve(specs)
@@ -1169,10 +1170,10 @@ router.put('/category_manage', (req, res) => {
                         })
                 })
                 .then((final) => {
-                    console.log(final)
                     console.log('final')
+                    console.log(specification)
                     db.specifications.findOneAndUpdate({
-                        de_firstCategory: req.body.originFirstCategory
+                        firstCategory: req.body.originFirstCategory
                     }, {
                         '$set': {
                             firstCategory: specification.firstCategory,
@@ -1180,7 +1181,7 @@ router.put('/category_manage', (req, res) => {
                             thirdCategory: specification.thirdCategory
                         }
                     }, (err, r) => {
-                        if (err || !r) return res.send(200, {succeed: false, msg: "DBError"})
+                        if (err) return res.send(400, {succeed: false, msg: "DBError"})
                     })
                     db.categorys.update({
                         firstCategory: req.body.originFirstCategory
@@ -1190,9 +1191,13 @@ router.put('/category_manage', (req, res) => {
                             secondCategory: final.secondCategory
                         }
                     }, (err, result) => {
-                        if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                        console.log('1231231232')
+                        if (err) return res.send(400, {succeed: false, msg: "DBError"})
                         res.send(200, {succeed: true, msg: "ok"})
                     })
+                })
+                .catch((err) => {
+                    res.send(err.statusCode, err.msg)
                 })
         })
 })
@@ -1269,7 +1274,7 @@ router.put('/category_manage_german', (req, res) => {
                         secondCategory: final.secondCategory
                     }
                 }, (err, result) => {
-                    if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                    if (err || !result) return res.send(500, {succeed: false, msg: "DBError"})
                     res.send(200, {succeed: true, msg: "ok"})
                 })
             })
