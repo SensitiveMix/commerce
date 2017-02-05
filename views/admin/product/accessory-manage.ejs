@@ -439,6 +439,7 @@
             } else {
                 uri = '/admin/category_manage'
             }
+            console.log(payload)
             $.ajax({
                 type: 'PUT',
                 url: uri,
@@ -455,6 +456,7 @@
                 },
                 error: function (error) {
                     $('#myModal').modal('hide')
+                    console.log(error)
                     layer.msg('修改失败,请检查是否有非法词汇')
                 }
             })
