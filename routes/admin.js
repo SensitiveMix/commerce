@@ -1933,8 +1933,19 @@ router.post('/saveProductDetail', function (req, res, next) {
 //产品基本信息录入管理
 router.get('/specification', checkLogin);
 router.get('/specification', function (req, res, next) {
-    console.log("产品上传管理" + new Date());
-    db.specifications.find({}, function (err, result) {
+    console.log("产品上传管理" + new Date())
+    let payload = {}
+    if (req.query.firstCategory) {
+        payload.firstCategory = req.query.firstCategory
+    }
+    if (req.query.secondCategory) {
+        payload.secondCategory = req.query.secondCategory
+    }
+
+    if (req.query.thirdCategory) {
+        payload.thirdCategory = req.query.thirdCategory
+    }
+    db.specifications.find(payload, function (err, result) {
         db.categorys.find({}, function (err, data) {
             if (err) res.send('404');
 
@@ -1960,7 +1971,20 @@ router.get('/specification', function (req, res, next) {
 router.get('/specification_german', checkLogin);
 router.get('/specification_german', function (req, res, next) {
     console.log("产品上传管理" + new Date());
-    db.specifications.find({}, function (err, result) {
+    console.log("产品上传管理" + new Date())
+    let payload = {}
+    if (req.query.firstCategory) {
+        payload.de_firstCategory = req.query.firstCategory
+    }
+    if (req.query.secondCategory) {
+        payload.de_secondCategory = req.query.secondCategory
+    }
+
+    if (req.query.thirdCategory) {
+        payload.de_thirdCategory = req.query.thirdCategory
+    }
+
+    db.specifications.find(payload, function (err, result) {
         db.categorys.find({}, function (err, data) {
             if (err) res.send('404');
 
