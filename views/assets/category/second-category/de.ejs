@@ -178,6 +178,14 @@
     $(function () {
         $('#zlight-nav').zlightMenu();
     });
+
+    function orderByTime() {
+        window.location = window.location.pathname + '?orderBy=online_time'
+    }
+
+    function orderByPrice() {
+        window.location = window.location.pathname + '?orderBy=price'
+    }
 </script>
 
 <!-- ========== CONTENT END ========== -->

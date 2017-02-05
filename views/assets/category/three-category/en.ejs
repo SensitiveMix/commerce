@@ -55,8 +55,8 @@
                                         <div class="navbar-collapse collapse" style="padding: 0">
                                             <ul class="nav navbar-nav">
                                                 <li class="menuItem active"><a>Recommended</a></li>
-                                                <li class="menuItem"><a>Time</a></li>
-                                                <li class="menuItem"><a>Price</a></li>
+                                                <li class="menuItem"><a onclick="orderByTime()">Time</a></li>
+                                                <li class="menuItem"><a onclick="orderByPrice()">Price</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -111,6 +111,14 @@
     $(function () {
         $('#zlight-nav').zlightMenu();
     });
+
+    function orderByTime() {
+        window.location = window.location.pathname + '?orderBy=online_time'
+    }
+
+    function orderByPrice() {
+        window.location = window.location.pathname + '?orderBy=price'
+    }
 </script>
 <!-- ========== CONTENT END ========== -->
 

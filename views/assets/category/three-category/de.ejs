@@ -12,15 +12,17 @@
                 min-height: 34px;
                 margin-bottom: 15px;
             }
-            .menuItem a{
+
+            .menuItem a {
                 color: #fff;
                 height: 34px;
-                line-height: 34px!important;
+                line-height: 34px !important;
                 font-weight: 500;
             }
-            .menuItem.active a{
-                color: #fff!important;
-                background: #333!important;
+
+            .menuItem.active a {
+                color: #fff !important;
+                background: #333 !important;
             }
 
         </style>
@@ -38,63 +40,63 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xs-10 col-md-10" style="margin: 0 auto;float: none">
-                <ol class="breadcrumb">
-                    <li><a href="/de">Home</a></li>
-                    <li><a href="<%= prev_category.firstUrl %>"><%= prev_category.firstTitle %></a></li>
-                    <li><a href="<%= prev_category.secondUrl %>"><%= prev_category.secondTitle %></a></li>
-                    <li class="active"><%= product[0].de_thirdTitle %></li>
-                </ol>
+                        <ol class="breadcrumb">
+                            <li><a href="/de">Home</a></li>
+                            <li><a href="<%= prev_category.firstUrl %>"><%= prev_category.firstTitle %></a></li>
+                            <li><a href="<%= prev_category.secondUrl %>"><%= prev_category.secondTitle %></a></li>
+                            <li class="active"><%= product[0].de_thirdTitle %></li>
+                        </ol>
 
-                <div class="row">
+                        <div class="row">
 
-                    <div class="col-sm-12">
-                        <div class="navwrapper">
-                            <div class="navbar navbar-default navbar-static-top sort-bar">
-                                <div class="navbar-collapse collapse" style="padding: 0">
-                                    <ul class="nav navbar-nav">
-                                        <li class="menuItem active"><a>Recommended</a></li>
-                                        <li class="menuItem"><a>Time</a></li>
-                                        <li class="menuItem"><a>Price</a></li>
-                                    </ul>
+                            <div class="col-sm-12">
+                                <div class="navwrapper">
+                                    <div class="navbar navbar-default navbar-static-top sort-bar">
+                                        <div class="navbar-collapse collapse" style="padding: 0">
+                                            <ul class="nav navbar-nav">
+                                                <li class="menuItem active"><a>Recommended</a></li>
+                                                <li class="menuItem"><a onclick="orderByTime()">Time</a></li>
+                                                <li class="menuItem"><a onclick="orderByPrice()">Price</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
 
 
-                        <ul class="products row">
-                            <% if(product[0].product.length != 0 ) { %>
-                            <% product[0].product.forEach(function(item){ %>
-                            <li class="col-sm-3">
-                                <div class="product">
-                                    <div class="thumbnail">
-                                        <a href="/de/<%= prev_category.firstTitle %>/<%= prev_category.secondTitle %>/<%= product[0].de_thirdTitle %>/single-product/<%= item.product_id %>"><img
-                                                    src="<%= item.product_images[0].url %>"
-                                                                                              alt=""></a>
-                                        <a href="#" class="add-to-cart" title="Add to Cart">
+                                <ul class="products row">
+                                    <% if(product[0].product.length != 0 ) { %>
+                                    <% product[0].product.forEach(function(item){ %>
+                                    <li class="col-sm-3">
+                                        <div class="product">
+                                            <div class="thumbnail">
+                                                <a href="/de/<%= prev_category.firstTitle %>/<%= prev_category.secondTitle %>/<%= product[0].de_thirdTitle %>/single-product/<%= item.product_id %>"><img
+                                                            src="<%= item.product_images[0].url %>"
+                                                            alt=""></a>
+                                                <a href="#" class="add-to-cart" title="Add to Cart">
                                           <span class="fa-stack fa-2x">
                                             <i class="fa fa-circle fa-stack-2x"></i>
                                             <i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
                                           </span>
-                                        </a>
-                                    </div>
-                                    <hr>
-                                    <div class="title">
-                                        <h3><a href="#"><%= item.product_images[0].title %></a></h3>
-                                        <!--<p>by Jack &amp; Jones</p>-->
-                                    </div>
+                                                </a>
+                                            </div>
+                                            <hr>
+                                            <div class="title">
+                                                <h3><a href="#"><%= item.product_images[0].title %></a></h3>
+                                                <!--<p>by Jack &amp; Jones</p>-->
+                                            </div>
 
-                                </div>
-                            </li>
+                                        </div>
+                                    </li>
 
-                            <% }) %>
-                            <% } %>
+                                    <% }) %>
+                                    <% } %>
 
-                        </ul>
+                                </ul>
 
+                            </div>
+
+                        </div>
                     </div>
-
-                </div>
-                </div>
                 </div>
             </div>
         </section>
@@ -109,6 +111,16 @@
     $(function () {
         $('#zlight-nav').zlightMenu();
     });
+
+    function orderByTime() {
+        window.location = window.location.pathname + '?orderBy=online_time'
+    }
+
+    function orderByPrice() {
+        window.location = window.location.pathname + '?orderBy=price'
+    }
+
+
 </script>
 <!-- ========== CONTENT END ========== -->
 

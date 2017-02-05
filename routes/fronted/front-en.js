@@ -32,7 +32,7 @@ router.get('/test/:id', (req, res) => {
 })
 
 router.get('/hello', (req, res) => {
-    db.feeExpress.find({_id:"588462e7379409aeb2c4086f"}, (err, data) => {
+    db.feeExpress.find({_id: "588462e7379409aeb2c4086f"}, (err, data) => {
         async.forEach(data, (d, cb) => {
             async.forEach(d.country, (e, callback) => {
                 db.feeExpressCountry.find({_id: e}, (err, result) => {
@@ -631,9 +631,24 @@ router.get('/personal-Order', (req, res) => {
 //三级类目查找
 router.get('/en/product/:id', checkCategories)
 router.get('/en/product/:id', (req, res) => {
+    let orderByDesc = req.query.orderBy
+    let query = {}
+    if (orderByDesc) {
+        query = {
+            path: 'secondCategory.thirdTitles.product',
+            options: {
+                sort: {
+                    orderByDesc: 'desc'
+                }
+            }
+        }
+    } else {
+        query = {path: 'secondCategory.thirdTitles.product'}
+    }
+
     db.categorys
         .findOne({'secondCategory.thirdTitles.thirdUrl': '/en/product/' + req.params["id"]})
-        .populate('secondCategory.thirdTitles.product')
+        .populate(query)
         .exec((err, result) => {
             let arr = []
             let secondParam = {}

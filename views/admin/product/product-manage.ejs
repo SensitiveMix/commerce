@@ -69,7 +69,7 @@
                             style="display:none;"></select>
                     <input type="hidden" class="j-select-hidden" id="selectproductgroup"
                            name="prodAuditFailForm.selectedProdGroupId" value="">
-                       <span class="clickSpanOne" style="display:none;">
+                    <span class="clickSpanOne" style="display:none;">
                             <span class="lsBtnOne">
                             <input name="searchSubmitbtn" type="button" value="搜索">
                             </span>
@@ -112,7 +112,7 @@
                            name="prodAuditFailForm.operateDateEndStr" id="operateDateEnd" value="" readonly=""><span
                             class="calendar_append"></span>
 
-                       <span class="clickSpanTwo">
+                    <span class="clickSpanTwo">
                             <span class="lsBtnOne">
                                 <input type="button" value="搜索" name="searchSubmitbtn">
                             </span>
@@ -148,5 +148,15 @@
     </div>
 </div>
 <script>
-
+//    $.ajax({
+//        type: 'get',
+//        url: '/api/v1/admin/product?status=online&&expiration_time=1',
+//        dataType: 'json',
+//        success: function (data) {
+//            console.log(data)
+//        },
+//        error: function () {
+//            alert('参数有误，创建失败！')
+//        }
+//    })
 </script>
