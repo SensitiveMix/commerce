@@ -1158,6 +1158,18 @@ router.put('/category_manage', (req, res) => {
                                         _.each(item.thirdTitles, (thirdItem) => {
                                             if (thirdItem.thirdTitle == req.body.originThirdCategory) {
                                                 thirdItem.thirdTitle = req.body.thirdCategory
+                                                thirdItem.thirdImages = req.body.thirdImages
+                                            }
+                                        })
+                                    }
+                                })
+                            } else {
+                                specification.thirdCategory = req.body.thirdCategory
+                                _.each(totalCategory.secondCategory, (item) => {
+                                    if (item.secondTitle == req.body.secondCategory) {
+                                        _.each(item.thirdTitles, (thirdItem) => {
+                                            if (thirdItem.thirdTitle == req.body.originThirdCategory) {
+                                                thirdItem.thirdImages = req.body.thirdImages
                                             }
                                         })
                                     }
@@ -1243,6 +1255,18 @@ router.put('/category_manage_german', (req, res) => {
                                     _.each(item.thirdTitles, (thirdItem) => {
                                         if (thirdItem.de_thirdTitle == req.body.originThirdCategory) {
                                             thirdItem.de_thirdTitle = req.body.thirdCategory
+                                            thirdItem.thirdImages = req.body.thirdImages
+                                        }
+                                    })
+                                }
+                            })
+                        } else {
+                            specs.de_thirdTitle = req.body.thirdCategory
+                            _.each(total_Category.secondCategory, (item) => {
+                                if (item.de_secondTitle == req.body.secondCategory) {
+                                    _.each(item.thirdTitles, (thirdItem) => {
+                                        if (thirdItem.de_thirdTitle == req.body.originThirdCategory) {
+                                            thirdItem.thirdImages = req.body.thirdImages
                                         }
                                     })
                                 }

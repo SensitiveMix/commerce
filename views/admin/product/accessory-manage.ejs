@@ -92,7 +92,7 @@
                         修改产品类目
                     </h4>
                 </div>
-                <div class="modal-body" style="height: 160px">
+                <div class="modal-body" style="height: 316px">
                     <div class="form-group col-sm-12">
                         <label for="category" class="col-sm-4 control-label">一级类目</label>
 
@@ -112,6 +112,14 @@
 
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="thd-category" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label for="category" class="col-sm-4 control-label">类目封面</label>
+
+                        <div class="col-sm-6">
+                            <input type="file" onchange="uploadFile()" id="file" name="file" multiple/><br/>
+                            <img id="thirdImage" style="width: 100px;height: 100px" src="" alt="">
                         </div>
                     </div>
                 </div>
@@ -285,7 +293,7 @@
                             $('#div_catagory2').addClass('addscroll');
                             $('#catagory2').empty();
                             <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
-                            var mythirdTitle = '<li data-crosscate="0" title="<%= thirdItem.thirdTitle %>" data-remark="读取3.5英寸软盘的设备可以读写1.44MB的3.5英寸软盘" data-leaf="1" data-valid="1" data-param="catePubId=009001007" data-en="Floppy Drives" data-cn="<%= thirdItem.thirdTitle %>"><%= thirdItem.thirdTitle %></li>'
+                            var mythirdTitle = '<li data-crosscate="0" title="<%= thirdItem.thirdTitle %>" data-remark="读取3.5英寸软盘的设备可以读写1.44MB的3.5英寸软盘" data-leaf="1" data-valid="1" data-param="catePubId=009001007" data-en="Floppy Drives" name="<%= thirdItem.thirdImages %>" data-cn="<%= thirdItem.thirdTitle %>"><%= thirdItem.thirdTitle %></li>'
                             $('#catagory2').append(mythirdTitle);
                             <% }) %>
                         }
@@ -318,92 +326,95 @@
         var total_category = []
         var total = {};
         $('#save_history').click(function () {
-                var single = {
-                    firstCategory: $('#catagory0 li.current').text(),
-                    secondCategory: $('#catagory1 li.current').text(),
-                    thirdCategory: $('#catagory2 li.current').text()
-                }
+            var single = {
+                firstCategory: $('#catagory0 li.current').text(),
+                secondCategory: $('#catagory1 li.current').text(),
+                thirdCategory: $('#catagory2 li.current').text()
+            }
 
-                var Length = total_category.filter(function (item) {
-                    return single.firstCategory == item.firstCategory && single.secondCategory == item.secondCategory && single.thirdCategory == item.thirdCategory
-                }).length
+            var Length = total_category.filter(function (item) {
+                return single.firstCategory == item.firstCategory && single.secondCategory == item.secondCategory && single.thirdCategory == item.thirdCategory
+            }).length
 
-                if (Length > 0) {
-                    layer.msg('该类目已存在');
-                } else {
-                    total_category.push(single);
-                    var myhistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + ' -</span>'
-                    $('#recentCategoryDropdown').append(myhistory);
-                    $('.save_category').css('display', 'block');
-                    var saveHistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + '</span><span class="delete">删除</span><br/>'
-                    $('.save_category_path').append(saveHistory)
+            if (Length > 0) {
+                layer.msg('该类目已存在');
+            } else {
+                total_category.push(single);
+                var myhistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + ' -</span>'
+                $('#recentCategoryDropdown').append(myhistory);
+                $('.save_category').css('display', 'block');
+                var saveHistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + '</span><span class="delete">删除</span><br/>'
+                $('.save_category_path').append(saveHistory)
 
-                    $('.delete').click(function () {
-                        var context = $(this).prev().text()
-                        var threeCategory = context.substring(context.lastIndexOf('>') + 1, context.length)
-                        total_category = total_category.filter(function (item) {
-                            return item.thirdCategory != threeCategory
-                        })
-                        if (threeCategory != '') {
-                            $.ajax({
-                                type: 'POST',
-                                url: 'deleteTemporary',
-                                data: {thirdCategory: threeCategory},
-                                dataType: 'json',
-                                success: function (data) {
-                                    if (data.status == 200) {
-                                        layer.msg('删除成功');
-                                    } else {
-                                        layer.msg('删除失败');
-                                    }
-
-                                }
-                            });
-                        } else {
-                            layer.msg('删除失败')
-                        }
-
-                        layer.msg('删除成功')
-                        $(this).prev().remove();
-                        $(this).next().remove();
-                        $(this).remove()
+                $('.delete').click(function () {
+                    var context = $(this).prev().text()
+                    var threeCategory = context.substring(context.lastIndexOf('>') + 1, context.length)
+                    total_category = total_category.filter(function (item) {
+                        return item.thirdCategory != threeCategory
                     })
-                    if ($('#catagory0 li.current').text().length != 0) {
+                    if (threeCategory != '') {
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/uploadTemporary',
-                            data: {
-                                firstCategory: $('#catagory0 li.current').text(),
-                                secondCategory: $('#catagory1 li.current').text(),
-                                thirdCategory: $('#catagory2 li.current').text(),
-                                addBy: '<%= username %>',
-                                status: 'NEW'
-                            },
+                            url: 'deleteTemporary',
+                            data: {thirdCategory: threeCategory},
                             dataType: 'json',
                             success: function (data) {
-                                isSave = true;
-                                layer.msg('收藏成功');
-                                console.log(data);
+                                if (data.status == 200) {
+                                    layer.msg('删除成功');
+                                } else {
+                                    layer.msg('删除失败');
+                                }
+
                             }
                         });
-
                     } else {
-                        alert('请选择类目!');
+                        layer.msg('删除失败')
                     }
+
+                    layer.msg('删除成功')
+                    $(this).prev().remove();
+                    $(this).next().remove();
+                    $(this).remove()
+                })
+                if ($('#catagory0 li.current').text().length != 0) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/uploadTemporary',
+                        data: {
+                            firstCategory: $('#catagory0 li.current').text(),
+                            secondCategory: $('#catagory1 li.current').text(),
+                            thirdCategory: $('#catagory2 li.current').text(),
+                            addBy: '<%= username %>',
+                            status: 'NEW'
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            isSave = true;
+                            layer.msg('收藏成功');
+                            console.log(data);
+                        }
+                    });
+
+                } else {
+                    alert('请选择类目!');
                 }
+            }
         })
 
         $('#showCategory').click(function () {
-                $('#myModal').modal('toggle')
-                let payload = {
-                    firstCategory: $('#catagory0 li.current').text(),
-                    secondCategory: $('#catagory1 li.current').text(),
-                    thirdCategory: $('#catagory2 li.current').text()
-                }
+            $('#myModal').modal('toggle')
+            let payload = {
+                firstCategory: $('#catagory0 li.current').text(),
+                secondCategory: $('#catagory1 li.current').text(),
+                thirdCategory: $('#catagory2 li.current').text(),
+                thirdImages: $('#catagory2 li.current').attr('name')
+            }
 
-                $('#fst-category').val(payload.firstCategory)
-                $('#sed-category').val(payload.secondCategory)
-                $('#thd-category').val(payload.thirdCategory)
+            console.log(payload)
+            $('#fst-category').val(payload.firstCategory)
+            $('#sed-category').val(payload.secondCategory)
+            $('#thd-category').val(payload.thirdCategory)
+            $("#thirdImage").attr('src', '/images/' + payload.thirdImages)
         })
 
         $('#save_change').click(function () {
@@ -415,6 +426,7 @@
                 firstCategory: $('#fst-category').val(),
                 secondCategory: $('#sed-category').val(),
                 thirdCategory: $('#thd-category').val(),
+                thirdImages: $("#thirdImage").attr('src').replace('/images/', ''),
                 first: false,
                 second: false,
                 third: false
@@ -504,4 +516,52 @@
             }
         })
     })
+
+    function uploadFile() {
+        let file = document.getElementById("file")
+        let formData = new FormData()
+        console.log(file)
+        console.log(file.files)
+        if (file.files.length > 8) {
+            layer.alert('上传图片大于8张')
+        } else {
+            for (var i = 0; i < file.files.length; i++) {
+                if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpeg') {
+                    layer.alert('上传图片格式有误')
+                    return false
+                } else if (file.files[i].size / 1024 > 2000) {
+                    layer.alert('上传图片大小不能超过2M')
+                    return false
+                } else {
+                    formData.append('file', file.files[i])
+                }
+
+                $('.limit_pic').text(8 - file.files.length)
+            }
+
+            $.ajax({
+                url: '/admin/uploadSingle',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    let image_data = data.data;
+                    if (image_data.length != 0) {
+                        image_data.forEach(function (item, index) {
+                            console.log(item)
+                            $("#thirdImage").attr('src', item)
+                        })
+                    }
+                },
+                error: function () {
+                    layer.msg('上传文件格式错误')
+                }
+            });
+        }
+
+
+    }
 </script>
