@@ -1,4 +1,181 @@
 <% layout('../backend-master.ejs') %>
+<style type="text/css">
+    ul, ol {
+        list-style: none;
+    }
+
+    .rtab-warp {
+        position: relative;
+        margin: 15px 0 10px;
+        padding: 0 10px 0 11px;
+        height: 29px;
+        border-bottom: 1px solid #ccc
+    }
+
+    .rtab-warp {
+        border-bottom: 2px solid #ddd;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        height: 40px;
+        line-height: 38px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .rtab-warp.syi-rtab {
+        max-width: 1000px
+    }
+
+    .rtab-warp ul {
+        float: left;
+    }
+
+    .rtab-warp ul li {
+        float: left;
+        margin-left: -1px;
+        font-weight: 700;
+        border-bottom: 0
+    }
+
+    .rtab-warp ul li {
+        margin-bottom: 0;
+    }
+
+    .rtab-warp ul li.current {
+        height: 27px;
+        border-bottom-color: #fff
+    }
+
+    .rtab-warp ul li a {
+        color: #444
+    }
+
+    .rtab-warp ul li a:hover {
+        color: #444;
+        text-decoration: none
+    }
+
+    .rtab-warp ul li span {
+        display: inline-block;
+        padding: 0 15px;
+        height: 27px;
+        line-height: 18px;
+        *line-height: 21px;
+        text-align: center;
+        border-top: 1px solid #fff;
+        cursor: pointer
+    }
+
+    .rtab-warp ul li.libg, .rtab-warp ul li.current {
+        position: relative;
+        z-index: 2;
+        margin-bottom: -1px;
+        border-top: 2px solid #fca35b;
+        border-left: 1px solid #cdcdcd;
+        border-right: 1px solid #cdcdcd
+    }
+
+    .rtab-warp ul li.libg span, .rtab-warp ul li.current span {
+        background: #fff;
+        cursor: default;
+        line-height: 14px;
+    }
+
+    .rtab-warp b {
+        display: inline-block;
+        width: auto;
+        height: 17px;
+        margin: 5px;
+        text-align: center
+    }
+
+    .rtab-warp b a {
+        display: inline-block;
+        vertical-align: middle;
+        width: 5px;
+        height: 7px;
+        margin-top: 5px;
+        background: url(http://www.dhresource.com/dhs/mos/image/syi/arrow.gif) no-repeat
+    }
+
+    .rtab-warp b.prev a {
+        background-position: 0 0
+    }
+
+    .rtab-warp b.prev a:hover {
+        background-position: 0 -13px
+    }
+
+    .rtab-warp b.next a {
+        background-position: -16px 0
+    }
+
+    .rtab-warp b.next a:hover {
+        background-position: -16px -13px
+    }
+
+    .rtab-warp b.prev.grey {
+        background: url(http://www.dhresource.com/dhs/mos/image/syi/arrow.gif) no-repeat 0 -24px
+    }
+
+    .rtab-warp b.next.grey {
+        background: url(http://www.dhresource.com/dhs/mos/image/syi/arrow.gif) no-repeat -16px -24px
+    }
+
+    .rtab-warp ul li.current {
+        border: 0;
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 2px solid #ff8600
+    }
+
+    .rtab-warp ul li span {
+        font-weight: 100;
+        font-size: 14px
+    }
+
+    .rtab-warp ul li span:hover {
+        color: #ff6000
+    }
+
+    .rtab-warp ul li.current span {
+        color: #ff6000;
+        font-weight: bold
+    }
+
+    .rtab-warp ul li b {
+        color: #ff6000;
+        font-weight: initial
+    }
+
+    .rtab-warp ul li.current b {
+        font-weight: bold
+    }
+
+    .rtab-warp .propbox {
+        float: right;
+        padding-top: 3px;
+        position: relative
+    }
+    .rtab-warp ul li.current span {
+        color: #ff6000;
+        font-weight: bold;
+    }
+    .propbox input {
+        box-shadow: 0 1px 0 rgba(238,238,238,1);
+        border: 1px solid #ffc27e;
+        border-radius: 2px;
+        background: #fff;
+        font-family: tahoma,arial,'microsoft yahei';
+        color: #ff6000;
+        line-height: 21px;
+        padding: 0 8px;
+        cursor: pointer;
+    }
+    input {
+        vertical-align: middle;
+    }
+</style>
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">管理产品</h3>
@@ -11,7 +188,7 @@
                     <p class="addheight" id="hideTipsBox">
                         1.您添加的产品需要通过审核后才能上架交易，审核时间通常在24-28个小时之内，遇特殊情况会稍有延迟，敬请谅解。<br>
                         2.请核对您添加的产品是否符合<a target="_blank"
-                                          href="http://seller.dhgate.com/policy/110305.html">敦煌网产品发布规则</a>，不符合规则的产品将不能通过审核<br>
+                                          href="#">Ecsell产品发布规则</a>，不符合规则的产品将不能通过审核<br>
                         3.现在起您发布的上架产品都能够展示在店铺中了！同时还能设置加载搜索产品，获取更多曝光率！
                         <a target="_blank" href="http://seller.dhgate.com/help/c0303/16643.html">了解更多</a>
                     </p>
@@ -20,29 +197,29 @@
             </div>
             <div id="newGuideTarget2" class="rtab-warp">
                 <ul>
-                    <li>
-                        <a href="/prodmanage/shelf/prodShelf.do?dhpath=10001,21001,0202">
+                    <li class="current">
+                        <a href="#">
                             <span id="shelfProductNum">
 								已上架<b>0</b>
 							</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/prodmanage/audit/prodAudit.do?dhpath=10001,21001,0202">
+                        <a href="">
                             <span id="auditProductNum">
 								待审核<b>0</b>
 							</span>
                         </a>
                     </li>
-                    <li class="current">
-                        <a href="/prodmanage/audit/prodAuditFail.do?dhpath=10001,21001,0202">
+                    <li>
+                        <a href="">
                             <span id="auditFailProductNum">
 								审核未通过<b>0</b>
 							</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/prodmanage/downshelf/prodDownShelf.do?dhpath=10001,21001,0202">
+                        <a href="">
                             <span id="downShelfProductNum">
 								已下架<b>0</b>
 							</span>
@@ -69,7 +246,7 @@
                             style="display:none;"></select>
                     <input type="hidden" class="j-select-hidden" id="selectproductgroup"
                            name="prodAuditFailForm.selectedProdGroupId" value="">
-                       <span class="clickSpanOne" style="display:none;">
+                    <span class="clickSpanOne" style="display:none;">
                             <span class="lsBtnOne">
                             <input name="searchSubmitbtn" type="button" value="搜索">
                             </span>
@@ -104,15 +281,15 @@
                 </p>
                 <p class="lsPone">
                     <span class="tname">更新日期：</span>
-                    <input type="text" class="cond-input condwid3 calendarFocus timeImg"
+                    <input type="text" class="cond-input condwid3 calendarFocus timeImg datepicker"
                            name="prodAuditFailForm.operateDateBeginStr" id="operateDateBegin" value="" readonly=""><span
                             class="calendar_append"></span>
                     <span>到</span>
-                    <input type="text" class="cond-input condwid3 calendarFocus timeImg"
+                    <input type="text" class="cond-input condwid3 calendarFocus timeImg datepicker"
                            name="prodAuditFailForm.operateDateEndStr" id="operateDateEnd" value="" readonly=""><span
                             class="calendar_append"></span>
 
-                       <span class="clickSpanTwo">
+                    <span class="clickSpanTwo">
                             <span class="lsBtnOne">
                                 <input type="button" value="搜索" name="searchSubmitbtn">
                             </span>
@@ -147,6 +324,11 @@
         </form>
     </div>
 </div>
+<script src="/js/bootstrap-datepicker.js"></script>
 <script>
-
+    $('.datepicker').datepicker({
+        language: 'zh-CN',
+        autoclose: true,
+        todayHighlight: true
+    })
 </script>
