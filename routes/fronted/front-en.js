@@ -882,6 +882,15 @@ router.get('/:first/:second/:third/single-product/:id', (req, res, next) => {
         })
 })
 
+router.get('/shopping-cart-add', (req, res) => {
+    res.render('assets/shopping-cart/en', {
+        title: 'ECSell',
+        categories: categoryies,
+        hotLabels: hotLabel,
+        user: 'admin-test',
+        status: 200
+    })
+})
 
 //一级&二级类目查找
 router.get('/en/:category/:id', checkCategories);

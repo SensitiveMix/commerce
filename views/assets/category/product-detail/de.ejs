@@ -91,7 +91,9 @@
                                 </div>
 
                             </div>
-                            <div class="col-sm-7 summary entry-summary">
+                            <form class="col-sm-7 summary entry-summary"
+                                  action="/de/shopping-cart-add?main_page=shopping_cart_add&product_id=<%= product[0].product_id %>&&
+                            product_title=<%= product[0].product_title_de %>">
 
                                 <h1 class="product_title"><%= product[0].product_title_de %><span
                                             class="item-id">#<%= product[0].product_id %></span></h1>
@@ -140,10 +142,13 @@
                                     <button class="plus"><i class="fa fa-plus"></i></button>
                                 </div>
 
-                                <input type="button" onclick="check_out" class="btn btn-primary btn-lg" id="add-to-cart"
+                                <!--<input type="button" onclick="check_out" class="btn btn-primary btn-lg" id="add-to-cart"-->
+                                <!--value="Add to Cart"> -->
+
+                                <input type="submit" class="btn btn-primary btn-lg" id="add-to-cart"
                                        value="Add to Cart">
 
-                            </div>
+                            </form>
                         </div>
 
                         <!-- Nav tabs -->
@@ -396,18 +401,17 @@
 
 <script>
     $(function () {
-        $("#add-to-cart").on('click', () => {
-            alert('1')
-            console.log($('.amount').html())
-            console.log($('#number').val())
-            console.log($('.product_title').html())
-            if ("<%= status %>" == '500') {
-                layer.msg('Please Login')
-            }
-            else {
-                self.location.href = "/de/checkout?price=" + $('.amount').html() + "&amount=" + $('#number').val() + "&title=" + $('.product_title').html() + ""
-            }
-        })
+        <!--$("#add-to-cart").on('click', () => {-->
+            <!--console.log($('.amount').html())-->
+            <!--console.log($('#number').val())-->
+            <!--console.log($('.product_title').html())-->
+            <!--if ("<%= status %>" == '500') {-->
+                <!--layer.msg('Please Login')-->
+            <!--}-->
+            <!--else {-->
+                <!--self.location.href = "/de/checkout?price=" + $('.amount').html() + "&amount=" + $('#number').val() + "&title=" + $('.product_title').html() + ""-->
+            <!--}-->
+        <!--})-->
 
         $('#zlight-nav').zlightMenu();
     });

@@ -985,6 +985,16 @@ router.get('/:category/:id', (req, res, next) => {
     }
 })
 
+router.get('/shopping-cart-add', (req, res) => {
+    res.render('assets/shopping-cart/de', {
+        title: 'ECSell',
+        categories: categoryies,
+        hotLabels: hotLabel,
+        user: 'admin-test',
+        status: 200
+    })
+})
+
 
 paypal.configure({
     'mode': 'sandbox',
