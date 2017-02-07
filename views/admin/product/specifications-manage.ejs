@@ -579,11 +579,9 @@
         <% category.forEach(function (item) { %>
         if ('<%= item.firstCategory %>' === first) {
             <% item.secondCategory.forEach(function (second) { %>
-            let html = "<option><%= second.secondTitle %></option>"
-            $('.secondCategory').append(html)
+            $('.secondCategory').append("<option><%= second.secondTitle %></option>")
             <% second.thirdTitles.forEach(function (third) { %>
-            let third_html = "<option><%= third.thirdTitle %></option>"
-            $('.thirdCategory').append(third_html)
+            $('.thirdCategory').append("<option><%= third.thirdTitle %></option>")
             <% }) %>
             <% }) %>
         }
@@ -600,11 +598,9 @@
         <% category.forEach(function (item) { %>
         if ('<%= item.de_firstCategory %>' === first) {
             <% item.secondCategory.forEach(function (second) { %>
-            let html = "<option><%= second.de_secondTitle %></option>"
-            $('.secondCategory').append(html)
+            $('.secondCategory').append("<option><%= second.de_secondTitle %></option>")
             <% second.thirdTitles.forEach(function (third) { %>
-            let third_html = "<option><%= third.de_thirdTitle %></option>"
-            $('.thirdCategory').append(third_html)
+            $('.thirdCategory').append("<option><%= third.de_thirdTitle %></option>")
             <% }) %>
             <% }) %>
         }
