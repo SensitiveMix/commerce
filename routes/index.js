@@ -28,7 +28,7 @@ var checkCategories = function (req, res, next) {
     next()
 }
 
-router.get('/test/:id', (req, res) => {
+router.get('/test', (req, res) => {
     // db.category.findOne({
     //     'secondCategory.thirdTitles.thirdUrl': '/product/' + req.params["id"]
     // }, (err, result) => {
@@ -60,10 +60,10 @@ router.get('/test/:id', (req, res) => {
     //
     //     }
     // })
-    db.categorys
-        .populate('secondCategory.thirdTitles.product')
-        .findOne({'secondCategory.thirdTitles.thirdUrl': '/product/' + req.query.id})
-        .exec((err, data) => {
+    db.feeExpress
+        .findOne(payload)
+        .populate('country.id')
+        .exec((err,data)=>{
             res.send(data)
         })
 })

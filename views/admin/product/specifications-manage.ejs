@@ -1,16 +1,114 @@
 <% layout('../backend-master.ejs') %>
 <link href="/stylesheets/lanrenzhijia.css" type="text/css" rel="stylesheet"/>
 <script src='/js/storage.js'></script>
+<style>
+    .control-label {
+        padding: 8px 0 0 0px;
+    }
+
+    .search {
+        padding-left: 36px;
+    }
+
+    .form {
+        padding-top: 20px;
+    }
+
+    .tool {
+        padding-top: 33px;
+    }
+</style>
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">产品规格管理</h3>
-        <button class="btn btn-info" onclick="CompatibilityCLK()">添加</button>
     </div>
-    <div class="col-md-2 col-md-offset-10" style="margin-top: 10px;margin-bottom: 10px;">
-        <select class="form-control" id="choose-spec">
-            <option value="English">英文产品规格</option>
-            <option value="German">德文产品规格</option>
-        </select>
+    <div class="box-body">
+        <div class="form">
+            <div class="form-group col-sm-5">
+                <div class="col-sm-6">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="category" class="control-label">一级类目:</label>
+                            <% if( language == 'de') { %>
+                            <select class="form-control firstCategory"
+                                    onchange="show_sub_de(this.options[this.options.selectedIndex].value)">
+                                <option value="">选择类目</option>
+
+                                <% if(category.length != 0) { %>
+                                <% category.forEach(function (item) { %>
+                                <option data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="类目"
+                                        data-en="Apparel"
+                                        data-param="catePubId=014" data-valid="1"
+                                        title="<%= item.firstCategory %>">
+                                    <a onclick="firstEvent(this.name)"
+                                       name="<%= item.de_firstCategory %>"><%= item.de_firstCategory %></a>
+                                </option>
+                                <% }) %>
+                                <% } %>
+                            </select>
+                            <% }else{ %>
+                            <select class="form-control firstCategory"
+                                    onchange="show_sub(this.options[this.options.selectedIndex].value)">
+                                <option value="">选择类目</option>
+
+                                <% if(category.length != 0) { %>
+                                <% category.forEach(function (item) { %>
+                                <option data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="类目"
+                                        data-en="Apparel"
+                                        data-param="catePubId=014" data-valid="1"
+                                        title="<%= item.firstCategory %>">
+                                    <a onclick="firstEvent(this.name)"
+                                       name="<%= item.firstCategory %>"><%= item.firstCategory %></a>
+                                </option>
+                                <% }) %>
+                                <% } %>
+                            </select>
+                            <% } %>
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-6">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="category" class="control-label pull-left">二级类目:</label>
+                            <select class="form-control secondCategory">
+                                <option value="">选择类目</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-7">
+                <div class="col-sm-4">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="category" class="control-label pull-left">三级类目:</label>
+                            <select class="form-control thirdCategory">
+                                <option value="">选择类目</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-2 search tool">
+                    <button class="btn btn-info" onclick="CompatibilitySearch()">搜索</button>
+                </div>
+
+                <div class="col-sm-2 tool">
+                    <button class="btn btn-info" onclick="CompatibilityCLK()">添加</button>
+                </div>
+
+                <div class="col-md-4 fanyi pull-right tool">
+                    <select class="form-control" id="choose-spec">
+                        <option value="English">英文产品规格</option>
+                        <option value="German">德文产品规格</option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
 
     <% if(specification.length != 0) { %>
@@ -336,7 +434,6 @@
         </form>
 
     </div>
-
 </div>
 
 <script>
@@ -438,6 +535,76 @@
                 alert('更新失败，请检查是否有非法词汇！');
             }
         });
+    }
+
+    function CompatibilitySearch() {
+        let first = $(".firstCategory").find("option:selected").val()
+        let second = $(".secondCategory").find("option:selected").val()
+        let third = $(".thirdCategory").find("option:selected").val()
+        let language = $("#choose-spec").val()
+        let query_path = ''
+
+        if (language == "English") {
+            query_path = '/admin/specification?'
+        } else {
+            query_path = '/admin/specification_german?'
+        }
+
+
+        if (first == "选择类目" || first == "") {
+            layer.msg("请选择搜索类目")
+            return
+        } else {
+            query_path += 'firstCategory=' + first
+        }
+
+        if (second != "选择类目") {
+            query_path += '&&secondCategory=' + second
+        }
+
+        if (third != "选择类目") {
+            query_path += '&&thirdCategory=' + third
+        }
+
+
+        window.location = query_path
+    }
+
+    function show_sub(first) {
+        let init = "<option>选择类目</option>"
+        $('.secondCategory').empty()
+        $('.thirdCategory').empty()
+        $('.secondCategory').append(init)
+        $('.thirdCategory').append(init)
+        <% category.forEach(function (item) { %>
+        if ('<%= item.firstCategory %>' === first) {
+            <% item.secondCategory.forEach(function (second) { %>
+            $('.secondCategory').append("<option><%= second.secondTitle %></option>")
+            <% second.thirdTitles.forEach(function (third) { %>
+            $('.thirdCategory').append("<option><%= third.thirdTitle %></option>")
+            <% }) %>
+            <% }) %>
+        }
+        <% }) %>
+    }
+
+
+    function show_sub_de(first) {
+        let init = "<option>选择类目</option>"
+        $('.secondCategory').empty()
+        $('.thirdCategory').empty()
+        $('.secondCategory').append(init)
+        $('.thirdCategory').append(init)
+        <% category.forEach(function (item) { %>
+        if ('<%= item.de_firstCategory %>' === first) {
+            <% item.secondCategory.forEach(function (second) { %>
+            $('.secondCategory').append("<option><%= second.de_secondTitle %></option>")
+            <% second.thirdTitles.forEach(function (third) { %>
+            $('.thirdCategory').append("<option><%= third.de_thirdTitle %></option>")
+            <% }) %>
+            <% }) %>
+        }
+        <% }) %>
     }
 
 </script>

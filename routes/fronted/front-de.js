@@ -601,9 +601,24 @@ router.get('/personal-Order', (req, res) => {
 //三级类目查找
 router.get('/product/:id', checkCategories)
 router.get('/product/:id', (req, res) => {
+    let orderByDesc = req.query.orderBy
+    let query = {}
+    if (orderByDesc) {
+        query = {
+            path: 'secondCategory.thirdTitles.product',
+            options: {
+                sort: {
+                    orderByDesc: 'desc'
+                }
+            }
+        }
+    } else {
+        query = {path: 'secondCategory.thirdTitles.product'}
+    }
+
     db.categorys
         .findOne({'secondCategory.thirdTitles.de_thirdUrl': '/de/product/' + req.params["id"]})
-        .populate('secondCategory.thirdTitles.product')
+        .populate(query)
         .exec((err, result) => {
             let arr = []
             let secondParam = {}
@@ -968,6 +983,16 @@ router.get('/:category/:id', (req, res, next) => {
             })
 
     }
+})
+
+router.get('/shopping-cart-add', (req, res) => {
+    res.render('assets/shopping-cart/de', {
+        title: 'ECSell',
+        categories: categoryies,
+        hotLabels: hotLabel,
+        user: 'admin-test',
+        status: 200
+    })
 })
 
 

@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const db = require('../../model/index')
 
 router.get('/product', (req, res) => {
     let payload = _processPayload(req.query)
@@ -9,7 +10,6 @@ router.get('/product', (req, res) => {
         res.send({succeed: true, msg: product})
     }).sort({'update_time': -1})
 })
-
 //修改产品
 router.put('/product', (req, res) => {
     db.products.findOneAndUpdate({_id: req.body.id}, {$set: req.body.content}, (err, product) => {
@@ -18,7 +18,6 @@ router.put('/product', (req, res) => {
         res.send({succeed: true, msg: '修改成功'})
     })
 })
-
 //产品上架
 router.delete('/product', (req, res) => {
     db.products.findOneAndUpdate({_id: req.body.id, status: 'pending'}, {$set: {status: 'online'}}, (err, product) => {
@@ -27,7 +26,6 @@ router.delete('/product', (req, res) => {
         res.send({succeed: true, msg: '上架成功'})
     })
 })
-
 //产品下架
 router.delete('/product', (req, res) => {
     db.products.findOneAndUpdate({_id: req.body.id, status: 'online'}, {$set: {status: 'outline'}}, (err, product) => {
@@ -38,6 +36,7 @@ router.delete('/product', (req, res) => {
 })
 
 
+//工具方法
 function _processError(res) {
     return res.send(500, {succeed: false, msg: '数据库错误'})
 }

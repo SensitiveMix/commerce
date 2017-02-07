@@ -30,6 +30,27 @@ router.get('/test/:id', (req, res) => {
             res.send(result)
         })
 })
+
+router.get('/hello', (req, res) => {
+    db.feeExpress.find({_id: "588462e7379409aeb2c4086f"}, (err, data) => {
+        async.forEach(data, (d, cb) => {
+            async.forEach(d.country, (e, callback) => {
+                db.feeExpressCountry.find({_id: e}, (err, result) => {
+                    if (result) {
+                        country.push(result[0])
+                    }
+                    callback()
+                })
+            }, (err) => {
+                d.country = country
+                cb()
+            })
+        }, (err) => {
+            if (err) return res.send(500, {succeed: false, msg: "internal error"})
+            res.send(200, {succeed: true, msg: data})
+        })
+    })
+})
 //utils
 let checkCategories = function (req, res, next) {
     if (categoryies.length == 0) {
@@ -610,9 +631,24 @@ router.get('/personal-Order', (req, res) => {
 //三级类目查找
 router.get('/en/product/:id', checkCategories)
 router.get('/en/product/:id', (req, res) => {
+    let orderByDesc = req.query.orderBy
+    let query = {}
+    if (orderByDesc) {
+        query = {
+            path: 'secondCategory.thirdTitles.product',
+            options: {
+                sort: {
+                    orderByDesc: 'desc'
+                }
+            }
+        }
+    } else {
+        query = {path: 'secondCategory.thirdTitles.product'}
+    }
+
     db.categorys
         .findOne({'secondCategory.thirdTitles.thirdUrl': '/en/product/' + req.params["id"]})
-        .populate('secondCategory.thirdTitles.product')
+        .populate(query)
         .exec((err, result) => {
             let arr = []
             let secondParam = {}
@@ -846,6 +882,15 @@ router.get('/:first/:second/:third/single-product/:id', (req, res, next) => {
         })
 })
 
+router.get('/shopping-cart-add', (req, res) => {
+    res.render('assets/shopping-cart/en', {
+        title: 'ECSell',
+        categories: categoryies,
+        hotLabels: hotLabel,
+        user: 'admin-test',
+        status: 200
+    })
+})
 
 //一级&二级类目查找
 router.get('/en/:category/:id', checkCategories);

@@ -1,4 +1,11 @@
 <% layout('../backend-master.ejs') %>
+<script>
+    layer.load()
+
+    window.onload = function () {
+        layer.closeAll('loading')
+    }
+</script>
 <style>
     .freight-fullname {
         display: none;
@@ -74,13 +81,13 @@
             <div class="nav navbar-nav navbar-right">
                 <li><a href="#FAQ">什么是运费模板？</a></li>
                 <li><a href="#FAQ">在哪里能看到具体的运费？</a></li>
-                <li><a class="f-view-more" href="http://seller.dhgate.com/help/c0410/18272.html#help_php-listmiddel-7"
+                <li><a class="f-view-more" href="#FAQ"
                        target="_blank">更多运费模板帮助</a></li>
             </div>
         </div>
     </div>
     <div class="box-body">
-        <div class="col-lg-4">
+        <div class="col-lg-4" style="margin-bottom: 8px">
             <a href="/admin/express_fee_template">
                 <button class="btn btn-info">新增运费模板</button>
             </a>
@@ -129,7 +136,6 @@
             </tbody>
         </table>
     </div>
-
 </div>
 
 <!--<script type="text/javascript" src="/transport/express.js"></script>-->
@@ -137,6 +143,7 @@
 
 <script>
     $(function () {
+
         $.ajax({
             type: 'GET',
             url: '/admin/fee-express',
@@ -146,6 +153,7 @@
                 console.log(data);
                 data.msg.forEach(function (item) {
                     var type = '';
+                    console.log(type)
                     switch (item.type) {
                         case 'parcel':
                             type = '小包运输';
@@ -157,18 +165,34 @@
                             type = '特快运输';
                             break;
                     }
-                    var myhtml = '<tr>'
-                        + '<td class="logistic-name" width="35%">' + item._id
-                        + '</td>'
-                        + '<td class="logistic-commit-standard" width="35%">'
-                        + '<span>' + type + '   </span>'
-                        + '<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#country_detail_' + item._id + '">查看国家详细</button>'
-                        + '</td>'
-                        + '<td width="30%">'
-                        + '<button class="btn btn-primary btn-xs" onclick="changeCountry(this.id)" id="' + item._id + '">修改</button>'
-                        + '</td>'
-                        + '</tr>';
-                    $('#express-template').append(myhtml);
+
+                    if (item.type == 'parcel') {
+                        var myhtml = '<tr>'
+                            + '<td class="logistic-name" width="35%">' + item._id
+                            + '</td>'
+                            + '<td class="logistic-commit-standard" width="35%">'
+                            + '<span>' + type + '   </span>'
+                            + '<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#country_detail_' + item._id + '">查看国家详细</button>'
+                            + '</td>'
+                            + '<td width="30%">'
+                            + '<button class="btn btn-primary btn-xs" name="' + item.type + '" disabled="disabled" onclick="changeCountry(this.id,this.name)" id="' + item._id + '">删除</button>'
+                            + '</td>'
+                            + '</tr>';
+                        $('#express-template').append(myhtml);
+                    } else {
+                        var myhtml = '<tr>'
+                            + '<td class="logistic-name" width="35%">' + item._id
+                            + '</td>'
+                            + '<td class="logistic-commit-standard" width="35%">'
+                            + '<span>' + type + '   </span>'
+                            + '<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#country_detail_' + item._id + '">查看国家详细</button>'
+                            + '</td>'
+                            + '<td width="30%">'
+                            + '<button class="btn btn-primary btn-xs" name="' + item.type + '"  onclick="changeCountry(this.id,this.name)" id="' + item._id + '">删除</button>'
+                            + '</td>'
+                            + '</tr>';
+                        $('#express-template').append(myhtml);
+                    }
 
 
                     var mycountry = '<div class="modal fade" id="country_detail_' + item._id + '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">'
@@ -191,18 +215,22 @@
                         + '</thead>'
                         + '<tbody>';
                     item.country.forEach(function (country_item) {
-                        var fee_status = country_item.free_ship.fee_status ? country_item.free_ship.fee_quantity + 'KG以上包邮' : "否";
-                        mycountry += '<tr>'
-                            + '<td>' + country_item._id
-                            + '</td>'
-                            + '<td>国家包括:' + country_item.country_name.join(',') + '<br>'
-                            + '预计<span>' + country_item.expected_delivery + '</span>天运达<br>'
-                            + '包邮:<span>' + fee_status + '</span>天运达'
-                            + '</td>'
-                            + '<td>'
-                            + '<button class="btn btn-primary btn-xs" onclick="changeTemplate(this.id)" id="' + country_item._id + '">修改</button>'
-                            + '</td>'
-                            + '</tr>'
+                        if (country_item != null) {
+                            var fee_status = country_item.free_ship.fee_status ? country_item.free_ship.fee_quantity + 'KG以上包邮' : "否";
+                            mycountry += '<tr>'
+                                + '<td>' + country_item._id
+                                + '</td>'
+                                + '<td>国家包括:' + country_item.country_name.join(',') + '<br>'
+                                + '预计<span>' + country_item.expected_delivery + '</span>天运达<br>'
+                                + '包邮:<span>' + fee_status + '</span>天运达'
+                                + '</td>'
+                                + '<td>'
+                                + '<button class="btn btn-primary btn-xs" name="' + item.type + '"  onclick="changeTemplate(this.id,this.name)" id="' + country_item._id + '">修改</button>'
+                                + '&nbsp'
+                                + '<button class="btn btn-danger btn-xs" name="' + item.type + '"  onclick="deleteTemplate(this.id,this.name)" id="' + country_item._id + '">刪除</button>'
+                                + '</td>'
+                                + '</tr>'
+                        }
                     });
 
                     mycountry += '</tbody>'
@@ -214,13 +242,13 @@
                         + '</div>'
                         + '</div>'
                         + '</div>';
-                    $('.box-body').append(mycountry);
+                    $('.box-body').append(mycountry)
 
                 })
 
 
             }
-        });
+        })
     })
     function showLine(name) {
         if (name == "true") {
@@ -232,12 +260,67 @@
         }
     }
 
-    function changeTemplate(id) {
+    function changeTemplate(id, type) {
+        console.log(id)
+        $.ajax({
+            url: '/admin/template',
+            type: 'get',
+            data: {
+                id: id,
+                type: type
+            },
+            success: function (data) {
+                if (data.succeed) {
+                    console.log(data)
+                    window.location = data.page
+                }
+            },
+            error: function () {
 
+            }
+        })
     }
 
-    function changeCountry(id) {
+    function deleteTemplate(id, type) {
 
+        $.ajax({
+            url: '/admin/template',
+            type: 'put',
+            data: {
+                id: id,
+                type: type
+            },
+            success: function (data) {
+                if (data.succeed) {
+                    $('#' + id).parent().parent().remove()
+                }
+            },
+            error: function () {
+
+            }
+        })
+    }
+
+    function changeCountry(id, type) {
+        $.ajax({
+            url: '/admin/fee/template',
+            type: 'put',
+            data: {
+                id: id,
+                type: type
+            },
+            success: function (data) {
+                if (data.succeed) {
+                    layer.msg("删除成功")
+                    $('#' + id).parent().parent().remove()
+                } else {
+                    layer.msg("删除失败")
+                }
+            },
+            error: function () {
+
+            }
+        })
     }
 </script>
 

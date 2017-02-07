@@ -65,9 +65,9 @@ router.get('/main', function (req, res) {
 });
 
 //后台登录界面
-router.get('/adminlogin', function (req, res) {
-    res.render('admin/backend-login', {title: '电商网站后台'});
-});
+router.get('/adminlogin', (req, res) => {
+    res.render('admin/backend-login', {title: '电商网站后台', login_status: true})
+})
 
 
 //后台登陆处理
@@ -1110,9 +1110,10 @@ router.delete('/category_manage', (req, res) => {
 
 router.put('/category_manage', (req, res) => {
     var specification = {}
+    console.log(req.body)
     let specPromise = new Promise((resolve, reject) => {
         db.specifications.findOne({
-                de_firstCategory: req.body.originFirstCategory
+                firstCategory: req.body.originFirstCategory
             }, (err, specs) => {
                 if (err) reject(err)
                 resolve(specs)
@@ -1157,6 +1158,18 @@ router.put('/category_manage', (req, res) => {
                                         _.each(item.thirdTitles, (thirdItem) => {
                                             if (thirdItem.thirdTitle == req.body.originThirdCategory) {
                                                 thirdItem.thirdTitle = req.body.thirdCategory
+                                                thirdItem.thirdImages = req.body.thirdImages
+                                            }
+                                        })
+                                    }
+                                })
+                            } else {
+                                specification.thirdCategory = req.body.thirdCategory
+                                _.each(totalCategory.secondCategory, (item) => {
+                                    if (item.secondTitle == req.body.secondCategory) {
+                                        _.each(item.thirdTitles, (thirdItem) => {
+                                            if (thirdItem.thirdTitle == req.body.originThirdCategory) {
+                                                thirdItem.thirdImages = req.body.thirdImages
                                             }
                                         })
                                     }
@@ -1169,10 +1182,10 @@ router.put('/category_manage', (req, res) => {
                         })
                 })
                 .then((final) => {
-                    console.log(final)
                     console.log('final')
+                    console.log(specification)
                     db.specifications.findOneAndUpdate({
-                        de_firstCategory: req.body.originFirstCategory
+                        firstCategory: req.body.originFirstCategory
                     }, {
                         '$set': {
                             firstCategory: specification.firstCategory,
@@ -1180,7 +1193,7 @@ router.put('/category_manage', (req, res) => {
                             thirdCategory: specification.thirdCategory
                         }
                     }, (err, r) => {
-                        if (err || !r) return res.send(200, {succeed: false, msg: "DBError"})
+                        if (err) return res.send(400, {succeed: false, msg: "DBError"})
                     })
                     db.categorys.update({
                         firstCategory: req.body.originFirstCategory
@@ -1190,9 +1203,13 @@ router.put('/category_manage', (req, res) => {
                             secondCategory: final.secondCategory
                         }
                     }, (err, result) => {
-                        if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                        console.log('1231231232')
+                        if (err) return res.send(400, {succeed: false, msg: "DBError"})
                         res.send(200, {succeed: true, msg: "ok"})
                     })
+                })
+                .catch((err) => {
+                    res.send(err.statusCode, err.msg)
                 })
         })
 })
@@ -1238,6 +1255,18 @@ router.put('/category_manage_german', (req, res) => {
                                     _.each(item.thirdTitles, (thirdItem) => {
                                         if (thirdItem.de_thirdTitle == req.body.originThirdCategory) {
                                             thirdItem.de_thirdTitle = req.body.thirdCategory
+                                            thirdItem.thirdImages = req.body.thirdImages
+                                        }
+                                    })
+                                }
+                            })
+                        } else {
+                            specs.de_thirdTitle = req.body.thirdCategory
+                            _.each(total_Category.secondCategory, (item) => {
+                                if (item.de_secondTitle == req.body.secondCategory) {
+                                    _.each(item.thirdTitles, (thirdItem) => {
+                                        if (thirdItem.de_thirdTitle == req.body.originThirdCategory) {
+                                            thirdItem.thirdImages = req.body.thirdImages
                                         }
                                     })
                                 }
@@ -1269,7 +1298,7 @@ router.put('/category_manage_german', (req, res) => {
                         secondCategory: final.secondCategory
                     }
                 }, (err, result) => {
-                    if (err || !result) return res.send(200, {succeed: false, msg: "DBError"})
+                    if (err || !result) return res.send(500, {succeed: false, msg: "DBError"})
                     res.send(200, {succeed: true, msg: "ok"})
                 })
             })
@@ -1904,8 +1933,19 @@ router.post('/saveProductDetail', function (req, res, next) {
 //产品基本信息录入管理
 router.get('/specification', checkLogin);
 router.get('/specification', function (req, res, next) {
-    console.log("产品上传管理" + new Date());
-    db.specifications.find({}, function (err, result) {
+    console.log("产品上传管理" + new Date())
+    let payload = {}
+    if (req.query.firstCategory) {
+        payload.firstCategory = req.query.firstCategory
+    }
+    if (req.query.secondCategory) {
+        payload.secondCategory = req.query.secondCategory
+    }
+
+    if (req.query.thirdCategory) {
+        payload.thirdCategory = req.query.thirdCategory
+    }
+    db.specifications.find(payload, function (err, result) {
         db.categorys.find({}, function (err, data) {
             if (err) res.send('404');
 
@@ -1931,7 +1971,20 @@ router.get('/specification', function (req, res, next) {
 router.get('/specification_german', checkLogin);
 router.get('/specification_german', function (req, res, next) {
     console.log("产品上传管理" + new Date());
-    db.specifications.find({}, function (err, result) {
+    console.log("产品上传管理" + new Date())
+    let payload = {}
+    if (req.query.firstCategory) {
+        payload.de_firstCategory = req.query.firstCategory
+    }
+    if (req.query.secondCategory) {
+        payload.de_secondCategory = req.query.secondCategory
+    }
+
+    if (req.query.thirdCategory) {
+        payload.de_thirdCategory = req.query.thirdCategory
+    }
+
+    db.specifications.find(payload, function (err, result) {
         db.categorys.find({}, function (err, data) {
             if (err) res.send('404');
 
@@ -2411,8 +2464,51 @@ router.get('/crawler-products-detail', (req, res) => {
 /*---------------------------------运费模板管理------------------------------*/
 
 router.get('/shopping_template', (req, res) => {
-    console.log('22222')
     res.render('admin/templates/shopping-templates', {username: u.nick_name})
+})
+
+router.get('/template', (req, res) => {
+    let payload = {_id: req.query.id || ""}
+    let type = req.query.type || "parcel"
+    db.feeExpressCountry.findOne(payload, (err, data) => {
+        if (err) return res.send(500, {succeed: false, msg: "internal error"})
+        req.session.express_tempalte = data
+        req.session.express_tempalte_type = type
+
+        res.send(200, {succeed: true, page: '/admin/express-fee-template'})
+    })
+})
+
+router.put('/template', (req, res) => {
+    let payload = {_id: req.body.id || ""}
+    if (!payload._id) return res.send(400, {succeed: false, msg: "internal error"})
+    db.feeExpressCountry.remove(payload, (err, data) => {
+        if (err) return res.send(500, {succeed: false, msg: "internal error"})
+        res.send(200, {succeed: true, msg: 'ok'})
+    })
+})
+
+router.put('/fee/template', (req, res) => {
+    let payload = {_id: req.body.id || ""}
+    if (!payload._id || !req.body.type) return res.send(400, {succeed: false, msg: "internal error"})
+    payload.type = req.body.type
+    db.feeExpress.remove(payload, (err, data) => {
+        if (err) return res.send(500, {succeed: false, msg: "internal error"})
+        res.send(200, {succeed: true, msg: 'ok'})
+    })
+})
+
+
+router.get('/express-fee-template', (req, res) => {
+    console.log(u.nick_name)
+    req.session.express_tempalte.username = u.nick_name || 'admin'
+    req.session.express_tempalte.type = req.session.express_tempalte_type
+    console.log(req.session.express_tempalte)
+    if (req.session.express_tempalte_type == 'parcel') {
+        res.render('admin/templates/parcel-change', req.session.express_tempalte)
+    } else {
+        res.render('admin/templates/express-ordinary-change', req.session.express_tempalte)
+    }
 })
 
 router.get('/express_fee_template', (req, res) => {
@@ -2425,71 +2521,110 @@ router.get('/fee-express', (req, res) => {
     if (req.query.type) {
         payload.type = req.query.type
     }
-    db.feeExpress.find(payload, (err, data) => {
-        async.forEach(data, (d, cb) => {
-            async.forEach(d.country, (e, callback) => {
-                db.feeExpressCountry.find({_id: e}, (err, result) => {
-                    if (result) {
-                        country.push(result[0])
-                    }
-                    callback()
-                })
-            }, (err) => {
-                d.country = country
-                cb()
-            })
-        }, (err) => {
-            if (err) return res.send(500, {succeed: false, msg: "internal error"})
+    db.feeExpress
+        .find(payload)
+        .populate('country')
+        .exec((err, data) => {
+            if (err) return customError(500, '数据库查询错误', res)
             res.send(200, {succeed: true, msg: data})
         })
-    })
 })
 
 router.post('/fee-express', (req, res) => {
     let payload = JSON.parse(req.body.data)
-    console.log(payload)
+    let query = {
+        type: payload.type,
+        country: payload.country,
+        discount: Number(payload.discount) || 0,
+        fuel_cost: Number(payload.fuel_cost) || 0
+    }
+
     let opts = new Promise((resolve, reject) => {
-        db.feeExpress.find({type: payload.type}, (err, data) => {
-            if (err) return res.send(500, {succeed: false, msg: "internal error"})
+        db.feeExpress.find({
+            type: payload.type
+        }, (err, data) => {
+            if (err) reject(data)
             resolve(data)
         })
     })
+
     opts
         .then((d) => {
-            console.log(d)
             if (d.length == 0) {
-                let fee = new db.feeExpress(payload)
+                let fee = new db.feeExpress(query)
                 fee.save((err) => {
-                    if (err) return res.send(500, {succeed: false, msg: "internal error"})
-                    res.send(200, {succeed: true, msg: 'add success'})
+                    if (err) throw {status: 500}
+                    res.send(201, {succeed: true, msg: 'add success'})
                 })
             } else {
-                async.forEach(payload.country, (item, callback) => {
-                    db.feeExpress.update({type: payload.type}, {
+                console.log(query.country)
+                async.forEach(query.country, (item, callback) => {
+                    db.feeExpress.findOneAndUpdate({
+                        type: payload.type
+                    }, {
                         $push: {
                             country: item
                         }
-                    }, (err, d) => {
+                    }, (err, data) => {
+                        console.log(err)
+                        console.log(data)
                         callback()
                     })
                 }, (err) => {
-                    if (err) return res.send(500, {succeed: false, msg: "internal error"})
+                    console.log(err)
+                    if (err) throw {status: 500}
                     res.send(200, {succeed: true, msg: 'add success'})
                 })
-
             }
+        })
+        .catch((err) => {
+            console.log(err)
+            return res.send(500, {succeed: false, msg: "internal error"})
         })
 })
 
 router.post('/fee-express-country', (req, res) => {
     console.log(req.body)
-
     let payload = JSON.parse(req.body.data)
-    if (!payload) return new customError(500, "param error", res)
+    if (!payload) return res.send(500, {succeed: false, msg: "param error"})
     let fee = new db.feeExpressCountry(payload)
     fee.save((err, docsInserted) => {
+        console.log(err)
         if (err || !docsInserted) return res.send(500, {succeed: false, msg: "internal error"})
         res.send(200, {succeed: true, msg: {countryId: docsInserted._id}})
+    })
+})
+
+router.put('/fee-express-country', (req, res) => {
+    console.log(req.body)
+    let payload = JSON.parse(req.body.data)
+    if (!payload) return res.send(500, {succeed: false, msg: "param error"})
+    db.feeExpressCountry.remove({_id: payload._id}, (err, d_data) => {
+        console.log(d_data)
+        if (err) return new customError(500, "param error", res)
+        delete payload._id
+        let fee = new db.feeExpressCountry(payload)
+        fee.save((err, docsInserted) => {
+            if (err || !docsInserted) return res.send(500, {succeed: false, msg: "internal error"})
+            res.send(200, {succeed: true, msg: {countryId: docsInserted._id}})
+        })
+    })
+})
+router.put('/fee-parcel-country', (req, res) => {
+    console.log(req.body)
+    let payload = JSON.parse(req.body.data)
+    if (!payload) return res.send(500, {succeed: false, msg: "param error"})
+    db.feeExpressCountry.findOneAndUpdate({_id: payload._id}, {
+        $set: {
+            country_name: payload.country_name,
+            transport_fees: payload.transport_fees,
+            registered_fee: payload.registered_fee,
+            free_ship: payload.free_ship,
+            expected_delivery: payload.expected_delivery
+        }
+    }, (err, d_data) => {
+        if (err) return res.send(500, {succeed: false, msg: "param error"})
+        res.send(200, {succeed: true, msg: 'ok'})
     })
 })
 
@@ -2881,29 +3016,32 @@ function getLittleTransportPrice(type, weight) {
 
 router.get('/country', (req, res) => {
     if (!req.query.type) return res.send(401, {succeed: false, msg: 'invalid params'})
-    let status = req.query.status === 'true'
-    db.countryFlags.find({type: req.query.type}, (err, data) => {
+    let status = req.query.status || 'all'
+    let payload = {type: req.query.type}
+    if (status != 'all') {
+        payload['countryLists.country_status'] = status == 'true'
+    }
+    console.log(payload)
+    db.countryFlags.findOne(payload, (err, data) => {
         if (err) return res.send(500, {succeed: true, msg: 'internal error'})
         if (data.length == 0) return res.send(404, {succeed: false, msg: 'NOT EXIST'})
-        let payload = data[0].countryLists.filter((i) => {
-            return i.country_status == status || false
-        })
-        res.send(200, {succeed: true, msg: payload})
+        res.send(200, {succeed: true, msg: data.countryLists})
     })
 })
 
 router.put('/country', (req, res) => {
+    let payload = JSON.parse(req.body.data)
     db.countryFlags.find({
-        type: req.body.type
+        type: payload.type
     }, (err, data) => {
         data[0].countryLists.forEach((e) => {
-            req.body.code.forEach((c) => {
-                if (e.country_code == c) {
+            payload.code.forEach((c) => {
+                if (e.country_cn_name == c) {
                     e.country_status = true
                 }
             })
         })
-        db.countryFlags.update({type: req.body.type}, {
+        db.countryFlags.update({type: payload.type}, {
             $set: {
                 countryLists: data[0].countryLists
             }
@@ -2913,6 +3051,7 @@ router.put('/country', (req, res) => {
         })
     })
 })
+
 
 router.get('/demo', (req, res) => {
     res.render('admin/product/product-national-flags-demo', {username: u.nick_name})
