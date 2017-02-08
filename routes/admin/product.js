@@ -1,14 +1,53 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../../model/index')
+const async = require('async')
 
 router.get('/product', (req, res) => {
     let payload = _processPayload(req.query)
+    console.log(payload)
     db.products.find(payload, (err, product) => {
-        console.log(err)
         if (err) return _processError(res)
         res.send({succeed: true, msg: product})
     }).sort({'update_time': -1})
+})
+
+router.get('/product/number', (req, res) => {
+    async.parallel([
+        done => {
+            db.products.find({status: 'online'}, (err, product) => {
+                if (err) return _processError(res)
+                done(null, product.length)
+            })
+        },
+        done => {
+            db.products.find({status: 'pending'}, (err, product) => {
+                if (err) return _processError(res)
+                done(null, product.length)
+            })
+        },
+        done => {
+            db.products.find({status: 'reject'}, (err, product) => {
+                if (err) return _processError(res)
+                done(null, product.length)
+            })
+        },
+        done => {
+            db.products.find({status: 'outline'}, (err, product) => {
+                if (err) return _processError(res)
+                done(null, product.length)
+            })
+        }
+    ], (err, products) => {
+        if (err) return _processError(res)
+        let [onlineCount, pendingCount, rejectCount, outlineCount] = products
+        res.send({
+            onlineCount: onlineCount,
+            pendingCount: pendingCount,
+            rejectCount: rejectCount,
+            outlineCount: outlineCount
+        })
+    })
 })
 //修改产品
 router.put('/product', (req, res) => {
@@ -74,7 +113,11 @@ function _clearObj(argument, key) {
 function _appendObj(argument, key, payload) {
     if (_parseObj(argument, key)) {
         let symbol = key == 'start' ? '$gte' : '$lt'
-        payload[symbol] = argument[key]
+
+        let str2 = argument[key];
+        let arr2 = str2.split("-");
+        let date2 = new Date(arr2[0], parseInt(arr2[1]) - 1, arr2[2])
+        payload[symbol] = date2.toISOString()
         delete argument[key]
     }
 }

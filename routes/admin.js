@@ -2423,6 +2423,7 @@ router.get('/crawler_manage', (req, res) => {
     res.render('admin/crawler/crawler', {username: u.nick_name})
 })
 router.get('/product-manage', (req, res) => {
+
     res.render('admin/product/product-manage', {username: u.nick_name})
 })
 router.post('/crawler_manage', (req, res) => {
