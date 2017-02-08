@@ -157,21 +157,24 @@
         padding-top: 3px;
         position: relative
     }
+
     .rtab-warp ul li.current span {
         color: #ff6000;
         font-weight: bold;
     }
+
     .propbox input {
-        box-shadow: 0 1px 0 rgba(238,238,238,1);
+        box-shadow: 0 1px 0 rgba(238, 238, 238, 1);
         border: 1px solid #ffc27e;
         border-radius: 2px;
         background: #fff;
-        font-family: tahoma,arial,'microsoft yahei';
+        font-family: tahoma, arial, 'microsoft yahei';
         color: #ff6000;
         line-height: 21px;
         padding: 0 8px;
         cursor: pointer;
     }
+
     input {
         vertical-align: middle;
     }
@@ -205,21 +208,21 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="#auditProductNum">
                             <span id="auditProductNum">
 								待审核<b>0</b>
 							</span>
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="#auditFailProductNum">
                             <span id="auditFailProductNum">
 								审核未通过<b>0</b>
 							</span>
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="#downShelfProductNum">
                             <span id="downShelfProductNum">
 								已下架<b>0</b>
 							</span>
@@ -231,7 +234,217 @@
                 </div>
             </div>
         </div>
-        <div class="condbox clearfix searchConditions" id="newGuideTarget3">
+        <div class="condbox clearfix searchConditions searchConditions-shelfProductNum" id="newGuideTarget3">
+            <div id="j-lsStop">
+                <p class="lsPone">
+                    <span class="tname">关键词：</span>
+                    <input type="text" id="productName" name="prodAuditFailForm.productName"
+                           class="cond-input condwid1 defaultcolor" data-value="输入产品名或关键词" value="输入产品名或关键词">
+                    <span class="tname">产品组：</span>
+                    <select name="" id="firSelectproductgroup" class="j-select-root mksearchselect addwid113">
+                        <option value="" title="请选择产品分组">请选择产品分组</option>
+                        <option value="nogroup" title="未分组">未分组</option>
+                    </select>
+                    <select name="" id="secSelectproductgroup" class="j-select-sub mksearchselect addwid113"
+                            style="display:none;"></select>
+                    <input type="hidden" class="j-select-hidden" id="selectproductgroup"
+                           name="prodAuditFailForm.selectedProdGroupId" value="">
+                    <span class="clickSpanOne" style="display:none;">
+                            <span class="lsBtnOne">
+                            <input name="searchSubmitbtn" type="button" value="搜索">
+                            </span>
+                            <span class="lsBtnTwo">
+                                <input name="searchResetbtn" type="button" value="重置">
+                            </span>
+                        </span>
+                    <span id="j-clickOpen" class="lsStopTwo "> 收起搜索条件<b></b></span>
+                    <span class="tname">诚保产品：</span>
+                    <select class="addwid113" name="prodAuditFailForm.prodSupportPlan">
+                        <option value="">所有</option>
+                        <option value="1">海外仓</option>
+                        <option value="2">品质保证</option>
+                        <option value="3">中国品牌</option>
+                    </select>
+                </p>
+                <p class="lsPone">
+                    <span class="tname">产品编号：</span>
+                    <input type="text" id="searchItemcode" name="prodAuditFailForm.itemcode"
+                           class="cond-input condwid1 defaultcolor" data-value="输入完整产品编号" value="输入完整产品编号">
+                    <span class="tname">商品编码：</span>
+                    <input type="text" id="searchSkuCode" name="prodAuditFailForm.skuCode"
+                           class="cond-input condwid1 defaultcolor" data-value="输入商品编码" value="输入商品编码">
+                    &nbsp;&nbsp;&nbsp;
+                    <span>审核未通过原因：</span>
+                    <select class="listing-box addwid113" name="prodAuditFailForm.selectedCounterfeittypeid">
+                        <option value="">请选择</option>
+                        <option value="100003">违规</option>
+                        <option value="100022">侵权</option>
+                        <option value="100006">禁销</option>
+                    </select>
+                </p>
+                <p class="lsPone">
+                    <span class="tname">更新日期：</span>
+                    <input type="text" class="cond-input condwid3 calendarFocus timeImg datepicker"
+                           name="prodAuditFailForm.operateDateBeginStr" id="operateDateBegin" value="" readonly=""><span
+                            class="calendar_append"></span>
+                    <span>到</span>
+                    <input type="text" class="cond-input condwid3 calendarFocus timeImg datepicker"
+                           name="prodAuditFailForm.operateDateEndStr" id="operateDateEnd" value="" readonly=""><span
+                            class="calendar_append"></span>
+
+                    <span class="clickSpanTwo">
+                            <span class="lsBtnOne">
+                                <input type="button" value="搜索" name="searchSubmitbtn">
+                            </span>
+                            <span class="lsBtnTwo">
+                                <input type="button" value="重置" name="searchResetbtn">
+                            </span>
+                        </span>
+                </p>
+            </div>
+        </div>
+        <div class="condbox clearfix searchConditions searchConditions-auditProductNum" hidden="hidden"
+             id="newGuideTarget3">
+            <div id="j-lsStop">
+                <p class="lsPone">
+                    <span class="tname">关键词：</span>
+                    <input type="text" id="productName" name="prodAuditFailForm.productName"
+                           class="cond-input condwid1 defaultcolor" data-value="输入产品名或关键词" value="输入产品名或关键词">
+                    <span class="tname">产品组：</span>
+                    <select name="" id="firSelectproductgroup" class="j-select-root mksearchselect addwid113">
+                        <option value="" title="请选择产品分组">请选择产品分组</option>
+                        <option value="nogroup" title="未分组">未分组</option>
+                    </select>
+                    <select name="" id="secSelectproductgroup" class="j-select-sub mksearchselect addwid113"
+                            style="display:none;"></select>
+                    <input type="hidden" class="j-select-hidden" id="selectproductgroup"
+                           name="prodAuditFailForm.selectedProdGroupId" value="">
+                    <span class="clickSpanOne" style="display:none;">
+                            <span class="lsBtnOne">
+                            <input name="searchSubmitbtn" type="button" value="搜索">
+                            </span>
+                            <span class="lsBtnTwo">
+                                <input name="searchResetbtn" type="button" value="重置">
+                            </span>
+                        </span>
+                    <span id="j-clickOpen" class="lsStopTwo "> 收起搜索条件<b></b></span>
+                    <span class="tname">诚保产品：</span>
+                    <select class="addwid113" name="prodAuditFailForm.prodSupportPlan">
+                        <option value="">所有</option>
+                        <option value="1">海外仓</option>
+                        <option value="2">品质保证</option>
+                        <option value="3">中国品牌</option>
+                    </select>
+                </p>
+                <p class="lsPone">
+                    <span class="tname">产品编号：</span>
+                    <input type="text" id="searchItemcode" name="prodAuditFailForm.itemcode"
+                           class="cond-input condwid1 defaultcolor" data-value="输入完整产品编号" value="输入完整产品编号">
+                    <span class="tname">商品编码：</span>
+                    <input type="text" id="searchSkuCode" name="prodAuditFailForm.skuCode"
+                           class="cond-input condwid1 defaultcolor" data-value="输入商品编码" value="输入商品编码">
+                    &nbsp;&nbsp;&nbsp;
+                    <span>审核未通过原因：</span>
+                    <select class="listing-box addwid113" name="prodAuditFailForm.selectedCounterfeittypeid">
+                        <option value="">请选择</option>
+                        <option value="100003">违规</option>
+                        <option value="100022">侵权</option>
+                        <option value="100006">禁销</option>
+                    </select>
+                </p>
+                <p class="lsPone">
+                    <span class="tname">更新日期：</span>
+                    <input type="text" class="cond-input condwid3 calendarFocus timeImg datepicker"
+                           name="prodAuditFailForm.operateDateBeginStr" id="operateDateBegin" value="" readonly=""><span
+                            class="calendar_append"></span>
+                    <span>到</span>
+                    <input type="text" class="cond-input condwid3 calendarFocus timeImg datepicker"
+                           name="prodAuditFailForm.operateDateEndStr" id="operateDateEnd" value="" readonly=""><span
+                            class="calendar_append"></span>
+
+                    <span class="clickSpanTwo">
+                            <span class="lsBtnOne">
+                                <input type="button" value="搜索" name="searchSubmitbtn">
+                            </span>
+                            <span class="lsBtnTwo">
+                                <input type="button" value="重置" name="searchResetbtn">
+                            </span>
+                        </span>
+                </p>
+            </div>
+        </div>
+        <div class="condbox clearfix searchConditions searchConditions-auditFailProductNum" hidden="hidden"
+             id="newGuideTarget3">
+            <div id="j-lsStop">
+                <p class="lsPone">
+                    <span class="tname">关键词：</span>
+                    <input type="text" id="productName" name="prodAuditFailForm.productName"
+                           class="cond-input condwid1 defaultcolor" data-value="输入产品名或关键词" value="输入产品名或关键词">
+                    <span class="tname">产品组：</span>
+                    <select name="" id="firSelectproductgroup" class="j-select-root mksearchselect addwid113">
+                        <option value="" title="请选择产品分组">请选择产品分组</option>
+                        <option value="nogroup" title="未分组">未分组</option>
+                    </select>
+                    <select name="" id="secSelectproductgroup" class="j-select-sub mksearchselect addwid113"
+                            style="display:none;"></select>
+                    <input type="hidden" class="j-select-hidden" id="selectproductgroup"
+                           name="prodAuditFailForm.selectedProdGroupId" value="">
+                    <span class="clickSpanOne" style="display:none;">
+                            <span class="lsBtnOne">
+                            <input name="searchSubmitbtn" type="button" value="搜索">
+                            </span>
+                            <span class="lsBtnTwo">
+                                <input name="searchResetbtn" type="button" value="重置">
+                            </span>
+                        </span>
+                    <span id="j-clickOpen" class="lsStopTwo "> 收起搜索条件<b></b></span>
+                    <span class="tname">诚保产品：</span>
+                    <select class="addwid113" name="prodAuditFailForm.prodSupportPlan">
+                        <option value="">所有</option>
+                        <option value="1">海外仓</option>
+                        <option value="2">品质保证</option>
+                        <option value="3">中国品牌</option>
+                    </select>
+                </p>
+                <p class="lsPone">
+                    <span class="tname">产品编号：</span>
+                    <input type="text" id="searchItemcode" name="prodAuditFailForm.itemcode"
+                           class="cond-input condwid1 defaultcolor" data-value="输入完整产品编号" value="输入完整产品编号">
+                    <span class="tname">商品编码：</span>
+                    <input type="text" id="searchSkuCode" name="prodAuditFailForm.skuCode"
+                           class="cond-input condwid1 defaultcolor" data-value="输入商品编码" value="输入商品编码">
+                    &nbsp;&nbsp;&nbsp;
+                    <span>审核未通过原因：</span>
+                    <select class="listing-box addwid113" name="prodAuditFailForm.selectedCounterfeittypeid">
+                        <option value="">请选择</option>
+                        <option value="100003">违规</option>
+                        <option value="100022">侵权</option>
+                        <option value="100006">禁销</option>
+                    </select>
+                </p>
+                <p class="lsPone">
+                    <span class="tname">更新日期：</span>
+                    <input type="text" class="cond-input condwid3 calendarFocus timeImg datepicker"
+                           name="prodAuditFailForm.operateDateBeginStr" id="operateDateBegin" value="" readonly=""><span
+                            class="calendar_append"></span>
+                    <span>到</span>
+                    <input type="text" class="cond-input condwid3 calendarFocus timeImg datepicker"
+                           name="prodAuditFailForm.operateDateEndStr" id="operateDateEnd" value="" readonly=""><span
+                            class="calendar_append"></span>
+
+                    <span class="clickSpanTwo">
+                            <span class="lsBtnOne">
+                                <input type="button" value="搜索" name="searchSubmitbtn">
+                            </span>
+                            <span class="lsBtnTwo">
+                                <input type="button" value="重置" name="searchResetbtn">
+                            </span>
+                        </span>
+                </p>
+            </div>
+        </div>
+        <div class="condbox clearfix searchConditions searchConditions-downShelfProductNum" hidden="hidden"
+             id="newGuideTarget3">
             <div id="j-lsStop">
                 <p class="lsPone">
                     <span class="tname">关键词：</span>
@@ -331,15 +544,24 @@
         autoclose: true,
         todayHighlight: true
     })
-//    $.ajax({
-//        type: 'get',
-//        url: '/api/v1/admin/product?status=online&&expiration_time=1',
-//        dataType: 'json',
-//        success: function (data) {
-//            console.log(data)
-//        },
-//        error: function () {
-//            alert('参数有误，创建失败！')
-//        }
-//    })
+
+    //
+    $('#newGuideTarget2 ul li').click(function () {
+        $(this).addClass("current")
+        let id = '.searchConditions-' + $(this).find('span').attr('id')
+        $(id).removeAttr("hidden")
+        $(this).siblings("li").removeClass("current")
+        $(id).siblings(".condbox").attr("hidden", "hidden")
+    })
+    //    $.ajax({
+    //        type: 'get',
+    //        url: '/api/v1/admin/product?status=online&&expiration_time=1',
+    //        dataType: 'json',
+    //        success: function (data) {
+    //            console.log(data)
+    //        },
+    //        error: function () {
+    //            alert('参数有误，创建失败！')
+    //        }
+    //    })
 </script>
