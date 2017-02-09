@@ -2423,9 +2423,26 @@ router.get('/crawler_manage', (req, res) => {
     res.render('admin/crawler/crawler', {username: u.nick_name})
 })
 router.get('/product-manage', (req, res) => {
-
     res.render('admin/product/product-manage', {username: u.nick_name})
 })
+// 产品管理详情页
+router.get('/change-product', (req, res) => {
+    req.session.product_id = req.query.product_id
+    res.send('product-manage-detail')
+})
+
+router.get('/product-manage-detail', (req, res) => {
+    db.products.findOne({_id: req.session.product_id }, (err, product) => {
+        console.log(product)
+        product.username = u.nick_name
+        db.suppliers.find({}, (err, suppliers) => {
+            product.suppliers = suppliers
+            res.render('admin/product/product-manage-detail', product)
+        })
+    })
+})
+
+
 router.post('/crawler_manage', (req, res) => {
     console.log(req.body)
     let payload = {

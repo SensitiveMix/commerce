@@ -1,0 +1,1227 @@
+<% layout('../backend-master.ejs') %>
+<script src="/js/md5.js"></script>
+<link href="/ueditor/themes/default/_css/umeditor.css" type="text/css" rel="stylesheet">
+<link href="/stylesheets/product-detail.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="../transport/express.js"></script>
+<script type="text/javascript" src="../transport/ordinary.js"></script>
+<script src='/js/storage.js'></script>
+<script src="/public_web_build/bundle.js"></script>
+<script src="/public_cookie_build/bundle.js"></script>
+<script type="text/javascript" charset="utf-8" src="../ueditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="../ueditor/_examples/editor_api.js"></script>
+<script type="text/javascript" src="../ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="../js/product-detail.js"></script>
+<script src="/plugins/pick-color/js/tinycolor-0.9.15.min.js"></script>
+<script src="/plugins/pick-color/js/pick-a-color-1.2.3.min.js"></script>
+<script type="text/javascript">
+    layer.load()
+
+    window.onload = function(){
+        layer.closeAll('loading')
+    }
+
+</script>
+<style>
+    .brick.small {
+        width: 55px;
+        height: 55px;
+    }
+
+    .brick.large {
+        width: 100px;
+        height: 100px;
+    }
+</style>
+<script>
+    $(function () {
+        $('#productname').val('<%= product_title %>')
+        $('#productname_de').val('<%= product_title_de %>')
+        $('select[name="supplier"]').val('<%= product_supplier %>')
+        $('#videourl').val('<%= product_video_link %>')
+        let productNameLength = $('#productname').val().length
+        let payload_len = 140 - productNameLength
+        if (payload_len < 0) {
+            payload_len = 0
+        }
+        $('#productNameLengthSpan').text(payload_len)
+
+        let formData = []
+        formData['product'] = []
+        let form = {}
+        let belong_category = []
+
+        $('#submitopt').on('click', function () {
+            // 产品标题
+            form.product_title = $('#productname').val()
+            form.product_title_german = $('#productname_de').val() || $('#productname').val()
+
+            //产品备注
+            form.product_remark = um.getContent()
+            form.product_remark_german = umdemon.getContent()
+
+
+            form.product_price = []
+
+            //产品计量单位
+            form.product_danWei = []
+            let danWei = {
+                danWei_key: $('select[name="measureid"]').find("option:selected").attr('data-name'),
+                danWei_value: $('select[name="measureid"]').val()
+            }
+            form.product_danWei.push(danWei)
+
+            //产品供应商
+            form.product_supplier = $('select[name="supplier"]').val()
+
+            //产品销售状态
+            form.product_sell_status = $('.color-preview.current-color').eq(0).css('background-color')
+
+            //产品备货期
+            form.product_stock_status = $('.color-preview.current-color').eq(1).css('background-color')
+
+            form.product_market = []
+            let market = {}
+            market.market_method = $('input[name="market_method"]:checked').val()
+
+            //产品销售方式
+            if ($('input[name="market_method"]:checked').val() == 2) {
+                market.market_amount = $('input[name="packquantity"]').val()
+            } else {
+                market.market_amount = ''
+            }
+            form.product_market.push(market)
+
+            //产品毛重
+            form.quantity = $('input[name="sell-function-mao"]').val()
+
+            //产品视频连接
+            form.product_video_link = $('#videourl').val()
+            form.product_images = []
+
+            //产品图片
+            $('.gridly div').each(function (index, item) {
+                let data_product_image = {}
+                data_product_image.title = ''
+                data_product_image.url = $(item).find('img').attr('src')
+                form.product_images.push(data_product_image)
+            })
+
+            $('#product-attribute-table tbody tr').each(function (index, item) {
+                let form_data_compile = {}
+                form_data_compile.compile_vip_price = $(item).find('td').eq(1).find('input').val()
+                form_data_compile.compile_normal_price = $(item).find('td').eq(2).find('input').val()
+                form_data_compile.compile_image = $(item).find('img').attr('src')
+                form.product_price.push(form_data_compile)
+            })
+
+
+            // 产品基本属性添加
+            let product_spec = {}
+            product_spec.compact = []
+            product_spec.hardOrSoft = []
+            product_spec.type = []
+            product_spec.features = []
+            product_spec.pattern = []
+            product_spec.color = []
+            product_spec.material = []
+            $('input[name="compatibility"]:checked').each(function () {
+                product_spec.compact.push($(this).val())
+            })
+            $('input[name="type"]:checked').each(function () {
+                product_spec.type.push($(this).val())
+            })
+            $('input[name="hardOrSoft"]:checked').each(function () {
+                product_spec.hardOrSoft.push($(this).val())
+            })
+            $('input[name="features"]:checked').each(function () {
+                product_spec.features.push($(this).val())
+            })
+            $('input[name="pattern"]:checked').each(function () {
+                product_spec.pattern.push($(this).val())
+            })
+            $('input[name="Color"]:checked').each(function () {
+                product_spec.color.push($(this).val())
+            })
+            $('input[name="material"]:checked').each(function () {
+                product_spec.material.push($(this).val())
+            })
+
+            form.product_spec = product_spec
+            //产品归属类目
+            form.belong_category = [{
+                first: $('#first').val(),
+                second: $('#second').val(),
+                third: $('#third').val()
+            }]
+            console.log(form)
+
+            let payload = {
+                product_title: form.product_title,
+                product_title_german: form.product_title_german,
+                product_remark: form.product_remark,
+                product_remark_german: form.product_remark_german,
+                product_quantity: form.quantity,
+                product_supplier: form.product_supplier,
+                product_sell_status: form.product_sell_status,
+                product_stock_status: form.product_stock_status,
+                product_video_link: form.product_video_link,
+                belong_category: JSON.stringify(form.belong_category),
+                product_price: JSON.stringify(form.product_price),
+                product_danWei: JSON.stringify(form.product_danWei),
+                product_market: JSON.stringify(form.product_market),
+                product_images: JSON.stringify(form.product_images),
+                product_spec: JSON.stringify(form.product_spec)
+            }
+
+            if (parseFormat('#productname', payload.product_title, '请输入产品标题')
+                && parseFormat('#productname_de', payload.product_title_german, '请输入产品标题')
+                && parseFormat('#sell-function-mao', payload.product_quantity, '请输入产品质量')
+                && parseFormat('select[name="supplier"]', payload.product_supplier, '请输入产品供应商')) {
+                $.ajax({
+                    url: '/admin/saveProductDetail',
+                    type: 'POST',
+                    data: payload,
+                    dataType: 'json',
+                    cache: false,
+                    success: function (data) {
+                        location.hash = '#ml-title'
+                        layer.msg("产品上传成功")
+                    },
+                    error: function () {
+                        layer.msg("产品上传失败")
+                    }
+                })
+
+            }
+        })
+
+
+        function parseFormat(key, val, tip) {
+            if (val == "") {
+                console.log(tip)
+                location.hash = key
+                layer.tips(tip, key)
+//                layer.alert(tip)
+                return false
+            } else {
+                return true
+            }
+        }
+
+        $('#cuxiao_price').change(function () {
+            if ($('input[name="cuxiao_price"]:checked').length == 1) {
+                $('#vip_price').attr('disabled', 'true');
+                $('#regular_price').attr('disabled', 'true');
+                $('#market_price').attr('disabled', 'true');
+
+            } else {
+                $('#vip_price').removeAttr('disabled')
+                $('#regular_price').removeAttr('disabled')
+                $('#market_price').removeAttr('disabled')
+            }
+        })
+
+        $('input[name="highlight-color"]').eq(0).change(function () {
+            if ($('input[name="highlight-color"]').eq(0).val() == '008000') {//绿色
+                $('#product-sell-status').val('库存确认可以采购');
+            }
+            if ($('input[name="highlight-color"]').eq(0).val() == 'ff0000') {//红色
+                $('#product-sell-status').val('停产');
+            }
+            if ($('input[name="highlight-color"]').eq(0).val() == 'ffff00') {//黄色
+                $('#product-sell-status').val('库存待确认');
+            }
+        })
+        $('input[name="highlight-color"]').eq(1).change(function () {
+            if ($('input[name="highlight-color"]').eq(1).val() == '008000') {//绿色
+                $('#product-stock-time').val('2天');
+            }
+            if ($('input[name="highlight-color"]').eq(1).val() == 'ffff00') {//黄色
+                $('#product-stock-time').val('3天');
+            }
+        })
+        $('#keywordbutton').click(function () {
+            var keyword2 = $("#keyword2");
+            var keyword3 = $("#keyword3");
+            if (keyword2.is(":hidden")) {
+                keyword2.show();
+            } else {
+                keyword3.show();
+                $("#keywordbutton").hide();
+            }
+        })
+
+        $('.logistics-panel-type').click(function () {
+            var index = $(this).index();
+            $('#logistic-list .logistics-panel').hide();
+            $('#logistic-list .logistics-panel').eq(index).toggle();
+        })
+
+        $('.logistic-checkbox').click(function () {
+            if ($(this).is(':checked') == true) {
+                $(this).parents('tr').find('.standard-logistic').removeAttr("disabled");
+                $(this).parents('tr').find('.no-logistic').removeAttr("disabled");
+            }
+            if ($(this).is(':checked') == false) {
+                $(this).parents('tr').find('.standard-logistic').attr("disabled", "true");
+                $(this).parents('tr').find('.no-logistic').attr("disabled", "true");
+
+            }
+        })
+
+
+        $('#productname').bind('input propertychange', function () {
+            var productNameLength = $('#productname').val().length;
+            $('#productNameLengthSpan').text(140 - productNameLength)
+            if (140 - productNameLength < 0) {
+                layer.tips('标题长度过长', "#productNameLengthSpan")
+            }
+        });
+        $('#submit-product-attributes').click(function () {
+            var product_attributes_type = new Array();
+            $('input[name="type"]:checked').each(function () {
+                product_attributes_type.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_compatibility = new Array();
+            $('input[name="compatibility"]:checked').each(function () {
+                product_attributes_compatibility.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_hardOrSoft = new Array();
+            $('input[name="hardOrSoft"]:checked').each(function () {
+                product_attributes_hardOrSoft.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_features = new Array();
+            $('input[name="features"]:checked').each(function () {
+                product_attributes_features.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_Color = new Array();
+            $('input[name="Color"]:checked').each(function () {
+                product_attributes_Color.push($(this).val());//向数组中添加元素
+            });
+            var product_attributes_material = new Array();
+            $('input[name="material"]:checked').each(function () {
+                product_attributes_material.push($(this).val());//向数组中添加元素
+            });
+
+            product_attributes_compatibility.forEach(function (item_compatibility, index) {
+                product_attributes_Color.forEach(function (item_type, index_type) {
+                    var table_body_tr = '<tr class="' + index + index_type + '"><td>【' + item_compatibility + '】' + item_type + '</td><td><input type="text" class="form-control vip-price-td1"></td><td><input type="text" class="form-control"></td><td class="file-upload-single"><input type="file" class="filestyle" data-input="false" id="filestyle-0" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);"><div class="bootstrap-filestyle input-group"><span class="group-span-filestyle " tabindex="0"><label for="filestyle-0" class="btn btn-default "><span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span></label></span></div></td><td><button class="btn btn-default delete-compatibility">删除</button></td></tr>';
+
+                    $('#product-attribute-table tbody').append(table_body_tr);
+                })
+            })
+            $('#bulk_operation').on('click', function () {
+                var product_increase = $('#product_increase').val();
+                $('#product-attribute-table tbody tr').each(function (index, item) {
+                    var eq_1 = $('input[name="price"]').val();
+                    $(item).find('td').eq(1).find('input').val(eq_1);
+                    $(item).find('td').eq(2).find('input').val((parseInt(eq_1) + parseFloat(product_increase)).toString());
+//                    var eq_2 = $('input[name="count"]').val();
+//                    $(item).find('td').eq(2).text(eq_2);
+                })
+            })
+            $('.delete-compatibility').click(function () {
+                $(this).parents('tr').remove();
+            })
+            $('.vip-price-td1').change(function () {
+                var product_increase = $('#product_increase').val();
+                var eq_1 = $(this).val();
+                $(this).parent().next().find('input').val((parseInt(eq_1) + parseFloat(product_increase)).toString());
+            })
+
+            $('.filestyle').on('change', function () {
+                var file = $(this)[0];
+                var formData = new FormData();
+                console.log(file)
+                console.log(file.files)
+                if (file.files.length > 1) {
+                    layer.alert('上传图片大于1张')
+                } else {
+                    for (let i = 0; i < file.files.length; i++) {
+                        if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpeg') {
+                            layer.alert('上传图片格式有误')
+                            return false
+                        } else if (file.files[i].size / 1024 > 2000) {
+                            layer.alert('上传图片大小不能超过2M')
+                            return false
+                        } else {
+                            formData.append('file', file.files[i]);
+                        }
+                    }
+                    $.ajax({
+                        url: '/admin/uploadSingle',
+                        type: 'POST',
+                        data: formData,
+                        async: false,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            var data = data.data
+                            console.log(data)
+                            if (data.length != 0) {
+                                data.forEach(function (item) {
+                                    $parent = $(file).parent()
+                                    $parent.empty()
+                                    item = item.replace('public', '')
+
+                                    let li = '<li style="list-style: none;"><img src="' + item + '"><span class="delete"></span></li>'
+                                    $parent.append(li)
+
+                                })
+                            }
+                            $('.delete').click(function () {
+                                var index = $(this).parents('tr').attr('class');
+                                $(this).parent('li').remove();
+                                var $parent_li = $('.' + index).find('td').eq(3);
+                                var myhtml = '<input type="file" class="filestyle" data-input="false" id="filestyle-0" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);"><div class="bootstrap-filestyle input-group"><span class="group-span-filestyle " tabindex="0"><label for="filestyle-0" class="btn btn-default "><span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span></label></span></div>';
+                                $parent_li.append(myhtml);
+
+                            })
+                        },
+                        error: function () {
+                            layer.msg('上传文件格式错误')
+                        }
+                    });
+                }
+            })
+
+        })
+    })
+</script>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">产品上传</h3>
+        <div class="leave-cat-lv leave01">
+            <span class="first">1. 选择类目</span>
+            <span class="middle current">2. 填写信息</span>
+            <span class="last">3. 提交审核</span>
+        </div>
+    </div>
+
+    <!-- 已选择类目 开始 -->
+    <div class="categorydicbox">
+        <div class="layer-b-bg">
+            <span class="layer-l"></span>
+            <span class="layer-r"></span>
+
+            <div class="cat-titleconbox">
+                <div class="col-md-1">
+                    <b>请添加产品类目：</b>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" id="first" placeholder="一级类目">
+                </div>
+
+                <div class="col-md-3">
+                    <input type="text" id="second" placeholder="二级类目">
+                </div>
+
+                <div class="col-md-3">
+                    <input type="text" id="third" placeholder="三级类目">
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+    <!-- 已选择类目 结束 -->
+    <!-- 错误信息 开始 -->
+    <div id="errorMsgDiv" style="display: none;" class="syi-all-error clearfix">
+        <div class="syi-all-error-lt"></div>
+        <div class="syi-all-error-ri">
+            <p class="p1"><b>您还有下述表单项填写不正确，请点击相应链接进行修改。</b></p>
+            <ul id="errorUL">
+
+            </ul>
+        </div>
+    </div>
+    <!-- 错误信息 结束 -->
+    <div id="syi_form" name="SYIForm" method="post" enctype="multipart/form-data" target="_blank">
+
+        <!-- title产品基本信息 开始 -->
+        <div class="titlebox"><h3>1、产品基本信息</h3></div>
+        <!-- title产品基本信息 结束 -->
+
+        <!-- 产品标题 开始 -->
+        <div class="mainlayout clearfix" id="productnameTip">
+            <div class="ml-title" id="ml-title"><span class="required">*</span>产品标题：</div>
+            <a id="a_productname"></a>
+            <div class="m-text">您的产品标题单词量为<b class="orgfont">0</b>，平台上此类目产品标题的单词量为<b class="greenfont">16-23</b>个，完整且清晰的描述有助于提升产品曝光率。<br>
+                （重复的单词堆积，和产品无关的介绍会被视为作弊，导致产品被搜索降序甚至屏蔽）
+            </div>
+            <div class="similarity-tip-txt" id="prodNameSimilTip" style="display:none;">
+                您填写的标题和短描的相似单词数已超过50%，信息重复会降低商品信息质量不利于产品曝光。
+            </div>
+
+            <div class="title_re">
+                英文
+                <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
+                德文
+                <input type="checkbox" class="demen" onclick="getTranslateTitle(true)"
+                       data-group-cls="btn-group-lg">
+                <input id="productname" onchange="getTranslateTitle(false)" name="productname"
+                       style="ime-mode:disabled;" class="attr-text-input addwid402"
+                       maxlength="140" placeholder="英文" type="text" value="" autoComplete='off'>
+                <span id="productnameTip productname_tip" class="helptips marginleft10">您还可以输入<b class="color444"
+                                                                                                 id="productNameLengthSpan">140</b><span
+                            class="color000">/<span>140</span></span>个字符</span>
+            </div>
+            <div id="productnameErrTip" class="tip-error" style="display:none;"></div>
+
+        </div>
+        <!-- 产品标题 结束 -->
+
+        <!-- 产品基本属性 开始 -->
+        <!-- 产品基本属性 开始 -->
+        <div id="product_cattr_container" class="j-basic-attr-container clearfix">
+            <div class="mainlayout clearfix">
+                <div class="ml-title">
+                    <span class="required">*</span>产品基本属性：<a id="a_productattr"></a>
+                </div>
+                <div class="m-text">您的产品在所在类目的非必填属性填写率为<b class="orgfont">0%</b>，平台上此类目的非必填属性填写率为<b class="greenfont">80%</b>，完整且清晰的描述有助于提升产品曝光率。<br>
+                    （请按产品实际情况正确填写参数，错误的参数会引起客户投诉，影响产品曝光率）
+                </div>
+                <p class="helptips">设置完整的产品属性有助于买家更容易找到您的产品<span helptipval="product_cattr_container"
+                                                                 class="helpicon"></span></p>
+                <div class="product-attributes">
+                    <% if(product_spec[0].compact.length != 0) { %>
+                    <div class="items J_Items">
+                        <div class="head-attributes">compatibility</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_spec[0].compact.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="compatibility" name="compatibility"
+                                           value="<%= item %>"><%= item %>
+                                </label>
+                                <% }) %>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                    <% if(product_spec[0].type.length != 0) { %>
+                    <div class="items J_Items">
+                        <div class="head-attributes">type</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_spec[0].type.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="type" name="type"
+                                           value="<%= item %>"><%= item %>
+                                </label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if(product_spec[0].hardOrSoft.length != 0) { %>
+                    <div class="items J_Items">
+                        <div class="head-attributes">hardOrSoft</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_spec[0].hardOrSoft.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="hardOrSoft" name="hardOrSoft"
+                                           value="<%= item %>"><%= item %>
+                                </label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if(product_spec[0].features.length != 0) { %>
+                    <div class="items J_Items">
+                        <div class="head-attributes">features</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_spec[0].features.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="features" name="features"
+                                           value="<%= item %>"><%= item %></label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if(product_spec[0].pattern.length != 0) { %>
+                    <div class="items J_Items">
+                        <div class="head-attributes">pattern</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_spec[0].pattern.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="pattern" name="pattern"
+                                           value="<%= item %>"><%= item %></label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if(product_spec[0].color.length != 0) { %>
+                    <div class="items J_Items">
+                        <div class="head-attributes">Color</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_spec[0].color.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="Color" name="Color"
+                                           value="<%= item %>"><%= item %>
+                                </label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if(product_spec[0].material.length != 0) { %>
+                    <div class="items J_Items" style="border-bottom: 0">
+                        <div class="head-attributes">material</div>
+                        <div class="body-attributes">
+                            <div class="items-detail" id="item">
+                                <% product_specification.material.forEach(function(item){ %>
+                                <label class="checkbox-inline-product-attributes">
+                                    <input type="checkbox" data-fa="material" name="material"
+                                           value="<%= item %>"><%= item %></label>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <div class="btns">
+                        <span class="btn btn-default" id="submit-product-attributes">Confirm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="display_div_brand" style="display:none;">
+
+            <div class="syi-properties-ri syi-rposition" id="div_brand_id" style="display:none;">
+                <div class="posionrel clearfix">
+                    <div class="drop-down" id="selectBrandsDiv" onclick="onSelectBrandsClick();">
+                        <span class="drop-down-value text-indent" id="brandNameSpan">- 无品牌 -</span>
+                        <span class="drop-down-default"></span>
+                        <div class="chouse-down-box text-indent" id="brandsDiv" style="display: none;">
+                        </div>
+                        <!--<iframe></iframe>-->
+                    </div>
+
+                </div>
+            </div>
+            <input type="hidden" value="99" name="brandid" id="brandid">
+            <input type="hidden" value="" name="brandValid" id="brandValid">
+            <input type="hidden" value="" name="brandName" id="brandName">
+
+        </div>
+        <!-- 产品基本属性 结束 -->
+        <!--产品销售规格 开始-->
+
+        <!--产品销售规格 结束-->
+
+        <!-- 属性图片上传入口参数   -->
+        <input id="functionname_avim" name="functionname_avim" type="hidden" value="avim">  <!--功能名   	不可以为空-->
+        <input id="imagebannername_avim" name="imagebannername_avim" type="hidden" value="">    <!--水印名  现在是用户名-->
+
+
+        <!-- 产品基本属性 结束 -->
+
+        <!-- 产品购买属性 开始 -->
+
+        <!-- 产品购买属性 结束 -->
+        <!-- 产品备注 开始 -->
+        <div class="mainlayout clearfix j-list-item vadiourlTip_remark" id="vadiourlTip">
+            <div class="ml-title">产品备注：</div>
+            <div class="helptips" style="width:126px;margin-bottom: 5px;">
+                英文
+                <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
+                德文
+                <input type="checkbox" class="demen_remark" onclick="getTranslate(true)"
+                       data-group-cls="btn-group-lg">
+                <span class="helpicon" title="勾选语言" helptipval="vadiourlTip"></span>
+            </div>
+            <div class="form-group">
+                <script type="text/plain" id="product_remark" style="width:685px;height:40%;">
+                </script>
+                <script type="text/javascript">
+                    var um = UM.getEditor('product_remark', {
+                        //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
+                        toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
+                        //focus时自动清空初始化时的内容
+                        autoClearinitialContent: true,
+                        //关闭字数统计
+                        wordCount: true,
+                        //关闭elementPath
+                        elementPathEnabled: false,
+                        //默认的编辑区域高度
+                        initialFrameHeight: 300
+                        //更多其他参数，请参考umeditor.config.js中的配置项
+                    });
+                    um.setContent('输入产品备注');
+                    um.addListener('selectionchange', function () {
+                        getTranslate(false)
+                    })
+                </script>
+            </div>
+            <div class="form-group demon" style="display: none">
+                <script type="text/plain" id="de_product_remark" style="width:685px;height:40%;">
+                </script>
+                <script type="text/javascript">
+                    var umdemon = UM.getEditor('de_product_remark', {
+                        //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
+                        toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
+                        //focus时自动清空初始化时的内容
+                        autoClearinitialContent: true,
+                        //关闭字数统计
+                        wordCount: true,
+                        //关闭elementPath
+                        elementPathEnabled: false,
+                        //默认的编辑区域高度
+                        initialFrameHeight: 300
+                        //更多其他参数，请参考umeditor.config.js中的配置项
+                    });
+                    umdemon.setContent('输入德文产品备注');
+                </script>
+            </div>
+        </div>
+
+        <!--   <textarea name="product_remark" onchange="getTranslate(false)" placeholder="默认英文" class="product_remark"
+                    id="product_remark" cols="50"
+                    rows="4"></textarea> -->
+
+    </div>
+
+    <!-- title产品销售信息开始 -->
+    <!-- title产品包装信息 开始 -->
+    <div class="titlebox" id="a_productprice"><h3>2、产品销售信息</h3></div>
+    <!-- 销售计量单位 开始 -->
+    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
+        <div class="ml-title"><span class="required">*</span>销售计量单位：</div>
+        <a id="a_measureid"></a>
+        <select class="attr-select j-select-unit form-control" name="measureid">
+            <option disabled="disabled" value="">-- 请选择销售单位 --</option>
+            <option data-name="打" value="1">打(Dozen)</option>
+            <option data-name="英尺" value="2">英尺(Feet)</option>
+            <option data-name="件" value="3" selected="">件(Piece)</option>
+            <option data-name="套" value="4">套(Set)</option>
+            <option data-name="克" value="5">克(Gram)</option>
+            <option data-name="英寸" value="6">英寸(Inch)</option>
+            <option data-name="千克" value="7">千克(Kilogram)</option>
+            <option data-name="千米" value="8">千米(Kilometre)</option>
+            <option data-name="升" value="9">升(Liter)</option>
+            <option data-name="吨" value="10">吨(Metric Tonne)</option>
+            <option data-name="米" value="11">米(Meter)</option>
+            <option data-name="毫升" value="12">毫升(Milliliter)</option>
+            <option data-name="盎司" value="13">盎司(Ounce)</option>
+            <option data-name="双" value="14">双(Pair)</option>
+            <option data-name="磅" value="15">磅(Pound)</option>
+            <option data-name="平方码" value="16">平方码(Square Yard)</option>
+            <option data-name="平方米" value="17">平方米(Square Meter)</option>
+            <option data-name="平方英尺" value="18">平方英尺(Square Feet)</option>
+            <option data-name="码" value="19">码(Yard)</option>
+            <option data-name="厘米" value="20">厘米(Centimeter)</option>
+            <option data-name="箱" value="21">箱(Carton)</option>
+        </select> 示例：12美元/<span class="j-unit-no" name="sortbyunit">件</span>
+        <span class="helpicon" title="销售计量单位帮助" data-helpid="saleUnit"></span>
+        <input type="hidden" id="measurename" value="件">
+
+        <div data-anchor="j-saleBox" data-id="tips-unit" class="tip-error" style="display:none;"
+             data-name="销售计量单位"></div>
+    </div>
+    <!-- 销售计量单位 结束 -->
+
+    <!-- ----- 销售方式 开始 -----  -->
+    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
+        <div class="ml-title"><span class="required">*</span>销售方式：</div>
+        <div class="marginbottom10 clearfix"><label>
+                <input name="market_method" id="sortbyradio1" data-name="件" type="radio" checked="" value="1">
+                <span class="marginleft5 marginright10"><label for="gg">按件卖</label>（单位：<span class="j-unit-no"
+                                                                                             name="sortbyunit">件</span>）</span>
+            </label>
+        </div>
+        <script>
+            $(function () {
+                $('input[name="market_method"]').click(function () {
+                    var discount = $('input[name="market_method"]:checked').val();
+                    if ($(this).val() == discount) {
+                        if ($(this).val() == 2) {
+                            $('#packquantity').removeAttr('disabled');
+                        } else {
+                            $('#packquantity').attr('disabled', 'disabled');
+                        }
+                    }
+                })
+            })
+        </script>
+        <div class="marginbottom10 clearfix">
+            <label>
+                <input name="market_method" id="sortbyradio2" data-name="包" type="radio" value="2">
+                <span class="marginleft5">按包卖</span>
+                <!--<input type="text" class="form-control" placeholder="" name="sell-function-bao">-->
+            </label>
+            <!--/包-->
+            <span>
+			<span class="j-sale-bao">
+                （每包产品的数量：<input id="packquantity" name="packquantity" value="1" type="text" class="input2" size="6"
+                                maxlength="8">
+			<span class="j-unit-no" name="sortbyunit">件</span>）</span>
+		</span>
+            <span class="helpicon" title="销售方式帮助" data-helpid="saleType"></span>
+        </div>
+
+        <div style="display:none" class="tip-error" data-anchor="j-saleBox" data-id="tips-packquantity"
+             data-name="销售方式"><p></p></div>
+    </div>
+    <!-- 销售方式 结束 -->
+
+    <!-- ----- 产品毛重 开始 -----  -->
+    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
+        <div class="ml-title"><span class="required">*</span>产品毛重：</div>
+        <div class="marginbottom10 clearfix">
+            <label>
+                <input type="text" class="form-control" placeholder="" id="sell-function-mao" name="sell-function-mao">
+            </label>kg/件
+            <span class="helpicon" title="产品毛重帮助" data-helpid="saleType"></span>
+        </div>
+    </div>
+    <!-- ----- 产品毛重 结束 -----  -->
+    ﻿<input type="hidden" name="noSpecWholeSaleIncome" value="">
+    <input type="hidden" id="catePubDiscount" value="">
+    <input type="hidden" name="cateMinPrice" id="cateMinPrice" value="0.01">
+    <input type="hidden" name="noSpecPrice" id="noSpecPrice">
+    <input type="hidden" name="minAkPrice" id="minAkPrice" value="">
+    <input type="hidden" name="maxAkPrice" id="maxAkPrice" value="">
+    <!-- title产品包装信息 结束 -->
+    <a id="tips-sale-foot"></a>
+    <div class="j-sale-container">
+        <a id="a_saleinfo"></a>
+        <div class="mainlayout j-basic-standard-container clearfix">
+            <div class="ml-title">产品销售规格：</div>
+            <!-- ----- 产品基本属性结束 -----  -->
+            <div class="product-attributes2" id="j-attribute-list">
+                <div>
+                    <table class="table-property j-buy-attrs-list"></table>
+                </div>
+                <div>
+                    <table class="table-property j-sale-attrs-list"></table>
+                </div>
+                <div id="div_self_defind_attr" class="j-list-item">
+                    <table class="table-property">
+                        <tbody>
+                        <tr>
+                            <td class="col-sm-2 bktit addborderline">批量操作</td>
+                            <td class="bkcon addborderline">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputEmail2">Price</label>
+                                        <input type="text" class="form-control" name="price" id="exampleInputEmail2"
+                                               placeholder="Price">
+                                    </div>
+                                    <!--<div class="form-group">-->
+                                    <!--<label class="sr-only" for="exampleInputEmail2">Count</label>-->
+                                    <!--<input type="text" class="form-control" name="count" id="exampleInputEmail2"-->
+                                    <!--placeholder="Count">-->
+                                    <!--</div>-->
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputEmail2">ProductId</label>
+                                        <input type="text" class="form-control" name="productId"
+                                               id="exampleInputEmail2"
+                                               placeholder="ProductId">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputEmail2">增量</label>
+                                        <input type="text" class="form-control" name="product_increase"
+                                               id="product_increase" value="0.5">
+                                    </div>
+                                    <a class="btn btn-default" id="bulk_operation">Confirm</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered" id="product-attribute-table">
+                        <thead>
+                        <tr>
+                            <td class="col-sm-2 bktit addborderline">颜色分类</td>
+                            <td class="col-sm-2 bktit addborderline">VIP价格(美元)</td>
+                            <td class="col-sm-2 bktit addborderline">普通会员价格(美元)</td>
+                            <td class="col-sm-2 bktit addborderline">图片</td>
+                            <td class="col-sm-2 bktit addborderline">操作</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+        <!--添加供应商 form start -->
+        <div class="modal fade" id="addForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                                    class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">添加供应商</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="addsupplier">
+                            <div class="form-group">
+                                <label for="gongyingshang">供应商名称</label>
+                                <input type="text" class="form-control" id="supplier_name" placeholder="供应商名称">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">供应商位置</label>
+                                <input type="text" class="form-control" id="supplier_address" placeholder="供应商位置">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="addRobotBtn">添加</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="form-horizontal  layer_notice hidden" id="addForm">-->
+
+
+        <!--</div>-->
+        <!-- 供应商 开始 -->
+        <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
+            <div class="ml-title"><span class="required"></span>供应商：</div>
+            <a id="a_measureid"></a>
+            <select class="attr-select j-select-unit form-control" id="supplier" name="supplier">
+                <% suppliers.forEach(function(supplier){ %>
+                <option value="<%= supplier.name %>"><%= supplier.name %></option>
+                <% }) %>
+            </select>
+            <button type="button" style="margin-top: 10px" class="btn btn-primary" data-toggle="modal"
+                    data-target="#addForm">
+                添加供应商
+            </button>
+        </div>
+        <!-- 供应商 结束 -->
+        <div class="mainlayout j-basic-standard-container clearfix">
+            <div class="ml-title">
+                产品销售状态：
+            </div>
+            <p class="helptips">黄色(库存待确认)<br>
+                绿色(库存确认可以采购，后台输入供应商信息)<br>
+                红色(停产)
+            </p>
+            <!-- ----- 产品基本属性结束 -----  -->
+            <div class="product-attributes2" id="j-attribute-list">
+                <div>
+                    <table class="table-property j-buy-attrs-list"></table>
+                </div>
+                <div>
+                    <table class="table-property j-sale-attrs-list"></table>
+                </div>
+                <div id="product_sell_status_div" class="j-list-item">
+                    <div>
+                        <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
+                        <div class="form-group" style="float: left;width: 53%">
+                            <div class="input-group">
+                                <input class="form-control" id="product-sell-status" type="text" placeholder=""
+                                       style="height: 47px" value="库存确认可以采购">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- 产品备货期 开始 -->
+        <div class="mainlayout j-basic-standard-container clearfix">
+            <div class="ml-title">
+                产品备货期：
+            </div>
+            <p class="helptips">黄色(默认3天)<br>
+                绿色(默认2天)<br>
+            </p>
+
+            <div class="product-attributes2" id="j-attribute-list">
+                <div>
+                    <table class="table-property j-buy-attrs-list"></table>
+                </div>
+                <div>
+                    <table class="table-property j-sale-attrs-list"></table>
+                </div>
+                <div id="product_sell_status_div" class="j-list-item">
+                    <div>
+                        <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
+                        <div class="form-group" style="float: left;width: 53%">
+                            <div class="input-group" style="display: inline-block">
+                                <input class="form-control" id="product-stock-time" type="text" placeholder=""
+                                       value="2天"
+                                       style="height: 47px">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- ----- 产品备货期 结束 -----  -->
+
+        <!-- 产品价格 结束 -->
+
+        <!--</div>        &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;    &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;-->
+
+        <!-- title产品内容描述 开始 -->
+        <div class="titlebox"><h3>3、产品内容描述</h3></div>
+
+        <!-- 产品图片 开始 -->
+        <!-- 产品图片 开始 -->
+        <div class="mainlayout clearfix">
+            <div class="ml-title"><span class="required">*</span>产品图片：</div>
+            <a id="a_div_imgcontainer"></a>
+            <p class="helptips">图片格式<strong>JPEG</strong>，文件大小<strong>2M</strong>以内，切勿盗用他人图片，以免受网规处罚。<span
+                        class="helpicon" title="产品图片帮助" data-helpid="waterMark"></span></p>
+            <p class="helptips">上传优质产品图片会获得更多的站内外流量。<br>优质产品图片定义：产品原图，即无人为修改痕迹、无水印、无修饰边框和文字。</p>
+            <div class="margintop10">
+                <div id="uploadImages">
+                    相册上传：<input type="file" onchange="uploadFile()" id="file" name="file"
+                                multiple/><br/>
+                    <div class="box-body">
+                        <!--<ul class="fl-file-upload gridly" id="file-upload"></ul>-->
+                        <div class="gridly"></div>
+                    </div>
+                </div>
+                <span class="helptips">
+    			您还可以上传<b class="color444 limit_pic" id="photonum_b">8</b>
+    			          <span class="color000">/<span>8</span></span> 张
+    		</span>
+                <input type="hidden" id="inp_img_index" value="">
+            </div>
+
+        </div>
+
+        <input id="current_oper_index" name="current_oper_index" type="hidden" value="1">
+
+        <input id="current_oper_imgurls" name="current_oper_imgurls" type="hidden" value="">
+
+
+        <!--图片上传弹出窗口完-->
+
+        <!-- 产品视频 开始 -->
+        <div class="mainlayout clearfix j-list-item" id="vadiourlTip">
+            <div class="ml-title">产品视频链接：</div>
+            <a id="a_vadiourl"></a>
+            <p class="helptips">
+                只允许输入YOUTUBE网站视频链接地址,例如:http://www.youtube.com/watch?v=*****
+                <span class="helpicon" title="导入视频帮助" helptipval="vadiourlTip"></span>
+            </p>
+            <div class="margintop10"><input class="attr-text-input addwid402" type="text" id="videourl" size="120"
+                                            name="videourl" maxlength="300" value="">
+            </div>
+        </div>
+        <!-- 产品视频结束 -->
+
+
+    </div>
+    <!-- 产品视频结束 -->
+
+    <!-- 完成提交开始 -->
+    <div id="syi_submit_id" class="syi-submit" style="margin-bottom: 10px">
+        <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系ECSELL客服部门。</strong><br>
+        <button id="submitopt" class="btn btn-info">产品提交</button>
+    </div>
+    <!-- 完成提交结束 -->
+
+    <!-- 翻译 开始 -->
+    <div id="translateBox" class="syi-translate" style="right: 26px;">
+        <div class="show-translabox"></div>
+
+        <div class="translabox">
+            <a href="http://fanyi.baidu.com/" target="_blank" class="jinshan"></a>
+            <a href="http://fanyi.youdao.com/" target="_blank" class="youdao"></a>
+            <a href="http://translate.google.cn/" target="_blank" class="google"></a>
+        </div>
+        <!-- 产品填写参考 开始 -->
+        <div class="syi-proreference-box" style="display:none;">
+            <div class="syi-proreference">
+                <a href="http://seller.dhgate.com/syi/showProdInfo.do?itemcode=" target="_blank"
+                   title="点此查看调整之前的产品信息" class="proreferencebox">产品填写参考</a>
+            </div>
+        </div>
+        <!-- 产品填写参考 结束 -->
+    </div>
+    <!-- 翻译 结束 -->
+
+
+    <div id="onLineChatBox" class="syi-onlinechat" style="top: 361px; right: 26px;">
+        <div class="show-onlinechat"></div>
+        <div class="onlinechatbox">
+            <a id="syi_chat_window" href="javascript:void(0);" class="onlinechat" target="_blank"></a>
+        </div>
+    </div>
+
+    <!-- footer文件调用开始 -->
+    <div class="headerlayout">
+        <!--[if IE 6]>
+        <div class="layoutmargin">
+            <div class="layoutpadding"><![endif]-->
+        <!--<iframe id="headiframe" name="head" src="http://seller.dhgate.com/syihtml/footer_syi.html" width="100%"-->
+        <!--height="81" frameborder="0" scrolling="no"></iframe>-->
+        <!--[if IE 6]></div></div><![endif]-->
+    </div>
+    <!-- footer文件调用结束 -->
+</div>
+</div>
+</div>
+<script>
+    if ($('.gridly').children().length == 0) {
+        window.LS.each(function (key, value) {    //遍历
+            if (/^brick_*/.test(key)) {
+                $('.gridly').append(value)
+                var reordering = function ($elements) {
+                    $('.gridly').gridly('draggable', 'on')
+                };
+                $('.gridly').gridly({
+                    callbacks: {reordering: reordering}
+                })
+            }
+        })
+    }
+    $('.delete').click(function () {
+        let div_brick = $(this).parents('div').attr('id')
+        console.log(div_brick)
+        $('#' + div_brick).remove()
+        window.LS.remove(div_brick)
+        $('.limit_pic').text(parseInt(8 - $('.gridly').children().length))
+    })
+    //提交添加
+    $("#addRobotBtn").on('click', function () {
+        let date = new Date()
+        let parmets = {
+            add_name: $("#supplier_name").val(),
+            add_address: $("#supplier_address").val(),
+            add_time: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes(),
+            add_time_number: (date.getTime() / 1000).toFixed()
+        }
+        console.log(parmets)
+        if (parmets.add_name == '') {
+            layer.tips('请填写供应商', '#supplier_name')
+        } else {
+            console.log(parmets)
+            $.ajax({
+                url: 'doAddSupplier',
+                type: 'POST',
+                data: parmets,
+                success: function (retmsgurndata) {
+                    console.log(retmsgurndata)
+                    $("#supplier").append("<option value='" + $("#supplier_name").val() + "'>" + $("#supplier_name").val() + "</option>")
+                    $("#supplier_name").val('')
+                    $("#supplier_address").val('')
+                    layer.closeAll()
+                    layer.msg('添加成功')
+                }, error: function (returndata) {
+                    alert('添加失败，请检查是否有非法词汇！')
+                }
+            })
+        }
+    })
+
+
+    function uploadFile() {
+        let file = document.getElementById("file")
+        let formData = new FormData()
+        console.log(file)
+        console.log(file.files)
+        if (file.files.length > 8) {
+            layer.alert('上传图片大于8张')
+        } else {
+            for (var i = 0; i < file.files.length; i++) {
+                if (file.files[i].type != 'image/png' && file.files[i].type != 'image/jpeg') {
+                    layer.alert('上传图片格式有误')
+                    return false
+                } else if (file.files[i].size / 1024 > 2000) {
+                    layer.alert('上传图片大小不能超过2M')
+                    return false
+                } else {
+                    formData.append('file', file.files[i])
+                }
+
+                $('.limit_pic').text(8 - file.files.length)
+            }
+
+            $.ajax({
+                url: '/admin/uploadSingle',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var data = data.data;
+                    console.log(data)
+                    if (data.length != 0) {
+                        $('.gridly').gridly('draggable', 'on')
+                        data.forEach(function (item, index) {
+                            item = item.replace('public', '');
+                            var li = '<div class="brick small" id="brick_' + index + '"><img src="' + item + '"><span class="delete"></span></div>';
+                            window.LS.set("brick_" + index, li)
+                            $('.gridly').append(li);
+                        })
+                    }
+
+                    var reordering = function ($elements) {
+                        $('.gridly').gridly('draggable', 'on')
+                    };
+
+
+                    $('.gridly').gridly({
+                        callbacks: {reordering: reordering}
+                    })
+
+
+                    $('.delete').click(function () {
+                        var div_brick = $(this).parents('div').attr('id')
+                        $('#' + div_brick).remove();
+                        window.LS.remove(div_brick)
+                        $('.limit_pic').text(parseInt($('.limit_pic').text()) + 1)
+                    })
+                },
+                error: function () {
+                    layer.msg('上传文件格式错误')
+                }
+            });
+        }
+
+
+    }
+
+    $('.gridly').gridly('draggable', 'on')
+    <% product_images.forEach(function (item, index) { %>
+    if (<%= index %> <
+    8
+    )
+    {
+        $('.gridly').append('<div class="brick small" style="height:58px;width:65px" id="brick_' + <%= index %> +'"><img style="height:50px;width:50px" src="<%= item.url %>"><span class="delete" style="top:-12px"></span></div>')
+    }
+    <% }) %>
+
+    var reordering = function ($elements) {
+        $('.gridly').gridly('draggable', 'on')
+    };
+
+
+    $('.gridly').gridly({
+        callbacks: {reordering: reordering}
+    })
+
+
+    $('.delete').click(function () {
+        var div_brick = $(this).parents('div').attr('id')
+        $('#' + div_brick).remove();
+        window.LS.remove(div_brick)
+        $('.limit_pic').text(parseInt($('.limit_pic').text()) + 1)
+    })
+</script>
