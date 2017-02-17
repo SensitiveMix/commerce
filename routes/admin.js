@@ -3,7 +3,7 @@ const router = express.Router()
 const http = require('http').Server(express)
 const formidable = require('formidable')
 const fs = require('fs')
-const crypto = require('crypto')
+const Utils = require('../utils')
 const async = require('async')
 const multer = require('multer')
 const xlstojson = require("xls-to-json-lc")
@@ -25,18 +25,7 @@ var u = []
 var leverlist = []
 var systems = []
 var tempCategory = []
-/*-------------------------------------------------------------------*/
-/* -------------------------实用工具 ---------------------------------*/
-//MD5加密
-function md5(text) {
-    return crypto.createHash('md5').update(text).digest('hex');
-}
 
-function getDate() {
-    var date = new Date();
-    var add_time = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
-    return add_time
-}
 //验证登录
 let checkLogin = (req, res, next) => {
     if (req.body.status != 'test') {
@@ -219,12 +208,12 @@ router.post('/doAddUser', function (req, res, next) {
     var date = Date();
     var doc = {
         name: req.body.addname,
-        password: md5(req.body.addpassword),
+        password: Utils.PassHash.HashMD5(req.body.addpassword),
         nick_name: req.body.addnickname,
         level: req.body.addLevel,
         levelName: req.body.addLevelName,
         registerTime: req.body.registerTime
-    };
+    }
     var robot = new db.users(doc);
     robot.save(function (err) {
         if (err) // ...
@@ -234,14 +223,14 @@ router.post('/doAddUser', function (req, res, next) {
 });
 
 //修改用户
-router.post('/doChangeUser', checkLogin);
+router.post('/doChangeUser', checkLogin)
 router.post('/doChangeUser', function (req, res, next) {
-    console.log("用户修改" + new Date());
-    var newPassword;
+    console.log("用户修改" + new Date())
+    let newPassword
     if (req.body.addpassword == '********') {
         newPassword = req.body.oldPassword;
     } else {
-        newPassword = md5(req.body.addpassword);
+        newPassword = Utils.PassHash.HashMD5(req.body.addpassword);
     }
     console.log(req.body);
     db.users.update({_id: req.body.id}, {
@@ -2166,7 +2155,7 @@ router.post('/doChangeSupplier', function (req, res) {
             $set: {
                 name: req.body.add_name,
                 add_location: req.body.add_by,
-                add_time: getDate()
+                add_time: Utils.DateTime.FormatDate()
             }
         }, function (err, result) {
             if (err) {
@@ -2432,7 +2421,7 @@ router.get('/change-product', (req, res) => {
 })
 
 router.get('/product-manage-detail', (req, res) => {
-    db.products.findOne({_id: req.session.product_id }, (err, product) => {
+    db.products.findOne({_id: req.session.product_id}, (err, product) => {
         console.log(product)
         product.username = u.nick_name
         db.suppliers.find({}, (err, suppliers) => {
