@@ -4,137 +4,143 @@
 <script>
 
 </script>
-<div class="box box-info">
-    <div class="box-header with-border">
-        <div class="leave-cat-lv leave01">
-            <span class="first">1. 商城首页类目</span>
-            <span class="middle current">2. 类目管理</span>
-            <span class="last">3. 修改成功</span>
+<section class="content-header">
+    <h1>
+        类目管理
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="main"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">类目</a></li>
+        <li class="active">类目管理</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-info">
+        <div class="col-md-2 col-md-offset-10">
+            <select class="form-control" style="margin-top: 8px" id="choose-category">
+                <option value="English">英文类目</option>
+                <option value="German">德文类目</option>
+            </select>
         </div>
-    </div>
-    <div class="col-md-2 col-md-offset-10">
-        <select class="form-control" id="choose-category">
-            <option value="English">英文类目</option>
-            <option value="German">德文类目</option>
-        </select>
-    </div>
-    <div class="greay-cat-box" id="greay-cat-box">
-        <div class="b-f-line">
-            <div class="categoryselectlistbox clearfix">
-                <div class="categoryselectlist addscroll" id="div_catagory0">
-                    <ul id="catagory0">
-                        <% if(category.length != 0) { %>
-                        <% category.forEach(function (item) { %>
-                        <li data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="服装" data-en="Apparel"
-                            data-param="catePubId=014" data-valid="1"
-                            title="<%= item.firstCategory %>"><%= item.firstCategory %></li>
-                        <% }) %>
-                        <% } %>
-                    </ul>
+        <div class="greay-cat-box" id="greay-cat-box">
+            <div class="b-f-line">
+                <div class="categoryselectlistbox clearfix">
+                    <div class="categoryselectlist addscroll" id="div_catagory0">
+                        <ul id="catagory0">
+                            <% if(category.length != 0) { %>
+                            <% category.forEach(function (item) { %>
+                            <li data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="服装" data-en="Apparel"
+                                data-param="catePubId=014" data-valid="1"
+                                title="<%= item.firstCategory %>"><%= item.firstCategory %></li>
+                            <% }) %>
+                            <% } %>
+                        </ul>
+                    </div>
+                    <div class="categoryselectlist" id="div_catagory1">
+                        <ul id="catagory1">
+                        </ul>
+                    </div>
+                    <div class="categoryselectlist" id="div_catagory2">
+                        <ul id="catagory2">
+                        </ul>
+                    </div>
+                    <div class="categoryselectlist " id="div_catagory3">
+                        <ul id="catagory3">
+                        </ul>
+                    </div>
                 </div>
-                <div class="categoryselectlist" id="div_catagory1">
-                    <ul id="catagory1">
-                    </ul>
-                </div>
-                <div class="categoryselectlist" id="div_catagory2">
-                    <ul id="catagory2">
-                    </ul>
-                </div>
-                <div class="categoryselectlist " id="div_catagory3">
-                    <ul id="catagory3">
-                    </ul>
+                <div class="selected-category">
+                    <!--   -----------------------------当前已选择的产品类目 DIV----------------------------               -->
+                    <div class="chouseed-catrgory clearfix">
+                        <div class="clearfix">
+                            <span class="cate-title">当前已选择的类目：</span>
+                            <span class="cate-value show_category_path" id="show_category_path"></span>
+                        </div>
+                        <div class="clearfix save_category" style="display: none;">
+                            <span class="cate-title">当前已保存的类目：</span>
+                            <!--<br/>-->
+                            <span class="cate-value save_category_path"
+                                  id="save_category_path"></span>
+                        </div>
+                    </div>
+                    <!--   -----------------------------没有操作权限提醒 DIV----------------------------               -->
+                    <div class="chousetips" id="div_show_admittance" style="display:none;">
+                    </div>
+                    <!--   -----------------------------类目介绍提醒DIV ----------------------------               -->
+                    <div class="selected-category-tip clearfix" id="div_show_remark" style="display:none;">
+                        <span class="cate-title">类目介绍：</span>
+                        <span class="cate-value show_remark" id="show_remark"></span>
+                    </div>
+
                 </div>
             </div>
-            <div class="selected-category">
-                <!--   -----------------------------当前已选择的产品类目 DIV----------------------------               -->
-                <div class="chouseed-catrgory clearfix">
-                    <div class="clearfix">
-                        <span class="cate-title">当前已选择的类目：</span>
-                        <span class="cate-value show_category_path" id="show_category_path"></span>
-                    </div>
-                    <div class="clearfix save_category" style="display: none;">
-                        <span class="cate-title">当前已保存的类目：</span>
-                        <!--<br/>-->
-                        <span class="cate-value save_category_path"
-                              id="save_category_path"></span>
-                    </div>
-                </div>
-                <!--   -----------------------------没有操作权限提醒 DIV----------------------------               -->
-                <div class="chousetips" id="div_show_admittance" style="display:none;">
-                </div>
-                <!--   -----------------------------类目介绍提醒DIV ----------------------------               -->
-                <div class="selected-category-tip clearfix" id="div_show_remark" style="display:none;">
-                    <span class="cate-title">类目介绍：</span>
-                    <span class="cate-value show_remark" id="show_remark"></span>
-                </div>
 
-            </div>
-        </div>
-
-        <div class="buttonbox">
-            <div class="container">
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary" id="showCategory">修改类目
-                    </button>
-                    <button type="button" class="btn btn-primary" id="deleteCategory">删除类目</button>
+            <div class="buttonbox">
+                <div class="container">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" id="showCategory">修改类目
+                        </button>
+                        <button type="button" class="btn btn-primary" id="deleteCategory">删除类目</button>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            修改产品类目
+                        </h4>
+                    </div>
+                    <div class="modal-body" style="height: 316px">
+                        <div class="form-group col-sm-12">
+                            <label for="category" class="col-sm-4 control-label">一级类目</label>
+
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="fst-category" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="category" class="col-sm-4 control-label">二级类目</label>
+
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="sed-category" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="category" class="col-sm-4 control-label">三级类目</label>
+
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="thd-category" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="category" class="col-sm-4 control-label">类目封面</label>
+
+                            <div class="col-sm-6">
+                                <input type="file" onchange="uploadFile()" id="file" name="file" multiple/><br/>
+                                <img id="thirdImage" style="width: 100px;height: 100px" src="" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" id="save_change" class="btn btn-primary">
+                            提交更改
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
     </div>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        修改产品类目
-                    </h4>
-                </div>
-                <div class="modal-body" style="height: 316px">
-                    <div class="form-group col-sm-12">
-                        <label for="category" class="col-sm-4 control-label">一级类目</label>
-
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="fst-category" placeholder="">
-                        </div>
-                    </div>
-                    <div class="form-group col-sm-12">
-                        <label for="category" class="col-sm-4 control-label">二级类目</label>
-
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="sed-category" placeholder="">
-                        </div>
-                    </div>
-                    <div class="form-group col-sm-12">
-                        <label for="category" class="col-sm-4 control-label">三级类目</label>
-
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="thd-category" placeholder="">
-                        </div>
-                    </div>
-                    <div class="form-group col-sm-12">
-                        <label for="category" class="col-sm-4 control-label">类目封面</label>
-
-                        <div class="col-sm-6">
-                            <input type="file" onchange="uploadFile()" id="file" name="file" multiple/><br/>
-                            <img id="thirdImage" style="width: 100px;height: 100px" src="" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                    </button>
-                    <button type="button" id="save_change" class="btn btn-primary">
-                        提交更改
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
-</div>
-
+</section>
 
 <script>
     $(function () {

@@ -16,7 +16,7 @@
 <script type="text/javascript">
     layer.load()
 
-    window.onload = function(){
+    window.onload = function () {
         layer.closeAll('loading')
     }
 
@@ -386,692 +386,707 @@
         })
     })
 </script>
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">产品上传</h3>
-        <div class="leave-cat-lv leave01">
-            <span class="first">1. 选择类目</span>
-            <span class="middle current">2. 填写信息</span>
-            <span class="last">3. 提交审核</span>
-        </div>
-    </div>
-
-    <!-- 已选择类目 开始 -->
-    <div class="categorydicbox">
-        <div class="layer-b-bg">
-            <span class="layer-l"></span>
-            <span class="layer-r"></span>
-
-            <div class="cat-titleconbox">
-                <div class="col-md-1">
-                    <b>请添加产品类目：</b>
-                </div>
-                <div class="col-md-3">
-                    <input type="text" id="first" placeholder="一级类目">
-                </div>
-
-                <div class="col-md-3">
-                    <input type="text" id="second" placeholder="二级类目">
-                </div>
-
-                <div class="col-md-3">
-                    <input type="text" id="third" placeholder="三级类目">
-                </div>
-
-
+<section class="content-header">
+    <h1>
+        爬虫产品详情页
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="main"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="crawler_manage">爬虫管理</a></li>
+        <li class="active">产品</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">产品上传</h3>
+            <div class="leave-cat-lv leave01">
+                <span class="first">1. 选择类目</span>
+                <span class="middle current">2. 填写信息</span>
+                <span class="last">3. 提交审核</span>
             </div>
         </div>
 
-    </div>
-    <!-- 已选择类目 结束 -->
-    <!-- 错误信息 开始 -->
-    <div id="errorMsgDiv" style="display: none;" class="syi-all-error clearfix">
-        <div class="syi-all-error-lt"></div>
-        <div class="syi-all-error-ri">
-            <p class="p1"><b>您还有下述表单项填写不正确，请点击相应链接进行修改。</b></p>
-            <ul id="errorUL">
+        <!-- 已选择类目 开始 -->
+        <div class="categorydicbox">
+            <div class="layer-b-bg">
+                <span class="layer-l"></span>
+                <span class="layer-r"></span>
 
-            </ul>
-        </div>
-    </div>
-    <!-- 错误信息 结束 -->
-    <div id="syi_form" name="SYIForm" method="post" enctype="multipart/form-data" target="_blank">
+                <div class="cat-titleconbox">
+                    <div class="col-md-1">
+                        <b>请添加产品类目：</b>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="first" placeholder="一级类目">
+                    </div>
 
-        <!-- title产品基本信息 开始 -->
-        <div class="titlebox"><h3>1、产品基本信息</h3></div>
-        <!-- title产品基本信息 结束 -->
+                    <div class="col-md-3">
+                        <input type="text" id="second" placeholder="二级类目">
+                    </div>
 
-        <!-- 产品标题 开始 -->
-        <div class="mainlayout clearfix" id="productnameTip">
-            <div class="ml-title" id="ml-title"><span class="required">*</span>产品标题：</div>
-            <a id="a_productname"></a>
-            <div class="m-text">您的产品标题单词量为<b class="orgfont">0</b>，平台上此类目产品标题的单词量为<b class="greenfont">16-23</b>个，完整且清晰的描述有助于提升产品曝光率。<br>
-                （重复的单词堆积，和产品无关的介绍会被视为作弊，导致产品被搜索降序甚至屏蔽）
+                    <div class="col-md-3">
+                        <input type="text" id="third" placeholder="三级类目">
+                    </div>
+
+
+                </div>
             </div>
-            <div class="similarity-tip-txt" id="prodNameSimilTip" style="display:none;">
-                您填写的标题和短描的相似单词数已超过50%，信息重复会降低商品信息质量不利于产品曝光。
-            </div>
-
-            <div class="title_re">
-                英文
-                <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
-                德文
-                <input type="checkbox" class="demen" onclick="getTranslateTitle(true)"
-                       data-group-cls="btn-group-lg">
-                <input id="productname" onchange="getTranslateTitle(false)" name="productname"
-                       style="ime-mode:disabled;" class="attr-text-input addwid402"
-                       maxlength="140" placeholder="英文" type="text" value="" autoComplete='off'>
-                <span id="productnameTip productname_tip" class="helptips marginleft10">您还可以输入<b class="color444"
-                                                                                                 id="productNameLengthSpan">140</b><span
-                            class="color000">/<span>140</span></span>个字符</span>
-            </div>
-            <div id="productnameErrTip" class="tip-error" style="display:none;"></div>
 
         </div>
-        <!-- 产品标题 结束 -->
+        <!-- 已选择类目 结束 -->
+        <!-- 错误信息 开始 -->
+        <div id="errorMsgDiv" style="display: none;" class="syi-all-error clearfix">
+            <div class="syi-all-error-lt"></div>
+            <div class="syi-all-error-ri">
+                <p class="p1"><b>您还有下述表单项填写不正确，请点击相应链接进行修改。</b></p>
+                <ul id="errorUL">
 
-        <!-- 产品基本属性 开始 -->
-        <!-- 产品基本属性 开始 -->
-        <div id="product_cattr_container" class="j-basic-attr-container clearfix">
-            <div class="mainlayout clearfix">
-                <div class="ml-title">
-                    <span class="required">*</span>产品基本属性：<a id="a_productattr"></a>
+                </ul>
+            </div>
+        </div>
+        <!-- 错误信息 结束 -->
+        <div id="syi_form" name="SYIForm" method="post" enctype="multipart/form-data" target="_blank">
+
+            <!-- title产品基本信息 开始 -->
+            <div class="titlebox"><h3>1、产品基本信息</h3></div>
+            <!-- title产品基本信息 结束 -->
+
+            <!-- 产品标题 开始 -->
+            <div class="mainlayout clearfix" id="productnameTip">
+                <div class="ml-title" id="ml-title"><span class="required">*</span>产品标题：</div>
+                <a id="a_productname"></a>
+                <div class="m-text">您的产品标题单词量为<b class="orgfont">0</b>，平台上此类目产品标题的单词量为<b class="greenfont">16-23</b>个，完整且清晰的描述有助于提升产品曝光率。<br>
+                    （重复的单词堆积，和产品无关的介绍会被视为作弊，导致产品被搜索降序甚至屏蔽）
                 </div>
-                <div class="m-text">您的产品在所在类目的非必填属性填写率为<b class="orgfont">0%</b>，平台上此类目的非必填属性填写率为<b class="greenfont">80%</b>，完整且清晰的描述有助于提升产品曝光率。<br>
-                    （请按产品实际情况正确填写参数，错误的参数会引起客户投诉，影响产品曝光率）
+                <div class="similarity-tip-txt" id="prodNameSimilTip" style="display:none;">
+                    您填写的标题和短描的相似单词数已超过50%，信息重复会降低商品信息质量不利于产品曝光。
                 </div>
-                <p class="helptips">设置完整的产品属性有助于买家更容易找到您的产品<span helptipval="product_cattr_container"
-                                                                 class="helpicon"></span></p>
-                <div class="product-attributes">
-                    <% if(product_specification.compatibility.length != 0) { %>
-                    <div class="items J_Items">
-                        <div class="head-attributes">compatibility</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.compatibility.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="compatibility" name="compatibility"
-                                           value="<%= item %>"><%= item %>
-                                </label>
-                                <% }) %>
+
+                <div class="title_re">
+                    英文
+                    <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
+                    德文
+                    <input type="checkbox" class="demen" onclick="getTranslateTitle(true)"
+                           data-group-cls="btn-group-lg">
+                    <input id="productname" onchange="getTranslateTitle(false)" name="productname"
+                           style="ime-mode:disabled;" class="attr-text-input addwid402"
+                           maxlength="140" placeholder="英文" type="text" value="" autoComplete='off'>
+                    <span id="productnameTip productname_tip" class="helptips marginleft10">您还可以输入<b class="color444"
+                                                                                                     id="productNameLengthSpan">140</b><span
+                                class="color000">/<span>140</span></span>个字符</span>
+                </div>
+                <div id="productnameErrTip" class="tip-error" style="display:none;"></div>
+
+            </div>
+            <!-- 产品标题 结束 -->
+
+            <!-- 产品基本属性 开始 -->
+            <!-- 产品基本属性 开始 -->
+            <div id="product_cattr_container" class="j-basic-attr-container clearfix">
+                <div class="mainlayout clearfix">
+                    <div class="ml-title">
+                        <span class="required">*</span>产品基本属性：<a id="a_productattr"></a>
+                    </div>
+                    <div class="m-text">您的产品在所在类目的非必填属性填写率为<b class="orgfont">0%</b>，平台上此类目的非必填属性填写率为<b
+                                class="greenfont">80%</b>，完整且清晰的描述有助于提升产品曝光率。<br>
+                        （请按产品实际情况正确填写参数，错误的参数会引起客户投诉，影响产品曝光率）
+                    </div>
+                    <p class="helptips">设置完整的产品属性有助于买家更容易找到您的产品<span helptipval="product_cattr_container"
+                                                                     class="helpicon"></span></p>
+                    <div class="product-attributes">
+                        <% if(product_specification.compatibility.length != 0) { %>
+                        <div class="items J_Items">
+                            <div class="head-attributes">compatibility</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.compatibility.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="compatibility" name="compatibility"
+                                               value="<%= item %>"><%= item %>
+                                    </label>
+                                    <% }) %>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                        <% if(product_specification.type.length != 0) { %>
+                        <div class="items J_Items">
+                            <div class="head-attributes">type</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.type.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="type" name="type"
+                                               value="<%= item %>"><%= item %>
+                                    </label>
+                                    <% }) %>
+                                </div>
                             </div>
                         </div>
                         <% } %>
-                    </div>
-                    <% if(product_specification.type.length != 0) { %>
-                    <div class="items J_Items">
-                        <div class="head-attributes">type</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.type.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="type" name="type"
-                                           value="<%= item %>"><%= item %>
-                                </label>
-                                <% }) %>
+                        <% if(product_specification.hardOrSoft.length != 0) { %>
+                        <div class="items J_Items">
+                            <div class="head-attributes">hardOrSoft</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.hardOrSoft.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="hardOrSoft" name="hardOrSoft"
+                                               value="<%= item %>"><%= item %>
+                                    </label>
+                                    <% }) %>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <% } %>
-                    <% if(product_specification.hardOrSoft.length != 0) { %>
-                    <div class="items J_Items">
-                        <div class="head-attributes">hardOrSoft</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.hardOrSoft.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="hardOrSoft" name="hardOrSoft"
-                                           value="<%= item %>"><%= item %>
-                                </label>
-                                <% }) %>
+                        <% } %>
+                        <% if(product_specification.features.length != 0) { %>
+                        <div class="items J_Items">
+                            <div class="head-attributes">features</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.features.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="features" name="features"
+                                               value="<%= item %>"><%= item %></label>
+                                    <% }) %>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <% } %>
-                    <% if(product_specification.features.length != 0) { %>
-                    <div class="items J_Items">
-                        <div class="head-attributes">features</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.features.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="features" name="features"
-                                           value="<%= item %>"><%= item %></label>
-                                <% }) %>
+                        <% } %>
+                        <% if(product_specification.pattern.length != 0) { %>
+                        <div class="items J_Items">
+                            <div class="head-attributes">pattern</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.pattern.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="pattern" name="pattern"
+                                               value="<%= item %>"><%= item %></label>
+                                    <% }) %>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <% } %>
-                    <% if(product_specification.pattern.length != 0) { %>
-                    <div class="items J_Items">
-                        <div class="head-attributes">pattern</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.pattern.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="pattern" name="pattern"
-                                           value="<%= item %>"><%= item %></label>
-                                <% }) %>
+                        <% } %>
+                        <% if(product_specification.Color.length != 0) { %>
+                        <div class="items J_Items">
+                            <div class="head-attributes">Color</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.Color.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="Color" name="Color"
+                                               value="<%= item %>"><%= item %>
+                                    </label>
+                                    <% }) %>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <% } %>
-                    <% if(product_specification.Color.length != 0) { %>
-                    <div class="items J_Items">
-                        <div class="head-attributes">Color</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.Color.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="Color" name="Color"
-                                           value="<%= item %>"><%= item %>
-                                </label>
-                                <% }) %>
+                        <% } %>
+                        <% if(product_specification.material.length != 0) { %>
+                        <div class="items J_Items" style="border-bottom: 0">
+                            <div class="head-attributes">material</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.material.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="material" name="material"
+                                               value="<%= item %>"><%= item %></label>
+                                    <% }) %>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <% } %>
-                    <% if(product_specification.material.length != 0) { %>
-                    <div class="items J_Items" style="border-bottom: 0">
-                        <div class="head-attributes">material</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.material.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="material" name="material"
-                                           value="<%= item %>"><%= item %></label>
-                                <% }) %>
-                            </div>
+                        <% } %>
+                        <div class="btns">
+                            <span class="btn btn-default" id="submit-product-attributes">Confirm</span>
                         </div>
-                    </div>
-                    <% } %>
-                    <div class="btns">
-                        <span class="btn btn-default" id="submit-product-attributes">Confirm</span>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="display_div_brand" style="display:none;">
+            <div id="display_div_brand" style="display:none;">
 
-            <div class="syi-properties-ri syi-rposition" id="div_brand_id" style="display:none;">
-                <div class="posionrel clearfix">
-                    <div class="drop-down" id="selectBrandsDiv" onclick="onSelectBrandsClick();">
-                        <span class="drop-down-value text-indent" id="brandNameSpan">- 无品牌 -</span>
-                        <span class="drop-down-default"></span>
-                        <div class="chouse-down-box text-indent" id="brandsDiv" style="display: none;">
+                <div class="syi-properties-ri syi-rposition" id="div_brand_id" style="display:none;">
+                    <div class="posionrel clearfix">
+                        <div class="drop-down" id="selectBrandsDiv" onclick="onSelectBrandsClick();">
+                            <span class="drop-down-value text-indent" id="brandNameSpan">- 无品牌 -</span>
+                            <span class="drop-down-default"></span>
+                            <div class="chouse-down-box text-indent" id="brandsDiv" style="display: none;">
+                            </div>
+                            <!--<iframe></iframe>-->
                         </div>
-                        <!--<iframe></iframe>-->
-                    </div>
 
+                    </div>
+                </div>
+                <input type="hidden" value="99" name="brandid" id="brandid">
+                <input type="hidden" value="" name="brandValid" id="brandValid">
+                <input type="hidden" value="" name="brandName" id="brandName">
+
+            </div>
+            <!-- 产品基本属性 结束 -->
+            <!--产品销售规格 开始-->
+
+            <!--产品销售规格 结束-->
+
+            <!-- 属性图片上传入口参数   -->
+            <input id="functionname_avim" name="functionname_avim" type="hidden" value="avim">  <!--功能名   	不可以为空-->
+            <input id="imagebannername_avim" name="imagebannername_avim" type="hidden" value="">    <!--水印名  现在是用户名-->
+
+
+            <!-- 产品基本属性 结束 -->
+
+            <!-- 产品购买属性 开始 -->
+
+            <!-- 产品购买属性 结束 -->
+            <!-- 产品备注 开始 -->
+            <div class="mainlayout clearfix j-list-item vadiourlTip_remark" id="vadiourlTip">
+                <div class="ml-title">产品备注：</div>
+                <div class="helptips" style="width:126px;margin-bottom: 5px;">
+                    英文
+                    <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
+                    德文
+                    <input type="checkbox" class="demen_remark" onclick="getTranslate(true)"
+                           data-group-cls="btn-group-lg">
+                    <span class="helpicon" title="勾选语言" helptipval="vadiourlTip"></span>
+                </div>
+                <div class="form-group">
+                    <script type="text/plain" id="product_remark" style="width:685px;height:40%;">
+                    </script>
+                    <script type="text/javascript">
+                        var um = UM.getEditor('product_remark', {
+                            //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
+                            toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
+                            //focus时自动清空初始化时的内容
+                            autoClearinitialContent: true,
+                            //关闭字数统计
+                            wordCount: true,
+                            //关闭elementPath
+                            elementPathEnabled: false,
+                            //默认的编辑区域高度
+                            initialFrameHeight: 300
+                            //更多其他参数，请参考umeditor.config.js中的配置项
+                        });
+                        um.setContent('输入产品备注');
+                        um.addListener('selectionchange', function () {
+                            getTranslate(false)
+                        })
+                    </script>
+                </div>
+                <div class="form-group demon" style="display: none">
+                    <script type="text/plain" id="de_product_remark" style="width:685px;height:40%;">
+                    </script>
+                    <script type="text/javascript">
+                        var umdemon = UM.getEditor('de_product_remark', {
+                            //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
+                            toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
+                            //focus时自动清空初始化时的内容
+                            autoClearinitialContent: true,
+                            //关闭字数统计
+                            wordCount: true,
+                            //关闭elementPath
+                            elementPathEnabled: false,
+                            //默认的编辑区域高度
+                            initialFrameHeight: 300
+                            //更多其他参数，请参考umeditor.config.js中的配置项
+                        });
+                        umdemon.setContent('输入德文产品备注');
+                    </script>
                 </div>
             </div>
-            <input type="hidden" value="99" name="brandid" id="brandid">
-            <input type="hidden" value="" name="brandValid" id="brandValid">
-            <input type="hidden" value="" name="brandName" id="brandName">
+
+            <!--   <textarea name="product_remark" onchange="getTranslate(false)" placeholder="默认英文" class="product_remark"
+                        id="product_remark" cols="50"
+                        rows="4"></textarea> -->
 
         </div>
-        <!-- 产品基本属性 结束 -->
-        <!--产品销售规格 开始-->
 
-        <!--产品销售规格 结束-->
+        <!-- title产品销售信息开始 -->
+        <!-- title产品包装信息 开始 -->
+        <div class="titlebox" id="a_productprice"><h3>2、产品销售信息</h3></div>
+        <!-- 销售计量单位 开始 -->
+        <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
+            <div class="ml-title"><span class="required">*</span>销售计量单位：</div>
+            <a id="a_measureid"></a>
+            <select class="attr-select j-select-unit form-control" name="measureid">
+                <option disabled="disabled" value="">-- 请选择销售单位 --</option>
+                <option data-name="打" value="1">打(Dozen)</option>
+                <option data-name="英尺" value="2">英尺(Feet)</option>
+                <option data-name="件" value="3" selected="">件(Piece)</option>
+                <option data-name="套" value="4">套(Set)</option>
+                <option data-name="克" value="5">克(Gram)</option>
+                <option data-name="英寸" value="6">英寸(Inch)</option>
+                <option data-name="千克" value="7">千克(Kilogram)</option>
+                <option data-name="千米" value="8">千米(Kilometre)</option>
+                <option data-name="升" value="9">升(Liter)</option>
+                <option data-name="吨" value="10">吨(Metric Tonne)</option>
+                <option data-name="米" value="11">米(Meter)</option>
+                <option data-name="毫升" value="12">毫升(Milliliter)</option>
+                <option data-name="盎司" value="13">盎司(Ounce)</option>
+                <option data-name="双" value="14">双(Pair)</option>
+                <option data-name="磅" value="15">磅(Pound)</option>
+                <option data-name="平方码" value="16">平方码(Square Yard)</option>
+                <option data-name="平方米" value="17">平方米(Square Meter)</option>
+                <option data-name="平方英尺" value="18">平方英尺(Square Feet)</option>
+                <option data-name="码" value="19">码(Yard)</option>
+                <option data-name="厘米" value="20">厘米(Centimeter)</option>
+                <option data-name="箱" value="21">箱(Carton)</option>
+            </select> 示例：12美元/<span class="j-unit-no" name="sortbyunit">件</span>
+            <span class="helpicon" title="销售计量单位帮助" data-helpid="saleUnit"></span>
+            <input type="hidden" id="measurename" value="件">
 
-        <!-- 属性图片上传入口参数   -->
-        <input id="functionname_avim" name="functionname_avim" type="hidden" value="avim">  <!--功能名   	不可以为空-->
-        <input id="imagebannername_avim" name="imagebannername_avim" type="hidden" value="">    <!--水印名  现在是用户名-->
-
-
-        <!-- 产品基本属性 结束 -->
-
-        <!-- 产品购买属性 开始 -->
-
-        <!-- 产品购买属性 结束 -->
-        <!-- 产品备注 开始 -->
-        <div class="mainlayout clearfix j-list-item vadiourlTip_remark" id="vadiourlTip">
-            <div class="ml-title">产品备注：</div>
-            <div class="helptips" style="width:126px;margin-bottom: 5px;">
-                英文
-                <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
-                德文
-                <input type="checkbox" class="demen_remark" onclick="getTranslate(true)"
-                       data-group-cls="btn-group-lg">
-                <span class="helpicon" title="勾选语言" helptipval="vadiourlTip"></span>
-            </div>
-            <div class="form-group">
-                <script type="text/plain" id="product_remark" style="width:685px;height:40%;">
-                </script>
-                <script type="text/javascript">
-                    var um = UM.getEditor('product_remark', {
-                        //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
-                        toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
-                        //focus时自动清空初始化时的内容
-                        autoClearinitialContent: true,
-                        //关闭字数统计
-                        wordCount: true,
-                        //关闭elementPath
-                        elementPathEnabled: false,
-                        //默认的编辑区域高度
-                        initialFrameHeight: 300
-                        //更多其他参数，请参考umeditor.config.js中的配置项
-                    });
-                    um.setContent('输入产品备注');
-                    um.addListener('selectionchange', function () {
-                        getTranslate(false)
-                    })
-                </script>
-            </div>
-            <div class="form-group demon" style="display: none">
-                <script type="text/plain" id="de_product_remark" style="width:685px;height:40%;">
-                </script>
-                <script type="text/javascript">
-                    var umdemon = UM.getEditor('de_product_remark', {
-                        //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
-                        toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
-                        //focus时自动清空初始化时的内容
-                        autoClearinitialContent: true,
-                        //关闭字数统计
-                        wordCount: true,
-                        //关闭elementPath
-                        elementPathEnabled: false,
-                        //默认的编辑区域高度
-                        initialFrameHeight: 300
-                        //更多其他参数，请参考umeditor.config.js中的配置项
-                    });
-                    umdemon.setContent('输入德文产品备注');
-                </script>
-            </div>
+            <div data-anchor="j-saleBox" data-id="tips-unit" class="tip-error" style="display:none;"
+                 data-name="销售计量单位"></div>
         </div>
+        <!-- 销售计量单位 结束 -->
 
-        <!--   <textarea name="product_remark" onchange="getTranslate(false)" placeholder="默认英文" class="product_remark"
-                    id="product_remark" cols="50"
-                    rows="4"></textarea> -->
-
-    </div>
-
-    <!-- title产品销售信息开始 -->
-    <!-- title产品包装信息 开始 -->
-    <div class="titlebox" id="a_productprice"><h3>2、产品销售信息</h3></div>
-    <!-- 销售计量单位 开始 -->
-    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
-        <div class="ml-title"><span class="required">*</span>销售计量单位：</div>
-        <a id="a_measureid"></a>
-        <select class="attr-select j-select-unit form-control" name="measureid">
-            <option disabled="disabled" value="">-- 请选择销售单位 --</option>
-            <option data-name="打" value="1">打(Dozen)</option>
-            <option data-name="英尺" value="2">英尺(Feet)</option>
-            <option data-name="件" value="3" selected="">件(Piece)</option>
-            <option data-name="套" value="4">套(Set)</option>
-            <option data-name="克" value="5">克(Gram)</option>
-            <option data-name="英寸" value="6">英寸(Inch)</option>
-            <option data-name="千克" value="7">千克(Kilogram)</option>
-            <option data-name="千米" value="8">千米(Kilometre)</option>
-            <option data-name="升" value="9">升(Liter)</option>
-            <option data-name="吨" value="10">吨(Metric Tonne)</option>
-            <option data-name="米" value="11">米(Meter)</option>
-            <option data-name="毫升" value="12">毫升(Milliliter)</option>
-            <option data-name="盎司" value="13">盎司(Ounce)</option>
-            <option data-name="双" value="14">双(Pair)</option>
-            <option data-name="磅" value="15">磅(Pound)</option>
-            <option data-name="平方码" value="16">平方码(Square Yard)</option>
-            <option data-name="平方米" value="17">平方米(Square Meter)</option>
-            <option data-name="平方英尺" value="18">平方英尺(Square Feet)</option>
-            <option data-name="码" value="19">码(Yard)</option>
-            <option data-name="厘米" value="20">厘米(Centimeter)</option>
-            <option data-name="箱" value="21">箱(Carton)</option>
-        </select> 示例：12美元/<span class="j-unit-no" name="sortbyunit">件</span>
-        <span class="helpicon" title="销售计量单位帮助" data-helpid="saleUnit"></span>
-        <input type="hidden" id="measurename" value="件">
-
-        <div data-anchor="j-saleBox" data-id="tips-unit" class="tip-error" style="display:none;"
-             data-name="销售计量单位"></div>
-    </div>
-    <!-- 销售计量单位 结束 -->
-
-    <!-- ----- 销售方式 开始 -----  -->
-    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
-        <div class="ml-title"><span class="required">*</span>销售方式：</div>
-        <div class="marginbottom10 clearfix"><label>
-                <input name="market_method" id="sortbyradio1" data-name="件" type="radio" checked="" value="1">
-                <span class="marginleft5 marginright10"><label for="gg">按件卖</label>（单位：<span class="j-unit-no"
-                                                                                             name="sortbyunit">件</span>）</span>
-            </label>
-        </div>
-        <script>
-            $(function () {
-                $('input[name="market_method"]').click(function () {
-                    var discount = $('input[name="market_method"]:checked').val();
-                    if ($(this).val() == discount) {
-                        if ($(this).val() == 2) {
-                            $('#packquantity').removeAttr('disabled');
-                        } else {
-                            $('#packquantity').attr('disabled', 'disabled');
+        <!-- ----- 销售方式 开始 -----  -->
+        <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
+            <div class="ml-title"><span class="required">*</span>销售方式：</div>
+            <div class="marginbottom10 clearfix"><label>
+                    <input name="market_method" id="sortbyradio1" data-name="件" type="radio" checked="" value="1">
+                    <span class="marginleft5 marginright10"><label for="gg">按件卖</label>（单位：<span class="j-unit-no"
+                                                                                                 name="sortbyunit">件</span>）</span>
+                </label>
+            </div>
+            <script>
+                $(function () {
+                    $('input[name="market_method"]').click(function () {
+                        var discount = $('input[name="market_method"]:checked').val();
+                        if ($(this).val() == discount) {
+                            if ($(this).val() == 2) {
+                                $('#packquantity').removeAttr('disabled');
+                            } else {
+                                $('#packquantity').attr('disabled', 'disabled');
+                            }
                         }
-                    }
+                    })
                 })
-            })
-        </script>
-        <div class="marginbottom10 clearfix">
-            <label>
-                <input name="market_method" id="sortbyradio2" data-name="包" type="radio" value="2">
-                <span class="marginleft5">按包卖</span>
-                <!--<input type="text" class="form-control" placeholder="" name="sell-function-bao">-->
-            </label>
-            <!--/包-->
-            <span>
+            </script>
+            <div class="marginbottom10 clearfix">
+                <label>
+                    <input name="market_method" id="sortbyradio2" data-name="包" type="radio" value="2">
+                    <span class="marginleft5">按包卖</span>
+                    <!--<input type="text" class="form-control" placeholder="" name="sell-function-bao">-->
+                </label>
+                <!--/包-->
+                <span>
 			<span class="j-sale-bao">
                 （每包产品的数量：<input id="packquantity" name="packquantity" value="1" type="text" class="input2" size="6"
                                 maxlength="8">
 			<span class="j-unit-no" name="sortbyunit">件</span>）</span>
 		</span>
-            <span class="helpicon" title="销售方式帮助" data-helpid="saleType"></span>
-        </div>
+                <span class="helpicon" title="销售方式帮助" data-helpid="saleType"></span>
+            </div>
 
-        <div style="display:none" class="tip-error" data-anchor="j-saleBox" data-id="tips-packquantity"
-             data-name="销售方式"><p></p></div>
-    </div>
-    <!-- 销售方式 结束 -->
-
-    <!-- ----- 产品毛重 开始 -----  -->
-    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
-        <div class="ml-title"><span class="required">*</span>产品毛重：</div>
-        <div class="marginbottom10 clearfix">
-            <label>
-                <input type="text" class="form-control" placeholder="" id="sell-function-mao" name="sell-function-mao">
-            </label>kg/件
-            <span class="helpicon" title="产品毛重帮助" data-helpid="saleType"></span>
+            <div style="display:none" class="tip-error" data-anchor="j-saleBox" data-id="tips-packquantity"
+                 data-name="销售方式"><p></p></div>
         </div>
-    </div>
-    <!-- ----- 产品毛重 结束 -----  -->
-    ﻿<input type="hidden" name="noSpecWholeSaleIncome" value="">
-    <input type="hidden" id="catePubDiscount" value="">
-    <input type="hidden" name="cateMinPrice" id="cateMinPrice" value="0.01">
-    <input type="hidden" name="noSpecPrice" id="noSpecPrice">
-    <input type="hidden" name="minAkPrice" id="minAkPrice" value="">
-    <input type="hidden" name="maxAkPrice" id="maxAkPrice" value="">
-    <!-- title产品包装信息 结束 -->
-    <a id="tips-sale-foot"></a>
-    <div class="j-sale-container">
-        <a id="a_saleinfo"></a>
-        <div class="mainlayout j-basic-standard-container clearfix">
-            <div class="ml-title">产品销售规格：</div>
-            <!-- ----- 产品基本属性结束 -----  -->
-            <div class="product-attributes2" id="j-attribute-list">
-                <div>
-                    <table class="table-property j-buy-attrs-list"></table>
+        <!-- 销售方式 结束 -->
+
+        <!-- ----- 产品毛重 开始 -----  -->
+        <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
+            <div class="ml-title"><span class="required">*</span>产品毛重：</div>
+            <div class="marginbottom10 clearfix">
+                <label>
+                    <input type="text" class="form-control" placeholder="" id="sell-function-mao"
+                           name="sell-function-mao">
+                </label>kg/件
+                <span class="helpicon" title="产品毛重帮助" data-helpid="saleType"></span>
+            </div>
+        </div>
+        <!-- ----- 产品毛重 结束 -----  -->
+        ﻿<input type="hidden" name="noSpecWholeSaleIncome" value="">
+        <input type="hidden" id="catePubDiscount" value="">
+        <input type="hidden" name="cateMinPrice" id="cateMinPrice" value="0.01">
+        <input type="hidden" name="noSpecPrice" id="noSpecPrice">
+        <input type="hidden" name="minAkPrice" id="minAkPrice" value="">
+        <input type="hidden" name="maxAkPrice" id="maxAkPrice" value="">
+        <!-- title产品包装信息 结束 -->
+        <a id="tips-sale-foot"></a>
+        <div class="j-sale-container">
+            <a id="a_saleinfo"></a>
+            <div class="mainlayout j-basic-standard-container clearfix">
+                <div class="ml-title">产品销售规格：</div>
+                <!-- ----- 产品基本属性结束 -----  -->
+                <div class="product-attributes2" id="j-attribute-list">
+                    <div>
+                        <table class="table-property j-buy-attrs-list"></table>
+                    </div>
+                    <div>
+                        <table class="table-property j-sale-attrs-list"></table>
+                    </div>
+                    <div id="div_self_defind_attr" class="j-list-item">
+                        <table class="table-property">
+                            <tbody>
+                            <tr>
+                                <td class="col-sm-2 bktit addborderline">批量操作</td>
+                                <td class="bkcon addborderline">
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputEmail2">Price</label>
+                                            <input type="text" class="form-control" name="price" id="exampleInputEmail2"
+                                                   placeholder="Price">
+                                        </div>
+                                        <!--<div class="form-group">-->
+                                        <!--<label class="sr-only" for="exampleInputEmail2">Count</label>-->
+                                        <!--<input type="text" class="form-control" name="count" id="exampleInputEmail2"-->
+                                        <!--placeholder="Count">-->
+                                        <!--</div>-->
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputEmail2">ProductId</label>
+                                            <input type="text" class="form-control" name="productId"
+                                                   id="exampleInputEmail2"
+                                                   placeholder="ProductId">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputEmail2">增量</label>
+                                            <input type="text" class="form-control" name="product_increase"
+                                                   id="product_increase" value="0.5">
+                                        </div>
+                                        <a class="btn btn-default" id="bulk_operation">Confirm</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered" id="product-attribute-table">
+                            <thead>
+                            <tr>
+                                <td class="col-sm-2 bktit addborderline">颜色分类</td>
+                                <td class="col-sm-2 bktit addborderline">VIP价格(美元)</td>
+                                <td class="col-sm-2 bktit addborderline">普通会员价格(美元)</td>
+                                <td class="col-sm-2 bktit addborderline">图片</td>
+                                <td class="col-sm-2 bktit addborderline">操作</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                    </div>
                 </div>
-                <div>
-                    <table class="table-property j-sale-attrs-list"></table>
-                </div>
-                <div id="div_self_defind_attr" class="j-list-item">
-                    <table class="table-property">
-                        <tbody>
-                        <tr>
-                            <td class="col-sm-2 bktit addborderline">批量操作</td>
-                            <td class="bkcon addborderline">
-                                <div class="form-inline">
-                                    <div class="form-group">
-                                        <label class="sr-only" for="exampleInputEmail2">Price</label>
-                                        <input type="text" class="form-control" name="price" id="exampleInputEmail2"
-                                               placeholder="Price">
-                                    </div>
-                                    <!--<div class="form-group">-->
-                                    <!--<label class="sr-only" for="exampleInputEmail2">Count</label>-->
-                                    <!--<input type="text" class="form-control" name="count" id="exampleInputEmail2"-->
-                                    <!--placeholder="Count">-->
-                                    <!--</div>-->
-                                    <div class="form-group">
-                                        <label class="sr-only" for="exampleInputEmail2">ProductId</label>
-                                        <input type="text" class="form-control" name="productId"
-                                               id="exampleInputEmail2"
-                                               placeholder="ProductId">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="exampleInputEmail2">增量</label>
-                                        <input type="text" class="form-control" name="product_increase"
-                                               id="product_increase" value="0.5">
-                                    </div>
-                                    <a class="btn btn-default" id="bulk_operation">Confirm</a>
+
+            </div>
+            <!--添加供应商 form start -->
+            <div class="modal fade" id="addForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">&times;</span><span
+                                        class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">添加供应商</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="addsupplier">
+                                <div class="form-group">
+                                    <label for="gongyingshang">供应商名称</label>
+                                    <input type="text" class="form-control" id="supplier_name" placeholder="供应商名称">
                                 </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <table class="table table-bordered" id="product-attribute-table">
-                        <thead>
-                        <tr>
-                            <td class="col-sm-2 bktit addborderline">颜色分类</td>
-                            <td class="col-sm-2 bktit addborderline">VIP价格(美元)</td>
-                            <td class="col-sm-2 bktit addborderline">普通会员价格(美元)</td>
-                            <td class="col-sm-2 bktit addborderline">图片</td>
-                            <td class="col-sm-2 bktit addborderline">操作</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-
-        </div>
-        <!--添加供应商 form start -->
-        <div class="modal fade" id="addForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                                    class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">添加供应商</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div id="addsupplier">
-                            <div class="form-group">
-                                <label for="gongyingshang">供应商名称</label>
-                                <input type="text" class="form-control" id="supplier_name" placeholder="供应商名称">
-                            </div>
-                            <div class="form-group">
-                                <label for="address">供应商位置</label>
-                                <input type="text" class="form-control" id="supplier_address" placeholder="供应商位置">
+                                <div class="form-group">
+                                    <label for="address">供应商位置</label>
+                                    <input type="text" class="form-control" id="supplier_address" placeholder="供应商位置">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="addRobotBtn">添加</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="addRobotBtn">添加
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--<div class="form-horizontal  layer_notice hidden" id="addForm">-->
+            <!--<div class="form-horizontal  layer_notice hidden" id="addForm">-->
 
 
-        <!--</div>-->
-        <!-- 供应商 开始 -->
-        <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
-            <div class="ml-title"><span class="required"></span>供应商：</div>
-            <a id="a_measureid"></a>
-            <select class="attr-select j-select-unit form-control" id="supplier" name="supplier">
-                <% suppliers.forEach(function(supplier){ %>
-                <option value="<%= supplier.name %>"><%= supplier.name %></option>
-                <% }) %>
-            </select>
-            <button type="button" style="margin-top: 10px" class="btn btn-primary" data-toggle="modal"
-                    data-target="#addForm">
-                添加供应商
-            </button>
-        </div>
-        <!-- 供应商 结束 -->
-        <div class="mainlayout j-basic-standard-container clearfix">
-            <div class="ml-title">
-                产品销售状态：
+            <!--</div>-->
+            <!-- 供应商 开始 -->
+            <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
+                <div class="ml-title"><span class="required"></span>供应商：</div>
+                <a id="a_measureid"></a>
+                <select class="attr-select j-select-unit form-control" id="supplier" name="supplier">
+                    <% suppliers.forEach(function(supplier){ %>
+                    <option value="<%= supplier.name %>"><%= supplier.name %></option>
+                    <% }) %>
+                </select>
+                <button type="button" style="margin-top: 10px" class="btn btn-primary" data-toggle="modal"
+                        data-target="#addForm">
+                    添加供应商
+                </button>
             </div>
-            <p class="helptips">黄色(库存待确认)<br>
-                绿色(库存确认可以采购，后台输入供应商信息)<br>
-                红色(停产)
-            </p>
-            <!-- ----- 产品基本属性结束 -----  -->
-            <div class="product-attributes2" id="j-attribute-list">
-                <div>
-                    <table class="table-property j-buy-attrs-list"></table>
+            <!-- 供应商 结束 -->
+            <div class="mainlayout j-basic-standard-container clearfix">
+                <div class="ml-title">
+                    产品销售状态：
                 </div>
-                <div>
-                    <table class="table-property j-sale-attrs-list"></table>
-                </div>
-                <div id="product_sell_status_div" class="j-list-item">
+                <p class="helptips">黄色(库存待确认)<br>
+                    绿色(库存确认可以采购，后台输入供应商信息)<br>
+                    红色(停产)
+                </p>
+                <!-- ----- 产品基本属性结束 -----  -->
+                <div class="product-attributes2" id="j-attribute-list">
                     <div>
-                        <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
-                        <div class="form-group" style="float: left;width: 53%">
-                            <div class="input-group">
-                                <input class="form-control" id="product-sell-status" type="text" placeholder=""
-                                       style="height: 47px" value="库存确认可以采购">
-                            </div>
-                        </div>
+                        <table class="table-property j-buy-attrs-list"></table>
                     </div>
-
-                </div>
-            </div>
-
-        </div>
-        <!-- 产品备货期 开始 -->
-        <div class="mainlayout j-basic-standard-container clearfix">
-            <div class="ml-title">
-                产品备货期：
-            </div>
-            <p class="helptips">黄色(默认3天)<br>
-                绿色(默认2天)<br>
-            </p>
-
-            <div class="product-attributes2" id="j-attribute-list">
-                <div>
-                    <table class="table-property j-buy-attrs-list"></table>
-                </div>
-                <div>
-                    <table class="table-property j-sale-attrs-list"></table>
-                </div>
-                <div id="product_sell_status_div" class="j-list-item">
                     <div>
-                        <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
-                        <div class="form-group" style="float: left;width: 53%">
-                            <div class="input-group" style="display: inline-block">
-                                <input class="form-control" id="product-stock-time" type="text" placeholder=""
-                                       value="2天"
-                                       style="height: 47px">
+                        <table class="table-property j-sale-attrs-list"></table>
+                    </div>
+                    <div id="product_sell_status_div" class="j-list-item">
+                        <div>
+                            <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
+                            <div class="form-group" style="float: left;width: 53%">
+                                <div class="input-group">
+                                    <input class="form-control" id="product-sell-status" type="text" placeholder=""
+                                           style="height: 47px" value="库存确认可以采购">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
+
             </div>
+            <!-- 产品备货期 开始 -->
+            <div class="mainlayout j-basic-standard-container clearfix">
+                <div class="ml-title">
+                    产品备货期：
+                </div>
+                <p class="helptips">黄色(默认3天)<br>
+                    绿色(默认2天)<br>
+                </p>
 
-        </div>
-        <!-- ----- 产品备货期 结束 -----  -->
+                <div class="product-attributes2" id="j-attribute-list">
+                    <div>
+                        <table class="table-property j-buy-attrs-list"></table>
+                    </div>
+                    <div>
+                        <table class="table-property j-sale-attrs-list"></table>
+                    </div>
+                    <div id="product_sell_status_div" class="j-list-item">
+                        <div>
+                            <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
+                            <div class="form-group" style="float: left;width: 53%">
+                                <div class="input-group" style="display: inline-block">
+                                    <input class="form-control" id="product-stock-time" type="text" placeholder=""
+                                           value="2天"
+                                           style="height: 47px">
+                                </div>
+                            </div>
+                        </div>
 
-        <!-- 产品价格 结束 -->
-
-        <!--</div>        &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;    &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;-->
-
-        <!-- title产品内容描述 开始 -->
-        <div class="titlebox"><h3>3、产品内容描述</h3></div>
-
-        <!-- 产品图片 开始 -->
-        <!-- 产品图片 开始 -->
-        <div class="mainlayout clearfix">
-            <div class="ml-title"><span class="required">*</span>产品图片：</div>
-            <a id="a_div_imgcontainer"></a>
-            <p class="helptips">图片格式<strong>JPEG</strong>，文件大小<strong>2M</strong>以内，切勿盗用他人图片，以免受网规处罚。<span
-                        class="helpicon" title="产品图片帮助" data-helpid="waterMark"></span></p>
-            <p class="helptips">上传优质产品图片会获得更多的站内外流量。<br>优质产品图片定义：产品原图，即无人为修改痕迹、无水印、无修饰边框和文字。</p>
-            <div class="margintop10">
-                <div id="uploadImages">
-                    相册上传：<input type="file" onchange="uploadFile()" id="file" name="file"
-                                multiple/><br/>
-                    <div class="box-body">
-                        <!--<ul class="fl-file-upload gridly" id="file-upload"></ul>-->
-                        <div class="gridly"></div>
                     </div>
                 </div>
-                <span class="helptips">
+
+            </div>
+            <!-- ----- 产品备货期 结束 -----  -->
+
+            <!-- 产品价格 结束 -->
+
+            <!--</div>        &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;    &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;-->
+
+            <!-- title产品内容描述 开始 -->
+            <div class="titlebox"><h3>3、产品内容描述</h3></div>
+
+            <!-- 产品图片 开始 -->
+            <!-- 产品图片 开始 -->
+            <div class="mainlayout clearfix">
+                <div class="ml-title"><span class="required">*</span>产品图片：</div>
+                <a id="a_div_imgcontainer"></a>
+                <p class="helptips">图片格式<strong>JPEG</strong>，文件大小<strong>2M</strong>以内，切勿盗用他人图片，以免受网规处罚。<span
+                            class="helpicon" title="产品图片帮助" data-helpid="waterMark"></span></p>
+                <p class="helptips">上传优质产品图片会获得更多的站内外流量。<br>优质产品图片定义：产品原图，即无人为修改痕迹、无水印、无修饰边框和文字。</p>
+                <div class="margintop10">
+                    <div id="uploadImages">
+                        相册上传：<input type="file" onchange="uploadFile()" id="file" name="file"
+                                    multiple/><br/>
+                        <div class="box-body">
+                            <!--<ul class="fl-file-upload gridly" id="file-upload"></ul>-->
+                            <div class="gridly"></div>
+                        </div>
+                    </div>
+                    <span class="helptips">
     			您还可以上传<b class="color444 limit_pic" id="photonum_b">8</b>
     			          <span class="color000">/<span>8</span></span> 张
     		</span>
-                <input type="hidden" id="inp_img_index" value="">
+                    <input type="hidden" id="inp_img_index" value="">
+                </div>
+
             </div>
 
-        </div>
+            <input id="current_oper_index" name="current_oper_index" type="hidden" value="1">
 
-        <input id="current_oper_index" name="current_oper_index" type="hidden" value="1">
-
-        <input id="current_oper_imgurls" name="current_oper_imgurls" type="hidden" value="">
+            <input id="current_oper_imgurls" name="current_oper_imgurls" type="hidden" value="">
 
 
-        <!--图片上传弹出窗口完-->
+            <!--图片上传弹出窗口完-->
 
-        <!-- 产品视频 开始 -->
-        <div class="mainlayout clearfix j-list-item" id="vadiourlTip">
-            <div class="ml-title">产品视频链接：</div>
-            <a id="a_vadiourl"></a>
-            <p class="helptips">
-                只允许输入YOUTUBE网站视频链接地址,例如:http://www.youtube.com/watch?v=*****
-                <span class="helpicon" title="导入视频帮助" helptipval="vadiourlTip"></span>
-            </p>
-            <div class="margintop10"><input class="attr-text-input addwid402" type="text" id="videourl" size="120"
-                                            name="videourl" maxlength="300" value="">
+            <!-- 产品视频 开始 -->
+            <div class="mainlayout clearfix j-list-item" id="vadiourlTip">
+                <div class="ml-title">产品视频链接：</div>
+                <a id="a_vadiourl"></a>
+                <p class="helptips">
+                    只允许输入YOUTUBE网站视频链接地址,例如:http://www.youtube.com/watch?v=*****
+                    <span class="helpicon" title="导入视频帮助" helptipval="vadiourlTip"></span>
+                </p>
+                <div class="margintop10"><input class="attr-text-input addwid402" type="text" id="videourl" size="120"
+                                                name="videourl" maxlength="300" value="">
+                </div>
             </div>
+            <!-- 产品视频结束 -->
+
+
         </div>
         <!-- 产品视频结束 -->
 
-
-    </div>
-    <!-- 产品视频结束 -->
-
-    <!-- 完成提交开始 -->
-    <div id="syi_submit_id" class="syi-submit" style="margin-bottom: 10px">
-        <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系ECSELL客服部门。</strong><br>
-        <button id="submitopt" class="btn btn-info">产品提交</button>
-    </div>
-    <!-- 完成提交结束 -->
-
-    <!-- 翻译 开始 -->
-    <div id="translateBox" class="syi-translate" style="right: 26px;">
-        <div class="show-translabox"></div>
-
-        <div class="translabox">
-            <a href="http://fanyi.baidu.com/" target="_blank" class="jinshan"></a>
-            <a href="http://fanyi.youdao.com/" target="_blank" class="youdao"></a>
-            <a href="http://translate.google.cn/" target="_blank" class="google"></a>
+        <!-- 完成提交开始 -->
+        <div id="syi_submit_id" class="syi-submit" style="margin-bottom: 10px">
+            <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系ECSELL客服部门。</strong><br>
+            <button id="submitopt" class="btn btn-info">产品提交</button>
         </div>
-        <!-- 产品填写参考 开始 -->
-        <div class="syi-proreference-box" style="display:none;">
-            <div class="syi-proreference">
-                <a href="http://seller.dhgate.com/syi/showProdInfo.do?itemcode=" target="_blank"
-                   title="点此查看调整之前的产品信息" class="proreferencebox">产品填写参考</a>
+        <!-- 完成提交结束 -->
+
+        <!-- 翻译 开始 -->
+        <div id="translateBox" class="syi-translate" style="right: 26px;">
+            <div class="show-translabox"></div>
+
+            <div class="translabox">
+                <a href="http://fanyi.baidu.com/" target="_blank" class="jinshan"></a>
+                <a href="http://fanyi.youdao.com/" target="_blank" class="youdao"></a>
+                <a href="http://translate.google.cn/" target="_blank" class="google"></a>
+            </div>
+            <!-- 产品填写参考 开始 -->
+            <div class="syi-proreference-box" style="display:none;">
+                <div class="syi-proreference">
+                    <a href="http://seller.dhgate.com/syi/showProdInfo.do?itemcode=" target="_blank"
+                       title="点此查看调整之前的产品信息" class="proreferencebox">产品填写参考</a>
+                </div>
+            </div>
+            <!-- 产品填写参考 结束 -->
+        </div>
+        <!-- 翻译 结束 -->
+
+
+        <div id="onLineChatBox" class="syi-onlinechat" style="top: 361px; right: 26px;">
+            <div class="show-onlinechat"></div>
+            <div class="onlinechatbox">
+                <a id="syi_chat_window" href="javascript:void(0);" class="onlinechat" target="_blank"></a>
             </div>
         </div>
-        <!-- 产品填写参考 结束 -->
-    </div>
-    <!-- 翻译 结束 -->
 
-
-    <div id="onLineChatBox" class="syi-onlinechat" style="top: 361px; right: 26px;">
-        <div class="show-onlinechat"></div>
-        <div class="onlinechatbox">
-            <a id="syi_chat_window" href="javascript:void(0);" class="onlinechat" target="_blank"></a>
+        <!-- footer文件调用开始 -->
+        <div class="headerlayout">
+            <!--[if IE 6]>
+            <div class="layoutmargin">
+                <div class="layoutpadding"><![endif]-->
+            <!--<iframe id="headiframe" name="head" src="http://seller.dhgate.com/syihtml/footer_syi.html" width="100%"-->
+            <!--height="81" frameborder="0" scrolling="no"></iframe>-->
+            <!--[if IE 6]></div></div><![endif]-->
         </div>
+        <!-- footer文件调用结束 -->
     </div>
-
-    <!-- footer文件调用开始 -->
-    <div class="headerlayout">
-        <!--[if IE 6]>
-        <div class="layoutmargin">
-            <div class="layoutpadding"><![endif]-->
-        <!--<iframe id="headiframe" name="head" src="http://seller.dhgate.com/syihtml/footer_syi.html" width="100%"-->
-        <!--height="81" frameborder="0" scrolling="no"></iframe>-->
-        <!--[if IE 6]></div></div><![endif]-->
-    </div>
-    <!-- footer文件调用结束 -->
-</div>
-</div>
-</div>
+</section>
 <script>
     if ($('.gridly').children().length == 0) {
         window.LS.each(function (key, value) {    //遍历

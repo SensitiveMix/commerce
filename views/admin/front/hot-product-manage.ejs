@@ -1,124 +1,137 @@
 <% layout('../backend-master.ejs') %>
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">最热标签管理</h3>
-        <input type="button" value="添加标签" id="addRobotBtn" style="margin-left: 50px" class='btn btn-primary'/>
-    </div>
-    <!-- /.box-header -->
-    <!-- form start -->
-    <div class="box-body">
-        <table id="robotetable" class="table table-bordered " aria-describedby="example2_info">
-            <thead>
-            <tr>
-                <th></th>
-                <th>标签名</th>
-                <th>添加颜色</th>
-                <th>修改时间</th>
-                <th>所属三级类目</th>
-                <th>修改操作</th>
-                <th>删除操作</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-            </tfoot>
-        </table>
-    </div>
+<section class="content-header">
+    <h1>
+        最热类目
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="main"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">类目</a></li>
+        <li class="active">最热类目管理</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <!--<h3 class="box-title">最热标签管理</h3>-->
+            <input type="button" value="添加类目" id="addRobotBtn" class='btn btn-primary pull-right'/>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <div class="box-body">
+            <table id="robotetable" class="table table-bordered " aria-describedby="example2_info">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>标签名</th>
+                    <th>添加颜色</th>
+                    <th>修改时间</th>
+                    <th>所属三级类目</th>
+                    <th>修改操作</th>
+                    <th>删除操作</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
 
-    <div class="form-horizontal  layer_notice hidden" id="recordDetail">
-        <table id="recordTb" class="table table-bordered " aria-describedby="example2_info">
-            <thead>
-            <tr>
-                <th>用户归属</th>
-                <th>操作人</th>
-                <th>更新时间</th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-            </tfoot>
-        </table>
-    </div>
+        <div class="form-horizontal  layer_notice hidden" id="recordDetail">
+            <table id="recordTb" class="table table-bordered " aria-describedby="example2_info">
+                <thead>
+                <tr>
+                    <th>用户归属</th>
+                    <th>操作人</th>
+                    <th>更新时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
 
-    <!--更新 form start -->
-    <div class="form-horizontal  layer_notice hidden" id="changeRobotForm">
-        <form class="" hidden="hidden" action="changeRobot" method="post" style="margin-top: 50px" id="changerot">
+        <!--更新 form start -->
+        <div class="form-horizontal  layer_notice hidden" id="changeRobotForm">
+            <form class="" hidden="hidden" action="changeRobot" method="post" style="margin-top: 50px" id="changerot">
 
-            <div class="box-body">
-                <input type="hidden" class="form-control" name="id" id="id"/>
+                <div class="box-body">
+                    <input type="hidden" class="form-control" name="id" id="id"/>
 
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">标签名</label>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">标签名</label>
 
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="account" name="account">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="account" name="account">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">标签颜色</label>
+
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="nick_name" name="nick_name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">所属类目</label>
+
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="password" name="password">
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">标签颜色</label>
-
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="nick_name" name="nick_name">
-                    </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="button" id="subRobotChange" class="btn btn-info pull-right closeBtn">确定</button>
                 </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">所属类目</label>
-
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="password" name="password">
-                    </div>
-                </div>
-            </div>
+                <!-- /.box-footer -->
+            </form>
             <!-- /.box-body -->
-            <div class="box-footer">
-                <button type="button" id="subRobotChange" class="btn btn-info pull-right closeBtn">确定</button>
-            </div>
-            <!-- /.box-footer -->
-        </form>
-        <!-- /.box-body -->
-    </div>
+        </div>
 
-    <!--添加 form start -->
-    <div class="form-horizontal  layer_notice hidden" id="addRoboteForm">
-        <form class="" hidden="hidden" action="addRobote" style="margin-top: 50px" method="post" id="addRote">
-            <div class="box-body">
-                <input type="hidden" class="form-control" name="id" id="id"/>
+        <!--添加 form start -->
+        <div class="form-horizontal  layer_notice hidden" id="addRoboteForm">
+            <form class="" hidden="hidden" action="addRobote" style="margin-top: 50px" method="post" id="addRote">
+                <div class="box-body">
+                    <input type="hidden" class="form-control" name="id" id="id"/>
 
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">标签名</label>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">标签名</label>
 
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="add_email" name="add_email">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="add_email" name="add_email">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">标签颜色</label>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">标签颜色</label>
 
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="add_nick_name" name="add_nick_name">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="add_nick_name" name="add_nick_name">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">所属类目</label>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">所属类目</label>
 
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="add_password" name="add_password">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="add_password" name="add_password">
+                        </div>
                     </div>
+
                 </div>
+                <div class="box-footer">
+                    <button type="button" id="subaddRobotBtn" class="btn btn-info pull-right closeBtn">添加</button>
+                </div>
+            </form>
 
-            </div>
-            <div class="box-footer">
-                <button type="button" id="subaddRobotBtn" class="btn btn-info pull-right closeBtn">添加</button>
-            </div>
-        </form>
 
+        </div>
 
     </div>
-
-</div>
+</section>
 <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.css">
 <script>
@@ -345,74 +358,72 @@
                     }
                 }
 
-        ],
-        "fnDrawCallback"
-        :
-        function (oSettings, json) {
-            $(".updatess").click(function () {
-                $('#changeRobotForm').removeClass('hidden');
-                $('#changerot').show();
-                var trNode = $(this).parent().parent();
-                trNodep = trNode;
-                $("#account").val(trNode.children().eq(1).html());
-                var sletcval = trNode.children().eq(7).find('input').val();
-                var hiddenid = trNode.children().eq(0).find("input").val();
+            ],
+            "fnDrawCallback": function (oSettings, json) {
+                $(".updatess").click(function () {
+                    $('#changeRobotForm').removeClass('hidden');
+                    $('#changerot').show();
+                    var trNode = $(this).parent().parent();
+                    trNodep = trNode;
+                    $("#account").val(trNode.children().eq(1).html());
+                    var sletcval = trNode.children().eq(7).find('input').val();
+                    var hiddenid = trNode.children().eq(0).find("input").val();
 
-                $("#robotid").val(hiddenid);
+                    $("#robotid").val(hiddenid);
 
-                $("#nick_name").val(trNode.children().eq(2).html());
-                $("input[name=password]").val(trNode.children().eq(4).html());
-                $("input[name=level_name]").val(trNode.children().eq(4).html());
+                    $("#nick_name").val(trNode.children().eq(2).html());
+                    $("input[name=password]").val(trNode.children().eq(4).html());
+                    $("input[name=level_name]").val(trNode.children().eq(4).html());
 
-                console.log(sletcval);
+                    console.log(sletcval);
 
-                $("#roleselect").val(sletcval);
+                    $("#roleselect").val(sletcval);
 
-                layer.open({
-                    type: 1,
-                    skin: 'layui-layer-rim',
-                    shade: false,
-                    title: false, //不显示标题
-                    content: $('#changeRobotForm'), //捕获的元素
-                    area: ['420px', "400px"],
-                    cancel: function (index) {
-                        layer.close(index);
+                    layer.open({
+                        type: 1,
+                        skin: 'layui-layer-rim',
+                        shade: false,
+                        title: false, //不显示标题
+                        content: $('#changeRobotForm'), //捕获的元素
+                        area: ['420px', "400px"],
+                        cancel: function (index) {
+                            layer.close(index);
 
-                    },
-                    scrollbar: false
-                });
-            });
-            //绑定删除事件
-            $(".deletess").on('click', function () {
-                var trNode = $(this).parent().parent();
-                var hiddenid = trNode.children().eq(0).find("input").val();
-                var parmets = {
-                    user_id: hiddenid
-                }
-                layer.confirm('您确定要删除吗？', {
-                    btn: ['确定', '返回'] //按钮
-                }, function () {
-                    $.ajax({
-                        url: '/admin/hotlabel/del',
-                        type: 'POST',
-                        data: parmets,
-                        success: function (returndata) {
-                            if (returndata.code == '200') {
-                                layer.msg('删除成功');
-                                trNode.children().hide();
-                            }
-                        }, error: function (returndata) {
-                            if (returndata.code == '500') {
-                                layer.alert('更新失败，请检查是否有非法词汇！');
-                            }
-                        }
+                        },
+                        scrollbar: false
                     });
-                }, function () {
-                    layer.msg('已取消');
                 });
-            });
-        }
-    });
+                //绑定删除事件
+                $(".deletess").on('click', function () {
+                    var trNode = $(this).parent().parent();
+                    var hiddenid = trNode.children().eq(0).find("input").val();
+                    var parmets = {
+                        user_id: hiddenid
+                    }
+                    layer.confirm('您确定要删除吗？', {
+                        btn: ['确定', '返回'] //按钮
+                    }, function () {
+                        $.ajax({
+                            url: '/admin/hotlabel/del',
+                            type: 'POST',
+                            data: parmets,
+                            success: function (returndata) {
+                                if (returndata.code == '200') {
+                                    layer.msg('删除成功');
+                                    trNode.children().hide();
+                                }
+                            }, error: function (returndata) {
+                                if (returndata.code == '500') {
+                                    layer.alert('更新失败，请检查是否有非法词汇！');
+                                }
+                            }
+                        });
+                    }, function () {
+                        layer.msg('已取消');
+                    });
+                });
+            }
+        });
     })
     ;
 

@@ -74,70 +74,81 @@
     }
 
 </style>
-<div class="box box-info">
-    <div class="box-header with-border">
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-            <h3 class="box-title">管理运费模板</h3>
-            <div class="nav navbar-nav navbar-right">
-                <li><a href="#FAQ">什么是运费模板？</a></li>
-                <li><a href="#FAQ">在哪里能看到具体的运费？</a></li>
-                <li><a class="f-view-more" href="#FAQ"
-                       target="_blank">更多运费模板帮助</a></li>
+<section class="content-header">
+    <h1>
+        管理运费模板
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="main"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">运费</a></li>
+        <li class="active">管理运费模板</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <div class="nav navbar-nav navbar-right">
+                    <li><a href="#FAQ">什么是运费模板？</a></li>
+                    <li><a href="#FAQ">在哪里能看到具体的运费？</a></li>
+                    <li><a class="f-view-more" href="#FAQ"
+                           target="_blank">更多运费模板帮助</a></li>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="box-body">
-        <div class="col-lg-4" style="margin-bottom: 8px">
-            <a href="/admin/express_fee_template">
-                <button class="btn btn-info">新增运费模板</button>
-            </a>
-        </div>
-        <div class="pull-right">
-            <a id="wuliu" style="text-decoration: none" name="true" onclick="showLine(this.name)">了解物流方式缩写展开</a>
-        </div>
-        <div class="col-lg-12">
-            <div id="freight-fullname" style="display: none" class="freight-fullname">
-                <div class="top-arr"></div>
-                <ul class="freight-intro">
-                    <ul>
-                        <li><strong>CHP</strong>: Swiss Post</li>
-                        <li><strong>CPAM</strong>: China Post Registered Air Mail</li>
-                        <li><strong>CPAP</strong>: China Post Air Parcel</li>
-                        <li><strong>DGM</strong>: DHL Global Mail</li>
-                        <li><strong>HKPAM</strong>: Hongkong Post Air Mail</li>
-                        <li><strong>HKPAP</strong>: Hongkong Post Air Parcel</li>
-                        <li><strong>Other</strong>: Seller's Shipping Method</li>
-                        <li><strong>SEP</strong>: Sweden Post</li>
-                        <li><strong>SF</strong>: SF Express</li>
-                        <li><strong>SGP</strong>: Singapore Post</li>
-                        <li><strong>UPSE</strong>: UPS Expedited™</li>
-                        <li><strong>UPSS</strong>: UPS Express Saver™</li>
-                        <li><strong>YANWEN JYT</strong>: China Post Ordinary Small Packet Plus</li>
-                        <li><strong>ZTORU</strong>: ZTO Express to Russia</li>
+        <div class="box-body">
+            <div class="col-lg-4" style="margin-bottom: 8px">
+                <a href="/admin/express_fee_template">
+                    <button class="btn btn-info">新增运费模板</button>
+                </a>
+            </div>
+            <div class="pull-right">
+                <a id="wuliu" style="text-decoration: none" name="true" onclick="showLine(this.name)">了解物流方式缩写展开</a>
+            </div>
+            <div class="col-lg-12">
+                <div id="freight-fullname" style="display: none" class="freight-fullname">
+                    <div class="top-arr"></div>
+                    <ul class="freight-intro">
+                        <ul>
+                            <li><strong>CHP</strong>: Swiss Post</li>
+                            <li><strong>CPAM</strong>: China Post Registered Air Mail</li>
+                            <li><strong>CPAP</strong>: China Post Air Parcel</li>
+                            <li><strong>DGM</strong>: DHL Global Mail</li>
+                            <li><strong>HKPAM</strong>: Hongkong Post Air Mail</li>
+                            <li><strong>HKPAP</strong>: Hongkong Post Air Parcel</li>
+                            <li><strong>Other</strong>: Seller's Shipping Method</li>
+                            <li><strong>SEP</strong>: Sweden Post</li>
+                            <li><strong>SF</strong>: SF Express</li>
+                            <li><strong>SGP</strong>: Singapore Post</li>
+                            <li><strong>UPSE</strong>: UPS Expedited™</li>
+                            <li><strong>UPSS</strong>: UPS Express Saver™</li>
+                            <li><strong>YANWEN JYT</strong>: China Post Ordinary Small Packet Plus</li>
+                            <li><strong>ZTORU</strong>: ZTO Express to Russia</li>
+                        </ul>
                     </ul>
-                </ul>
+                </div>
             </div>
+            <table class="table table-bordered" id="express-template">
+                <thead>
+                <tr>
+                    <th width="20%">模板ID</th>
+                    <th width="40%">运费设置
+                        <span class="setting-help-icon ui-help ui-help-icon"></span>
+                    </th>
+                    <th width="40%">
+                        操作
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- 物流公司列表-->
+
+                </tbody>
+            </table>
         </div>
-        <table class="table table-bordered" id="express-template">
-            <thead>
-            <tr>
-                <th width="20%">模板ID</th>
-                <th width="40%">运费设置
-                    <span class="setting-help-icon ui-help ui-help-icon"></span>
-                </th>
-                <th width="40%">
-                    操作
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- 物流公司列表-->
-
-            </tbody>
-        </table>
     </div>
-</div>
-
+</section>
 <!--<script type="text/javascript" src="/transport/express.js"></script>-->
 
 

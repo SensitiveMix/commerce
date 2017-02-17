@@ -44,93 +44,103 @@
         })
     }
 </script>
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">类目上传</h3>
-    </div>
-    <div class="col-md-2 pull-right" style="margin: 15px 0">
-        <select name="语言选择" class="form-control" onchange="getAllTranslate('zh',this.value)" id="">
-            <option value="zh">中文</option>
-            <option value="en">英文</option>
-            <option value="de">德文</option>
-        </select>
-    </div>
-    <!-- /.box-header -->
-    <!-- form start -->
-    <div class="col-md-12">
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">
-                    <!--<button class="btn btn-info">添加分类</button>-->
-                </h3>
-            </div><!-- /.box-header -->
-            <div class="box-body">
-                <table class="tb_total table table-bordered">
-                    <thead>
-                    <tr class="head_table">
-                        <th>分类名称</th>
-                        <th>分类图片</th>
-                        <th>默认展开</th>
-                        <th>创建时间</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="0_">
-                        <td>
-                            <i class="fa fa-caret-down pull-left"></i>
-                            <i style="display: none" class="fa fa-caret-right pull-left"></i>&nbsp;
-                            <input class="one" type="text" placeholder="一级英文类目">
-                            <input class="de_one" type="text" placeholder="一级德文类目">
-                        </td>
-                        <td>
-                            <!--<input type="file" id="file" name="file"/><br/>-->
-                            <!--<input type="button" id="upload" class="btn btn-info" value="上传图片"/>-->
-                        </td>
-                        <td>
-                            <img class="fa-toggle-on" src="/images/toggle-on.svg" onclick="toggle('off')"
-                                 style="display: none" alt="">
-                            <img class="fa-toggle-off" onclick="toggle('on')" src="/images/toggle-off.svg" alt="">
-                        </td>
-                        <td></td>
-                        <td>
-                            <!--<button class="btn btn-danger">删除</button>-->
-                        </td>
-                    </tr>
-                    <tr class="xyz">
-                        <td>&nbsp;<img src="/images/arrow.svg" alt="">&nbsp;
-                            <button class="btn btn-info add">添加二级子类</button>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div><!-- /.box-body -->
-            <div class="box-footer clearfix">
-                <ul class="pagination pagination-sm no-margin pull-right">
-                    <li><a href="#">«</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">»</a></li>
-                </ul>
-            </div>
-        </div><!-- /.box -->
-    </div>
-
-    <div class="box-footer">
-        <div class="pull-right">
-            <button id="updateName" onclick="saveAll()" class="btn btn-info" type="button">提 交</button>
+<section class="content-header">
+    <h1>
+        类目上传
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="main"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">类目</a></li>
+        <li class="active">类目上传</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-info">
+        <div class="col-md-2 pull-right" style="margin: 15px 0">
+            <select name="语言选择" class="form-control" onchange="getAllTranslate('zh',this.value)" id="">
+                <option value="zh">中文</option>
+                <option value="en">英文</option>
+                <option value="de">德文</option>
+            </select>
         </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <!--<button class="btn btn-info">添加分类</button>-->
+                    </h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="tb_total table table-bordered">
+                        <thead>
+                        <tr class="head_table">
+                            <th>分类名称</th>
+                            <th>分类图片</th>
+                            <th>默认展开</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="0_">
+                            <td>
+                                <i class="fa fa-caret-down pull-left"></i>
+                                <i style="display: none" class="fa fa-caret-right pull-left"></i>&nbsp;
+                                <input class="one" type="text" placeholder="一级英文类目">
+                                <input class="de_one" type="text" placeholder="一级德文类目">
+                            </td>
+                            <td>
+                                <!--<input type="file" id="file" name="file"/><br/>-->
+                                <!--<input type="button" id="upload" class="btn btn-info" value="上传图片"/>-->
+                            </td>
+                            <td>
+                                <img class="fa-toggle-on" src="/images/toggle-on.svg" onclick="toggle('off')"
+                                     style="display: none" alt="">
+                                <img class="fa-toggle-off" onclick="toggle('on')" src="/images/toggle-off.svg" alt="">
+                            </td>
+                            <td></td>
+                            <td>
+                                <!--<button class="btn btn-danger">删除</button>-->
+                            </td>
+                        </tr>
+                        <tr class="xyz">
+                            <td>&nbsp;<img src="/images/arrow.svg" alt="">&nbsp;
+                                <button class="btn btn-info add">添加二级子类</button>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
+                </div>
+            </div><!-- /.box -->
+        </div>
+
+        <div class="box-footer">
+            <div class="pull-right">
+                <button id="updateName" onclick="saveAll()" class="btn btn-info" type="button">提 交</button>
+            </div>
+        </div>
+        <!-- /.box-body -->
+
+        <!-- /.box-footer -->
+
     </div>
-    <!-- /.box-body -->
-
-    <!-- /.box-footer -->
-
-</div>
+</section>
 <script type="text/javascript">
     var count_three = 0;
     var count_two = 0;

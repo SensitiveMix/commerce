@@ -260,112 +260,121 @@
         }
     })
 </script>
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">管理产品</h3>
-    </div>
-    <div class="box-body">
-        <div class="body-header">
-            <div class="col-sailtips clearfix">
-                <span class="leftcol-tip">温馨提示：</span>
-                <div class="rightcol-tip">
-                    <p class="addheight" id="hideTipsBox">
-                        1.您添加的产品需要通过审核后才能上架交易，审核时间通常在24-28个小时之内，遇特殊情况会稍有延迟，敬请谅解。<br>
-                        2.请核对您添加的产品是否符合<a target="_blank"
-                                          href="#">Ecsell产品发布规则</a>，不符合规则的产品将不能通过审核<br>
-                        3.现在起您发布的上架产品都能够展示在店铺中了！同时还能设置加载搜索产品，获取更多曝光率！
-                        <a target="_blank" href="#">了解更多</a>
-                    </p>
-                    <span class="viewticps viewshow " id="viewTips">展开</span>
+<section class="content-header">
+    <h1>
+        产品管理
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="main"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">产品</a></li>
+        <li class="active">产品管理</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-info">
+        <div class="box-body">
+            <div class="body-header">
+                <div class="col-sailtips clearfix">
+                    <span class="leftcol-tip">温馨提示：</span>
+                    <div class="rightcol-tip">
+                        <p class="addheight" id="hideTipsBox">
+                            1.您添加的产品需要通过审核后才能上架交易，审核时间通常在24-28个小时之内，遇特殊情况会稍有延迟，敬请谅解。<br>
+                            2.请核对您添加的产品是否符合<a target="_blank"
+                                              href="#">Ecsell产品发布规则</a>，不符合规则的产品将不能通过审核<br>
+                            3.现在起您发布的上架产品都能够展示在店铺中了！同时还能设置加载搜索产品，获取更多曝光率！
+                            <a target="_blank" href="#">了解更多</a>
+                        </p>
+                        <span class="viewticps viewshow " id="viewTips">展开</span>
+                    </div>
                 </div>
-            </div>
-            <div id="newGuideTarget2" class="rtab-warp">
-                <ul>
-                    <li class="current">
-                        <a href="#">
+                <div id="newGuideTarget2" class="rtab-warp">
+                    <ul>
+                        <li class="current">
+                            <a href="#">
                             <span id="shelfProductNum">
 								已上架<b id="shelfProductNum-num">0</b>
 							</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#auditProductNum">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#auditProductNum">
                             <span id="auditProductNum">
 								待审核<b id="auditProductNum-num">0</b>
 							</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#auditFailProductNum">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#auditFailProductNum">
                             <span id="auditFailProductNum">
 								审核未通过<b id="auditFailProductNum-num">0</b>
 							</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#downShelfProductNum">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#downShelfProductNum">
                             <span id="downShelfProductNum">
 								已下架<b id="downShelfProductNum-num">0</b>
 							</span>
-                        </a>
-                    </li>
-                </ul>
-                <div class="propbox tipstion">
-                    <input type="button" value="一键修改" class="j-onekey">
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="propbox tipstion">
+                        <input type="button" value="一键修改" class="j-onekey">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="condbox clearfix searchConditions searchConditions-shelfProductNum" id="newGuideTarget3">
-            <div id="j-lsStop">
-                <div class="row">
-                    <div class="col-md-4">
+            <div class="condbox clearfix searchConditions searchConditions-shelfProductNum" id="newGuideTarget3">
+                <div id="j-lsStop">
+                    <div class="row">
                         <div class="col-md-4">
-                            <span class="tname">关键词：</span>
+                            <div class="col-md-4">
+                                <span class="tname">关键词：</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="productName" name="prodAuditFailForm.productName"
+                                       class="cond-input condwid1 defaultcolor form-control"
+                                       data-value="输入产品名或关键词"
+                                       value="输入产品名或关键词">
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <input type="text" id="productName" name="prodAuditFailForm.productName"
-                                   class="cond-input condwid1 defaultcolor form-control"
-                                   data-value="输入产品名或关键词"
-                                   value="输入产品名或关键词">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
                         <div class="col-md-4">
-                            <span class="tname">产品编号：</span>
+                            <div class="col-md-4">
+                                <span class="tname">产品编号：</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="searchItemcode" name="prodAuditFailForm.itemcode"
+                                       class="cond-input condwid1 defaultcolor form-control" data-value="输入完整产品编号"
+                                       value="输入完整产品编号">
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <input type="text" id="searchItemcode" name="prodAuditFailForm.itemcode"
-                                   class="cond-input condwid1 defaultcolor form-control" data-value="输入完整产品编号"
-                                   value="输入完整产品编号">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
                         <div class="col-md-4">
-                            <span class="tname">商品编码：</span>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" id="searchSkuCode" name="prodAuditFailForm.skuCode"
-                                   class="cond-input condwid1 defaultcolor form-control" data-value="输入商品编码"
-                                   value="输入商品编码">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" style="margin-top: 10px">
-                    <div class="col-md-8">
-                        <div class="col-md-2">
-                            <span class="tname pull-left">上架日期：</span>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="input-daterange input-group" id="datepicker">
-                                <input type="text" class="input-sm form-control" id="start" name="start"/>
-                                <span class="input-group-addon">to</span>
-                                <input type="text" class="input-sm form-control" id="end" name="end"/>
+                            <div class="col-md-4">
+                                <span class="tname">商品编码：</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="searchSkuCode" name="prodAuditFailForm.skuCode"
+                                       class="cond-input condwid1 defaultcolor form-control" data-value="输入商品编码"
+                                       value="输入商品编码">
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-8">
+                            <div class="col-md-2">
+                                <span class="tname pull-left">上架日期：</span>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm form-control" id="start" name="start"/>
+                                    <span class="input-group-addon">to</span>
+                                    <input type="text" class="input-sm form-control" id="end" name="end"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
                         <span class="clickSpanTwo pull-right">
                             <span class="lsBtnOne">
                                 <input type="button" value="搜索" class="btn btn-info searchSubmitbtn">
@@ -374,62 +383,62 @@
                                 <input type="button" value="重置" class="btn btn-danger searchResetbtn">
                             </span>
                         </span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="condbox clearfix searchConditions searchConditions-auditProductNum" hidden="hidden"
-             id="newGuideTarget3">
-            <div id="j-lsStop">
-                <div class="row">
-                    <div class="col-md-4">
+            <div class="condbox clearfix searchConditions searchConditions-auditProductNum" hidden="hidden"
+                 id="newGuideTarget3">
+                <div id="j-lsStop">
+                    <div class="row">
                         <div class="col-md-4">
-                            <span class="tname">关键词：</span>
+                            <div class="col-md-4">
+                                <span class="tname">关键词：</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="productName" name="prodAuditFailForm.productName"
+                                       class="cond-input condwid1 defaultcolor form-control"
+                                       data-value="输入产品名或关键词"
+                                       value="输入产品名或关键词">
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <input type="text" id="productName" name="prodAuditFailForm.productName"
-                                   class="cond-input condwid1 defaultcolor form-control"
-                                   data-value="输入产品名或关键词"
-                                   value="输入产品名或关键词">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
                         <div class="col-md-4">
-                            <span class="tname">产品编号：</span>
+                            <div class="col-md-4">
+                                <span class="tname">产品编号：</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="searchItemcode" name="prodAuditFailForm.itemcode"
+                                       class="cond-input condwid1 defaultcolor form-control" data-value="输入完整产品编号"
+                                       value="输入完整产品编号">
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <input type="text" id="searchItemcode" name="prodAuditFailForm.itemcode"
-                                   class="cond-input condwid1 defaultcolor form-control" data-value="输入完整产品编号"
-                                   value="输入完整产品编号">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
                         <div class="col-md-4">
-                            <span class="tname">商品编码：</span>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" id="searchSkuCode" name="prodAuditFailForm.skuCode"
-                                   class="cond-input condwid1 defaultcolor form-control" data-value="输入商品编码"
-                                   value="输入商品编码">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" style="margin-top: 10px">
-                    <div class="col-md-8">
-                        <div class="col-md-2">
-                            <span class="tname pull-left">更新日期：</span>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="input-daterange input-group" id="datepicker">
-                                <input type="text" class="input-sm form-control" id="start" name="start"/>
-                                <span class="input-group-addon">to</span>
-                                <input type="text" class="input-sm form-control" id="end" name="end"/>
+                            <div class="col-md-4">
+                                <span class="tname">商品编码：</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="searchSkuCode" name="prodAuditFailForm.skuCode"
+                                       class="cond-input condwid1 defaultcolor form-control" data-value="输入商品编码"
+                                       value="输入商品编码">
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-8">
+                            <div class="col-md-2">
+                                <span class="tname pull-left">更新日期：</span>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm form-control" id="start" name="start"/>
+                                    <span class="input-group-addon">to</span>
+                                    <input type="text" class="input-sm form-control" id="end" name="end"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
                         <span class="clickSpanTwo pull-right">
                             <span class="lsBtnOne">
                                 <input type="button" value="搜索" class="btn btn-info searchSubmitbtn">
@@ -438,62 +447,62 @@
                                 <input type="button" value="重置" class="btn btn-danger searchResetbtn">
                             </span>
                         </span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="condbox clearfix searchConditions searchConditions-auditFailProductNum" hidden="hidden"
-             id="newGuideTarget3">
-            <div id="j-lsStop">
-                <div class="row">
-                    <div class="col-md-4">
+            <div class="condbox clearfix searchConditions searchConditions-auditFailProductNum" hidden="hidden"
+                 id="newGuideTarget3">
+                <div id="j-lsStop">
+                    <div class="row">
                         <div class="col-md-4">
-                            <span class="tname">关键词：</span>
+                            <div class="col-md-4">
+                                <span class="tname">关键词：</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="productName" name="prodAuditFailForm.productName"
+                                       class="cond-input condwid1 defaultcolor form-control"
+                                       data-value="输入产品名或关键词"
+                                       value="输入产品名或关键词">
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <input type="text" id="productName" name="prodAuditFailForm.productName"
-                                   class="cond-input condwid1 defaultcolor form-control"
-                                   data-value="输入产品名或关键词"
-                                   value="输入产品名或关键词">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
                         <div class="col-md-4">
-                            <span class="tname">产品编号：</span>
+                            <div class="col-md-4">
+                                <span class="tname">产品编号：</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="searchItemcode" name="prodAuditFailForm.itemcode"
+                                       class="cond-input condwid1 defaultcolor form-control" data-value="输入完整产品编号"
+                                       value="输入完整产品编号">
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <input type="text" id="searchItemcode" name="prodAuditFailForm.itemcode"
-                                   class="cond-input condwid1 defaultcolor form-control" data-value="输入完整产品编号"
-                                   value="输入完整产品编号">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
                         <div class="col-md-4">
-                            <span class="tname">商品编码：</span>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" id="searchSkuCode" name="prodAuditFailForm.skuCode"
-                                   class="cond-input condwid1 defaultcolor form-control" data-value="输入商品编码"
-                                   value="输入商品编码">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" style="margin-top: 10px">
-                    <div class="col-md-8">
-                        <div class="col-md-2">
-                            <span class="tname pull-left">更新日期：</span>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="input-daterange input-group" id="datepicker">
-                                <input type="text" class="input-sm form-control" id="start" name="start"/>
-                                <span class="input-group-addon">to</span>
-                                <input type="text" class="input-sm form-control" id="end" name="end"/>
+                            <div class="col-md-4">
+                                <span class="tname">商品编码：</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="searchSkuCode" name="prodAuditFailForm.skuCode"
+                                       class="cond-input condwid1 defaultcolor form-control" data-value="输入商品编码"
+                                       value="输入商品编码">
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-8">
+                            <div class="col-md-2">
+                                <span class="tname pull-left">更新日期：</span>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm form-control" id="start" name="start"/>
+                                    <span class="input-group-addon">to</span>
+                                    <input type="text" class="input-sm form-control" id="end" name="end"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
                         <span class="clickSpanTwo pull-right">
                             <span class="lsBtnOne">
                                 <input type="button" value="搜索" class="btn btn-info searchSubmitbtn">
@@ -502,62 +511,62 @@
                                 <input type="button" value="重置" class="btn btn-danger searchResetbtn">
                             </span>
                         </span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="condbox clearfix searchConditions searchConditions-downShelfProductNum" hidden="hidden"
-             id="newGuideTarget3">
-            <div id="j-lsStop">
-                <div class="row">
-                    <div class="col-md-4">
+            <div class="condbox clearfix searchConditions searchConditions-downShelfProductNum" hidden="hidden"
+                 id="newGuideTarget3">
+                <div id="j-lsStop">
+                    <div class="row">
                         <div class="col-md-4">
-                            <span class="tname">关键词：</span>
+                            <div class="col-md-4">
+                                <span class="tname">关键词：</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="productName" name="prodAuditFailForm.productName"
+                                       class="cond-input condwid1 defaultcolor form-control"
+                                       data-value="输入产品名或关键词"
+                                       value="输入产品名或关键词">
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <input type="text" id="productName" name="prodAuditFailForm.productName"
-                                   class="cond-input condwid1 defaultcolor form-control"
-                                   data-value="输入产品名或关键词"
-                                   value="输入产品名或关键词">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
                         <div class="col-md-4">
-                            <span class="tname">产品编号：</span>
+                            <div class="col-md-4">
+                                <span class="tname">产品编号：</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="searchItemcode" name="prodAuditFailForm.itemcode"
+                                       class="cond-input condwid1 defaultcolor form-control" data-value="输入完整产品编号"
+                                       value="输入完整产品编号">
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <input type="text" id="searchItemcode" name="prodAuditFailForm.itemcode"
-                                   class="cond-input condwid1 defaultcolor form-control" data-value="输入完整产品编号"
-                                   value="输入完整产品编号">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
                         <div class="col-md-4">
-                            <span class="tname">商品编码：</span>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" id="searchSkuCode" name="prodAuditFailForm.skuCode"
-                                   class="cond-input condwid1 defaultcolor form-control" data-value="输入商品编码"
-                                   value="输入商品编码">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" style="margin-top: 10px">
-                    <div class="col-md-8">
-                        <div class="col-md-2">
-                            <span class="tname pull-left">下架时间：</span>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="input-daterange input-group" id="datepicker">
-                                <input type="text" class="input-sm form-control" name="start"/>
-                                <span class="input-group-addon">to</span>
-                                <input type="text" class="input-sm form-control" name="end"/>
+                            <div class="col-md-4">
+                                <span class="tname">商品编码：</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="searchSkuCode" name="prodAuditFailForm.skuCode"
+                                       class="cond-input condwid1 defaultcolor form-control" data-value="输入商品编码"
+                                       value="输入商品编码">
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-8">
+                            <div class="col-md-2">
+                                <span class="tname pull-left">下架时间：</span>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm form-control" name="start"/>
+                                    <span class="input-group-addon">to</span>
+                                    <input type="text" class="input-sm form-control" name="end"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
                         <span class="clickSpanTwo pull-right">
                             <span class="lsBtnOne">
                                 <input type="button" value="搜索" class="btn btn-info searchSubmitbtn">
@@ -566,80 +575,81 @@
                                 <input type="button" value="重置" class="btn btn-danger searchResetbtn">
                             </span>
                         </span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="box-body">
+            <form class="form-horizontal">
+                <div class="box-body">
+                    <table class="table table-bordered tb-shelfProductNum">
+                        <thead>
+                        <tr>
+                            <th>产品信息</th>
+                            <th>订单数</th>
+                            <th>有效期</th>
+                            <th>更新时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="shelfProductNum-product-body">
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                    <table hidden="hidden" class="table table-bordered tb-auditProductNum">
+                        <thead>
+                        <tr>
+                            <th>产品信息</th>
+                            <th>订单数</th>
+                            <th>有效期</th>
+                            <th>更新时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="auditProductNum-product-body">
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                    <table hidden="hidden" class="table table-bordered tb-auditFailProductNum">
+                        <thead>
+                        <tr>
+                            <th>产品信息</th>
+                            <th>订单数</th>
+                            <th>有效期</th>
+                            <th>更新时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="auditFailProductNum-product-body">
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                    <table hidden="hidden" class="table table-bordered tb-downShelfProductNum">
+                        <thead>
+                        <tr>
+                            <th>产品信息</th>
+                            <th>订单数</th>
+                            <th>有效期</th>
+                            <th>更新时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="downShelfProductNum-product-body">
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                </div>
+            </form>
+        </div>
+
     </div>
-
-    <div class="box-body">
-        <form class="form-horizontal">
-            <div class="box-body">
-                <table class="table table-bordered tb-shelfProductNum">
-                    <thead>
-                    <tr>
-                        <th>产品信息</th>
-                        <th>订单数</th>
-                        <th>有效期</th>
-                        <th>更新时间</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody id="shelfProductNum-product-body">
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-                <table hidden="hidden" class="table table-bordered tb-auditProductNum">
-                    <thead>
-                    <tr>
-                        <th>产品信息</th>
-                        <th>订单数</th>
-                        <th>有效期</th>
-                        <th>更新时间</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody id="auditProductNum-product-body">
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-                <table hidden="hidden" class="table table-bordered tb-auditFailProductNum">
-                    <thead>
-                    <tr>
-                        <th>产品信息</th>
-                        <th>订单数</th>
-                        <th>有效期</th>
-                        <th>更新时间</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody id="auditFailProductNum-product-body">
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-                <table hidden="hidden" class="table table-bordered tb-downShelfProductNum">
-                    <thead>
-                    <tr>
-                        <th>产品信息</th>
-                        <th>订单数</th>
-                        <th>有效期</th>
-                        <th>更新时间</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody id="downShelfProductNum-product-body">
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-            </div>
-        </form>
-    </div>
-
-</div>
+</section>
 <script src="/js/bootstrap-datepicker.js"></script>
 <script>
 

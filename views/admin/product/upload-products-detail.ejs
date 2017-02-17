@@ -93,7 +93,7 @@
                 let form_data_compile = {}
                 let color = $(item).find('td').eq(0).text()
                 console.log(color)
-                color = color.substring(color.lastIndexOf('】')+1, color.length)
+                color = color.substring(color.lastIndexOf('】') + 1, color.length)
                 form_data_compile.compile_vip_price = $(item).find('td').eq(1).find('input').val()
                 form_data_compile.compile_color = color
                 form_data_compile.compile_normal_price = $(item).find('td').eq(2).find('input').val()
@@ -369,1289 +369,1297 @@
         })
     })
 </script>
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">产品上传</h3>
-        <div class="leave-cat-lv leave01">
-            <span class="first">1. 选择类目</span>
-            <span class="middle current">2. 填写信息</span>
-            <span class="last">3. 提交审核</span>
-        </div>
-    </div>
+<section class="content-header">
+    <h1>
+        产品上传
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="main"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">产品</a></li>
+        <li class="active">产品上传</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-info">
 
-    <!-- 已选择类目 开始 -->
-    <div class="categorydicbox">
-        <div class="layer-b-bg">
-            <span class="layer-l"></span>
-            <span class="layer-r"></span>
-            <div class="cat-titleconbox">
+        <!-- 已选择类目 开始 -->
+        <div class="categorydicbox">
+            <div class="layer-b-bg">
+                <span class="layer-l"></span>
+                <span class="layer-r"></span>
+                <div class="cat-titleconbox">
 
-                <b>当前已选择的产品类目：</b>
-                <% if(tempCategory) { %>
-                <% tempCategory.forEach(function (item) { %>
-                <span class="navbox"><%= item.firstCategory %><span class="nav">&gt;</span><%= item.secondCategory %>
-                    <span class="nav">&gt;</span><%= item.thirdCategory %></span>
-                <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <% }) %>
-                <% } else { %>
-                <script>
-                    $.cookie('PHPSESSID');
-                </script>
-                <% } %>
-                <a class="marginleft20" href="#" onclick="javascript:history.go(-1);">«返回修改类目</a>
-            </div>
-        </div>
-
-    </div>
-    <!-- 已选择类目 结束 -->
-    <!-- 错误信息 开始 -->
-    <div id="errorMsgDiv" style="display: none;" class="syi-all-error clearfix">
-        <div class="syi-all-error-lt"></div>
-        <div class="syi-all-error-ri">
-            <p class="p1"><b>您还有下述表单项填写不正确，请点击相应链接进行修改。</b></p>
-            <ul id="errorUL">
-
-            </ul>
-        </div>
-    </div>
-    <!-- 错误信息 结束 -->
-    <div id="syi_form" name="SYIForm" method="post" enctype="multipart/form-data" target="_blank">
-
-        <!-- title产品基本信息 开始 -->
-        <div class="titlebox"><h3>1、产品基本信息</h3></div>
-        <!-- title产品基本信息 结束 -->
-
-        <!-- 产品标题 开始 -->
-        <div class="mainlayout clearfix" id="productnameTip">
-            <div class="ml-title" id="ml-title"><span class="required">*</span>产品标题：</div>
-            <a id="a_productname"></a>
-            <div class="m-text">您的产品标题单词量为<b class="orgfont">0</b>，平台上此类目产品标题的单词量为<b class="greenfont">16-23</b>个，完整且清晰的描述有助于提升产品曝光率。<br>
-                （重复的单词堆积，和产品无关的介绍会被视为作弊，导致产品被搜索降序甚至屏蔽）
-            </div>
-            <div class="similarity-tip-txt" id="prodNameSimilTip" style="display:none;">
-                您填写的标题和短描的相似单词数已超过50%，信息重复会降低商品信息质量不利于产品曝光。
-            </div>
-
-            <div class="title_re">
-                英文
-                <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
-                德文
-                <input type="checkbox" class="demen" onclick="getTranslateTitle(true)"
-                       data-group-cls="btn-group-lg">
-                <input id="productname" onchange="getTranslateTitle(false)" name="productname"
-                       style="ime-mode:disabled;" class="attr-text-input addwid402"
-                       maxlength="140" placeholder="英文" type="text" value="" autoComplete='off'>
-                <span id="productnameTip productname_tip" class="helptips marginleft10">您还可以输入<b class="color444"
-                                                                                                 id="productNameLengthSpan">140</b><span
-                            class="color000">/<span>140</span></span>个字符</span>
-            </div>
-            <div id="productnameErrTip" class="tip-error" style="display:none;"></div>
-
-        </div>
-        <!-- 产品标题 结束 -->
-
-        <!-- 产品基本属性 开始 -->
-        <!-- 产品基本属性 开始 -->
-        <div id="product_cattr_container" class="j-basic-attr-container clearfix">
-            <div class="mainlayout clearfix">
-                <div class="ml-title">
-                    <span class="required">*</span>产品基本属性：<a id="a_productattr"></a>
+                    <b>当前已选择的产品类目：</b>
+                    <% if(tempCategory) { %>
+                    <% tempCategory.forEach(function (item) { %>
+                    <span class="navbox"><%= item.firstCategory %><span
+                                class="nav">&gt;</span><%= item.secondCategory %>
+                        <span class="nav">&gt;</span><%= item.thirdCategory %></span>
+                    <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <% }) %>
+                    <% } else { %>
+                    <script>
+                        $.cookie('PHPSESSID');
+                    </script>
+                    <% } %>
+                    <a class="marginleft20" href="#" onclick="javascript:history.go(-1);">«返回修改类目</a>
                 </div>
-                <div class="m-text">您的产品在所在类目的非必填属性填写率为<b class="orgfont">0%</b>，平台上此类目的非必填属性填写率为<b class="greenfont">80%</b>，完整且清晰的描述有助于提升产品曝光率。<br>
-                    （请按产品实际情况正确填写参数，错误的参数会引起客户投诉，影响产品曝光率）
+            </div>
+
+        </div>
+        <!-- 已选择类目 结束 -->
+        <!-- 错误信息 开始 -->
+        <div id="errorMsgDiv" style="display: none;" class="syi-all-error clearfix">
+            <div class="syi-all-error-lt"></div>
+            <div class="syi-all-error-ri">
+                <p class="p1"><b>您还有下述表单项填写不正确，请点击相应链接进行修改。</b></p>
+                <ul id="errorUL">
+
+                </ul>
+            </div>
+        </div>
+        <!-- 错误信息 结束 -->
+        <div id="syi_form" name="SYIForm" method="post" enctype="multipart/form-data" target="_blank">
+
+            <!-- title产品基本信息 开始 -->
+            <div class="titlebox"><h3>1、产品基本信息</h3></div>
+            <!-- title产品基本信息 结束 -->
+
+            <!-- 产品标题 开始 -->
+            <div class="mainlayout clearfix" id="productnameTip">
+                <div class="ml-title" id="ml-title"><span class="required">*</span>产品标题：</div>
+                <a id="a_productname"></a>
+                <div class="m-text">您的产品标题单词量为<b class="orgfont">0</b>，平台上此类目产品标题的单词量为<b class="greenfont">16-23</b>个，完整且清晰的描述有助于提升产品曝光率。<br>
+                    （重复的单词堆积，和产品无关的介绍会被视为作弊，导致产品被搜索降序甚至屏蔽）
                 </div>
-                <p class="helptips">设置完整的产品属性有助于买家更容易找到您的产品<span helptipval="product_cattr_container"
-                                                                 class="helpicon"></span></p>
-                <div class="product-attributes">
-                    <% if(product_specification.compatibility.length != 0) { %>
-                    <div class="items J_Items">
-                        <div class="head-attributes">compatibility</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.compatibility.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="compatibility" name="compatibility"
-                                           value="<%= item %>"><%= item %>
-                                </label>
-                                <% }) %>
+                <div class="similarity-tip-txt" id="prodNameSimilTip" style="display:none;">
+                    您填写的标题和短描的相似单词数已超过50%，信息重复会降低商品信息质量不利于产品曝光。
+                </div>
+
+                <div class="title_re">
+                    英文
+                    <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
+                    德文
+                    <input type="checkbox" class="demen" onclick="getTranslateTitle(true)"
+                           data-group-cls="btn-group-lg">
+                    <input id="productname" onchange="getTranslateTitle(false)" name="productname"
+                           style="ime-mode:disabled;" class="attr-text-input addwid402"
+                           maxlength="140" placeholder="英文" type="text" value="" autoComplete='off'>
+                    <span id="productnameTip productname_tip" class="helptips marginleft10">您还可以输入<b class="color444"
+                                                                                                     id="productNameLengthSpan">140</b><span
+                                class="color000">/<span>140</span></span>个字符</span>
+                </div>
+                <div id="productnameErrTip" class="tip-error" style="display:none;"></div>
+
+            </div>
+            <!-- 产品标题 结束 -->
+
+            <!-- 产品基本属性 开始 -->
+            <!-- 产品基本属性 开始 -->
+            <div id="product_cattr_container" class="j-basic-attr-container clearfix">
+                <div class="mainlayout clearfix">
+                    <div class="ml-title">
+                        <span class="required">*</span>产品基本属性：<a id="a_productattr"></a>
+                    </div>
+                    <div class="m-text">您的产品在所在类目的非必填属性填写率为<b class="orgfont">0%</b>，平台上此类目的非必填属性填写率为<b
+                                class="greenfont">80%</b>，完整且清晰的描述有助于提升产品曝光率。<br>
+                        （请按产品实际情况正确填写参数，错误的参数会引起客户投诉，影响产品曝光率）
+                    </div>
+                    <p class="helptips">设置完整的产品属性有助于买家更容易找到您的产品<span helptipval="product_cattr_container"
+                                                                     class="helpicon"></span></p>
+                    <div class="product-attributes">
+                        <% if(product_specification.compatibility.length != 0) { %>
+                        <div class="items J_Items">
+                            <div class="head-attributes">compatibility</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.compatibility.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="compatibility" name="compatibility"
+                                               value="<%= item %>"><%= item %>
+                                    </label>
+                                    <% }) %>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                        <% if(product_specification.type.length != 0) { %>
+                        <div class="items J_Items">
+                            <div class="head-attributes">type</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.type.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="type" name="type"
+                                               value="<%= item %>"><%= item %>
+                                    </label>
+                                    <% }) %>
+                                </div>
                             </div>
                         </div>
                         <% } %>
-                    </div>
-                    <% if(product_specification.type.length != 0) { %>
-                    <div class="items J_Items">
-                        <div class="head-attributes">type</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.type.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="type" name="type"
-                                           value="<%= item %>"><%= item %>
-                                </label>
-                                <% }) %>
+                        <% if(product_specification.hardOrSoft.length != 0) { %>
+                        <div class="items J_Items">
+                            <div class="head-attributes">hardOrSoft</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.hardOrSoft.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="hardOrSoft" name="hardOrSoft"
+                                               value="<%= item %>"><%= item %>
+                                    </label>
+                                    <% }) %>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <% } %>
-                    <% if(product_specification.hardOrSoft.length != 0) { %>
-                    <div class="items J_Items">
-                        <div class="head-attributes">hardOrSoft</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.hardOrSoft.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="hardOrSoft" name="hardOrSoft"
-                                           value="<%= item %>"><%= item %>
-                                </label>
-                                <% }) %>
+                        <% } %>
+                        <% if(product_specification.features.length != 0) { %>
+                        <div class="items J_Items">
+                            <div class="head-attributes">features</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.features.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="features" name="features"
+                                               value="<%= item %>"><%= item %></label>
+                                    <% }) %>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <% } %>
-                    <% if(product_specification.features.length != 0) { %>
-                    <div class="items J_Items">
-                        <div class="head-attributes">features</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.features.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="features" name="features"
-                                           value="<%= item %>"><%= item %></label>
-                                <% }) %>
+                        <% } %>
+                        <% if(product_specification.pattern.length != 0) { %>
+                        <div class="items J_Items">
+                            <div class="head-attributes">pattern</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.pattern.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="pattern" name="pattern"
+                                               value="<%= item %>"><%= item %></label>
+                                    <% }) %>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <% } %>
-                    <% if(product_specification.pattern.length != 0) { %>
-                    <div class="items J_Items">
-                        <div class="head-attributes">pattern</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.pattern.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="pattern" name="pattern"
-                                           value="<%= item %>"><%= item %></label>
-                                <% }) %>
+                        <% } %>
+                        <% if(product_specification.Color.length != 0) { %>
+                        <div class="items J_Items">
+                            <div class="head-attributes">Color</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.Color.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="Color" name="Color"
+                                               value="<%= item %>"><%= item %>
+                                    </label>
+                                    <% }) %>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <% } %>
-                    <% if(product_specification.Color.length != 0) { %>
-                    <div class="items J_Items">
-                        <div class="head-attributes">Color</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.Color.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="Color" name="Color"
-                                           value="<%= item %>"><%= item %>
-                                </label>
-                                <% }) %>
+                        <% } %>
+                        <% if(product_specification.material.length != 0) { %>
+                        <div class="items J_Items" style="border-bottom: 0">
+                            <div class="head-attributes">material</div>
+                            <div class="body-attributes">
+                                <div class="items-detail" id="item">
+                                    <% product_specification.material.forEach(function(item){ %>
+                                    <label class="checkbox-inline-product-attributes">
+                                        <input type="checkbox" data-fa="material" name="material"
+                                               value="<%= item %>"><%= item %></label>
+                                    <% }) %>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <% } %>
-                    <% if(product_specification.material.length != 0) { %>
-                    <div class="items J_Items" style="border-bottom: 0">
-                        <div class="head-attributes">material</div>
-                        <div class="body-attributes">
-                            <div class="items-detail" id="item">
-                                <% product_specification.material.forEach(function(item){ %>
-                                <label class="checkbox-inline-product-attributes">
-                                    <input type="checkbox" data-fa="material" name="material"
-                                           value="<%= item %>"><%= item %></label>
-                                <% }) %>
-                            </div>
+                        <% } %>
+                        <div class="btns">
+                            <span class="btn btn-default" id="submit-product-attributes">Confirm</span>
                         </div>
-                    </div>
-                    <% } %>
-                    <div class="btns">
-                        <span class="btn btn-default" id="submit-product-attributes">Confirm</span>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="display_div_brand" style="display:none;">
+            <div id="display_div_brand" style="display:none;">
 
-            <div class="syi-properties-ri syi-rposition" id="div_brand_id" style="display:none;">
-                <div class="posionrel clearfix">
-                    <div class="drop-down" id="selectBrandsDiv" onclick="onSelectBrandsClick();">
-                        <span class="drop-down-value text-indent" id="brandNameSpan">- 无品牌 -</span>
-                        <span class="drop-down-default"></span>
-                        <div class="chouse-down-box text-indent" id="brandsDiv" style="display: none;">
+                <div class="syi-properties-ri syi-rposition" id="div_brand_id" style="display:none;">
+                    <div class="posionrel clearfix">
+                        <div class="drop-down" id="selectBrandsDiv" onclick="onSelectBrandsClick();">
+                            <span class="drop-down-value text-indent" id="brandNameSpan">- 无品牌 -</span>
+                            <span class="drop-down-default"></span>
+                            <div class="chouse-down-box text-indent" id="brandsDiv" style="display: none;">
+                            </div>
+                            <!--<iframe></iframe>-->
                         </div>
-                        <!--<iframe></iframe>-->
-                    </div>
 
+                    </div>
+                </div>
+                <input type="hidden" value="99" name="brandid" id="brandid">
+                <input type="hidden" value="" name="brandValid" id="brandValid">
+                <input type="hidden" value="" name="brandName" id="brandName">
+
+            </div>
+            <!-- 产品基本属性 结束 -->
+            <!--产品销售规格 开始-->
+
+            <!--产品销售规格 结束-->
+
+            <!-- 属性图片上传入口参数   -->
+            <input id="functionname_avim" name="functionname_avim" type="hidden" value="avim">  <!--功能名   	不可以为空-->
+            <input id="imagebannername_avim" name="imagebannername_avim" type="hidden" value="">    <!--水印名  现在是用户名-->
+
+
+            <!-- 产品基本属性 结束 -->
+
+            <!-- 产品购买属性 开始 -->
+
+            <!-- 产品购买属性 结束 -->
+            <!-- 产品备注 开始 -->
+            <div class="mainlayout clearfix j-list-item vadiourlTip_remark" id="vadiourlTip">
+                <div class="ml-title">产品备注：</div>
+                <div class="helptips" style="width:126px;margin-bottom: 5px;">
+                    英文
+                    <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
+                    德文
+                    <input type="checkbox" class="demen_remark" onclick="getTranslate(true)"
+                           data-group-cls="btn-group-lg">
+                    <span class="helpicon" title="勾选语言" helptipval="vadiourlTip"></span>
+                </div>
+                <div class="form-group">
+                    <script type="text/plain" id="product_remark" style="width:685px;height:40%;">
+                    </script>
+                    <script type="text/javascript">
+                        var um = UM.getEditor('product_remark', {
+                            //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
+                            toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
+                            //focus时自动清空初始化时的内容
+                            autoClearinitialContent: true,
+                            //关闭字数统计
+                            wordCount: true,
+                            //关闭elementPath
+                            elementPathEnabled: false,
+                            //默认的编辑区域高度
+                            initialFrameHeight: 300
+                            //更多其他参数，请参考umeditor.config.js中的配置项
+                        });
+                        um.setContent('输入产品备注');
+                        um.addListener('selectionchange', function () {
+                            getTranslate(false)
+                        })
+                    </script>
+                </div>
+                <div class="form-group demon" style="display: none">
+                    <script type="text/plain" id="de_product_remark" style="width:685px;height:40%;">
+                    </script>
+                    <script type="text/javascript">
+                        var umdemon = UM.getEditor('de_product_remark', {
+                            //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
+                            toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
+                            //focus时自动清空初始化时的内容
+                            autoClearinitialContent: true,
+                            //关闭字数统计
+                            wordCount: true,
+                            //关闭elementPath
+                            elementPathEnabled: false,
+                            //默认的编辑区域高度
+                            initialFrameHeight: 300
+                            //更多其他参数，请参考umeditor.config.js中的配置项
+                        });
+                        umdemon.setContent('输入德文产品备注');
+                    </script>
                 </div>
             </div>
-            <input type="hidden" value="99" name="brandid" id="brandid">
-            <input type="hidden" value="" name="brandValid" id="brandValid">
-            <input type="hidden" value="" name="brandName" id="brandName">
+
+            <!--   <textarea name="product_remark" onchange="getTranslate(false)" placeholder="默认英文" class="product_remark"
+                        id="product_remark" cols="50"
+                        rows="4"></textarea> -->
 
         </div>
-        <!-- 产品基本属性 结束 -->
-        <!--产品销售规格 开始-->
 
-        <!--产品销售规格 结束-->
+        <!-- title产品销售信息开始 -->
+        <!-- title产品包装信息 开始 -->
+        <div class="titlebox" id="a_productprice"><h3>2、产品销售信息</h3></div>
+        <!-- 销售计量单位 开始 -->
+        <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
+            <div class="ml-title"><span class="required">*</span>销售计量单位：</div>
+            <a id="a_measureid"></a>
+            <select class="attr-select j-select-unit form-control" name="measureid">
+                <option disabled="disabled" value="">-- 请选择销售单位 --</option>
+                <option data-name="打" value="1">打(Dozen)</option>
+                <option data-name="英尺" value="2">英尺(Feet)</option>
+                <option data-name="件" value="3" selected="">件(Piece)</option>
+                <option data-name="套" value="4">套(Set)</option>
+                <option data-name="克" value="5">克(Gram)</option>
+                <option data-name="英寸" value="6">英寸(Inch)</option>
+                <option data-name="千克" value="7">千克(Kilogram)</option>
+                <option data-name="千米" value="8">千米(Kilometre)</option>
+                <option data-name="升" value="9">升(Liter)</option>
+                <option data-name="吨" value="10">吨(Metric Tonne)</option>
+                <option data-name="米" value="11">米(Meter)</option>
+                <option data-name="毫升" value="12">毫升(Milliliter)</option>
+                <option data-name="盎司" value="13">盎司(Ounce)</option>
+                <option data-name="双" value="14">双(Pair)</option>
+                <option data-name="磅" value="15">磅(Pound)</option>
+                <option data-name="平方码" value="16">平方码(Square Yard)</option>
+                <option data-name="平方米" value="17">平方米(Square Meter)</option>
+                <option data-name="平方英尺" value="18">平方英尺(Square Feet)</option>
+                <option data-name="码" value="19">码(Yard)</option>
+                <option data-name="厘米" value="20">厘米(Centimeter)</option>
+                <option data-name="箱" value="21">箱(Carton)</option>
+            </select> 示例：12美元/<span class="j-unit-no" name="sortbyunit">件</span>
+            <span class="helpicon" title="销售计量单位帮助" data-helpid="saleUnit"></span>
+            <input type="hidden" id="measurename" value="件">
 
-        <!-- 属性图片上传入口参数   -->
-        <input id="functionname_avim" name="functionname_avim" type="hidden" value="avim">  <!--功能名   	不可以为空-->
-        <input id="imagebannername_avim" name="imagebannername_avim" type="hidden" value="">    <!--水印名  现在是用户名-->
-
-
-        <!-- 产品基本属性 结束 -->
-
-        <!-- 产品购买属性 开始 -->
-
-        <!-- 产品购买属性 结束 -->
-        <!-- 产品备注 开始 -->
-        <div class="mainlayout clearfix j-list-item vadiourlTip_remark" id="vadiourlTip">
-            <div class="ml-title">产品备注：</div>
-            <div class="helptips" style="width:126px;margin-bottom: 5px;">
-                英文
-                <input type="checkbox" class="enh" checked data-group-cls="btn-group-sm">
-                德文
-                <input type="checkbox" class="demen_remark" onclick="getTranslate(true)"
-                       data-group-cls="btn-group-lg">
-                <span class="helpicon" title="勾选语言" helptipval="vadiourlTip"></span>
-            </div>
-            <div class="form-group">
-                <script type="text/plain" id="product_remark" style="width:685px;height:40%;">
-                </script>
-                <script type="text/javascript">
-                    var um = UM.getEditor('product_remark', {
-                        //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
-                        toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
-                        //focus时自动清空初始化时的内容
-                        autoClearinitialContent: true,
-                        //关闭字数统计
-                        wordCount: true,
-                        //关闭elementPath
-                        elementPathEnabled: false,
-                        //默认的编辑区域高度
-                        initialFrameHeight: 300
-                        //更多其他参数，请参考umeditor.config.js中的配置项
-                    });
-                    um.setContent('输入产品备注');
-                    um.addListener('selectionchange', function () {
-                        getTranslate(false)
-                    })
-                </script>
-            </div>
-            <div class="form-group demon" style="display: none">
-                <script type="text/plain" id="de_product_remark" style="width:685px;height:40%;">
-                </script>
-                <script type="text/javascript">
-                    var umdemon = UM.getEditor('de_product_remark', {
-                        //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
-                        toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
-                        //focus时自动清空初始化时的内容
-                        autoClearinitialContent: true,
-                        //关闭字数统计
-                        wordCount: true,
-                        //关闭elementPath
-                        elementPathEnabled: false,
-                        //默认的编辑区域高度
-                        initialFrameHeight: 300
-                        //更多其他参数，请参考umeditor.config.js中的配置项
-                    });
-                    umdemon.setContent('输入德文产品备注');
-                </script>
-            </div>
+            <div data-anchor="j-saleBox" data-id="tips-unit" class="tip-error" style="display:none;"
+                 data-name="销售计量单位"></div>
         </div>
+        <!-- 销售计量单位 结束 -->
 
-        <!--   <textarea name="product_remark" onchange="getTranslate(false)" placeholder="默认英文" class="product_remark"
-                    id="product_remark" cols="50"
-                    rows="4"></textarea> -->
-
-    </div>
-
-    <!-- title产品销售信息开始 -->
-    <!-- title产品包装信息 开始 -->
-    <div class="titlebox" id="a_productprice"><h3>2、产品销售信息</h3></div>
-    <!-- 销售计量单位 开始 -->
-    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
-        <div class="ml-title"><span class="required">*</span>销售计量单位：</div>
-        <a id="a_measureid"></a>
-        <select class="attr-select j-select-unit form-control" name="measureid">
-            <option disabled="disabled" value="">-- 请选择销售单位 --</option>
-            <option data-name="打" value="1">打(Dozen)</option>
-            <option data-name="英尺" value="2">英尺(Feet)</option>
-            <option data-name="件" value="3" selected="">件(Piece)</option>
-            <option data-name="套" value="4">套(Set)</option>
-            <option data-name="克" value="5">克(Gram)</option>
-            <option data-name="英寸" value="6">英寸(Inch)</option>
-            <option data-name="千克" value="7">千克(Kilogram)</option>
-            <option data-name="千米" value="8">千米(Kilometre)</option>
-            <option data-name="升" value="9">升(Liter)</option>
-            <option data-name="吨" value="10">吨(Metric Tonne)</option>
-            <option data-name="米" value="11">米(Meter)</option>
-            <option data-name="毫升" value="12">毫升(Milliliter)</option>
-            <option data-name="盎司" value="13">盎司(Ounce)</option>
-            <option data-name="双" value="14">双(Pair)</option>
-            <option data-name="磅" value="15">磅(Pound)</option>
-            <option data-name="平方码" value="16">平方码(Square Yard)</option>
-            <option data-name="平方米" value="17">平方米(Square Meter)</option>
-            <option data-name="平方英尺" value="18">平方英尺(Square Feet)</option>
-            <option data-name="码" value="19">码(Yard)</option>
-            <option data-name="厘米" value="20">厘米(Centimeter)</option>
-            <option data-name="箱" value="21">箱(Carton)</option>
-        </select> 示例：12美元/<span class="j-unit-no" name="sortbyunit">件</span>
-        <span class="helpicon" title="销售计量单位帮助" data-helpid="saleUnit"></span>
-        <input type="hidden" id="measurename" value="件">
-
-        <div data-anchor="j-saleBox" data-id="tips-unit" class="tip-error" style="display:none;"
-             data-name="销售计量单位"></div>
-    </div>
-    <!-- 销售计量单位 结束 -->
-
-    <!-- ----- 销售方式 开始 -----  -->
-    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
-        <div class="ml-title"><span class="required">*</span>销售方式：</div>
-        <div class="marginbottom10 clearfix"><label>
-                <input name="market_method" id="sortbyradio1" data-name="件" type="radio" checked="" value="1">
-                <span class="marginleft5 marginright10"><label for="gg">按件卖</label>（单位：<span class="j-unit-no"
-                                                                                             name="sortbyunit">件</span>）</span>
-            </label>
-        </div>
-        <script>
-            $(function () {
-                $('input[name="market_method"]').click(function () {
-                    var discount = $('input[name="market_method"]:checked').val();
-                    if ($(this).val() == discount) {
-                        if ($(this).val() == 2) {
-                            $('#packquantity').removeAttr('disabled');
-                        } else {
-                            $('#packquantity').attr('disabled', 'disabled');
+        <!-- ----- 销售方式 开始 -----  -->
+        <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
+            <div class="ml-title"><span class="required">*</span>销售方式：</div>
+            <div class="marginbottom10 clearfix"><label>
+                    <input name="market_method" id="sortbyradio1" data-name="件" type="radio" checked="" value="1">
+                    <span class="marginleft5 marginright10"><label for="gg">按件卖</label>（单位：<span class="j-unit-no"
+                                                                                                 name="sortbyunit">件</span>）</span>
+                </label>
+            </div>
+            <script>
+                $(function () {
+                    $('input[name="market_method"]').click(function () {
+                        var discount = $('input[name="market_method"]:checked').val();
+                        if ($(this).val() == discount) {
+                            if ($(this).val() == 2) {
+                                $('#packquantity').removeAttr('disabled');
+                            } else {
+                                $('#packquantity').attr('disabled', 'disabled');
+                            }
                         }
-                    }
+                    })
                 })
-            })
-        </script>
-        <div class="marginbottom10 clearfix">
-            <label>
-                <input name="market_method" id="sortbyradio2" data-name="包" type="radio" value="2">
-                <span class="marginleft5">按包卖</span>
-                <!--<input type="text" class="form-control" placeholder="" name="sell-function-bao">-->
-            </label>
-            <!--/包-->
-            <span>
+            </script>
+            <div class="marginbottom10 clearfix">
+                <label>
+                    <input name="market_method" id="sortbyradio2" data-name="包" type="radio" value="2">
+                    <span class="marginleft5">按包卖</span>
+                    <!--<input type="text" class="form-control" placeholder="" name="sell-function-bao">-->
+                </label>
+                <!--/包-->
+                <span>
 			<span class="j-sale-bao">
                 （每包产品的数量：<input id="packquantity" name="packquantity" value="1" type="text" class="input2" size="6"
                                 maxlength="8">
 			<span class="j-unit-no" name="sortbyunit">件</span>）</span>
 		</span>
-            <span class="helpicon" title="销售方式帮助" data-helpid="saleType"></span>
-        </div>
+                <span class="helpicon" title="销售方式帮助" data-helpid="saleType"></span>
+            </div>
 
-        <div style="display:none" class="tip-error" data-anchor="j-saleBox" data-id="tips-packquantity"
-             data-name="销售方式"><p></p></div>
-    </div>
-    <!-- 销售方式 结束 -->
-
-    <!-- ----- 产品毛重 开始 -----  -->
-    <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
-        <div class="ml-title"><span class="required">*</span>产品毛重：</div>
-        <div class="marginbottom10 clearfix">
-            <label>
-                <input type="text" class="form-control" placeholder="" id="sell-function-mao" name="sell-function-mao">
-            </label>kg/件
-            <span class="helpicon" title="产品毛重帮助" data-helpid="saleType"></span>
+            <div style="display:none" class="tip-error" data-anchor="j-saleBox" data-id="tips-packquantity"
+                 data-name="销售方式"><p></p></div>
         </div>
-    </div>
-    <!-- ----- 产品毛重 结束 -----  -->
-    ﻿<input type="hidden" name="noSpecWholeSaleIncome" value="">
-    <input type="hidden" id="catePubDiscount" value="">
-    <input type="hidden" name="cateMinPrice" id="cateMinPrice" value="0.01">
-    <input type="hidden" name="noSpecPrice" id="noSpecPrice">
-    <input type="hidden" name="minAkPrice" id="minAkPrice" value="">
-    <input type="hidden" name="maxAkPrice" id="maxAkPrice" value="">
-    <!-- title产品包装信息 结束 -->
-    <a id="tips-sale-foot"></a>
-    <div class="j-sale-container">
-        <a id="a_saleinfo"></a>
-        <div class="mainlayout j-basic-standard-container clearfix">
-            <div class="ml-title">产品销售规格：</div>
-            <!-- ----- 产品基本属性结束 -----  -->
-            <div class="product-attributes2" id="j-attribute-list">
-                <div>
-                    <table class="table-property j-buy-attrs-list"></table>
+        <!-- 销售方式 结束 -->
+
+        <!-- ----- 产品毛重 开始 -----  -->
+        <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleType">
+            <div class="ml-title"><span class="required">*</span>产品毛重：</div>
+            <div class="marginbottom10 clearfix">
+                <label>
+                    <input type="text" class="form-control" placeholder="" id="sell-function-mao"
+                           name="sell-function-mao">
+                </label>kg/件
+                <span class="helpicon" title="产品毛重帮助" data-helpid="saleType"></span>
+            </div>
+        </div>
+        <!-- ----- 产品毛重 结束 -----  -->
+        ﻿<input type="hidden" name="noSpecWholeSaleIncome" value="">
+        <input type="hidden" id="catePubDiscount" value="">
+        <input type="hidden" name="cateMinPrice" id="cateMinPrice" value="0.01">
+        <input type="hidden" name="noSpecPrice" id="noSpecPrice">
+        <input type="hidden" name="minAkPrice" id="minAkPrice" value="">
+        <input type="hidden" name="maxAkPrice" id="maxAkPrice" value="">
+        <!-- title产品包装信息 结束 -->
+        <a id="tips-sale-foot"></a>
+        <div class="j-sale-container">
+            <a id="a_saleinfo"></a>
+            <div class="mainlayout j-basic-standard-container clearfix">
+                <div class="ml-title">产品销售规格：</div>
+                <!-- ----- 产品基本属性结束 -----  -->
+                <div class="product-attributes2" id="j-attribute-list">
+                    <div>
+                        <table class="table-property j-buy-attrs-list"></table>
+                    </div>
+                    <div>
+                        <table class="table-property j-sale-attrs-list"></table>
+                    </div>
+                    <div id="div_self_defind_attr" class="j-list-item">
+                        <table class="table-property">
+                            <tbody>
+                            <tr>
+                                <td class="col-sm-2 bktit addborderline">批量操作</td>
+                                <td class="bkcon addborderline">
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputEmail2">Price</label>
+                                            <input type="text" class="form-control" name="price" id="exampleInputEmail2"
+                                                   placeholder="Price">
+                                        </div>
+                                        <!--<div class="form-group">-->
+                                        <!--<label class="sr-only" for="exampleInputEmail2">Count</label>-->
+                                        <!--<input type="text" class="form-control" name="count" id="exampleInputEmail2"-->
+                                        <!--placeholder="Count">-->
+                                        <!--</div>-->
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputEmail2">ProductId</label>
+                                            <input type="text" class="form-control" name="productId"
+                                                   id="exampleInputEmail2"
+                                                   placeholder="ProductId">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputEmail2">增量</label>
+                                            <input type="text" class="form-control" name="product_increase"
+                                                   id="product_increase" value="0.5">
+                                        </div>
+                                        <a class="btn btn-default" id="bulk_operation">Confirm</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered" id="product-attribute-table">
+                            <thead>
+                            <tr>
+                                <td class="col-sm-2 bktit addborderline">颜色分类</td>
+                                <td class="col-sm-2 bktit addborderline">VIP价格(美元)</td>
+                                <td class="col-sm-2 bktit addborderline">普通会员价格(美元)</td>
+                                <td class="col-sm-2 bktit addborderline">图片</td>
+                                <td class="col-sm-2 bktit addborderline">操作</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                    </div>
                 </div>
-                <div>
-                    <table class="table-property j-sale-attrs-list"></table>
-                </div>
-                <div id="div_self_defind_attr" class="j-list-item">
-                    <table class="table-property">
-                        <tbody>
-                        <tr>
-                            <td class="col-sm-2 bktit addborderline">批量操作</td>
-                            <td class="bkcon addborderline">
-                                <div class="form-inline">
-                                    <div class="form-group">
-                                        <label class="sr-only" for="exampleInputEmail2">Price</label>
-                                        <input type="text" class="form-control" name="price" id="exampleInputEmail2"
-                                               placeholder="Price">
-                                    </div>
-                                    <!--<div class="form-group">-->
-                                    <!--<label class="sr-only" for="exampleInputEmail2">Count</label>-->
-                                    <!--<input type="text" class="form-control" name="count" id="exampleInputEmail2"-->
-                                    <!--placeholder="Count">-->
-                                    <!--</div>-->
-                                    <div class="form-group">
-                                        <label class="sr-only" for="exampleInputEmail2">ProductId</label>
-                                        <input type="text" class="form-control" name="productId"
-                                               id="exampleInputEmail2"
-                                               placeholder="ProductId">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="exampleInputEmail2">增量</label>
-                                        <input type="text" class="form-control" name="product_increase"
-                                               id="product_increase" value="0.5">
-                                    </div>
-                                    <a class="btn btn-default" id="bulk_operation">Confirm</a>
+
+            </div>
+            <!--添加供应商 form start -->
+            <div class="modal fade" id="addForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">&times;</span><span
+                                        class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">添加供应商</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="addsupplier">
+                                <div class="form-group">
+                                    <label for="gongyingshang">供应商名称</label>
+                                    <input type="text" class="form-control" id="supplier_name" placeholder="供应商名称">
                                 </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <table class="table table-bordered" id="product-attribute-table">
-                        <thead>
-                        <tr>
-                            <td class="col-sm-2 bktit addborderline">颜色分类</td>
-                            <td class="col-sm-2 bktit addborderline">VIP价格(美元)</td>
-                            <td class="col-sm-2 bktit addborderline">普通会员价格(美元)</td>
-                            <td class="col-sm-2 bktit addborderline">图片</td>
-                            <td class="col-sm-2 bktit addborderline">操作</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-
-        </div>
-        <!--添加供应商 form start -->
-        <div class="modal fade" id="addForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                                    class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">添加供应商</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div id="addsupplier">
-                            <div class="form-group">
-                                <label for="gongyingshang">供应商名称</label>
-                                <input type="text" class="form-control" id="supplier_name" placeholder="供应商名称">
-                            </div>
-                            <div class="form-group">
-                                <label for="address">供应商位置</label>
-                                <input type="text" class="form-control" id="supplier_address" placeholder="供应商位置">
+                                <div class="form-group">
+                                    <label for="address">供应商位置</label>
+                                    <input type="text" class="form-control" id="supplier_address" placeholder="供应商位置">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="addRobotBtn">添加</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="addRobotBtn">添加
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--<div class="form-horizontal  layer_notice hidden" id="addForm">-->
+            <!--<div class="form-horizontal  layer_notice hidden" id="addForm">-->
 
 
-        <!--</div>-->
-        <!-- 供应商 开始 -->
-        <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
-            <div class="ml-title"><span class="required"></span>供应商：</div>
-            <a id="a_measureid"></a>
-            <select class="attr-select j-select-unit form-control" id="supplier" name="supplier">
-                <% suppliers.forEach(function(supplier){ %>
-                <option value="<%= supplier.name %>"><%= supplier.name %></option>
-                <% }) %>
-            </select>
-            <button type="button" style="margin-top: 10px" class="btn btn-primary" data-toggle="modal"
-                    data-target="#addForm">
-                添加供应商
-            </button>
-        </div>
-        <!-- 供应商 结束 -->
-        <div class="mainlayout j-basic-standard-container clearfix">
-            <div class="ml-title">
-                产品销售状态：
+            <!--</div>-->
+            <!-- 供应商 开始 -->
+            <div class="mainlayout clearfix j-list-item j-help" data-helpid="saleUnit">
+                <div class="ml-title"><span class="required"></span>供应商：</div>
+                <a id="a_measureid"></a>
+                <select class="attr-select j-select-unit form-control" id="supplier" name="supplier">
+                    <% suppliers.forEach(function(supplier){ %>
+                    <option value="<%= supplier.name %>"><%= supplier.name %></option>
+                    <% }) %>
+                </select>
+                <button type="button" style="margin-top: 10px" class="btn btn-primary" data-toggle="modal"
+                        data-target="#addForm">
+                    添加供应商
+                </button>
             </div>
-            <p class="helptips">黄色(库存待确认)<br>
-                绿色(库存确认可以采购，后台输入供应商信息)<br>
-                红色(停产)
-            </p>
-            <!-- ----- 产品基本属性结束 -----  -->
-            <div class="product-attributes2" id="j-attribute-list">
-                <div>
-                    <table class="table-property j-buy-attrs-list"></table>
+            <!-- 供应商 结束 -->
+            <div class="mainlayout j-basic-standard-container clearfix">
+                <div class="ml-title">
+                    产品销售状态：
                 </div>
-                <div>
-                    <table class="table-property j-sale-attrs-list"></table>
-                </div>
-                <div id="product_sell_status_div" class="j-list-item">
+                <p class="helptips">黄色(库存待确认)<br>
+                    绿色(库存确认可以采购，后台输入供应商信息)<br>
+                    红色(停产)
+                </p>
+                <!-- ----- 产品基本属性结束 -----  -->
+                <div class="product-attributes2" id="j-attribute-list">
                     <div>
-                        <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
-                        <div class="form-group" style="float: left;width: 53%">
-                            <div class="input-group">
-                                <input class="form-control" id="product-sell-status" type="text" placeholder=""
-                                       style="height: 47px" value="库存确认可以采购">
-                            </div>
-                        </div>
+                        <table class="table-property j-buy-attrs-list"></table>
                     </div>
-
-                </div>
-            </div>
-
-        </div>
-        <!-- 产品备货期 开始 -->
-        <div class="mainlayout j-basic-standard-container clearfix">
-            <div class="ml-title">
-                产品备货期：
-            </div>
-            <p class="helptips">黄色(默认3天)<br>
-                绿色(默认2天)<br>
-            </p>
-
-            <div class="product-attributes2" id="j-attribute-list">
-                <div>
-                    <table class="table-property j-buy-attrs-list"></table>
-                </div>
-                <div>
-                    <table class="table-property j-sale-attrs-list"></table>
-                </div>
-                <div id="product_sell_status_div" class="j-list-item">
                     <div>
-                        <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
-                        <div class="form-group" style="float: left;width: 53%">
-                            <div class="input-group" style="display: inline-block">
-                                <input class="form-control" id="product-stock-time" type="text" placeholder=""
-                                       value="2天"
-                                       style="height: 47px">
+                        <table class="table-property j-sale-attrs-list"></table>
+                    </div>
+                    <div id="product_sell_status_div" class="j-list-item">
+                        <div>
+                            <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
+                            <div class="form-group" style="float: left;width: 53%">
+                                <div class="input-group">
+                                    <input class="form-control" id="product-sell-status" type="text" placeholder=""
+                                           style="height: 47px" value="库存确认可以采购">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
+
             </div>
+            <!-- 产品备货期 开始 -->
+            <div class="mainlayout j-basic-standard-container clearfix">
+                <div class="ml-title">
+                    产品备货期：
+                </div>
+                <p class="helptips">黄色(默认3天)<br>
+                    绿色(默认2天)<br>
+                </p>
 
-        </div>
-        <!-- ----- 产品备货期 结束 -----  -->
+                <div class="product-attributes2" id="j-attribute-list">
+                    <div>
+                        <table class="table-property j-buy-attrs-list"></table>
+                    </div>
+                    <div>
+                        <table class="table-property j-sale-attrs-list"></table>
+                    </div>
+                    <div id="product_sell_status_div" class="j-list-item">
+                        <div>
+                            <input type="text" value="008000" name="highlight-color" class="pick-a-color form-control">
+                            <div class="form-group" style="float: left;width: 53%">
+                                <div class="input-group" style="display: inline-block">
+                                    <input class="form-control" id="product-stock-time" type="text" placeholder=""
+                                           value="2天"
+                                           style="height: 47px">
+                                </div>
+                            </div>
+                        </div>
 
-        <!-- 产品价格 结束 -->
-
-        <!--</div>        &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;    &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;-->
-
-        <!-- title产品内容描述 开始 -->
-        <div class="titlebox"><h3>3、产品内容描述</h3></div>
-
-        <!-- 产品图片 开始 -->
-        <!-- 产品图片 开始 -->
-        <div class="mainlayout clearfix">
-            <div class="ml-title"><span class="required">*</span>产品图片：</div>
-            <a id="a_div_imgcontainer"></a>
-            <p class="helptips">图片格式<strong>JPEG</strong>，文件大小<strong>2M</strong>以内，切勿盗用他人图片，以免受网规处罚。<span
-                        class="helpicon" title="产品图片帮助" data-helpid="waterMark"></span></p>
-            <p class="helptips">上传优质产品图片会获得更多的站内外流量。<br>优质产品图片定义：产品原图，即无人为修改痕迹、无水印、无修饰边框和文字。</p>
-            <div class="margintop10">
-                <div id="uploadImages">
-                    相册上传：<input type="file" onchange="uploadFile()" id="file" name="file"
-                                multiple/><br/>
-                    <div class="box-body">
-                        <!--<ul class="fl-file-upload gridly" id="file-upload"></ul>-->
-                        <div class="gridly"></div>
                     </div>
                 </div>
-                <span class="helptips">
+
+            </div>
+            <!-- ----- 产品备货期 结束 -----  -->
+
+            <!-- 产品价格 结束 -->
+
+            <!--</div>        &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;    &lt;!&ndash; title产品销售信息 结束 &ndash;&gt;-->
+
+            <!-- title产品内容描述 开始 -->
+            <div class="titlebox"><h3>3、产品内容描述</h3></div>
+
+            <!-- 产品图片 开始 -->
+            <!-- 产品图片 开始 -->
+            <div class="mainlayout clearfix">
+                <div class="ml-title"><span class="required">*</span>产品图片：</div>
+                <a id="a_div_imgcontainer"></a>
+                <p class="helptips">图片格式<strong>JPEG</strong>，文件大小<strong>2M</strong>以内，切勿盗用他人图片，以免受网规处罚。<span
+                            class="helpicon" title="产品图片帮助" data-helpid="waterMark"></span></p>
+                <p class="helptips">上传优质产品图片会获得更多的站内外流量。<br>优质产品图片定义：产品原图，即无人为修改痕迹、无水印、无修饰边框和文字。</p>
+                <div class="margintop10">
+                    <div id="uploadImages">
+                        相册上传：<input type="file" onchange="uploadFile()" id="file" name="file"
+                                    multiple/><br/>
+                        <div class="box-body">
+                            <!--<ul class="fl-file-upload gridly" id="file-upload"></ul>-->
+                            <div class="gridly"></div>
+                        </div>
+                    </div>
+                    <span class="helptips">
     			您还可以上传<b class="color444 limit_pic" id="photonum_b">8</b>
     			          <span class="color000">/<span>8</span></span> 张
     		</span>
-                <input type="hidden" id="inp_img_index" value="">
+                    <input type="hidden" id="inp_img_index" value="">
+                </div>
+
             </div>
 
-        </div>
+            <input id="current_oper_index" name="current_oper_index" type="hidden" value="1">
 
-        <input id="current_oper_index" name="current_oper_index" type="hidden" value="1">
-
-        <input id="current_oper_imgurls" name="current_oper_imgurls" type="hidden" value="">
+            <input id="current_oper_imgurls" name="current_oper_imgurls" type="hidden" value="">
 
 
-        <!--图片上传弹出窗口完-->
+            <!--图片上传弹出窗口完-->
 
-        <!-- 产品视频 开始 -->
-        <div class="mainlayout clearfix j-list-item" id="vadiourlTip">
-            <div class="ml-title">产品视频链接：</div>
-            <a id="a_vadiourl"></a>
-            <p class="helptips">
-                只允许输入YOUTUBE网站视频链接地址,例如:http://www.youtube.com/watch?v=*****
-                <span class="helpicon" title="导入视频帮助" helptipval="vadiourlTip"></span>
-            </p>
-            <div class="margintop10"><input class="attr-text-input addwid402" type="text" id="videourl" size="120"
-                                            name="videourl" maxlength="300" value="">
+            <!-- 产品视频 开始 -->
+            <div class="mainlayout clearfix j-list-item" id="vadiourlTip">
+                <div class="ml-title">产品视频链接：</div>
+                <a id="a_vadiourl"></a>
+                <p class="helptips">
+                    只允许输入YOUTUBE网站视频链接地址,例如:http://www.youtube.com/watch?v=*****
+                    <span class="helpicon" title="导入视频帮助" helptipval="vadiourlTip"></span>
+                </p>
+                <div class="margintop10"><input class="attr-text-input addwid402" type="text" id="videourl" size="120"
+                                                name="videourl" maxlength="300" value="">
+                </div>
             </div>
+            <!-- 产品视频结束 -->
+
+
         </div>
         <!-- 产品视频结束 -->
 
+        <!-- 运费设置开始 -->
+        <!--<div class="titlebox" id="shippingmodelidTip_1">-->
+        <!--<h3>4、设置运费</h3><span class="helpicon" title="设置运费帮助" helptipval="shippingmodelidTip_1"></span>-->
+        <!--<a id="a_shippingmodelid"></a>-->
+        <!--</div>-->
+        <!--&lt;!&ndash; 运费设置列表开始 &ndash;&gt;-->
+        <!--<div class="j-list-item">-->
+        <!--&lt;!&ndash; 大标题开始 &ndash;&gt;-->
+        <!--<div class="mainlayout clearfix j-shippingarea-container">-->
+        <!--<div class="ml-title"><span class="required">*</span>运费计算模板：</div>-->
+        <!--<div class="ui-tab ui-tab-normal tab-wrap logistics-container ui-switchable" data-name="loc-cn"-->
+        <!--data-country="CN" data-widget-cid="widget-5">-->
+        <!--<div class="btn-group" data-toggle="buttons">-->
+        <!--<label class="btn btn-primary active logistics-panel-type">-->
+        <!--<input type="radio" name="options" autocomplete="off" checked>小包类物流-->
+        <!--</label>-->
+        <!--<label class="btn btn-primary logistics-panel-type">-->
+        <!--<input type="radio" name="options" autocomplete="off">普通类物流-->
+        <!--</label>-->
+        <!--<label class="btn btn-primary logistics-panel-type">-->
+        <!--<input type="radio" name="options" autocomplete="off">特快类物流-->
+        <!--</label>-->
+        <!--<label class="btn btn-primary logistics-panel-type">-->
+        <!--<input type="radio" name="options" autocomplete="off">其他物流-->
+        <!--</label>-->
+        <!--</div>-->
+        <!--<div class="ui-tab-body ui-switchable-content" id="logistic-list">-->
+        <!--<div id="economy-logistics-panel"-->
+        <!--class="logistics-panel ui-tab-pane ui-tab-active series-wrap ui-switchable-panel"-->
+        <!--data-role="panel" data-series="cn-post" style="display: block;">-->
+        <!--<div class="alert alert-warning alert-dismissible fade in" role="alert">-->
+        <!--<button type="button" class="close" data-dismiss="alert"><span-->
+        <!--aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
+        <!--小包类物流运费优惠，但不提供目的国包裹妥投信息，仅适合货值低、重量轻的商品使用。-->
+        <!--</div>-->
+        <!--<table width="100%" cellspacing="0" cellpadding="8"-->
+        <!--class="table table-bordered table-list logistic-list ui-table">-->
+        <!--<thead>-->
+        <!--<tr>-->
+        <!--<th width="20%">选择物流</th>-->
+        <!--<th width="40%">运费设置-->
+        <!--<span class="setting-help-icon ui-help ui-help-icon"></span>-->
+        <!--</th>-->
+        <!--<th width="40%">运达时间设置</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--&lt;!&ndash; 物流公司列表&ndash;&gt;-->
+        <!--<tr id="YANWEN_JYT" class="logistic-row" logisticcompany="YANWEN_JYT"-->
+        <!--isdeliverycountryzone="COUNTRY" companydisplayname="					China Post Ordinary Small Packet Plus-->
+        <!--<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国邮政平常小包+-->
+        <!--" logisticsmessage="">-->
+        <!--<td class="logistic-name" width="35%">-->
+        <!--<input type="checkbox" class="logistic-checkbox" id="YANWEN_JYT-check"-->
+        <!--name="logistic-name" value="YANWEN_JYT" checked="checked">-->
+        <!--<span id="YANWEN_JYT">小包快递-->
+        <!--</span>-->
+        <!--<span class="logisticname-info ui-help ui-help-icon"></span>-->
+        <!--<div class="tip-me logisticname-tip" style="display:none;">-->
+        <!--<div class="help-content-wrap">-->
+        <!--Ecsell线上发货渠道，无挂号费，适合运送货值低重量轻的商品，不提供目的国包裹妥投信息。<br>-->
+        <!--<a href="http://seller.aliexpress.com/so/onlinelogistics_postbj.php"-->
+        <!--target="_blank">了解详情</a>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</td>-->
+        <!--<td class="logistic-commit-standard" width="35%">-->
+        <!--<div class="set-logistic">-->
+        <!--<input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"-->
+        <!--type="radio" checked="checked">-->
+        <!--<span>标准运费</span>-->
+        <!--<span class="decount-box">-->
+        <!--减免-->
+        <!--<input id="decount-box-input-CPAM" value="0" class="decount-box-input"-->
+        <!--size="2" maxlength="2" name="freight-reduce-count-CPAM">-->
+        <!--%-->
+        <!--<span class="decount-help-link ui-help ui-help-icon"></span>-->
+        <!--<span class="discountBox" style="">即<span-->
+        <!--class="discountHook">全</span>折</span>-->
 
-    </div>
-    <!-- 产品视频结束 -->
+        <!--</span>-->
+        <!--</div>-->
 
-    <!-- 运费设置开始 -->
-    <!--<div class="titlebox" id="shippingmodelidTip_1">-->
-    <!--<h3>4、设置运费</h3><span class="helpicon" title="设置运费帮助" helptipval="shippingmodelidTip_1"></span>-->
-    <!--<a id="a_shippingmodelid"></a>-->
-    <!--</div>-->
-    <!--&lt;!&ndash; 运费设置列表开始 &ndash;&gt;-->
-    <!--<div class="j-list-item">-->
-    <!--&lt;!&ndash; 大标题开始 &ndash;&gt;-->
-    <!--<div class="mainlayout clearfix j-shippingarea-container">-->
-    <!--<div class="ml-title"><span class="required">*</span>运费计算模板：</div>-->
-    <!--<div class="ui-tab ui-tab-normal tab-wrap logistics-container ui-switchable" data-name="loc-cn"-->
-    <!--data-country="CN" data-widget-cid="widget-5">-->
-    <!--<div class="btn-group" data-toggle="buttons">-->
-    <!--<label class="btn btn-primary active logistics-panel-type">-->
-    <!--<input type="radio" name="options" autocomplete="off" checked>小包类物流-->
-    <!--</label>-->
-    <!--<label class="btn btn-primary logistics-panel-type">-->
-    <!--<input type="radio" name="options" autocomplete="off">普通类物流-->
-    <!--</label>-->
-    <!--<label class="btn btn-primary logistics-panel-type">-->
-    <!--<input type="radio" name="options" autocomplete="off">特快类物流-->
-    <!--</label>-->
-    <!--<label class="btn btn-primary logistics-panel-type">-->
-    <!--<input type="radio" name="options" autocomplete="off">其他物流-->
-    <!--</label>-->
-    <!--</div>-->
-    <!--<div class="ui-tab-body ui-switchable-content" id="logistic-list">-->
-    <!--<div id="economy-logistics-panel"-->
-    <!--class="logistics-panel ui-tab-pane ui-tab-active series-wrap ui-switchable-panel"-->
-    <!--data-role="panel" data-series="cn-post" style="display: block;">-->
-    <!--<div class="alert alert-warning alert-dismissible fade in" role="alert">-->
-    <!--<button type="button" class="close" data-dismiss="alert"><span-->
-    <!--aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
-    <!--小包类物流运费优惠，但不提供目的国包裹妥投信息，仅适合货值低、重量轻的商品使用。-->
-    <!--</div>-->
-    <!--<table width="100%" cellspacing="0" cellpadding="8"-->
-    <!--class="table table-bordered table-list logistic-list ui-table">-->
-    <!--<thead>-->
-    <!--<tr>-->
-    <!--<th width="20%">选择物流</th>-->
-    <!--<th width="40%">运费设置-->
-    <!--<span class="setting-help-icon ui-help ui-help-icon"></span>-->
-    <!--</th>-->
-    <!--<th width="40%">运达时间设置</th>-->
-    <!--</tr>-->
-    <!--</thead>-->
-    <!--<tbody>-->
-    <!--&lt;!&ndash; 物流公司列表&ndash;&gt;-->
-    <!--<tr id="YANWEN_JYT" class="logistic-row" logisticcompany="YANWEN_JYT"-->
-    <!--isdeliverycountryzone="COUNTRY" companydisplayname="					China Post Ordinary Small Packet Plus-->
-    <!--<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国邮政平常小包+-->
-    <!--" logisticsmessage="">-->
-    <!--<td class="logistic-name" width="35%">-->
-    <!--<input type="checkbox" class="logistic-checkbox" id="YANWEN_JYT-check"-->
-    <!--name="logistic-name" value="YANWEN_JYT" checked="checked">-->
-    <!--<span id="YANWEN_JYT">小包快递-->
-    <!--</span>-->
-    <!--<span class="logisticname-info ui-help ui-help-icon"></span>-->
-    <!--<div class="tip-me logisticname-tip" style="display:none;">-->
-    <!--<div class="help-content-wrap">-->
-    <!--Ecsell线上发货渠道，无挂号费，适合运送货值低重量轻的商品，不提供目的国包裹妥投信息。<br>-->
-    <!--<a href="http://seller.aliexpress.com/so/onlinelogistics_postbj.php"-->
-    <!--target="_blank">了解详情</a>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</td>-->
-    <!--<td class="logistic-commit-standard" width="35%">-->
-    <!--<div class="set-logistic">-->
-    <!--<input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"-->
-    <!--type="radio" checked="checked">-->
-    <!--<span>标准运费</span>-->
-    <!--<span class="decount-box">-->
-    <!--减免-->
-    <!--<input id="decount-box-input-CPAM" value="0" class="decount-box-input"-->
-    <!--size="2" maxlength="2" name="freight-reduce-count-CPAM">-->
-    <!--%-->
-    <!--<span class="decount-help-link ui-help ui-help-icon"></span>-->
-    <!--<span class="discountBox" style="">即<span-->
-    <!--class="discountHook">全</span>折</span>-->
+        <!--<div class="set-logistic">-->
+        <!--<input class="no-logistic" name="freight-mode-CPAM" value="all_free"-->
+        <!--type="radio">-->
+        <!--卖家承担运费-->
+        <!--<span class="freeshipping-box" style="display: none;">Free Shipping</span>-->
+        <!--</div>-->
+        <!--<label>燃油附加费:</label>-->
+        <!--<input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"-->
+        <!--name="ranyoufei">-->
+        <!--</td>-->
+        <!--<td width="30%">-->
+        <!--<div class="set-commit-time">-->
+        <!--<input class="standard-commit-time" name="arrival-time-mode-YANWEN_JYT"-->
+        <!--value="all_standard" type="radio">-->
+        <!--承诺运达时间-->
+        <!--<input id="time-box-input-YANWEN_JYT"-->
+        <!--class="time-box-input ui-textfield ui-textfield-system" size="2"-->
+        <!--maxlength="2" name="arrival-time-days-YANWEN_JYT" value="">-->
+        <!--天-->
+        <!--</div>-->
 
-    <!--</span>-->
-    <!--</div>-->
+        <!--<div class="set-commit-time">-->
+        <!--<input id="custom-commit-time-YANWEN_JYT" class="custom-commit-time"-->
+        <!--name="arrival-time-mode-YANWEN_JYT" value="self_define" type="radio"-->
+        <!--logisticcompany="YANWEN_JYT" isdeliverycountryzone="COUNTRY"-->
+        <!--checked="checked">-->
+        <!--<label for="custom-commit-time-YANWEN_JYT" class="custom-time">-->
+        <!--自定义运达时间-->
+        <!--</label>-->
+        <!--<textarea class="custom-commit-time-content"-->
+        <!--name="arrival-time-custom-setting-YANWEN_JYT"></textarea>-->
+        <!--</div>-->
+        <!--</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+        <!--</table>-->
+        <!--</div>-->
+        <!--<div id="standard-logistics-panel"-->
+        <!--class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="panel"-->
+        <!--data-series="cn-business" style="display: none;">-->
+        <!--<div class="alert alert-warning alert-dismissible fade in" role="alert">-->
+        <!--<button type="button" class="close" data-dismiss="alert"><span-->
+        <!--aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
+        <!--普通类物流包括邮政挂号服务和专线类服务，全程物流追踪信息可查询。无忧物流的排他规则已取消，您可以如其他物流线路一样设置使用-->
+        <!--</div>-->
+        <!--<table width="100%" cellspacing="0" cellpadding="8"-->
+        <!--class="table table-bordered table-list logistic-list ui-table">-->
+        <!--<thead>-->
+        <!--<tr>-->
+        <!--<th width="20%">选择物流</th>-->
+        <!--<th width="40%">运费设置-->
+        <!--<span class="setting-help-icon ui-help ui-help-icon"></span>-->
+        <!--</th>-->
+        <!--<th width="40%">运达时间设置</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
 
-    <!--<div class="set-logistic">-->
-    <!--<input class="no-logistic" name="freight-mode-CPAM" value="all_free"-->
-    <!--type="radio">-->
-    <!--卖家承担运费-->
-    <!--<span class="freeshipping-box" style="display: none;">Free Shipping</span>-->
-    <!--</div>-->
-    <!--<label>燃油附加费:</label>-->
-    <!--<input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"-->
-    <!--name="ranyoufei">-->
-    <!--</td>-->
-    <!--<td width="30%">-->
-    <!--<div class="set-commit-time">-->
-    <!--<input class="standard-commit-time" name="arrival-time-mode-YANWEN_JYT"-->
-    <!--value="all_standard" type="radio">-->
-    <!--承诺运达时间-->
-    <!--<input id="time-box-input-YANWEN_JYT"-->
-    <!--class="time-box-input ui-textfield ui-textfield-system" size="2"-->
-    <!--maxlength="2" name="arrival-time-days-YANWEN_JYT" value="">-->
-    <!--天-->
-    <!--</div>-->
+        <!--<tr class="logistic-row" logisticcompany="CPAM" isdeliverycountryzone="COUNTRY"-->
+        <!--companydisplayname="					China Post Registered Air Mail-->
+        <!--<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国邮政挂号小包-->
+        <!--">-->
+        <!--<td class="logistic-name" width="35%">-->
+        <!--<input type="checkbox" class="logistic-checkbox" id="CPAM-check"-->
+        <!--name="logistic-name" value="CPAM" checked="checked">-->
+        <!--<div id="CPAM-name-div" class="marginleft5 logistics-name-div">-->
+        <!--普通快递-->
+        <!--<span class="logisticname-info ui-help ui-help-icon"></span>-->
+        <!--<div class="tip-me logisticname-tip" style="display:none;">-->
+        <!--<div class="help-content-wrap">-->
+        <!--可寄送2kg以上的普通商品，运送范围为全球，可使用速卖通线上发货，专享线上发货合约价及服务保障！<br>-->
+        <!--<a href="#" target="_blank">了解详情</a>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</td>-->
+        <!--<td class="logistic-commit-standard" width="35%">-->
+        <!--<div class="set-logistic">-->
+        <!--<input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"-->
+        <!--type="radio" checked="checked">-->
+        <!--<span>标准运费</span>-->
+        <!--<span class="decount-box">-->
+        <!--减免-->
+        <!--<input id="decount-box-input-CPAM" value="0" class="decount-box-input"-->
+        <!--size="2" maxlength="2" name="freight-reduce-count-CPAM">-->
+        <!--%-->
+        <!--<span class="decount-help-link ui-help ui-help-icon"></span>-->
+        <!--<span class="discountBox" style="">即<span-->
+        <!--class="discountHook">全</span>折</span>-->
 
-    <!--<div class="set-commit-time">-->
-    <!--<input id="custom-commit-time-YANWEN_JYT" class="custom-commit-time"-->
-    <!--name="arrival-time-mode-YANWEN_JYT" value="self_define" type="radio"-->
-    <!--logisticcompany="YANWEN_JYT" isdeliverycountryzone="COUNTRY"-->
-    <!--checked="checked">-->
-    <!--<label for="custom-commit-time-YANWEN_JYT" class="custom-time">-->
-    <!--自定义运达时间-->
-    <!--</label>-->
-    <!--<textarea class="custom-commit-time-content"-->
-    <!--name="arrival-time-custom-setting-YANWEN_JYT"></textarea>-->
-    <!--</div>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</tbody>-->
-    <!--</table>-->
-    <!--</div>-->
-    <!--<div id="standard-logistics-panel"-->
-    <!--class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="panel"-->
-    <!--data-series="cn-business" style="display: none;">-->
-    <!--<div class="alert alert-warning alert-dismissible fade in" role="alert">-->
-    <!--<button type="button" class="close" data-dismiss="alert"><span-->
-    <!--aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
-    <!--普通类物流包括邮政挂号服务和专线类服务，全程物流追踪信息可查询。无忧物流的排他规则已取消，您可以如其他物流线路一样设置使用-->
-    <!--</div>-->
-    <!--<table width="100%" cellspacing="0" cellpadding="8"-->
-    <!--class="table table-bordered table-list logistic-list ui-table">-->
-    <!--<thead>-->
-    <!--<tr>-->
-    <!--<th width="20%">选择物流</th>-->
-    <!--<th width="40%">运费设置-->
-    <!--<span class="setting-help-icon ui-help ui-help-icon"></span>-->
-    <!--</th>-->
-    <!--<th width="40%">运达时间设置</th>-->
-    <!--</tr>-->
-    <!--</thead>-->
-    <!--<tbody>-->
+        <!--</span>-->
+        <!--</div>-->
 
-    <!--<tr class="logistic-row" logisticcompany="CPAM" isdeliverycountryzone="COUNTRY"-->
-    <!--companydisplayname="					China Post Registered Air Mail-->
-    <!--<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国邮政挂号小包-->
-    <!--">-->
-    <!--<td class="logistic-name" width="35%">-->
-    <!--<input type="checkbox" class="logistic-checkbox" id="CPAM-check"-->
-    <!--name="logistic-name" value="CPAM" checked="checked">-->
-    <!--<div id="CPAM-name-div" class="marginleft5 logistics-name-div">-->
-    <!--普通快递-->
-    <!--<span class="logisticname-info ui-help ui-help-icon"></span>-->
-    <!--<div class="tip-me logisticname-tip" style="display:none;">-->
-    <!--<div class="help-content-wrap">-->
-    <!--可寄送2kg以上的普通商品，运送范围为全球，可使用速卖通线上发货，专享线上发货合约价及服务保障！<br>-->
-    <!--<a href="#" target="_blank">了解详情</a>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</td>-->
-    <!--<td class="logistic-commit-standard" width="35%">-->
-    <!--<div class="set-logistic">-->
-    <!--<input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"-->
-    <!--type="radio" checked="checked">-->
-    <!--<span>标准运费</span>-->
-    <!--<span class="decount-box">-->
-    <!--减免-->
-    <!--<input id="decount-box-input-CPAM" value="0" class="decount-box-input"-->
-    <!--size="2" maxlength="2" name="freight-reduce-count-CPAM">-->
-    <!--%-->
-    <!--<span class="decount-help-link ui-help ui-help-icon"></span>-->
-    <!--<span class="discountBox" style="">即<span-->
-    <!--class="discountHook">全</span>折</span>-->
+        <!--<div class="set-logistic">-->
+        <!--<input class="no-logistic" name="freight-mode-CPAM" value="all_free"-->
+        <!--type="radio">-->
+        <!--卖家承担运费-->
+        <!--<span class="freeshipping-box" style="display: none;">Free Shipping</span>-->
+        <!--</div>-->
+        <!--<label>燃油附加费:</label>-->
+        <!--<input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"-->
+        <!--name="ranyoufei">-->
+        <!--</td>-->
+        <!--<td width="30%">-->
+        <!--<div class="set-commit-time">-->
+        <!--<input class="standard-commit-time" name="arrival-time-mode-CPAM"-->
+        <!--value="all_standard" type="radio">-->
+        <!--承诺运达时间-->
+        <!--<input id="time-box-input-CPAM"-->
+        <!--class="time-box-input ui-textfield ui-textfield-system" size="2"-->
+        <!--maxlength="2" name="arrival-time-days-CPAM" value="">-->
+        <!--天-->
+        <!--</div>-->
 
-    <!--</span>-->
-    <!--</div>-->
+        <!--<div class="set-commit-time">-->
+        <!--<input id="custom-commit-time-CPAM" class="custom-commit-time"-->
+        <!--name="arrival-time-mode-CPAM" value="self_define" type="radio"-->
+        <!--logisticcompany="CPAM" isdeliverycountryzone="COUNTRY" checked="checked">-->
+        <!--<label for="custom-commit-time-CPAM" class="custom-time">-->
+        <!--自定义运达时间-->
+        <!--</label>-->
+        <!--<textarea class="custom-commit-time-content"-->
+        <!--name="arrival-time-custom-setting-CPAM"></textarea>-->
+        <!--</div>-->
+        <!--</td>-->
 
-    <!--<div class="set-logistic">-->
-    <!--<input class="no-logistic" name="freight-mode-CPAM" value="all_free"-->
-    <!--type="radio">-->
-    <!--卖家承担运费-->
-    <!--<span class="freeshipping-box" style="display: none;">Free Shipping</span>-->
-    <!--</div>-->
-    <!--<label>燃油附加费:</label>-->
-    <!--<input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"-->
-    <!--name="ranyoufei">-->
-    <!--</td>-->
-    <!--<td width="30%">-->
-    <!--<div class="set-commit-time">-->
-    <!--<input class="standard-commit-time" name="arrival-time-mode-CPAM"-->
-    <!--value="all_standard" type="radio">-->
-    <!--承诺运达时间-->
-    <!--<input id="time-box-input-CPAM"-->
-    <!--class="time-box-input ui-textfield ui-textfield-system" size="2"-->
-    <!--maxlength="2" name="arrival-time-days-CPAM" value="">-->
-    <!--天-->
-    <!--</div>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+        <!--</table>-->
+        <!--</div>-->
 
-    <!--<div class="set-commit-time">-->
-    <!--<input id="custom-commit-time-CPAM" class="custom-commit-time"-->
-    <!--name="arrival-time-mode-CPAM" value="self_define" type="radio"-->
-    <!--logisticcompany="CPAM" isdeliverycountryzone="COUNTRY" checked="checked">-->
-    <!--<label for="custom-commit-time-CPAM" class="custom-time">-->
-    <!--自定义运达时间-->
-    <!--</label>-->
-    <!--<textarea class="custom-commit-time-content"-->
-    <!--name="arrival-time-custom-setting-CPAM"></textarea>-->
-    <!--</div>-->
-    <!--</td>-->
+        <!--<div id="express-logistics-panel"-->
+        <!--class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="panel"-->
+        <!--data-series="cn-dedicated" style="display: none;">-->
+        <!--<div class="alert alert-warning alert-dismissible fade in" role="alert">-->
+        <!--<button type="button" class="close" data-dismiss="alert"><span-->
+        <!--aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
+        <!--特快类物流方案包含邮政快递、商业快递，时效快全程物流追踪信息可查询，适合高货值商品使用。-->
+        <!--</div>-->
+        <!--<table width="100%" cellspacing="0" cellpadding="8"-->
+        <!--class="table table-bordered  table-list logistic-list ui-table">-->
+        <!--<thead>-->
+        <!--<tr>-->
+        <!--<th width="20%">选择物流</th>-->
+        <!--<th width="40%">运费设置-->
+        <!--<span class="setting-help-icon ui-help ui-help-icon"></span>-->
+        <!--</th>-->
+        <!--<th width="40%">运达时间设置</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--&lt;!&ndash; 物流公司列表&ndash;&gt;-->
+        <!--<tr id="SF" class="logistic-row  disabled-row" logisticcompany="SF"-->
+        <!--isdeliverycountryzone="COUNTRY" companydisplayname="					SF Express-->
+        <!--<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺丰速运-->
+        <!--"-->
+        <!--logisticsmessage="顺丰速运新增运达国家，可根据您的实际情况编辑运费模板。<a href=http://bbs.seller.aliexpress.com/bbs/read.php?tid=294253&amp;page=1&amp;toread=1#tpc' target='_blanke'>点击了解详情</a>">-->
+        <!--<td class="logistic-name" width="35%">-->
+        <!--<input type="checkbox" class="logistic-checkbox" id="SF-check" name="logistic-name"-->
+        <!--value="SF">-->
+        <!--<span id="SF">特快快递-->
+        <!--</span>-->
+        <!--</td>-->
+        <!--<td class="logistic-commit-standard" width="35%">-->
+        <!--<div class="set-logistic">-->
+        <!--<input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"-->
+        <!--type="radio" checked="checked">-->
+        <!--<span>标准运费</span>-->
+        <!--<span class="decount-box">-->
+        <!--减免-->
+        <!--<input id="decount-box-input-CPAM" value="0" class="decount-box-input"-->
+        <!--size="2" maxlength="2" name="freight-reduce-count-CPAM">-->
+        <!--%-->
+        <!--<span class="decount-help-link ui-help ui-help-icon"></span>-->
+        <!--<span class="discountBox" style="">即<span-->
+        <!--class="discountHook">全</span>折</span>-->
 
-    <!--</tr>-->
-    <!--</tbody>-->
-    <!--</table>-->
-    <!--</div>-->
+        <!--</span>-->
+        <!--</div>-->
 
-    <!--<div id="express-logistics-panel"-->
-    <!--class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel" data-role="panel"-->
-    <!--data-series="cn-dedicated" style="display: none;">-->
-    <!--<div class="alert alert-warning alert-dismissible fade in" role="alert">-->
-    <!--<button type="button" class="close" data-dismiss="alert"><span-->
-    <!--aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
-    <!--特快类物流方案包含邮政快递、商业快递，时效快全程物流追踪信息可查询，适合高货值商品使用。-->
-    <!--</div>-->
-    <!--<table width="100%" cellspacing="0" cellpadding="8"-->
-    <!--class="table table-bordered  table-list logistic-list ui-table">-->
-    <!--<thead>-->
-    <!--<tr>-->
-    <!--<th width="20%">选择物流</th>-->
-    <!--<th width="40%">运费设置-->
-    <!--<span class="setting-help-icon ui-help ui-help-icon"></span>-->
-    <!--</th>-->
-    <!--<th width="40%">运达时间设置</th>-->
-    <!--</tr>-->
-    <!--</thead>-->
-    <!--<tbody>-->
-    <!--&lt;!&ndash; 物流公司列表&ndash;&gt;-->
-    <!--<tr id="SF" class="logistic-row  disabled-row" logisticcompany="SF"-->
-    <!--isdeliverycountryzone="COUNTRY" companydisplayname="					SF Express-->
-    <!--<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺丰速运-->
-    <!--"-->
-    <!--logisticsmessage="顺丰速运新增运达国家，可根据您的实际情况编辑运费模板。<a href=http://bbs.seller.aliexpress.com/bbs/read.php?tid=294253&amp;page=1&amp;toread=1#tpc' target='_blanke'>点击了解详情</a>">-->
-    <!--<td class="logistic-name" width="35%">-->
-    <!--<input type="checkbox" class="logistic-checkbox" id="SF-check" name="logistic-name"-->
-    <!--value="SF">-->
-    <!--<span id="SF">特快快递-->
-    <!--</span>-->
-    <!--</td>-->
-    <!--<td class="logistic-commit-standard" width="35%">-->
-    <!--<div class="set-logistic">-->
-    <!--<input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"-->
-    <!--type="radio" checked="checked">-->
-    <!--<span>标准运费</span>-->
-    <!--<span class="decount-box">-->
-    <!--减免-->
-    <!--<input id="decount-box-input-CPAM" value="0" class="decount-box-input"-->
-    <!--size="2" maxlength="2" name="freight-reduce-count-CPAM">-->
-    <!--%-->
-    <!--<span class="decount-help-link ui-help ui-help-icon"></span>-->
-    <!--<span class="discountBox" style="">即<span-->
-    <!--class="discountHook">全</span>折</span>-->
+        <!--<div class="set-logistic">-->
+        <!--<input class="no-logistic" name="freight-mode-CPAM" value="all_free"-->
+        <!--type="radio">-->
+        <!--卖家承担运费-->
+        <!--<span class="freeshipping-box" style="display: none;">Free Shipping</span>-->
+        <!--</div>-->
+        <!--<label>燃油附加费:</label>-->
+        <!--<input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"-->
+        <!--name="ranyoufei">-->
+        <!--</td>-->
+        <!--<td width="30%">-->
+        <!--<div class="set-commit-time">-->
+        <!--<input class="standard-commit-time" name="arrival-time-mode-SF"-->
+        <!--value="all_standard" type="radio">-->
+        <!--承诺运达时间-->
+        <!--<input id="time-box-input-SF"-->
+        <!--class="time-box-input ui-textfield ui-textfield-system" size="2"-->
+        <!--maxlength="2" name="arrival-time-days-SF" value="23">-->
+        <!--天-->
+        <!--</div>-->
 
-    <!--</span>-->
-    <!--</div>-->
+        <!--<div class="set-commit-time">-->
+        <!--<input id="custom-commit-time-SF" class="custom-commit-time"-->
+        <!--name="arrival-time-mode-SF" value="self_define" type="radio"-->
+        <!--logisticcompany="SF" isdeliverycountryzone="COUNTRY" disabled="">-->
+        <!--<label for="custom-commit-time-SF" class="custom-time">-->
+        <!--自定义运达时间-->
+        <!--</label>-->
+        <!--<textarea class="custom-commit-time-content"-->
+        <!--name="arrival-time-custom-setting-SF">  </textarea>-->
+        <!--</div>-->
+        <!--</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+        <!--</table>-->
+        <!--</div>-->
 
-    <!--<div class="set-logistic">-->
-    <!--<input class="no-logistic" name="freight-mode-CPAM" value="all_free"-->
-    <!--type="radio">-->
-    <!--卖家承担运费-->
-    <!--<span class="freeshipping-box" style="display: none;">Free Shipping</span>-->
-    <!--</div>-->
-    <!--<label>燃油附加费:</label>-->
-    <!--<input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"-->
-    <!--name="ranyoufei">-->
-    <!--</td>-->
-    <!--<td width="30%">-->
-    <!--<div class="set-commit-time">-->
-    <!--<input class="standard-commit-time" name="arrival-time-mode-SF"-->
-    <!--value="all_standard" type="radio">-->
-    <!--承诺运达时间-->
-    <!--<input id="time-box-input-SF"-->
-    <!--class="time-box-input ui-textfield ui-textfield-system" size="2"-->
-    <!--maxlength="2" name="arrival-time-days-SF" value="23">-->
-    <!--天-->
-    <!--</div>-->
+        <!--<div id="other-logistics-panel" class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel"-->
+        <!--data-role="panel" data-series="cn-other" style="display: none;">-->
+        <!--<div class="alert alert-warning alert-dismissible fade in" role="alert">-->
+        <!--<button type="button" class="close" data-dismiss="alert"><span-->
+        <!--aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
+        <!--提醒：请使用真实且物流信息可查询的物流方式发货，如果您使用无法核实物流跟踪信息的物流方式，Ecsell有权不予认可。-->
+        <!--</div>-->
+        <!--<table width="100%" cellspacing="0" cellpadding="8"-->
+        <!--class="table table-bordered  table-list logistic-list ui-table">-->
 
-    <!--<div class="set-commit-time">-->
-    <!--<input id="custom-commit-time-SF" class="custom-commit-time"-->
-    <!--name="arrival-time-mode-SF" value="self_define" type="radio"-->
-    <!--logisticcompany="SF" isdeliverycountryzone="COUNTRY" disabled="">-->
-    <!--<label for="custom-commit-time-SF" class="custom-time">-->
-    <!--自定义运达时间-->
-    <!--</label>-->
-    <!--<textarea class="custom-commit-time-content"-->
-    <!--name="arrival-time-custom-setting-SF">  </textarea>-->
-    <!--</div>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</tbody>-->
-    <!--</table>-->
-    <!--</div>-->
+        <!--<thead>-->
+        <!--<tr>-->
+        <!--<th width="20%">选择物流</th>-->
+        <!--<th width="40%">运费设置-->
+        <!--<span class="setting-help-icon ui-help ui-help-icon"></span>-->
+        <!--</th>-->
+        <!--<th width="40%">运达时间设置</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr class="logistic-row  disabled-row" isdeliverycountryzone="COUNTRY"-->
+        <!--logisticcompany="Other" companydisplayname="					Seller's Shipping Method-->
+        <!--<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;卖家自定义-中国-->
+        <!--" logisticsmessage="">-->
+        <!--<td class="logistic-name">-->
+        <!--<input type="checkbox" class="logistic-checkbox" id="Other-check"-->
+        <!--name="logistic-name" value="Other">-->
+        <!--<span id="Other">					Seller's Shipping Method-->
+        <!--<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;卖家自定义-中国-->
+        <!--</span>-->
 
-    <!--<div id="other-logistics-panel" class="logistics-panel ui-tab-pane series-wrap ui-switchable-panel"-->
-    <!--data-role="panel" data-series="cn-other" style="display: none;">-->
-    <!--<div class="alert alert-warning alert-dismissible fade in" role="alert">-->
-    <!--<button type="button" class="close" data-dismiss="alert"><span-->
-    <!--aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
-    <!--提醒：请使用真实且物流信息可查询的物流方式发货，如果您使用无法核实物流跟踪信息的物流方式，Ecsell有权不予认可。-->
-    <!--</div>-->
-    <!--<table width="100%" cellspacing="0" cellpadding="8"-->
-    <!--class="table table-bordered  table-list logistic-list ui-table">-->
+        <!--<span class="logisticname-info ui-help ui-help-icon"></span>-->
+        <!--<div class="tip-me logisticname-tip" style="display:none;">-->
+        <!--<div class="help-content-wrap">-->
+        <!--如果运费模板没有您使用的物流方式，可以使用此选项设置运费，但您需要遵守速卖通物流网规选择物流。对于无法核实真伪的物流跟踪信息，速卖通有权不予认可。<a-->
+        <!--href="#" target="_blank">了解详情</a>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</td>-->
+        <!--<td class="logistic-commit-standard" width="35%">-->
+        <!--<div class="set-logistic">-->
+        <!--<input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"-->
+        <!--type="radio" checked="checked">-->
+        <!--<span>标准运费</span>-->
+        <!--<span class="decount-box">-->
+        <!--减免-->
+        <!--<input id="decount-box-input-CPAM" value="0" class="decount-box-input"-->
+        <!--size="2" maxlength="2" name="freight-reduce-count-CPAM">-->
+        <!--%-->
+        <!--<span class="decount-help-link ui-help ui-help-icon"></span>-->
+        <!--<span class="discountBox" style="">即<span-->
+        <!--class="discountHook">全</span>折</span>-->
 
-    <!--<thead>-->
-    <!--<tr>-->
-    <!--<th width="20%">选择物流</th>-->
-    <!--<th width="40%">运费设置-->
-    <!--<span class="setting-help-icon ui-help ui-help-icon"></span>-->
-    <!--</th>-->
-    <!--<th width="40%">运达时间设置</th>-->
-    <!--</tr>-->
-    <!--</thead>-->
-    <!--<tbody>-->
-    <!--<tr class="logistic-row  disabled-row" isdeliverycountryzone="COUNTRY"-->
-    <!--logisticcompany="Other" companydisplayname="					Seller's Shipping Method-->
-    <!--<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;卖家自定义-中国-->
-    <!--" logisticsmessage="">-->
-    <!--<td class="logistic-name">-->
-    <!--<input type="checkbox" class="logistic-checkbox" id="Other-check"-->
-    <!--name="logistic-name" value="Other">-->
-    <!--<span id="Other">					Seller's Shipping Method-->
-    <!--<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;卖家自定义-中国-->
-    <!--</span>-->
+        <!--</span>-->
+        <!--</div>-->
 
-    <!--<span class="logisticname-info ui-help ui-help-icon"></span>-->
-    <!--<div class="tip-me logisticname-tip" style="display:none;">-->
-    <!--<div class="help-content-wrap">-->
-    <!--如果运费模板没有您使用的物流方式，可以使用此选项设置运费，但您需要遵守速卖通物流网规选择物流。对于无法核实真伪的物流跟踪信息，速卖通有权不予认可。<a-->
-    <!--href="#" target="_blank">了解详情</a>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</td>-->
-    <!--<td class="logistic-commit-standard" width="35%">-->
-    <!--<div class="set-logistic">-->
-    <!--<input class="standard-logistic" name="freight-mode-CPAM" value="all_standard"-->
-    <!--type="radio" checked="checked">-->
-    <!--<span>标准运费</span>-->
-    <!--<span class="decount-box">-->
-    <!--减免-->
-    <!--<input id="decount-box-input-CPAM" value="0" class="decount-box-input"-->
-    <!--size="2" maxlength="2" name="freight-reduce-count-CPAM">-->
-    <!--%-->
-    <!--<span class="decount-help-link ui-help ui-help-icon"></span>-->
-    <!--<span class="discountBox" style="">即<span-->
-    <!--class="discountHook">全</span>折</span>-->
+        <!--<div class="set-logistic">-->
+        <!--<input class="no-logistic" name="freight-mode-CPAM" value="all_free"-->
+        <!--type="radio">-->
+        <!--卖家承担运费-->
+        <!--<span class="freeshipping-box" style="display: none;">Free Shipping</span>-->
+        <!--</div>-->
+        <!--<label>燃油附加费:</label>-->
+        <!--<input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"-->
+        <!--name="ranyoufei">-->
+        <!--</td>-->
+        <!--<td width="20%">-->
+        <!--<div class="set-commit-time">-->
+        <!--<input class="standard-commit-time" name="arrival-time-mode-Other"-->
+        <!--value="all_standard" type="radio">-->
+        <!--承诺运达时间-->
+        <!--<input id="time-box-input-Other" class="time-box-input" size="1" maxlength="2"-->
+        <!--name="arrival-time-days-Other" value="23">-->
+        <!--天-->
+        <!--</div>-->
 
-    <!--</span>-->
-    <!--</div>-->
+        <!--<div class="set-commit-time">-->
+        <!--<input id="custom-commit-time-Other" class="custom-commit-time"-->
+        <!--name="arrival-time-mode-Other" value="self_define" type="radio"-->
+        <!--isdeliverycountryzone="COUNTRY" logisticcompany="Other" disabled="">-->
+        <!--<label for="custom-commit-time-Other" class="custom-time">-->
+        <!--自定义运达时间-->
+        <!--</label>-->
+        <!--<textarea class="custom-commit-time-content"-->
+        <!--name="arrival-time-custom-setting-Other">  </textarea>-->
+        <!--</div>-->
+        <!--</td>-->
 
-    <!--<div class="set-logistic">-->
-    <!--<input class="no-logistic" name="freight-mode-CPAM" value="all_free"-->
-    <!--type="radio">-->
-    <!--卖家承担运费-->
-    <!--<span class="freeshipping-box" style="display: none;">Free Shipping</span>-->
-    <!--</div>-->
-    <!--<label>燃油附加费:</label>-->
-    <!--<input placeholder="燃油附加费" value="12%" class="" size="10" maxlength="10"-->
-    <!--name="ranyoufei">-->
-    <!--</td>-->
-    <!--<td width="20%">-->
-    <!--<div class="set-commit-time">-->
-    <!--<input class="standard-commit-time" name="arrival-time-mode-Other"-->
-    <!--value="all_standard" type="radio">-->
-    <!--承诺运达时间-->
-    <!--<input id="time-box-input-Other" class="time-box-input" size="1" maxlength="2"-->
-    <!--name="arrival-time-days-Other" value="23">-->
-    <!--天-->
-    <!--</div>-->
+        <!--</tr>-->
 
-    <!--<div class="set-commit-time">-->
-    <!--<input id="custom-commit-time-Other" class="custom-commit-time"-->
-    <!--name="arrival-time-mode-Other" value="self_define" type="radio"-->
-    <!--isdeliverycountryzone="COUNTRY" logisticcompany="Other" disabled="">-->
-    <!--<label for="custom-commit-time-Other" class="custom-time">-->
-    <!--自定义运达时间-->
-    <!--</label>-->
-    <!--<textarea class="custom-commit-time-content"-->
-    <!--name="arrival-time-custom-setting-Other">  </textarea>-->
-    <!--</div>-->
-    <!--</td>-->
+        <!--</tbody>-->
+        <!--</table>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<input type="button" value="标准运费计算器" id="calculate-yunfei" class="btn btn-primary" data-toggle="modal"-->
+        <!--data-target="#yunfei-table">-->
 
-    <!--</tr>-->
+        <!--<div class="modal fade" id="yunfei-table" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
+        <!--aria-hidden="true">-->
+        <!--<div class="modal-dialog">-->
+        <!--<div class="modal-content">-->
+        <!--<div class="modal-header">-->
+        <!--<button type="button" class="close" data-dismiss="modal"><span-->
+        <!--aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+        <!--<h4 class="modal-title" id="myModalLabel">计算标准运费</h4>-->
+        <!--</div>-->
+        <!--<div class="modal-body">-->
+        <!--<div class="deitbox">-->
+        <!--<div class="ccl-title">-->
+        <!--<p>-->
+        <!--包装信息：<br>-->
+        <!--<input type="text" class="inputtxt02" value="1.0" size="6" name="grossWeight"-->
+        <!--id="grossWeight">-->
+        <!--<span class="marginlfrl10">公斤(kg)</span>-->
+        <!--<label class="marginlf10">购买数量：</label>-->
+        <!--<input type="text" class="inputtxt01" size="6" id="quantity" name="quantity"-->
+        <!--value="1">-->
+        <!--<label class="marginlf10"> 送达国家：</label>-->
+        <!--<select style="width: 15%;display: inline-block;" id="country" name="country"-->
+        <!--class="form-control">-->
+        <!--</select>-->
+        <!--<script>-->
+        <!--$(function () {-->
+        <!--var express = expresses;-->
+        <!--var ordinary = ordinaries;-->
+        <!--express.data.forEach(function (item) {-->
+        <!--$('#country').append('<option>' + item.zh + '</option>')-->
+        <!--})-->
+        <!--$('#grossWeight').change(function () {-->
+        <!--var grossWeight = $('#grossWeight').val();-->
+        <!--if (grossWeight < 2) {-->
+        <!--$('#country').html('');-->
+        <!--express.data.forEach(function (item) {-->
+        <!--$('#country').append('<option>' + item.zh + '</option>')-->
+        <!--})-->
+        <!--} else if (grossWeight < 21) {-->
+        <!--$('#country').html('');-->
+        <!--ordinary.data.forEach(function (item) {-->
+        <!--$('#country').append('<option>' + item.zh + '</option>')-->
+        <!--})-->
+        <!--} else {-->
+        <!--$('#country').html('');-->
+        <!--ordinary.data.forEach(function (item) {-->
+        <!--$('#country').append('<option>' + item.zh + '</option>')-->
+        <!--})-->
+        <!--}-->
+        <!--})-->
 
-    <!--</tbody>-->
-    <!--</table>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<input type="button" value="标准运费计算器" id="calculate-yunfei" class="btn btn-primary" data-toggle="modal"-->
-    <!--data-target="#yunfei-table">-->
+        <!--})-->
+        <!--$(function () {-->
 
-    <!--<div class="modal fade" id="yunfei-table" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
-    <!--aria-hidden="true">-->
-    <!--<div class="modal-dialog">-->
-    <!--<div class="modal-content">-->
-    <!--<div class="modal-header">-->
-    <!--<button type="button" class="close" data-dismiss="modal"><span-->
-    <!--aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
-    <!--<h4 class="modal-title" id="myModalLabel">计算标准运费</h4>-->
-    <!--</div>-->
-    <!--<div class="modal-body">-->
-    <!--<div class="deitbox">-->
-    <!--<div class="ccl-title">-->
-    <!--<p>-->
-    <!--包装信息：<br>-->
-    <!--<input type="text" class="inputtxt02" value="1.0" size="6" name="grossWeight"-->
-    <!--id="grossWeight">-->
-    <!--<span class="marginlfrl10">公斤(kg)</span>-->
-    <!--<label class="marginlf10">购买数量：</label>-->
-    <!--<input type="text" class="inputtxt01" size="6" id="quantity" name="quantity"-->
-    <!--value="1">-->
-    <!--<label class="marginlf10"> 送达国家：</label>-->
-    <!--<select style="width: 15%;display: inline-block;" id="country" name="country"-->
-    <!--class="form-control">-->
-    <!--</select>-->
-    <!--<script>-->
-    <!--$(function () {-->
-    <!--var express = expresses;-->
-    <!--var ordinary = ordinaries;-->
-    <!--express.data.forEach(function (item) {-->
-    <!--$('#country').append('<option>' + item.zh + '</option>')-->
-    <!--})-->
-    <!--$('#grossWeight').change(function () {-->
-    <!--var grossWeight = $('#grossWeight').val();-->
-    <!--if (grossWeight < 2) {-->
-    <!--$('#country').html('');-->
-    <!--express.data.forEach(function (item) {-->
-    <!--$('#country').append('<option>' + item.zh + '</option>')-->
-    <!--})-->
-    <!--} else if (grossWeight < 21) {-->
-    <!--$('#country').html('');-->
-    <!--ordinary.data.forEach(function (item) {-->
-    <!--$('#country').append('<option>' + item.zh + '</option>')-->
-    <!--})-->
-    <!--} else {-->
-    <!--$('#country').html('');-->
-    <!--ordinary.data.forEach(function (item) {-->
-    <!--$('#country').append('<option>' + item.zh + '</option>')-->
-    <!--})-->
-    <!--}-->
-    <!--})-->
+        <!--$('#calculate-yunfei-re').click(function () {-->
+        <!--var weight_for_jian = $('input[name="grossWeight"]').val();-->
+        <!--if (weight_for_jian.length == 0) {-->
+        <!--myjinggao = '<div id="weightTip" class="alert alert-danger alert-dismissible fade in" role="alert">'-->
+        <!--+ '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'-->
+        <!--+ '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'-->
+        <!--+ '必须输入包装重量'-->
+        <!--+ '</div>';-->
+        <!--$('.ccl-title').append(myjinggao);-->
+        <!--return false;-->
+        <!--}-->
+        <!--var weight = (weight_for_jian * $('#quantity').val()).toFixed(2);-->
+        <!--var area = $('#country').val();-->
+        <!--$.ajax({-->
+        <!--type: 'POST',-->
+        <!--url: '/admin/transport',-->
+        <!--data: {-->
+        <!--weight: weight,-->
+        <!--area: area-->
+        <!--},-->
+        <!--dataType: 'json',-->
+        <!--success: function (data) {-->
+        <!--var myhtml = '';-->
+        <!--if (data.express) {-->
+        <!--if (data.express.price) {-->
+        <!--myhtml = '<tr>'-->
+        <!--+ '<td class="padleft20" width="50%">'-->
+        <!--+ '<a target="_blank">'-->
+        <!--+ data.express.msg-->
+        <!--+ '</a>'-->
+        <!--+ '</td>'-->
+        <!--+ '<td class="tal-right" width="22%">3-8 days</td>'-->
+        <!--+ '<td class="tal-right" width="28%">'-->
+        <!--+ data.express.price-->
+        <!--+ '</td>'-->
+        <!--+ '</tr>';-->
+        <!--}-->
+        <!--}-->
+        <!--if (data.little_packet) {-->
+        <!--if (data.little_packet.price) {-->
+        <!--myhtml += '<tr>'-->
+        <!--+ '<td class="padleft20" width="50%">'-->
+        <!--+ '<a target="_blank">'-->
+        <!--+ data.little_packet.msg-->
+        <!--+ '</a>'-->
+        <!--+ '</td>'-->
+        <!--+ '<td class="tal-right" width="22%">3-8 days</td>'-->
+        <!--+ '<td class="tal-right" width="28%">'-->
+        <!--+ data.little_packet.price-->
+        <!--+ '</td>'-->
+        <!--+ '</tr>';-->
+        <!--}-->
+        <!--}-->
+        <!--if (data.ordinary) {-->
+        <!--if (data.ordinary.price) {-->
+        <!--myhtml += '<tr>'-->
+        <!--+ '<td class="padleft20" width="50%">'-->
+        <!--+ '<a target="_blank">'-->
+        <!--+ data.ordinary.msg-->
+        <!--+ '</a>'-->
+        <!--+ '</td>'-->
+        <!--+ '<td class="tal-right" width="22%">3-8 days</td>'-->
+        <!--+ '<td class="tal-right" width="28%">'-->
+        <!--+ data.ordinary.price-->
+        <!--+ '</td>'-->
+        <!--+ '</tr>';-->
+        <!--}-->
+        <!--}-->
+        <!--$('#calculatorbox tbody').html(myhtml);-->
+        <!--},-->
+        <!--error: function (data) {-->
+        <!--if (data.status == 404) {-->
+        <!--$('#calculatorbox tbody').html('');-->
+        <!--myjinggao = '<div id="weightTip" class="alert alert-warning alert-dismissible fade in" role="alert">'-->
+        <!--+ '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'-->
+        <!--+ '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'-->
+        <!--+ '暂时没有快递到该国家'-->
+        <!--+ '</div>';-->
+        <!--$('.ccl-title').append(myjinggao);-->
+        <!--}-->
+        <!--}-->
+        <!--});-->
+        <!--})-->
+        <!--})-->
+        <!--</script>-->
+        <!--<span class="yellowBtn valmiddle marginlf10">-->
+        <!--<input type="submit" class="btn btn-info" id="calculate-yunfei-re" value="计算">-->
+        <!--</span>-->
+        <!--</p>-->
+        <!--<p>-->
+        <!--<span class="red" style="display:none">必须输入包装重量</span>-->
+        <!--</p>-->
+        <!--</div>-->
+        <!--<div class="calculatorbox" id="calculatorbox">-->
+        <!--<table width="100%" class="table table-bordered">-->
+        <!--<thead>-->
+        <!--<tr>-->
+        <!--<th width="50%" class="tal-left">物流公司</th>-->
+        <!--<th width="22%" class="tal-right">估计时间</th>-->
+        <!--<th width="28%" class="tal-right">标准运费含燃油费</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
 
-    <!--})-->
-    <!--$(function () {-->
+        <!--</tbody>-->
+        <!--</table>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="modal-footer">-->
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div id="postAirMail20160218" class="similarity-tip-gantan" style="display:none;"><span-->
+        <!--style="color:red;">epacket、邮政小包类物流限重2KG，单件已超重禁止使用。</span></div>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;-&#45;&#45;&#45;&#45; 大标题结束 -&#45;&#45;&#45;&#45;&ndash;&gt;-->
+        <!--&lt;!&ndash;-&#45;&#45;&#45;&#45; 运费设置列表开始 -&#45;&#45;&#45;&#45;&ndash;&gt;-->
+        <!--</div>-->
+        <!--对频繁上传产品的卖家显示验证码-->
 
-    <!--$('#calculate-yunfei-re').click(function () {-->
-    <!--var weight_for_jian = $('input[name="grossWeight"]').val();-->
-    <!--if (weight_for_jian.length == 0) {-->
-    <!--myjinggao = '<div id="weightTip" class="alert alert-danger alert-dismissible fade in" role="alert">'-->
-    <!--+ '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'-->
-    <!--+ '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'-->
-    <!--+ '必须输入包装重量'-->
-    <!--+ '</div>';-->
-    <!--$('.ccl-title').append(myjinggao);-->
-    <!--return false;-->
-    <!--}-->
-    <!--var weight = (weight_for_jian * $('#quantity').val()).toFixed(2);-->
-    <!--var area = $('#country').val();-->
-    <!--$.ajax({-->
-    <!--type: 'POST',-->
-    <!--url: '/admin/transport',-->
-    <!--data: {-->
-    <!--weight: weight,-->
-    <!--area: area-->
-    <!--},-->
-    <!--dataType: 'json',-->
-    <!--success: function (data) {-->
-    <!--var myhtml = '';-->
-    <!--if (data.express) {-->
-    <!--if (data.express.price) {-->
-    <!--myhtml = '<tr>'-->
-    <!--+ '<td class="padleft20" width="50%">'-->
-    <!--+ '<a target="_blank">'-->
-    <!--+ data.express.msg-->
-    <!--+ '</a>'-->
-    <!--+ '</td>'-->
-    <!--+ '<td class="tal-right" width="22%">3-8 days</td>'-->
-    <!--+ '<td class="tal-right" width="28%">'-->
-    <!--+ data.express.price-->
-    <!--+ '</td>'-->
-    <!--+ '</tr>';-->
-    <!--}-->
-    <!--}-->
-    <!--if (data.little_packet) {-->
-    <!--if (data.little_packet.price) {-->
-    <!--myhtml += '<tr>'-->
-    <!--+ '<td class="padleft20" width="50%">'-->
-    <!--+ '<a target="_blank">'-->
-    <!--+ data.little_packet.msg-->
-    <!--+ '</a>'-->
-    <!--+ '</td>'-->
-    <!--+ '<td class="tal-right" width="22%">3-8 days</td>'-->
-    <!--+ '<td class="tal-right" width="28%">'-->
-    <!--+ data.little_packet.price-->
-    <!--+ '</td>'-->
-    <!--+ '</tr>';-->
-    <!--}-->
-    <!--}-->
-    <!--if (data.ordinary) {-->
-    <!--if (data.ordinary.price) {-->
-    <!--myhtml += '<tr>'-->
-    <!--+ '<td class="padleft20" width="50%">'-->
-    <!--+ '<a target="_blank">'-->
-    <!--+ data.ordinary.msg-->
-    <!--+ '</a>'-->
-    <!--+ '</td>'-->
-    <!--+ '<td class="tal-right" width="22%">3-8 days</td>'-->
-    <!--+ '<td class="tal-right" width="28%">'-->
-    <!--+ data.ordinary.price-->
-    <!--+ '</td>'-->
-    <!--+ '</tr>';-->
-    <!--}-->
-    <!--}-->
-    <!--$('#calculatorbox tbody').html(myhtml);-->
-    <!--},-->
-    <!--error: function (data) {-->
-    <!--if (data.status == 404) {-->
-    <!--$('#calculatorbox tbody').html('');-->
-    <!--myjinggao = '<div id="weightTip" class="alert alert-warning alert-dismissible fade in" role="alert">'-->
-    <!--+ '<button style="right:-7px" type="button" class="close" data-dismiss="alert">'-->
-    <!--+ '<span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'-->
-    <!--+ '暂时没有快递到该国家'-->
-    <!--+ '</div>';-->
-    <!--$('.ccl-title').append(myjinggao);-->
-    <!--}-->
-    <!--}-->
-    <!--});-->
-    <!--})-->
-    <!--})-->
-    <!--</script>-->
-    <!--<span class="yellowBtn valmiddle marginlf10">-->
-    <!--<input type="submit" class="btn btn-info" id="calculate-yunfei-re" value="计算">-->
-    <!--</span>-->
-    <!--</p>-->
-    <!--<p>-->
-    <!--<span class="red" style="display:none">必须输入包装重量</span>-->
-    <!--</p>-->
-    <!--</div>-->
-    <!--<div class="calculatorbox" id="calculatorbox">-->
-    <!--<table width="100%" class="table table-bordered">-->
-    <!--<thead>-->
-    <!--<tr>-->
-    <!--<th width="50%" class="tal-left">物流公司</th>-->
-    <!--<th width="22%" class="tal-right">估计时间</th>-->
-    <!--<th width="28%" class="tal-right">标准运费含燃油费</th>-->
-    <!--</tr>-->
-    <!--</thead>-->
-    <!--<tbody>-->
-
-    <!--</tbody>-->
-    <!--</table>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="modal-footer">-->
-    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div id="postAirMail20160218" class="similarity-tip-gantan" style="display:none;"><span-->
-    <!--style="color:red;">epacket、邮政小包类物流限重2KG，单件已超重禁止使用。</span></div>-->
-    <!--</div>-->
-    <!--&lt;!&ndash;-&#45;&#45;&#45;&#45; 大标题结束 -&#45;&#45;&#45;&#45;&ndash;&gt;-->
-    <!--&lt;!&ndash;-&#45;&#45;&#45;&#45; 运费设置列表开始 -&#45;&#45;&#45;&#45;&ndash;&gt;-->
-    <!--</div>-->
-    <!--对频繁上传产品的卖家显示验证码-->
-
-    <!-- title其他信息 结束 -->
+        <!-- title其他信息 结束 -->
 
 
-    <!-- 完成提交开始 -->
-    <div id="syi_submit_id" class="syi-submit" style="margin-bottom: 10px">
-        <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系ECSELL客服部门。</strong><br>
-        <button id="submitopt" class="btn btn-info">产品提交</button>
-    </div>
-    <!-- 完成提交结束 -->
-
-    <!-- 翻译 开始 -->
-    <div id="translateBox" class="syi-translate" style="right: 26px;">
-        <div class="show-translabox"></div>
-
-        <div class="translabox">
-            <a href="http://fanyi.baidu.com/" target="_blank" class="jinshan"></a>
-            <a href="http://fanyi.youdao.com/" target="_blank" class="youdao"></a>
-            <a href="http://translate.google.cn/" target="_blank" class="google"></a>
+        <!-- 完成提交开始 -->
+        <div id="syi_submit_id" class="syi-submit" style="margin-bottom: 10px">
+            <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系ECSELL客服部门。</strong><br>
+            <button id="submitopt" class="btn btn-info">产品提交</button>
         </div>
-        <!-- 产品填写参考 开始 -->
-        <div class="syi-proreference-box" style="display:none;">
-            <div class="syi-proreference">
-                <a href="http://seller.dhgate.com/syi/showProdInfo.do?itemcode=" target="_blank"
-                   title="点此查看调整之前的产品信息" class="proreferencebox">产品填写参考</a>
+        <!-- 完成提交结束 -->
+
+        <!-- 翻译 开始 -->
+        <div id="translateBox" class="syi-translate" style="right: 26px;">
+            <div class="show-translabox"></div>
+
+            <div class="translabox">
+                <a href="http://fanyi.baidu.com/" target="_blank" class="jinshan"></a>
+                <a href="http://fanyi.youdao.com/" target="_blank" class="youdao"></a>
+                <a href="http://translate.google.cn/" target="_blank" class="google"></a>
+            </div>
+            <!-- 产品填写参考 开始 -->
+            <div class="syi-proreference-box" style="display:none;">
+                <div class="syi-proreference">
+                    <a href="http://seller.dhgate.com/syi/showProdInfo.do?itemcode=" target="_blank"
+                       title="点此查看调整之前的产品信息" class="proreferencebox">产品填写参考</a>
+                </div>
+            </div>
+            <!-- 产品填写参考 结束 -->
+        </div>
+        <!-- 翻译 结束 -->
+
+
+        <div id="onLineChatBox" class="syi-onlinechat" style="top: 361px; right: 26px;">
+            <div class="show-onlinechat"></div>
+            <div class="onlinechatbox">
+                <a id="syi_chat_window" href="javascript:void(0);" class="onlinechat" target="_blank"></a>
             </div>
         </div>
-        <!-- 产品填写参考 结束 -->
-    </div>
-    <!-- 翻译 结束 -->
 
-
-    <div id="onLineChatBox" class="syi-onlinechat" style="top: 361px; right: 26px;">
-        <div class="show-onlinechat"></div>
-        <div class="onlinechatbox">
-            <a id="syi_chat_window" href="javascript:void(0);" class="onlinechat" target="_blank"></a>
+        <!-- footer文件调用开始 -->
+        <div class="headerlayout">
+            <!--[if IE 6]>
+            <div class="layoutmargin">
+                <div class="layoutpadding"><![endif]-->
+            <!--<iframe id="headiframe" name="head" src="http://seller.dhgate.com/syihtml/footer_syi.html" width="100%"-->
+            <!--height="81" frameborder="0" scrolling="no"></iframe>-->
+            <!--[if IE 6]></div></div><![endif]-->
         </div>
-    </div>
-
-    <!-- footer文件调用开始 -->
-    <div class="headerlayout">
-        <!--[if IE 6]>
-        <div class="layoutmargin">
-            <div class="layoutpadding"><![endif]-->
-        <!--<iframe id="headiframe" name="head" src="http://seller.dhgate.com/syihtml/footer_syi.html" width="100%"-->
-        <!--height="81" frameborder="0" scrolling="no"></iframe>-->
-        <!--[if IE 6]></div></div><![endif]-->
-    </div>
-    <!-- footer文件调用结束 -->
-    <!--添加 form start -->
-    <div class="form-horizontal  layer_notice hidden" id="addRoboteForm">
-        <form class="" hidden="hidden" action="addRobote" style="margin-top: 50px" method="post" id="addRote">
-            <div class="box-body">
-                恭喜您，您的产品已经成功提交！
-                <div class="bod-line-btom btom-none">
-                    <p class="color000">现在您可以：</p>
-                    <p><span class="addwid90"><a href="/">添加新产品</a></span>发布一个全新的产品</p>
-                    <p><span class="addwid90"><a href="/upload">添加类似产品</a></span>附带刚提交的产品信息，只需修改差异内容，操作更便捷</p>
-                    <p><span class="addwid90"><a
-                                    href="http://www.dhgate.com/product/productdisplay.do?from=product_preview&amp;itemcode=395710282"
-                                    target="_blank">查看发布结果</a></span>查看刚发布的产品购买页面</p>
-                    <p class="padtop10">
+        <!-- footer文件调用结束 -->
+        <!--添加 form start -->
+        <div class="form-horizontal  layer_notice hidden" id="addRoboteForm">
+            <form class="" hidden="hidden" action="addRobote" style="margin-top: 50px" method="post" id="addRote">
+                <div class="box-body">
+                    恭喜您，您的产品已经成功提交！
+                    <div class="bod-line-btom btom-none">
+                        <p class="color000">现在您可以：</p>
+                        <p><span class="addwid90"><a href="/">添加新产品</a></span>发布一个全新的产品</p>
+                        <p><span class="addwid90"><a href="/upload">添加类似产品</a></span>附带刚提交的产品信息，只需修改差异内容，操作更便捷</p>
+                        <p><span class="addwid90"><a
+                                        href="http://www.dhgate.com/product/productdisplay.do?from=product_preview&amp;itemcode=395710282"
+                                        target="_blank">查看发布结果</a></span>查看刚发布的产品购买页面</p>
+                        <p class="padtop10">
 		            <span class="tourBtn">
 			        <input name="name1" type="button" value="返回我的产品列表" onclick="">
 					</span>
-                    </p>
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
-</div>
-</div>
+</section>
 <script>
     if ($('.gridly').children().length == 0) {
         window.LS.each(function (key, value) {    //遍历

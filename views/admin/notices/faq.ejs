@@ -4,23 +4,26 @@
 <script type="text/javascript" charset="utf-8" src="/ueditor/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="/ueditor/_examples/editor_api.js"></script>
 <script type="text/javascript" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">常见问题自定义</h3>
-        <!--<ol class="breadcrumb">-->
-        <!--<li><a href="#"><i class="fa fa-dashboard"></i> 基本设置</a></li>-->
-        <!--<li class="active">注册须知自定义</li>-->
-        <!--</ol>-->
-    </div>
-    <!-- /.box-header -->
-    <!-- form start -->
+<section class="content-header">
+    <h1>
+        常见问题
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="main"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">基本设置</a></li>
+        <li class="active">常见问题自定义</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-info">
 
-    <div class="box-body">
-        <div class="form-group">
-            <div class="box-header">
-                <h3 class="box-title">英文</h3>
-            </div>
-            <script type="text/plain" id="myEditor" style="width:100%;height:auto;">
+        <div class="box-body">
+            <div class="form-group">
+                <div class="box-header">
+                    <h3 class="box-title">英文</h3>
+                </div>
+                <script type="text/plain" id="myEditor" style="width:100%;height:auto;">
         <p>这里我可以写一些输入提示</p>
 
 
@@ -30,30 +33,32 @@
 
 
 
-            </script>
-            <script type="text/javascript">
-                var um = UM.getEditor('myEditor', {
-                    //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
-                    toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
-                    //focus时自动清空初始化时的内容
-                    autoClearinitialContent: true,
-                    //关闭字数统计
-                    wordCount: false,
-                    //关闭elementPath
-                    elementPathEnabled: false,
-                    //默认的编辑区域高度
-                    initialFrameHeight: 500
-                    //更多其他参数，请参考umeditor.config.js中的配置项
-                });
-                // um.insertHtml("<%= faq[0].main_content %>");
-                um.setContent('<%- faq[0].main_content %>');
-            </script>
-        </div>
-        <div class="form-group">
-            <div class="box-header">
-                <h3 class="box-title">德文</h3>
+
+
+                </script>
+                <script type="text/javascript">
+                    var um = UM.getEditor('myEditor', {
+                        //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
+                        toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
+                        //focus时自动清空初始化时的内容
+                        autoClearinitialContent: true,
+                        //关闭字数统计
+                        wordCount: false,
+                        //关闭elementPath
+                        elementPathEnabled: false,
+                        //默认的编辑区域高度
+                        initialFrameHeight: 500
+                        //更多其他参数，请参考umeditor.config.js中的配置项
+                    });
+                    // um.insertHtml("<%= faq[0].main_content %>");
+                    um.setContent('<%- faq[0].main_content %>');
+                </script>
             </div>
-            <script type="text/plain" id="myGermanEditor" style="width:100%;height:auto;">
+            <div class="form-group">
+                <div class="box-header">
+                    <h3 class="box-title">德文</h3>
+                </div>
+                <script type="text/plain" id="myGermanEditor" style="width:100%;height:auto;">
         <p>这里我可以写一些输入提示</p>
 
 
@@ -63,33 +68,36 @@
 
 
 
-            </script>
-            <script type="text/javascript">
-                var umGerman = UM.getEditor('myGermanEditor', {
-                    //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
-                    toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
-                    //focus时自动清空初始化时的内容
-                    autoClearinitialContent: true,
-                    //关闭字数统计
-                    wordCount: false,
-                    //关闭elementPath
-                    elementPathEnabled: false,
-                    //默认的编辑区域高度
-                    initialFrameHeight: 500
-                    //更多其他参数，请参考umeditor.config.js中的配置项
-                });
-                umGerman.setContent('<%- de_faq[0].main_content %>');
-            </script>
+
+
+                </script>
+                <script type="text/javascript">
+                    var umGerman = UM.getEditor('myGermanEditor', {
+                        //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
+                        toolbar: ['fullscreen source undo redo bold italic underline image video emotion link backcolor forecolor removeformat'],
+                        //focus时自动清空初始化时的内容
+                        autoClearinitialContent: true,
+                        //关闭字数统计
+                        wordCount: false,
+                        //关闭elementPath
+                        elementPathEnabled: false,
+                        //默认的编辑区域高度
+                        initialFrameHeight: 500
+                        //更多其他参数，请参考umeditor.config.js中的配置项
+                    });
+                    umGerman.setContent('<%- de_faq[0].main_content %>');
+                </script>
+            </div>
+            <div class="box-footer">
+                <button id="updateName" class="btn btn-info pull-right col-sm-1" type="button">提 交</button>
+            </div>
         </div>
-        <div class="box-footer">
-            <button id="updateName" class="btn btn-info pull-right col-sm-1" type="button">提 交</button>
-        </div>
+        <!-- /.box-body -->
+
+        <!-- /.box-footer -->
+
     </div>
-    <!-- /.box-body -->
-
-    <!-- /.box-footer -->
-
-</div>
+</section>
 <script type="text/javascript">
 
     $(function () {

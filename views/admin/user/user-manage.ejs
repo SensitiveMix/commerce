@@ -1,149 +1,161 @@
 <% layout('../backend-master.ejs') %>
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">用户管理</h3>
-        <input type="button" value="添加用户" id="addRobotBtn" style="margin-left: 50px" class='btn btn-primary'/>
-    </div>
-    <!-- /.box-header -->
-    <!-- form start -->
-    <div class="box-body">
-        <table id="robotetable" class="table table-bordered " aria-describedby="example2_info">
-            <thead>
-            <tr>
-                <th></th>
-                <th>账号</th>
-                <th>用户昵称</th>
-                <th>密码</th>
-                <th>用户等级</th>
-                <th>修改操作</th>
-                <th>删除操作</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-            </tfoot>
-        </table>
-    </div>
+<section class="content-header">
+    <h1>
+        用户管理
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="main"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">用户</a></li>
+        <li class="active">用户管理</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <input type="button" value="添加用户" id="addRobotBtn" class='btn btn-primary pull-right'/>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <div class="box-body">
+            <table id="robotetable" class="table table-bordered " aria-describedby="example2_info">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>账号</th>
+                    <th>用户昵称</th>
+                    <th>密码</th>
+                    <th>用户等级</th>
+                    <th>修改操作</th>
+                    <th>删除操作</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
 
-    <div class="form-horizontal  layer_notice hidden" id="recordDetail">
-        <table id="recordTb" class="table table-bordered " aria-describedby="example2_info">
-            <thead>
-            <tr>
-                <th>用户归属</th>
-                <th>操作人</th>
-                <th>更新时间</th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-            </tfoot>
-        </table>
-    </div>
+        <div class="form-horizontal  layer_notice hidden" id="recordDetail">
+            <table id="recordTb" class="table table-bordered " aria-describedby="example2_info">
+                <thead>
+                <tr>
+                    <th>用户归属</th>
+                    <th>操作人</th>
+                    <th>更新时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
 
-    <!--更新 form start -->
-    <div class="form-horizontal  layer_notice hidden" id="changeRobotForm">
-        <form class="" hidden="hidden" action="changeRobot" method="post" style="margin-top: 50px" id="changerot">
+        <!--更新 form start -->
+        <div class="form-horizontal  layer_notice hidden" id="changeRobotForm">
+            <form class="" hidden="hidden" action="changeRobot" method="post" style="margin-top: 50px" id="changerot">
 
-            <div class="box-body">
-                <input type="hidden" class="form-control" name="id" id="id"/>
+                <div class="box-body">
+                    <input type="hidden" class="form-control" name="id" id="id"/>
 
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">邮箱</label>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">邮箱</label>
 
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="account" name="account">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="account" name="account">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">用户昵称</label>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">用户昵称</label>
 
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="nick_name" name="nick_name">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="nick_name" name="nick_name">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">密码</label>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">密码</label>
 
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="password" name="password">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="password" name="password">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-4 control-label">用户等级</label>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">用户等级</label>
 
-                    <div class="col-sm-6">
-                        <select id="roleselect" name="roleselect" class="form-control" value="">
-                            <% lvlist.forEach(function(name){ %>
-                            <option value="<%= name.levlekey %>"><%= name.levlevalue %></option>
-                            <% }) %>
-                        </select>
+                        <div class="col-sm-6">
+                            <select id="roleselect" name="roleselect" class="form-control" value="">
+                                <% lvlist.forEach(function(name){ %>
+                                <option value="<%= name.levlekey %>"><%= name.levlevalue %></option>
+                                <% }) %>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-            </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="button" id="subRobotChange" class="btn btn-info pull-right closeBtn">确定</button>
+                </div>
+                <!-- /.box-footer -->
+            </form>
             <!-- /.box-body -->
-            <div class="box-footer">
-                <button type="button" id="subRobotChange" class="btn btn-info pull-right closeBtn">确定</button>
-            </div>
-            <!-- /.box-footer -->
-        </form>
-        <!-- /.box-body -->
-    </div>
+        </div>
 
-    <!--添加 form start -->
-    <div class="form-horizontal  layer_notice hidden" id="addRoboteForm">
-        <form class="" hidden="hidden" action="addRobote" style="margin-top: 50px" method="post" id="addRote">
-            <div class="box-body">
-                <input type="hidden" class="form-control" name="id" id="id"/>
+        <!--添加 form start -->
+        <div class="form-horizontal  layer_notice hidden" id="addRoboteForm">
+            <form class="" hidden="hidden" action="addRobote" style="margin-top: 50px" method="post" id="addRote">
+                <div class="box-body">
+                    <input type="hidden" class="form-control" name="id" id="id"/>
 
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">用户邮箱</label>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">用户邮箱</label>
 
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="add_email" name="add_email">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="add_email" name="add_email">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">用户昵称</label>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">用户昵称</label>
 
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="add_nick_name" name="add_nick_name">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="add_nick_name" name="add_nick_name">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">密码</label>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">密码</label>
 
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="add_password" name="add_password">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="add_password" name="add_password">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-4 control-label">用户等级</label>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">用户等级</label>
 
-                    <div class="col-sm-6">
-                        <select id="addLevel" name="addLevel" class="form-control" value="">
-                            <% lvlist.forEach(function(name){ %>
-                            <option value="<%= name.levlekey %>"><%= name.levlevalue %></option>
-                            <% }) %>
-                        </select>
+                        <div class="col-sm-6">
+                            <select id="addLevel" name="addLevel" class="form-control" value="">
+                                <% lvlist.forEach(function(name){ %>
+                                <option value="<%= name.levlekey %>"><%= name.levlevalue %></option>
+                                <% }) %>
+                            </select>
+                        </div>
                     </div>
+
                 </div>
 
-            </div>
+
+                <div class="box-footer">
+                    <button type="button" id="subaddRobotBtn" class="btn btn-info pull-right closeBtn">添加</button>
+                </div>
+            </form>
 
 
-            <div class="box-footer">
-                <button type="button" id="subaddRobotBtn" class="btn btn-info pull-right closeBtn">添加</button>
-            </div>
-        </form>
-
+        </div>
 
     </div>
-
-</div>
+</section>
 <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.css">
 <script>
@@ -270,7 +282,7 @@
                 id: $(".update").val(),
                 addname: $("#account").val(),
                 addpassword: $("#password").val(),
-                oldPassword:$("#oldpass").val(),
+                oldPassword: $("#oldpass").val(),
                 addnickname: $("#nick_name").val(),
                 addLevel: $("#roleselect").find("option:selected").val(),
                 addLevelName: $("#roleselect").find("option:selected").text()

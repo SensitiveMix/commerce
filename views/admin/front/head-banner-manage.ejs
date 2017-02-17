@@ -1,40 +1,55 @@
 <% layout('../backend-master.ejs') %>
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">商城首页广告图</h3>
-    </div>
-    <!-- /.box-header -->
-    <!-- form start -->
 
-
-    <div class="box-body">
-        <form id="form-signin" action="doupload" method="post" enctype='multipart/form-data' class="form-horizontal">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">广告图</label>
-
-                <div class="col-sm-10">
-                    <input id="fulAvatar" name="fulAvatar" type="file"/>
-                    <img style="width: inherit;" id="logoimg" src="<%= image_url.image_url %>"/>
-                </div>
-                <div class="pull-right">
-                    <button id="updateLogo" class="btn btn-info" type="button">上 传</button>
-                    <button id="updateName" class="btn btn-info" type="button">提 交</button>
-                </div>
-                <input id="imgoflogo" name="room_logo" type="hidden" value=""/>
-                </input>
-        </form>
-
-        <div class="box-footer">
-
+<section class="content-header">
+    <h1>
+        首页广告图
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="main"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">商城</a></li>
+        <li class="active">首页广告图</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title"></h3>
         </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+
+
+        <div class="box-body">
+            <form id="form-signin" action="doupload" method="post" enctype='multipart/form-data'
+                  class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">广告图</label>
+
+                    <div class="col-sm-10">
+                        <input id="fulAvatar" name="fulAvatar" type="file"/>
+                        <img style="width: inherit;" id="logoimg" src="<%= image_url.image_url %>"/>
+                    </div>
+                    <div class="pull-right">
+                        <button id="updateLogo" class="btn btn-info" type="button">上 传</button>
+                        <button id="updateName" class="btn btn-info" type="button">提 交</button>
+                    </div>
+                    <input id="imgoflogo" name="room_logo" type="hidden" value=""/>
+                    </input>
+            </form>
+
+            <div class="box-footer">
+
+            </div>
+        </div>
+
+
+        <!-- /.box-body -->
+
+        <!-- /.box-footer -->
+
     </div>
-
-
-    <!-- /.box-body -->
-
-    <!-- /.box-footer -->
-
-</div>
+</section>
 <script type="text/javascript">
 
     $(function () {

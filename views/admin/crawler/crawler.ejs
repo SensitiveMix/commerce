@@ -1,361 +1,373 @@
 <% layout('../backend-master.ejs') %>
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">爬虫管理</h3>
-    </div>
-    <form class="form-horizontal  layer_notice" hidden="hidden" id="files"
-          enctype="multipart/form-data"
-          action="uploadFile"
-          method="post">
-        <div class="box-body">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label">导入爬取表格:</label>
+<section class="content-header">
+    <h1>
+        爬虫管理
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="main"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">爬虫</a></li>
+        <li class="active">爬虫管理</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-info">
+        <form class="form-horizontal  layer_notice" hidden="hidden" id="files"
+              enctype="multipart/form-data"
+              action="uploadFile"
+              method="post">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">导入爬取表格:</label>
 
-                <div class="col-sm-6">
-                    <input type="file" id="file" name="file"/>
-                </div>
-                <div class="col-sm-2">
+                    <div class="col-sm-6">
+                        <input type="file" id="file" name="file"/>
+                    </div>
+                    <div class="col-sm-2">
 
-                    <img src="/images/crawler_prob.svg" alt="表格格式只存在一列，列名为link" title="表格格式只存在一列，列名为link">
+                        <img src="/images/crawler_prob.svg" alt="表格格式只存在一列，列名为link" title="表格格式只存在一列，列名为link">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="box-footer">
-            <input type="button" class="btn btn-info pull-right closeBtn" id="file_sub" value="导入" name="submit">
-        </div>
-    </form>
-    <!-- /.box-header -->
-    <!-- form start -->
-    <div class="box-body">
-        <div class="row" style="margin: 15px;">
-            <div class="col-md-12">
-                <div class="col-md-12  input-group">
-                    <input class="form-control" type="text" id="crawler" placeholder="请输入爬取链接">
-                    <span class="input-group-btn">
+            <div class="box-footer">
+                <input type="button" class="btn btn-info pull-right closeBtn" id="file_sub" value="导入" name="submit">
+            </div>
+        </form>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <div class="box-body">
+            <div class="row" style="margin: 15px;">
+                <div class="col-md-12">
+                    <div class="col-md-12  input-group">
+                        <input class="form-control" type="text" id="crawler" placeholder="请输入爬取链接">
+                        <span class="input-group-btn">
                             <button id="start_crawel" type="button" class="btn btn-warning btn-flat"
                                     onclick="start_crawler(this.id)">爬取</button>
                           </span>
-                </div>
-            </div>
-            <div class="col-md-12  input-group">
-                <button id="start_batch_crawler" style="margin: 10px 14px 0 0;" class="btn btn-info pull-right"
-                        onclick="start_batch_crawler()">批量爬取
-                </button>
-            </div>
-            <!--<div class="col-md-3">-->
-            <!---->
-            <!--</div>-->
-        </div>
-        <table id="robotetable" class="table table-bordered " aria-describedby="example2_info">
-            <thead>
-            <tr>
-                <td>Title</td>
-                <td>Image</td>
-                <td>Property</td>
-                <td>Delete</td>
-                <td>Upload</td>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <div class="modal fade" id="mycrawel_img" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                                    class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">图片详情</h4>
-                    </div>
-                    <div class="modal-body">
-                        <img src="" width="150px">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
+                <div class="col-md-12  input-group">
+                    <button id="start_batch_crawler" style="margin: 10px 14px 0 0;" class="btn btn-info pull-right"
+                            onclick="start_batch_crawler()">批量爬取
+                    </button>
+                </div>
+                <!--<div class="col-md-3">-->
+                <!---->
+                <!--</div>-->
             </div>
-        </div>
-        <div class="modal fade bs-example-modal-lg" id="property-detail" tabindex="-1" role="dialog"
-             aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" style="width: 1100px">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                                    class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">产品属性详情</h4>
-                    </div>
-                    <div class="modal-body">
-                        <table class="table table-bordered " aria-describedby="example2_info">
-                            <thead>
-                            <tr>
-                                <td>For</td>
-                                <td>Compatibility</td>
-                                <td>Type</td>
-                                <td>Hard / Soft</td>
-                                <td>Features</td>
-                                <td>Pattern</td>
-                                <td>Color</td>
-                                <td>Material</td>
-                                <td>Dimensions</td>
-                                <td>Net Weight</td>
-                                <td>Customization</td>
-                                <td>Additional Material</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            <tfoot>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <table id="robotetable" class="table table-bordered " aria-describedby="example2_info">
+                <thead>
+                <tr>
+                    <td>Title</td>
+                    <td>Image</td>
+                    <td>Property</td>
+                    <td>Delete</td>
+                    <td>Upload</td>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div class="modal fade" id="mycrawel_img" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">&times;</span><span
+                                        class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">图片详情</h4>
+                        </div>
+                        <div class="modal-body">
+                            <img src="" width="150px">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="modal fade bs-example-modal-lg" id="property-detail" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="width: 1100px">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">&times;</span><span
+                                        class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">产品属性详情</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-bordered " aria-describedby="example2_info">
+                                <thead>
+                                <tr>
+                                    <td>For</td>
+                                    <td>Compatibility</td>
+                                    <td>Type</td>
+                                    <td>Hard / Soft</td>
+                                    <td>Features</td>
+                                    <td>Pattern</td>
+                                    <td>Color</td>
+                                    <td>Material</td>
+                                    <td>Dimensions</td>
+                                    <td>Net Weight</td>
+                                    <td>Customization</td>
+                                    <td>Additional Material</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </div>
+    <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.css">
+    <script>
 
-</div>
-<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.css">
-<script>
+        let count = 0
+        //单条爬取
+        function start_crawler(link) {
+            if (link == 'start_crawel') {
+                link = $('#crawler').val()
+            }
+            if (link == '') {
+                layer.tips('请输入爬取链接', '#crawler')
+            } else {
+                layer.msg('抓取中', {
+                    icon: 16
+                    , shade: 0.01
+                })
+                $.ajax({
+                    url: 'crawler',
+                    type: 'GET',
+                    data: {
+                        link: link
+                    },
+                    dataType: 'json',
+                    success: function (res) {
+                        console.log(res)
 
-    let count = 0
-    //单条爬取
-    function start_crawler(link) {
-        if (link == 'start_crawel') {
-            link = $('#crawler').val()
-        }
-        if (link == '') {
-            layer.tips('请输入爬取链接', '#crawler')
-        } else {
-            layer.msg('抓取中', {
-                icon: 16
-                , shade: 0.01
-            })
-            $.ajax({
-                url: 'crawler',
-                type: 'GET',
-                data: {
-                    link: link
-                },
-                dataType: 'json',
-                success: function (res) {
-                    console.log(res)
+                        setTimeout(function () {
+                            layer.closeAll('loading')
+                            layer.msg('抓取成功')
+                        }, 700)
+                        let title = res.title
+                        let img = res.img
+                        let imgArray = []
+                        let imgArrayQuery = []
+                        img.forEach(function (item, index) {
+                            imgArrayQuery.push(item.image_url)
+                            imgArray.push('<a data-url="' + item.image_url + '" class="view-crawel_img btn btn-link" data-toggle="modal" data-target="#mycrawel_img">图片' + (index + 1) + '</a>')
+                        })
+                        let imgQuery = imgArray.join('')
+                        let property = res.property
+                        property.forEach((r) => {
+                            r.value.replace(/[\r\n]/g, "").replace(/^\s*$/g, '')
+                            this[r.pro] = r.value
+                        })
 
-                    setTimeout(function () {
-                        layer.closeAll('loading')
-                        layer.msg('抓取成功')
-                    }, 700)
-                    let title = res.title
-                    let img = res.img
-                    let imgArray = []
-                    let imgArrayQuery = []
-                    img.forEach(function (item, index) {
-                        imgArrayQuery.push(item.image_url)
-                        imgArray.push('<a data-url="' + item.image_url + '" class="view-crawel_img btn btn-link" data-toggle="modal" data-target="#mycrawel_img">图片' + (index + 1) + '</a>')
-                    })
-                    let imgQuery = imgArray.join('')
-                    let property = res.property
-                    property.forEach((r) => {
-                        r.value.replace(/[\r\n]/g, "").replace(/^\s*$/g, '')
-                        this[r.pro] = r.value
-                    })
-
-                    let payload = ["For", "Compatibility", "Type", "Hard / Soft", "Features", "Pattern", "Color", "Material", "dimensions", "netWeight", "customization", "Additional Material"]
-                    payload.forEach(e => {
-                        if (typeof this[e] == "undefined" || this[e] == "undefined") {
-                            this[e] = ""
-                        }
-                    })
-                    count++
-                    let delClass = "delete-crawel-detail" + '-' + count
-                    let uploadClass = "upload-crawel-detail" + '-' + count
-                    let my_html = '<tr>' +
-                        '<td>' + title + '</td>' +
-                        '<td>' + imgQuery + '</td>' +
-                        '<td><a class="property-detail btn btn-xs btn-info" data-toggle="modal" data-target="#property-detail">详情</a></td>' +
-                        '<td style="display: none" class="forSpec">' + this["For"] + '</td>' +
-                        '<td style="display: none" class="compatibility">' + this["Compatibility"] + '</td>' +
-                        '<td style="display: none" class="type">' + this["Type"] + '</td>' +
-                        '<td style="display: none" class="hardOrSoft">' + this["Hard / Soft"] + '</td>' +
-                        '<td style="display: none" class="features">' + this["Features"] + '</td>' +
-                        '<td style="display: none" class="pattern">' + this["Pattern"] + '</td>' +
-                        '<td style="display: none" class="color">' + this["Color"] + '</td>' +
-                        '<td style="display: none" class="material">' + this["Material"] + '</td>' +
-                        '<td style="display: none" class="dimensions">' + this["dimensions"] + '</td>' +
-                        '<td style="display: none" class="netWeight">' + this["netWeight"] + '</td>' +
-                        '<td style="display: none" class="customization">' + this["customization"] + '</td>' +
-                        '<td style="display: none" class="additionalMaterial">' + this["Additional Material"] + '</td>' +
-                        '<td><a class="btn btn-danger ' + delClass + ' delete-crawel-detail">删除</a></td>' +
-                        '<td><a class="btn btn-primary ' + uploadClass + ' upload-crawel-detail">上传</a></td>' +
-                        '</tr>'
-
-                    $('#robotetable tbody').append(my_html)
-
-                    $('.view-crawel_img').click(function () {
-                        var src = $(this).attr('data-url');
-                        $('#mycrawel_img').find('.modal-body img').attr('src', src)
-                    })
-
-                    function _processOutPut(arg) {
-                        let arr = []
-                        if (arg.indexOf(',') > 0) {
-                            arr = arg.split(",")
-                            arr.pop()
-                        }
-                        console.log(arr)
-                        return arr
-                    }
-
-
-                    $('.' + delClass).click(function () {
-                        $(this).parent().parent().remove()
-                    })
-                    $('.' + uploadClass).click(function () {
-                        let payload = {}
-                        let that = $(this).parent().parent()
-                        payload.title = title
-                        payload.img = imgArrayQuery
-                        payload.forSpec = _processOutPut(that.find('.forSpec').text())
-                        payload.compatibility = _processOutPut(that.find('.compatibility').text())
-                        payload.type = _processOutPut(that.find('.type').text())
-                        payload.hardOrSoft = _processOutPut(that.find('.hardOrSoft').text())
-                        payload.pattern = _processOutPut(that.find('.pattern').text())
-                        payload.features = _processOutPut(that.find('.features').text())
-                        payload.color = _processOutPut(that.find('.color').text())
-                        payload.material = _processOutPut(that.find('.material').text())
-                        payload.dimensions = _processOutPut(that.find('.dimensions').text())
-                        payload.netWeight = _processOutPut(that.find('.netWeight').text())
-                        payload.customization = _processOutPut(that.find('.customization').text())
-                        payload.additionalMaterial = _processOutPut(that.find('.additionalMaterial').text())
-                        $.ajax({
-                            url: '/admin/crawler_manage',
-                            type: 'POST',
-                            data: payload,
-                            cache: false,
-                            dataType: 'json',
-                            success: function (res) {
-                                $('.' + uploadClass).text('已上传')
-                                $('.' + uploadClass).attr('disabled', "true")
-                                window.open(res.page)
-                            },
-                            error: function (err) {
-                                layer.msg('网络错误')
+                        let payload = ["For", "Compatibility", "Type", "Hard / Soft", "Features", "Pattern", "Color", "Material", "dimensions", "netWeight", "customization", "Additional Material"]
+                        payload.forEach(e => {
+                            if (typeof this[e] == "undefined" || this[e] == "undefined") {
+                                this[e] = ""
                             }
                         })
-                    })
-
-                    $('.property-detail').click(function () {
-                        $('#property-detail table tbody').empty()
-                        let forSpec = $(this).parents('tr').find('.for').html()
-                        let compatibility = $(this).parents('tr').find('.compatibility').html()
-                        let type = $(this).parents('tr').find('.type').html()
-                        let hardOrSoft = $(this).parents('tr').find('.hardOrSoft').html()
-                        let features = $(this).parents('tr').find('.features').html()
-                        let pattern = $(this).parents('tr').find('.pattern').html()
-                        let color = $(this).parents('tr').find('.color').html()
-                        let material = $(this).parents('tr').find('.material').html()
-                        let dimensions = $(this).parents('tr').find('.dimensions').html()
-                        let netWeight = $(this).parents('tr').find('.netWeight').html()
-                        let customization = $(this).parents('tr').find('.customization').html()
-                        let additionalMaterial = $(this).parents('tr').find('.additionalMaterial').html()
+                        count++
+                        let delClass = "delete-crawel-detail" + '-' + count
+                        let uploadClass = "upload-crawel-detail" + '-' + count
                         let my_html = '<tr>' +
-                            '<td class="for">' + forSpec + '</td>' +
-                            '<td class="compatibility">' + compatibility + '</td>' +
-                            '<td class="type">' + type + '</td>' +
-                            '<td class="hardOrSoft">' + hardOrSoft + '</td>' +
-                            '<td class="features">' + features + '</td>' +
-                            '<td class="pattern">' + pattern + '</td>' +
-                            '<td class="color">' + color + '</td>' +
-                            '<td class="material">' + material + '</td>' +
-                            '<td class="dimensions">' + dimensions + '</td>' +
-                            '<td class="netWeight">' + netWeight + '</td>' +
-                            '<td class="customization">' + customization + '</td>' +
-                            '<td class="additionalMaterial">' + additionalMaterial + '</td>' +
-                            '</tr>';
-                        $('#property-detail table tbody').append(my_html)
-                    })
+                            '<td>' + title + '</td>' +
+                            '<td>' + imgQuery + '</td>' +
+                            '<td><a class="property-detail btn btn-xs btn-info" data-toggle="modal" data-target="#property-detail">详情</a></td>' +
+                            '<td style="display: none" class="forSpec">' + this["For"] + '</td>' +
+                            '<td style="display: none" class="compatibility">' + this["Compatibility"] + '</td>' +
+                            '<td style="display: none" class="type">' + this["Type"] + '</td>' +
+                            '<td style="display: none" class="hardOrSoft">' + this["Hard / Soft"] + '</td>' +
+                            '<td style="display: none" class="features">' + this["Features"] + '</td>' +
+                            '<td style="display: none" class="pattern">' + this["Pattern"] + '</td>' +
+                            '<td style="display: none" class="color">' + this["Color"] + '</td>' +
+                            '<td style="display: none" class="material">' + this["Material"] + '</td>' +
+                            '<td style="display: none" class="dimensions">' + this["dimensions"] + '</td>' +
+                            '<td style="display: none" class="netWeight">' + this["netWeight"] + '</td>' +
+                            '<td style="display: none" class="customization">' + this["customization"] + '</td>' +
+                            '<td style="display: none" class="additionalMaterial">' + this["Additional Material"] + '</td>' +
+                            '<td><a class="btn btn-danger ' + delClass + ' delete-crawel-detail">删除</a></td>' +
+                            '<td><a class="btn btn-primary ' + uploadClass + ' upload-crawel-detail">上传</a></td>' +
+                            '</tr>'
+
+                        $('#robotetable tbody').append(my_html)
+
+                        $('.view-crawel_img').click(function () {
+                            var src = $(this).attr('data-url');
+                            $('#mycrawel_img').find('.modal-body img').attr('src', src)
+                        })
+
+                        function _processOutPut(arg) {
+                            let arr = []
+                            if (arg.indexOf(',') > 0) {
+                                arr = arg.split(",")
+                                arr.pop()
+                            }
+                            console.log(arr)
+                            return arr
+                        }
+
+
+                        $('.' + delClass).click(function () {
+                            $(this).parent().parent().remove()
+                        })
+                        $('.' + uploadClass).click(function () {
+                            let payload = {}
+                            let that = $(this).parent().parent()
+                            payload.title = title
+                            payload.img = imgArrayQuery
+                            payload.forSpec = _processOutPut(that.find('.forSpec').text())
+                            payload.compatibility = _processOutPut(that.find('.compatibility').text())
+                            payload.type = _processOutPut(that.find('.type').text())
+                            payload.hardOrSoft = _processOutPut(that.find('.hardOrSoft').text())
+                            payload.pattern = _processOutPut(that.find('.pattern').text())
+                            payload.features = _processOutPut(that.find('.features').text())
+                            payload.color = _processOutPut(that.find('.color').text())
+                            payload.material = _processOutPut(that.find('.material').text())
+                            payload.dimensions = _processOutPut(that.find('.dimensions').text())
+                            payload.netWeight = _processOutPut(that.find('.netWeight').text())
+                            payload.customization = _processOutPut(that.find('.customization').text())
+                            payload.additionalMaterial = _processOutPut(that.find('.additionalMaterial').text())
+                            $.ajax({
+                                url: '/admin/crawler_manage',
+                                type: 'POST',
+                                data: payload,
+                                cache: false,
+                                dataType: 'json',
+                                success: function (res) {
+                                    $('.' + uploadClass).text('已上传')
+                                    $('.' + uploadClass).attr('disabled', "true")
+                                    window.open(res.page)
+                                },
+                                error: function (err) {
+                                    layer.msg('网络错误')
+                                }
+                            })
+                        })
+
+                        $('.property-detail').click(function () {
+                            $('#property-detail table tbody').empty()
+                            let forSpec = $(this).parents('tr').find('.for').html()
+                            let compatibility = $(this).parents('tr').find('.compatibility').html()
+                            let type = $(this).parents('tr').find('.type').html()
+                            let hardOrSoft = $(this).parents('tr').find('.hardOrSoft').html()
+                            let features = $(this).parents('tr').find('.features').html()
+                            let pattern = $(this).parents('tr').find('.pattern').html()
+                            let color = $(this).parents('tr').find('.color').html()
+                            let material = $(this).parents('tr').find('.material').html()
+                            let dimensions = $(this).parents('tr').find('.dimensions').html()
+                            let netWeight = $(this).parents('tr').find('.netWeight').html()
+                            let customization = $(this).parents('tr').find('.customization').html()
+                            let additionalMaterial = $(this).parents('tr').find('.additionalMaterial').html()
+                            let my_html = '<tr>' +
+                                '<td class="for">' + forSpec + '</td>' +
+                                '<td class="compatibility">' + compatibility + '</td>' +
+                                '<td class="type">' + type + '</td>' +
+                                '<td class="hardOrSoft">' + hardOrSoft + '</td>' +
+                                '<td class="features">' + features + '</td>' +
+                                '<td class="pattern">' + pattern + '</td>' +
+                                '<td class="color">' + color + '</td>' +
+                                '<td class="material">' + material + '</td>' +
+                                '<td class="dimensions">' + dimensions + '</td>' +
+                                '<td class="netWeight">' + netWeight + '</td>' +
+                                '<td class="customization">' + customization + '</td>' +
+                                '<td class="additionalMaterial">' + additionalMaterial + '</td>' +
+                                '</tr>';
+                            $('#property-detail table tbody').append(my_html)
+                        })
+                    },
+                    error: function () {
+                        layer.alert('爬取失败，请检查链接是否有误！')
+                    }
+                })
+            }
+        }
+
+
+        //多个爬取
+        function start_batch_crawler() {
+            $('#files').show()
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-rim',
+                shade: false,
+                title: false,
+                content: $('#files'),
+                area: ['420px', "400px"],
+                cancel: function (index) {
+                    layer.close(index)
+                },
+                scrollbar: false
+            })
+        }
+
+
+        //表格上传
+        function uploadFile() {
+            let file = document.getElementById("file")
+            let formData = new FormData()
+            for (let i = 0; i < file.files.length; i++) {
+                formData.append('file', file.files[i])
+            }
+            $.ajax({
+                url: 'uploadFile',
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    console.log(res)
+                    if (res.err_desc == 'No file passed' || res.error_code == 1) {
+                        layer.msg('请选取表格')
+                    } else {
+                        layer.msg('上传成功')
+                        setTimeout(() => {
+                            layer.closeAll()
+                        }, 1000)
+
+                        res.data.forEach(function (item) {
+                            start_crawler(item.link)
+                        })
+                    }
                 },
                 error: function () {
-                    layer.alert('爬取失败，请检查链接是否有误！')
+                    layer.msg('内部服务器错误');
                 }
             })
         }
-    }
 
-
-    //多个爬取
-    function start_batch_crawler() {
-        $('#files').show()
-        layer.open({
-            type: 1,
-            skin: 'layui-layer-rim',
-            shade: false,
-            title: false,
-            content: $('#files'),
-            area: ['420px', "400px"],
-            cancel: function (index) {
-                layer.close(index)
-            },
-            scrollbar: false
-        })
-    }
-
-
-    //表格上传
-    function uploadFile() {
-        let file = document.getElementById("file")
-        let formData = new FormData()
-        for (let i = 0; i < file.files.length; i++) {
-            formData.append('file', file.files[i])
+        function postPage() {
+            let payload = document.getElementById('file_sub')
+            payload.addEventListener("click", function () {
+                uploadFile()
+            }, false)
         }
-        $.ajax({
-            url: 'uploadFile',
-            type: 'POST',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                console.log(res)
-                if (res.err_desc == 'No file passed' || res.error_code == 1) {
-                    layer.msg('请选取表格')
-                } else {
-                    layer.msg('上传成功')
-                    setTimeout(() => {
-                        layer.closeAll()
-                    }, 1000)
 
-                    res.data.forEach(function (item) {
-                        start_crawler(item.link)
-                    })
-                }
-            },
-            error: function () {
-                layer.msg('内部服务器错误');
-            }
-        })
-    }
+        function _formatArr(array) {
+            return array.filter((arr, index) => {
+                array[index] = array[index].replace(/(^\s*)|(\s*$)|(\t*$)|(\n*$)/g, "")
+            })
+        }
 
-    function postPage() {
-        let payload = document.getElementById('file_sub')
-        payload.addEventListener("click", function () {
-            uploadFile()
-        }, false)
-    }
-
-    function _formatArr(array) {
-        return array.filter((arr, index) => {
-            array[index] = array[index].replace(/(^\s*)|(\s*$)|(\t*$)|(\n*$)/g, "")
-        })
-    }
-
-    window.onload = function () {
-        postPage()
-    }
-</script>
+        window.onload = function () {
+            postPage()
+        }
+    </script>
+</section>

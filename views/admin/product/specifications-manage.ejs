@@ -18,423 +18,433 @@
         padding-top: 33px;
     }
 </style>
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">产品规格管理</h3>
-    </div>
-    <div class="box-body">
-        <div class="form">
-            <div class="form-group col-sm-5">
-                <div class="col-sm-6">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="category" class="control-label">一级类目:</label>
-                            <% if( language == 'de') { %>
-                            <select class="form-control firstCategory"
-                                    onchange="show_sub_de(this.options[this.options.selectedIndex].value)">
-                                <option value="">选择类目</option>
+<section class="content-header">
+    <h1>
+        产品规格
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="main"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">产品</a></li>
+        <li class="active">产品规格管理</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-info">
+        <div class="box-body">
+            <div class="form">
+                <div class="form-group col-sm-5">
+                    <div class="col-sm-6">
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="category" class="control-label">一级类目:</label>
+                                <% if( language == 'de') { %>
+                                <select class="form-control firstCategory"
+                                        onchange="show_sub_de(this.options[this.options.selectedIndex].value)">
+                                    <option value="">选择类目</option>
 
-                                <% if(category.length != 0) { %>
-                                <% category.forEach(function (item) { %>
-                                <option data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="类目"
-                                        data-en="Apparel"
-                                        data-param="catePubId=014" data-valid="1"
-                                        title="<%= item.firstCategory %>">
-                                    <a onclick="firstEvent(this.name)"
-                                       name="<%= item.de_firstCategory %>"><%= item.de_firstCategory %></a>
-                                </option>
-                                <% }) %>
+                                    <% if(category.length != 0) { %>
+                                    <% category.forEach(function (item) { %>
+                                    <option data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="类目"
+                                            data-en="Apparel"
+                                            data-param="catePubId=014" data-valid="1"
+                                            title="<%= item.firstCategory %>">
+                                        <a onclick="firstEvent(this.name)"
+                                           name="<%= item.de_firstCategory %>"><%= item.de_firstCategory %></a>
+                                    </option>
+                                    <% }) %>
+                                    <% } %>
+                                </select>
+                                <% }else{ %>
+                                <select class="form-control firstCategory"
+                                        onchange="show_sub(this.options[this.options.selectedIndex].value)">
+                                    <option value="">选择类目</option>
+
+                                    <% if(category.length != 0) { %>
+                                    <% category.forEach(function (item) { %>
+                                    <option data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="类目"
+                                            data-en="Apparel"
+                                            data-param="catePubId=014" data-valid="1"
+                                            title="<%= item.firstCategory %>">
+                                        <a onclick="firstEvent(this.name)"
+                                           name="<%= item.firstCategory %>"><%= item.firstCategory %></a>
+                                    </option>
+                                    <% }) %>
+                                    <% } %>
+                                </select>
                                 <% } %>
-                            </select>
-                            <% }else{ %>
-                            <select class="form-control firstCategory"
-                                    onchange="show_sub(this.options[this.options.selectedIndex].value)">
-                                <option value="">选择类目</option>
 
-                                <% if(category.length != 0) { %>
-                                <% category.forEach(function (item) { %>
-                                <option data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="类目"
-                                        data-en="Apparel"
-                                        data-param="catePubId=014" data-valid="1"
-                                        title="<%= item.firstCategory %>">
-                                    <a onclick="firstEvent(this.name)"
-                                       name="<%= item.firstCategory %>"><%= item.firstCategory %></a>
-                                </option>
-                                <% }) %>
-                                <% } %>
-                            </select>
-                            <% } %>
+                            </div>
+                        </form>
+                    </div>
 
-                        </div>
-                    </form>
+                    <div class="col-sm-6">
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="category" class="control-label pull-left">二级类目:</label>
+                                <select class="form-control secondCategory">
+                                    <option value="">选择类目</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
-                <div class="col-sm-6">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="category" class="control-label pull-left">二级类目:</label>
-                            <select class="form-control secondCategory">
-                                <option value="">选择类目</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                <div class="form-group col-sm-7">
+                    <div class="col-sm-4">
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="category" class="control-label pull-left">三级类目:</label>
+                                <select class="form-control thirdCategory">
+                                    <option value="">选择类目</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
 
-            <div class="form-group col-sm-7">
-                <div class="col-sm-4">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="category" class="control-label pull-left">三级类目:</label>
-                            <select class="form-control thirdCategory">
-                                <option value="">选择类目</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
+                    <div class="col-sm-2 search tool">
+                        <button class="btn btn-info" onclick="CompatibilitySearch()">搜索</button>
+                    </div>
 
-                <div class="col-sm-2 search tool">
-                    <button class="btn btn-info" onclick="CompatibilitySearch()">搜索</button>
-                </div>
+                    <div class="col-sm-2 tool">
+                        <button class="btn btn-info" onclick="CompatibilityCLK()">添加</button>
+                    </div>
 
-                <div class="col-sm-2 tool">
-                    <button class="btn btn-info" onclick="CompatibilityCLK()">添加</button>
-                </div>
-
-                <div class="col-md-4 fanyi pull-right tool">
-                    <select class="form-control" id="choose-spec">
-                        <option value="English">英文产品规格</option>
-                        <option value="German">德文产品规格</option>
-                    </select>
+                    <div class="col-md-4 fanyi pull-right tool">
+                        <select class="form-control" id="choose-spec">
+                            <option value="English">英文产品规格</option>
+                            <option value="German">德文产品规格</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <% if(specification.length != 0) { %>
-    <% specification.forEach(function (single) { %>
-    <div class="box-body">
-        <div class="col-md-12">
-            <div class="box">
-                <div class="box-header with-border">
-                    类目: &nbsp;
-                    <h3 class="box-title" title="一级类目"><%= single.firstCategory %></h3>&nbsp; =>&nbsp;
-                    <h3 class="box-title" title="二级类目"><%= single.secondCategory %></h3>&nbsp; =>&nbsp;
-                    <h3 class="box-title" title="三级类目"><%= single.thirdCategory %></h3>
-                </div><!-- /.box-header -->
+        <% if(specification.length != 0) { %>
+        <% specification.forEach(function (single) { %>
+        <div class="box-body">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        类目: &nbsp;
+                        <h3 class="box-title" title="一级类目"><%= single.firstCategory %></h3>&nbsp; =>&nbsp;
+                        <h3 class="box-title" title="二级类目"><%= single.secondCategory %></h3>&nbsp; =>&nbsp;
+                        <h3 class="box-title" title="三级类目"><%= single.thirdCategory %></h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tbody class="Compatibility">
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>属性名称</th>
+                                <th>属性值</th>
+                                <th>添加时间</th>
+                                <th>操作</th>
+                            </tr>
+
+                            <% if(single.specification.hasOwnProperty('compatibility')) { %>
+                            <% single.specification.compatibility.forEach(function (secondItem) { %>
+                            <tr>
+                                <th></th>
+                                <th><%= secondItem.name %></th>
+                                <% if(language == 'en') { %>
+                                <th><%= secondItem.value %></th>
+                                <% }else{ %>
+                                <th><%= secondItem.de_value %></th>
+                                <% } %>
+                                <th><%= secondItem.addTime %></th>
+                                <% if(language == 'en') { %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% }else{ %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% } %>
+                            </tr>
+                            <% }) %>
+                            <% } %>
+
+                            <% if(single.specification.hasOwnProperty('type')) { %>
+                            <% single.specification.type.forEach(function (secondItem) { %>
+                            <tr>
+                                <th></th>
+                                <th><%= secondItem.name %></th>
+                                <% if(language == 'en') { %>
+                                <th><%= secondItem.value %></th>
+                                <% }else{ %>
+                                <th><%= secondItem.de_value %></th>
+                                <% } %>
+                                <th><%= secondItem.addTime %></th>
+                                <% if(language == 'en') { %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% }else{ %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% } %>
+                            </tr>
+                            <% }) %>
+                            <% } %>
+
+                            <% if(single.specification.hasOwnProperty('hardOrSoft')) { %>
+                            <% single.specification.hardOrSoft.forEach(function (secondItem) { %>
+                            <tr>
+                                <th></th>
+                                <th><%= secondItem.name %></th>
+                                <% if(language == 'en') { %>
+                                <th><%= secondItem.value %></th>
+                                <% }else{ %>
+                                <th><%= secondItem.de_value %></th>
+                                <% } %>
+                                <th><%= secondItem.addTime %></th>
+                                <% if(language == 'en') { %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% }else{ %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% } %>
+                            </tr>
+                            <% }) %>
+                            <% } %>
+
+                            <% if(single.specification.hasOwnProperty('features')) { %>
+                            <% single.specification.features.forEach(function (secondItem) { %>
+                            <tr>
+                                <th></th>
+                                <th><%= secondItem.name %></th>
+                                <% if(language == 'en') { %>
+                                <th><%= secondItem.value %></th>
+                                <% }else{ %>
+                                <th><%= secondItem.de_value %></th>
+                                <% } %>
+                                <th><%= secondItem.addTime %></th>
+                                <% if(language == 'en') { %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% }else{ %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% } %>
+                            </tr>
+                            <% }) %>
+                            <% } %>
+
+                            <% if(single.specification.hasOwnProperty('pattern')) { %>
+                            <% single.specification.pattern.forEach(function (secondItem) { %>
+                            <tr>
+                                <th></th>
+                                <th><%= secondItem.name %></th>
+                                <% if(language == 'en') { %>
+                                <th><%= secondItem.value %></th>
+                                <% }else{ %>
+                                <th><%= secondItem.de_value %></th>
+                                <% } %>
+                                <th><%= secondItem.addTime %></th>
+                                <% if(language == 'en') { %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% }else{ %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% } %>
+                            </tr>
+                            <% }) %>
+                            <% } %>
+
+                            <% if(single.specification.hasOwnProperty('Color')) { %>
+                            <% single.specification.Color.forEach(function (secondItem) { %>
+                            <tr>
+                                <th></th>
+                                <th><%= secondItem.name %></th>
+                                <% if(language == 'en') { %>
+                                <th><%= secondItem.value %></th>
+                                <% }else{ %>
+                                <th><%= secondItem.de_value %></th>
+                                <% } %>
+                                <th><%= secondItem.addTime %></th>
+                                <% if(language == 'en') { %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% }else{ %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% } %>
+                            </tr>
+                            <% }) %>
+                            <% } %>
+
+                            <% if(single.specification.hasOwnProperty('material')) { %>
+                            <% single.specification.material.forEach(function (secondItem) { %>
+                            <tr>
+                                <th></th>
+                                <th><%= secondItem.name %></th>
+                                <% if(language == 'en') { %>
+                                <th><%= secondItem.value %></th>
+                                <% }else{ %>
+                                <th><%= secondItem.de_value %></th>
+                                <% } %>
+                                <th><%= secondItem.addTime %></th>
+                                <% if(language == 'en') { %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% }else{ %>
+                                <th>
+                                    <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
+                                            onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
+                                        删除
+                                    </button>
+                                </th>
+                                <% } %>
+                            </tr>
+                            <% }) %>
+                            <% } %>
+
+                            </tbody>
+                        </table>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            <li><a href="#">«</a></li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">»</a></li>
+                        </ul>
+                    </div>
+                </div><!-- /.box -->
+            </div>
+        </div>
+        <% }) %>
+        <% } %>
+
+        <!--添加 form start -->
+        <div class="form-horizontal  layer_notice hidden" id="addRoboteForm">
+            <form class="" hidden="hidden" action="addParam" style="margin-top: 50px" method="post" id="addRote">
                 <div class="box-body">
-                    <table class="table table-bordered">
-                        <tbody class="Compatibility">
-                        <tr>
-                            <th style="width: 10px">#</th>
-                            <th>属性名称</th>
-                            <th>属性值</th>
-                            <th>添加时间</th>
-                            <th>操作</th>
-                        </tr>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">属性</label>
 
-                        <% if(single.specification.hasOwnProperty('compatibility')) { %>
-                        <% single.specification.compatibility.forEach(function (secondItem) { %>
-                        <tr>
-                            <th></th>
-                            <th><%= secondItem.name %></th>
-                            <% if(language == 'en') { %>
-                            <th><%= secondItem.value %></th>
-                            <% }else{ %>
-                            <th><%= secondItem.de_value %></th>
-                            <% } %>
-                            <th><%= secondItem.addTime %></th>
-                            <% if(language == 'en') { %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% }else{ %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% } %>
-                        </tr>
-                        <% }) %>
-                        <% } %>
+                        <div class="col-sm-6">
+                            <select id="pd_select" class="form-control" name="" id="">
+                                <option value="compatibility">
+                                    compatibility
+                                </option>
+                                <option value="type">
+                                    type
+                                </option>
+                                <option value="hardOrSoft">
+                                    hardOrSoft
+                                </option>
+                                <option value="features">
+                                    features
+                                </option>
+                                <option value="pattern">
+                                    pattern
+                                </option>
+                                <option value="Color">
+                                    Color
+                                </option>
+                                <option value="material">
+                                    material
+                                </option>
+                            </select>
+                        </div>
+                    </div>
 
-                        <% if(single.specification.hasOwnProperty('type')) { %>
-                        <% single.specification.type.forEach(function (secondItem) { %>
-                        <tr>
-                            <th></th>
-                            <th><%= secondItem.name %></th>
-                            <% if(language == 'en') { %>
-                            <th><%= secondItem.value %></th>
-                            <% }else{ %>
-                            <th><%= secondItem.de_value %></th>
-                            <% } %>
-                            <th><%= secondItem.addTime %></th>
-                            <% if(language == 'en') { %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% }else{ %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% } %>
-                        </tr>
-                        <% }) %>
-                        <% } %>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">所属三级类目</label>
 
-                        <% if(single.specification.hasOwnProperty('hardOrSoft')) { %>
-                        <% single.specification.hardOrSoft.forEach(function (secondItem) { %>
-                        <tr>
-                            <th></th>
-                            <th><%= secondItem.name %></th>
-                            <% if(language == 'en') { %>
-                            <th><%= secondItem.value %></th>
-                            <% }else{ %>
-                            <th><%= secondItem.de_value %></th>
-                            <% } %>
-                            <th><%= secondItem.addTime %></th>
-                            <% if(language == 'en') { %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% }else{ %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% } %>
-                        </tr>
-                        <% }) %>
-                        <% } %>
+                        <div class="col-sm-6">
+                            <select id="default_category" name="default_category" class="form-control" value="">
+                                <% category.forEach(function(item){ %>
+                                <% item.secondCategory.forEach(function(items){ %>
+                                <% items.thirdTitles.forEach(function(third){ %>
+                                <option value="<%= third.thirdTitle %>"><%= third.thirdTitle %></option>
+                                <% }) %>
+                                <% }) %>
+                                <% }) %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">属性值(英文)*</label>
 
-                        <% if(single.specification.hasOwnProperty('features')) { %>
-                        <% single.specification.features.forEach(function (secondItem) { %>
-                        <tr>
-                            <th></th>
-                            <th><%= secondItem.name %></th>
-                            <% if(language == 'en') { %>
-                            <th><%= secondItem.value %></th>
-                            <% }else{ %>
-                            <th><%= secondItem.de_value %></th>
-                            <% } %>
-                            <th><%= secondItem.addTime %></th>
-                            <% if(language == 'en') { %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% }else{ %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% } %>
-                        </tr>
-                        <% }) %>
-                        <% } %>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="spec" name="spec">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">属性值(德文)</label>
 
-                        <% if(single.specification.hasOwnProperty('pattern')) { %>
-                        <% single.specification.pattern.forEach(function (secondItem) { %>
-                        <tr>
-                            <th></th>
-                            <th><%= secondItem.name %></th>
-                            <% if(language == 'en') { %>
-                            <th><%= secondItem.value %></th>
-                            <% }else{ %>
-                            <th><%= secondItem.de_value %></th>
-                            <% } %>
-                            <th><%= secondItem.addTime %></th>
-                            <% if(language == 'en') { %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% }else{ %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% } %>
-                        </tr>
-                        <% }) %>
-                        <% } %>
-
-                        <% if(single.specification.hasOwnProperty('Color')) { %>
-                        <% single.specification.Color.forEach(function (secondItem) { %>
-                        <tr>
-                            <th></th>
-                            <th><%= secondItem.name %></th>
-                            <% if(language == 'en') { %>
-                            <th><%= secondItem.value %></th>
-                            <% }else{ %>
-                            <th><%= secondItem.de_value %></th>
-                            <% } %>
-                            <th><%= secondItem.addTime %></th>
-                            <% if(language == 'en') { %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% }else{ %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% } %>
-                        </tr>
-                        <% }) %>
-                        <% } %>
-
-                        <% if(single.specification.hasOwnProperty('material')) { %>
-                        <% single.specification.material.forEach(function (secondItem) { %>
-                        <tr>
-                            <th></th>
-                            <th><%= secondItem.name %></th>
-                            <% if(language == 'en') { %>
-                            <th><%= secondItem.value %></th>
-                            <% }else{ %>
-                            <th><%= secondItem.de_value %></th>
-                            <% } %>
-                            <th><%= secondItem.addTime %></th>
-                            <% if(language == 'en') { %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.value %>','<%= secondItem.name %>','<%= single.thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% }else{ %>
-                            <th>
-                                <button class="btn btn-danger" name="<%= secondItem.name %>" id="type"
-                                        onclick="deltobase('<%= secondItem.de_value %>','<%= secondItem.name %>','<%= single.de_thirdCategory %>')">
-                                    删除
-                                </button>
-                            </th>
-                            <% } %>
-                        </tr>
-                        <% }) %>
-                        <% } %>
-
-                        </tbody>
-                    </table>
-                </div><!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    <ul class="pagination pagination-sm no-margin pull-right">
-                        <li><a href="#">«</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">»</a></li>
-                    </ul>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="spec_german" name="spec_german">
+                        </div>
+                    </div>
                 </div>
-            </div><!-- /.box -->
+
+                <div class="box-footer">
+                    <button type="button" id="subaddRobotBtn" class="btn btn-info pull-right closeBtn"
+                            onclick="addtobase()">添加
+                    </button>
+                </div>
+            </form>
+
         </div>
     </div>
-    <% }) %>
-    <% } %>
-
-    <!--添加 form start -->
-    <div class="form-horizontal  layer_notice hidden" id="addRoboteForm">
-        <form class="" hidden="hidden" action="addParam" style="margin-top: 50px" method="post" id="addRote">
-            <div class="box-body">
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">属性</label>
-
-                    <div class="col-sm-6">
-                        <select id="pd_select" class="form-control" name="" id="">
-                            <option value="compatibility">
-                                compatibility
-                            </option>
-                            <option value="type">
-                                type
-                            </option>
-                            <option value="hardOrSoft">
-                                hardOrSoft
-                            </option>
-                            <option value="features">
-                                features
-                            </option>
-                            <option value="pattern">
-                                pattern
-                            </option>
-                            <option value="Color">
-                                Color
-                            </option>
-                            <option value="material">
-                                material
-                            </option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-4 control-label">所属三级类目</label>
-
-                    <div class="col-sm-6">
-                        <select id="default_category" name="default_category" class="form-control" value="">
-                            <% category.forEach(function(item){ %>
-                            <% item.secondCategory.forEach(function(items){ %>
-                            <% items.thirdTitles.forEach(function(third){ %>
-                            <option value="<%= third.thirdTitle %>"><%= third.thirdTitle %></option>
-                            <% }) %>
-                            <% }) %>
-                            <% }) %>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">属性值(英文)*</label>
-
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="spec" name="spec">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">属性值(德文)</label>
-
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="spec_german" name="spec_german">
-                    </div>
-                </div>
-            </div>
-
-            <div class="box-footer">
-                <button type="button" id="subaddRobotBtn" class="btn btn-info pull-right closeBtn"
-                        onclick="addtobase()">添加
-                </button>
-            </div>
-        </form>
-
-    </div>
-</div>
+</section>
 
 <script>
     $('#choose-spec').on('change', function () {
