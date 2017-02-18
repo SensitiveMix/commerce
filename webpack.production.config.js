@@ -6,9 +6,9 @@ var webpack = require('webpack');
 var productionConfig = [{
     entry: {
         public_js_build: './public/js/',
-        public_css_build: './public/stylesheets/',
+        public_web_build: './public/js/jquery.gridly.js',
         public_cookie_build: './public/js/web/jquery.cookie.js',
-        public_web_build: './public/stylesheets/'
+        public_css_build: './public/stylesheets/'
     },
     output: {
         filename: './[name]/bundle.js',
@@ -51,6 +51,6 @@ var productionConfig = [{
         new CleanWebpackPlugin(['public/public_js_build', 'public/public_css_build', 'public/public_cookie_build', 'public/public_web_build']),
         new Ex("public_css_build/styles.css"),
     ]
-}];
+}]
 
 module.exports = productionConfig
