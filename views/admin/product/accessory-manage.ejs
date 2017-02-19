@@ -31,7 +31,7 @@
                             <% if(category.length != 0) { %>
                             <% category.forEach(function (item) { %>
                             <li data-crosscate="0" class="j-tipsbox" data-crosscate="2" data-cn="服装" data-en="Apparel"
-                                data-param="catePubId=014" data-valid="1"
+                                data-param="catePubId=014" data-valid="1" style="color:<%= item.firstCategory_color %>"
                                 title="<%= item.firstCategory %>"><%= item.firstCategory %></li>
                             <% }) %>
                             <% } %>
@@ -261,7 +261,7 @@
                     $('#div_catagory1').addClass('addscroll');
                     $('#catagory1').empty();
                     <% item.secondCategory.forEach(function (secondItem) { %>
-                    var mysecondTitle = '<li data-crosscate="0" title="<%= secondItem.secondTitle %>" data-leaf="0" data-valid="1" data-param="catePubId=135005" data-en="<%= secondItem.secondTitle %>" data-cn="<%= secondItem.secondTitle %>"><%= secondItem.secondTitle %></li>'
+                    var mysecondTitle = '<li data-crosscate="0" style="color:<%= secondItem.secondTitle_color %>" title="<%= secondItem.secondTitle %>" data-leaf="0" data-valid="1" data-param="catePubId=135005" data-en="<%= secondItem.secondTitle %>" data-cn="<%= secondItem.secondTitle %>"><%= secondItem.secondTitle %></li>'
                     $('#catagory1').append(mysecondTitle);
                     <% }) %>
                 }
@@ -299,7 +299,7 @@
                             $('#div_catagory2').addClass('addscroll');
                             $('#catagory2').empty();
                             <% secondItem.thirdTitles.forEach(function (thirdItem) { %>
-                            var mythirdTitle = '<li data-crosscate="0" title="<%= thirdItem.thirdTitle %>" data-remark="读取3.5英寸软盘的设备可以读写1.44MB的3.5英寸软盘" data-leaf="1" data-valid="1" data-param="catePubId=009001007" data-en="Floppy Drives" name="<%= thirdItem.thirdImages %>" data-cn="<%= thirdItem.thirdTitle %>"><%= thirdItem.thirdTitle %></li>'
+                            var mythirdTitle = '<li data-crosscate="0" style="color:<%= thirdItem.thirdTitle_color %>" title="<%= thirdItem.thirdTitle %>" data-remark="读取3.5英寸软盘的设备可以读写1.44MB的3.5英寸软盘" data-leaf="1" data-valid="1" data-param="catePubId=009001007" data-en="Floppy Drives" name="<%= thirdItem.thirdImages %>" data-cn="<%= thirdItem.thirdTitle %>"><%= thirdItem.thirdTitle %></li>'
                             $('#catagory2').append(mythirdTitle);
                             <% }) %>
                         }

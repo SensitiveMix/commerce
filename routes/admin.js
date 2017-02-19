@@ -969,12 +969,15 @@ router.get('/accessory_manage_german', (req, res) => {
         if (err) res.send('404')
         new Promise((resolve, reject) => {
             _.each(categories, (category) => {
+                category.firstCategory_color = category.firstCategory == category.de_firstCategory ? "red" : "black"
                 category.firstCategory = category.de_firstCategory || category.firstCategory
                 if (typeof category.secondCategory != 'undefined') {
                     _.each(category.secondCategory, (second) => {
+                        second.secondTitle_color = second.de_secondTitle == second.secondTitle ? "red" : "black"
                         second.secondTitle = second.de_secondTitle || second.secondTitle
                         if (typeof second.thirdTitles != 'undefined') {
                             _.each(second.thirdTitles, (third) => {
+                                third.thirdTitle_color = third.de_thirdTitle == third.thirdTitle ? "red" : "black"
                                 third.thirdTitle = third.de_thirdTitle || third.thirdTitle
                             })
                         }
