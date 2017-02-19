@@ -416,7 +416,7 @@
                         $.cookie('PHPSESSID');
                     </script>
                     <% } %>
-                    <a class="marginleft20" href="#" onclick="javascript:history.go(-1);">«返回修改类目</a>
+                    <a class="marginleft20" href="upload">«返回修改类目</a>
                 </div>
             </div>
 
@@ -653,7 +653,7 @@
                             initialFrameHeight: 300
                             //更多其他参数，请参考umeditor.config.js中的配置项
                         });
-                        um.setContent('输入产品备注');
+                        um.setContent('');
                         um.addListener('selectionchange', function () {
                             getTranslate(false)
                         })
@@ -676,7 +676,7 @@
                             initialFrameHeight: 300
                             //更多其他参数，请参考umeditor.config.js中的配置项
                         });
-                        umdemon.setContent('输入德文产品备注');
+                        umdemon.setContent('');
                     </script>
                 </div>
             </div>

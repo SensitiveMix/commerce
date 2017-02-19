@@ -1513,12 +1513,15 @@ router.get('/hotlabel', function (req, res, next) {
 //上传产品
 router.get('/upload', checkLogin);
 router.get('/upload', function (req, res) {
+    console.log('save history go -1')
+    console.log(req.session.tempCategory)
     db.categorys.find({}, function (err, result) {
         if (err) res.send('404')
         res.render('admin/product/upload-goods', {
             username: u.nick_name,
             upload: [],
             category: result,
+            tempCategory: req.session.tempCategory || [],
             specStatus: true
         })
     })
@@ -1607,13 +1610,17 @@ router.get('/upload-products-detail', (req, res, next) => {
                     let [product_specs, category, suppliers] = values
                     let product_spec = product_specs.product_specs
 
+                    console.log('----------')
+                    console.log(product_specs.spec_status)
+                    console.log('----------')
                     if (!product_specs.spec_status) {
                         db.categorys.find({}, function (err, result) {
-                            if (err) res.send('404')
+                            if (err) return res.send('404')
                             return res.render('admin/product/upload-goods', {
                                 username: u.nick_name,
                                 upload: [],
                                 category: result,
+                                tempCategory: req.session.tempCategory || [],
                                 specStatus: false
                             })
                         })
@@ -1705,11 +1712,10 @@ router.post('/uploadTemporary', function (req, res, next) {
             upload_time: (new Date().getTime() / 1000).toFixed(),
             status: 'NEW'
         }
+        console.log('typeof temp status: ' + typeof req.session.tempCategory)
         if (typeof req.session.tempCategory == 'undefined') {
             tempCategory.push(Categories)
             req.session.tempCategory = tempCategory
-            console.log('first')
-            console.log(Categories)
             let category = new db.uploadTemporarys(Categories)
             category.save(function (err) {
                 console.log(err);
@@ -1742,56 +1748,72 @@ router.post('/uploadTemporary', function (req, res, next) {
                 if (i.firstCategory != req.body.firstCategory
                     || i.secondCategory != req.body.secondCategory
                     || i.thirdCategory != req.body.thirdCategory) {
+                    // temporary do not already exist so dismiss it
                     callback()
+                } else {
+                    // temporary already exist so dismiss it
+                    callback('error')
                 }
-                console.log(req.session.tempCategory)
             }, (err) => {
-                if (!err) {
-                    req.session.tempCategory.push(Categories)
-                    console.log(req.session.tempCategory)
-                    let category = new db.uploadTemporarys(Categories)
-                    category.save(function (err) {
-                        console.log(err);
-                        if (err) {
-                            console.log(err);
-                            res.send({error_msg: ['INTERNAL SERVER ERROR'], info: "", result: "fail", code: "500"})
-                        } else {
-                            db.uploadTemporarys.find({'addBy': req.body.addBy}, null, {
-                                sort: {
-                                    upload_time: -1
-                                }
-                            }, function (err, result) {
-                                if (err) {
-                                    res.send({
-                                        error_msg: ['INTERNAL SERVER ERROR'],
-                                        info: "",
-                                        result: "fail",
-                                        code: "500"
-                                    });
-                                } else {
-                                    res.send({error_msg: [], info: result, result: "success", code: "200"});
-                                }
+                // error <null or error>
+                console.log("upload temporary already exist")
+                if (err) return res.send({error_msg: [], info: Categories, result: "success", code: "200"})
+                // need add temporary category into session
 
-                            }).limit(5);
-                        }
+                // TODO DO NOT SUPPORT MUTIL UPLOAD
+                // req.session.tempCategory.push(Categories)
+                // let arrayLike = []
+                // arrayLike.push(Categories)
+                req.session.tempCategory.push(Categories)
+                console.log(req.session.tempCategory)
+
+                // report status
+                console.log("upload temporary do not already exist")
+                let category = new db.uploadTemporarys(Categories)
+                category.save(err => {
+                    if (err) return res.send({
+                        error_msg: ['INTERNAL SERVER ERROR'],
+                        info: "",
+                        result: "fail",
+                        code: "500"
                     })
-                }
+                    db.uploadTemporarys.find({
+                        'addBy': req.body.addBy
+                    }, null, {
+                        sort: {
+                            upload_time: -1
+                        }
+                    }, (err, result) => {
+                        if (err) return res.send({
+                            error_msg: ['INTERNAL SERVER ERROR'],
+                            info: "",
+                            result: "fail",
+                            code: "500"
+                        })
+                        console.log("upload temporary upload status success")
+                        res.send({error_msg: [], info: result, result: "success", code: "200"})
+                    }).limit(5)
+                })
             })
         }
     }
 })
 
-router.post('/deleteTemporary', function (req, res, next) {
+router.post('/deleteTemporary', (req, res) => {
+    console.log(req.body.thirdCategory.trim())
+    if (req.body.thirdCategory == '') return res.json({status: 403, msg: 'NOT FOUND'})
+    tempCategory = _.filter(function (item) {
+        return item.thirdCategory != req.body.thirdCategory
+    })
 
-    if (req.body.thirdCategory != '') {
-        tempCategory = _.filter(function (item) {
-            return item.thirdCategory != req.body.thirdCategory
-        })
-        res.json({status: 200, msg: 'SUCCESS'})
-    } else {
-        res.json({status: 403, msg: 'NOT FOUND'})
-    }
-});
+    req.session.tempCategory = _.filter(req.session.tempCategory, item => {
+        return item.thirdCategory != req.body.thirdCategory.trim()
+    })
+    console.log("delete success")
+    console.log(req.session.tempCategory)
+
+    res.json(201, {status: 200, msg: 'SUCCESS'})
+})
 
 //点击上传产品跳转到产品详情页接口
 router.post('/uploadProductDetail', function (req, res, next) {

@@ -1,7 +1,5 @@
 <% layout('../backend-master.ejs') %>
 <script src="/public_cookie_build/bundle.js"></script>
-<!--<script type="text/javascript" src="/ueditor/third-party/jquery.min.js"></script>-->
-<!--<script src="/js/web/jquery.cookie.js"></script>-->
 <style>
     .categoryselectlist li.current, .categoryselectlist li.hover {
         color: #fff;
@@ -264,7 +262,46 @@
     if ('<%= specStatus %>' == 'false') {
         layer.alert("请上传该类目产品属性")
     }
+
+
     $(function () {
+        if ('<%= tempCategory %>'.length != 0) {
+            $('.save_category').css('display', 'block')
+            <% tempCategory.forEach(function (item) { %>
+            $('.save_category_path').append('<span data-param="en" data-val="<%= item.firstCategory %>">-<%= item.firstCategory %> >> <%= item.secondCategory %> >>  <%= item.thirdCategory %> </span><span class="delete">删除</span><br/>')
+            <% }) %>
+        }
+
+        $('.delete').click(function () {
+            var context = $(this).prev().text()
+            var threeCategory = context.substring(context.lastIndexOf('>') + 1, context.length)
+            total_category = total_category.filter(function (item) {
+                return item.thirdCategory != threeCategory
+            })
+            if (threeCategory != '') {
+                $.ajax({
+                    type: 'POST',
+                    url: 'deleteTemporary',
+                    data: {thirdCategory: threeCategory},
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.status == 200) {
+                            layer.msg('删除成功');
+                        } else {
+                            layer.msg('删除失败');
+                        }
+
+                    }
+                });
+            } else {
+                layer.msg('删除失败')
+            }
+            layer.msg('删除成功')
+            $(this).prev().remove()
+            $(this).next().remove()
+            $(this).remove()
+        })
+
 
         $.ajax({
             type: 'GET',
@@ -513,6 +550,95 @@
             }
         })
 
+        function saveCategoryHistory() {
+            if ($('#catagory2 li.current').text() == '') {
+                layer.msg('请选择三级类目')
+            } else {
+                let single = {
+                    firstCategory: $('#catagory0 li.current').text(),
+                    secondCategory: $('#catagory1 li.current').text(),
+                    thirdCategory: $('#catagory2 li.current').text()
+                }
+                let Length = total_category.filter(function (item) {
+                    return single.firstCategory == item.firstCategory && single.secondCategory == item.secondCategory && single.thirdCategory == item.thirdCategory
+                }).length
+
+                if (Length > 0) {
+                    layer.msg('该类目已存在')
+                } else {
+                    total_category.push(single)
+                    var myhistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + ' -</span>'
+                    $('#recentCategoryDropdown').append(myhistory)
+                    $('.save_category').css('display', 'block')
+                    var saveHistory = '<span data-param="en" data-val="' + $('#catagory0 li.current').text() + '">- ' + $('#catagory0 li.current').text() + '>>' + $('#catagory1 li.current').text() + '>>' + $('#catagory2 li.current').text() + '</span><span class="delete">删除</span><br/>'
+                    $('.save_category_path').append(saveHistory)
+
+                    $('.delete').click(function () {
+                        var context = $(this).prev().text()
+                        var threeCategory = context.substring(context.lastIndexOf('>') + 1, context.length)
+                        total_category = total_category.filter(function (item) {
+                            return item.thirdCategory != threeCategory
+                        })
+                        if (threeCategory != '') {
+                            $.ajax({
+                                type: 'POST',
+                                url: 'deleteTemporary',
+                                data: {thirdCategory: threeCategory},
+                                dataType: 'json',
+                                success: function (data) {
+                                    if (data.status == 200) {
+                                        layer.msg('删除成功');
+                                    } else {
+                                        layer.msg('删除失败');
+                                    }
+
+                                }
+                            });
+                        } else {
+                            layer.msg('删除失败')
+                        }
+                        layer.msg('删除成功')
+                        $(this).prev().remove()
+                        $(this).next().remove()
+                        $(this).remove()
+                    })
+
+
+                    if ($('#catagory0 li.current').text().length != 0) {
+                        let payload = {
+                            firstCategory: $('#catagory0 li.current').text(),
+                            secondCategory: $('#catagory1 li.current').text(),
+                            thirdCategory: $('#catagory2 li.current').text(),
+                            addBy: '<%= username %>',
+                            status: 'NEW'
+                        }
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/uploadTemporary',
+                            data: payload,
+                            dataType: 'json',
+                            success: function (data) {
+                                isSave = true;
+                                console.log(data);
+                                if ($('#catagory0 li.current').text() == '') {
+                                    layer.msg('请选择类目');
+                                } else {
+                                    window.location.href = '/admin/upload-products-detail';
+                                }
+                            },
+                            error: function (err_msg) {
+                                console.log('-----')
+                                console.log(err_msg)
+                            }
+                        })
+                    } else {
+                        alert('请选择类目!');
+                    }
+                }
+            }
+        }
+
         $('#product_detail').click(function () {
             var titleArray = [];
             $('.save_category_path span[data-val]').each(function (index, item) {
@@ -521,10 +647,9 @@
             var titleString = titleArray.join(';');
             console.log(titleString);
             $.cookie('title', titleString);
-            if ($('#catagory0 li.current').text() == '') {
-                layer.msg('请选择类目');
-            } else if (isSave == false) {
-                layer.msg('请先收藏类目');
+//            saveCategoryHistory()
+            if ($('.save_category_path').children().length == 0) {
+                layer.msg('请保存类目');
             } else {
                 window.location.href = '/admin/upload-products-detail';
             }
