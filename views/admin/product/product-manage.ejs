@@ -205,6 +205,7 @@
         success: function (data) {
             let products = data.msg
             products.forEach(product => {
+                product.online_time = product.online_time || ""
                 var myhtml = '<tr>'
                     + '<td class="padleft20 row" width="50%">'
                     + '<span class="prolayout">'
@@ -786,6 +787,7 @@
                 console.log(products.length)
                 $('#auditProductNum-num').html(products.length)
                 products.forEach(product => {
+                    product.online_time = product.online_time || ""
                     var myhtml = '<tr>'
                         + '<td class="padleft20 row" width="50%">'
                         + '<span class="prolayout">'
@@ -866,6 +868,7 @@
                 console.log(products.length)
                 $('#shelfProductNum-num').html(products.length)
                 products.forEach(product => {
+                    product.online_time = product.online_time || ""
                     var myhtml = '<tr>'
                         + '<td class="padleft20 row" width="50%">'
                         + '<span class="prolayout">'
@@ -948,6 +951,7 @@
                 console.log(products.length)
                 $('#downShelfProductNum-num').html(products.length)
                 products.forEach(product => {
+                    product.online_time = product.online_time || ""
                     var myhtml = '<tr>'
                         + '<td class="padleft20 row" width="50%">'
                         + '<span class="prolayout">'
@@ -1044,6 +1048,7 @@
                 console.log(products.length)
                 $('#' + productType + '-num').html(products.length)
                 products.forEach(product => {
+                    product.online_time = product.online_time || ""
                     var myhtml = '<tr>'
                         + '<td class="padleft20 row" width="50%">'
                         + '<span class="prolayout">'

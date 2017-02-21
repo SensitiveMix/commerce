@@ -402,7 +402,12 @@ a {
 }
 
 #submitopt {
-    margin-bottom: 13px;
+    margin-bottom: 15px;
+    margin-left:15px;
+
+}
+#submitopt-draft {
+    margin-bottom: 15px;
 }
 
 .file-upload-single li {

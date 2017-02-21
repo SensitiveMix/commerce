@@ -192,6 +192,150 @@
             }
         })
 
+        $('#submitopt-draft').on('click', function () {
+            // 产品标题
+            form.product_title = $('#productname').val()
+            form.product_title_german = $('#productname_de').val() || $('#productname').val()
+
+            //产品备注
+            form.product_remark = um.getContent()
+            form.product_remark_german = umdemon.getContent()
+
+
+            form.product_price = []
+
+            //产品计量单位
+            form.product_danWei = []
+            let danWei = {
+                danWei_key: $('select[name="measureid"]').find("option:selected").attr('data-name'),
+                danWei_value: $('select[name="measureid"]').val()
+            }
+            form.product_danWei.push(danWei)
+
+            //产品供应商
+            form.product_supplier = $('select[name="supplier"]').val()
+
+            //产品销售状态
+            form.product_sell_status = $('.color-preview.current-color').eq(0).css('background-color')
+
+            //产品备货期
+            form.product_stock_status = $('.color-preview.current-color').eq(1).css('background-color')
+
+            form.product_market = []
+            let market = {}
+            market.market_method = $('input[name="market_method"]:checked').val()
+
+            //产品销售方式
+            if ($('input[name="market_method"]:checked').val() == 2) {
+                market.market_amount = $('input[name="packquantity"]').val()
+            } else {
+                market.market_amount = ''
+            }
+            form.product_market.push(market)
+
+            //产品毛重
+            form.quantity = $('input[name="sell-function-mao"]').val()
+
+            //产品视频连接
+            form.product_video_link = $('#videourl').val()
+            form.product_images = []
+
+            //产品图片
+            $('.gridly div').each(function (index, item) {
+                let data_product_image = {}
+                data_product_image.title = ''
+                data_product_image.url = $(item).find('img').attr('src')
+                form.product_images.push(data_product_image)
+            })
+
+            $('#product-attribute-table tbody tr').each(function (index, item) {
+                let form_data_compile = {}
+                let color = $(item).find('td').eq(0).text()
+                console.log(color)
+                color = color.substring(color.lastIndexOf('】') + 1, color.length)
+                form_data_compile.compile_vip_price = $(item).find('td').eq(1).find('input').val()
+                form_data_compile.compile_color = color
+                form_data_compile.compile_normal_price = $(item).find('td').eq(2).find('input').val()
+                form_data_compile.compile_image = $(item).find('img').attr('src')
+                form.product_price.push(form_data_compile)
+            })
+
+
+            // 产品基本属性添加
+            let product_spec = {}
+            product_spec.compact = []
+            product_spec.hardOrSoft = []
+            product_spec.type = []
+            product_spec.features = []
+            product_spec.pattern = []
+            product_spec.color = []
+            product_spec.material = []
+            $('input[name="compatibility"]:checked').each(function () {
+                product_spec.compact.push($(this).val())
+            })
+            $('input[name="type"]:checked').each(function () {
+                product_spec.type.push($(this).val())
+            })
+            $('input[name="hardOrSoft"]:checked').each(function () {
+                product_spec.hardOrSoft.push($(this).val())
+            })
+            $('input[name="features"]:checked').each(function () {
+                product_spec.features.push($(this).val())
+            })
+            $('input[name="pattern"]:checked').each(function () {
+                product_spec.pattern.push($(this).val())
+            })
+            $('input[name="Color"]:checked').each(function () {
+                product_spec.color.push($(this).val())
+            })
+            $('input[name="material"]:checked').each(function () {
+                product_spec.material.push($(this).val())
+            })
+
+            form.product_spec = product_spec
+            //产品归属类目
+            form.belong_category = belong_category
+            console.log(form)
+
+            let payload = {
+                product_title: form.product_title,
+                product_title_german: form.product_title_german,
+                product_remark: form.product_remark,
+                product_remark_german: form.product_remark_german,
+                product_quantity: form.quantity,
+                product_supplier: form.product_supplier,
+                product_sell_status: form.product_sell_status,
+                product_stock_status: form.product_stock_status,
+                product_video_link: form.product_video_link,
+                belong_category: JSON.stringify(form.belong_category),
+                product_price: JSON.stringify(form.product_price),
+                product_danWei: JSON.stringify(form.product_danWei),
+                product_market: JSON.stringify(form.product_market),
+                product_images: JSON.stringify(form.product_images),
+                product_spec: JSON.stringify(form.product_spec)
+            }
+
+            if (parseFormat('#productname', payload.product_title, '请输入产品标题')
+                && parseFormat('#productname_de', payload.product_title_german, '请输入产品标题')
+                && parseFormat('#sell-function-mao', payload.product_quantity, '请输入产品质量')
+                && parseFormat('select[name="supplier"]', payload.product_supplier, '请输入产品供应商')) {
+                $.ajax({
+                    url: '/admin/draft/saveProductDetail',
+                    type: 'POST',
+                    data: payload,
+                    dataType: 'json',
+                    cache: false,
+                    success: function (data) {
+                        location.hash = '#ml-title'
+                        layer.msg("产品暂存成功")
+                    },
+                    error: function () {
+                        layer.msg("产品暂存失败")
+                    }
+                })
+
+            }
+        })
 
         function parseFormat(key, val, tip) {
             if (val == "") {
@@ -1024,6 +1168,7 @@
         <!-- 完成提交开始 -->
         <div id="syi_submit_id" class="syi-submit" style="margin-bottom: 10px">
             <strong id="errormsgid" class="error-edit-text">网络繁忙，请稍后重试，如果问题仍然存在，请联系ECSELL客服部门。</strong><br>
+            <button id="submitopt-draft" class="btn btn-info">产品暂存</button>
             <button id="submitopt" class="btn btn-info">产品提交</button>
         </div>
         <!-- 完成提交结束 -->

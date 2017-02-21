@@ -43,6 +43,7 @@ let product = new Schema({
     product_title: String,
     product_title_de: String,
     product_quantity: Number,
+    product_draft_status: {type: Boolean, default: false},
     update_time: Date,
     outline_time: Date,
     online_time: Date,

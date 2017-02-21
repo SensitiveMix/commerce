@@ -34,8 +34,38 @@
 </style>
 <script>
     $(function () {
+        $('.marginleft20').click(function () {
+            let category = []
+            <% belong_category.forEach(function (item) { %>
+            var belong_category_item = {}
+            belong_category_item.firstCategory = '<%= item.first %>'
+            belong_category_item.secondCategory = '<%= item.second %>'
+            belong_category_item.thirdCategory = '<%= item.third %>'
+            category.push(belong_category_item)
+            console.log(belong_category_item)
+            <% }) %>
+
+            console.log(category)
+
+            $.ajax({
+                url: '/admin/changeCategory',
+                type: 'POST',
+                data: {
+                    category: JSON.stringify(category)
+                },
+                dataType: 'json',
+                cache: false,
+                success: function (result) {
+                    window.location = result.page
+                },
+                error: function () {
+                }
+            })
+        })
+
         $('#productname').val('<%= product_title %>')
         $('#productname_de').val('<%= product_title_de %>')
+        $('input[name="sell-function-mao"]').val('<%= product_quantity %>')
         $('select[name="supplier"]').val('<%= product_supplier %>')
         $('#videourl').val('<%= product_video_link %>')
         let productNameLength = $('#productname').val().length
@@ -48,7 +78,28 @@
         let formData = []
         formData['product'] = []
         let form = {}
-        let belong_category = []
+        let belong_categorys = []
+        <% belong_category.forEach(function (item) { %>
+        var belong_category_item = {}
+        belong_category_item.firstCategory = '<%= item.first %>'
+        belong_category_item.secondCategory = '<%= item.second %>'
+        belong_category_item.thirdCategory = '<%= item.third %>'
+        belong_categorys.push(belong_category_item)
+        <% }) %>
+
+        $('select[name="supplier"]').change(function () {
+            if ($(this).val() == "产品待确认") {
+                $('.color-preview.current-color').eq(0).css('background-color', 'rgb(255, 255, 0)')
+                $('.color-preview.current-color').eq(1).css('background-color', 'rgb(255, 255, 0)')
+                $('#product-sell-status').val('库存待确认')
+                $('#product-stock-time').val('3天')
+            } else {
+                $('.color-preview.current-color').eq(0).css('background-color', 'rgb(0, 128, 0)')
+                $('.color-preview.current-color').eq(1).css('background-color', 'rgb(0, 128, 0)')
+                $('#product-sell-status').val('库存确认可以采购')
+                $('#product-stock-time').val('2天')
+            }
+        })
 
         $('#submitopt').on('click', function () {
             // 产品标题
@@ -148,14 +199,10 @@
 
             form.product_spec = product_spec
             //产品归属类目
-            form.belong_category = [{
-                first: $('#first').val(),
-                second: $('#second').val(),
-                third: $('#third').val()
-            }]
-            console.log(form)
+            form.belong_category = belong_categorys
 
             let payload = {
+                product_id: '<%= _id %>',
                 product_title: form.product_title,
                 product_title_german: form.product_title_german,
                 product_remark: form.product_remark,
@@ -178,8 +225,8 @@
                 && parseFormat('#sell-function-mao', payload.product_quantity, '请输入产品质量')
                 && parseFormat('select[name="supplier"]', payload.product_supplier, '请输入产品供应商')) {
                 $.ajax({
-                    url: '/admin/saveProductDetail',
-                    type: 'POST',
+                    url: '/admin/draft/saveProductDetail',
+                    type: 'PUT',
                     data: payload,
                     dataType: 'json',
                     cache: false,
@@ -191,7 +238,6 @@
                         layer.msg("产品上传失败")
                     }
                 })
-
             }
         })
 
@@ -411,25 +457,17 @@
                 <span class="layer-r"></span>
 
                 <div class="cat-titleconbox">
-                    <div class="col-md-1">
-                        <b>请添加产品类目：</b>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="first" placeholder="一级类目">
-                    </div>
 
-                    <div class="col-md-3">
-                        <input type="text" id="second" placeholder="二级类目">
-                    </div>
-
-                    <div class="col-md-3">
-                        <input type="text" id="third" placeholder="三级类目">
-                    </div>
-
-
+                    <b>当前已选择的产品类目：</b>
+                    <% belong_category.forEach(function (item) { %>
+                    <span class="navbox"><%= item.first %><span
+                                class="nav">&gt;</span><%= item.second %>
+                        <span class="nav">&gt;</span><%= item.third %></span>
+                    <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <% }) %>
+                    <a class="marginleft20">«返回修改类目</a>
                 </div>
             </div>
-
         </div>
         <!-- 已选择类目 结束 -->
         <!-- 错误信息 开始 -->
@@ -906,6 +944,7 @@
                     <% suppliers.forEach(function(supplier){ %>
                     <option value="<%= supplier.name %>"><%= supplier.name %></option>
                     <% }) %>
+                    <option value="产品待确认">产品待确认</option>
                 </select>
                 <button type="button" style="margin-top: 10px" class="btn btn-primary" data-toggle="modal"
                         data-target="#addForm">
@@ -1002,10 +1041,7 @@
                             <div class="gridly"></div>
                         </div>
                     </div>
-                    <span class="helptips">
-    			您还可以上传<b class="color444 limit_pic" id="photonum_b">8</b>
-    			          <span class="color000">/<span>8</span></span> 张
-    		</span>
+                    </span>
                     <input type="hidden" id="inp_img_index" value="">
                 </div>
 

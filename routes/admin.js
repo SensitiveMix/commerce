@@ -1517,7 +1517,6 @@ router.get('/hotlabel', function (req, res, next) {
 router.get('/upload', checkLogin);
 router.get('/upload', function (req, res) {
     console.log('save history go -1')
-    console.log(req.session.tempCategory)
     db.categorys.find({}, function (err, result) {
         if (err) res.send('404')
         res.render('admin/product/upload-goods', {
@@ -1528,6 +1527,28 @@ router.get('/upload', function (req, res) {
             specStatus: true
         })
     })
+})
+
+router.get('/upload-manage-draft', checkLogin)
+router.get('/upload-manage-draft', function (req, res) {
+    console.log('save change history go -1')
+    db.categorys.find({}, function (err, result) {
+        if (err) res.send('404')
+        res.render('admin/product/upload-goods', {
+            username: u.nick_name,
+            upload: [],
+            category: result,
+            tempCategory: req.session.changeCategory || [],
+            specStatus: true
+        })
+    })
+})
+
+router.post('/changeCategory', (req, res) => {
+    console.log(JSON.parse(req.body.category))
+    console.log('1111111')
+    req.session.changeCategory = JSON.parse(req.body.category) || []
+    res.send({succeed: true, page: "/admin/upload-manage-draft"})
 })
 
 //上传产品详细信息
@@ -1939,6 +1960,42 @@ router.post('/saveProductDetail', function (req, res, next) {
                 res.send({succeed: true, msg: "ok"})
             })
         })
+})
+
+//保存草稿详细产品
+router.put('/draft/saveProductDetail', (req, res) => {
+    db.products.remove({"_id": req.body.product_id}, (err, result) => {
+        console.log(err)
+        if (err || !result) return res.send(500)
+        let data = {
+            product_title: req.body.product_title,
+            product_title_de: req.body.product_title_german,
+            product_remark: req.body.product_remark,
+            product_remark_de: req.body.product_remark_german,
+            product_quantity: Number(req.body.product_quantity).toFixed(),
+            product_id: (new Date().getTime()).toFixed(),
+            product_supplier: req.body.product_supplier,
+            product_sell_status: req.body.product_sell_status,
+            product_stock_status: req.body.product_stock_status,
+            product_video_link: req.body.product_video_link,
+            belong_category: JSON.parse(req.body.belong_category),
+            product_price: JSON.parse(req.body.product_price),
+            product_danWei: JSON.parse(req.body.product_danWei)[0],
+            product_market: JSON.parse(req.body.product_market)[0],
+            product_images: JSON.parse(req.body.product_images),
+            product_spec: JSON.parse(req.body.product_spec),
+            product_draft_status: false,
+            update_time: new Date().getTime(),
+            status: 'pending',
+            operator: 'admin'
+        }
+
+        new db.products(data)
+            .save((err, obj) => {
+                if (err) return res.send(400, {succeed: false})
+                res.send({succeed: true, msg: "ok"})
+            })
+    })
 })
 
 
@@ -2438,6 +2495,10 @@ router.get('/crawler_manage', (req, res) => {
 })
 router.get('/product-manage', (req, res) => {
     res.render('admin/product/product-manage', {username: u.nick_name})
+})
+
+router.get('/product-draft', (req, res) => {
+    res.render('admin/product/product-draft', {username: u.nick_name})
 })
 // 产品管理详情页
 router.get('/change-product', (req, res) => {

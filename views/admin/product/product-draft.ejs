@@ -1,0 +1,450 @@
+<% layout('../backend-master.ejs') %>
+<style type="text/css">
+    ul, ol {
+        list-style: none;
+    }
+
+    .rtab-warp {
+        position: relative;
+        margin: 15px 0 10px;
+        padding: 0 10px 0 11px;
+        height: 29px;
+        border-bottom: 1px solid #ccc
+    }
+
+    .rtab-warp {
+        border-bottom: 2px solid #ddd;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        height: 40px;
+        line-height: 38px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .rtab-warp.syi-rtab {
+        max-width: 1000px
+    }
+
+    .rtab-warp ul {
+        float: left;
+    }
+
+    .rtab-warp ul li {
+        float: left;
+        margin-left: -1px;
+        font-weight: 700;
+        border-bottom: 0
+    }
+
+    .rtab-warp ul li {
+        margin-bottom: 0;
+    }
+
+    .rtab-warp ul li.current {
+        height: 27px;
+        border-bottom-color: #fff
+    }
+
+    .rtab-warp ul li a {
+        color: #444
+    }
+
+    .rtab-warp ul li a:hover {
+        color: #444;
+        text-decoration: none
+    }
+
+    .rtab-warp ul li span {
+        display: inline-block;
+        padding: 0 15px;
+        height: 27px;
+        line-height: 18px;
+        *line-height: 21px;
+        text-align: center;
+        border-top: 1px solid #fff;
+        cursor: pointer
+    }
+
+    .rtab-warp ul li.libg, .rtab-warp ul li.current {
+        position: relative;
+        z-index: 2;
+        margin-bottom: -1px;
+        border-top: 2px solid #fca35b;
+        border-left: 1px solid #cdcdcd;
+        border-right: 1px solid #cdcdcd
+    }
+
+    .rtab-warp ul li.libg span, .rtab-warp ul li.current span {
+        background: #fff;
+        cursor: default;
+        line-height: 14px;
+    }
+
+    .rtab-warp b {
+        display: inline-block;
+        width: auto;
+        height: 17px;
+        margin: 5px;
+        text-align: center
+    }
+
+    .rtab-warp b a {
+        display: inline-block;
+        vertical-align: middle;
+        width: 5px;
+        height: 7px;
+        margin-top: 5px;
+        background: url(http://www.dhresource.com/dhs/mos/image/syi/arrow.gif) no-repeat
+    }
+
+    .rtab-warp b.prev a {
+        background-position: 0 0
+    }
+
+    .rtab-warp b.prev a:hover {
+        background-position: 0 -13px
+    }
+
+    .rtab-warp b.next a {
+        background-position: -16px 0
+    }
+
+    .rtab-warp b.next a:hover {
+        background-position: -16px -13px
+    }
+
+    .rtab-warp b.prev.grey {
+        background: url(http://www.dhresource.com/dhs/mos/image/syi/arrow.gif) no-repeat 0 -24px
+    }
+
+    .rtab-warp b.next.grey {
+        background: url(http://www.dhresource.com/dhs/mos/image/syi/arrow.gif) no-repeat -16px -24px
+    }
+
+    .rtab-warp ul li.current {
+        border: 0;
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 2px solid #ff8600
+    }
+
+    .rtab-warp ul li span {
+        font-weight: 100;
+        font-size: 14px
+    }
+
+    .rtab-warp ul li span:hover {
+        color: #ff6000
+    }
+
+    .rtab-warp ul li.current span {
+        color: #ff6000;
+        font-weight: bold
+    }
+
+    .rtab-warp ul li b {
+        color: #ff6000;
+        font-weight: initial
+    }
+
+    .rtab-warp ul li.current b {
+        font-weight: bold
+    }
+
+    .rtab-warp .propbox {
+        float: right;
+        padding-top: 3px;
+        position: relative
+    }
+
+    .rtab-warp ul li.current span {
+        color: #ff6000;
+        font-weight: bold;
+    }
+
+    .propbox input {
+        box-shadow: 0 1px 0 rgba(238, 238, 238, 1);
+        border: 1px solid #ffc27e;
+        border-radius: 2px;
+        background: #fff;
+        font-family: tahoma, arial, 'microsoft yahei';
+        color: #ff6000;
+        line-height: 21px;
+        padding: 0 8px;
+        cursor: pointer;
+    }
+
+    input {
+        vertical-align: middle;
+    }
+
+    .shelfProductNum-product-title {
+        margin: 4px 0;
+    }
+
+    .searchConditions-shelfProductNum .condwid1,
+    .searchConditions-auditProductNum .condwid1,
+    .searchConditions-auditFailProductNum .condwid1,
+    .searchConditions-downShelfProductNum .condwid1 {
+        margin-left: 5px;
+    }
+
+    .searchConditions-shelfProductNum .clickSpanTwo,
+    .searchConditions-auditProductNum .clickSpanTwo,
+    .searchConditions-auditFailProductNum .clickSpanTwo,
+    .searchConditions-downShelfProductNum .clickSpanTwo {
+        margin-right: 11px;
+    }
+</style>
+<script>
+    $.ajax({
+        type: 'get',
+        url: '/api/v1/admin/product?product_draft_status=true',
+        dataType: 'json',
+        success: function (data) {
+            let products = data.msg
+            products.forEach(product => {
+                product.online_time = product.online_time || ""
+                var myhtml = '<tr>'
+                    + '<td class="padleft20 row" width="50%">'
+                    + '<span class="prolayout">'
+                    + '<div class="col-sm-3">'
+                    + '<a>'
+                    + '<img style="height:80px;width:80px"src="' + product.product_images[0].url + '">'
+                    + '</a>'
+                    + '</div>'
+                    + '<div class="col-sm-9">'
+                    + '<span class="shelfProductNum-product-title">'
+                    + '' + product.product_title + ''
+                    + '</span><br>'
+                    + '<span class="shelfProductNum-product-normal-price">'
+                    + '预计收入 ：$' + product.product_price[0].compile_normal_price + ''
+                    + '</span><br>'
+                    + '<span class="shelfProductNum-product-vip-price">'
+                    + 'VIP预计收入 ：$' + product.product_price[0].compile_vip_price + ''
+                    + '</span><br>'
+                    + '<span class="shelfProductNum-product-id">'
+                    + '产品编号 ：' + product.product_id + ''
+                    + '</span>'
+                    + '</div>'
+                    + '</span>'
+                    + '</td>'
+                    + '<td class="tal-right" width="10%">' + product.product_quantity + '</td>'
+                    + '<td class="tal-right" width="28%">' + product.online_time.substring(0, product.online_time.indexOf('T')) + ''
+                    + '<td class="tal-right" width="28%">' + product.update_time.substring(0, product.online_time.indexOf('T')) + ''
+                    + '</td>'
+                    + '<td>'
+                    + '<button class="btn btn-info" id="' + product._id + '" onclick="change_product(this.id)">编辑</button>'
+                    + '</td>'
+                    + '</tr>';
+                $('#shelfProductNum-product-body').append(myhtml)
+            })
+        },
+        error: function () {
+            alert('参数有误，创建失败！')
+        }
+    })
+</script>
+<section class="content-header">
+    <h1>
+        产品草稿
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="main"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">产品</a></li>
+        <li class="active">产品草稿</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-info">
+        <div class="box-body">
+            <div class="body-header">
+                <div class="col-sailtips clearfix">
+                    <span class="leftcol-tip">温馨提示：</span>
+                    <div class="rightcol-tip">
+                        <p class="addheight" id="hideTipsBox">
+                            1.您添加的产品草稿需要通过重新编辑保存后才能上架交易，审核时间通常在24-28个小时之内，遇特殊情况会稍有延迟，敬请谅解。<br>
+                            2.请核对您添加的产品是否符合<a target="_blank"
+                                              href="#">Ecsell产品发布规则</a>，不符合规则的产品将不能通过审核<br>
+                            3.现在起您发布的上架产品都能够展示在店铺中了！同时还能设置加载搜索产品，获取更多曝光率！
+                            <a target="_blank" href="#">了解更多</a>
+                        </p>
+                        <span class="viewticps viewshow " id="viewTips">展开</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="box-body">
+            <form class="form-horizontal">
+                <div class="box-body">
+                    <table class="table table-bordered tb-shelfProductNum">
+                        <thead>
+                        <tr>
+                            <th>产品信息</th>
+                            <th>订单数</th>
+                            <th>有效期</th>
+                            <th>更新时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="shelfProductNum-product-body">
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                    <table hidden="hidden" class="table table-bordered tb-auditProductNum">
+                        <thead>
+                        <tr>
+                            <th>产品信息</th>
+                            <th>订单数</th>
+                            <th>有效期</th>
+                            <th>更新时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="auditProductNum-product-body">
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                    <table hidden="hidden" class="table table-bordered tb-auditFailProductNum">
+                        <thead>
+                        <tr>
+                            <th>产品信息</th>
+                            <th>订单数</th>
+                            <th>有效期</th>
+                            <th>更新时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="auditFailProductNum-product-body">
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                    <table hidden="hidden" class="table table-bordered tb-downShelfProductNum">
+                        <thead>
+                        <tr>
+                            <th>产品信息</th>
+                            <th>订单数</th>
+                            <th>有效期</th>
+                            <th>更新时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="downShelfProductNum-product-body">
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</section>
+<script src="/js/bootstrap-datepicker.js"></script>
+<script>
+
+    function change_product(id) {
+        $.ajax({
+            type: 'get',
+            url: '/admin/change-product?product_id=' + id,
+            dataType: 'json',
+            success: function (path) {
+            },
+            error: function (err) {
+                window.location = err.responseText
+                console.log(err)
+            }
+        })
+    }
+
+    $('#newGuideTarget2 ul li').click(function () {
+        $(this).addClass("current")
+        let productType = $(this).find('span').attr('id')
+        let id = '.searchConditions-' + productType
+        let tb = '.tb-' + productType
+        $(id).removeAttr("hidden")
+        $(tb).removeAttr("hidden")
+        getProduct(productType)
+        $(this).siblings("li").removeClass("current")
+        $(id).siblings(".condbox").attr("hidden", "hidden")
+        $(tb).siblings("table").attr("hidden", "hidden")
+    })
+
+    function getProduct(productType) {
+        let status = 'online'
+        switch (productType) {
+            case 'shelfProductNum':
+                status = 'online'
+                break
+            case 'auditProductNum':
+                status = 'pending'
+                break
+            case 'auditFailProductNum':
+                status = 'reject'
+                break
+            case 'downShelfProductNum':
+                status = 'outline'
+                break
+        }
+
+        let url = '/api/v1/admin/product?status=' + status
+        $.ajax({
+            type: 'get',
+            url: url,
+            dataType: 'json',
+            success: function (data) {
+                $('#' + productType + '-product-body').empty()
+                let products = data.msg
+                console.log(products.length)
+                $('#' + productType + '-num').html(products.length)
+                products.forEach(product => {
+                    product.online_time = product.online_time || ""
+                    var myhtml = '<tr>'
+                        + '<td class="padleft20 row" width="50%">'
+                        + '<span class="prolayout">'
+                        + '<div class="col-sm-3">'
+                        + '<a>'
+                        + '<img style="height:80px;width:80px"src="' + product.product_images[0].url + '">'
+                        + '</a>'
+                        + '</div>'
+                        + '<div class="col-sm-9">'
+                        + '<span class="shelfProductNum-product-title">'
+                        + '' + product.product_title + ''
+                        + '</span><br>'
+                        + '<span class="shelfProductNum-product-normal-price">'
+                        + '预计收入 ：$' + product.product_price[0].compile_normal_price + ''
+                        + '</span><br>'
+                        + '<span class="shelfProductNum-product-vip-price">'
+                        + 'VIP预计收入 ：$' + product.product_price[0].compile_vip_price + ''
+                        + '</span><br>'
+                        + '<span class="shelfProductNum-product-id">'
+                        + '产品编号 ：' + product.product_id + ''
+                        + '</span>'
+                        + '</div>'
+                        + '</span>'
+                        + '</td>'
+                        + '<td class="tal-right" width="10%">' + product.product_quantity + '</td>'
+                        + '<td class="tal-right" width="28%">' + product.online_time.substring(0, product.online_time.indexOf('T')) + ''
+                        + '<td class="tal-right" width="28%">' + product.update_time.substring(0, product.online_time.indexOf('T')) + ''
+                        + '</td>'
+                        + '<td>'
+                        + '<button class="btn btn-info" id="' + product._id + '" onclick="change_product(this.id)">编辑</button>'
+                        + '</td>'
+                        + '</tr>';
+                    $('#' + productType + '-product-body').append(myhtml)
+                })
+            },
+            error: function () {
+                alert('参数有误，创建失败！')
+            }
+        })
+    }
+</script>
