@@ -1,7 +1,7 @@
 {
   "name": "e-commerce-platform",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "cross-env NODE_ENV=dev node app_browsersync",
     "dev": "cross-env NODE_ENV=dev sudo nodemon app.js",
