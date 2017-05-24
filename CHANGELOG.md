@@ -1,3 +1,459 @@
+
+n.n.n / 2017-05-24
+==================
+
+  * chore:change readme
+  * change index
+  * v0.4.3
+  * change index
+  * v0.4.2
+  * change index
+  * v0.4.1
+  * v.0.4.0
+  * # v0.3.4
+  * v0.3.3
+  * change index
+  * update backend style
+  * add commerce utils
+  * v0.3.2
+  * change index
+  * add product manage detail
+  * change index
+  * add product mange search
+  * add product manage
+  * Merge remote-tracking branch 'origin/master'
+  * one
+  * change index
+  * merge
+  * add shooping cart
+  * change
+  * merge
+  * fix repeat bug
+  * merge
+  * restructure spec manage
+  * change index
+  * add change accessory image
+  * merge
+  * add sort index change
+  * merge
+  * add fronted sort
+  * fix category bug
+  * fix signout bug
+  * change index
+  * change index
+  * remove origin template link
+  * change index
+  * merge
+  * fix bug issue
+  * change
+  * change template page
+  * fix fee template
+  * merge
+  * add transport flag
+  * remove admin
+  * remove config
+  * change
+  * add change template page
+  * update
+  * add router
+  * merge
+  * add func
+  * update
+  * restructrue fronted
+  * update
+  * merge
+  * update
+  * update country template
+  * Merge remote-tracking branch 'origin/master'
+  * update
+  * merge
+  * v0.3.1
+  * 修改
+  * update
+  * fix bug
+  * .
+  * fix front start bug
+  * .
+  * v0.3.0
+  * change index
+  * add translate page(main pg)
+  * merge
+  * add english
+  * update
+  * add translate
+  * Merge remote-tracking branch 'origin/master'
+  * 添加ajax的内容
+  * add product manage
+  * add index
+  * merge
+  * add product detail
+  * 123
+  * df
+  * update product detail
+  * Merge remote-tracking branch 'origin/master'
+  * 提交一部分
+  * merge readme
+  * merge
+  * finish crawler page and add loading
+  * index fix
+  * modify fee country api
+  * fix login bug && format app.js
+  * fix login bug && format app.js
+  * Update README.md
+  * merge
+  * merge
+  * v0.2.8
+  * Update README.md
+  * merge
+  * v0.2.7
+  * split clawler folder
+  * v0.2.6
+  * 上传运费模板
+  * update index
+  * v0.2.5
+  * add update detail
+  * merge
+  * update
+  * v0.2.4
+  * v0.2.4
+  * format readme
+  * update readme
+  * add travis ci db cfg
+  * merge
+  * v0.2.3
+  * Update index.js
+  * Update README.md
+  * Update README.md
+  * Update README.md
+  * Update README.md
+  * v0.2.2
+  * add v0.2.1
+  * v0.2.0
+  * fix bug
+  * add webpck
+  * update spec
+  * restructure category
+  * update accessory
+  * add category manage page
+  * merge
+  * fix jquery bug
+  * public/assets
+  * merge
+  * remove repeat bundle
+  * merge
+  * pro change
+  * pic pro
+  * merge
+  * fix fee_manage_bug
+  * public/assets
+  * add localstorage and pci gridly
+  * modify translate
+  * remote space
+  * fix
+  * add build
+  * merge
+  * fix spectication
+  * remove tmp
+  * modify index
+  * restructure
+  * merge
+  * restructure
+  * Update index.js
+  * v0.1.9
+  * fix access
+  * Merge remote-tracking branch 'origin/master'
+  * commit
+  * update error
+  * add web language manage
+  * update index
+  * modify fee page
+  * Update index.js
+  * update
+  * update
+  * Update index.js
+  * modify fee manage
+  * merge
+  * v0.1.8
+  * Update readme.md
+  * merge
+  * v0.1.7
+  * commit
+  * fix travis
+  * fix travis
+  * Update readme.md
+  * Merge branch 'master' of github.com:sunNode/commerce
+  * add server db
+  * merge
+  * add two language category
+  * public/assets
+  * add backup db
+  * merge
+  * fix admin transport bug
+  * public/assets
+  * fix import json
+  * add express&oridinary
+  * public/assets
+  * Merge remote-tracking branch 'origin/master'
+  * 修改内容
+  * fix commit bug
+  * update travis ci
+  * update changelog
+  * update
+  * add transport api and unit tst
+  * add transport api
+  * record route response time
+  * add transport
+  * add translate en-de and de-en
+  * v0.1.5
+  * update
+  * update readme
+  * fix ut
+  * add art
+  * Merge branch 'master' of github.com:sunNode/commerce
+  * add cov
+  * Update codecov.yml
+  * add travis logo
+  * add travis-ci logo
+  * v0.1.4
+  * v0.1.3
+  * v0.1.3
+  * modify banner height
+  * delete unuse imgae
+  * Merge branch 'master' of https://bitbucket.org/wechatpla/master
+  * fix banner bug
+  * Merge branch 'master' of bitbucket.org:wechatpla/master
+  * server total modify
+  * add local
+  * loacal
+  * add local
+
+n.n.n / 2017-05-24
+==================
+
+  * chore:change readme
+  * change index
+  * v0.4.3
+  * change index
+  * v0.4.2
+  * change index
+  * v0.4.1
+  * v.0.4.0
+  * # v0.3.4
+  * v0.3.3
+  * change index
+  * update backend style
+  * add commerce utils
+  * v0.3.2
+  * change index
+  * add product manage detail
+  * change index
+  * add product mange search
+  * add product manage
+  * Merge remote-tracking branch 'origin/master'
+  * one
+  * change index
+  * merge
+  * add shooping cart
+  * change
+  * merge
+  * fix repeat bug
+  * merge
+  * restructure spec manage
+  * change index
+  * add change accessory image
+  * merge
+  * add sort index change
+  * merge
+  * add fronted sort
+  * fix category bug
+  * fix signout bug
+  * change index
+  * change index
+  * remove origin template link
+  * change index
+  * merge
+  * fix bug issue
+  * change
+  * change template page
+  * fix fee template
+  * merge
+  * add transport flag
+  * remove admin
+  * remove config
+  * change
+  * add change template page
+  * update
+  * add router
+  * merge
+  * add func
+  * update
+  * restructrue fronted
+  * update
+  * merge
+  * update
+  * update country template
+  * Merge remote-tracking branch 'origin/master'
+  * update
+  * merge
+  * v0.3.1
+  * 修改
+  * update
+  * fix bug
+  * .
+  * fix front start bug
+  * .
+  * v0.3.0
+  * change index
+  * add translate page(main pg)
+  * merge
+  * add english
+  * update
+  * add translate
+  * Merge remote-tracking branch 'origin/master'
+  * 添加ajax的内容
+  * add product manage
+  * add index
+  * merge
+  * add product detail
+  * 123
+  * df
+  * update product detail
+  * Merge remote-tracking branch 'origin/master'
+  * 提交一部分
+  * merge readme
+  * merge
+  * finish crawler page and add loading
+  * index fix
+  * modify fee country api
+  * fix login bug && format app.js
+  * fix login bug && format app.js
+  * Update README.md
+  * merge
+  * merge
+  * v0.2.8
+  * Update README.md
+  * merge
+  * v0.2.7
+  * split clawler folder
+  * v0.2.6
+  * 上传运费模板
+  * update index
+  * v0.2.5
+  * add update detail
+  * merge
+  * update
+  * v0.2.4
+  * v0.2.4
+  * format readme
+  * update readme
+  * add travis ci db cfg
+  * merge
+  * v0.2.3
+  * Update index.js
+  * Update README.md
+  * Update README.md
+  * Update README.md
+  * Update README.md
+  * v0.2.2
+  * add v0.2.1
+  * v0.2.0
+  * fix bug
+  * add webpck
+  * update spec
+  * restructure category
+  * update accessory
+  * add category manage page
+  * merge
+  * fix jquery bug
+  * public/assets
+  * merge
+  * remove repeat bundle
+  * merge
+  * pro change
+  * pic pro
+  * merge
+  * fix fee_manage_bug
+  * public/assets
+  * add localstorage and pci gridly
+  * modify translate
+  * remote space
+  * fix
+  * add build
+  * merge
+  * fix spectication
+  * remove tmp
+  * modify index
+  * restructure
+  * merge
+  * restructure
+  * Update index.js
+  * v0.1.9
+  * fix access
+  * Merge remote-tracking branch 'origin/master'
+  * commit
+  * update error
+  * add web language manage
+  * update index
+  * modify fee page
+  * Update index.js
+  * update
+  * update
+  * Update index.js
+  * modify fee manage
+  * merge
+  * v0.1.8
+  * Update readme.md
+  * merge
+  * v0.1.7
+  * commit
+  * fix travis
+  * fix travis
+  * Update readme.md
+  * Merge branch 'master' of github.com:sunNode/commerce
+  * add server db
+  * merge
+  * add two language category
+  * public/assets
+  * add backup db
+  * merge
+  * fix admin transport bug
+  * public/assets
+  * fix import json
+  * add express&oridinary
+  * public/assets
+  * Merge remote-tracking branch 'origin/master'
+  * 修改内容
+  * fix commit bug
+  * update travis ci
+  * update changelog
+  * update
+  * add transport api and unit tst
+  * add transport api
+  * record route response time
+  * add transport
+  * add translate en-de and de-en
+  * v0.1.5
+  * update
+  * update readme
+  * fix ut
+  * add art
+  * Merge branch 'master' of github.com:sunNode/commerce
+  * add cov
+  * Update codecov.yml
+  * add travis logo
+  * add travis-ci logo
+  * v0.1.4
+  * v0.1.3
+  * v0.1.3
+  * modify banner height
+  * delete unuse imgae
+  * Merge branch 'master' of https://bitbucket.org/wechatpla/master
+  * fix banner bug
+  * Merge branch 'master' of bitbucket.org:wechatpla/master
+  * server total modify
+  * add local
+  * loacal
+  * add local
 # e-commence-platform CHANGELOG
 
 ##  v0.0.1
