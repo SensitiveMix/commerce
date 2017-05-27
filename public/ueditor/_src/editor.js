@@ -1,13 +1,13 @@
-UMEDITOR_CONFIG = window.UMEDITOR_CONFIG || {};
+UMEDITOR_CONFIG = window.UMEDITOR_CONFIG || {}
 
 window.UM = {
-    plugins : {},
+  plugins: {},
 
-    commands : {},
+  commands: {},
 
-    I18N : {},
+  I18N: {},
 
-    version : "1.2.2"
-};
+  version: '1.2.2'
+}
 
-var dom = UM.dom = {};
+var dom = UM.dom = {}

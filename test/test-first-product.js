@@ -1,22 +1,21 @@
 /**
  * Created by sunNode on 16/10/22.
  */
-var should = require('should');
-var app = require('../app');
-var request = require('supertest');
-
+var should = require('should')
+var app = require('../app')
+var request = require('supertest')
 
 describe('get first category test', function () {
-    it('should get all secondCategory success', function (done) {
-        request(app)
+  it('should get all secondCategory success', function (done) {
+    request(app)
             .get('/products/soap/147896723310')
             // .expect('Content-Type', 'text/html; charset=utf-8')
             .end(function (err, res) {
-                if (err) throw err;
-                should.exist(res.text);
-                done();
-            });
-    });
+              if (err) throw err
+              should.exist(res.text)
+              done()
+            })
+  })
     // JSON
     // [ { secondImages: [],
     //     thirdTitles: [ [Object] ],
@@ -32,5 +31,4 @@ describe('get first category test', function () {
     //         secondUrl: '/product/.net/147896723328',
     //         secondTimeStamp: 1478970000,
     //         secondTitle: '.net' } ]
-
-});
+})

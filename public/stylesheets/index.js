@@ -1,5 +1,5 @@
-window.$ = require("jquery");
-var $ = require('jquery');
+window.$ = require('jquery')
+var $ = require('jquery')
 require('../assets/css/bootstrap.min.css')
 require('../assets/css/owl.carousel.css')
 require('../assets/css/owl.theme.css')

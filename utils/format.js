@@ -1,23 +1,20 @@
 class Format {
-
     /**
      * judge obj
      * @param data
      * @returns {*}
      */
-    static isNull(data) {
-        if (typeof data == "boolean") {
-            return format.isBoolean(data)
-        } else {
-            return (data == "" || data == undefined || data == null)
-        }
+  static isNull (data) {
+    if (typeof data === 'boolean') {
+      return format.isBoolean(data)
+    } else {
+      return (data == '' || data == undefined || data == null)
     }
+  }
 
-
-    static isBoolean(data) {
-        return data == true
-    }
+  static isBoolean (data) {
+    return data == true
+  }
 }
-
 
 module.exports = Format

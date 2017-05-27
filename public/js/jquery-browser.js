@@ -1,35 +1,33 @@
 jQuery.extend({
-	browser: function() 
-	{
-		var
+  browser: function ()	{
+    var
 	    rwebkit = /(webkit)\/([\w.]+)/,
 	    ropera = /(opera)(?:.*version)?[ \/]([\w.]+)/,
 	    rmsie = /(msie) ([\w.]+)/,
-	    rmozilla = /(mozilla)(?:.*? rv:([\w.]+))?/,    
+	    rmozilla = /(mozilla)(?:.*? rv:([\w.]+))?/,
 	    browser = {},
 	    ua = window.navigator.userAgent,
-	    browserMatch = uaMatch(ua);
+	    browserMatch = uaMatch(ua)
 
 	    if (browserMatch.browser) {
-	        browser[browserMatch.browser] = true;
-	        browser.version = browserMatch.version;
+	        browser[browserMatch.browser] = true
+	        browser.version = browserMatch.version
 	    }
-	    return { browser: browser };
-	},
-});
+	    return { browser: browser }
+  }
+})
 
-function uaMatch(ua) 
-{
-        ua = ua.toLowerCase();
+function uaMatch (ua) {
+  ua = ua.toLowerCase()
 
-        var match = rwebkit.exec(ua)
-                    || ropera.exec(ua)
-                    || rmsie.exec(ua)
-                    || ua.indexOf("compatible") < 0 && rmozilla.exec(ua)
-                    || [];
+  var match = rwebkit.exec(ua) ||
+                    ropera.exec(ua) ||
+                    rmsie.exec(ua) ||
+                    ua.indexOf('compatible') < 0 && rmozilla.exec(ua) ||
+                    []
 
-        return {
-            browser : match[1] || "",
-            version : match[2] || "0"
-        };
+  return {
+    browser: match[1] || '',
+    version: match[2] || '0'
+  }
 }

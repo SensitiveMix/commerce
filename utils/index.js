@@ -7,7 +7,7 @@ const PassHash = require('./passhash')
  * @type {{DateTime: DateTime, Format: Format, PassHash: PassHash}}
  */
 module.exports = {
-    DateTime: DateTime,
-    Format: Format,
-    PassHash: PassHash
+  DateTime: DateTime,
+  Format: Format,
+  PassHash: PassHash
 }

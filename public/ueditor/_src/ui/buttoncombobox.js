@@ -6,49 +6,43 @@
  * To change this template use File | Settings | File Templates.
  */
 
-(function(){
+(function () {
+  var widgetName = 'buttoncombobox'
 
-    var widgetName = 'buttoncombobox';
+  UM.ui.define(widgetName, (function () {
+    return {
+      defaultOpt: {
+                // 按钮初始文字
+        label: '',
+        title: ''
+      },
+      init: function (options) {
+        var me = this
 
-    UM.ui.define( widgetName, ( function(){
+        var btnWidget = $.eduibutton({
+          caret: true,
+          name: options.comboboxName,
+          title: options.title,
+          text: options.label,
+          click: function () {
+            me.show(this.root())
+          }
+        })
 
-        return {
-            defaultOpt: {
-                //按钮初始文字
-                label: '',
-                title: ''
-            },
-            init: function( options ) {
+        me.supper.init.call(me, options)
 
-                var me = this;
+                // 监听change， 改变button显示内容
+        me.on('changebefore', function (e, label) {
+          btnWidget.eduibutton('label', label)
+        })
 
-                var btnWidget = $.eduibutton({
-                    caret: true,
-                    name: options.comboboxName,
-                    title: options.title,
-                    text: options.label,
-                    click: function(){
-                        me.show( this.root() );
-                    }
-                });
+        me.data('button', btnWidget)
 
-                me.supper.init.call( me, options );
-
-                //监听change， 改变button显示内容
-                me.on('changebefore', function( e, label ){
-                    btnWidget.eduibutton('label', label );
-                });
-
-                me.data( 'button', btnWidget );
-
-                me.attachTo(btnWidget)
-
-            },
-            button: function(){
-                return this.data( 'button' );
-            }
-        }
-
-    } )(), 'combobox' );
-
-})();
+        me.attachTo(btnWidget)
+      },
+      button: function () {
+        return this.data('button')
+      }
+    }
+  })(), 'combobox')
+})()

@@ -1,18 +1,17 @@
-var express = require('express');
-var router = express.Router();
-var http = require('http').Server(express);
-var formidable = require('formidable');
-var fs = require('fs');
-var crypto = require('crypto');
-var db = require('../model/index');
+var express = require('express')
+var router = express.Router()
+var http = require('http').Server(express)
+var formidable = require('formidable')
+var fs = require('fs')
+var crypto = require('crypto')
+var db = require('../model/index')
 
-
-var r = [];
-var u = [];
+var r = []
+var u = []
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-    res.send('respond with a resource');
-});
+  res.send('respond with a resource')
+})
 
 // router.post('/doadminlogin', function (req, res, next) {
 //     // var newpassword = md5(req.body.password)
@@ -39,4 +38,4 @@ router.get('/', function (req, res, next) {
 //         }
 //     });
 // });
-module.exports = router;
+module.exports = router
