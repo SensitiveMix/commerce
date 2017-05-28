@@ -9,7 +9,7 @@
 
 [![Build Status](https://travis-ci.org/SensitiveMix/commerce.svg?branch=master)](https://travis-ci.org/SensitiveMix/commerce)
 [![codecov](https://codecov.io/gh/SensitiveMix/node-cluster-email/branch/master/graph/badge.svg)](https://codecov.io/gh/SensitiveMix/node-cluster-email)
- [![Progress](http://progressed.io/bar/70?title=%E8%BF%9B%E5%BA%A6)](http://progressed.io)
+ [![Progress](http://progressed.io/bar/100?title=%E8%BF%9B%E5%BA%A6)](http://progressed.io)
 
 A Commerce website for taking advantage of the built-in commerce platform in node v6.8.0.Focus on backend manage and Fronted show.
 
