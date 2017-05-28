@@ -28,11 +28,15 @@ var tempCategory = []
 // 验证登录
 let checkLogin = (req, res, next) => {
   if (req.body.status != 'test') {
-    if (u.length == 0) {
+    if (u.length === 0) {
       res.render('admin/mainsets/404', {username: u.nick_name})
     }
   }
   next()
+}
+
+function customError (code, msg, response) {
+  response.send(code, msg)
 }
 
 /* ------------------------------------------------------------------- */
@@ -97,7 +101,7 @@ router.post('/doadminlogin', function (req, res) {
             console.log(user_name)
             console.log(user)
             systems = system
-            if (user.length == 1) {
+            if (user.length === 1) {
               console.log(user.nick_name + ':登录成功' + new Date())
               u = user[0]
               global.u = user[0]
@@ -105,7 +109,7 @@ router.post('/doadminlogin', function (req, res) {
             } else {
               console.log(query.name + ':登录失败' + new Date())
               let payload = {}
-              if (user_name.length == 0) {
+              if (user_name.length === 0) {
                 payload.mes_info = '用户名错误'
               } else {
                 payload.mes_info = '密码错误'
@@ -223,7 +227,7 @@ router.post('/doChangeUser', checkLogin)
 router.post('/doChangeUser', function (req, res, next) {
   console.log('用户修改' + new Date())
   let newPassword
-  if (req.body.addpassword == '********') {
+  if (req.body.addpassword === '********') {
     newPassword = req.body.oldPassword
   } else {
     newPassword = Utils.PassHash.HashMD5(req.body.addpassword)
@@ -368,7 +372,7 @@ router.post('/doupload', function (req, res) {
         break
     }
 
-    if (extName.length == 0) {
+    if (extName.length === 0) {
       res.locals.error = '只支持png和jpg格式图片'
       res.end()
       return
@@ -571,7 +575,7 @@ router.post('/register-notice', (req, res) => {
     }
   ], (err, results) => {
     let [English, German] = results
-    if (English && German && German == true) {
+    if (English && German && German === true) {
       res.send({succeed: true, msg: 'ok'})
     } else {
       res.send({succeed: false, msg: 'DB Error'})
@@ -641,7 +645,7 @@ router.post('/about-us', (req, res) => {
     }
   ], (err, results) => {
     let [English, German] = results
-    if (English && German && German == true) {
+    if (English && German && German === true) {
       res.send({succeed: true, msg: 'ok'})
     } else {
       res.send({succeed: false, msg: 'DB Error'})
@@ -711,7 +715,7 @@ router.post('/contact-us', (req, res) => {
     }
   ], (err, results) => {
     let [English, German] = results
-    if (English && German && German == true) {
+    if (English && German && German === true) {
       res.send({succeed: true, msg: 'ok'})
     } else {
       res.send({succeed: false, msg: 'DB Error'})
@@ -781,7 +785,7 @@ router.post('/faq', (req, res) => {
     }
   ], (err, results) => {
     let [English, German] = results
-    if (English && German && German == true) {
+    if (English && German && German === true) {
       res.send({succeed: true, msg: 'ok'})
     } else {
       res.send({succeed: false, msg: 'DB Error'})
@@ -851,7 +855,7 @@ router.post('/attention', (req, res) => {
     }
   ], (err, results) => {
     let [English, German] = results
-    if (English && German && German == true) {
+    if (English && German && German === true) {
       res.send({succeed: true, msg: 'ok'})
     } else {
       res.send({succeed: false, msg: 'DB Error'})
@@ -921,7 +925,7 @@ router.post('/privacy', (req, res) => {
     }
   ], (err, results) => {
     let [English, German] = results
-    if (English && German && German == true) {
+    if (English && German && German === true) {
       res.send({succeed: true, msg: 'ok'})
     } else {
       res.send({succeed: false, msg: 'DB Error'})
@@ -960,15 +964,15 @@ router.get('/accessory_manage_german', (req, res) => {
     if (err) res.send('404')
     new Promise((resolve, reject) => {
       _.each(categories, (category) => {
-        category.firstCategory_color = category.firstCategory == category.de_firstCategory ? 'red' : 'black'
+        category.firstCategory_color = category.firstCategory === category.de_firstCategory ? 'red' : 'black'
         category.firstCategory = category.de_firstCategory || category.firstCategory
         if (typeof category.secondCategory !== 'undefined') {
           _.each(category.secondCategory, (second) => {
-            second.secondTitle_color = second.de_secondTitle == second.secondTitle ? 'red' : 'black'
+            second.secondTitle_color = second.de_secondTitle === second.secondTitle ? 'red' : 'black'
             second.secondTitle = second.de_secondTitle || second.secondTitle
             if (typeof second.thirdTitles !== 'undefined') {
               _.each(second.thirdTitles, (third) => {
-                third.thirdTitle_color = third.de_thirdTitle == third.thirdTitle ? 'red' : 'black'
+                third.thirdTitle_color = third.de_thirdTitle === third.thirdTitle ? 'red' : 'black'
                 third.thirdTitle = third.de_thirdTitle || third.thirdTitle
               })
             }
@@ -1005,7 +1009,7 @@ router.delete('/category_manage', (req, res) => {
   queryResult
         .then((totalCategory) => {
           return new Promise((resolve, reject) => {
-            if (first && second == '' && third == '') {
+            if (first && second === '' && third === '') {
               totalCategory = ''
               db.specifications.remove({
                 firstCategory: first
@@ -1016,7 +1020,7 @@ router.delete('/category_manage', (req, res) => {
             resolve(totalCategory)
           })
                 .then((total_Category) => {
-                  if (first && second && third == '') {
+                  if (first && second && third === '') {
                     db.specifications.remove({
                       firstCategory: first,
                       secondCategory: second
@@ -1027,7 +1031,7 @@ router.delete('/category_manage', (req, res) => {
                     })
                     _.each(total_Category.secondCategory, (item, key) => {
                       if (typeof item !== 'undefined') {
-                        if (typeof item.secondTitle !== 'undefined' && item.secondTitle == second) {
+                        if (typeof item.secondTitle !== 'undefined' && item.secondTitle === second) {
                           totalCategory.secondCategory.splice(key, 1)
                         }
                       }
@@ -1045,11 +1049,11 @@ router.delete('/category_manage', (req, res) => {
                       if (err) throw Error()
                     })
                     _.each(total_Category.secondCategory, (item) => {
-                      if (item.secondTitle == second) {
+                      if (item.secondTitle === second) {
                         _.each(item.thirdTitles, (thirdItem, key) => {
                           console.log(thirdItem)
                           if (typeof thirdItem !== 'undefined') {
-                            if (typeof thirdItem.thirdTitle !== 'undefined' && thirdItem.thirdTitle == third) {
+                            if (typeof thirdItem.thirdTitle !== 'undefined' && thirdItem.thirdTitle === third) {
                               delete item.thirdTitles.splice(key, 1)
                             }
                           }
@@ -1066,7 +1070,7 @@ router.delete('/category_manage', (req, res) => {
         .then((final) => {
           console.log(final)
           console.log('final')
-          if (final == '') {
+          if (final === '') {
             db.categorys.remove({
               firstCategory: first
             }, (err, result) => {
@@ -1126,7 +1130,7 @@ router.put('/category_manage', (req, res) => {
                           if (req.body.second === 'true') {
                             specification.secondCategory = req.body.secondCategory
                             _.each(totalCategory.secondCategory, (item) => {
-                              if (item.secondTitle == req.body.originSecondCategory) {
+                              if (item.secondTitle === req.body.originSecondCategory) {
                                 item.secondTitle = req.body.secondCategory
                               }
                             })
@@ -1137,9 +1141,9 @@ router.put('/category_manage', (req, res) => {
                           if (req.body.third === 'true') {
                             specification.thirdCategory = req.body.thirdCategory
                             _.each(totalCategory.secondCategory, (item) => {
-                              if (item.secondTitle == req.body.secondCategory) {
+                              if (item.secondTitle === req.body.secondCategory) {
                                 _.each(item.thirdTitles, (thirdItem) => {
-                                  if (thirdItem.thirdTitle == req.body.originThirdCategory) {
+                                  if (thirdItem.thirdTitle === req.body.originThirdCategory) {
                                     thirdItem.thirdTitle = req.body.thirdCategory
                                     thirdItem.thirdImages = req.body.thirdImages
                                   }
@@ -1149,9 +1153,9 @@ router.put('/category_manage', (req, res) => {
                           } else {
                             specification.thirdCategory = req.body.thirdCategory
                             _.each(totalCategory.secondCategory, (item) => {
-                              if (item.secondTitle == req.body.secondCategory) {
+                              if (item.secondTitle === req.body.secondCategory) {
                                 _.each(item.thirdTitles, (thirdItem) => {
-                                  if (thirdItem.thirdTitle == req.body.originThirdCategory) {
+                                  if (thirdItem.thirdTitle === req.body.originThirdCategory) {
                                     thirdItem.thirdImages = req.body.thirdImages
                                   }
                                 })
@@ -1211,7 +1215,7 @@ router.put('/category_manage_german', (req, res) => {
     })
     queryResult
             .then((totalCategory) => {
-              if (totalCategory == null) throw {statusCode: 404, msg: 'Nut Found'}
+              if (totalCategory === null) throw {statusCode: 404, msg: 'Nut Found'}
               return new Promise((resolve, reject) => {
                 if (req.body.first === 'true') {
                   totalCategory.de_firstCategory = req.body.firstCategory
@@ -1223,7 +1227,7 @@ router.put('/category_manage_german', (req, res) => {
                       if (req.body.second === 'true') {
                         specs.de_secondTitle = req.body.secondCategory
                         _.each(total_Category.secondCategory, (item) => {
-                          if (item.de_secondTitle == req.body.originSecondCategory) {
+                          if (item.de_secondTitle === req.body.originSecondCategory) {
                             item.de_secondTitle = req.body.secondCategory
                           }
                         })
@@ -1234,9 +1238,9 @@ router.put('/category_manage_german', (req, res) => {
                       if (req.body.third === 'true') {
                         specs.de_thirdTitle = req.body.thirdCategory
                         _.each(total_Category.secondCategory, (item) => {
-                          if (item.de_secondTitle == req.body.secondCategory) {
+                          if (item.de_secondTitle === req.body.secondCategory) {
                             _.each(item.thirdTitles, (thirdItem) => {
-                              if (thirdItem.de_thirdTitle == req.body.originThirdCategory) {
+                              if (thirdItem.de_thirdTitle === req.body.originThirdCategory) {
                                 thirdItem.de_thirdTitle = req.body.thirdCategory
                                 thirdItem.thirdImages = req.body.thirdImages
                               }
@@ -1246,9 +1250,9 @@ router.put('/category_manage_german', (req, res) => {
                       } else {
                         specs.de_thirdTitle = req.body.thirdCategory
                         _.each(total_Category.secondCategory, (item) => {
-                          if (item.de_secondTitle == req.body.secondCategory) {
+                          if (item.de_secondTitle === req.body.secondCategory) {
                             _.each(item.thirdTitles, (thirdItem) => {
-                              if (thirdItem.de_thirdTitle == req.body.originThirdCategory) {
+                              if (thirdItem.de_thirdTitle === req.body.originThirdCategory) {
                                 thirdItem.thirdImages = req.body.thirdImages
                               }
                             })
@@ -1301,9 +1305,9 @@ router.delete('/category_manage_german', (req, res) => {
   })
   queryResult
         .then((totalCategory) => {
-          if (totalCategory == null) throw {statusCode: 404, msg: 'Nut Found'}
+          if (totalCategory === null) throw {statusCode: 404, msg: 'Nut Found'}
           return new Promise((resolve, reject) => {
-            if (first && second == '' && third == '') {
+            if (first && second === '' && third === '') {
               db.specifications.remove({
                 de_firstCategory: first
               }, (err, result) => {
@@ -1314,7 +1318,7 @@ router.delete('/category_manage_german', (req, res) => {
             resolve(totalCategory)
           })
                 .then((total_Category) => {
-                  if (first && second && third == '') {
+                  if (first && second && third === '') {
                     db.specifications.remove({
                       de_firstCategory: first,
                       de_secondCategory: second
@@ -1323,7 +1327,7 @@ router.delete('/category_manage_german', (req, res) => {
                     })
                     _.each(total_Category.secondCategory, (item, key) => {
                       if (typeof item !== 'undefined') {
-                        if (typeof item.de_secondTitle !== 'undefined' && item.de_secondTitle == second) {
+                        if (typeof item.de_secondTitle !== 'undefined' && item.de_secondTitle === second) {
                           totalCategory.secondCategory.splice(key, 1)
                         }
                       }
@@ -1341,10 +1345,10 @@ router.delete('/category_manage_german', (req, res) => {
                       if (err) throw Error()
                     })
                     _.each(total_Category.secondCategory, (item) => {
-                      if (item.de_secondTitle == second) {
+                      if (item.de_secondTitle === second) {
                         _.each(item.thirdTitles, (thirdItem, key) => {
                           if (typeof thirdItem !== 'undefined') {
-                            if (typeof thirdItem.de_thirdTitle !== 'undefined' && thirdItem.de_thirdTitle == third) {
+                            if (typeof thirdItem.de_thirdTitle !== 'undefined' && thirdItem.de_thirdTitle === third) {
                               delete item.thirdTitles.splice(key, 1)
                             }
                           }
@@ -1359,7 +1363,7 @@ router.delete('/category_manage_german', (req, res) => {
                 })
         })
         .then((final) => {
-          if (final == '') {
+          if (final === '') {
             db.categorys.remove({
               firstCategory: first
             }, (err, result) => {
@@ -1660,7 +1664,7 @@ router.get('/upload-products-detail', (req, res, next) => {
 })
 
 function parseIsNull (args) {
-  if (args.length == 0) {
+  if (args.length === 0) {
     return false
   } else {
     return true
@@ -1683,7 +1687,7 @@ function parseIsExist (arg) {
 
 function filterArr (spectication, tempCategory) {
   var newArr = _.filter(spectication, function (compatibility) {
-    return tempCategory == compatibility.belong
+    return tempCategory === compatibility.belong
   })
   return newArr
 }
@@ -1706,7 +1710,7 @@ router.get('/uploadTemporary', function (req, res, next) {
 
 // 产品页面POST保存最近上传类目接口
 router.post('/uploadTemporary', function (req, res, next) {
-  if (req.body.firstCategory == '' && req.body.secondCategory != '') {
+  if (req.body.firstCategory === '' && req.body.secondCategory != '') {
     res.send({error_msg: ['FORMAT PARAM Error'], info: '', result: 'fail', code: '400'})
   } else {
     let Categories = {
@@ -1809,7 +1813,7 @@ router.post('/uploadTemporary', function (req, res, next) {
 
 router.post('/deleteTemporary', (req, res) => {
   console.log(req.body.thirdCategory.trim())
-  if (req.body.thirdCategory == '') return res.json({status: 403, msg: 'NOT FOUND'})
+  if (req.body.thirdCategory === '') return res.json({status: 403, msg: 'NOT FOUND'})
   tempCategory = _.filter(function (item) {
     return item.thirdCategory != req.body.thirdCategory
   })
@@ -1827,7 +1831,7 @@ router.post('/deleteTemporary', (req, res) => {
 router.post('/uploadProductDetail', function (req, res, next) {
   var Categories = []
   _.each(req.body, function (product) {
-    if (product.firstCategory == '' && product.secondCategory != '') {
+    if (product.firstCategory === '' && product.secondCategory != '') {
       res.send({error_msg: ['FORMAT PARAM Error'], info: '', result: 'fail', code: '400', username: u.nick_name})
     } else {
       var singleCategories = {
@@ -1894,11 +1898,11 @@ router.post('/saveProductDetail', function (req, res, next) {
             db.categorys.findOne({'secondCategory.thirdTitles.thirdTitle': item.third}, (err, result) => {
               if (err || !result) return res.send(500)
               let newArr = _.filter(result.secondCategory, (secondCategory) => {
-                return secondCategory.secondTitle == item.second
+                return secondCategory.secondTitle === item.second
               })
 
               _.each(newArr[0].thirdTitles, (thirdCategory) => {
-                if (thirdCategory.thirdTitle == item.third) {
+                if (thirdCategory.thirdTitle === item.third) {
                   thirdCategory.product.push(obj._id)
                 }
               })
@@ -2103,7 +2107,7 @@ router.post('/spec/property/delete', function (req, res, next) {
   var attribute = 'specification.' + req.body.name
   let queryLoad = {}
   let setLoad = {}
-  if (req.body.language == 'en') {
+  if (req.body.language === 'en') {
     queryLoad = {'thirdCategory': req.body.belong}
     setLoad = {
       'name': req.body.name,
@@ -2303,7 +2307,7 @@ var upload = multer({
 })
 router.post('/uploadSingle', upload.array('file'), function (req, res, next) {
   console.log(req.files)
-  if (req.files == undefined) {
+  if (req.files === undefined) {
     res.send('请选择要上传的图片...')
   } else {
     var str = '文件上传成功...'
@@ -2327,7 +2331,7 @@ router.post('/uploadSingle', upload.array('file'), function (req, res, next) {
 /* 多图片上传 */
 router.post('/uploadImage', upload.array('file'), function (req, res, next) {
   console.log(req.files)
-  if (req.files == undefined) {
+  if (req.files === undefined) {
     res.send('请选择要上传的图片...')
   } else {
     var str = '文件上传成功...'
@@ -2574,7 +2578,7 @@ router.get('/express-fee-template', (req, res) => {
   req.session.express_tempalte.username = u.nick_name || 'admin'
   req.session.express_tempalte.type = req.session.express_tempalte_type
   console.log(req.session.express_tempalte)
-  if (req.session.express_tempalte_type == 'parcel') {
+  if (req.session.express_tempalte_type === 'parcel') {
     res.render('admin/templates/parcel-change', req.session.express_tempalte)
   } else {
     res.render('admin/templates/express-ordinary-change', req.session.express_tempalte)
@@ -2620,7 +2624,7 @@ router.post('/fee-express', (req, res) => {
 
   opts
         .then((d) => {
-          if (d.length == 0) {
+          if (d.length === 0) {
             let fee = new db.feeExpress(query)
             fee.save((err) => {
               if (err) throw {status: 500}
@@ -2919,7 +2923,7 @@ function formatFee (args) {
   let bb = num + ''
   let dian = bb.indexOf('.')
   let result = ''
-  if (dian == -1) {
+  if (dian === -1) {
     result = num.toFixed(4)
   } else {
     let cc = bb.substring(dian + 1, bb.length)
@@ -2940,12 +2944,12 @@ function formatFee (args) {
  * @return [type]
  */
 router.post('/transport', (req, res) => {
-  if (req.body.weight == 'undefined' || req.body.area == 'undefined') {
+  if (req.body.weight === 'undefined' || req.body.area === 'undefined') {
     res.send(401, {code: 401, msg: 'Params Error'})
     return
   }
 
-  if (req.body.weight == '' || req.body.area == '') {
+  if (req.body.weight === '' || req.body.area === '') {
     res.send(401, {code: 401, msg: 'Params Error'})
     return
   }
@@ -3085,12 +3089,12 @@ router.get('/country', (req, res) => {
   let status = req.query.status || 'all'
   let payload = {type: req.query.type}
   if (status != 'all') {
-    payload['countryLists.country_status'] = status == 'true'
+    payload['countryLists.country_status'] = status === 'true'
   }
   console.log(payload)
   db.countryFlags.findOne(payload, (err, data) => {
     if (err) return res.send(500, {succeed: true, msg: 'internal error'})
-    if (data.length == 0) return res.send(404, {succeed: false, msg: 'NOT EXIST'})
+    if (data.length === 0) return res.send(404, {succeed: false, msg: 'NOT EXIST'})
     res.send(200, {succeed: true, msg: data.countryLists})
   })
 })
@@ -3102,7 +3106,7 @@ router.put('/country', (req, res) => {
   }, (err, data) => {
     data[0].countryLists.forEach((e) => {
       payload.code.forEach((c) => {
-        if (e.country_cn_name == c) {
+        if (e.country_cn_name === c) {
           e.country_status = true
         }
       })

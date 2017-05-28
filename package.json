@@ -102,5 +102,13 @@
     "supertest": "^2.0.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.3"
-  }
+  },
+  "standard": {
+  "ignore": [
+    "**/test/",
+    "/public/",
+    "/node_modules/",
+    "/views/"
+  ]
+}
 }

@@ -7,154 +7,118 @@ const _ = require('lodash')
 
 var hotLabel = []
 var categoryies = []
-var u = []
+
+function customError (code, msg, response) {
+  response.send(code, msg)
+}
 
 var checkCategories = function (req, res, next) {
-  if (categoryies.length == 0) {
+  if (categoryies.length === 0) {
     db.categorys.find({}, function (err, result) {
       if (err) res.send('404')
       categoryies = result
     })
-  } else if (hotLabel.length == 0) {
+  } else if (hotLabel.length === 0) {
     db.hotLabels.find({}, null, {
       sort: {
         add_time: -1
       }
     }, function (err, labels) {
+      if (err) res.send(err)
       hotLabel = labels
     })
   }
   next()
 }
 
-router.get('/test', (req, res) => {
-    // db.category.findOne({
-    //     'secondCategory.thirdTitles.thirdUrl': '/product/' + req.params["id"]
-    // }, (err, result) => {
-    //     let arr = []
-    //     let secondParam = {}
-    //
-    //     if (result != null) {
-    //         secondParam.firstTitle = result.firstCategory;
-    //         secondParam.firstUrl = result.firstUrl;
-    //         _.each(result.secondCategory, function (second) {
-    //             let newArr = _.filter(second.thirdTitles, function (third) {
-    //                 secondParam.secondTitle = second.secondTitle;
-    //                 secondParam.secondUrl = second.secondUrl;
-    //                 secondParam.thirdTitle = third.thirdTitle;
-    //                 secondParam.thirdUrl = third.thirdUrl;
-    //                 return third.thirdUrl == '/product/' + req.params["id"]
-    //             });
-    //             arr = _.concat(newArr, arr)
-    //         });
-    //         var statusCode = null
-    //         if (req.cookies["account"] != null) {
-    //             statusCode = 200;
-    //         } else {
-    //             statusCode = 500
-    //         }
-    //
-    //         console.log(secondParam)
-    //         res.send({msg: secondParam, statusCode: statusCode})
-    //
-    //     }
-    // })
-  db.feeExpress
-        .findOne(payload)
-        .populate('country.id')
-        .exec((err, data) => {
-          res.send(data)
-        })
-})
-
 /* GET home page. */
 router.get('/', (req, res) => {
   async.parallel([
-    done => {
-      db.categorys
-                    .find({})
-                    .populate('secondCategory.thirdTitles.product')
-                    .exec((err, data) => {
-                      if (err) return customError(500, '数据库查询错误', res)
-                      categoryies = data
-                      done(err, data)
-                    })
-    },
-    done => {
-      db.hotLabels
-                    .find({})
-                    .exec((err, label) => {
-                      if (err) return customError(500, '数据库查询错误', res)
-                      done(err, label)
-                    })
-    }
-  ],
-        (err, response) => {
-          if (err) return customError(500, '数据库查询错误', res)
-          let category = response[0]
-          let labels = response[1]
-          let account = null
-          let statusCode = 500
-          if (req.cookies['account'] != null) {
-            account = req.cookies['account']
-            statusCode = 200
-          }
-
-          console.log(labels)
-          res.render('assets/index/en', {
-            title: 'ECSell',
-            url: '/',
-            categories: category,
-            hotLabels: labels,
-            user: account,
-            status: statusCode,
-            language: 'English'
+      done => {
+        db.categorys
+          .find({})
+          .populate('secondCategory.thirdTitles.product')
+          .exec((err, data) => {
+            if (err) return customError(500, '数据库查询错误', res)
+            categoryies = data
+            done(err, data)
           })
-        })
+      },
+      done => {
+        db.hotLabels
+          .find({})
+          .exec((err, label) => {
+            if (err) return customError(500, '数据库查询错误', res)
+            done(err, label)
+          })
+      }
+    ],
+    (err, response) => {
+      if (err) return customError(500, '数据库查询错误', res)
+      let category = response[0]
+      let labels = response[1]
+      let account = null
+      let statusCode = 500
+      if (req.cookies['account'] !== null) {
+        account = req.cookies['account']
+        statusCode = 200
+      }
+
+      console.log(labels)
+      res.render('assets/index/en', {
+        title: 'ECSell',
+        url: '/',
+        categories: category,
+        hotLabels: labels,
+        user: account,
+        status: statusCode,
+        language: 'English'
+      })
+    })
 })
 
 router.get('/login', (req, res, next) => {
   async.parallel([
-    (done) => {
-      db.categorys.find({}, function (err, result) {
-        if (err) res.send('404')
-        categoryies = result
-        done(err, result)
-      })
-    },
-    (done) => {
-      db.hotLabels.find({}, null, {
-        sort: {
-          add_time: -1
-        }
-      }, function (err, labels) {
-        hotLabel = labels
-        done(err, labels)
-      })
-    }
-  ],
-        (err, results) => {
-          if (err) {
-            done(err)
-          } else {
-            var category = results[0]
-            var labels = results[1]
-            var account = null
-            var statusCode = 500
-            console.log(category)
-            if (req.cookies['account'] != null) {
-              account = req.cookies['account']
-              statusCode = 200
-            }
-            res.render('assets/login', {
-              title: 'ECSell',
-              categories: category,
-              hotLabels: labels,
-              user: account,
-              status: statusCode
-            })
-          }
+      (done) => {
+        db.categorys.find({}, function (err, result) {
+          if (err) res.send('404')
+          categoryies = result
+          done(err, result)
         })
+      },
+      (done) => {
+        db.hotLabels.find({}, null, {
+          sort: {
+            add_time: -1
+          }
+        }, function (err, labels) {
+          hotLabel = labels
+          done(err, labels)
+        })
+      }
+    ],
+    (err, results) => {
+      if (err) {
+        done(err)
+      } else {
+        var category = results[0]
+        var labels = results[1]
+        var account = null
+        var statusCode = 500
+        console.log(category)
+        if (req.cookies['account'] !== null) {
+          account = req.cookies['account']
+          statusCode = 200
+        }
+        res.render('assets/login', {
+          title: 'ECSell',
+          categories: category,
+          hotLabels: labels,
+          user: account,
+          status: statusCode
+        })
+      }
+    })
 })
 
 // 登出处理
@@ -180,7 +144,7 @@ router.post('/validateEmail', (req, res, next) => {
 router.get('/personal-center', checkCategories)
 router.get('/personal-center', (req, res, next) => {
   var statusCode = null
-  if (req.cookies['account'] != null) {
+  if (req.cookies['account'] !== null) {
     statusCode = 200
   } else {
     statusCode = 500
@@ -198,7 +162,7 @@ router.get('/personal-center', (req, res, next) => {
 router.get('/personal-Order', checkCategories)
 router.get('/personal-Order', (req, res, next) => {
   var statusCode = null
-  if (req.cookies['account'] != null) {
+  if (req.cookies['account'] !== null) {
     statusCode = 200
   } else {
     statusCode = 500
@@ -227,10 +191,10 @@ router.post('/change-profile', (req, res, next) => {
     } else {
       var changeCode = null
       var statusCode = null
-      if (result.nModified == 0) {
+      if (result.nModified === 0) {
         res.send({account: '', code: 500, msg: 'CHANGE FAILED'})
       } else {
-        if (req.cookies['account'] != null) {
+        if (req.cookies['account'] !== null) {
           var name = req.cookies['account'].name
           var level = req.cookies['account'].level
           res.clearCookie('account')
@@ -265,10 +229,10 @@ router.post('/change-email', (req, res, next) => {
     } else {
       console.log(result)
       var changeCode = null
-      if (result.nModified == 0) {
+      if (result.nModified === 0) {
         res.send({account: '', code: 500, msg: 'CHANGE FAILED'})
       } else {
-        if (req.cookies['account'] != null) {
+        if (req.cookies['account'] !== null) {
           var name = req.body.newEmail
           var nick_name = req.cookies['account'].nick_name
           var company = req.cookies['account'].company
@@ -302,10 +266,10 @@ router.post('/change-password', (req, res, next) => {
     } else {
       console.log(result)
       var changeCode = null
-      if (result.nModified == 0) {
+      if (result.nModified === 0) {
         res.send({account: '', code: 500, msg: 'CHANGE FAILED'})
       } else {
-        if (req.cookies['account'] != null) {
+        if (req.cookies['account'] !== null) {
           res.send({account: req.cookies['account'], code: 200, msg: 'SUCCESS'})
         } else {
           res.send({account: '', code: 500, msg: 'Not LOGIN'})
@@ -328,10 +292,10 @@ router.post('/change-address', (req, res, next) => {
     } else {
       console.log(result)
       var changeCode = null
-      if (result.nModified == 0) {
+      if (result.nModified === 0) {
         res.send({account: '', code: 500, msg: 'CHANGE FAILED'})
       } else {
-        if (req.cookies['account'] != null) {
+        if (req.cookies['account'] !== null) {
           req.cookies['account'].areaCode = req.body.areaCode
           req.cookies['account'].detail_address = req.body.detail_address
           res.send({account: req.cookies['account'], code: 200, msg: 'SUCCESS'})
@@ -420,7 +384,7 @@ router.get('/team-of-use', (req, res) => {
       res.send(404)
     } else {
       var statusCode = null
-      if (req.cookies['account'] != null) {
+      if (req.cookies['account'] !== null) {
         statusCode = 200
       } else {
         statusCode = 500
@@ -444,7 +408,7 @@ router.get('/about-us', (req, res) => {
       res.send(404)
     } else {
       var statusCode = null
-      if (req.cookies['account'] != null) {
+      if (req.cookies['account'] !== null) {
         statusCode = 200
       } else {
         statusCode = 500
@@ -468,7 +432,7 @@ router.get('/privacy-policy', (req, res) => {
       res.send(404)
     } else {
       var statusCode = null
-      if (req.cookies['account'] != null) {
+      if (req.cookies['account'] !== null) {
         statusCode = 200
       } else {
         statusCode = 500
@@ -492,7 +456,7 @@ router.get('/FAQ', (req, res) => {
       res.send(404)
     } else {
       var statusCode = null
-      if (req.cookies['account'] != null) {
+      if (req.cookies['account'] !== null) {
         statusCode = 200
       } else {
         statusCode = 500
@@ -516,7 +480,7 @@ router.get('/attention', (req, res) => {
       res.send(404)
     } else {
       var statusCode = null
-      if (req.cookies['account'] != null) {
+      if (req.cookies['account'] !== null) {
         statusCode = 200
       } else {
         statusCode = 500
@@ -540,7 +504,7 @@ router.get('/contact-us', (req, res) => {
       res.send(404)
     } else {
       var statusCode = null
-      if (req.cookies['account'] != null) {
+      if (req.cookies['account'] !== null) {
         statusCode = 200
       } else {
         statusCode = 500
@@ -566,7 +530,7 @@ router.get('/product/:id', (req, res, next) => {
     var arr = []
     var secondParam = {}
 
-    if (result != null) {
+    if (result !== null) {
       secondParam.firstTitle = result.firstCategory
       secondParam.firstUrl = result.firstUrl
       _.each(result.secondCategory, function (second) {
@@ -575,19 +539,19 @@ router.get('/product/:id', (req, res, next) => {
           secondParam.secondUrl = second.secondUrl
           secondParam.thirdTitle = third.thirdTitle
           secondParam.thirdUrl = third.thirdUrl
-          return third.thirdUrl == '/product/' + req.params['id']
+          return third.thirdUrl === '/product/' + req.params['id']
         })
         arr = _.concat(newArr, arr)
       })
       var statusCode = null
-      if (req.cookies['account'] != null) {
+      if (req.cookies['account'] !== null) {
         statusCode = 200
       } else {
         statusCode = 500
       }
 
       console.log(secondParam)
-      if (arr.length == 0) {
+      if (arr.length === 0) {
         res.render('assets/category', {
           product: [],
           title: 'ECSell',
@@ -610,7 +574,7 @@ router.get('/product/:id', (req, res, next) => {
         })
       }
     } else {
-      if (req.cookies['account'] != null) {
+      if (req.cookies['account'] !== null) {
         statusCode = 200
       } else {
         statusCode = 500
@@ -641,7 +605,7 @@ router.get('/single-product/:id', (req, res, next) => {
     var most_like = []
     var detail_params = {}
     console.log(result)
-    if (result != null) {
+    if (result !== null) {
       detail_params.firstTitle = result.firstCategory
       detail_params.firstUrl = result.firstUrl
       _.each(result.secondCategory, function (second) {
@@ -651,25 +615,25 @@ router.get('/single-product/:id', (req, res, next) => {
             detail_params.thirdUrl = third.thirdUrl
             detail_params.secondTitle = second.secondTitle
             detail_params.secondUrl = second.secondUrl
-            return four.product_id == req.params['id']
+            return four.product_id === req.params['id']
           })
           arr = _.concat(newArr, arr)
         })
         _.each(second.thirdTitles, function (third) {
           var mostArr = _.filter(third.product, function (four) {
-            return four.product_id != req.params['id']
+            return four.product_id !== req.params['id']
           })
           most_like = _.concat(mostArr, most_like)
         })
       })
       console.log(detail_params)
       var statusCode = null
-      if (req.cookies['account'] != null) {
+      if (req.cookies['account'] !== null) {
         statusCode = 200
       } else {
         statusCode = 500
       }
-      if (arr.length == 0) {
+      if (arr.length === 0) {
         res.render('assets/product-detail', {
           product: [],
           title: 'ECSell',
@@ -696,7 +660,7 @@ router.get('/single-product/:id', (req, res, next) => {
         })
       }
     } else {
-      if (req.cookies['account'] != null) {
+      if (req.cookies['account'] !== null) {
         statusCode = 200
       } else {
         statusCode = 500
@@ -728,7 +692,7 @@ router.get('/single-product/:id', (req, res, next) => {
   }, function (err, result) {
     var arr = []
     var detail_params = {}
-    if (result != null) {
+    if (result !== null) {
       _.each(result.secondCategory, function (second) {
         _.each(second.thirdTitles, function (third) {
           var newArr = _.filter(third.product, function (four) {
@@ -736,7 +700,7 @@ router.get('/single-product/:id', (req, res, next) => {
             detail_params.thirdUrl = third.thirdUrl
             detail_params.secondTitle = second.secondTitle
             detail_params.secondUrl = second.secondUrl
-            return four.product_id == req.params['id']
+            return four.product_id === req.params['id']
           })
           arr = _.concat(newArr, arr)
         })
@@ -744,13 +708,13 @@ router.get('/single-product/:id', (req, res, next) => {
       console.log(detail_params)
       console.log(arr)
       var statusCode = null
-      if (req.cookies['account'] != null) {
+      if (req.cookies['account'] !== null) {
         statusCode = 200
       } else {
         statusCode = 500
       }
 
-      if (arr.length == 0) {
+      if (arr.length === 0) {
         res.render('assets/single-product-detail', {
           product: [],
           prev_category: detail_params,
@@ -775,7 +739,7 @@ router.get('/single-product/:id', (req, res, next) => {
         })
       }
     } else {
-      if (req.cookies['account'] != null) {
+      if (req.cookies['account'] !== null) {
         statusCode = 200
       } else {
         statusCode = 500
@@ -796,14 +760,14 @@ router.get('/single-product/:id', (req, res, next) => {
 // 一级&二级类目查找
 router.get('/:category/:id', checkCategories)
 router.get('/:category/:id', (req, res, next) => {
-  if (req.params['id'].indexOf('_') == -1 && req.params['category'] != 'admin') {
+  if (req.params['id'].indexOf('_') === -1 && req.params['category'] !== 'admin') {
     console.log('-------')
-        // 一级类目
+    // 一级类目
     db.categorys.find({
       'firstUrl': '/' + req.params['category'] + '/' + req.params['id']
     }, function (err, result) {
       console.log(result)
-      if (result.length != 0) {
+      if (result.length !== 0) {
         var secondCategory = result[0].secondCategory
         console.log(secondCategory)
         var statusCode = null
@@ -811,12 +775,12 @@ router.get('/:category/:id', (req, res, next) => {
         detail_params.firstTitle = result[0].firstCategory
         detail_params.firstUrl = result[0].firstUrl
 
-        if (req.cookies['account'] != null) {
+        if (req.cookies['account'] !== null) {
           statusCode = 200
         } else {
           statusCode = 500
         }
-        if (secondCategory.length == 0) {
+        if (secondCategory.length === 0) {
           res.render('assets/first-category', {
             product: [],
             title: 'ECSell',
@@ -840,7 +804,7 @@ router.get('/:category/:id', (req, res, next) => {
           })
         }
       } else {
-        if (req.cookies['account'] != null) {
+        if (req.cookies['account'] !== null) {
           statusCode = 200
         } else {
           statusCode = 500
@@ -856,8 +820,8 @@ router.get('/:category/:id', (req, res, next) => {
         })
       }
     })
-  } else if (req.params['category'] != 'admin') {
-        // 二级类目
+  } else if (req.params['category'] !== 'admin') {
+    // 二级类目
     console.log(req.params['category'] + '------------')
     db.categorys.findOne({
       'secondCategory.secondUrl': '/' + req.params['category'] + '/' + req.params['id']
@@ -871,13 +835,13 @@ router.get('/:category/:id', (req, res, next) => {
         detail_params.secondTitle = second.secondTitle
         detail_params.secondUrl = second.secondUrl
 
-        return second.secondUrl == '/' + req.params['category'] + '/' + req.params['id']
+        return second.secondUrl === '/' + req.params['category'] + '/' + req.params['id']
       })
       console.log(req.params['category'])
-            // _.concat(newArr, arr);
+      // _.concat(newArr, arr);
       console.log(newArr)
       var statusCode = null
-      if (req.cookies['account'] != null) {
+      if (req.cookies['account'] !== null) {
         statusCode = 200
       } else {
         statusCode = 500
@@ -902,7 +866,7 @@ router.get('/:category/:id', (req, res, next) => {
 router.get('/SEO_Engine', (req, res, next) => {
   db.SEOS.find({'SEO_Name': req.query.name}, (err, result) => {
     if (err) res.send(404)
-    if (result.length != 0) {
+    if (result.length !== 0) {
       res.send(result)
     } else {
       res.send({status: 500, msg: 'NOT FOUND'})
