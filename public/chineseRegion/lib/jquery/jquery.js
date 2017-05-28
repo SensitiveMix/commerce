@@ -3067,12 +3067,12 @@
                 var type = jQuery.type(arg)
                 if (type === 'function') {
                   if (!options.unique || !self.has(arg)) {
-                  list.push(arg)
-                }
+                    list.push(arg)
+                  }
                 } else if (arg && arg.length && type !== 'string') {
 								// Inspect recursively
-                add(arg)
-              }
+                  add(arg)
+                }
               })
             })(arguments)
 					// Do we need to add the callbacks to the
@@ -3098,11 +3098,11 @@
 							// Handle firing indexes
                 if (firing) {
                   if (index <= firingLength) {
-                  firingLength--
-                }
+                    firingLength--
+                  }
                   if (index <= firingIndex) {
-                  firingIndex--
-                }
+                    firingIndex--
+                  }
                 }
               }
             })
@@ -8301,13 +8301,13 @@
                 if (conv) {
 								// Condense equivalence converters
                   if (conv === true) {
-                conv = converters[ conv2 ]
+                    conv = converters[ conv2 ]
 
 								// Otherwise, insert the intermediate dataType
-              } else if (converters[ conv2 ] !== true) {
-              current = tmp[ 0 ]
-              dataTypes.unshift(tmp[ 1 ])
-            }
+                  } else if (converters[ conv2 ] !== true) {
+                    current = tmp[ 0 ]
+                    dataTypes.unshift(tmp[ 1 ])
+                  }
                   break
                 }
               }
@@ -8605,50 +8605,50 @@
 
 								// Do not keep as active anymore
                   if (handle) {
-                  xhr.onreadystatechange = jQuery.noop
-                  if (xhrOnUnloadAbort) {
-                  delete xhrCallbacks[ handle ]
-                }
-                }
+                    xhr.onreadystatechange = jQuery.noop
+                    if (xhrOnUnloadAbort) {
+                      delete xhrCallbacks[ handle ]
+                    }
+                  }
 
 								// If it's an abort
                   if (isAbort) {
 									// Abort it manually if needed
-                  if (xhr.readyState !== 4) {
-                  xhr.abort()
-                }
-                } else {
-                  responses = {}
-                  status = xhr.status
-                  responseHeaders = xhr.getAllResponseHeaders()
+                    if (xhr.readyState !== 4) {
+                      xhr.abort()
+                    }
+                  } else {
+                    responses = {}
+                    status = xhr.status
+                    responseHeaders = xhr.getAllResponseHeaders()
 
 									// When requesting binary data, IE6-9 will throw an exception
 									// on any attempt to access responseText (#11426)
-                  if (typeof xhr.responseText === 'string') {
-                  responses.text = xhr.responseText
-                }
+                    if (typeof xhr.responseText === 'string') {
+                      responses.text = xhr.responseText
+                    }
 
 									// Firefox throws an exception when accessing
 									// statusText for faulty cross-domain requests
-                  try {
-                  statusText = xhr.statusText
-                } catch (e) {
+                    try {
+                      statusText = xhr.statusText
+                    } catch (e) {
 										// We normalize with Webkit giving an empty statusText
-                  statusText = ''
-                }
+                      statusText = ''
+                    }
 
 									// Filter status for non standard behaviors
 
 									// If the request is local and we have data: assume a success
 									// (success with no data won't get notified, that's the best we
 									// can do given current implementations)
-                  if (!status && s.isLocal && !s.crossDomain) {
-                  status = responses.text ? 200 : 404
+                    if (!status && s.isLocal && !s.crossDomain) {
+                      status = responses.text ? 200 : 404
 									// IE - #1450: sometimes returns 1223 when it should be 204
-                } else if (status === 1223) {
-              status = 204
-            }
-                }
+                    } else if (status === 1223) {
+                      status = 204
+                    }
+                  }
                 }
               } catch (firefoxAccessException) {
                 if (!isAbort) {
@@ -8675,9 +8675,9 @@
 							// Create the active xhrs callbacks list if needed
 							// and attach the unload handler
                 if (!xhrCallbacks) {
-                xhrCallbacks = {}
-                jQuery(window).unload(xhrOnUnloadAbort)
-              }
+                  xhrCallbacks = {}
+                  jQuery(window).unload(xhrOnUnloadAbort)
+                }
 							// Add to list of active xhrs callbacks
                 xhrCallbacks[ handle ] = callback
               }

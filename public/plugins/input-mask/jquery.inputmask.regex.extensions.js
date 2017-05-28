@@ -86,7 +86,7 @@ Allows for using regular expressions as a mask
                 }
               }
 
-              if (currentToken.matches.length > 0)                { opts.regexTokens.push(currentToken) }
+              if (currentToken.matches.length > 0) { opts.regexTokens.push(currentToken) }
             }
             function validateRegexToken (token, fromGroup) {
               var isvalid = false
@@ -103,35 +103,35 @@ Allows for using regular expressions as a mask
                   var quantifierMax = opts.quantifierFilter.exec(matchToken)[0].replace('}', '')
                   var testExp = regexPart + '{1,' + quantifierMax + '}' // relax quantifier validation
                   for (var j = 0; j < openGroupCount; j++) {
-                      testExp += ')'
-                    }
+                    testExp += ')'
+                  }
                   var exp = new RegExp('^(' + testExp + ')$')
                   isvalid = exp.test(bufferStr)
                   regexPart += matchToken
                 } else if (matchToken['isLiteral'] == true) {
-                    matchToken = matchToken['matches'][0]
-                    var testExp = regexPart, openGroupCloser = ''
-                    for (var j = 0; j < openGroupCount; j++) {
-                        openGroupCloser += ')'
-                      }
-                    for (var k = 0; k < matchToken.length; k++) { // relax literal validation
-                        testExp = (testExp + matchToken[k]).replace(/\|$/, '')
-                        var exp = new RegExp('^(' + testExp + openGroupCloser + ')$')
-                        isvalid = exp.test(bufferStr)
-                        if (isvalid) break
-                      }
-                    regexPart += matchToken
-                                    // console.log(bufferStr + " " + exp + " " + isvalid);
-                  } else {
-                    regexPart += matchToken
-                    var testExp = regexPart.replace(/\|$/, '')
-                    for (var j = 0; j < openGroupCount; j++) {
-                        testExp += ')'
-                      }
-                    var exp = new RegExp('^(' + testExp + ')$')
-                    isvalid = exp.test(bufferStr)
-                                    // console.log(bufferStr + " " + exp + " " + isvalid);
+                  matchToken = matchToken['matches'][0]
+                  var testExp = regexPart, openGroupCloser = ''
+                  for (var j = 0; j < openGroupCount; j++) {
+                    openGroupCloser += ')'
                   }
+                  for (var k = 0; k < matchToken.length; k++) { // relax literal validation
+                    testExp = (testExp + matchToken[k]).replace(/\|$/, '')
+                    var exp = new RegExp('^(' + testExp + openGroupCloser + ')$')
+                    isvalid = exp.test(bufferStr)
+                    if (isvalid) break
+                  }
+                  regexPart += matchToken
+                                    // console.log(bufferStr + " " + exp + " " + isvalid);
+                } else {
+                  regexPart += matchToken
+                  var testExp = regexPart.replace(/\|$/, '')
+                  for (var j = 0; j < openGroupCount; j++) {
+                    testExp += ')'
+                  }
+                  var exp = new RegExp('^(' + testExp + ')$')
+                  isvalid = exp.test(bufferStr)
+                                    // console.log(bufferStr + " " + exp + " " + isvalid);
+                }
                 if (isvalid) break
               }
 

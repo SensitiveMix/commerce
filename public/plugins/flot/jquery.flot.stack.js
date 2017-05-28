@@ -113,20 +113,20 @@ charts or filled areas).
                         // we got past point below, might need to
                         // insert interpolated extra point
             if (withlines && i > 0 && points[i - ps] != null) {
-                intery = py + (points[i - ps + accumulateOffset] - py) * (qx - px) / (points[i - ps + keyOffset] - px)
-                newpoints.push(qx)
-                newpoints.push(intery + qy)
-                for (m = 2; m < ps; ++m) { newpoints.push(points[i + m]) }
-                bottom = qy
-              }
+              intery = py + (points[i - ps + accumulateOffset] - py) * (qx - px) / (points[i - ps + keyOffset] - px)
+              newpoints.push(qx)
+              newpoints.push(intery + qy)
+              for (m = 2; m < ps; ++m) { newpoints.push(points[i + m]) }
+              bottom = qy
+            }
 
             j += otherps
           } else { // px < qx
             if (fromgap && withlines) {
                             // if we come from a gap, we just skip this point
-                i += ps
-                continue
-              }
+              i += ps
+              continue
+            }
 
             for (m = 0; m < ps; ++m) { newpoints.push(points[i + m]) }
 

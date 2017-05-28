@@ -1792,11 +1792,11 @@ router.post('/uploadTemporary', function (req, res, next) {
           }, (err, result) => {
             if (err) {
               return res.send({
-                  error_msg: ['INTERNAL SERVER ERROR'],
-                  info: '',
-                  result: 'fail',
-                  code: '500'
-                })
+                error_msg: ['INTERNAL SERVER ERROR'],
+                info: '',
+                result: 'fail',
+                code: '500'
+              })
             }
             console.log('upload temporary upload status success')
             res.send({error_msg: [], info: result, result: 'success', code: '200'})

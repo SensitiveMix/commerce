@@ -278,7 +278,7 @@
           [this.element, {
             focus: $.proxy(this.show, this),
             keyup: $.proxy(function (e) {
-              if ($.inArray(e.keyCode, [27, 37, 39, 38, 40, 32, 13, 9]) === -1)                { this.update() }
+              if ($.inArray(e.keyCode, [27, 37, 39, 38, 40, 32, 13, 9]) === -1) { this.update() }
             }, this),
             keydown: $.proxy(this.keydown, this)
           }]
@@ -930,8 +930,7 @@
         this.dates.push(date)
       }
       if (typeof this.o.multidate === 'number') {
-        while (this.dates.length > this.o.multidate)
-          {this.dates.remove(0)}
+        while (this.dates.length > this.o.multidate) { this.dates.remove(0) }
       }
     },
 

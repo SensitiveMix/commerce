@@ -430,8 +430,8 @@
               }, 240, 'linear')
             }				else if (that.s.screen.y < that.s.scroller.top + 50)				{
               $(that.s.dt.nTable.parentNode).animate({
-              'scrollTop': $(that.s.dt.nTable.parentNode).scrollTop() - 50
-            }, 240, 'linear')
+                'scrollTop': $(that.s.dt.nTable.parentNode).scrollTop() - 50
+              }, 240, 'linear')
             }
           }
         }, 250)
@@ -525,20 +525,20 @@
             if (coordsStart.x <= coordsEnd.x) {
               for (j = coordsStart.x; j <= coordsEnd.x; j++) {
                 cells.push({
-                node: $('tbody>tr:eq(' + i + ')>td:eq(' + j + ')', table)[0],
-                x: j - coordsStart.x,
-                y: i - coordsStart.y,
-                colIdx: columnIndex(j)
-              })
+                  node: $('tbody>tr:eq(' + i + ')>td:eq(' + j + ')', table)[0],
+                  x: j - coordsStart.x,
+                  y: i - coordsStart.y,
+                  colIdx: columnIndex(j)
+                })
               }
             }				else {
               for (j = coordsStart.x; j >= coordsEnd.x; j--) {
                 cells.push({
-                node: $('tbody>tr:eq(' + i + ')>td:eq(' + j + ')', table)[0],
-                x: j - coordsStart.x,
-                y: i - coordsStart.y,
-                colIdx: columnIndex(j)
-              })
+                  node: $('tbody>tr:eq(' + i + ')>td:eq(' + j + ')', table)[0],
+                  x: j - coordsStart.x,
+                  y: i - coordsStart.y,
+                  colIdx: columnIndex(j)
+                })
               }
             }
           }
@@ -547,20 +547,20 @@
             if (coordsStart.x <= coordsEnd.x) {
               for (j = coordsStart.x; j <= coordsEnd.x; j++) {
                 cells.push({
-                node: $('tbody>tr:eq(' + i + ')>td:eq(' + j + ')', table)[0],
-                x: j - coordsStart.x,
-                y: i - coordsStart.y,
-                colIdx: columnIndex(j)
-              })
+                  node: $('tbody>tr:eq(' + i + ')>td:eq(' + j + ')', table)[0],
+                  x: j - coordsStart.x,
+                  y: i - coordsStart.y,
+                  colIdx: columnIndex(j)
+                })
               }
             }				else {
               for (j = coordsStart.x; j >= coordsEnd.x; j--) {
                 cells.push({
-                node: $('tbody>tr:eq(' + i + ')>td:eq(' + j + ')', table)[0],
-                x: coordsStart.x - j,
-                y: coordsStart.y - i,
-                colIdx: columnIndex(j)
-              })
+                  node: $('tbody>tr:eq(' + i + ')>td:eq(' + j + ')', table)[0],
+                  x: coordsStart.x - j,
+                  y: coordsStart.y - i,
+                  colIdx: columnIndex(j)
+                })
               }
             }
           }

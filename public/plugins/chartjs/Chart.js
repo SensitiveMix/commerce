@@ -1843,10 +1843,10 @@
                 for (var i = 0; i < this.valuesCount; i++)								{
                   pointPosition = this.getPointPosition(i, this.calculateCenterOffset(this.min + (index * this.stepValue)))
                   if (i === 0) {
-                  ctx.moveTo(pointPosition.x, pointPosition.y)
-                } else {
-                  ctx.lineTo(pointPosition.x, pointPosition.y)
-                }
+                    ctx.moveTo(pointPosition.x, pointPosition.y)
+                  } else {
+                    ctx.lineTo(pointPosition.x, pointPosition.y)
+                  }
                 }
                 ctx.closePath()
                 ctx.stroke()

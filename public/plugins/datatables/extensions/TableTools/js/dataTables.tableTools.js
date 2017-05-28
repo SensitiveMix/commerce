@@ -1186,9 +1186,9 @@ var TableTools;
           }		else if (oConfig.sAction == 'div')		{
             this._fnTextConfig(nButton, oConfig)
           }		else if (oConfig.sAction == 'collection')		{
-          this._fnTextConfig(nButton, oConfig)
-          this._fnCollectionConfig(nButton, oConfig)
-        }
+            this._fnTextConfig(nButton, oConfig)
+            this._fnCollectionConfig(nButton, oConfig)
+          }
 
           if (this.s.dt.iTabIndex !== -1) {
             $(nButton)
@@ -1417,12 +1417,12 @@ var TableTools;
             if (this.s.select.type === 'os') {
               $(dt.nTBody).on('mousedown.DTTT_Select', 'tr', function (e) {
                 if (e.shiftKey) {
-                $(dt.nTBody)
+                  $(dt.nTBody)
 							.css('-moz-user-select', 'none')
 							.one('selectstart.DTTT_Select', 'tr', function () {
   return false
 })
-              }
+                }
               })
 
               $(dt.nTBody).on('mouseup.DTTT_Select', 'tr', function (e) {
@@ -1454,60 +1454,60 @@ var TableTools;
               if (select.type == 'os') {
                 if (e.ctrlKey || e.metaKey) {
 						// Add or remove from the selection
-                if (that.fnIsSelected(row)) {
-                  that._fnRowDeselect(row, e)
-                }						else {
-                  that._fnRowSelect(row, e)
-                }
-              }					else if (e.shiftKey) {
+                  if (that.fnIsSelected(row)) {
+                    that._fnRowDeselect(row, e)
+                  }						else {
+                    that._fnRowSelect(row, e)
+                  }
+                }					else if (e.shiftKey) {
 						// Add a range of rows, from the last selected row to
 						// this one
-                var rowIdxs = that.s.dt.aiDisplay.slice() // visible rows
-                var idx1 = $.inArray(select.lastRow, rowIdxs)
-                var idx2 = $.inArray(pos, rowIdxs)
+                  var rowIdxs = that.s.dt.aiDisplay.slice() // visible rows
+                  var idx1 = $.inArray(select.lastRow, rowIdxs)
+                  var idx2 = $.inArray(pos, rowIdxs)
 
-                if (that.fnGetSelected().length === 0 || idx1 === -1) {
+                  if (that.fnGetSelected().length === 0 || idx1 === -1) {
 							// select from top to here - slightly odd, but both
 							// Windows and Mac OS do this
-                  rowIdxs.splice($.inArray(pos, rowIdxs) + 1, rowIdxs.length)
-                }						else {
+                    rowIdxs.splice($.inArray(pos, rowIdxs) + 1, rowIdxs.length)
+                  }						else {
 							// reverse so we can shift click 'up' as well as down
-                  if (idx1 > idx2) {
-                  var tmp = idx2
-                  idx2 = idx1
-                  idx1 = tmp
-                }
+                    if (idx1 > idx2) {
+                      var tmp = idx2
+                      idx2 = idx1
+                      idx1 = tmp
+                    }
 
-                  rowIdxs.splice(idx2 + 1, rowIdxs.length)
-                  rowIdxs.splice(0, idx1)
-                }
+                    rowIdxs.splice(idx2 + 1, rowIdxs.length)
+                    rowIdxs.splice(0, idx1)
+                  }
 
-                if (!that.fnIsSelected(row)) {
+                  if (!that.fnIsSelected(row)) {
 							// Select range
-                  that._fnRowSelect(rowIdxs, e)
-                }						else {
+                    that._fnRowSelect(rowIdxs, e)
+                  }						else {
 							// Deselect range - need to keep the clicked on row selected
-                  rowIdxs.splice($.inArray(pos, rowIdxs), 1)
-                  that._fnRowDeselect(rowIdxs, e)
-                }
-              }					else {
+                    rowIdxs.splice($.inArray(pos, rowIdxs), 1)
+                    that._fnRowDeselect(rowIdxs, e)
+                  }
+                }					else {
 						// No cmd or shift click. Deselect current if selected,
 						// or select this row only
-                if (that.fnIsSelected(row) && that.fnGetSelected().length === 1) {
-                  that._fnRowDeselect(row, e)
-                }						else {
-                  that.fnSelectNone()
-                  that._fnRowSelect(row, e)
+                  if (that.fnIsSelected(row) && that.fnGetSelected().length === 1) {
+                    that._fnRowDeselect(row, e)
+                  }						else {
+                    that.fnSelectNone()
+                    that._fnRowSelect(row, e)
+                  }
                 }
-              }
               }				else if (that.fnIsSelected(row)) {
-              that._fnRowDeselect(row, e)
-            }				else if (select.type == 'single') {
-              that.fnSelectNone()
-              that._fnRowSelect(row, e)
-            }				else if (select.type == 'multi') {
-              that._fnRowSelect(row, e)
-            }
+                that._fnRowDeselect(row, e)
+              }				else if (select.type == 'single') {
+                that.fnSelectNone()
+                that._fnRowSelect(row, e)
+              }				else if (select.type == 'multi') {
+                that._fnRowSelect(row, e)
+              }
 
               select.lastRow = pos
             })// .on('selectstart', function () { return false; } );
@@ -1625,13 +1625,13 @@ var TableTools;
 			// jQuery object or an array of nodes, or aoData points
             for (i = 0, iLen = src.length; i < iLen; i++)			{
               if (src[i].nodeName)				{
-              pos = this.s.dt.oInstance.fnGetPosition(src[i])
-              out.push(this.s.dt.aoData[pos])
-            }				else if (typeof src[i] === 'number')				{
-              out.push(this.s.dt.aoData[ src[i] ])
-            }				else				{
-              out.push(src[i])
-            }
+                pos = this.s.dt.oInstance.fnGetPosition(src[i])
+                out.push(this.s.dt.aoData[pos])
+              }				else if (typeof src[i] === 'number')				{
+                out.push(this.s.dt.aoData[ src[i] ])
+              }				else				{
+                out.push(src[i])
+              }
             }
 
             return out
@@ -1877,22 +1877,22 @@ var TableTools;
             }
           }		else if (mColumns == 'visible')		{
             for (i = 0, iLen = columnCount; i < iLen; i++)			{
-            aColumns.push(!!columns[i].bVisible)
-          }
+              aColumns.push(!!columns[i].bVisible)
+            }
           }		else if (mColumns == 'hidden')		{
-          for (i = 0, iLen = columnCount; i < iLen; i++)			{
-            aColumns.push(!columns[i].bVisible)
-          }
-        }		else if (mColumns == 'sortable')		{
-          for (i = 0, iLen = columnCount; i < iLen; i++)			{
-            aColumns.push(!!columns[i].bSortable)
-          }
-        }		else /* all */
+            for (i = 0, iLen = columnCount; i < iLen; i++)			{
+              aColumns.push(!columns[i].bVisible)
+            }
+          }		else if (mColumns == 'sortable')		{
+            for (i = 0, iLen = columnCount; i < iLen; i++)			{
+              aColumns.push(!!columns[i].bSortable)
+            }
+          }		else /* all */
 		{
-          for (i = 0, iLen = columnCount; i < iLen; i++)			{
-            aColumns.push(true)
+            for (i = 0, iLen = columnCount; i < iLen; i++)			{
+              aColumns.push(true)
+            }
           }
-        }
 
           return aColumns
         },
@@ -1990,17 +1990,17 @@ var TableTools;
 					/* Convert to strings (with small optimisation) */
                 var mTypeData = dt.oApi._fnGetCellData(dt, aDataIndex[j], i, 'display')
                 if (oConfig.fnCellRender)					{
-                sLoopData = oConfig.fnCellRender(mTypeData, i, tr, aDataIndex[j]) + ''
-              }					else if (typeof mTypeData === 'string')					{
+                  sLoopData = oConfig.fnCellRender(mTypeData, i, tr, aDataIndex[j]) + ''
+                }					else if (typeof mTypeData === 'string')					{
 						/* Strip newlines, replace img tags with alt attr. and finally strip html... */
-                sLoopData = mTypeData.replace(/\n/g, ' ')
-                sLoopData =
+                  sLoopData = mTypeData.replace(/\n/g, ' ')
+                  sLoopData =
 						    sLoopData.replace(/<img.*?\s+alt\s*=\s*(?:"([^"]+)"|'([^']+)'|([^\s>]+)).*?>/gi,
 						        '$1$2$3')
-                sLoopData = sLoopData.replace(/<.*?>/g, '')
-              } else					{
-                sLoopData = mTypeData + ''
-              }
+                  sLoopData = sLoopData.replace(/<.*?>/g, '')
+                } else					{
+                  sLoopData = mTypeData + ''
+                }
 
 					/* Trim and clean the data */
                 sLoopData = sLoopData.replace(/^\s+/, '').replace(/\s+$/, '')
@@ -2160,9 +2160,9 @@ var TableTools;
             if (cFeature != 'i' && cFeature != 't' && cFeature.length == 1)			{
               for (var i = 0, iLen = anFeature[cFeature].length; i < iLen; i++)				{
                 this.dom.print.hidden.push({
-                'node': anFeature[cFeature][i],
-                'display': 'block'
-              })
+                  'node': anFeature[cFeature][i],
+                  'display': 'block'
+                })
                 anFeature[cFeature][i].style.display = 'none'
               }
             }
@@ -2349,9 +2349,9 @@ var TableTools;
               if (sDisplay != 'none')				{
 					/* Cache the node and it's previous state so we can restore it */
                 anHidden.push({
-                'node': nChildren[i],
-                'display': sDisplay
-              })
+                  'node': nChildren[i],
+                  'display': sDisplay
+                })
                 nChildren[i].style.display = 'none'
               }
             }

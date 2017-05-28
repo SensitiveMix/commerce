@@ -322,27 +322,27 @@
 
             for (i = 0, ien = breakpoints.length; i < ien; i++) {
               if (breakpoints[i].width <= size) {
-              add(colIdx, breakpoints[i].name)
-            }
+                add(colIdx, breakpoints[i].name)
+              }
             }
           }			else if (operator === 'min-') {
 				// Add this breakpoint and all larger
             size = that._find(name).width
 
             for (i = 0, ien = breakpoints.length; i < ien; i++) {
-            if (breakpoints[i].width >= size) {
-              add(colIdx, breakpoints[i].name)
+              if (breakpoints[i].width >= size) {
+                add(colIdx, breakpoints[i].name)
+              }
             }
-          }
           }			else if (operator === 'not-') {
 				// Add all but this breakpoint (xxx need extra information)
 
-          for (i = 0, ien = breakpoints.length; i < ien; i++) {
-            if (breakpoints[i].name.indexOf(matched) === -1) {
-              add(colIdx, breakpoints[i].name)
+            for (i = 0, ien = breakpoints.length; i < ien; i++) {
+              if (breakpoints[i].name.indexOf(matched) === -1) {
+                add(colIdx, breakpoints[i].name)
+              }
             }
           }
-        }
         }
 
 		// Loop over each column and determine if it has a responsive control
@@ -369,10 +369,10 @@
             }				else if (className === 'control') {
 					// Special column that is only visible, when one of the other
 					// columns is hidden. This is used for the details control
-            hasClass = true
-            col.control = true
-            return
-          }
+              hasClass = true
+              col.control = true
+              return
+            }
 
             $.each(breakpoints, function (j, breakpoint) {
 					// Does this column have a class that matches this breakpoint?
@@ -385,11 +385,11 @@
 
                 if (match[2] === brokenPoint[0] && match[3] === '-' + brokenPoint[1]) {
 							// Class name matches breakpoint name fully
-                column(i, breakpoint.name, match[1], match[2] + match[3])
-              }						else if (match[2] === brokenPoint[0] && !match[3]) {
+                  column(i, breakpoint.name, match[1], match[2] + match[3])
+                }						else if (match[2] === brokenPoint[0] && !match[3]) {
 							// Class name matched primary breakpoint name with no qualifier
-                column(i, breakpoint.name, match[1], match[2])
-              }
+                  column(i, breakpoint.name, match[1], match[2])
+                }
               }
             })
           }

@@ -119,21 +119,21 @@ UM.plugins['removeformat'] = function () {
             if (!dtd.$empty[current.tagName.toLowerCase()] && !domUtils.isBookmarkNode(current)) {
               if (tagReg.test(current.tagName)) {
                 if (style) {
-                    domUtils.removeStyle(current, style)
-                    if (isRedundantSpan(current) && style != 'text-decoration') {
-                      domUtils.remove(current, true)
-                    }
-                  } else {
+                  domUtils.removeStyle(current, style)
+                  if (isRedundantSpan(current) && style != 'text-decoration') {
                     domUtils.remove(current, true)
                   }
+                } else {
+                  domUtils.remove(current, true)
+                }
               } else {
                                 // trace:939  不能把list上的样式去掉
                 if (!dtd.$tableContent[current.tagName] && !dtd.$list[current.tagName]) {
-                    domUtils.removeAttributes(current, removeFormatAttributes)
-                    if (isRedundantSpan(current)) {
-                      domUtils.remove(current, true)
-                    }
+                  domUtils.removeAttributes(current, removeFormatAttributes)
+                  if (isRedundantSpan(current)) {
+                    domUtils.remove(current, true)
                   }
+                }
               }
             }
             current = next

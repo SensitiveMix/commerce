@@ -241,12 +241,12 @@ API.txt for details.
                 if (norm < 1.5) {
                   size = 1
                 } else if (norm < 3) {
-                size = 2
-              } else if (norm < 7.5) {
-                size = 5
-              } else {
-                size = 10
-              }
+                  size = 2
+                } else if (norm < 7.5) {
+                  size = 5
+                } else {
+                  size = 10
+                }
 
                 size *= magn
               }
@@ -271,13 +271,13 @@ API.txt for details.
             } else if (unit == 'hour') {
               d.setHours(floorInBase(d.getHours(), tickSize))
             } else if (unit == 'month') {
-            d.setMonth(floorInBase(d.getMonth(), tickSize))
-          } else if (unit == 'quarter') {
-            d.setMonth(3 * floorInBase(d.getMonth() / 3,
+              d.setMonth(floorInBase(d.getMonth(), tickSize))
+            } else if (unit == 'quarter') {
+              d.setMonth(3 * floorInBase(d.getMonth() / 3,
 								tickSize))
-          } else if (unit == 'year') {
-          d.setFullYear(floorInBase(d.getFullYear(), tickSize))
-        }
+            } else if (unit == 'year') {
+              d.setFullYear(floorInBase(d.getFullYear(), tickSize))
+            }
 
 						// reset smaller components
 
@@ -378,20 +378,20 @@ API.txt for details.
               fmt = '%b %d'
             } else if ((useQuarters && t < timeUnitSize.quarter) ||
 							(!useQuarters && t < timeUnitSize.year)) {
-            if (span < timeUnitSize.year) {
-              fmt = '%b'
+              if (span < timeUnitSize.year) {
+                fmt = '%b'
+              } else {
+                fmt = '%b %Y'
+              }
+            } else if (useQuarters && t < timeUnitSize.year) {
+              if (span < timeUnitSize.year) {
+                fmt = 'Q%q'
+              } else {
+                fmt = 'Q%q %Y'
+              }
             } else {
-              fmt = '%b %Y'
+              fmt = '%Y'
             }
-          } else if (useQuarters && t < timeUnitSize.year) {
-            if (span < timeUnitSize.year) {
-        fmt = 'Q%q'
-      } else {
-        fmt = 'Q%q %Y'
-      }
-          } else {
-            fmt = '%Y'
-          }
 
             var rt = formatDate(d, fmt, opts.monthNames, opts.dayNames)
 

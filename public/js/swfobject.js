@@ -25,19 +25,19 @@ var swfobject = (function () {
     } function createObjParam (el, pName, pValue) { var p = createElement('param'); p.setAttribute('name', pName); p.setAttribute('value', pValue); el.appendChild(p) } function removeSWF (id) { var obj = getElementById(id); if (obj && obj.nodeName == 'OBJECT') { if (ua.ie && ua.win) { obj.style.display = 'none'; (function () { if (obj.readyState == 4) { removeObjectInIE(id) } else { setTimeout(arguments.callee, 10) } })() } else { obj.parentNode.removeChild(obj) } } } function removeObjectInIE (id) { var obj = getElementById(id); if (obj) { for (var i in obj) { if (typeof obj[i] === 'function') { obj[i] = null } }obj.parentNode.removeChild(obj) } } function getElementById (id) { var el = null; try { el = doc.getElementById(id) } catch (e) {} return el } function createElement (el) { return doc.createElement(el) } function addListener (target, eventType, fn) { target.attachEvent(eventType, fn); listenersArr[listenersArr.length] = [target, eventType, fn] } function hasPlayerVersion (rv) { var pv = ua.pv, v = rv.split('.'); v[0] = parseInt(v[0], 10); v[1] = parseInt(v[1], 10) || 0; v[2] = parseInt(v[2], 10) || 0; return !!((pv[0] > v[0] || (pv[0] == v[0] && pv[1] > v[1]) || (pv[0] == v[0] && pv[1] == v[1] && pv[2] >= v[2]))) } function createCSS (sel, decl, media, newStyle) {
       if (ua.ie && ua.mac) { return } var h = doc.getElementsByTagName('head')[0]; if (!h) { return } var m = (media && typeof media === 'string') ? media : 'screen'; if (newStyle) { dynamicStylesheet = null; dynamicStylesheetMedia = null } if (!dynamicStylesheet || dynamicStylesheetMedia != m) {
         var s = createElement('style'); s.setAttribute('type', 'text/css'); s.setAttribute('media', m); dynamicStylesheet = h.appendChild(s); if (ua.ie && ua.win && typeof doc.styleSheets !== UNDEF && doc.styleSheets.length > 0) {
-      dynamicStylesheet = doc.styleSheets[doc.styleSheets.length - 1]
-    }dynamicStylesheetMedia = m
+          dynamicStylesheet = doc.styleSheets[doc.styleSheets.length - 1]
+        }dynamicStylesheetMedia = m
       } if (ua.ie && ua.win) { if (dynamicStylesheet && typeof dynamicStylesheet.addRule === OBJECT) { dynamicStylesheet.addRule(sel, decl) } } else { if (dynamicStylesheet && typeof doc.createTextNode !== UNDEF) { dynamicStylesheet.appendChild(doc.createTextNode(sel + ' {' + decl + '}')) } }
     } function setVisibility (id, isVisible) { if (!autoHideShow) { return } var v = isVisible ? 'visible' : 'hidden'; if (isDomLoaded && getElementById(id)) { getElementById(id).style.visibility = v } else { createCSS('#' + id, 'visibility:' + v) } } function urlEncodeIfNecessary (s) { var regex = /[\\\"<>\.;]/; var hasBadChars = regex.exec(s) != null; return hasBadChars && typeof encodeURIComponent !== UNDEF ? encodeURIComponent(s) : s } var cleanup = (function () { if (ua.ie && ua.win) { window.attachEvent('onunload', function () { var ll = listenersArr.length; for (var i = 0; i < ll; i++) { listenersArr[i][0].detachEvent(listenersArr[i][1], listenersArr[i][2]) } var il = objIdArr.length; for (var j = 0; j < il; j++) { removeSWF(objIdArr[j]) } for (var k in ua) { ua[k] = null }ua = null; for (var l in swfobject) { swfobject[l] = null }swfobject = null }) } }()); return {registerObject: function (objectIdStr, swfVersionStr, xiSwfUrlStr, callbackFn) { if (ua.w3 && objectIdStr && swfVersionStr) { var regObj = {}; regObj.id = objectIdStr; regObj.swfVersion = swfVersionStr; regObj.expressInstall = xiSwfUrlStr; regObj.callbackFn = callbackFn; regObjArr[regObjArr.length] = regObj; setVisibility(objectIdStr, false) } else { if (callbackFn) { callbackFn({success: false, id: objectIdStr}) } } },
       getObjectById: function (objectIdStr) { if (ua.w3) { return getObjectById(objectIdStr) } },
       embedSWF: function (swfUrlStr, replaceElemIdStr, widthStr, heightStr, swfVersionStr, xiSwfUrlStr, flashvarsObj, parObj, attObj, callbackFn) {
-    var callbackObj = {success: false, id: replaceElemIdStr}; if (ua.w3 && !(ua.wk && ua.wk < 312) && swfUrlStr && replaceElemIdStr && widthStr && heightStr && swfVersionStr) {
-      setVisibility(replaceElemIdStr, false); addDomLoadEvent(function () {
-        widthStr += ''; heightStr += ''; var att = {}; if (attObj && typeof attObj === OBJECT) { for (var i in attObj) { att[i] = attObj[i] } }att.data = swfUrlStr; att.width = widthStr; att.height = heightStr
-        var par = {}; if (parObj && typeof parObj === OBJECT) { for (var j in parObj) { par[j] = parObj[j] } } if (flashvarsObj && typeof flashvarsObj === OBJECT) { for (var k in flashvarsObj) { if (typeof par.flashvars !== UNDEF) { par.flashvars += '&' + k + '=' + flashvarsObj[k] } else { par.flashvars = k + '=' + flashvarsObj[k] } } } if (hasPlayerVersion(swfVersionStr)) { var obj = createSWF(att, par, replaceElemIdStr); if (att.id == replaceElemIdStr) { setVisibility(replaceElemIdStr, true) }callbackObj.success = true; callbackObj.ref = obj } else { if (xiSwfUrlStr && canExpressInstall()) { att.data = xiSwfUrlStr; showExpressInstall(att, par, replaceElemIdStr, callbackFn); return } else { setVisibility(replaceElemIdStr, true) } } if (callbackFn) { callbackFn(callbackObj) }
-      })
-    } else { if (callbackFn) { callbackFn(callbackObj) } }
-  },
+        var callbackObj = {success: false, id: replaceElemIdStr}; if (ua.w3 && !(ua.wk && ua.wk < 312) && swfUrlStr && replaceElemIdStr && widthStr && heightStr && swfVersionStr) {
+          setVisibility(replaceElemIdStr, false); addDomLoadEvent(function () {
+            widthStr += ''; heightStr += ''; var att = {}; if (attObj && typeof attObj === OBJECT) { for (var i in attObj) { att[i] = attObj[i] } }att.data = swfUrlStr; att.width = widthStr; att.height = heightStr
+            var par = {}; if (parObj && typeof parObj === OBJECT) { for (var j in parObj) { par[j] = parObj[j] } } if (flashvarsObj && typeof flashvarsObj === OBJECT) { for (var k in flashvarsObj) { if (typeof par.flashvars !== UNDEF) { par.flashvars += '&' + k + '=' + flashvarsObj[k] } else { par.flashvars = k + '=' + flashvarsObj[k] } } } if (hasPlayerVersion(swfVersionStr)) { var obj = createSWF(att, par, replaceElemIdStr); if (att.id == replaceElemIdStr) { setVisibility(replaceElemIdStr, true) }callbackObj.success = true; callbackObj.ref = obj } else { if (xiSwfUrlStr && canExpressInstall()) { att.data = xiSwfUrlStr; showExpressInstall(att, par, replaceElemIdStr, callbackFn); return } else { setVisibility(replaceElemIdStr, true) } } if (callbackFn) { callbackFn(callbackObj) }
+          })
+        } else { if (callbackFn) { callbackFn(callbackObj) } }
+      },
       switchOffAutoHideShow: function () { autoHideShow = false },
       ua: ua,
       getFlashPlayerVersion: function () { return {major: ua.pv[0], minor: ua.pv[1], release: ua.pv[2]} },
@@ -50,13 +50,13 @@ var swfobject = (function () {
       addLoadEvent: addLoadEvent,
       getQueryParamValue: function (param) { var q = doc.location.search || doc.location.hash; if (q) { if (/\?/.test(q)) { q = q.split('?')[1] } if (param == null) { return urlEncodeIfNecessary(q) } var pairs = q.split('&'); for (var i = 0; i < pairs.length; i++) { if (pairs[i].substring(0, pairs[i].indexOf('=')) == param) { return urlEncodeIfNecessary(pairs[i].substring((pairs[i].indexOf('=') + 1))) } } } return '' },
       expressInstallCallback: function () {
-    if (isExpressInstallActive) {
-      var obj = getElementById(EXPRESS_INSTALL_ID); if (obj && storedAltContent) {
-        obj.parentNode.replaceChild(storedAltContent, obj); if (storedAltContentId) {
-          setVisibility(storedAltContentId, true)
-          if (ua.ie && ua.win) { storedAltContent.style.display = 'block' }
-        } if (storedCallbackFn) { storedCallbackFn(storedCallbackObj) }
-      }isExpressInstallActive = false
-    }
-  }}
+        if (isExpressInstallActive) {
+          var obj = getElementById(EXPRESS_INSTALL_ID); if (obj && storedAltContent) {
+            obj.parentNode.replaceChild(storedAltContent, obj); if (storedAltContentId) {
+              setVisibility(storedAltContentId, true)
+              if (ua.ie && ua.win) { storedAltContent.style.display = 'block' }
+            } if (storedCallbackFn) { storedCallbackFn(storedCallbackObj) }
+          }isExpressInstallActive = false
+        }
+      }}
 }())

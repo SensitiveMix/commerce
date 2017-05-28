@@ -54,24 +54,24 @@ this.imageElement.setAttributes({type: 'image', alt: ''}), c.insertElement(this.
                 label: c.lang.common.url,
                 required: !0,
                 onChange: function () {
-                 var a = this.getDialog(), b = this.getValue(); if (b.length > 0) {
-                  var a = this.getDialog(), d = a.originalElement; a.preview.removeStyle('display'); d.setCustomData('isReady', 'false'); var c = CKEDITOR.document.getById(m); c && c.setStyle('display',
+                  var a = this.getDialog(), b = this.getValue(); if (b.length > 0) {
+                    var a = this.getDialog(), d = a.originalElement; a.preview.removeStyle('display'); d.setCustomData('isReady', 'false'); var c = CKEDITOR.document.getById(m); c && c.setStyle('display',
 ''); d.on('load', q, a); d.on('error', h, a); d.on('abort', h, a); d.setAttribute('src', b); t.setAttribute('src', b); a.preview.setAttribute('src', t.$.src); g(a)
-                } else a.preview && (a.preview.removeAttribute('src'), a.preview.setStyle('display', 'none'))
-               },
+                  } else a.preview && (a.preview.removeAttribute('src'), a.preview.setStyle('display', 'none'))
+                },
                 setup: function (a, b) { if (a == f) { var d = b.data('cke-saved-src') || b.getAttribute('src'); this.getDialog().dontResetSize = !0; this.setValue(d); this.setInitValue() } },
                 commit: function (a, b) {
-                 a == f && (this.getValue() || this.isChanged()) ? (b.data('cke-saved-src', this.getValue()), b.setAttribute('src',
+                  a == f && (this.getValue() || this.isChanged()) ? (b.data('cke-saved-src', this.getValue()), b.setAttribute('src',
 this.getValue())) : a == 8 && (b.setAttribute('src', ''), b.removeAttribute('src'))
-               },
+                },
                 validate: CKEDITOR.dialog.validate.notEmpty(c.lang.image.urlMissing)}, {type: 'button', id: 'browse', style: 'display:inline-block;margin-top:10px;', align: 'center', label: c.lang.common.browseServer, hidden: !0, filebrowser: 'info:txtUrl'}]}]}, {id: 'txtAlt',
-                 type: 'text',
-                 label: c.lang.image.alt,
-                 accessKey: 'T',
-                 'default': '',
-                 onChange: function () { g(this.getDialog()) },
-                 setup: function (a, b) { a == f && this.setValue(b.getAttribute('alt')) },
-                 commit: function (a,
+                  type: 'text',
+                  label: c.lang.image.alt,
+                  accessKey: 'T',
+                  'default': '',
+                  onChange: function () { g(this.getDialog()) },
+                  setup: function (a, b) { a == f && this.setValue(b.getAttribute('alt')) },
+                  commit: function (a,
 b) { a == f ? (this.getValue() || this.isChanged()) && b.setAttribute('alt', this.getValue()) : a == 4 ? b.setAttribute('alt', this.getValue()) : a == 8 && b.removeAttribute('alt') }}, {type: 'hbox',
   children: [{id: 'basic',
     type: 'vbox',
@@ -106,9 +106,9 @@ a.getCustomData('isReady') == 'true' && b.setStyle('height', a.$.height + 'px'))
               type: 'html',
               style: 'margin-top:30px;width:40px;height:40px;',
               onLoad: function () {
-              var a = CKEDITOR.document.getById(u), b = CKEDITOR.document.getById(p); a && (a.on('click', function (a) { x(this); a.data && a.data.preventDefault() }, this.getDialog()), a.on('mouseover', function () { this.addClass('cke_btn_over') }, a), a.on('mouseout', function () { this.removeClass('cke_btn_over') },
+                var a = CKEDITOR.document.getById(u), b = CKEDITOR.document.getById(p); a && (a.on('click', function (a) { x(this); a.data && a.data.preventDefault() }, this.getDialog()), a.on('mouseover', function () { this.addClass('cke_btn_over') }, a), a.on('mouseout', function () { this.removeClass('cke_btn_over') },
 a)); b && (b.on('click', function (a) { l(this); var b = this.originalElement, c = this.getValueOf('info', 'txtWidth'); if (b.getCustomData('isReady') == 'true' && c) { b = b.$.height / b.$.width * c; if (!isNaN(b)) { this.setValueOf('info', 'txtHeight', Math.round(b)); g(this) } }a.data && a.data.preventDefault() }, this.getDialog()), b.on('mouseover', function () { this.addClass('cke_btn_over') }, b), b.on('mouseout', function () { this.removeClass('cke_btn_over') }, b))
-            },
+              },
               html: '<div><a href="javascript:void(0)" tabindex="-1" title="' + c.lang.image.lockRatio +
 '" class="cke_btn_locked" id="' + p + '" role="checkbox"><span class="cke_icon"></span><span class="cke_label">' + c.lang.image.lockRatio + '</span></a><a href="javascript:void(0)" tabindex="-1" title="' + c.lang.image.resetSize + '" class="cke_btn_reset" id="' + u + '" role="button"><span class="cke_label">' + c.lang.image.resetSize + '</span></a></div>'}]}, {type: 'vbox',
   padding: 1,
@@ -166,17 +166,17 @@ b.removeStyle('margin-top'), b.removeStyle('margin-bottom'))
           items: [[c.lang.common.notSet, ''], [c.lang.common.alignLeft, 'left'], [c.lang.common.alignRight, 'right']],
           onChange: function () { g(this.getDialog()); i.call(this, 'advanced:txtdlgGenStyle') },
           setup: function (a, b) {
-          if (a == f) {
-          var c = b.getStyle('float'); switch (c) { case 'inherit':case 'none':c = '' }!c && (c = (b.getAttribute('align') ||
+            if (a == f) {
+              var c = b.getStyle('float'); switch (c) { case 'inherit':case 'none':c = '' }!c && (c = (b.getAttribute('align') ||
 '').toLowerCase()); this.setValue(c)
-        }
-        },
+            }
+          },
           commit: function (a, b, c) { var e = this.getValue(); if (a == f || a == 4) { if (e ? b.setStyle('float', e) : b.removeStyle('float'), !c && a == f) switch (e = (b.getAttribute('align') || '').toLowerCase(), e) { case 'left':case 'right':b.removeAttribute('align') } } else a == 8 && b.removeStyle('float') }}]}]}, {type: 'vbox',
-          height: '250px',
-          children: [{type: 'html',
-          id: 'htmlPreview',
-          style: 'width:95%;',
-          html: '<div>' + CKEDITOR.tools.htmlEncode(c.lang.common.preview) + '<br><div id="' + m + '" class="ImagePreviewLoader" style="display:none"><div class="loading">&nbsp;</div></div><div class="ImagePreviewBox"><table><tr><td><a href="javascript:void(0)" target="_blank" onclick="return false;" id="' +
+            height: '250px',
+            children: [{type: 'html',
+              id: 'htmlPreview',
+              style: 'width:95%;',
+              html: '<div>' + CKEDITOR.tools.htmlEncode(c.lang.common.preview) + '<br><div id="' + m + '" class="ImagePreviewLoader" style="display:none"><div class="loading">&nbsp;</div></div><div class="ImagePreviewBox"><table><tr><td><a href="javascript:void(0)" target="_blank" onclick="return false;" id="' +
 A + '"><img id="' + z + '" alt="" /></a>' + (c.config.image_previewText || 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas feugiat consequat diam. Maecenas metus. Vivamus diam purus, cursus a, commodo non, facilisis vitae, nulla. Aenean dictum lacinia tortor. Nunc iaculis, nibh non iaculis aliquam, orci felis euismod neque, sed ornare massa mauris sed velit. Nulla pretium mi et risus. Fusce mi pede, tempor id, cursus ac, ullamcorper nec, enim. Sed tortor. Curabitur molestie. Duis velit augue, condimentum at, ultrices a, luctus ut, orci. Donec pellentesque egestas eros. Integer cursus, augue in cursus faucibus, eros pede bibendum sem, in tempus tellus justo quis ligula. Etiam eget tortor. Vestibulum rutrum, est ut placerat elementum, lectus nisl aliquam velit, tempor aliquam eros nunc nonummy metus. In eros metus, gravida a, gravida sed, lobortis id, turpis. Ut ultrices, ipsum at venenatis fringilla, sem nulla lacinia tellus, eget aliquet turpis mauris non enim. Nam turpis. Suspendisse lacinia. Curabitur ac tortor ut ipsum egestas elementum. Nunc imperdiet gravida mauris.') +
 '</td></tr></table></div></div>'}]}]}]}, {id: 'Link',
   requiredContent: 'a[href]',
@@ -223,24 +223,24 @@ A + '"><img id="' + z + '" alt="" /></a>' + (c.config.image_previewText || 'Lore
               label: c.lang.common.longDescr,
               setup: function (a, b) { a == f && this.setValue(b.getAttribute('longDesc')) },
               commit: function (a, b) { a == f && (this.getValue() || this.isChanged()) && b.setAttribute('longDesc', this.getValue()) }}, {type: 'hbox',
-              widths: ['50%', '50%'],
-              children: [{type: 'text', id: 'txtGenClass', requiredContent: 'img(cke-xyz)', label: c.lang.common.cssClass, 'default': '', setup: function (a, b) { a == f && this.setValue(b.getAttribute('class')) }, commit: function (a, b) { a == f && (this.getValue() || this.isChanged()) && b.setAttribute('class', this.getValue()) }}, {type: 'text',
-              id: 'txtGenTitle',
-              requiredContent: 'img[title]',
-              label: c.lang.common.advisoryTitle,
-              'default': '',
-              onChange: function () { g(this.getDialog()) },
-              setup: function (a, b) { a == f && this.setValue(b.getAttribute('title')) },
-              commit: function (a, b) { a == f ? (this.getValue() || this.isChanged()) && b.setAttribute('title', this.getValue()) : a == 4 ? b.setAttribute('title', this.getValue()) : a == 8 && b.removeAttribute('title') }}]}, {type: 'text',
-                id: 'txtdlgGenStyle',
-                requiredContent: 'img{cke-xyz}',
-                label: c.lang.common.cssStyle,
-                validate: CKEDITOR.dialog.validate.inlineStyle(c.lang.common.invalidInlineStyle),
-                'default': '',
-                setup: function (a,
+                widths: ['50%', '50%'],
+                children: [{type: 'text', id: 'txtGenClass', requiredContent: 'img(cke-xyz)', label: c.lang.common.cssClass, 'default': '', setup: function (a, b) { a == f && this.setValue(b.getAttribute('class')) }, commit: function (a, b) { a == f && (this.getValue() || this.isChanged()) && b.setAttribute('class', this.getValue()) }}, {type: 'text',
+                  id: 'txtGenTitle',
+                  requiredContent: 'img[title]',
+                  label: c.lang.common.advisoryTitle,
+                  'default': '',
+                  onChange: function () { g(this.getDialog()) },
+                  setup: function (a, b) { a == f && this.setValue(b.getAttribute('title')) },
+                  commit: function (a, b) { a == f ? (this.getValue() || this.isChanged()) && b.setAttribute('title', this.getValue()) : a == 4 ? b.setAttribute('title', this.getValue()) : a == 8 && b.removeAttribute('title') }}]}, {type: 'text',
+                    id: 'txtdlgGenStyle',
+                    requiredContent: 'img{cke-xyz}',
+                    label: c.lang.common.cssStyle,
+                    validate: CKEDITOR.dialog.validate.inlineStyle(c.lang.common.invalidInlineStyle),
+                    'default': '',
+                    setup: function (a,
 b) { if (a == f) { var c = b.getAttribute('style'); !c && b.$.style.cssText && (c = b.$.style.cssText); this.setValue(c); var e = b.$.style.height, c = b.$.style.width, e = (e || '').match(k), c = (c || '').match(k); this.attributesInStyle = {height: !!e, width: !!c} } },
-                onChange: function () { i.call(this, 'info:cmbFloat info:cmbAlign info:txtVSpace info:txtHSpace info:txtBorder info:txtWidth info:txtHeight'.split(' ')); g(this) },
-                commit: function (a, b) { a == f && (this.getValue() || this.isChanged()) && b.setAttribute('style', this.getValue()) }}]}]}
+                    onChange: function () { i.call(this, 'info:cmbFloat info:cmbAlign info:txtVSpace info:txtHSpace info:txtBorder info:txtWidth info:txtHeight'.split(' ')); g(this) },
+                    commit: function (a, b) { a == f && (this.getValue() || this.isChanged()) && b.setAttribute('style', this.getValue()) }}]}]}
   }
   CKEDITOR.dialog.add('image', function (c) { return r(c, 'image') }); CKEDITOR.dialog.add('imagebutton', function (c) { return r(c, 'imagebutton') })
 })()

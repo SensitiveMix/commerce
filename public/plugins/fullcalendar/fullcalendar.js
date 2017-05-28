@@ -7078,10 +7078,10 @@ Common interface:
                 } else if (themeIcon && options.theme) {
                   innerHtml = "<span class='ui-icon ui-icon-" + themeIcon + "'></span>"
                 } else if (normalIcon && !options.theme) {
-                innerHtml = "<span class='fc-icon fc-icon-" + normalIcon + "'></span>"
-              } else {
-                innerHtml = htmlEscape(defaultText || buttonName)
-              }
+                  innerHtml = "<span class='fc-icon fc-icon-" + normalIcon + "'></span>"
+                } else {
+                  innerHtml = htmlEscape(defaultText || buttonName)
+                }
 
                 classes = [
                   'fc-' + buttonName + '-button',

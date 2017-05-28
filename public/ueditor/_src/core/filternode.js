@@ -25,8 +25,8 @@ var filterNode = UM.filterNode = (function () {
                 for (var i = 0, ci; ci = node.children[i];) {
                   filterNode(ci, rules)
                   if (ci.parentNode) {
-                      i++
-                    }
+                    i++
+                  }
                 }
               }
             } else {
@@ -47,11 +47,11 @@ var filterNode = UM.filterNode = (function () {
                 if (a == 'style' && utils.isArray(attrs[a])) {
                   var tmpCssStyle = []
                   utils.each(attrs[a], function (v) {
-                      var tmp
-                      if (tmp = node.getStyle(v)) {
-                              tmpCssStyle.push(v + ':' + tmp)
-                            }
-                    })
+                    var tmp
+                    if (tmp = node.getStyle(v)) {
+                      tmpCssStyle.push(v + ':' + tmp)
+                    }
+                  })
                   tmpVal = tmpCssStyle.join(';')
                 }
                 if (tmpVal) {

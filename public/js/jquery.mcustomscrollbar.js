@@ -31,8 +31,8 @@
             mCustomScrollBox.bind('mousewheel', function (e, delta) {
               var scrollTo, mouseWheelPixels = $this.data('mouseWheelPixels'), absPos = Math.abs(mCSB_container.position().top), draggerPos = mCSB_dragger.position().top, limit = mCSB_draggerContainer.height() - mCSB_dragger.height(); if ($this.data('normalizeMouseWheelDelta')) {
                 if (delta < 0) { delta = -1 } else {
-            delta = 1
-          }
+                  delta = 1
+                }
               } if (mouseWheelPixels === 'auto') { mouseWheelPixels = 100 + Math.round($this.data('scrollAmount') / 2) } if ($this.data('horizontalScroll')) { draggerPos = mCSB_dragger.position().left; limit = mCSB_draggerContainer.width() - mCSB_dragger.width(); absPos = Math.abs(mCSB_container.position().left) } if ((delta > 0 && draggerPos !== 0) || (delta < 0 && draggerPos !== limit)) { e.preventDefault(); e.stopImmediatePropagation() }scrollTo = absPos - (delta * mouseWheelPixels); $this.mCustomScrollbar('scrollTo', scrollTo, {trigger: 'internal'})
             }); $this.data({'bindEvent_mousewheel': true})
           }
@@ -40,25 +40,25 @@
           if ($this.data('scrollButtons_scrollType') === 'pixels') {
             if ($this.data('horizontalScroll')) { mCSB_buttonRight.add(mCSB_buttonLeft).unbind('mousedown touchstart MSPointerDown mouseup MSPointerUp mouseout MSPointerOut touchend', mCSB_buttonRight_stop, mCSB_buttonLeft_stop); $this.data({'bindEvent_buttonsContinuous_x': false}); if (!$this.data('bindEvent_buttonsPixels_x')) { mCSB_buttonRight.bind('click', function (e) { e.preventDefault(); PixelsScrollTo(Math.abs(mCSB_container.position().left) + $this.data('scrollButtons_scrollAmount')) }); mCSB_buttonLeft.bind('click', function (e) { e.preventDefault(); PixelsScrollTo(Math.abs(mCSB_container.position().left) - $this.data('scrollButtons_scrollAmount')) }); $this.data({'bindEvent_buttonsPixels_x': true}) } } else { mCSB_buttonDown.add(mCSB_buttonUp).unbind('mousedown touchstart MSPointerDown mouseup MSPointerUp mouseout MSPointerOut touchend', mCSB_buttonRight_stop, mCSB_buttonLeft_stop); $this.data({'bindEvent_buttonsContinuous_y': false}); if (!$this.data('bindEvent_buttonsPixels_y')) { mCSB_buttonDown.bind('click', function (e) { e.preventDefault(); PixelsScrollTo(Math.abs(mCSB_container.position().top) + $this.data('scrollButtons_scrollAmount')) }); mCSB_buttonUp.bind('click', function (e) { e.preventDefault(); PixelsScrollTo(Math.abs(mCSB_container.position().top) - $this.data('scrollButtons_scrollAmount')) }); $this.data({'bindEvent_buttonsPixels_y': true}) } } function PixelsScrollTo (to) {
               if (!mCSB_dragger.data('preventAction')) {
-          mCSB_dragger.data('preventAction', true)
-          $this.mCustomScrollbar('scrollTo', to, {trigger: 'internal'})
-        }
+                mCSB_dragger.data('preventAction', true)
+                $this.mCustomScrollbar('scrollTo', to, {trigger: 'internal'})
+              }
             }
           } else {
             if ($this.data('horizontalScroll')) { mCSB_buttonRight.add(mCSB_buttonLeft).unbind('click'); $this.data({'bindEvent_buttonsPixels_x': false}); if (!$this.data('bindEvent_buttonsContinuous_x')) { mCSB_buttonRight.bind('mousedown touchstart MSPointerDown', function (e) { e.preventDefault(); var scrollButtonsSpeed = ScrollButtonsSpeed(); $this.data({'mCSB_buttonScrollRight': setInterval(function () { $this.mCustomScrollbar('scrollTo', Math.abs(mCSB_container.position().left) + scrollButtonsSpeed, {trigger: 'internal', scrollEasing: 'easeOutCirc'}) }, 17)}) }); var mCSB_buttonRight_stop = function (e) { e.preventDefault(); clearInterval($this.data('mCSB_buttonScrollRight')) }; mCSB_buttonRight.bind('mouseup touchend MSPointerUp mouseout MSPointerOut', mCSB_buttonRight_stop); mCSB_buttonLeft.bind('mousedown touchstart MSPointerDown', function (e) { e.preventDefault(); var scrollButtonsSpeed = ScrollButtonsSpeed(); $this.data({'mCSB_buttonScrollLeft': setInterval(function () { $this.mCustomScrollbar('scrollTo', Math.abs(mCSB_container.position().left) - scrollButtonsSpeed, {trigger: 'internal', scrollEasing: 'easeOutCirc'}) }, 17)}) }); var mCSB_buttonLeft_stop = function (e) { e.preventDefault(); clearInterval($this.data('mCSB_buttonScrollLeft')) }; mCSB_buttonLeft.bind('mouseup touchend MSPointerUp mouseout MSPointerOut', mCSB_buttonLeft_stop); $this.data({'bindEvent_buttonsContinuous_x': true}) } } else {
               mCSB_buttonDown.add(mCSB_buttonUp).unbind('click'); $this.data({'bindEvent_buttonsPixels_y': false}); if (!$this.data('bindEvent_buttonsContinuous_y')) {
-          mCSB_buttonDown.bind('mousedown touchstart MSPointerDown', function (e) { e.preventDefault(); var scrollButtonsSpeed = ScrollButtonsSpeed(); $this.data({'mCSB_buttonScrollDown': setInterval(function () { $this.mCustomScrollbar('scrollTo', Math.abs(mCSB_container.position().top) + scrollButtonsSpeed, {trigger: 'internal', scrollEasing: 'easeOutCirc'}) }, 17)}) }); var mCSB_buttonDown_stop = function (e) {
-            e.preventDefault(); clearInterval($this.data('mCSB_buttonScrollDown'))
-          }; mCSB_buttonDown.bind('mouseup touchend MSPointerUp mouseout MSPointerOut', mCSB_buttonDown_stop); mCSB_buttonUp.bind('mousedown touchstart MSPointerDown', function (e) { e.preventDefault(); var scrollButtonsSpeed = ScrollButtonsSpeed(); $this.data({'mCSB_buttonScrollUp': setInterval(function () { $this.mCustomScrollbar('scrollTo', Math.abs(mCSB_container.position().top) - scrollButtonsSpeed, {trigger: 'internal', scrollEasing: 'easeOutCirc'}) }, 17)}) }); var mCSB_buttonUp_stop = function (e) { e.preventDefault(); clearInterval($this.data('mCSB_buttonScrollUp')) }; mCSB_buttonUp.bind('mouseup touchend MSPointerUp mouseout MSPointerOut', mCSB_buttonUp_stop); $this.data({'bindEvent_buttonsContinuous_y': true})
-        }
+                mCSB_buttonDown.bind('mousedown touchstart MSPointerDown', function (e) { e.preventDefault(); var scrollButtonsSpeed = ScrollButtonsSpeed(); $this.data({'mCSB_buttonScrollDown': setInterval(function () { $this.mCustomScrollbar('scrollTo', Math.abs(mCSB_container.position().top) + scrollButtonsSpeed, {trigger: 'internal', scrollEasing: 'easeOutCirc'}) }, 17)}) }); var mCSB_buttonDown_stop = function (e) {
+                  e.preventDefault(); clearInterval($this.data('mCSB_buttonScrollDown'))
+                }; mCSB_buttonDown.bind('mouseup touchend MSPointerUp mouseout MSPointerOut', mCSB_buttonDown_stop); mCSB_buttonUp.bind('mousedown touchstart MSPointerDown', function (e) { e.preventDefault(); var scrollButtonsSpeed = ScrollButtonsSpeed(); $this.data({'mCSB_buttonScrollUp': setInterval(function () { $this.mCustomScrollbar('scrollTo', Math.abs(mCSB_container.position().top) - scrollButtonsSpeed, {trigger: 'internal', scrollEasing: 'easeOutCirc'}) }, 17)}) }); var mCSB_buttonUp_stop = function (e) { e.preventDefault(); clearInterval($this.data('mCSB_buttonScrollUp')) }; mCSB_buttonUp.bind('mouseup touchend MSPointerUp mouseout MSPointerOut', mCSB_buttonUp_stop); $this.data({'bindEvent_buttonsContinuous_y': true})
+              }
             } function ScrollButtonsSpeed () { var speed = $this.data('scrollButtons_scrollSpeed'); if ($this.data('scrollButtons_scrollSpeed') === 'auto') { speed = Math.round(($this.data('scrollInertia') + 100) / 40) } return speed }
           }
         } if ($this.data('autoScrollOnFocus')) { if (!$this.data('bindEvent_focusin')) { mCustomScrollBox.bind('focusin', function () { mCustomScrollBox.scrollTop(0).scrollLeft(0); var focusedElem = $(document.activeElement); if (focusedElem.is('input,textarea,select,button,a[tabindex],area,object')) { var mCSB_containerPos = mCSB_container.position().top, focusedElemPos = focusedElem.position().top, visibleLimit = mCustomScrollBox.height() - focusedElem.outerHeight(); if ($this.data('horizontalScroll')) { mCSB_containerPos = mCSB_container.position().left; focusedElemPos = focusedElem.position().left; visibleLimit = mCustomScrollBox.width() - focusedElem.outerWidth() } if (mCSB_containerPos + focusedElemPos < 0 || mCSB_containerPos + focusedElemPos > visibleLimit) { $this.mCustomScrollbar('scrollTo', focusedElemPos, {trigger: 'internal'}) } } }); $this.data({'bindEvent_focusin': true}) } } if ($this.data('autoHideScrollbar')) {
           if (!$this.data('bindEvent_autoHideScrollbar')) {
             mCustomScrollBox.bind('mouseenter', function (e) { mCustomScrollBox.addClass('mCS-mouse-over'); functions.showScrollbar.call(mCustomScrollBox.children('.mCSB_scrollTools')) }).bind('mouseleave touchend', function (e) {
-        mCustomScrollBox.removeClass('mCS-mouse-over')
-        if (e.type === 'mouseleave') { functions.hideScrollbar.call(mCustomScrollBox.children('.mCSB_scrollTools')) }
-      }); $this.data({'bindEvent_autoHideScrollbar': true})
+              mCustomScrollBox.removeClass('mCS-mouse-over')
+              if (e.type === 'mouseleave') { functions.hideScrollbar.call(mCustomScrollBox.children('.mCSB_scrollTools')) }
+            }); $this.data({'bindEvent_autoHideScrollbar': true})
           }
         }
       },

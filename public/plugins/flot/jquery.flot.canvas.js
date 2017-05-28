@@ -76,32 +76,32 @@ browser, but needs to redraw with canvas text when exporting as an image.
               for (var key in styleCache) {
                 if (hasOwnProperty.call(styleCache, key)) {
                   var info = styleCache[key],
-                  positions = info.positions,
-                  lines = info.lines
+                    positions = info.positions,
+                    lines = info.lines
 
 									// Since every element at this level of the cache have the
 									// same font and fill styles, we can just change them once
 									// using the values from the first element.
 
                   if (updateStyles) {
-                  context.fillStyle = info.font.color
-                  context.font = info.font.definition
-                  updateStyles = false
-                }
+                    context.fillStyle = info.font.color
+                    context.font = info.font.definition
+                    updateStyles = false
+                  }
 
                   for (var i = 0, position; position = positions[i]; i++) {
-                  if (position.active) {
-                  for (var j = 0, line; line = position.lines[j]; j++) {
-                    context.fillText(lines[j].text, line[0], line[1])
+                    if (position.active) {
+                      for (var j = 0, line; line = position.lines[j]; j++) {
+                        context.fillText(lines[j].text, line[0], line[1])
+                      }
+                    } else {
+                      positions.splice(i--, 1)
+                    }
                   }
-                } else {
-                  positions.splice(i--, 1)
-                }
-                }
 
                   if (positions.length == 0) {
-                  delete styleCache[key]
-                }
+                    delete styleCache[key]
+                  }
                 }
               }
             }

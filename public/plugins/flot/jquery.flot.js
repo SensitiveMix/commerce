@@ -183,14 +183,14 @@ Licensed under the MIT license.
                 for (var i = 0, position; position = positions[i]; i++) {
                   if (position.active) {
                     if (!position.rendered) {
-                  layer.append(position.element)
-                  position.rendered = true
-                }
+                      layer.append(position.element)
+                      position.rendered = true
+                    }
                   } else {
                     positions.splice(i--, 1)
                     if (position.rendered) {
-                  position.element.detach()
-                }
+                      position.element.detach()
+                    }
                   }
                 }
 

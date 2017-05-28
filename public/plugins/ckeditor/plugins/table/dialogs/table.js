@@ -54,21 +54,21 @@ setTimeout(function () { var g = new CKEDITOR.dom.element(c.$.rows[0].cells[0]),
                 label: a.lang.table.headers,
                 items: [[a.lang.table.headersNone, ''], [a.lang.table.headersRow, 'row'], [a.lang.table.headersColumn, 'col'], [a.lang.table.headersBoth, 'both']],
                 setup: function (a) {
-                 var d = this.getDialog(); d.hasColumnHeaders =
+                  var d = this.getDialog(); d.hasColumnHeaders =
 !0; for (var c = 0; c < a.$.rows.length; c++) { var b = a.$.rows[c].cells[0]; if (b && b.nodeName.toLowerCase() != 'th') { d.hasColumnHeaders = !1; break } }a.$.tHead !== null ? this.setValue(d.hasColumnHeaders ? 'both' : 'row') : this.setValue(d.hasColumnHeaders ? 'col' : '')
-               },
-                commit: k}, {type: 'text',
-                 id: 'txtBorder',
-                 requiredContent: 'table[border]',
-                 'default': a.filter.check('table[border]') ? 1 : 0,
-                 label: a.lang.table.border,
-                 controlStyle: 'width:3em',
-                 validate: CKEDITOR.dialog.validate.number(a.lang.table.invalidBorder),
-                 setup: function (a) {
-                  this.setValue(a.getAttribute('border') ||
-'')
                 },
-                 commit: function (a, d) { this.getValue() ? d.setAttribute('border', this.getValue()) : d.removeAttribute('border') }}, {id: 'cmbAlign', type: 'select', requiredContent: 'table[align]', 'default': '', label: a.lang.common.align, items: [[a.lang.common.notSet, ''], [a.lang.common.alignLeft, 'left'], [a.lang.common.alignCenter, 'center'], [a.lang.common.alignRight, 'right']], setup: function (a) { this.setValue(a.getAttribute('align') || '') }, commit: function (a, d) { this.getValue() ? d.setAttribute('align', this.getValue()) : d.removeAttribute('align') }}]},
+                commit: k}, {type: 'text',
+                  id: 'txtBorder',
+                  requiredContent: 'table[border]',
+                  'default': a.filter.check('table[border]') ? 1 : 0,
+                  label: a.lang.table.border,
+                  controlStyle: 'width:3em',
+                  validate: CKEDITOR.dialog.validate.number(a.lang.table.invalidBorder),
+                  setup: function (a) {
+                    this.setValue(a.getAttribute('border') ||
+'')
+                  },
+                  commit: function (a, d) { this.getValue() ? d.setAttribute('border', this.getValue()) : d.removeAttribute('border') }}, {id: 'cmbAlign', type: 'select', requiredContent: 'table[align]', 'default': '', label: a.lang.common.align, items: [[a.lang.common.notSet, ''], [a.lang.common.alignLeft, 'left'], [a.lang.common.alignCenter, 'center'], [a.lang.common.alignRight, 'right']], setup: function (a) { this.setValue(a.getAttribute('align') || '') }, commit: function (a, d) { this.getValue() ? d.setAttribute('align', this.getValue()) : d.removeAttribute('align') }}]},
           {type: 'vbox',
             padding: 0,
             children: [{type: 'hbox',
@@ -83,59 +83,59 @@ setTimeout(function () { var g = new CKEDITOR.dom.element(c.$.rows[0].cells[0]),
                 getValue: q,
                 validate: CKEDITOR.dialog.validate.cssLength(a.lang.common.invalidCssLength.replace('%1', a.lang.common.width)),
                 onChange: function () {
-                 var a = this.getDialog().getContentElement('advanced', 'advStyles'); a &&
+                  var a = this.getDialog().getContentElement('advanced', 'advStyles'); a &&
 a.updateStyle('width', this.getValue())
-               },
+                },
                 setup: function (a) { this.setValue(a.getStyle('width')) },
                 commit: k}]}, {type: 'hbox',
-                 widths: ['5em'],
-                 children: [{type: 'text',
-                  id: 'txtHeight',
-                  requiredContent: 'table{height}',
-                  controlStyle: 'width:5em',
-                  label: a.lang.common.height,
-                  title: a.lang.common.cssLengthTooltip,
-                  'default': '',
-                  getValue: q,
-                  validate: CKEDITOR.dialog.validate.cssLength(a.lang.common.invalidCssLength.replace('%1', a.lang.common.height)),
-                  onChange: function () {
-                var a = this.getDialog().getContentElement('advanced', 'advStyles')
-                a && a.updateStyle('height', this.getValue())
-              },
-                  setup: function (a) { (a = a.getStyle('height')) && this.setValue(a) },
-                  commit: k}]}, {type: 'html', html: '&nbsp;'}, {type: 'text',
-                id: 'txtCellSpace',
-                requiredContent: 'table[cellspacing]',
-                controlStyle: 'width:3em',
-                label: a.lang.table.cellSpace,
-                'default': a.filter.check('table[cellspacing]') ? 1 : 0,
-                validate: CKEDITOR.dialog.validate.number(a.lang.table.invalidCellSpacing),
-                setup: function (a) { this.setValue(a.getAttribute('cellSpacing') || '') },
-                commit: function (a, d) {
-                this.getValue() ? d.setAttribute('cellSpacing',
+                  widths: ['5em'],
+                  children: [{type: 'text',
+                    id: 'txtHeight',
+                    requiredContent: 'table{height}',
+                    controlStyle: 'width:5em',
+                    label: a.lang.common.height,
+                    title: a.lang.common.cssLengthTooltip,
+                    'default': '',
+                    getValue: q,
+                    validate: CKEDITOR.dialog.validate.cssLength(a.lang.common.invalidCssLength.replace('%1', a.lang.common.height)),
+                    onChange: function () {
+                      var a = this.getDialog().getContentElement('advanced', 'advStyles')
+                      a && a.updateStyle('height', this.getValue())
+                    },
+                    setup: function (a) { (a = a.getStyle('height')) && this.setValue(a) },
+                    commit: k}]}, {type: 'html', html: '&nbsp;'}, {type: 'text',
+                      id: 'txtCellSpace',
+                      requiredContent: 'table[cellspacing]',
+                      controlStyle: 'width:3em',
+                      label: a.lang.table.cellSpace,
+                      'default': a.filter.check('table[cellspacing]') ? 1 : 0,
+                      validate: CKEDITOR.dialog.validate.number(a.lang.table.invalidCellSpacing),
+                      setup: function (a) { this.setValue(a.getAttribute('cellSpacing') || '') },
+                      commit: function (a, d) {
+                        this.getValue() ? d.setAttribute('cellSpacing',
 this.getValue()) : d.removeAttribute('cellSpacing')
-              }}, {type: 'text', id: 'txtCellPad', requiredContent: 'table[cellpadding]', controlStyle: 'width:3em', label: a.lang.table.cellPad, 'default': a.filter.check('table[cellpadding]') ? 1 : 0, validate: CKEDITOR.dialog.validate.number(a.lang.table.invalidCellPadding), setup: function (a) { this.setValue(a.getAttribute('cellPadding') || '') }, commit: function (a, d) { this.getValue() ? d.setAttribute('cellPadding', this.getValue()) : d.removeAttribute('cellPadding') }}]}]}, {type: 'html',
-                align: 'right',
-                html: ''}, {type: 'vbox',
-                padding: 0,
-                children: [{type: 'text',
-              id: 'txtCaption',
-              requiredContent: 'caption',
-              label: a.lang.table.caption,
-              setup: function (a) { this.enable(); a = a.getElementsByTag('caption'); if (a.count() > 0) { var a = a.getItem(0), d = a.getFirst(CKEDITOR.dom.walker.nodeType(CKEDITOR.NODE_ELEMENT)); d && !d.equals(a.getBogus()) ? (this.disable(), this.setValue(a.getText())) : (a = CKEDITOR.tools.trim(a.getText()), this.setValue(a)) } },
-              commit: function (e, d) {
-              if (this.isEnabled()) {
-              var c = this.getValue(), b = d.getElementsByTag('caption')
-              if (c)b.count() > 0 ? (b = b.getItem(0), b.setHtml('')) : (b = new CKEDITOR.dom.element('caption', a.document), d.getChildCount() ? b.insertBefore(d.getFirst()) : b.appendTo(d)), b.append(new CKEDITOR.dom.text(c, a.document)); else if (b.count() > 0) for (c = b.count() - 1; c >= 0; c--)b.getItem(c).remove()
-            }
-            }}, {type: 'text',
-            id: 'txtSummary',
-            requiredContent: 'table[summary]',
-            label: a.lang.table.summary,
-            setup: function (a) { this.setValue(a.getAttribute('summary') || '') },
-            commit: function (a, d) {
-            this.getValue() ? d.setAttribute('summary', this.getValue())
+                      }}, {type: 'text', id: 'txtCellPad', requiredContent: 'table[cellpadding]', controlStyle: 'width:3em', label: a.lang.table.cellPad, 'default': a.filter.check('table[cellpadding]') ? 1 : 0, validate: CKEDITOR.dialog.validate.number(a.lang.table.invalidCellPadding), setup: function (a) { this.setValue(a.getAttribute('cellPadding') || '') }, commit: function (a, d) { this.getValue() ? d.setAttribute('cellPadding', this.getValue()) : d.removeAttribute('cellPadding') }}]}]}, {type: 'html',
+                        align: 'right',
+                        html: ''}, {type: 'vbox',
+                          padding: 0,
+                          children: [{type: 'text',
+                            id: 'txtCaption',
+                            requiredContent: 'caption',
+                            label: a.lang.table.caption,
+                            setup: function (a) { this.enable(); a = a.getElementsByTag('caption'); if (a.count() > 0) { var a = a.getItem(0), d = a.getFirst(CKEDITOR.dom.walker.nodeType(CKEDITOR.NODE_ELEMENT)); d && !d.equals(a.getBogus()) ? (this.disable(), this.setValue(a.getText())) : (a = CKEDITOR.tools.trim(a.getText()), this.setValue(a)) } },
+                            commit: function (e, d) {
+                              if (this.isEnabled()) {
+                                var c = this.getValue(), b = d.getElementsByTag('caption')
+                                if (c)b.count() > 0 ? (b = b.getItem(0), b.setHtml('')) : (b = new CKEDITOR.dom.element('caption', a.document), d.getChildCount() ? b.insertBefore(d.getFirst()) : b.appendTo(d)), b.append(new CKEDITOR.dom.text(c, a.document)); else if (b.count() > 0) for (c = b.count() - 1; c >= 0; c--)b.getItem(c).remove()
+                              }
+                            }}, {type: 'text',
+                              id: 'txtSummary',
+                              requiredContent: 'table[summary]',
+                              label: a.lang.table.summary,
+                              setup: function (a) { this.setValue(a.getAttribute('summary') || '') },
+                              commit: function (a, d) {
+                                this.getValue() ? d.setAttribute('summary', this.getValue())
 : d.removeAttribute('summary')
-          }}]}]}, m && m.createAdvancedTab(a, null, 'table')]}
+                              }}]}]}, m && m.createAdvancedTab(a, null, 'table')]}
   } var q = CKEDITOR.tools.cssLength, k = function (a) { var e = this.id; a.info || (a.info = {}); a.info[e] = this.getValue() }; CKEDITOR.dialog.add('table', function (a) { return n(a, 'table') }); CKEDITOR.dialog.add('tableProperties', function (a) { return n(a, 'tableProperties') })
 })()

@@ -319,45 +319,45 @@
       format: 'rgba',
       parse: function (execResult) {
         return [
-            2.55 * execResult[1],
-            2.55 * execResult[2],
-            2.55 * execResult[3],
-            execResult[4]
-          ]
+          2.55 * execResult[1],
+          2.55 * execResult[2],
+          2.55 * execResult[3],
+          execResult[4]
+        ]
       }
     }, {
       re: /hsl\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*?\)/,
       format: 'hsl',
       parse: function (execResult) {
-          return [
-            execResult[1] / 360,
-            execResult[2] / 100,
-            execResult[3] / 100,
-            execResult[4]
-          ]
-        }
+        return [
+          execResult[1] / 360,
+          execResult[2] / 100,
+          execResult[3] / 100,
+          execResult[4]
+        ]
+      }
     }, {
-        re: /hsla\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
-        format: 'hsla',
-        parse: function (execResult) {
-          return [
-              execResult[1] / 360,
-              execResult[2] / 100,
-              execResult[3] / 100,
-              execResult[4]
-            ]
-        }
-      }, {
+      re: /hsla\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
+      format: 'hsla',
+      parse: function (execResult) {
+        return [
+          execResult[1] / 360,
+          execResult[2] / 100,
+          execResult[3] / 100,
+          execResult[4]
+        ]
+      }
+    }, {
             // predefined color name
-        re: /^([a-z]{3,})$/,
-        format: 'alias',
-        parse: function (execResult) {
-            var hexval = this.colorNameToHex(execResult[0]) ||  '#000000'
-            var match = this.stringParsers[0].re.exec(hexval),
-              values = match && this.stringParsers[0].parse.apply(this, [match])
-            return values
-          }
-      }],
+      re: /^([a-z]{3,})$/,
+      format: 'alias',
+      parse: function (execResult) {
+        var hexval = this.colorNameToHex(execResult[0]) ||  '#000000'
+        var match = this.stringParsers[0].re.exec(hexval),
+          values = match && this.stringParsers[0].parse.apply(this, [match])
+        return values
+      }
+    }],
     colorNameToHex: function (name) {
             // 140 predefined colors from the HTML Colors spec
       var colors = {

@@ -1799,19 +1799,19 @@ Emitter.prototype.removeEventListener = function (event, fn) {
 
                 debug('pausing current transport "%s"', self.transport.name)
                 self.transport.pause(function () {
-              if (failed) return
-              if (self.readyState == 'closed') return
-              debug('changing transport and sending upgrade packet')
+                  if (failed) return
+                  if (self.readyState == 'closed') return
+                  debug('changing transport and sending upgrade packet')
 
-              cleanup()
+                  cleanup()
 
-              self.setTransport(transport)
-              transport.send([{ type: 'upgrade' }])
-              self.emit('upgrade', transport)
-              transport = null
-              self.upgrading = false
-              self.flush()
-            })
+                  self.setTransport(transport)
+                  transport.send([{ type: 'upgrade' }])
+                  self.emit('upgrade', transport)
+                  transport = null
+                  self.upgrading = false
+                  self.flush()
+                })
               } else {
                 debug('probe transport "%s" failed', name)
                 var err = new Error('probe error')
@@ -2125,10 +2125,10 @@ Socket.prototype.send = function (msg, fn) {
             if (this.writeBuffer.length) {
               this.once('drain', function () {
                 if (this.upgrading) {
-              waitForUpgrade()
-            } else {
-              close()
-            }
+                  waitForUpgrade()
+                } else {
+                  close()
+                }
               })
             } else if (this.upgrading) {
               waitForUpgrade()
@@ -2865,10 +2865,10 @@ Socket.prototype.send = function (msg, fn) {
             if (this.method == 'POST') {
               try {
                 if (this.isBinary) {
-              xhr.setRequestHeader('Content-type', 'application/octet-stream')
-            } else {
-              xhr.setRequestHeader('Content-type', 'text/plain;charset=UTF-8')
-            }
+                  xhr.setRequestHeader('Content-type', 'application/octet-stream')
+                } else {
+                  xhr.setRequestHeader('Content-type', 'text/plain;charset=UTF-8')
+                }
               } catch (e) {}
             }
 
@@ -2888,14 +2888,14 @@ Socket.prototype.send = function (msg, fn) {
               xhr.onreadystatechange = function () {
                 if (xhr.readyState != 4) return
                 if (xhr.status == 200 || xhr.status == 1223) {
-              self.onLoad()
-            } else {
+                  self.onLoad()
+                } else {
           // make sure the `error` event handler that's user-set
           // does not throw in the same tick and gets caught here
-              setTimeout(function () {
-                self.onError(xhr.status)
-              }, 0)
-            }
+                  setTimeout(function () {
+                    self.onError(xhr.status)
+                  }, 0)
+                }
               }
             }
 
@@ -4443,8 +4443,8 @@ Socket.prototype.send = function (msg, fn) {
 
                 if (err.type == packet.type && err.data == packet.data) {
           // parser error in individual packet - ignoring payload
-                return callback(err, 0, 1)
-              }
+                  return callback(err, 0, 1)
+                }
 
                 var ret = callback(packet, i + n, l)
                 if (ret === false) return
@@ -4507,8 +4507,8 @@ Socket.prototype.send = function (msg, fn) {
               if (isString) {
                 var view = new Uint8Array(p.length)
                 for (var i = 0; i < p.length; i++) {
-                view[i] = p.charCodeAt(i)
-              }
+                  view[i] = p.charCodeAt(i)
+                }
                 ab = view.buffer
               }
 
@@ -4546,8 +4546,8 @@ Socket.prototype.send = function (msg, fn) {
               if (typeof encoded === 'string') {
                 var view = new Uint8Array(encoded.length)
                 for (var i = 0; i < encoded.length; i++) {
-                view[i] = encoded.charCodeAt(i)
-              }
+                  view[i] = encoded.charCodeAt(i)
+                }
                 encoded = view.buffer
                 binaryIdentifier[0] = 0
               }
@@ -4624,8 +4624,8 @@ Socket.prototype.send = function (msg, fn) {
                 var typed = new Uint8Array(msg)
                 msg = ''
                 for (var i = 0; i < typed.length; i++) {
-                msg += String.fromCharCode(typed[i])
-              }
+                  msg += String.fromCharCode(typed[i])
+                }
               }
             }
 
@@ -4873,19 +4873,19 @@ Socket.prototype.send = function (msg, fn) {
             if (isArray(obj)) {
               for (var i = 0; i < obj.length; i++) {
                 if (_hasBinary(obj[i])) {
-                return true
-              }
+                  return true
+                }
               }
             } else if (obj && typeof obj === 'object') {
               if (obj.toJSON) {
-              obj = obj.toJSON()
-            }
+                obj = obj.toJSON()
+              }
 
               for (var key in obj) {
-              if (obj.hasOwnProperty(key) && _hasBinary(obj[key])) {
-              return true
-            }
-            }
+                if (obj.hasOwnProperty(key) && _hasBinary(obj[key])) {
+                  return true
+                }
+              }
             }
 
             return false
@@ -4935,13 +4935,13 @@ Socket.prototype.send = function (msg, fn) {
 				// high surrogate, and there is a next character
                 extra = string.charCodeAt(counter++)
                 if ((extra & 0xFC00) == 0xDC00) { // low surrogate
-              output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000)
-            } else {
+                  output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000)
+                } else {
 					// unmatched surrogate; only append this code unit, in case the next
 					// code unit is the high surrogate of a surrogate pair
-              output.push(value)
-              counter--
-            }
+                  output.push(value)
+                  counter--
+                }
               } else {
                 output.push(value)
               }
@@ -4984,10 +4984,10 @@ Socket.prototype.send = function (msg, fn) {
               symbol = stringFromCharCode(((codePoint >> 12) & 0x0F) | 0xE0)
               symbol += createByte(codePoint, 6)
             } else if ((codePoint & 0xFFE00000) == 0) { // 4-byte sequence
-          symbol = stringFromCharCode(((codePoint >> 18) & 0x07) | 0xF0)
-          symbol += createByte(codePoint, 12)
-          symbol += createByte(codePoint, 6)
-        }
+              symbol = stringFromCharCode(((codePoint >> 18) & 0x07) | 0xF0)
+              symbol += createByte(codePoint, 12)
+              symbol += createByte(codePoint, 6)
+            }
             symbol += stringFromCharCode((codePoint & 0x3F) | 0x80)
             return symbol
           }
@@ -5130,8 +5130,8 @@ Socket.prototype.send = function (msg, fn) {
               var object = {}
               var hasOwnProperty = object.hasOwnProperty
               for (var key in utf8) {
-            hasOwnProperty.call(utf8, key) && (freeExports[key] = utf8[key])
-          }
+                hasOwnProperty.call(utf8, key) && (freeExports[key] = utf8[key])
+              }
             }
           } else { // in Rhino or a web browser
             root.utf8 = utf8
@@ -5337,19 +5337,19 @@ Socket.prototype.send = function (msg, fn) {
             if (isArray(obj)) {
               for (var i = 0; i < obj.length; i++) {
                 if (_hasBinary(obj[i])) {
-              return true
-            }
+                  return true
+                }
               }
             } else if (obj && typeof obj === 'object') {
               if (obj.toJSON) {
-            obj = obj.toJSON()
-          }
+                obj = obj.toJSON()
+              }
 
               for (var key in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, key) && _hasBinary(obj[key])) {
-              return true
-            }
-          }
+                if (Object.prototype.hasOwnProperty.call(obj, key) && _hasBinary(obj[key])) {
+                  return true
+                }
+              }
             }
 
             return false
@@ -5553,16 +5553,16 @@ Socket.prototype.send = function (msg, fn) {
             } else if (isArray(data)) {
               var newData = new Array(data.length)
               for (var i = 0; i < data.length; i++) {
-            newData[i] = _deconstructPacket(data[i])
-          }
+                newData[i] = _deconstructPacket(data[i])
+              }
               return newData
             } else if (typeof data === 'object' && !(data instanceof Date)) {
-          var newData = {}
-          for (var key in data) {
-            newData[key] = _deconstructPacket(data[key])
-          }
-          return newData
-        }
+              var newData = {}
+              for (var key in data) {
+                newData[key] = _deconstructPacket(data[key])
+              }
+              return newData
+            }
             return data
           }
 
@@ -5590,15 +5590,15 @@ Socket.prototype.send = function (msg, fn) {
               return buf
             } else if (isArray(data)) {
               for (var i = 0; i < data.length; i++) {
-            data[i] = _reconstructPacket(data[i])
-          }
+                data[i] = _reconstructPacket(data[i])
+              }
               return data
             } else if (data && typeof data === 'object') {
-          for (var key in data) {
-            data[key] = _reconstructPacket(data[key])
-          }
-          return data
-        }
+              for (var key in data) {
+                data[key] = _reconstructPacket(data[key])
+              }
+              return data
+            }
             return data
           }
 
@@ -5630,27 +5630,27 @@ Socket.prototype.send = function (msg, fn) {
               var fileReader = new FileReader()
               fileReader.onload = function () { // this.result == arraybuffer
                 if (containingObject) {
-              containingObject[curKey] = this.result
-            } else {
-              bloblessData = this.result
-            }
+                  containingObject[curKey] = this.result
+                } else {
+                  bloblessData = this.result
+                }
 
         // if nothing pending its callback time
                 if (!--pendingBlobs) {
-              callback(bloblessData)
-            }
+                  callback(bloblessData)
+                }
               }
 
               fileReader.readAsArrayBuffer(obj) // blob -> arraybuffer
             } else if (isArray(obj)) { // handle array
               for (var i = 0; i < obj.length; i++) {
-            _removeBlobs(obj[i], i, obj)
-          }
+                _removeBlobs(obj[i], i, obj)
+              }
             } else if (obj && typeof obj === 'object' && !isBuf(obj)) { // and object
-          for (var key in obj) {
-            _removeBlobs(obj[key], key, obj)
-          }
-        }
+              for (var key in obj) {
+                _removeBlobs(obj[key], key, obj)
+              }
+            }
           }
 
           var pendingBlobs = 0
@@ -6142,11 +6142,11 @@ Socket.prototype.send = function (msg, fn) {
               var stringify = JSON3.stringify, stringifySupported = typeof stringify === 'function' && isExtended
               if (stringifySupported) {
           // A test function object with a custom `toJSON` method.
-              (value = function () {
-              return 1
-            }).toJSON = value
-              try {
-              stringifySupported =
+                (value = function () {
+                  return 1
+                }).toJSON = value
+                try {
+                  stringifySupported =
               // Firefox 3.1b1 and b2 serialize string, number, and boolean
               // primitives as object literals.
               stringify(0) === '0' &&
@@ -6199,51 +6199,51 @@ Socket.prototype.send = function (msg, fn) {
               // Safari <= 5.1.5 and Opera >= 10.53 incorrectly serialize millisecond
               // values less than 1000. Credits: @Yaffle.
               stringify(new Date(-1)) == '"1969-12-31T23:59:59.999Z"'
-            } catch (exception) {
-              stringifySupported = false
-            }
-            }
+                } catch (exception) {
+                  stringifySupported = false
+                }
+              }
               isSupported = stringifySupported
             }
       // Test `JSON.parse`.
             if (name == 'json-parse') {
               var parse = JSON3.parse
               if (typeof parse === 'function') {
-              try {
+                try {
             // FF 3.1b1, b2 will throw an exception if a bare literal is provided.
             // Conforming implementations should also coerce the initial argument to
             // a string prior to parsing.
-              if (parse('0') === 0 && !parse(false)) {
+                  if (parse('0') === 0 && !parse(false)) {
               // Simple parsing test.
-                value = parse(serialized)
-                var parseSupported = value['a'].length == 5 && value['a'][0] === 1
-                if (parseSupported) {
-                try {
+                    value = parse(serialized)
+                    var parseSupported = value['a'].length == 5 && value['a'][0] === 1
+                    if (parseSupported) {
+                      try {
                   // Safari <= 5.1.2 and FF 3.1b1 allow unescaped tabs in strings.
-                  parseSupported = !parse('"\t"')
-                } catch (exception) {}
-                if (parseSupported) {
-                  try {
+                        parseSupported = !parse('"\t"')
+                      } catch (exception) {}
+                      if (parseSupported) {
+                        try {
                     // FF 4.0 and 4.0.1 allow leading `+` signs and leading
                     // decimal points. FF 4.0, 4.0.1, and IE 9-10 also allow
                     // certain octal literals.
-                    parseSupported = parse('01') !== 1
-                  } catch (exception) {}
-                }
-                if (parseSupported) {
-                  try {
+                          parseSupported = parse('01') !== 1
+                        } catch (exception) {}
+                      }
+                      if (parseSupported) {
+                        try {
                     // FF 4.0, 4.0.1, and Rhino 1.7R3-R4 allow trailing decimal
                     // points. These environments, along with FF 3.1b1 and 2,
                     // also allow trailing commas in JSON objects and arrays.
-                    parseSupported = parse('1.') !== 1
-                  } catch (exception) {}
+                          parseSupported = parse('1.') !== 1
+                        } catch (exception) {}
+                      }
+                    }
+                  }
+                } catch (exception) {
+                  parseSupported = false
                 }
               }
-              }
-            } catch (exception) {
-              parseSupported = false
-            }
-            }
               isSupported = parseSupported
             }
           }
@@ -6291,20 +6291,20 @@ Socket.prototype.send = function (msg, fn) {
             // Capture and break the object's prototype chain (see section 8.6.2
             // of the ES 5.1 spec). The parenthesized expression prevents an
             // unsafe transformation by the Closure Compiler.
-                var original = this.__proto__, result = property in (this.__proto__ = null, this)
+                  var original = this.__proto__, result = property in (this.__proto__ = null, this)
             // Restore the original prototype chain.
-                this.__proto__ = original
-                return result
-              }
+                  this.__proto__ = original
+                  return result
+                }
               } else {
           // Capture a reference to the top-level `Object` constructor.
                 constructor = members.constructor
           // Use the `constructor` property to simulate `Object#hasOwnProperty` in
           // other environments.
                 isProperty = function (property) {
-                var parent = (this.constructor || constructor).prototype
-                return property in this && !(property in parent && this[property] === parent[property])
-              }
+                  var parent = (this.constructor || constructor).prototype
+                  return property in this && !(property in parent && this[property] === parent[property])
+                }
               }
               members = null
               return isProperty.call(this, property)
@@ -6360,10 +6360,10 @@ Socket.prototype.send = function (msg, fn) {
                 for (property in object) {
             // Gecko <= 1.0 enumerates the `prototype` property of functions under
             // certain conditions; IE does not.
-                if (!(isFunction && property == 'prototype') && hasProperty.call(object, property)) {
-                callback(property)
-              }
-              }
+                  if (!(isFunction && property == 'prototype') && hasProperty.call(object, property)) {
+                    callback(property)
+                  }
+                }
           // Manually invoke the callback for each non-enumerable property.
                 for (length = members.length; property = members[--length]; hasProperty.call(object, property) && callback(property));
               }
@@ -6371,31 +6371,31 @@ Socket.prototype.send = function (msg, fn) {
         // Safari <= 2.0.4 enumerates shadowed properties twice.
               forEach = function (object, callback) {
           // Create a set of iterated properties.
-              var members = {}, isFunction = getClass.call(object) == functionClass, property
-              for (property in object) {
+                var members = {}, isFunction = getClass.call(object) == functionClass, property
+                for (property in object) {
             // Store each property name to prevent double enumeration. The
             // `prototype` property of functions is not enumerated due to cross-
             // environment inconsistencies.
-              if (!(isFunction && property == 'prototype') && !isProperty.call(members, property) && (members[property] = 1) && isProperty.call(object, property)) {
-                callback(property)
+                  if (!(isFunction && property == 'prototype') && !isProperty.call(members, property) && (members[property] = 1) && isProperty.call(object, property)) {
+                    callback(property)
+                  }
+                }
               }
-            }
-            }
             } else {
         // No bugs detected; use the standard `for...in` algorithm.
               forEach = function (object, callback) {
-              var isFunction = getClass.call(object) == functionClass, property, isConstructor
-              for (property in object) {
-              if (!(isFunction && property == 'prototype') && isProperty.call(object, property) && !(isConstructor = property === 'constructor')) {
-                callback(property)
-              }
-            }
+                var isFunction = getClass.call(object) == functionClass, property, isConstructor
+                for (property in object) {
+                  if (!(isFunction && property == 'prototype') && isProperty.call(object, property) && !(isConstructor = property === 'constructor')) {
+                    callback(property)
+                  }
+                }
           // Manually invoke the callback for the `constructor` property due to
           // cross-environment inconsistencies.
-              if (isConstructor || isProperty.call(object, (property = 'constructor'))) {
-              callback(property)
-            }
-            }
+                if (isConstructor || isProperty.call(object, (property = 'constructor'))) {
+                  callback(property)
+                }
+              }
             }
             return forEach(object, callback)
           }
@@ -6442,16 +6442,16 @@ Socket.prototype.send = function (msg, fn) {
           // If the character is a control character, append its Unicode or
           // shorthand escape sequence; otherwise, append the character as-is.
                 switch (charCode) {
-                case 8: case 9: case 10: case 12: case 13: case 34: case 92:
-                  result += Escapes[charCode]
-                  break
-                default:
-                  if (charCode < 32) {
-                  result += unicodePrefix + toPaddedString(2, charCode.toString(16))
-                  break
+                  case 8: case 9: case 10: case 12: case 13: case 34: case 92:
+                    result += Escapes[charCode]
+                    break
+                  default:
+                    if (charCode < 32) {
+                      result += unicodePrefix + toPaddedString(2, charCode.toString(16))
+                      break
+                    }
+                    result += isLarge ? symbols[index] : charIndexBuggy ? value.charAt(index) : value[index]
                 }
-                  result += isLarge ? symbols[index] : charIndexBuggy ? value.charAt(index) : value[index]
-              }
               }
               return result + '"'
             }
@@ -6467,56 +6467,56 @@ Socket.prototype.send = function (msg, fn) {
               if (typeof value === 'object' && value) {
                 className = getClass.call(value)
                 if (className == dateClass && !isProperty.call(value, 'toJSON')) {
-                if (value > -1 / 0 && value < 1 / 0) {
+                  if (value > -1 / 0 && value < 1 / 0) {
               // Dates are serialized according to the `Date#toJSON` method
               // specified in ES 5.1 section 15.9.5.44. See section 15.9.1.15
               // for the ISO 8601 date time string format.
-                if (getDay) {
+                    if (getDay) {
                 // Manually compute the year, month, date, hours, minutes,
                 // seconds, and milliseconds if the `getUTC*` methods are
                 // buggy. Adapted from @Yaffle's `date-shim` project.
-                  date = floor(value / 864e5)
-                  for (year = floor(date / 365.2425) + 1970 - 1; getDay(year + 1, 0) <= date; year++);
-                  for (month = floor((date - getDay(year, 0)) / 30.42); getDay(year, month + 1) <= date; month++);
-                  date = 1 + date - getDay(year, month)
+                      date = floor(value / 864e5)
+                      for (year = floor(date / 365.2425) + 1970 - 1; getDay(year + 1, 0) <= date; year++);
+                      for (month = floor((date - getDay(year, 0)) / 30.42); getDay(year, month + 1) <= date; month++);
+                      date = 1 + date - getDay(year, month)
                 // The `time` value specifies the time within the day (see ES
                 // 5.1 section 15.9.1.2). The formula `(A % B + B) % B` is used
                 // to compute `A modulo B`, as the `%` operator does not
                 // correspond to the `modulo` operation for negative numbers.
-                  time = (value % 864e5 + 864e5) % 864e5
+                      time = (value % 864e5 + 864e5) % 864e5
                 // The hours, minutes, seconds, and milliseconds are obtained by
                 // decomposing the time within the day. See section 15.9.1.10.
-                  hours = floor(time / 36e5) % 24
-                  minutes = floor(time / 6e4) % 60
-                  seconds = floor(time / 1e3) % 60
-                  milliseconds = time % 1e3
-                } else {
-                  year = value.getUTCFullYear()
-                  month = value.getUTCMonth()
-                  date = value.getUTCDate()
-                  hours = value.getUTCHours()
-                  minutes = value.getUTCMinutes()
-                  seconds = value.getUTCSeconds()
-                  milliseconds = value.getUTCMilliseconds()
-                }
+                      hours = floor(time / 36e5) % 24
+                      minutes = floor(time / 6e4) % 60
+                      seconds = floor(time / 1e3) % 60
+                      milliseconds = time % 1e3
+                    } else {
+                      year = value.getUTCFullYear()
+                      month = value.getUTCMonth()
+                      date = value.getUTCDate()
+                      hours = value.getUTCHours()
+                      minutes = value.getUTCMinutes()
+                      seconds = value.getUTCSeconds()
+                      milliseconds = value.getUTCMilliseconds()
+                    }
               // Serialize extended years correctly.
-                value = (year <= 0 || year >= 1e4 ? (year < 0 ? '-' : '+') + toPaddedString(6, year < 0 ? -year : year) : toPaddedString(4, year)) +
+                    value = (year <= 0 || year >= 1e4 ? (year < 0 ? '-' : '+') + toPaddedString(6, year < 0 ? -year : year) : toPaddedString(4, year)) +
                 '-' + toPaddedString(2, month + 1) + '-' + toPaddedString(2, date) +
                 // Months, dates, hours, minutes, and seconds should have two
                 // digits; milliseconds should have three.
                 'T' + toPaddedString(2, hours) + ':' + toPaddedString(2, minutes) + ':' + toPaddedString(2, seconds) +
                 // Milliseconds are optional in ES 5.0, but required in 5.1.
                 '.' + toPaddedString(3, milliseconds) + 'Z'
-              } else {
-                value = null
-              }
-              } else if (typeof value.toJSON === 'function' && ((className != numberClass && className != stringClass && className != arrayClass) || isProperty.call(value, 'toJSON'))) {
+                  } else {
+                    value = null
+                  }
+                } else if (typeof value.toJSON === 'function' && ((className != numberClass && className != stringClass && className != arrayClass) || isProperty.call(value, 'toJSON'))) {
             // Prototype <= 1.6.1 adds non-standard `toJSON` methods to the
             // `Number`, `String`, `Date`, and `Array` prototypes. JSON 3
             // ignores all `toJSON` methods on these objects unless they are
             // defined directly on an instance.
-              value = value.toJSON(property)
-            }
+                  value = value.toJSON(property)
+                }
               }
               if (callback) {
           // If a replacement function was provided, call it to obtain the value
@@ -6533,21 +6533,21 @@ Socket.prototype.send = function (msg, fn) {
               } else if (className == numberClass) {
           // JSON numbers must be finite. `Infinity` and `NaN` are serialized as
           // `"null"`.
-              return value > -1 / 0 && value < 1 / 0 ? '' + value : 'null'
-            } else if (className == stringClass) {
+                return value > -1 / 0 && value < 1 / 0 ? '' + value : 'null'
+              } else if (className == stringClass) {
           // Strings are double-quoted and escaped.
-            return quote('' + value)
-          }
+                return quote('' + value)
+              }
         // Recursively serialize objects and arrays.
               if (typeof value === 'object') {
           // Check for cyclic structures. This is a linear search; performance
           // is inversely proportional to the number of unique nested objects.
                 for (length = stack.length; length--;) {
-                if (stack[length] === value) {
+                  if (stack[length] === value) {
               // Cyclic structures cannot be serialized by `JSON.stringify`.
-                throw TypeError()
-              }
-              }
+                    throw TypeError()
+                  }
+                }
           // Add the object to the stack of traversed objects.
                 stack.push(value)
                 results = []
@@ -6556,29 +6556,29 @@ Socket.prototype.send = function (msg, fn) {
                 indentation += whitespace
                 if (className == arrayClass) {
             // Recursively serialize array elements.
-                for (index = 0, length = value.length; index < length; index++) {
-                element = serialize(index, value, callback, properties, whitespace, indentation, stack)
-                results.push(element === undef ? 'null' : element)
-              }
-                result = results.length ? (whitespace ? '[\n' + indentation + results.join(',\n' + indentation) + '\n' + prefix + ']' : ('[' + results.join(',') + ']')) : '[]'
-              } else {
+                  for (index = 0, length = value.length; index < length; index++) {
+                    element = serialize(index, value, callback, properties, whitespace, indentation, stack)
+                    results.push(element === undef ? 'null' : element)
+                  }
+                  result = results.length ? (whitespace ? '[\n' + indentation + results.join(',\n' + indentation) + '\n' + prefix + ']' : ('[' + results.join(',') + ']')) : '[]'
+                } else {
             // Recursively serialize object members. Members are selected from
             // either a user-specified list of property names, or the object
             // itself.
-                forEach(properties || value, function (property) {
-                var element = serialize(property, value, callback, properties, whitespace, indentation, stack)
-                if (element !== undef) {
+                  forEach(properties || value, function (property) {
+                    var element = serialize(property, value, callback, properties, whitespace, indentation, stack)
+                    if (element !== undef) {
                 // According to ES 5.1 section 15.12.3: "If `gap` {whitespace}
                 // is not the empty string, let `member` {quote(property) + ":"}
                 // be the concatenation of `member` and the `space` character."
                 // The "`space` character" refers to the literal space
                 // character, not the `space` {width} argument provided to
                 // `JSON.stringify`.
-                  results.push(quote(property) + ':' + (whitespace ? ' ' : '') + element)
+                      results.push(quote(property) + ':' + (whitespace ? ' ' : '') + element)
+                    }
+                  })
+                  result = results.length ? (whitespace ? '{\n' + indentation + results.join(',\n' + indentation) + '\n' + prefix + '}' : ('{' + results.join(',') + '}')) : '{}'
                 }
-              })
-                result = results.length ? (whitespace ? '{\n' + indentation + results.join(',\n' + indentation) + '\n' + prefix + '}' : ('{' + results.join(',') + '}')) : '{}'
-              }
           // Remove the object from the traversed object stack.
                 stack.pop()
                 return result
@@ -6590,23 +6590,23 @@ Socket.prototype.send = function (msg, fn) {
               var whitespace, callback, properties, className
               if (typeof filter === 'function' || typeof filter === 'object' && filter) {
                 if ((className = getClass.call(filter)) == functionClass) {
-                callback = filter
-              } else if (className == arrayClass) {
+                  callback = filter
+                } else if (className == arrayClass) {
             // Convert the property names array into a makeshift set.
-              properties = {}
-              for (var index = 0, length = filter.length, value; index < length; value = filter[index++], ((className = getClass.call(value)), className == stringClass || className == numberClass) && (properties[value] = 1));
-            }
+                  properties = {}
+                  for (var index = 0, length = filter.length, value; index < length; value = filter[index++], ((className = getClass.call(value)), className == stringClass || className == numberClass) && (properties[value] = 1));
+                }
               }
               if (width) {
                 if ((className = getClass.call(width)) == numberClass) {
             // Convert the `width` to an integer and create a string containing
             // `width` number of space characters.
-                if ((width -= width % 1) > 0) {
-                for (whitespace = '', width > 10 && (width = 10); whitespace.length < width; whitespace += ' ');
-              }
-              } else if (className == stringClass) {
-              whitespace = width.length <= 10 ? width : width.slice(0, 10)
-            }
+                  if ((width -= width % 1) > 0) {
+                    for (whitespace = '', width > 10 && (width = 10); whitespace.length < width; whitespace += ' ');
+                  }
+                } else if (className == stringClass) {
+                  whitespace = width.length <= 10 ? width : width.slice(0, 10)
+                }
               }
         // Opera <= 7.54u2 discards the values associated with empty string keys
         // (`""`) only if they are used directly within an object member list
@@ -6649,152 +6649,152 @@ Socket.prototype.send = function (msg, fn) {
               while (Index < length) {
                 charCode = source.charCodeAt(Index)
                 switch (charCode) {
-                case 9: case 10: case 13: case 32:
+                  case 9: case 10: case 13: case 32:
               // Skip whitespace tokens, including tabs, carriage returns, line
               // feeds, and space characters.
-                  Index++
-                  break
-                case 123: case 125: case 91: case 93: case 58: case 44:
+                    Index++
+                    break
+                  case 123: case 125: case 91: case 93: case 58: case 44:
               // Parse a punctuator token (`{`, `}`, `[`, `]`, `:`, or `,`) at
               // the current position.
-                  value = charIndexBuggy ? source.charAt(Index) : source[Index]
-                  Index++
-                  return value
-                case 34:
+                    value = charIndexBuggy ? source.charAt(Index) : source[Index]
+                    Index++
+                    return value
+                  case 34:
               // `"` delimits a JSON string; advance to the next character and
               // begin parsing the string. String tokens are prefixed with the
               // sentinel `@` character to distinguish them from punctuators and
               // end-of-string tokens.
-                  for (value = '@', Index++; Index < length;) {
-                  charCode = source.charCodeAt(Index)
-                  if (charCode < 32) {
+                    for (value = '@', Index++; Index < length;) {
+                      charCode = source.charCodeAt(Index)
+                      if (charCode < 32) {
                   // Unescaped ASCII control characters (those with a code unit
                   // less than the space character) are not permitted.
-                    abort()
-                  } else if (charCode == 92) {
+                        abort()
+                      } else if (charCode == 92) {
                   // A reverse solidus (`\`) marks the beginning of an escaped
                   // control character (including `"`, `\`, and `/`) or Unicode
                   // escape sequence.
-                  charCode = source.charCodeAt(++Index)
-                  switch (charCode) {
-                    case 92: case 34: case 47: case 98: case 116: case 110: case 102: case 114:
+                        charCode = source.charCodeAt(++Index)
+                        switch (charCode) {
+                          case 92: case 34: case 47: case 98: case 116: case 110: case 102: case 114:
                       // Revive escaped control characters.
-                      value += Unescapes[charCode]
-                      Index++
-                      break
-                    case 117:
+                            value += Unescapes[charCode]
+                            Index++
+                            break
+                          case 117:
                       // `\u` marks the beginning of a Unicode escape sequence.
                       // Advance to the first character and validate the
                       // four-digit code point.
-                      begin = ++Index
-                      for (position = Index + 4; Index < position; Index++) {
-                        charCode = source.charCodeAt(Index)
+                            begin = ++Index
+                            for (position = Index + 4; Index < position; Index++) {
+                              charCode = source.charCodeAt(Index)
                         // A valid sequence comprises four hexdigits (case-
                         // insensitive) that form a single hexadecimal value.
-                        if (!(charCode >= 48 && charCode <= 57 || charCode >= 97 && charCode <= 102 || charCode >= 65 && charCode <= 70)) {
+                              if (!(charCode >= 48 && charCode <= 57 || charCode >= 97 && charCode <= 102 || charCode >= 65 && charCode <= 70)) {
                           // Invalid Unicode escape sequence.
-                          abort()
-                        }
-                      }
+                                abort()
+                              }
+                            }
                       // Revive the escaped character.
-                      value += fromCharCode('0x' + source.slice(begin, Index))
-                      break
-                    default:
+                            value += fromCharCode('0x' + source.slice(begin, Index))
+                            break
+                          default:
                       // Invalid escape sequence.
-                      abort()
-                  }
-                } else {
-                  if (charCode == 34) {
+                            abort()
+                        }
+                      } else {
+                        if (charCode == 34) {
                     // An unescaped double-quote character marks the end of the
                     // string.
-                    break
-                  }
-                  charCode = source.charCodeAt(Index)
-                  begin = Index
+                          break
+                        }
+                        charCode = source.charCodeAt(Index)
+                        begin = Index
                   // Optimize for the common case where a string is valid.
-                  while (charCode >= 32 && charCode != 92 && charCode != 34) {
-                    charCode = source.charCodeAt(++Index)
-                  }
+                        while (charCode >= 32 && charCode != 92 && charCode != 34) {
+                          charCode = source.charCodeAt(++Index)
+                        }
                   // Append the string as-is.
-                  value += source.slice(begin, Index)
-                }
-                }
-                  if (source.charCodeAt(Index) == 34) {
+                        value += source.slice(begin, Index)
+                      }
+                    }
+                    if (source.charCodeAt(Index) == 34) {
                 // Advance to the next character and return the revived string.
-                  Index++
-                  return value
-                }
+                      Index++
+                      return value
+                    }
               // Unterminated string.
-                  abort()
-                default:
-              // Parse numbers and literals.
-                  begin = Index
-              // Advance past the negative sign, if one is specified.
-                  if (charCode == 45) {
-                  isSigned = true
-                  charCode = source.charCodeAt(++Index)
-                }
-              // Parse an integer or floating-point value.
-                  if (charCode >= 48 && charCode <= 57) {
-                // Leading zeroes are interpreted as octal literals.
-                  if (charCode == 48 && ((charCode = source.charCodeAt(Index + 1)), charCode >= 48 && charCode <= 57)) {
-                  // Illegal octal literal.
                     abort()
-                  }
-                  isSigned = false
+                  default:
+              // Parse numbers and literals.
+                    begin = Index
+              // Advance past the negative sign, if one is specified.
+                    if (charCode == 45) {
+                      isSigned = true
+                      charCode = source.charCodeAt(++Index)
+                    }
+              // Parse an integer or floating-point value.
+                    if (charCode >= 48 && charCode <= 57) {
+                // Leading zeroes are interpreted as octal literals.
+                      if (charCode == 48 && ((charCode = source.charCodeAt(Index + 1)), charCode >= 48 && charCode <= 57)) {
+                  // Illegal octal literal.
+                        abort()
+                      }
+                      isSigned = false
                 // Parse the integer component.
-                  for (; Index < length && ((charCode = source.charCodeAt(Index)), charCode >= 48 && charCode <= 57); Index++);
+                      for (; Index < length && ((charCode = source.charCodeAt(Index)), charCode >= 48 && charCode <= 57); Index++);
                 // Floats cannot contain a leading decimal point; however, this
                 // case is already accounted for by the parser.
-                  if (source.charCodeAt(Index) == 46) {
-                    position = ++Index
+                      if (source.charCodeAt(Index) == 46) {
+                        position = ++Index
                   // Parse the decimal component.
-                    for (; position < length && ((charCode = source.charCodeAt(position)), charCode >= 48 && charCode <= 57); position++);
-                    if (position == Index) {
+                        for (; position < length && ((charCode = source.charCodeAt(position)), charCode >= 48 && charCode <= 57); position++);
+                        if (position == Index) {
                     // Illegal trailing decimal.
-                    abort()
-                  }
-                    Index = position
-                  }
+                          abort()
+                        }
+                        Index = position
+                      }
                 // Parse exponents. The `e` denoting the exponent is
                 // case-insensitive.
-                  charCode = source.charCodeAt(Index)
-                  if (charCode == 101 || charCode == 69) {
-                    charCode = source.charCodeAt(++Index)
+                      charCode = source.charCodeAt(Index)
+                      if (charCode == 101 || charCode == 69) {
+                        charCode = source.charCodeAt(++Index)
                   // Skip past the sign following the exponent, if one is
                   // specified.
-                    if (charCode == 43 || charCode == 45) {
-                    Index++
-                  }
+                        if (charCode == 43 || charCode == 45) {
+                          Index++
+                        }
                   // Parse the exponential component.
-                    for (position = Index; position < length && ((charCode = source.charCodeAt(position)), charCode >= 48 && charCode <= 57); position++);
-                    if (position == Index) {
+                        for (position = Index; position < length && ((charCode = source.charCodeAt(position)), charCode >= 48 && charCode <= 57); position++);
+                        if (position == Index) {
                     // Illegal empty exponent.
-                    abort()
-                  }
-                    Index = position
-                  }
+                          abort()
+                        }
+                        Index = position
+                      }
                 // Coerce the parsed value to a JavaScript number.
-                  return +source.slice(begin, Index)
-                }
+                      return +source.slice(begin, Index)
+                    }
               // A negative sign may only precede numbers.
-                  if (isSigned) {
-                  abort()
-                }
+                    if (isSigned) {
+                      abort()
+                    }
               // `true`, `false`, and `null` literals.
-                  if (source.slice(Index, Index + 4) == 'true') {
-                  Index += 4
-                  return true
-                } else if (source.slice(Index, Index + 5) == 'false') {
-                  Index += 5
-                  return false
-                } else if (source.slice(Index, Index + 4) == 'null') {
-                Index += 4
-                return null
-              }
+                    if (source.slice(Index, Index + 4) == 'true') {
+                      Index += 4
+                      return true
+                    } else if (source.slice(Index, Index + 5) == 'false') {
+                      Index += 5
+                      return false
+                    } else if (source.slice(Index, Index + 4) == 'null') {
+                      Index += 4
+                      return null
+                    }
               // Unrecognized token.
-                  abort()
-              }
+                    abort()
+                }
               }
         // Return the sentinel `$` character if the parser has reached the end
         // of the source string.
@@ -6811,73 +6811,73 @@ Socket.prototype.send = function (msg, fn) {
               if (typeof value === 'string') {
                 if ((charIndexBuggy ? value.charAt(0) : value[0]) == '@') {
             // Remove the sentinel `@` character.
-                return value.slice(1)
-              }
+                  return value.slice(1)
+                }
           // Parse object and array literals.
                 if (value == '[') {
             // Parses a JSON array, returning a new JavaScript array.
-                results = []
-                for (;; hasMembers || (hasMembers = true)) {
-                value = lex()
+                  results = []
+                  for (;; hasMembers || (hasMembers = true)) {
+                    value = lex()
               // A closing square bracket marks the end of the array literal.
-                if (value == ']') {
-                  break
-                }
+                    if (value == ']') {
+                      break
+                    }
               // If the array literal contains elements, the current token
               // should be a comma separating the previous element from the
               // next.
-                if (hasMembers) {
-                  if (value == ',') {
-                  value = lex()
-                  if (value == ']') {
+                    if (hasMembers) {
+                      if (value == ',') {
+                        value = lex()
+                        if (value == ']') {
                     // Unexpected trailing `,` in array literal.
-                    abort()
-                  }
-                } else {
+                          abort()
+                        }
+                      } else {
                   // A `,` must separate each array element.
-                  abort()
-                }
-                }
+                        abort()
+                      }
+                    }
               // Elisions and leading commas are not permitted.
-                if (value == ',') {
-                  abort()
-                }
-                results.push(get(value))
-              }
-                return results
-              } else if (value == '{') {
+                    if (value == ',') {
+                      abort()
+                    }
+                    results.push(get(value))
+                  }
+                  return results
+                } else if (value == '{') {
             // Parses a JSON object, returning a new JavaScript object.
-              results = {}
-              for (;; hasMembers || (hasMembers = true)) {
-                value = lex()
+                  results = {}
+                  for (;; hasMembers || (hasMembers = true)) {
+                    value = lex()
               // A closing curly brace marks the end of the object literal.
-                if (value == '}') {
-                break
-              }
+                    if (value == '}') {
+                      break
+                    }
               // If the object literal contains members, the current token
               // should be a comma separator.
-                if (hasMembers) {
-                if (value == ',') {
-                  value = lex()
-                  if (value == '}') {
+                    if (hasMembers) {
+                      if (value == ',') {
+                        value = lex()
+                        if (value == '}') {
                     // Unexpected trailing `,` in object literal.
-                    abort()
-                  }
-                } else {
+                          abort()
+                        }
+                      } else {
                   // A `,` must separate each object member.
-                  abort()
-                }
-              }
+                        abort()
+                      }
+                    }
               // Leading commas are not permitted, object property names must be
               // double-quoted strings, and a `:` must separate each property
               // name and value.
-                if (value == ',' || typeof value !== 'string' || (charIndexBuggy ? value.charAt(0) : value[0]) != '@' || lex() != ':') {
-                abort()
-              }
-                results[value.slice(1)] = get(lex())
-              }
-              return results
-            }
+                    if (value == ',' || typeof value !== 'string' || (charIndexBuggy ? value.charAt(0) : value[0]) != '@' || lex() != ':') {
+                      abort()
+                    }
+                    results[value.slice(1)] = get(lex())
+                  }
+                  return results
+                }
           // Unexpected token encountered.
                 abort()
               }
@@ -6904,14 +6904,14 @@ Socket.prototype.send = function (msg, fn) {
           // because its `Object#hasOwnProperty` implementation returns `false`
           // for array indices (e.g., `![1, 2, 3].hasOwnProperty("0")`).
                 if (getClass.call(value) == arrayClass) {
-                for (length = value.length; length--;) {
-                update(value, length, callback)
-              }
-              } else {
-                forEach(value, function (property) {
-                update(value, property, callback)
-              })
-              }
+                  for (length = value.length; length--;) {
+                    update(value, length, callback)
+                  }
+                } else {
+                  forEach(value, function (property) {
+                    update(value, property, callback)
+                  })
+                }
               }
               return callback.call(source, property, value)
             }

@@ -139,10 +139,10 @@ Optional extensions on the jquery.inputmask base
                   if (chrs == opts.radixPoint) {
                     isValid = opts.regex.number(opts).test('0' + bufferStr + '0')
                     if (isValid) {
-                        buffer[pos] = '0'
-                        pos++
-                        return { 'pos': pos }
-                      }
+                      buffer[pos] = '0'
+                      pos++
+                      return { 'pos': pos }
+                    }
                   }
                 }
               }

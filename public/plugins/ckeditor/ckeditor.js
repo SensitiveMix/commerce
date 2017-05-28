@@ -25,9 +25,9 @@ b); if (!b) throw 'The CKEditor installation path could not be automatically det
             a.push(d); document.readyState === 'complete' && setTimeout(b, 1); if (a.length == 1) {
               if (document.addEventListener)document.addEventListener('DOMContentLoaded', b, !1), window.addEventListener('load', b, !1); else if (document.attachEvent) {
                 document.attachEvent('onreadystatechange', b); window.attachEvent('onload', b); d = !1; try {
-               d =
+                  d =
 !window.frameElement
-             } catch (e) {} if (document.documentElement.doScroll && d) { var i = function () { try { document.documentElement.doScroll('left') } catch (d) { setTimeout(i, 1); return }b() }; i() }
+                } catch (e) {} if (document.documentElement.doScroll && d) { var i = function () { try { document.documentElement.doScroll('left') } catch (d) { setTimeout(i, 1); return }b() }; i() }
               }
             }
           }
@@ -46,9 +46,9 @@ b); if (!b) throw 'The CKEditor installation path could not be automatically det
               for (var s = s.slice(0), u, f = 0; f < s.length; f++) {
                 if (o.errorProof) {
                   try {
-             u = s[f].call(this,
+                    u = s[f].call(this,
 j, i, d, g)
-           } catch (p) {}
+                  } catch (p) {}
                 } else u = s[f].call(this, j, i, d, g); u === false ? a = 1 : typeof u !== 'undefined' && (i = u); if (b || a) break
               }
             }
@@ -885,21 +885,21 @@ c.split(d); d = c.getIndex() + 1
             } else { j && (l = r.getChild(j - 1) || r.getLast()); l || (k = r) } for (k = c(k); k || l;) {
               if (k && !l) { !t && k.equals(f) && (t = true); if (d ? k.isBlockBoundary() : !e.contains(k)) break; if (!i || k.getComputedStyle('display') != 'inline') { i = false; t ? h = k : this.setStartBefore(k) }l = k.getPrevious() } for (;l;) {
                 r = false; if (l.type == CKEDITOR.NODE_COMMENT)l = l.getPrevious(); else {
-              if (l.type == CKEDITOR.NODE_TEXT) { j = l.getText(); /[^\s\ufeff]/.test(j) && (l = null); r = /[\s\ufeff]$/.test(j) } else if ((l.$.offsetWidth > 0 || b && l.is('br')) &&
+                  if (l.type == CKEDITOR.NODE_TEXT) { j = l.getText(); /[^\s\ufeff]/.test(j) && (l = null); r = /[\s\ufeff]$/.test(j) } else if ((l.$.offsetWidth > 0 || b && l.is('br')) &&
 !l.data('cke-bookmark')) if (i && CKEDITOR.dtd.$removeEmpty[l.getName()]) { j = l.getText(); if (/[^\s\ufeff]/.test(j))l = null; else for (var g = l.$.getElementsByTagName('*'), n = 0, E; E = g[n++];) if (!CKEDITOR.dtd.$removeEmpty[E.nodeName.toLowerCase()]) { l = null; break }l && (r = !!j.length) } else l = null; r && (i ? t ? h = k : k && this.setStartBefore(k) : i = true); if (l) { r = l.getPrevious(); if (!k && !r) { k = l; l = null; break }l = r } else k = null
-            }
+                }
               }k && (k = c(k.getParent()))
             }r = this.endContainer; j = this.endOffset; k = l = null; t = i = false; if (r.type == CKEDITOR.NODE_TEXT) {
               r =
 !CKEDITOR.tools.trim(r.substring(j)).length && r; i = !(r && r.getLength()); if (r && !(l = r.getNext()))k = r.getParent()
             } else (l = r.getChild(j)) || (k = r); for (;k || l;) {
-          if (k && !l) { !t && k.equals(f) && (t = true); if (d ? k.isBlockBoundary() : !e.contains(k)) break; if (!i || k.getComputedStyle('display') != 'inline') { i = false; t ? m = k : k && this.setEndAfter(k) }l = k.getNext() } for (;l;) {
-            r = false; if (l.type == CKEDITOR.NODE_TEXT) { j = l.getText(); /[^\s\ufeff]/.test(j) && (l = null); r = /^[\s\ufeff]/.test(j) } else if (l.type == CKEDITOR.NODE_ELEMENT) {
-            if ((l.$.offsetWidth >
+              if (k && !l) { !t && k.equals(f) && (t = true); if (d ? k.isBlockBoundary() : !e.contains(k)) break; if (!i || k.getComputedStyle('display') != 'inline') { i = false; t ? m = k : k && this.setEndAfter(k) }l = k.getNext() } for (;l;) {
+                r = false; if (l.type == CKEDITOR.NODE_TEXT) { j = l.getText(); /[^\s\ufeff]/.test(j) && (l = null); r = /^[\s\ufeff]/.test(j) } else if (l.type == CKEDITOR.NODE_ELEMENT) {
+                  if ((l.$.offsetWidth >
 0 || b && l.is('br')) && !l.data('cke-bookmark')) if (i && CKEDITOR.dtd.$removeEmpty[l.getName()]) { j = l.getText(); if (/[^\s\ufeff]/.test(j))l = null; else { g = l.$.getElementsByTagName('*'); for (n = 0; E = g[n++];) if (!CKEDITOR.dtd.$removeEmpty[E.nodeName.toLowerCase()]) { l = null; break } }l && (r = !!j.length) } else l = null
-          } else r = 1; r && i && (t ? m = k : this.setEndAfter(k)); if (l) { r = l.getNext(); if (!k && !r) { k = l; l = null; break }l = r } else k = null
-          }k && (k = c(k.getParent()))
-        } if (h && m) { f = h.contains(m) ? m : h; this.setStartBefore(f); this.setEndAfter(f) } break; case CKEDITOR.ENLARGE_BLOCK_CONTENTS:case CKEDITOR.ENLARGE_LIST_ITEM_CONTENTS:k =
+                } else r = 1; r && i && (t ? m = k : this.setEndAfter(k)); if (l) { r = l.getNext(); if (!k && !r) { k = l; l = null; break }l = r } else k = null
+              }k && (k = c(k.getParent()))
+            } if (h && m) { f = h.contains(m) ? m : h; this.setStartBefore(f); this.setEndAfter(f) } break; case CKEDITOR.ENLARGE_BLOCK_CONTENTS:case CKEDITOR.ENLARGE_LIST_ITEM_CONTENTS:k =
 new CKEDITOR.dom.range(this.root); e = this.root; k.setStartAt(e, CKEDITOR.POSITION_AFTER_START); k.setEnd(this.startContainer, this.startOffset); k = new CKEDITOR.dom.walker(k); var z, M, Q = CKEDITOR.dom.walker.blockBoundary(a == CKEDITOR.ENLARGE_LIST_ITEM_CONTENTS ? {br: 1} : null), v = null, w = function (a) { if (a.type == CKEDITOR.NODE_ELEMENT && a.getAttribute('contenteditable') == 'false') if (v) { if (v.equals(a)) { v = null; return } } else v = a; else if (v) return; var b = Q(a); b || (z = a); return b }, d = function (a) {
     var b = w(a); !b && (a.is && a.is('br')) &&
 (M = a); return b
@@ -1050,22 +1050,22 @@ this._.docEndMarker = f.document.createText(''); this._.lastNode.insertAfter(g)
         }p = this._.nextNode; f = this._.lastNode; for (this._.nextNode = null; p;) {
           var y = 0, m = p.hasAscendant('pre'), k = p.type != CKEDITOR.NODE_ELEMENT, l = 0; if (k)p.type == CKEDITOR.NODE_TEXT && d.test(p.getText()) && (k = 0); else {
             var t = p.getName(); if (CKEDITOR.dtd.$block[t] && p.getAttribute('contenteditable') == 'false') { b = p; c(this, a, b); break } else if (p.isBlockBoundary(this.forceBrBreak && !m && {br: 1})) {
-           if (t == 'br')k = 1; else if (!g && !p.getChildCount() &&
+              if (t == 'br')k = 1; else if (!g && !p.getChildCount() &&
 t != 'hr') { b = p; q = p.equals(f); break } if (g) { g.setEndAt(p, CKEDITOR.POSITION_BEFORE_START); if (t != 'br') this._.nextNode = p }y = 1
-         } else { if (p.getFirst()) { if (!g) { g = this.range.clone(); g.setStartAt(p, CKEDITOR.POSITION_BEFORE_START) }p = p.getFirst(); continue }k = 1 }
+            } else { if (p.getFirst()) { if (!g) { g = this.range.clone(); g.setStartAt(p, CKEDITOR.POSITION_BEFORE_START) }p = p.getFirst(); continue }k = 1 }
           } if (k && !g) { g = this.range.clone(); g.setStartAt(p, CKEDITOR.POSITION_BEFORE_START) }q = (!y || k) && p.equals(f); if (g && !y) {
-         for (;!p.getNext(n) && !q;) {
-            t = p.getParent(); if (t.isBlockBoundary(this.forceBrBreak && !m && {br: 1})) {
-            y = 1; k = 0; q || t.equals(f); g.setEndAt(t, CKEDITOR.POSITION_BEFORE_END)
-            break
-          }p = t; k = 1; q = p.equals(f); l = 1
-          }
-       }k && g.setEndAt(p, CKEDITOR.POSITION_AFTER_END); p = e(p, l, f); if ((q = !p) || y && g) break
+            for (;!p.getNext(n) && !q;) {
+              t = p.getParent(); if (t.isBlockBoundary(this.forceBrBreak && !m && {br: 1})) {
+                y = 1; k = 0; q || t.equals(f); g.setEndAt(t, CKEDITOR.POSITION_BEFORE_END)
+                break
+              }p = t; k = 1; q = p.equals(f); l = 1
+            }
+          }k && g.setEndAt(p, CKEDITOR.POSITION_AFTER_END); p = e(p, l, f); if ((q = !p) || y && g) break
         } if (!b) {
           if (!g) { this._.docEndMarker && this._.docEndMarker.remove(); return this._.nextNode = null }b = new CKEDITOR.dom.elementPath(g.startContainer, g.root); p = b.blockLimit; y = {div: 1, th: 1, td: 1}; b = b.block; if (!b && p && !this.enforceRealBlocks && y[p.getName()] && g.checkStartOfBlock() && g.checkEndOfBlock() && !p.equals(g.root))b = p; else if (!b || this.enforceRealBlocks && b.getName() == 'li') {
-         b = this.range.document.createElement(a)
-         g.extractContents().appendTo(b); b.trim(); g.insertNode(b); s = u = true
-       } else if (b.getName() != 'li') { if (!g.checkStartOfBlock() || !g.checkEndOfBlock()) { b = b.clone(false); g.extractContents().appendTo(b); b.trim(); u = g.splitBlock(); s = !u.wasStartOfBlock; u = !u.wasEndOfBlock; g.insertNode(b) } } else if (!q) this._.nextNode = b.equals(f) ? null : e(g.getBoundaryNodes().endNode, 1, f)
+            b = this.range.document.createElement(a)
+            g.extractContents().appendTo(b); b.trim(); g.insertNode(b); s = u = true
+          } else if (b.getName() != 'li') { if (!g.checkStartOfBlock() || !g.checkEndOfBlock()) { b = b.clone(false); g.extractContents().appendTo(b); b.trim(); u = g.splitBlock(); s = !u.wasStartOfBlock; u = !u.wasEndOfBlock; g.insertNode(b) } } else if (!q) this._.nextNode = b.equals(f) ? null : e(g.getBoundaryNodes().endNode, 1, f)
         } if (s)(s = b.getPrevious()) && s.type == CKEDITOR.NODE_ELEMENT && (s.getName() == 'br' ? s.remove() : s.getLast() && s.getLast().$.nodeName.toLowerCase() == 'br' && s.getLast().remove())
         if (u)(s = b.getLast()) && s.type == CKEDITOR.NODE_ELEMENT && s.getName() == 'br' && (!CKEDITOR.env.needsBrFiller || s.getPrevious(h) || s.getNext(h)) && s.remove(); if (!this._.nextNode) this._.nextNode = q || b.equals(f) || !f ? null : e(b, 1, f); return b
       }}; CKEDITOR.dom.range.prototype.createIterator = function () { return new a(this) }
@@ -1110,13 +1110,13 @@ e(a.styles, b.styles, c.validStyles)
               allClasses: false,
               allStyles: false}; if (!k && !x) { m.push(f); return true }i(f); if (k) { g = 0; for (r = k.length; g < r; ++g)a(k[g], f, e, true, h) } if (x) { g = 0; for (r = x.length; g < r; ++g)a(x[g], f, e, false, h) } if (!e.valid) { m.push(f); return true }h = e.validAttributes; g = e.validStyles; k = e.validClasses; r = f.attributes; var x = f.styles, n = r['class'], L = r.style, A, z, E = [], I = [], s = /^data-cke-/, q = false; delete r.style; delete r['class']; if (!e.allAttributes) {
                 for (A in r) {
-               if (!h[A]) {
-                  if (s.test(A)) {
-                  if (A != (z = A.replace(/^data-cke-saved-/, '')) &&
+                  if (!h[A]) {
+                    if (s.test(A)) {
+                      if (A != (z = A.replace(/^data-cke-saved-/, '')) &&
 !h[z]) { delete r[A]; q = true }
-                } else { delete r[A]; q = true }
+                    } else { delete r[A]; q = true }
+                  }
                 }
-             }
               } if (e.allStyles) { if (L)r.style = L } else { for (A in x)g[A] ? E.push(A + ':' + x[A]) : q = true; if (E.length)r.style = E.sort().join('; ') } if (e.allClasses)n && (r['class'] = n); else { for (A in k)k[A] && I.push(A); I.length && (r['class'] = I.sort().join(' ')); n && I.length < n.split(/\s+/).length && (q = true) }q && (y = true); if (!t && !o(f)) { m.push(f); return true }
         } if (l)f.name = f.name.replace(d, 'cke:$1'); return y
       }
@@ -1369,20 +1369,20 @@ CKEDITOR.env.version < 10900 && a.lang.dir == 'rtl')a.lang.dir = 'ltr'; if (!a.c
 'g'), c = c.replace(l, ''), c = c + (',' + d)
       } if (e) var h = RegExp('(?:^|,)(?:' + e.replace(/\s*,\s*/g, '|') + ')(?=,|$)', 'g'), c = c.replace(h, ''); CKEDITOR.env.air && (c = c + ',adobeair'); CKEDITOR.plugins.load(c.split(','), function (c) {
         var d = [], e = [], k = []; a.plugins = c; for (var l in c) {
-      var m = c[l], g = m.lang, i = null, j = m.requires, v; CKEDITOR.tools.isArray(j) && (j = j.join(',')); if (j && (v = j.match(h))) {
-        for (;j = v.pop();) {
-          CKEDITOR.tools.setTimeout(function (a, b) {
-          throw Error('Plugin "' + a.replace(',', '') + '" cannot be removed from the plugins list, because it\'s required by "' +
+          var m = c[l], g = m.lang, i = null, j = m.requires, v; CKEDITOR.tools.isArray(j) && (j = j.join(',')); if (j && (v = j.match(h))) {
+            for (;j = v.pop();) {
+              CKEDITOR.tools.setTimeout(function (a, b) {
+                throw Error('Plugin "' + a.replace(',', '') + '" cannot be removed from the plugins list, because it\'s required by "' +
 b + '" plugin.')
-        }, 0, null, [j, l])
-        }
-      } if (g && !a.lang[l]) { g.split && (g = g.split(',')); if (CKEDITOR.tools.indexOf(g, a.langCode) >= 0)i = a.langCode; else { i = a.langCode.replace(/-.*/, ''); i = i != a.langCode && CKEDITOR.tools.indexOf(g, i) >= 0 ? i : CKEDITOR.tools.indexOf(g, 'en') >= 0 ? 'en' : g[0] } if (!m.langEntries || !m.langEntries[i])k.push(CKEDITOR.getUrl(m.path + 'lang/' + i + '.js')); else { a.lang[l] = m.langEntries[i]; i = null } }e.push(i); d.push(m)
-    }CKEDITOR.scriptLoader.load(k, function () {
-      for (var c = ['beforeInit', 'init', 'afterInit'], k = 0; k < c.length; k++) {
-        for (var m =
+              }, 0, null, [j, l])
+            }
+          } if (g && !a.lang[l]) { g.split && (g = g.split(',')); if (CKEDITOR.tools.indexOf(g, a.langCode) >= 0)i = a.langCode; else { i = a.langCode.replace(/-.*/, ''); i = i != a.langCode && CKEDITOR.tools.indexOf(g, i) >= 0 ? i : CKEDITOR.tools.indexOf(g, 'en') >= 0 ? 'en' : g[0] } if (!m.langEntries || !m.langEntries[i])k.push(CKEDITOR.getUrl(m.path + 'lang/' + i + '.js')); else { a.lang[l] = m.langEntries[i]; i = null } }e.push(i); d.push(m)
+        }CKEDITOR.scriptLoader.load(k, function () {
+          for (var c = ['beforeInit', 'init', 'afterInit'], k = 0; k < c.length; k++) {
+            for (var m =
 0; m < d.length; m++) { var l = d[m]; k === 0 && (e[m] && l.lang && l.langEntries) && (a.lang[l.name] = l.langEntries[e[m]]); if (l[c[k]])l[c[k]](a) }
-      }a.fireOnce('pluginsLoaded'); b.keystrokes && a.setKeystroke(a.config.keystrokes); for (m = 0; m < a.config.blockedKeystrokes.length; m++)a.keystrokeHandler.blockedKeystrokes[a.config.blockedKeystrokes[m]] = 1; a.status = 'loaded'; a.fireOnce('loaded'); CKEDITOR.fire('instanceLoaded', null, a)
-    })
+          }a.fireOnce('pluginsLoaded'); b.keystrokes && a.setKeystroke(a.config.keystrokes); for (m = 0; m < a.config.blockedKeystrokes.length; m++)a.keystrokeHandler.blockedKeystrokes[a.config.blockedKeystrokes[m]] = 1; a.status = 'loaded'; a.fireOnce('loaded'); CKEDITOR.fire('instanceLoaded', null, a)
+        })
       })
     } function q () {
       var a = this.element; if (a && this.elementMode != CKEDITOR.ELEMENT_MODE_APPENDTO) {
@@ -1391,17 +1391,17 @@ b + '" plugin.')
       } return false
     }a.prototype = CKEDITOR.editor.prototype; CKEDITOR.editor = a; var s = 0, u = {}; CKEDITOR.tools.extend(CKEDITOR.editor.prototype, {addCommand: function (a, b) { b.name = a.toLowerCase(); var d = new CKEDITOR.command(this, b); this.mode && c(this, d); return this.commands[a] = d },
       _attachToForm: function () {
-    var a = this, b = a.element, c = new CKEDITOR.dom.element(b.$.form); if (b.is('textarea') && c) {
-      var d = function (c) {
-        a.updateElement()
-        a._.required && (!b.getValue() && a.fire('required') === false) && c.data.preventDefault()
-      }; c.on('submit', d); if (c.$.submit && c.$.submit.call && c.$.submit.apply)c.$.submit = CKEDITOR.tools.override(c.$.submit, function (a) { return function () { d(); a.apply ? a.apply(this) : a() } }); a.on('destroy', function () { c.removeListener('submit', d) })
-    }
-  },
+        var a = this, b = a.element, c = new CKEDITOR.dom.element(b.$.form); if (b.is('textarea') && c) {
+          var d = function (c) {
+            a.updateElement()
+            a._.required && (!b.getValue() && a.fire('required') === false) && c.data.preventDefault()
+          }; c.on('submit', d); if (c.$.submit && c.$.submit.call && c.$.submit.apply)c.$.submit = CKEDITOR.tools.override(c.$.submit, function (a) { return function () { d(); a.apply ? a.apply(this) : a() } }); a.on('destroy', function () { c.removeListener('submit', d) })
+        }
+      },
       destroy: function (a) {
-    this.fire('beforeDestroy'); !a && q.call(this); this.editable(null); this.status = 'destroyed'; this.fire('destroy'); this.removeAllListeners(); CKEDITOR.remove(this); CKEDITOR.fire('instanceDestroyed',
+        this.fire('beforeDestroy'); !a && q.call(this); this.editable(null); this.status = 'destroyed'; this.fire('destroy'); this.removeAllListeners(); CKEDITOR.remove(this); CKEDITOR.fire('instanceDestroyed',
 null, this)
-  },
+      },
       elementPath: function (a) { return (a = a || this.getSelection().getStartElement()) ? new CKEDITOR.dom.elementPath(a, this.editable()) : null },
       createRange: function () { var a = this.editable(); return a ? new CKEDITOR.dom.range(a) : null },
       execCommand: function (a, b) { var c = this.getCommand(a), d = {name: a, commandData: b, command: c}; if (c && c.state != CKEDITOR.TRISTATE_DISABLED && this.fire('beforeCommandExec', d) !== true) { d.returnValue = c.exec(d.commandData); if (!c.async && this.fire('afterCommandExec', d) !== true) return d.returnValue } return false },
@@ -1419,15 +1419,15 @@ null, this)
       resetDirty: function () { this._.previousValue = this.getSnapshot() },
       updateElement: function () { return q.call(this) },
       setKeystroke: function () {
-    for (var a = this.keystrokeHandler.keystrokes, b = CKEDITOR.tools.isArray(arguments[0]) ? arguments[0] : [[].slice.call(arguments, 0)], c,
-      d, e = b.length; e--;) { c = b[e]; d = 0; if (CKEDITOR.tools.isArray(c)) { d = c[1]; c = c[0] }d ? a[c] = d : delete a[c] }
-  },
+        for (var a = this.keystrokeHandler.keystrokes, b = CKEDITOR.tools.isArray(arguments[0]) ? arguments[0] : [[].slice.call(arguments, 0)], c,
+          d, e = b.length; e--;) { c = b[e]; d = 0; if (CKEDITOR.tools.isArray(c)) { d = c[1]; c = c[0] }d ? a[c] = d : delete a[c] }
+      },
       addFeature: function (a) { return this.filter.addFeature(a) },
       setActiveFilter: function (a) { if (!a)a = this.filter; if (this.activeFilter !== a) { this.activeFilter = a; this.fire('activeFilterChange'); a === this.filter ? this.setActiveEnterMode(null, null) : this.setActiveEnterMode(a.getAllowedEnterMode(this.enterMode), a.getAllowedEnterMode(this.shiftEnterMode, true)) } },
       setActiveEnterMode: function (a, b) {
-    a = a ? this.blockless ? CKEDITOR.ENTER_BR
+        a = a ? this.blockless ? CKEDITOR.ENTER_BR
 : a : this.enterMode; b = b ? this.blockless ? CKEDITOR.ENTER_BR : b : this.shiftEnterMode; if (this.activeEnterMode != a || this.activeShiftEnterMode != b) { this.activeEnterMode = a; this.activeShiftEnterMode = b; this.fire('activeEnterModeChange') }
-  }})
+      }})
   })(); CKEDITOR.ELEMENT_MODE_NONE = 0; CKEDITOR.ELEMENT_MODE_REPLACE = 1; CKEDITOR.ELEMENT_MODE_APPENDTO = 2; CKEDITOR.ELEMENT_MODE_INLINE = 3
   CKEDITOR.htmlParser = function () { this._ = {htmlPartsRegex: RegExp("<(?:(?:\\/([^>]+)>)|(?:!--([\\S|\\s]*?)--\>)|(?:([^\\s>]+)\\s*((?:(?:\"[^\"]*\")|(?:'[^']*')|[^\"'>])*)\\/?>))", 'g')} };
   (function () {
@@ -1495,9 +1495,9 @@ true
             for (;;) {
               g = (h = m.name) ? CKEDITOR.dtd[h] || (m._.isBlockLike ? CKEDITOR.dtd.div : CKEDITOR.dtd.span) : c; if (!f.isUnknown && !m.isUnknown && !g[d]) {
                 if (m.isOptionalClose)u.onTagClose(h); else if (d in b && h in b) { h = m.children; (h = h[h.length - 1]) && h.name == 'li' || o(h = new CKEDITOR.htmlParser.element('li'), m); !f.returnPoint && (f.returnPoint = m); m = h } else if (d in CKEDITOR.dtd.$listItem && !s(d, h)) {
-               u.onTagOpen(d ==
+                  u.onTagOpen(d ==
 'li' ? 'ul' : 'dl', {}, 0, 1)
-             } else if (h in e && !s(d, h)) { !f.returnPoint && (f.returnPoint = m); m = m.parent } else { h in CKEDITOR.dtd.$inline && p.unshift(m); if (m.parent)o(m, m.parent, 1); else { f.isOrphan = 1; break } }
+                } else if (h in e && !s(d, h)) { !f.returnPoint && (f.returnPoint = m); m = m.parent } else { h in CKEDITOR.dtd.$inline && p.unshift(m); if (m.parent)o(m, m.parent, 1); else { f.isOrphan = 1; break } }
               } else break
             }n(d); i(); f.parent = m; f.isEmpty ? o(f) : m = f
           }
@@ -1628,9 +1628,9 @@ true)
               table: function (a) {
                 a.children.slice(0).sort(function (a, b) {
                   var c, d; if (a.type == CKEDITOR.NODE_ELEMENT && b.type == a.type) { c = CKEDITOR.tools.indexOf(l, a.name); d = CKEDITOR.tools.indexOf(l, b.name) } if (!(c > -1 && d > -1 && c != d)) {
-                c = a.parent ? a.getIndex()
+                    c = a.parent ? a.getIndex()
 : -1; d = b.parent ? b.getIndex() : -1
-              } return c > d ? 1 : -1
+                  } return c > d ? 1 : -1
                 })
               },
               param: function (a) { a.children = []; a.isEmpty = true; return a },
@@ -1775,25 +1775,25 @@ a.editor; !b && c.getSelection().scrollIntoView(); setTimeout(function () { c.fi
         insertHtml: function (a, b) { g(this); s(this, b || 'html', a) },
         insertText: function (a) {
           g(this); var b = this.editor, c = b.getSelection().getStartElement().hasAscendant('pre', true) ? CKEDITOR.ENTER_BR : b.activeEnterMode, b = c == CKEDITOR.ENTER_BR, e = CKEDITOR.tools, a = e.htmlEncode(a.replace(/\r\n/g, '\n')), a = a.replace(/\t/g, '&nbsp;&nbsp; &nbsp;'), c = c == CKEDITOR.ENTER_P ? 'p' : 'div'; if (!b) {
-         var d = /\n{2}/g
-         if (d.test(a)) var l = '<' + c + '>', h = '</' + c + '>', a = l + a.replace(d, function () { return h + l }) + h
-       }a = a.replace(/\n/g, '<br>'); b || (a = a.replace(RegExp('<br>(?=</' + c + '>)'), function (a) { return e.repeat(a, 2) })); a = a.replace(/^ | $/g, '&nbsp;'); a = a.replace(/(>|\s) /g, function (a, b) { return b + '&nbsp;' }).replace(/ (?=<)/g, '&nbsp;'); s(this, 'text', a)
+            var d = /\n{2}/g
+            if (d.test(a)) var l = '<' + c + '>', h = '</' + c + '>', a = l + a.replace(d, function () { return h + l }) + h
+          }a = a.replace(/\n/g, '<br>'); b || (a = a.replace(RegExp('<br>(?=</' + c + '>)'), function (a) { return e.repeat(a, 2) })); a = a.replace(/^ | $/g, '&nbsp;'); a = a.replace(/(>|\s) /g, function (a, b) { return b + '&nbsp;' }).replace(/ (?=<)/g, '&nbsp;'); s(this, 'text', a)
         },
         insertElement: function (a, b) { b ? this.insertElementIntoRange(a, b) : this.insertElementIntoSelection(a) },
         insertElementIntoRange: function (a, b) {
           var c = this.editor, e = c.config.enterMode, d = a.getName(),
-         l = CKEDITOR.dtd.$block[d]; if (b.checkReadOnly()) return false; b.deleteContents(1); b.startContainer.type == CKEDITOR.NODE_ELEMENT && b.startContainer.is({tr: 1, table: 1, tbody: 1, thead: 1, tfoot: 1}) && u(b); var g, h; if (l) for (;(g = b.getCommonAncestor(0, 1)) && (h = CKEDITOR.dtd[g.getName()]) && (!h || !h[d]);) if (g.getName() in CKEDITOR.dtd.span)b.splitElement(g); else if (b.checkStartOfBlock() && b.checkEndOfBlock()) { b.setStartBefore(g); b.collapse(true); g.remove() } else b.splitBlock(e == CKEDITOR.ENTER_DIV ? 'div' : 'p', c.editable()); b.insertNode(a)
+            l = CKEDITOR.dtd.$block[d]; if (b.checkReadOnly()) return false; b.deleteContents(1); b.startContainer.type == CKEDITOR.NODE_ELEMENT && b.startContainer.is({tr: 1, table: 1, tbody: 1, thead: 1, tfoot: 1}) && u(b); var g, h; if (l) for (;(g = b.getCommonAncestor(0, 1)) && (h = CKEDITOR.dtd[g.getName()]) && (!h || !h[d]);) if (g.getName() in CKEDITOR.dtd.span)b.splitElement(g); else if (b.checkStartOfBlock() && b.checkEndOfBlock()) { b.setStartBefore(g); b.collapse(true); g.remove() } else b.splitBlock(e == CKEDITOR.ENTER_DIV ? 'div' : 'p', c.editable()); b.insertNode(a)
           return true
         },
         insertElementIntoSelection: function (a) {
           var b = this.editor, e = b.activeEnterMode, b = b.getSelection(), d = b.getRanges()[0], k = a.getName(), k = CKEDITOR.dtd.$block[k]; g(this); if (this.insertElementIntoRange(a, d)) {
-         d.moveToPosition(a, CKEDITOR.POSITION_AFTER_END); if (k) {
-          if ((k = a.getNext(function (a) { return c(a) && !i(a) })) && k.type == CKEDITOR.NODE_ELEMENT && k.is(CKEDITOR.dtd.$block))k.getDtd()['#'] ? d.moveToElementEditStart(k) : d.moveToElementEditEnd(a); else if (!k && e != CKEDITOR.ENTER_BR) {
-            k = d.fixBlock(true, e == CKEDITOR.ENTER_DIV
+            d.moveToPosition(a, CKEDITOR.POSITION_AFTER_END); if (k) {
+              if ((k = a.getNext(function (a) { return c(a) && !i(a) })) && k.type == CKEDITOR.NODE_ELEMENT && k.is(CKEDITOR.dtd.$block))k.getDtd()['#'] ? d.moveToElementEditStart(k) : d.moveToElementEditEnd(a); else if (!k && e != CKEDITOR.ENTER_BR) {
+                k = d.fixBlock(true, e == CKEDITOR.ENTER_DIV
 ? 'div' : 'p'); d.moveToElementEditStart(k)
-          }
-        }
-       }b.selectRanges([d]); n(this, CKEDITOR.env.opera)
+              }
+            }
+          }b.selectRanges([d]); n(this, CKEDITOR.env.opera)
         },
         setData: function (a, b) { b || (a = this.editor.dataProcessor.toHtml(a)); this.setHtml(a); this.editor.fire('dataReady') },
         getData: function (a) { var b = this.getHtml(); a || (b = this.editor.dataProcessor.toDataFormat(b)); return b },
@@ -1837,67 +1837,67 @@ m[c ? 'checkStartOfBlock' : 'checkEndOfBlock']()) { a.fire('saveSnapshot'); m[c 
         var b = a.getHead(); if (b.getCustomData('stylesheet')) { var c = a.getCustomData('stylesheet_ref'); if (--c)a.setCustomData('stylesheet_ref', c); else { a.removeCustomData('stylesheet_ref'); b.removeCustomData('stylesheet').remove() } } delete this.editor
       }}}); CKEDITOR.editor.prototype.editable = function (a) { var b = this._.editable; if (b && a) return 0; if (arguments.length)b = this._.editable = a ? a instanceof CKEDITOR.editable ? a : new CKEDITOR.editable(this, a) : (b && b.detach(), null); return b }; var i = CKEDITOR.dom.walker.bogus(), j = /(^|<body\b[^>]*>)\s*<(p|div|address|h\d|center|pre)[^>]*>\s*(?:<br[^>]*>|&nbsp;|\u00A0|&#160;)?\s*(:?<\/\2>)?\s*(?=$|<\/body>)/gi,
         o = CKEDITOR.dom.walker.whitespaces(true), q = CKEDITOR.dom.walker.bookmark(false, true); CKEDITOR.on('instanceLoaded', function (b) {
-       var c = b.editor; c.on('insertElement', function (a) { a = a.data; if (a.type == CKEDITOR.NODE_ELEMENT && (a.is('input') || a.is('textarea'))) { a.getAttribute('contentEditable') != 'false' && a.data('cke-editable', a.hasAttribute('contenteditable') ? 'true' : '1'); a.setAttribute('contentEditable', false) } }); c.on('selectionChange', function (b) {
-        if (!c.readOnly) {
-          var e = c.getSelection(); if (e && !e.isLocked) {
-            e = c.checkDirty()
-            c.fire('lockSnapshot'); a(b); c.fire('unlockSnapshot'); !e && c.resetDirty()
-          }
-        }
-      })
-     }); CKEDITOR.on('instanceCreated', function (a) {
-      var b = a.editor; b.on('mode', function () {
-        var a = b.editable(); if (a && a.isInline()) {
-          var c = b.title; a.changeAttr('role', 'textbox'); a.changeAttr('aria-label', c); c && a.changeAttr('title', c); if (c = this.ui.space(this.elementMode == CKEDITOR.ELEMENT_MODE_INLINE ? 'top' : 'contents')) {
-            var e = CKEDITOR.tools.getNextId(), d = CKEDITOR.dom.element.createFromHtml('<span id="' + e + '" class="cke_voice_label">' + this.lang.common.editorHelp +
+          var c = b.editor; c.on('insertElement', function (a) { a = a.data; if (a.type == CKEDITOR.NODE_ELEMENT && (a.is('input') || a.is('textarea'))) { a.getAttribute('contentEditable') != 'false' && a.data('cke-editable', a.hasAttribute('contenteditable') ? 'true' : '1'); a.setAttribute('contentEditable', false) } }); c.on('selectionChange', function (b) {
+            if (!c.readOnly) {
+              var e = c.getSelection(); if (e && !e.isLocked) {
+                e = c.checkDirty()
+                c.fire('lockSnapshot'); a(b); c.fire('unlockSnapshot'); !e && c.resetDirty()
+              }
+            }
+          })
+        }); CKEDITOR.on('instanceCreated', function (a) {
+          var b = a.editor; b.on('mode', function () {
+            var a = b.editable(); if (a && a.isInline()) {
+              var c = b.title; a.changeAttr('role', 'textbox'); a.changeAttr('aria-label', c); c && a.changeAttr('title', c); if (c = this.ui.space(this.elementMode == CKEDITOR.ELEMENT_MODE_INLINE ? 'top' : 'contents')) {
+                var e = CKEDITOR.tools.getNextId(), d = CKEDITOR.dom.element.createFromHtml('<span id="' + e + '" class="cke_voice_label">' + this.lang.common.editorHelp +
 '</span>'); c.append(d); a.changeAttr('aria-describedby', e)
-          }
-        }
-      })
-    }); CKEDITOR.addCss('.cke_editable{cursor:text}.cke_editable img,.cke_editable input,.cke_editable textarea{cursor:default}'); var s = (function () {
-        function a (b) { return b.type == CKEDITOR.NODE_ELEMENT } function b (c, e) {
-          var d, k, m, l, h = [], i = e.range.startContainer; d = e.range.startPath(); for (var i = g[i.getName()], r = 0, j = c.getChildren(), n = j.count(), o = -1, q = -1, x = 0, s = d.contains(g.$list); r < n; ++r) {
-            d = j.getItem(r); if (a(d)) {
-              m = d.getName(); if (s && m in CKEDITOR.dtd.$list) {
-              h =
+              }
+            }
+          })
+        }); CKEDITOR.addCss('.cke_editable{cursor:text}.cke_editable img,.cke_editable input,.cke_editable textarea{cursor:default}'); var s = (function () {
+            function a (b) { return b.type == CKEDITOR.NODE_ELEMENT } function b (c, e) {
+              var d, k, m, l, h = [], i = e.range.startContainer; d = e.range.startPath(); for (var i = g[i.getName()], r = 0, j = c.getChildren(), n = j.count(), o = -1, q = -1, x = 0, s = d.contains(g.$list); r < n; ++r) {
+                d = j.getItem(r); if (a(d)) {
+                  m = d.getName(); if (s && m in CKEDITOR.dtd.$list) {
+                    h =
 h.concat(b(d, e))
-            } else { l = !!i[m]; if (m == 'br' && d.data('cke-eol') && (!r || r == n - 1)) { x = (k = r ? h[r - 1].node : j.getItem(r + 1)) && (!a(k) || !k.is('br')); k = k && a(k) && g.$block[k.getName()] }o == -1 && !l && (o = r); l || (q = r); h.push({isElement: 1, isLineBreak: x, isBlock: d.isBlockBoundary(), hasBlockSibling: k, node: d, name: m, allowed: l}); k = x = 0 }
-            } else h.push({isElement: 0, node: d, allowed: 1})
-          } if (o > -1)h[o].firstNotAllowed = 1; if (q > -1)h[q].lastNotAllowed = 1; return h
-        } function e (b, c) {
-          var d = [], k = b.getChildren(), m = k.count(), l, h = 0, r = g[c], i = !b.is(g.$inline) ||
+                  } else { l = !!i[m]; if (m == 'br' && d.data('cke-eol') && (!r || r == n - 1)) { x = (k = r ? h[r - 1].node : j.getItem(r + 1)) && (!a(k) || !k.is('br')); k = k && a(k) && g.$block[k.getName()] }o == -1 && !l && (o = r); l || (q = r); h.push({isElement: 1, isLineBreak: x, isBlock: d.isBlockBoundary(), hasBlockSibling: k, node: d, name: m, allowed: l}); k = x = 0 }
+                } else h.push({isElement: 0, node: d, allowed: 1})
+              } if (o > -1)h[o].firstNotAllowed = 1; if (q > -1)h[q].lastNotAllowed = 1; return h
+            } function e (b, c) {
+              var d = [], k = b.getChildren(), m = k.count(), l, h = 0, r = g[c], i = !b.is(g.$inline) ||
 b.is('br'); for (i && d.push(' '); h < m; h++) { l = k.getItem(h); a(l) && !l.is(r) ? d = d.concat(e(l, c)) : d.push(l) }i && d.push(' '); return d
-        } function d (b) { return b && a(b) && (b.is(g.$removeEmpty) || b.is('a') && !b.isBlockBoundary()) } function k (b, c, e, d) {
-          var l = b.clone(), m, g; l.setEndAt(c, CKEDITOR.POSITION_BEFORE_END); if ((m = (new CKEDITOR.dom.walker(l)).next()) && a(m) && h[m.getName()] && (g = m.getPrevious()) && a(g) && !g.getParent().equals(b.startContainer) && e.contains(g) && d.contains(m) && m.isIdentical(g)) {
-          m.moveChildren(g); m.remove()
-          k(b, c, e, d)
-        }
-        } function l (b, c) { function e (b, c) { if (c.isBlock && c.isElement && !c.node.is('br') && a(b) && b.is('br')) { b.remove(); return 1 } } var d = c.endContainer.getChild(c.endOffset), k = c.endContainer.getChild(c.endOffset - 1); d && e(d, b[b.length - 1]); if (k && e(k, b[0])) { c.setEnd(c.endContainer, c.endOffset - 1); c.collapse() } } var g = CKEDITOR.dtd, h = {p: 1, div: 1, h1: 1, h2: 1, h3: 1, h4: 1, h5: 1, h6: 1, ul: 1, ol: 1, li: 1, pre: 1, dl: 1, blockquote: 1}, r = {p: 1, div: 1, h1: 1, h2: 1, h3: 1, h4: 1, h5: 1, h6: 1}, i = CKEDITOR.tools.extend({}, g.$inline); delete i.br; return function (h,
+            } function d (b) { return b && a(b) && (b.is(g.$removeEmpty) || b.is('a') && !b.isBlockBoundary()) } function k (b, c, e, d) {
+              var l = b.clone(), m, g; l.setEndAt(c, CKEDITOR.POSITION_BEFORE_END); if ((m = (new CKEDITOR.dom.walker(l)).next()) && a(m) && h[m.getName()] && (g = m.getPrevious()) && a(g) && !g.getParent().equals(b.startContainer) && e.contains(g) && d.contains(m) && m.isIdentical(g)) {
+                m.moveChildren(g); m.remove()
+                k(b, c, e, d)
+              }
+            } function l (b, c) { function e (b, c) { if (c.isBlock && c.isElement && !c.node.is('br') && a(b) && b.is('br')) { b.remove(); return 1 } } var d = c.endContainer.getChild(c.endOffset), k = c.endContainer.getChild(c.endOffset - 1); d && e(d, b[b.length - 1]); if (k && e(k, b[0])) { c.setEnd(c.endContainer, c.endOffset - 1); c.collapse() } } var g = CKEDITOR.dtd, h = {p: 1, div: 1, h1: 1, h2: 1, h3: 1, h4: 1, h5: 1, h6: 1, ul: 1, ol: 1, li: 1, pre: 1, dl: 1, blockquote: 1}, r = {p: 1, div: 1, h1: 1, h2: 1, h3: 1, h4: 1, h5: 1, h6: 1}, i = CKEDITOR.tools.extend({}, g.$inline); delete i.br; return function (h,
 j, o) {
-        var q = h.editor; h.getDocument(); var x = q.getSelection().getRanges()[0], s = false; if (j == 'unfiltered_html') { j = 'html'; s = true } if (!x.checkReadOnly()) {
-          var v = (new CKEDITOR.dom.elementPath(x.startContainer, x.root)).blockLimit || x.root, j = {type: j, dontFilter: s, editable: h, editor: q, range: x, blockLimit: v, mergeCandidates: [], zombies: []}, q = j.range, s = j.mergeCandidates, w, H, C, D; if (j.type == 'text' && q.shrink(CKEDITOR.SHRINK_ELEMENT, true, false)) {
-            w = CKEDITOR.dom.element.createFromHtml('<span>&nbsp;</span>', q.document); q.insertNode(w)
-            q.setStartAfter(w)
-          }H = new CKEDITOR.dom.elementPath(q.startContainer); j.endPath = C = new CKEDITOR.dom.elementPath(q.endContainer); if (!q.collapsed) { var v = C.block || C.blockLimit, X = q.getCommonAncestor(); v && (!v.equals(X) && !v.contains(X) && q.checkEndOfBlock()) && j.zombies.push(v); q.deleteContents() } for (;(D = a(q.startContainer) && q.startContainer.getChild(q.startOffset - 1)) && a(D) && D.isBlockBoundary() && H.contains(D);)q.moveToPosition(D, CKEDITOR.POSITION_BEFORE_END); k(q, j.blockLimit, H, C); if (w) {
-          q.setEndBefore(w); q.collapse()
-          w.remove()
-        }w = q.startPath(); if (v = w.contains(d, false, 1)) { q.splitElement(v); j.inlineStylesRoot = v; j.inlineStylesPeak = w.lastElement }w = q.createBookmark(); (v = w.startNode.getPrevious(c)) && a(v) && d(v) && s.push(v); (v = w.startNode.getNext(c)) && a(v) && d(v) && s.push(v); for (v = w.startNode; (v = v.getParent()) && d(v);)s.push(v); q.moveToBookmark(w); if (w = o) {
-      w = j.range; if (j.type == 'text' && j.inlineStylesRoot) {
-        D = j.inlineStylesPeak; q = D.getDocument().createText('{cke-peak}'); for (s = j.inlineStylesRoot.getParent(); !D.equals(s);) {
-          q = q.appendTo(D.clone())
-          D = D.getParent()
-        }o = q.getOuterHtml().split('{cke-peak}').join(o)
-      }D = j.blockLimit.getName(); if (/^\s+|\s+$/.test(o) && 'span' in CKEDITOR.dtd[D]) var u = '<span data-cke-marker="1">&nbsp;</span>', o = u + o + u; o = j.editor.dataProcessor.toHtml(o, {context: null, fixForBody: false, dontFilter: j.dontFilter, filter: j.editor.activeFilter, enterMode: j.editor.activeEnterMode}); D = w.document.createElement('body'); D.setHtml(o); if (u) { D.getFirst().remove(); D.getLast().remove() } if ((u = w.startPath().block) && !(u.getChildCount() == 1 && u.getBogus())) {
-        a: {
-         var F
-         if (D.getChildCount() == 1 && a(F = D.getFirst()) && F.is(r)) { u = F.getElementsByTag('*'); w = 0; for (s = u.count(); w < s; w++) { q = u.getItem(w); if (!q.is(i)) break a }F.moveChildren(F.getParent(1)); F.remove() }
-       }
-      }j.dataWrapper = D; w = o
-    } if (w) {
-      F = j.range; var u = F.document, B, o = j.blockLimit; w = 0; var J; D = []; var G, O, s = q = 0, K, R; H = F.startContainer; var v = j.endPath.elements[0], S; C = v.getPosition(H); X = !!v.getCommonAncestor(H) && C != CKEDITOR.POSITION_IDENTICAL && !(C & CKEDITOR.POSITION_CONTAINS + CKEDITOR.POSITION_IS_CONTAINED); H = b(j.dataWrapper, j)
-      for (l(H, F); w < H.length; w++) {
-        C = H[w]; if (B = C.isLineBreak) { B = F; K = o; var N = void 0, U = void 0; if (C.hasBlockSibling)B = 1; else { N = B.startContainer.getAscendant(g.$block, 1); if (!N || !N.is({div: 1, p: 1}))B = 0; else { U = N.getPosition(K); if (U == CKEDITOR.POSITION_IDENTICAL || U == CKEDITOR.POSITION_CONTAINS)B = 0; else { K = B.splitElement(N); B.moveToPosition(K, CKEDITOR.POSITION_AFTER_START); B = 1 } } } } if (B)s = w > 0; else {
-         B = F.startPath(); if (!C.isBlock && j.editor.config.autoParagraph !== false && (j.editor.activeEnterMode != CKEDITOR.ENTER_BR && j.editor.editable().equals(B.blockLimit) &&
+              var q = h.editor; h.getDocument(); var x = q.getSelection().getRanges()[0], s = false; if (j == 'unfiltered_html') { j = 'html'; s = true } if (!x.checkReadOnly()) {
+                var v = (new CKEDITOR.dom.elementPath(x.startContainer, x.root)).blockLimit || x.root, j = {type: j, dontFilter: s, editable: h, editor: q, range: x, blockLimit: v, mergeCandidates: [], zombies: []}, q = j.range, s = j.mergeCandidates, w, H, C, D; if (j.type == 'text' && q.shrink(CKEDITOR.SHRINK_ELEMENT, true, false)) {
+                  w = CKEDITOR.dom.element.createFromHtml('<span>&nbsp;</span>', q.document); q.insertNode(w)
+                  q.setStartAfter(w)
+                }H = new CKEDITOR.dom.elementPath(q.startContainer); j.endPath = C = new CKEDITOR.dom.elementPath(q.endContainer); if (!q.collapsed) { var v = C.block || C.blockLimit, X = q.getCommonAncestor(); v && (!v.equals(X) && !v.contains(X) && q.checkEndOfBlock()) && j.zombies.push(v); q.deleteContents() } for (;(D = a(q.startContainer) && q.startContainer.getChild(q.startOffset - 1)) && a(D) && D.isBlockBoundary() && H.contains(D);)q.moveToPosition(D, CKEDITOR.POSITION_BEFORE_END); k(q, j.blockLimit, H, C); if (w) {
+                  q.setEndBefore(w); q.collapse()
+                  w.remove()
+                }w = q.startPath(); if (v = w.contains(d, false, 1)) { q.splitElement(v); j.inlineStylesRoot = v; j.inlineStylesPeak = w.lastElement }w = q.createBookmark(); (v = w.startNode.getPrevious(c)) && a(v) && d(v) && s.push(v); (v = w.startNode.getNext(c)) && a(v) && d(v) && s.push(v); for (v = w.startNode; (v = v.getParent()) && d(v);)s.push(v); q.moveToBookmark(w); if (w = o) {
+                  w = j.range; if (j.type == 'text' && j.inlineStylesRoot) {
+                    D = j.inlineStylesPeak; q = D.getDocument().createText('{cke-peak}'); for (s = j.inlineStylesRoot.getParent(); !D.equals(s);) {
+                      q = q.appendTo(D.clone())
+                      D = D.getParent()
+                    }o = q.getOuterHtml().split('{cke-peak}').join(o)
+                  }D = j.blockLimit.getName(); if (/^\s+|\s+$/.test(o) && 'span' in CKEDITOR.dtd[D]) var u = '<span data-cke-marker="1">&nbsp;</span>', o = u + o + u; o = j.editor.dataProcessor.toHtml(o, {context: null, fixForBody: false, dontFilter: j.dontFilter, filter: j.editor.activeFilter, enterMode: j.editor.activeEnterMode}); D = w.document.createElement('body'); D.setHtml(o); if (u) { D.getFirst().remove(); D.getLast().remove() } if ((u = w.startPath().block) && !(u.getChildCount() == 1 && u.getBogus())) {
+                    a: {
+                      var F
+                      if (D.getChildCount() == 1 && a(F = D.getFirst()) && F.is(r)) { u = F.getElementsByTag('*'); w = 0; for (s = u.count(); w < s; w++) { q = u.getItem(w); if (!q.is(i)) break a }F.moveChildren(F.getParent(1)); F.remove() }
+                    }
+                  }j.dataWrapper = D; w = o
+                } if (w) {
+                  F = j.range; var u = F.document, B, o = j.blockLimit; w = 0; var J; D = []; var G, O, s = q = 0, K, R; H = F.startContainer; var v = j.endPath.elements[0], S; C = v.getPosition(H); X = !!v.getCommonAncestor(H) && C != CKEDITOR.POSITION_IDENTICAL && !(C & CKEDITOR.POSITION_CONTAINS + CKEDITOR.POSITION_IS_CONTAINED); H = b(j.dataWrapper, j)
+                  for (l(H, F); w < H.length; w++) {
+                    C = H[w]; if (B = C.isLineBreak) { B = F; K = o; var N = void 0, U = void 0; if (C.hasBlockSibling)B = 1; else { N = B.startContainer.getAscendant(g.$block, 1); if (!N || !N.is({div: 1, p: 1}))B = 0; else { U = N.getPosition(K); if (U == CKEDITOR.POSITION_IDENTICAL || U == CKEDITOR.POSITION_CONTAINS)B = 0; else { K = B.splitElement(N); B.moveToPosition(K, CKEDITOR.POSITION_AFTER_START); B = 1 } } } } if (B)s = w > 0; else {
+                      B = F.startPath(); if (!C.isBlock && j.editor.config.autoParagraph !== false && (j.editor.activeEnterMode != CKEDITOR.ENTER_BR && j.editor.editable().equals(B.blockLimit) &&
 !B.block) && (O = j.editor.activeEnterMode != CKEDITOR.ENTER_BR && j.editor.config.autoParagraph !== false ? j.editor.activeEnterMode == CKEDITOR.ENTER_DIV ? 'div' : 'p' : false)) { O = u.createElement(O); O.appendBogus(); F.insertNode(O); CKEDITOR.env.needsBrFiller && (J = O.getBogus()) && J.remove(); F.moveToPosition(O, CKEDITOR.POSITION_BEFORE_END) } if ((B = F.startPath().block) && !B.equals(G)) { if (J = B.getBogus()) { J.remove(); D.push(B) }G = B }C.firstNotAllowed && (q = 1); if (q && C.isElement) {
   B = F.startContainer; for (K = null; B && !g[B.getName()][C.name];) {
     if (B.equals(o)) {
@@ -1909,27 +1909,27 @@ null; break
   (R = X ? v : R) && F.setEndAt(R, CKEDITOR.POSITION_AFTER_START)
   q = 0
 }F.collapse()
-       }
-      }j.dontMoveCaret = s; j.bogusNeededBlocks = D
-    }J = j.range; var V; R = j.bogusNeededBlocks; for (S = J.createBookmark(); G = j.zombies.pop();) if (G.getParent()) { O = J.clone(); O.moveToElementEditStart(G); O.removeEmptyBlocksAtEnd() } if (R) for (;G = R.pop();)CKEDITOR.env.needsBrFiller ? G.appendBogus() : G.append(J.document.createText(' ')); for (;G = j.mergeCandidates.pop();)G.mergeSiblings(); J.moveToBookmark(S); if (!j.dontMoveCaret) {
-      for (G = a(J.startContainer) && J.startContainer.getChild(J.startOffset - 1); G && a(G) && !G.is(g.$empty);) {
-       if (G.isBlockBoundary()) {
-        J.moveToPosition(G,
+                    }
+                  }j.dontMoveCaret = s; j.bogusNeededBlocks = D
+                }J = j.range; var V; R = j.bogusNeededBlocks; for (S = J.createBookmark(); G = j.zombies.pop();) if (G.getParent()) { O = J.clone(); O.moveToElementEditStart(G); O.removeEmptyBlocksAtEnd() } if (R) for (;G = R.pop();)CKEDITOR.env.needsBrFiller ? G.appendBogus() : G.append(J.document.createText(' ')); for (;G = j.mergeCandidates.pop();)G.mergeSiblings(); J.moveToBookmark(S); if (!j.dontMoveCaret) {
+                  for (G = a(J.startContainer) && J.startContainer.getChild(J.startOffset - 1); G && a(G) && !G.is(g.$empty);) {
+                    if (G.isBlockBoundary()) {
+                      J.moveToPosition(G,
 CKEDITOR.POSITION_BEFORE_END)
-      } else { if (d(G) && G.getHtml().match(/(\s|&nbsp;)$/g)) { V = null; break }V = J.clone(); V.moveToPosition(G, CKEDITOR.POSITION_BEFORE_END) }G = G.getLast(c)
-     }V && J.moveToRange(V)
-    }x.select(); n(h)
-        }
-      }
-      }()), u = (function () {
-        function a (b) { b = new CKEDITOR.dom.walker(b); b.guard = function (a, b) { if (b) return false; if (a.type == CKEDITOR.NODE_ELEMENT) return a.is(CKEDITOR.dtd.$tableContent) }; b.evaluator = function (a) { return a.type == CKEDITOR.NODE_ELEMENT }; return b } function b (a, c, e) {
-          c = a.getDocument().createElement(c)
-          a.append(c, e); return c
-        } function c (a) { var b = a.count(), e; for (b; b-- > 0;) { e = a.getItem(b); if (!CKEDITOR.tools.trim(e.getHtml())) { e.appendBogus(); CKEDITOR.env.ie && (CKEDITOR.env.version < 9 && e.getChildCount()) && e.getFirst().remove() } } } return function (e) {
-          var d = e.startContainer, l = d.getAscendant('table', 1), g = false; c(l.getElementsByTag('td')); c(l.getElementsByTag('th')); l = e.clone(); l.setStart(d, 0); l = a(l).lastBackward(); if (!l) { l = e.clone(); l.setEndAt(d, CKEDITOR.POSITION_BEFORE_END); l = a(l).lastForward(); g = true }l ||
+                    } else { if (d(G) && G.getHtml().match(/(\s|&nbsp;)$/g)) { V = null; break }V = J.clone(); V.moveToPosition(G, CKEDITOR.POSITION_BEFORE_END) }G = G.getLast(c)
+                  }V && J.moveToRange(V)
+                }x.select(); n(h)
+              }
+            }
+          }()), u = (function () {
+            function a (b) { b = new CKEDITOR.dom.walker(b); b.guard = function (a, b) { if (b) return false; if (a.type == CKEDITOR.NODE_ELEMENT) return a.is(CKEDITOR.dtd.$tableContent) }; b.evaluator = function (a) { return a.type == CKEDITOR.NODE_ELEMENT }; return b } function b (a, c, e) {
+              c = a.getDocument().createElement(c)
+              a.append(c, e); return c
+            } function c (a) { var b = a.count(), e; for (b; b-- > 0;) { e = a.getItem(b); if (!CKEDITOR.tools.trim(e.getHtml())) { e.appendBogus(); CKEDITOR.env.ie && (CKEDITOR.env.version < 9 && e.getChildCount()) && e.getFirst().remove() } } } return function (e) {
+              var d = e.startContainer, l = d.getAscendant('table', 1), g = false; c(l.getElementsByTag('td')); c(l.getElementsByTag('th')); l = e.clone(); l.setStart(d, 0); l = a(l).lastBackward(); if (!l) { l = e.clone(); l.setEndAt(d, CKEDITOR.POSITION_BEFORE_END); l = a(l).lastForward(); g = true }l ||
 (l = d); if (l.is('table')) { e.setStartAt(l, CKEDITOR.POSITION_BEFORE_START); e.collapse(true); l.remove() } else { l.is({tbody: 1, thead: 1, tfoot: 1}) && (l = b(l, 'tr', g)); l.is('tr') && (l = b(l, l.getParent().is('thead') ? 'th' : 'td', g)); (d = l.getBogus()) && d.remove(); e.moveToPosition(l, g ? CKEDITOR.POSITION_AFTER_START : CKEDITOR.POSITION_BEFORE_END) }
-        }
-      }())
+            }
+          }())
   })();
   (function () {
     function a () { var a = this._.fakeSelection, b; if (a) { b = this.getSelection(1); if (!b || !b.isHidden()) { a.reset(); a = 0 } } if (!a) { a = b || this.getSelection(1); if (!a || a.getType() == CKEDITOR.SELECTION_NONE) return } this.fire('selectionCheck', a); b = this.elementPath(); if (!b.compare(this._.selectionPreviousPath)) { if (CKEDITOR.env.webkit) this._.previousActive = this.document.getActive(); this._.selectionPreviousPath = b; this.fire('selectionChange', {selection: a, path: b}) } } function e () {
@@ -1979,16 +1979,16 @@ p.x; d.document.$.documentElement.scrollTop = p.y
               }p = null
             }); if (b.$.compatMode != 'BackCompat') {
               if (CKEDITOR.env.ie7Compat || CKEDITOR.env.ie6Compat) {
-          g.on('mousedown', function (a) {
-            function b (a) { a = a.data.$; if (e) { var c = m.$.createTextRange(); try { c.moveToPoint(a.x, a.y) } catch (d) {}e.setEndPoint(f.compareEndPoints('StartToStart', c) < 0 ? 'EndToEnd' : 'StartToStart', c); e.select() } } function d () { g.removeListener('mousemove', b); c.removeListener('mouseup', d); g.removeListener('mouseup', d); e.select() }a = a.data; if (a.getTarget().is('html') &&
+                g.on('mousedown', function (a) {
+                  function b (a) { a = a.data.$; if (e) { var c = m.$.createTextRange(); try { c.moveToPoint(a.x, a.y) } catch (d) {}e.setEndPoint(f.compareEndPoints('StartToStart', c) < 0 ? 'EndToEnd' : 'StartToStart', c); e.select() } } function d () { g.removeListener('mousemove', b); c.removeListener('mouseup', d); g.removeListener('mouseup', d); e.select() }a = a.data; if (a.getTarget().is('html') &&
 a.$.y < g.$.clientHeight && a.$.x < g.$.clientWidth) { var e = m.$.createTextRange(); try { e.moveToPoint(a.$.x, a.$.y) } catch (k) {} var f = e.duplicate(); g.on('mousemove', b); c.on('mouseup', d); g.on('mouseup', d) }
-          })
-        } if (CKEDITOR.env.version > 7 && CKEDITOR.env.version < 11) {
-          g.on('mousedown', function (a) { if (a.data.getTarget().is('html')) { c.on('mouseup', v); g.on('mouseup', v) } }); var v = function () {
-         c.removeListener('mouseup', v); g.removeListener('mouseup', v); var a = CKEDITOR.document.$.selection, d = a.createRange(); a.type != 'None' && d.parentElement().ownerDocument ==
+                })
+              } if (CKEDITOR.env.version > 7 && CKEDITOR.env.version < 11) {
+                g.on('mousedown', function (a) { if (a.data.getTarget().is('html')) { c.on('mouseup', v); g.on('mouseup', v) } }); var v = function () {
+                  c.removeListener('mouseup', v); g.removeListener('mouseup', v); var a = CKEDITOR.document.$.selection, d = a.createRange(); a.type != 'None' && d.parentElement().ownerDocument ==
 b.$ && d.select()
-       }
-        }
+                }
+              }
             }
           }k.attachListener(k, 'selectionchange', a, d); k.attachListener(k, 'keyup', e, d); k.attachListener(k, CKEDITOR.env.webkit ? 'DOMFocusIn' : 'focus', function () { d.forceNextSelectionCheck(); d.selectionChange(1) }); if (i ? CKEDITOR.env.webkit || CKEDITOR.env.gecko : CKEDITOR.env.opera) { var w; k.attachListener(k, 'mousedown', function () { w = 1 }); k.attachListener(b.getDocumentElement(), 'mouseup', function () { w && e.call(d); w = 0 }) } else k.attachListener(CKEDITOR.env.ie ? k : b.getDocumentElement(), 'mouseup', e, d); CKEDITOR.env.webkit &&
 k.attachListener(b, 'keydown', function (a) { switch (a.data.getKey()) { case 13:case 33:case 34:case 35:case 36:case 37:case 39:case 8:case 45:case 46:h(k) } }, null, null, -1); k.attachListener(k, 'keydown', j(d), null, null, -1)
@@ -2031,61 +2031,61 @@ h.parentElement())
         },
         getRanges: (function () {
           var a = f ? (function () {
-      function a (b) { return (new CKEDITOR.dom.node(b)).getIndex() } var b = function (b, c) {
-        b = b.duplicate(); b.collapse(c)
-        var d = b.parentElement(); if (!d.hasChildNodes()) return {container: d, offset: 0}; for (var e = d.children, f, g, h = b.duplicate(), l = 0, m = e.length - 1, j = -1, i, o; l <= m;) { j = Math.floor((l + m) / 2); f = e[j]; h.moveToElementText(f); i = h.compareEndPoints('StartToStart', b); if (i > 0)m = j - 1; else if (i < 0)l = j + 1; else return {container: d, offset: a(f)} } if (j == -1 || j == e.length - 1 && i < 0) {
-          h.moveToElementText(d); h.setEndPoint('StartToStart', b); h = h.text.replace(/(\r\n|\r)/g, '\n').length; e = d.childNodes; if (!h) {
-            f = e[e.length - 1]; return f.nodeType != CKEDITOR.NODE_TEXT
+            function a (b) { return (new CKEDITOR.dom.node(b)).getIndex() } var b = function (b, c) {
+              b = b.duplicate(); b.collapse(c)
+              var d = b.parentElement(); if (!d.hasChildNodes()) return {container: d, offset: 0}; for (var e = d.children, f, g, h = b.duplicate(), l = 0, m = e.length - 1, j = -1, i, o; l <= m;) { j = Math.floor((l + m) / 2); f = e[j]; h.moveToElementText(f); i = h.compareEndPoints('StartToStart', b); if (i > 0)m = j - 1; else if (i < 0)l = j + 1; else return {container: d, offset: a(f)} } if (j == -1 || j == e.length - 1 && i < 0) {
+                h.moveToElementText(d); h.setEndPoint('StartToStart', b); h = h.text.replace(/(\r\n|\r)/g, '\n').length; e = d.childNodes; if (!h) {
+                  f = e[e.length - 1]; return f.nodeType != CKEDITOR.NODE_TEXT
 ? {container: d, offset: e.length} : {container: f, offset: f.nodeValue.length}
-          } for (d = e.length; h > 0 && d > 0;) { g = e[--d]; if (g.nodeType == CKEDITOR.NODE_TEXT) { o = g; h = h - g.nodeValue.length } } return {container: o, offset: -h}
-        }h.collapse(i > 0); h.setEndPoint(i > 0 ? 'StartToStart' : 'EndToStart', b); h = h.text.replace(/(\r\n|\r)/g, '\n').length; if (!h) return {container: d, offset: a(f) + (i > 0 ? 0 : 1)}; for (;h > 0;) {
-          try { g = f[i > 0 ? 'previousSibling' : 'nextSibling']; if (g.nodeType == CKEDITOR.NODE_TEXT) { h = h - g.nodeValue.length; o = g }f = g } catch (n) {
-            return {container: d,
-              offset: a(f)}
-          }
-        } return {container: o, offset: i > 0 ? -h : o.nodeValue.length + h}
-      }; return function () {
-        var a = this.getNative(), c = a && a.createRange(), d = this.getType(); if (!a) return []; if (d == CKEDITOR.SELECTION_TEXT) { a = new CKEDITOR.dom.range(this.root); d = b(c, true); a.setStart(new CKEDITOR.dom.node(d.container), d.offset); d = b(c); a.setEnd(new CKEDITOR.dom.node(d.container), d.offset); a.endContainer.getPosition(a.startContainer) & CKEDITOR.POSITION_PRECEDING && a.endOffset <= a.startContainer.getIndex() && a.collapse(); return [a] } if (d ==
+                } for (d = e.length; h > 0 && d > 0;) { g = e[--d]; if (g.nodeType == CKEDITOR.NODE_TEXT) { o = g; h = h - g.nodeValue.length } } return {container: o, offset: -h}
+              }h.collapse(i > 0); h.setEndPoint(i > 0 ? 'StartToStart' : 'EndToStart', b); h = h.text.replace(/(\r\n|\r)/g, '\n').length; if (!h) return {container: d, offset: a(f) + (i > 0 ? 0 : 1)}; for (;h > 0;) {
+                try { g = f[i > 0 ? 'previousSibling' : 'nextSibling']; if (g.nodeType == CKEDITOR.NODE_TEXT) { h = h - g.nodeValue.length; o = g }f = g } catch (n) {
+                  return {container: d,
+                    offset: a(f)}
+                }
+              } return {container: o, offset: i > 0 ? -h : o.nodeValue.length + h}
+            }; return function () {
+              var a = this.getNative(), c = a && a.createRange(), d = this.getType(); if (!a) return []; if (d == CKEDITOR.SELECTION_TEXT) { a = new CKEDITOR.dom.range(this.root); d = b(c, true); a.setStart(new CKEDITOR.dom.node(d.container), d.offset); d = b(c); a.setEnd(new CKEDITOR.dom.node(d.container), d.offset); a.endContainer.getPosition(a.startContainer) & CKEDITOR.POSITION_PRECEDING && a.endOffset <= a.startContainer.getIndex() && a.collapse(); return [a] } if (d ==
 CKEDITOR.SELECTION_ELEMENT) { for (var d = [], e = 0; e < c.length; e++) { for (var f = c.item(e), k = f.parentNode, g = 0, a = new CKEDITOR.dom.range(this.root); g < k.childNodes.length && k.childNodes[g] != f; g++);a.setStart(new CKEDITOR.dom.node(k), g); a.setEnd(new CKEDITOR.dom.node(k), g + 1); d.push(a) } return d } return []
-      }
-    }()) : function () {
-      var a = [], b, c = this.getNative(); if (!c) return a; for (var d = 0; d < c.rangeCount; d++) {
-        var e = c.getRangeAt(d); b = new CKEDITOR.dom.range(this.root); b.setStart(new CKEDITOR.dom.node(e.startContainer), e.startOffset)
-        b.setEnd(new CKEDITOR.dom.node(e.endContainer), e.endOffset); a.push(b)
-      } return a
-    }; return function (b) {
-      var c = this._.cache; if (c.ranges && !b) return c.ranges; if (!c.ranges)c.ranges = new CKEDITOR.dom.rangeList(a.call(this)); if (b) {
-        for (var d = c.ranges, e = 0; e < d.length; e++) {
-          var f = d[e]; f.getCommonAncestor().isReadOnly() && d.splice(e, 1); if (!f.collapsed) {
-            if (f.startContainer.isReadOnly()) {
-          for (var b = f.startContainer, g; b;) {
-            if ((g = b.type == CKEDITOR.NODE_ELEMENT) && b.is('body') || !b.isReadOnly()) break; g && b.getAttribute('contentEditable') ==
+            }
+          }()) : function () {
+            var a = [], b, c = this.getNative(); if (!c) return a; for (var d = 0; d < c.rangeCount; d++) {
+              var e = c.getRangeAt(d); b = new CKEDITOR.dom.range(this.root); b.setStart(new CKEDITOR.dom.node(e.startContainer), e.startOffset)
+              b.setEnd(new CKEDITOR.dom.node(e.endContainer), e.endOffset); a.push(b)
+            } return a
+          }; return function (b) {
+            var c = this._.cache; if (c.ranges && !b) return c.ranges; if (!c.ranges)c.ranges = new CKEDITOR.dom.rangeList(a.call(this)); if (b) {
+              for (var d = c.ranges, e = 0; e < d.length; e++) {
+                var f = d[e]; f.getCommonAncestor().isReadOnly() && d.splice(e, 1); if (!f.collapsed) {
+                  if (f.startContainer.isReadOnly()) {
+                    for (var b = f.startContainer, g; b;) {
+                      if ((g = b.type == CKEDITOR.NODE_ELEMENT) && b.is('body') || !b.isReadOnly()) break; g && b.getAttribute('contentEditable') ==
 'false' && f.setStartAfter(b); b = b.getParent()
+                    }
+                  }b = f.startContainer; g = f.endContainer; var h = f.startOffset, j = f.endOffset, i = f.clone(); b && b.type == CKEDITOR.NODE_TEXT && (h >= b.getLength() ? i.setStartAfter(b) : i.setStartBefore(b)); g && g.type == CKEDITOR.NODE_TEXT && (j ? i.setEndAfter(g) : i.setEndBefore(g)); b = new CKEDITOR.dom.walker(i); b.evaluator = function (a) {
+                    if (a.type == CKEDITOR.NODE_ELEMENT && a.isReadOnly()) {
+                      var b = f.clone(); f.setEndBefore(a); f.collapsed && d.splice(e--, 1); if (!(a.getPosition(i.endContainer) & CKEDITOR.POSITION_CONTAINS)) {
+                        b.setStartAfter(a)
+                        b.collapsed || d.splice(e + 1, 0, b)
+                      } return true
+                    } return false
+                  }; b.next()
+                }
+              }
+            } return c.ranges
           }
-        }b = f.startContainer; g = f.endContainer; var h = f.startOffset, j = f.endOffset, i = f.clone(); b && b.type == CKEDITOR.NODE_TEXT && (h >= b.getLength() ? i.setStartAfter(b) : i.setStartBefore(b)); g && g.type == CKEDITOR.NODE_TEXT && (j ? i.setEndAfter(g) : i.setEndBefore(g)); b = new CKEDITOR.dom.walker(i); b.evaluator = function (a) {
-          if (a.type == CKEDITOR.NODE_ELEMENT && a.isReadOnly()) {
-         var b = f.clone(); f.setEndBefore(a); f.collapsed && d.splice(e--, 1); if (!(a.getPosition(i.endContainer) & CKEDITOR.POSITION_CONTAINS)) {
-            b.setStartAfter(a)
-            b.collapsed || d.splice(e + 1, 0, b)
-          } return true
-       } return false
-        }; b.next()
-          }
-        }
-      } return c.ranges
-    }
         }()),
         getStartElement: function () {
           var a = this._.cache; if (a.startElement !== void 0) return a.startElement; var b; switch (this.getType()) {
-      case CKEDITOR.SELECTION_ELEMENT:return this.getSelectedElement(); case CKEDITOR.SELECTION_TEXT:var c = this.getRanges()[0]; if (c) {
-        if (c.collapsed) { b = c.startContainer; b.type != CKEDITOR.NODE_ELEMENT && (b = b.getParent()) } else {
-          for (c.optimize(); ;) {
-            b = c.startContainer; if (c.startOffset == (b.getChildCount ? b.getChildCount()
+            case CKEDITOR.SELECTION_ELEMENT:return this.getSelectedElement(); case CKEDITOR.SELECTION_TEXT:var c = this.getRanges()[0]; if (c) {
+              if (c.collapsed) { b = c.startContainer; b.type != CKEDITOR.NODE_ELEMENT && (b = b.getParent()) } else {
+                for (c.optimize(); ;) {
+                  b = c.startContainer; if (c.startOffset == (b.getChildCount ? b.getChildCount()
 : b.getLength()) && !b.isBlockBoundary())c.setStartAfter(b); else break
-          }b = c.startContainer; if (b.type != CKEDITOR.NODE_ELEMENT) return b.getParent(); b = b.getChild(c.startOffset); if (!b || b.type != CKEDITOR.NODE_ELEMENT)b = c.startContainer; else for (c = b.getFirst(); c && c.type == CKEDITOR.NODE_ELEMENT;) { b = c; c = c.getFirst() }
-        }b = b.$
-      }
-    } return a.startElement = b ? new CKEDITOR.dom.element(b) : null
+                }b = c.startContainer; if (b.type != CKEDITOR.NODE_ELEMENT) return b.getParent(); b = b.getChild(c.startOffset); if (!b || b.type != CKEDITOR.NODE_ELEMENT)b = c.startContainer; else for (c = b.getFirst(); c && c.type == CKEDITOR.NODE_ELEMENT;) { b = c; c = c.getFirst() }
+              }b = b.$
+            }
+          } return a.startElement = b ? new CKEDITOR.dom.element(b) : null
         },
         getSelectedElement: function () {
           var a = this._.cache; if (a.selectedElement !== void 0) return a.selectedElement; var b = this, c = CKEDITOR.tools.tryThese(function () { return b.getNative().createRange().item(0) },
@@ -2099,20 +2099,20 @@ function () { for (var a = b.getRanges()[0].clone(), c, d, e = 2; e && (!(c = a.
         unlock: function (a) { if (this.isLocked) { if (a) var b = this.getSelectedElement(), c = !b && this.getRanges(), d = this.isFake; this.isLocked = 0; this.reset(); if (a)(a = b || c[0] && c[0].getCommonAncestor()) && a.getAscendant('body', 1) && (d ? this.fake(b) : b ? this.selectElement(b) : this.selectRanges(c)) } },
         reset: function () {
           this._.cache = {}; this.isFake = 0; var a = this.root.editor; if (a && a._.fakeSelection && this.rev == a._.fakeSelection.rev) {
-      delete a._.fakeSelection
-      var b = a._.hiddenSelectionContainer; if (b) { a.fire('lockSnapshot'); b.remove(); a.fire('unlockSnapshot') } delete a._.hiddenSelectionContainer
-    } this.rev = p++
+            delete a._.fakeSelection
+            var b = a._.hiddenSelectionContainer; if (b) { a.fire('lockSnapshot'); b.remove(); a.fire('unlockSnapshot') } delete a._.hiddenSelectionContainer
+          } this.rev = p++
         },
         selectElement: function (a) { var b = new CKEDITOR.dom.range(this.root); b.setStartBefore(a); b.setEndAfter(a); this.selectRanges([b]) },
         selectRanges: function (a) {
           this.reset(); if (a.length) {
-      if (this.isLocked) { var b = CKEDITOR.document.getActive(); this.unlock(); this.selectRanges(a); this.lock(); !b.equals(this.root) && b.focus() } else {
-        a: {
-          var d, e; if (a.length == 1 && !(e = a[0]).collapsed &&
+            if (this.isLocked) { var b = CKEDITOR.document.getActive(); this.unlock(); this.selectRanges(a); this.lock(); !b.equals(this.root) && b.focus() } else {
+              a: {
+                var d, e; if (a.length == 1 && !(e = a[0]).collapsed &&
 (b = e.getEnclosedNode()) && b.type == CKEDITOR.NODE_ELEMENT) { e = e.clone(); e.shrink(CKEDITOR.SHRINK_ELEMENT, true); if ((d = e.getEnclosedNode()) && d.type == CKEDITOR.NODE_ELEMENT)b = d; if (b.getAttribute('contenteditable') == 'false') break a }b = void 0
-        } if (b) this.fake(b); else {
-          if (f) {
-            e = CKEDITOR.dom.walker.whitespaces(true); d = /\ufeff|\u00a0/; var g = {table: 1, tbody: 1, tr: 1}; if (a.length > 1) { b = a[a.length - 1]; a[0].setEnd(b.endContainer, b.endOffset) } var b = a[0], a = b.collapsed, j, i, o, n = b.getEnclosedNode(); if (n && n.type == CKEDITOR.NODE_ELEMENT &&
+              } if (b) this.fake(b); else {
+                if (f) {
+                  e = CKEDITOR.dom.walker.whitespaces(true); d = /\ufeff|\u00a0/; var g = {table: 1, tbody: 1, tr: 1}; if (a.length > 1) { b = a[a.length - 1]; a[0].setEnd(b.endContainer, b.endOffset) } var b = a[0], a = b.collapsed, j, i, o, n = b.getEnclosedNode(); if (n && n.type == CKEDITOR.NODE_ELEMENT &&
 n.getName() in y && (!n.is('a') || !n.getText())) try { o = n.$.createControlRange(); o.addElement(n.$); o.select(); return } catch (q) {}(b.startContainer.type == CKEDITOR.NODE_ELEMENT && b.startContainer.getName() in g || b.endContainer.type == CKEDITOR.NODE_ELEMENT && b.endContainer.getName() in g) && b.shrink(CKEDITOR.NODE_ELEMENT, true); o = b.createBookmark(); var g = o.startNode, p; if (!a)p = o.endNode; o = b.document.$.body.createTextRange(); o.moveToElementText(g.$); o.moveStart('character', 1); if (p) {
   d = b.document.$.body.createTextRange()
   d.moveToElementText(p.$); o.setEndPoint('EndToEnd', d); o.moveEnd('character', -1)
@@ -2120,27 +2120,27 @@ n.getName() in y && (!n.is('a') || !n.getText())) try { o = n.$.createControlRan
   if (j) { o.moveStart('character', -1); o.select(); b.document.$.selection.clear() } else o.select(); b.moveToPosition(i,
 CKEDITOR.POSITION_BEFORE_START); i.remove()
 } else { b.setEndBefore(p); p.remove(); o.select() }
-          } else {
-            p = this.getNative(); if (!p) return; if (CKEDITOR.env.opera) { b = this.document.$.createRange(); b.selectNodeContents(this.root.$); p.addRange(b) } this.removeAllRanges(); for (o = 0; o < a.length; o++) {
-              if (o < a.length - 1) {
-                b = a[o]; j = a[o + 1]; d = b.clone(); d.setStart(b.endContainer, b.endOffset); d.setEnd(j.startContainer, j.startOffset); if (!d.collapsed) {
-            d.shrink(CKEDITOR.NODE_ELEMENT, true); i = d.getCommonAncestor(); d = d.getEnclosedNode()
-            if (i.isReadOnly() || d && d.isReadOnly()) { j.setStart(b.startContainer, b.startOffset); a.splice(o--, 1); continue }
-          }
-              }b = a[o]; i = this.document.$.createRange(); j = b.startContainer; if (CKEDITOR.env.opera && b.collapsed && j.type == CKEDITOR.NODE_ELEMENT) { d = j.getChild(b.startOffset - 1); e = j.getChild(b.startOffset); if (!d && !e && j.is(CKEDITOR.dtd.$removeEmpty) || d && d.type == CKEDITOR.NODE_ELEMENT || e && e.type == CKEDITOR.NODE_ELEMENT) { b.insertNode(this.document.createText('')); b.collapse(1) } } if (b.collapsed && CKEDITOR.env.webkit && c(b)) {
-          j =
+                } else {
+                  p = this.getNative(); if (!p) return; if (CKEDITOR.env.opera) { b = this.document.$.createRange(); b.selectNodeContents(this.root.$); p.addRange(b) } this.removeAllRanges(); for (o = 0; o < a.length; o++) {
+                    if (o < a.length - 1) {
+                      b = a[o]; j = a[o + 1]; d = b.clone(); d.setStart(b.endContainer, b.endOffset); d.setEnd(j.startContainer, j.startOffset); if (!d.collapsed) {
+                        d.shrink(CKEDITOR.NODE_ELEMENT, true); i = d.getCommonAncestor(); d = d.getEnclosedNode()
+                        if (i.isReadOnly() || d && d.isReadOnly()) { j.setStart(b.startContainer, b.startOffset); a.splice(o--, 1); continue }
+                      }
+                    }b = a[o]; i = this.document.$.createRange(); j = b.startContainer; if (CKEDITOR.env.opera && b.collapsed && j.type == CKEDITOR.NODE_ELEMENT) { d = j.getChild(b.startOffset - 1); e = j.getChild(b.startOffset); if (!d && !e && j.is(CKEDITOR.dtd.$removeEmpty) || d && d.type == CKEDITOR.NODE_ELEMENT || e && e.type == CKEDITOR.NODE_ELEMENT) { b.insertNode(this.document.createText('')); b.collapse(1) } } if (b.collapsed && CKEDITOR.env.webkit && c(b)) {
+                      j =
 this.root; h(j, false); d = j.getDocument().createText('​'); j.setCustomData('cke-fillingChar', d); b.insertNode(d); if ((j = d.getNext()) && !d.getPrevious() && j.type == CKEDITOR.NODE_ELEMENT && j.getName() == 'br') { h(this.root); b.moveToPosition(j, CKEDITOR.POSITION_BEFORE_START) } else b.moveToPosition(d, CKEDITOR.POSITION_AFTER_END)
-        }i.setStart(b.startContainer.$, b.startOffset); try { i.setEnd(b.endContainer.$, b.endOffset) } catch (s) {
-            if (s.toString().indexOf('NS_ERROR_ILLEGAL_VALUE') >= 0) {
-          b.collapse(1); i.setEnd(b.endContainer.$,
+                    }i.setStart(b.startContainer.$, b.startOffset); try { i.setEnd(b.endContainer.$, b.endOffset) } catch (s) {
+                      if (s.toString().indexOf('NS_ERROR_ILLEGAL_VALUE') >= 0) {
+                        b.collapse(1); i.setEnd(b.endContainer.$,
 b.endOffset)
-        } else throw s
-          }p.addRange(i)
+                      } else throw s
+                    }p.addRange(i)
+                  }
+                } this.reset(); this.root.fire('selectionchange')
+              }
             }
-          } this.reset(); this.root.fire('selectionchange')
-        }
-      }
-    }
+          }
         },
         fake: function (a) { var b = this.root.editor; this.reset(); i(b); var c = this._.cache, d = new CKEDITOR.dom.range(this.root); d.setStartBefore(a); d.setEndAfter(a); c.ranges = new CKEDITOR.dom.rangeList(d); c.selectedElement = c.startElement = a; c.type = CKEDITOR.SELECTION_ELEMENT; c.selectedText = c.nativeSel = null; this.isFake = 1; this.rev = p++; b._.fakeSelection = this; this.root.fire('selectionchange') },
         isHidden: function () {
@@ -2174,9 +2174,9 @@ n.getNextSourceNode(true); continue
             for (var j = y(this, d), p = j.hasAttributes(), r = q.getCommonAncestor(), s = {}, x = {}, z = {}, A = {}, T, P, Z; j && r;) {
               if (r.getName() == f) {
                 for (T in g.attributes) {
-               if (!A[T] &&
+                  if (!A[T] &&
 (Z = r.getAttribute(P)))j.getAttribute(T) == Z ? x[T] = 1 : A[T] = 1
-             } for (P in g.styles) if (!z[P] && (Z = r.getStyle(P)))j.getStyle(P) == Z ? s[P] = 1 : z[P] = 1
+                } for (P in g.styles) if (!z[P] && (Z = r.getStyle(P)))j.getStyle(P) == Z ? s[P] = 1 : z[P] = 1
               }r = r.getParent()
             } for (T in x)j.removeAttribute(T); for (P in s)j.removeStyle(P); p && !j.hasAttributes() && (j = null); if (j) { q.extractContents().appendTo(j); q.insertNode(j); u.call(this, j); j.mergeSiblings(); CKEDITOR.env.ie || j.$.normalize() } else { j = new CKEDITOR.dom.element('span'); q.extractContents().appendTo(j); q.insertNode(j); u.call(this, j); j.remove(true) }q = null
           }
@@ -2211,9 +2211,9 @@ a.removeStyle(e)
       var b = a.createBookmark(1), c = a.createIterator(); c.enforceRealBlocks = true; c.enlargeBr = this._.enterMode != CKEDITOR.ENTER_BR; for (var d, e; d = c.getNextParagraph();) {
         if (this.checkElementRemovable(d)) {
           if (d.is('pre')) {
-         (e =
+            (e =
 this._.enterMode == CKEDITOR.ENTER_BR ? null : a.document.createElement(this._.enterMode == CKEDITOR.ENTER_P ? 'p' : 'div')) && d.copyAttributes(e); i(d, e)
-       } else s.call(this, d)
+          } else s.call(this, d)
         }
       } a.moveToBookmark(b)
     } function i (a, b) {
@@ -2221,97 +2221,97 @@ this._.enterMode == CKEDITOR.ENTER_BR ? null : a.document.createElement(this._.e
         e = b; (f = a.getBogus()) && f.remove(); f = a.getHtml(); f = o(f, /(?:^[ \t\n\r]+)|(?:[ \t\n\r]+$)/g, ''); f = f.replace(/[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, '$1'); f = f.replace(/([ \t\n\r]+|&nbsp;)/g,
 ' '); f = f.replace(/<br\b[^>]*>/gi, '\n'); if (CKEDITOR.env.ie) { var g = a.getDocument().createElement('div'); g.append(e); e.$.outerHTML = '<pre>' + f + '</pre>'; e.copyAttributes(g.getFirst()); e = g.getFirst().remove() } else e.setHtml(f); b = e
       } else f ? b = q(c ? [a.getHtml()] : j(a), b) : a.moveChildren(b); b.replace(a); if (d) { var c = b, h; if ((h = c.getPrevious(z)) && h.type == CKEDITOR.NODE_ELEMENT && h.is('pre')) { d = o(h.getHtml(), /\n$/, '') + '\n\n' + o(c.getHtml(), /^\n/, ''); CKEDITOR.env.ie ? c.$.outerHTML = '<pre>' + d + '</pre>' : c.setHtml(d); h.remove() } } else {
-     c &&
+        c &&
 p(b)
-   }
+      }
     } function j (a) { a.getName(); var b = []; o(a.getOuterHtml(), /(\S\s*)\n(?:\s|(<span[^>]+data-cke-bookmark.*?\/span>))*\n(?!$)/gi, function (a, b, c) { return b + '</pre>' + c + '<pre>' }).replace(/<pre\b.*?>([\s\S]*?)<\/pre>/gi, function (a, c) { b.push(c) }); return b } function o (a, b, c) { var d = '', e = '', a = a.replace(/(^<span[^>]+data-cke-bookmark.*?\/span>)|(<span[^>]+data-cke-bookmark.*?\/span>$)/gi, function (a, b, c) { b && (d = b); c && (e = c); return '' }); return d + a.replace(b, c) + e } function q (a, b) {
       var c; a.length > 1 && (c = new CKEDITOR.dom.documentFragment(b.getDocument()))
       for (var d = 0; d < a.length; d++) { var e = a[d], e = e.replace(/(\r\n|\r)/g, '\n'), e = o(e, /^[ \t]*\n/, ''), e = o(e, /\n$/, ''), e = o(e, /^[ \t]+|[ \t]+$/g, function (a, b) { return a.length == 1 ? '&nbsp;' : b ? ' ' + CKEDITOR.tools.repeat('&nbsp;', a.length - 1) : CKEDITOR.tools.repeat('&nbsp;', a.length - 1) + ' ' }), e = e.replace(/\n/g, '<br>'), e = e.replace(/[ \t]{2,}/g, function (a) { return CKEDITOR.tools.repeat('&nbsp;', a.length - 1) + ' ' }); if (c) { var f = b.clone(); f.setHtml(e); c.append(f) } else b.setHtml(e) } return c || b
     } function s (a, b) {
-   var c = this._.definition,
-      d = c.attributes, c = c.styles, e = l(this)[a.getName()], g = CKEDITOR.tools.isEmpty(d) && CKEDITOR.tools.isEmpty(c), h; for (h in d) if (!((h == 'class' || this._.definition.fullMatch) && a.getAttribute(h) != t(h, d[h])) && !(b && h.slice(0, 5) == 'data-')) { g = a.hasAttribute(h); a.removeAttribute(h) } for (var j in c) if (!(this._.definition.fullMatch && a.getStyle(j) != t(j, c[j], true))) { g = g || !!a.getStyle(j); a.removeStyle(j) }f(a, e, r[a.getName()]); g && (this._.definition.alwaysRemoveElement ? p(a, 1) : !CKEDITOR.dtd.$block[a.getName()] || this._.enterMode ==
+      var c = this._.definition,
+        d = c.attributes, c = c.styles, e = l(this)[a.getName()], g = CKEDITOR.tools.isEmpty(d) && CKEDITOR.tools.isEmpty(c), h; for (h in d) if (!((h == 'class' || this._.definition.fullMatch) && a.getAttribute(h) != t(h, d[h])) && !(b && h.slice(0, 5) == 'data-')) { g = a.hasAttribute(h); a.removeAttribute(h) } for (var j in c) if (!(this._.definition.fullMatch && a.getStyle(j) != t(j, c[j], true))) { g = g || !!a.getStyle(j); a.removeStyle(j) }f(a, e, r[a.getName()]); g && (this._.definition.alwaysRemoveElement ? p(a, 1) : !CKEDITOR.dtd.$block[a.getName()] || this._.enterMode ==
 CKEDITOR.ENTER_BR && !a.hasAttributes() ? p(a) : a.renameNode(this._.enterMode == CKEDITOR.ENTER_P ? 'p' : 'div'))
- } function u (a) { for (var b = l(this), c = a.getElementsByTag(this.element), d, e = c.count(); --e >= 0;) { d = c.getItem(e); d.isReadOnly() || s.call(this, d, true) } for (var g in b) if (g != this.element) { c = a.getElementsByTag(g); for (e = c.count() - 1; e >= 0; e--) { d = c.getItem(e); d.isReadOnly() || f(d, b[g]) } } } function f (a, b, c) {
-    if (b = b && b.attributes) {
-    for (var d = 0; d < b.length; d++) {
-      var e = b[d][0], f; if (f = a.getAttribute(e)) {
-        var g = b[d][1]; (g === null ||
+    } function u (a) { for (var b = l(this), c = a.getElementsByTag(this.element), d, e = c.count(); --e >= 0;) { d = c.getItem(e); d.isReadOnly() || s.call(this, d, true) } for (var g in b) if (g != this.element) { c = a.getElementsByTag(g); for (e = c.count() - 1; e >= 0; e--) { d = c.getItem(e); d.isReadOnly() || f(d, b[g]) } } } function f (a, b, c) {
+      if (b = b && b.attributes) {
+        for (var d = 0; d < b.length; d++) {
+          var e = b[d][0], f; if (f = a.getAttribute(e)) {
+            var g = b[d][1]; (g === null ||
 g.test && g.test(f) || typeof g === 'string' && f == g) && a.removeAttribute(e)
-      }
-    }
-  }c || p(a)
-  } function p (a, b) {
-  if (!a.hasAttributes() || b) {
-    if (CKEDITOR.dtd.$block[a.getName()]) { var c = a.getPrevious(z), d = a.getNext(z); c && (c.type == CKEDITOR.NODE_TEXT || !c.isBlockBoundary({br: 1})) && a.append('br', 1); d && (d.type == CKEDITOR.NODE_TEXT || !d.isBlockBoundary({br: 1})) && a.append('br'); a.remove(true) } else {
-      c = a.getFirst(); d = a.getLast(); a.remove(true); if (c) {
-        c.type == CKEDITOR.NODE_ELEMENT && c.mergeSiblings(); d && (!c.equals(d) && d.type == CKEDITOR.NODE_ELEMENT) &&
+          }
+        }
+      }c || p(a)
+    } function p (a, b) {
+      if (!a.hasAttributes() || b) {
+        if (CKEDITOR.dtd.$block[a.getName()]) { var c = a.getPrevious(z), d = a.getNext(z); c && (c.type == CKEDITOR.NODE_TEXT || !c.isBlockBoundary({br: 1})) && a.append('br', 1); d && (d.type == CKEDITOR.NODE_TEXT || !d.isBlockBoundary({br: 1})) && a.append('br'); a.remove(true) } else {
+          c = a.getFirst(); d = a.getLast(); a.remove(true); if (c) {
+            c.type == CKEDITOR.NODE_ELEMENT && c.mergeSiblings(); d && (!c.equals(d) && d.type == CKEDITOR.NODE_ELEMENT) &&
 d.mergeSiblings()
+          }
+        }
       }
-    }
-  }
-} function y (a, b, c) { var d; d = a.element; d == '*' && (d = 'span'); d = new CKEDITOR.dom.element(d, b); c && c.copyAttributes(d); d = m(d, a); b.getCustomData('doc_processing_style') && d.hasAttribute('id') ? d.removeAttribute('id') : b.setCustomData('doc_processing_style', 1); return d } function m (a, b) { var c = b._.definition, d = c.attributes, c = CKEDITOR.style.getStyleText(c); if (d) for (var e in d)a.setAttribute(e, d[e]); c && a.setAttribute('style', c); return a } function k (a, b) {
-  for (var c in a) {
-    a[c] = a[c].replace(I, function (a,
+    } function y (a, b, c) { var d; d = a.element; d == '*' && (d = 'span'); d = new CKEDITOR.dom.element(d, b); c && c.copyAttributes(d); d = m(d, a); b.getCustomData('doc_processing_style') && d.hasAttribute('id') ? d.removeAttribute('id') : b.setCustomData('doc_processing_style', 1); return d } function m (a, b) { var c = b._.definition, d = c.attributes, c = CKEDITOR.style.getStyleText(c); if (d) for (var e in d)a.setAttribute(e, d[e]); c && a.setAttribute('style', c); return a } function k (a, b) {
+      for (var c in a) {
+        a[c] = a[c].replace(I, function (a,
 c) { return b[c] })
-  }
-} function l (a) { if (a._.overrides) return a._.overrides; var b = a._.overrides = {}, c = a._.definition.overrides; if (c) { CKEDITOR.tools.isArray(c) || (c = [c]); for (var d = 0; d < c.length; d++) { var e = c[d], f, g; if (typeof e === 'string')f = e.toLowerCase(); else { f = e.element ? e.element.toLowerCase() : a.element; g = e.attributes }e = b[f] || (b[f] = {}); if (g) { var e = e.attributes = e.attributes || [], h; for (h in g)e.push([h.toLowerCase(), g[h]]) } } } return b } function t (a, b, c) {
-  var d = new CKEDITOR.dom.element('span'); d[c ? 'setStyle' : 'setAttribute'](a,
+      }
+    } function l (a) { if (a._.overrides) return a._.overrides; var b = a._.overrides = {}, c = a._.definition.overrides; if (c) { CKEDITOR.tools.isArray(c) || (c = [c]); for (var d = 0; d < c.length; d++) { var e = c[d], f, g; if (typeof e === 'string')f = e.toLowerCase(); else { f = e.element ? e.element.toLowerCase() : a.element; g = e.attributes }e = b[f] || (b[f] = {}); if (g) { var e = e.attributes = e.attributes || [], h; for (h in g)e.push([h.toLowerCase(), g[h]]) } } } return b } function t (a, b, c) {
+      var d = new CKEDITOR.dom.element('span'); d[c ? 'setStyle' : 'setAttribute'](a,
 b); return d[c ? 'getStyle' : 'getAttribute'](a)
-} function x (a, b) { for (var c = a.document, d = a.getRanges(), e = b ? this.removeFromRange : this.applyToRange, f, g = d.createIterator(); f = g.getNextRange();)e.call(this, f); a.selectRanges(d); c.removeCustomData('doc_processing_style') } var r = {address: 1, div: 1, h1: 1, h2: 1, h3: 1, h4: 1, h5: 1, h6: 1, p: 1, pre: 1, section: 1, header: 1, footer: 1, nav: 1, article: 1, aside: 1, figure: 1, dialog: 1, hgroup: 1, time: 1, meter: 1, menu: 1, command: 1, keygen: 1, output: 1, progress: 1, details: 1, datagrid: 1, datalist: 1}, L = {a: 1,
-    embed: 1,
-    hr: 1,
-    img: 1,
-    li: 1,
-    object: 1,
-    ol: 1,
-    table: 1,
-    td: 1,
-    tr: 1,
-    th: 1,
-    ul: 1,
-    dl: 1,
-    dt: 1,
-    dd: 1,
-    form: 1,
-    audio: 1,
-    video: 1}, A = /\s*(?:;\s*|$)/, I = /#\((.+?)\)/g, E = CKEDITOR.dom.walker.bookmark(0, 1), z = CKEDITOR.dom.walker.whitespaces(1); CKEDITOR.style = function (a, b) {
-      var c = a.attributes; if (c && c.style) { a.styles = CKEDITOR.tools.extend({}, a.styles, CKEDITOR.tools.parseCssText(c.style)); delete c.style } if (b) { a = CKEDITOR.tools.clone(a); k(a.attributes, b); k(a.styles, b) }c = this.element = a.element ? typeof a.element === 'string' ? a.element.toLowerCase()
+    } function x (a, b) { for (var c = a.document, d = a.getRanges(), e = b ? this.removeFromRange : this.applyToRange, f, g = d.createIterator(); f = g.getNextRange();)e.call(this, f); a.selectRanges(d); c.removeCustomData('doc_processing_style') } var r = {address: 1, div: 1, h1: 1, h2: 1, h3: 1, h4: 1, h5: 1, h6: 1, p: 1, pre: 1, section: 1, header: 1, footer: 1, nav: 1, article: 1, aside: 1, figure: 1, dialog: 1, hgroup: 1, time: 1, meter: 1, menu: 1, command: 1, keygen: 1, output: 1, progress: 1, details: 1, datagrid: 1, datalist: 1}, L = {a: 1,
+        embed: 1,
+        hr: 1,
+        img: 1,
+        li: 1,
+        object: 1,
+        ol: 1,
+        table: 1,
+        td: 1,
+        tr: 1,
+        th: 1,
+        ul: 1,
+        dl: 1,
+        dt: 1,
+        dd: 1,
+        form: 1,
+        audio: 1,
+        video: 1}, A = /\s*(?:;\s*|$)/, I = /#\((.+?)\)/g, E = CKEDITOR.dom.walker.bookmark(0, 1), z = CKEDITOR.dom.walker.whitespaces(1); CKEDITOR.style = function (a, b) {
+          var c = a.attributes; if (c && c.style) { a.styles = CKEDITOR.tools.extend({}, a.styles, CKEDITOR.tools.parseCssText(c.style)); delete c.style } if (b) { a = CKEDITOR.tools.clone(a); k(a.attributes, b); k(a.styles, b) }c = this.element = a.element ? typeof a.element === 'string' ? a.element.toLowerCase()
 : a.element : '*'; this.type = a.type || (r[c] ? CKEDITOR.STYLE_BLOCK : L[c] ? CKEDITOR.STYLE_OBJECT : CKEDITOR.STYLE_INLINE); if (typeof this.element === 'object') this.type = CKEDITOR.STYLE_OBJECT; this._ = {definition: a}
-    }; CKEDITOR.editor.prototype.applyStyle = function (a) { a.checkApplicable(this.elementPath()) && x.call(a, this.getSelection()) }; CKEDITOR.editor.prototype.removeStyle = function (a) { a.checkApplicable(this.elementPath()) && x.call(a, this.getSelection(), 1) }; CKEDITOR.style.prototype = {apply: function (a) { x.call(this, a.getSelection()) },
-      remove: function (a) { x.call(this, a.getSelection(), 1) },
-      applyToRange: function (a) { return (this.applyToRange = this.type == CKEDITOR.STYLE_INLINE ? e : this.type == CKEDITOR.STYLE_BLOCK ? g : this.type == CKEDITOR.STYLE_OBJECT ? d : null).call(this, a) },
-      removeFromRange: function (a) { return (this.removeFromRange = this.type == CKEDITOR.STYLE_INLINE ? b : this.type == CKEDITOR.STYLE_BLOCK ? n : this.type == CKEDITOR.STYLE_OBJECT ? h : null).call(this, a) },
-      applyToObject: function (a) { m(a, this) },
-      checkActive: function (a) {
-        switch (this.type) {
-          case CKEDITOR.STYLE_BLOCK:return this.checkElementRemovable(a.block ||
+        }; CKEDITOR.editor.prototype.applyStyle = function (a) { a.checkApplicable(this.elementPath()) && x.call(a, this.getSelection()) }; CKEDITOR.editor.prototype.removeStyle = function (a) { a.checkApplicable(this.elementPath()) && x.call(a, this.getSelection(), 1) }; CKEDITOR.style.prototype = {apply: function (a) { x.call(this, a.getSelection()) },
+          remove: function (a) { x.call(this, a.getSelection(), 1) },
+          applyToRange: function (a) { return (this.applyToRange = this.type == CKEDITOR.STYLE_INLINE ? e : this.type == CKEDITOR.STYLE_BLOCK ? g : this.type == CKEDITOR.STYLE_OBJECT ? d : null).call(this, a) },
+          removeFromRange: function (a) { return (this.removeFromRange = this.type == CKEDITOR.STYLE_INLINE ? b : this.type == CKEDITOR.STYLE_BLOCK ? n : this.type == CKEDITOR.STYLE_OBJECT ? h : null).call(this, a) },
+          applyToObject: function (a) { m(a, this) },
+          checkActive: function (a) {
+            switch (this.type) {
+              case CKEDITOR.STYLE_BLOCK:return this.checkElementRemovable(a.block ||
 a.blockLimit, true); case CKEDITOR.STYLE_OBJECT:case CKEDITOR.STYLE_INLINE:for (var b = a.elements, c = 0, d; c < b.length; c++) { d = b[c]; if (!(this.type == CKEDITOR.STYLE_INLINE && (d == a.block || d == a.blockLimit))) { if (this.type == CKEDITOR.STYLE_OBJECT) { var e = d.getName(); if (!(typeof this.element === 'string' ? e == this.element : e in this.element)) continue } if (this.checkElementRemovable(d, true)) return true } }
-        } return false
-      },
-      checkApplicable: function (a, b) {
-        if (b && !b.check(this)) return false; switch (this.type) {
-          case CKEDITOR.STYLE_OBJECT:return !!a.contains(this.element)
-          case CKEDITOR.STYLE_BLOCK:return !!a.blockLimit.getDtd()[this.element]
-        } return true
-      },
-      checkElementMatch: function (a, b) {
-        var c = this._.definition; if (!a || !c.ignoreReadonly && a.isReadOnly()) return false; var d = a.getName(); if (typeof this.element === 'string' ? d == this.element : d in this.element) {
-          if (!b && !a.hasAttributes()) return true; if (d = c._AC)c = d; else { var d = {}, e = 0, f = c.attributes; if (f) for (var g in f) { e++; d[g] = f[g] } if (g = CKEDITOR.style.getStyleText(c)) { d.style || e++; d.style = g }d._length = e; c = c._AC = d } if (c._length) {
-            for (var h in c) {
-              if (h !=
+            } return false
+          },
+          checkApplicable: function (a, b) {
+            if (b && !b.check(this)) return false; switch (this.type) {
+              case CKEDITOR.STYLE_OBJECT:return !!a.contains(this.element)
+              case CKEDITOR.STYLE_BLOCK:return !!a.blockLimit.getDtd()[this.element]
+            } return true
+          },
+          checkElementMatch: function (a, b) {
+            var c = this._.definition; if (!a || !c.ignoreReadonly && a.isReadOnly()) return false; var d = a.getName(); if (typeof this.element === 'string' ? d == this.element : d in this.element) {
+              if (!b && !a.hasAttributes()) return true; if (d = c._AC)c = d; else { var d = {}, e = 0, f = c.attributes; if (f) for (var g in f) { e++; d[g] = f[g] } if (g = CKEDITOR.style.getStyleText(c)) { d.style || e++; d.style = g }d._length = e; c = c._AC = d } if (c._length) {
+                for (var h in c) {
+                  if (h !=
 '_length') { e = a.getAttribute(h) || ''; if (h == 'style')a: { d = c[h]; typeof d === 'string' && (d = CKEDITOR.tools.parseCssText(d)); typeof e === 'string' && (e = CKEDITOR.tools.parseCssText(e, true)); g = void 0; for (g in d) if (!(g in e && (e[g] == d[g] || d[g] == 'inherit' || e[g] == 'inherit'))) { d = false; break a }d = true } else d = c[h] == e; if (d) { if (!b) return true } else if (b) return false }
-            } if (b) return true
-          } else return true
-        } return false
-      },
-      checkElementRemovable: function (a, b) {
-        if (this.checkElementMatch(a, b)) return true; var c = l(this)[a.getName()]; if (c) {
-          var d
-          if (!(c = c.attributes)) return true; for (var e = 0; e < c.length; e++) { d = c[e][0]; if (d = a.getAttribute(d)) { var f = c[e][1]; if (f === null || typeof f === 'string' && d == f || f.test(d)) return true } }
-        } return false
-      },
-      buildPreview: function (a) { var b = this._.definition, c = [], d = b.element; d == 'bdo' && (d = 'span'); var c = ['<', d], e = b.attributes; if (e) for (var f in e)c.push(' ', f, '="', e[f], '"'); (e = CKEDITOR.style.getStyleText(b)) && c.push(' style="', e, '"'); c.push('>', a || b.name, '</', d, '>'); return c.join('') },
-      getDefinition: function () { return this._.definition }}
+                } if (b) return true
+              } else return true
+            } return false
+          },
+          checkElementRemovable: function (a, b) {
+            if (this.checkElementMatch(a, b)) return true; var c = l(this)[a.getName()]; if (c) {
+              var d
+              if (!(c = c.attributes)) return true; for (var e = 0; e < c.length; e++) { d = c[e][0]; if (d = a.getAttribute(d)) { var f = c[e][1]; if (f === null || typeof f === 'string' && d == f || f.test(d)) return true } }
+            } return false
+          },
+          buildPreview: function (a) { var b = this._.definition, c = [], d = b.element; d == 'bdo' && (d = 'span'); var c = ['<', d], e = b.attributes; if (e) for (var f in e)c.push(' ', f, '="', e[f], '"'); (e = CKEDITOR.style.getStyleText(b)) && c.push(' style="', e, '"'); c.push('>', a || b.name, '</', d, '>'); return c.join('') },
+          getDefinition: function () { return this._.definition }}
     CKEDITOR.style.getStyleText = function (a) { var b = a._ST; if (b) return b; var b = a.styles, c = a.attributes && a.attributes.style || '', d = ''; c.length && (c = c.replace(A, ';')); for (var e in b) { var f = b[e], g = (e + ':' + f).replace(A, ';'); f == 'inherit' ? d = d + g : c = c + g }c.length && (c = CKEDITOR.tools.normalizeCssText(c, true)); return a._ST = c + d }; var M = CKEDITOR.POSITION_PRECEDING | CKEDITOR.POSITION_IDENTICAL | CKEDITOR.POSITION_IS_CONTAINED, Q = CKEDITOR.POSITION_FOLLOWING | CKEDITOR.POSITION_IDENTICAL | CKEDITOR.POSITION_IS_CONTAINED
   })()
   CKEDITOR.styleCommand = function (a, e) { this.requiredContent = this.allowedContent = this.style = a; CKEDITOR.tools.extend(this, e, true) }; CKEDITOR.styleCommand.prototype.exec = function (a) { a.focus(); this.state == CKEDITOR.TRISTATE_OFF ? a.applyStyle(this.style) : this.state == CKEDITOR.TRISTATE_ON && a.removeStyle(this.style) }; CKEDITOR.stylesSet = new CKEDITOR.resourceManager('', 'stylesSet'); CKEDITOR.addStylesSet = CKEDITOR.tools.bind(CKEDITOR.stylesSet.add, CKEDITOR.stylesSet)
@@ -2439,8 +2439,8 @@ this)
             if (!(arguments.length < 3)) {
               i.call(this, a); var e = this._.inputId = CKEDITOR.tools.getNextId() + '_textInput', c = {'class': 'cke_dialog_ui_input_' +
 a.type,
-                id: e,
-                type: a.type}; a.validate && (this.validate = a.validate); a.maxLength && (c.maxlength = a.maxLength); a.size && (c.size = a.size); a.inputStyle && (c.style = a.inputStyle); var f = this, h = !1; b.on('load', function () { f.getInputElement().on('keydown', function (a) { a.data.getKeystroke() == 13 && (h = true) }); f.getInputElement().on('keyup', function (a) { if (a.data.getKeystroke() == 13 && h) { b.getButton('ok') && setTimeout(function () { b.getButton('ok').click() }, 0); h = false } }, null, null, 1E3) }); CKEDITOR.ui.dialog.labeledElement.call(this,
+                  id: e,
+                  type: a.type}; a.validate && (this.validate = a.validate); a.maxLength && (c.maxlength = a.maxLength); a.size && (c.size = a.size); a.inputStyle && (c.style = a.inputStyle); var f = this, h = !1; b.on('load', function () { f.getInputElement().on('keydown', function (a) { a.data.getKeystroke() == 13 && (h = true) }); f.getInputElement().on('keyup', function (a) { if (a.data.getKeystroke() == 13 && h) { b.getButton('ok') && setTimeout(function () { b.getButton('ok').click() }, 0); h = false } }, null, null, 1E3) }); CKEDITOR.ui.dialog.labeledElement.call(this,
 b, a, d, function () { var b = ['<div class="cke_dialog_ui_input_', a.type, '" role="presentation"']; a.width && b.push('style="width:' + a.width + '" '); b.push('><input '); c['aria-labelledby'] = this._.labelId; this._.required && (c['aria-required'] = this._.required); for (var d in c)b.push(d + '="' + c[d] + '" '); b.push(' /></div>'); return b.join('') })
             }
           },
@@ -2448,19 +2448,19 @@ b, a, d, function () { var b = ['<div class="cke_dialog_ui_input_', a.type, '" r
             if (!(arguments.length < 3)) {
               i.call(this, a); var e = this, c = this._.inputId = CKEDITOR.tools.getNextId() + '_textarea', f = {}; a.validate && (this.validate = a.validate)
               f.rows = a.rows || 5; f.cols = a.cols || 20; f['class'] = 'cke_dialog_ui_input_textarea ' + (a['class'] || ''); typeof a.inputStyle !== 'undefined' && (f.style = a.inputStyle); a.dir && (f.dir = a.dir); CKEDITOR.ui.dialog.labeledElement.call(this, b, a, d, function () {
-              f['aria-labelledby'] = this._.labelId; this._.required && (f['aria-required'] = this._.required); var a = ['<div class="cke_dialog_ui_input_textarea" role="presentation"><textarea id="', c, '" '], b; for (b in f)a.push(b + '="' + CKEDITOR.tools.htmlEncode(f[b]) + '" '); a.push('>', CKEDITOR.tools.htmlEncode(e._['default']),
+                f['aria-labelledby'] = this._.labelId; this._.required && (f['aria-required'] = this._.required); var a = ['<div class="cke_dialog_ui_input_textarea" role="presentation"><textarea id="', c, '" '], b; for (b in f)a.push(b + '="' + CKEDITOR.tools.htmlEncode(f[b]) + '" '); a.push('>', CKEDITOR.tools.htmlEncode(e._['default']),
 '</textarea></div>'); return a.join('')
-            })
+              })
             }
           },
           checkbox: function (b, a, d) {
             if (!(arguments.length < 3)) {
               var e = i.call(this, a, {'default': !!a['default']}); a.validate && (this.validate = a.validate); CKEDITOR.ui.dialog.uiElement.call(this, b, a, d, 'span', null, null, function () {
-              var c = CKEDITOR.tools.extend({}, a, {id: a.id ? a.id + '_checkbox' : CKEDITOR.tools.getNextId() + '_checkbox'}, true), d = [], h = CKEDITOR.tools.getNextId() + '_label', g = {'class': 'cke_dialog_ui_checkbox_input', type: 'checkbox', 'aria-labelledby': h}; p(c); if (a['default']) {
-                g.checked =
+                var c = CKEDITOR.tools.extend({}, a, {id: a.id ? a.id + '_checkbox' : CKEDITOR.tools.getNextId() + '_checkbox'}, true), d = [], h = CKEDITOR.tools.getNextId() + '_label', g = {'class': 'cke_dialog_ui_checkbox_input', type: 'checkbox', 'aria-labelledby': h}; p(c); if (a['default']) {
+                  g.checked =
 'checked'
-              } if (typeof c.inputStyle !== 'undefined')c.style = c.inputStyle; e.checkbox = new CKEDITOR.ui.dialog.uiElement(b, c, d, 'input', null, g); d.push(' <label id="', h, '" for="', g.id, '"' + (a.labelStyle ? ' style="' + a.labelStyle + '"' : '') + '>', CKEDITOR.tools.htmlEncode(a.label), '</label>'); return d.join('')
-            })
+                } if (typeof c.inputStyle !== 'undefined')c.style = c.inputStyle; e.checkbox = new CKEDITOR.ui.dialog.uiElement(b, c, d, 'input', null, g); d.push(' <label id="', h, '" for="', g.id, '"' + (a.labelStyle ? ' style="' + a.labelStyle + '"' : '') + '>', CKEDITOR.tools.htmlEncode(a.label), '</label>'); return d.join('')
+              })
             }
           },
           radio: function (b, a, d) {
@@ -2477,47 +2477,47 @@ b, a, d, function () {
           button: function (b, a, d) {
             if (arguments.length) {
               typeof a === 'function' && (a = a(b.getParentEditor())); i.call(this, a, {disabled: a.disabled || !1}); CKEDITOR.event.implementOn(this); var e = this; b.on('load', function () {
-              var a =
+                var a =
 this.getElement(); (function () { a.on('click', function (a) { e.click(); a.data.preventDefault() }); a.on('keydown', function (a) { a.data.getKeystroke() in {32: 1} && (e.click(), a.data.preventDefault()) }) })(); a.unselectable()
-            }, this); var c = CKEDITOR.tools.extend({}, a); delete c.style; var f = CKEDITOR.tools.getNextId() + '_label'; CKEDITOR.ui.dialog.uiElement.call(this, b, c, d, 'a', null, {style: a.style, href: 'javascript:void(0)', title: a.label, hidefocus: 'true', 'class': a['class'], role: 'button', 'aria-labelledby': f}, '<span id="' + f +
+              }, this); var c = CKEDITOR.tools.extend({}, a); delete c.style; var f = CKEDITOR.tools.getNextId() + '_label'; CKEDITOR.ui.dialog.uiElement.call(this, b, c, d, 'a', null, {style: a.style, href: 'javascript:void(0)', title: a.label, hidefocus: 'true', 'class': a['class'], role: 'button', 'aria-labelledby': f}, '<span id="' + f +
 '" class="cke_dialog_ui_button">' + CKEDITOR.tools.htmlEncode(a.label) + '</span>')
             }
           },
           select: function (b, a, d) {
             if (!(arguments.length < 3)) {
               var e = i.call(this, a); a.validate && (this.validate = a.validate); e.inputId = CKEDITOR.tools.getNextId() + '_select'; CKEDITOR.ui.dialog.labeledElement.call(this, b, a, d, function () {
-              var c = CKEDITOR.tools.extend({}, a, {id: a.id ? a.id + '_select' : CKEDITOR.tools.getNextId() + '_select'}, true), d = [], h = [], g = {id: e.inputId, 'class': 'cke_dialog_ui_input_select', 'aria-labelledby': this._.labelId}; d.push('<div class="cke_dialog_ui_input_',
+                var c = CKEDITOR.tools.extend({}, a, {id: a.id ? a.id + '_select' : CKEDITOR.tools.getNextId() + '_select'}, true), d = [], h = [], g = {id: e.inputId, 'class': 'cke_dialog_ui_input_select', 'aria-labelledby': this._.labelId}; d.push('<div class="cke_dialog_ui_input_',
 a.type, '" role="presentation"'); a.width && d.push('style="width:' + a.width + '" '); d.push('>'); if (a.size != void 0)g.size = a.size; if (a.multiple != void 0)g.multiple = a.multiple; p(c); for (var k = 0, j; k < a.items.length && (j = a.items[k]); k++)h.push('<option value="', CKEDITOR.tools.htmlEncode(j[1] !== void 0 ? j[1] : j[0]).replace(/"/g, '&quot;'), '" /> ', CKEDITOR.tools.htmlEncode(j[0])); if (typeof c.inputStyle !== 'undefined')c.style = c.inputStyle; e.select = new CKEDITOR.ui.dialog.uiElement(b, c, d, 'select', null, g, h.join('')); d.push('</div>')
-              return d.join('')
-            })
+                return d.join('')
+              })
             }
           },
           file: function (b, a, d) {
             if (!(arguments.length < 3)) {
               void 0 === a['default'] && (a['default'] = ''); var e = CKEDITOR.tools.extend(i.call(this, a), {definition: a, buttons: []}); a.validate && (this.validate = a.validate); b.on('load', function () { CKEDITOR.document.getById(e.frameId).getParent().addClass('cke_dialog_ui_input_file') }); CKEDITOR.ui.dialog.labeledElement.call(this, b, a, d, function () {
-              e.frameId = CKEDITOR.tools.getNextId() + '_fileInput'; var b = ['<iframe frameborder="0" allowtransparency="0" class="cke_dialog_ui_input_file" role="presentation" id="',
-                e.frameId, '" title="', a.label, '" src="javascript:void(']; b.push(CKEDITOR.env.ie ? '(function(){' + encodeURIComponent('document.open();(' + CKEDITOR.tools.fixDomain + ')();document.close();') + '})()' : '0'); b.push(')"></iframe>'); return b.join('')
-            })
+                e.frameId = CKEDITOR.tools.getNextId() + '_fileInput'; var b = ['<iframe frameborder="0" allowtransparency="0" class="cke_dialog_ui_input_file" role="presentation" id="',
+                  e.frameId, '" title="', a.label, '" src="javascript:void(']; b.push(CKEDITOR.env.ie ? '(function(){' + encodeURIComponent('document.open();(' + CKEDITOR.tools.fixDomain + ')();document.close();') + '})()' : '0'); b.push(')"></iframe>'); return b.join('')
+              })
             }
           },
           fileButton: function (b, a, d) {
             if (!(arguments.length < 3)) {
               i.call(this, a); var e = this; a.validate && (this.validate = a.validate); var c = CKEDITOR.tools.extend({}, a), f = c.onClick; c.className = (c.className ? c.className + ' ' : '') + 'cke_dialog_ui_button'; c.onClick = function (c) {
-              var d =
+                var d =
 a['for']; if (!f || f.call(this, c) !== false) { b.getContentElement(d[0], d[1]).submit(); this.disable() }
-            }; b.on('load', function () { b.getContentElement(a['for'][0], a['for'][1])._.buttons.push(e) }); CKEDITOR.ui.dialog.button.call(this, b, c, d)
+              }; b.on('load', function () { b.getContentElement(a['for'][0], a['for'][1])._.buttons.push(e) }); CKEDITOR.ui.dialog.button.call(this, b, c, d)
             }
           },
           html: (function () {
             var b = /^\s*<[\w:]+\s+([^>]*)?>/, a = /^(\s*<[\w:]+(?:\s+[^>]*)?)((?:.|\r|\n)+)$/, d = /\/$/; return function (e, c, f) {
               if (!(arguments.length < 3)) {
-              var h = [], g = c.html; g.charAt(0) != '<' && (g = '<span>' + g + '</span>'); var k = c.focus; if (k) {
-                var j = this.focus; this.focus = function () {
-                 (typeof k ===
+                var h = [], g = c.html; g.charAt(0) != '<' && (g = '<span>' + g + '</span>'); var k = c.focus; if (k) {
+                  var j = this.focus; this.focus = function () {
+                    (typeof k ===
 'function' ? k : j).call(this); this.fire('focus')
-               }; c.isFocusable && (this.isFocusable = this.isFocusable); this.keyboardFocusable = !0
-              }CKEDITOR.ui.dialog.uiElement.call(this, e, c, h, 'span', null, null, ''); h = h.join('').match(b); g = g.match(a) || ['', '', '']; d.test(g[1]) && (g[1] = g[1].slice(0, -1), g[2] = '/' + g[2]); f.push([g[1], ' ', h[1] || '', g[2]].join(''))
-            }
+                  }; c.isFocusable && (this.isFocusable = this.isFocusable); this.keyboardFocusable = !0
+                }CKEDITOR.ui.dialog.uiElement.call(this, e, c, h, 'span', null, null, ''); h = h.join('').match(b); g = g.match(a) || ['', '', '']; d.test(g[1]) && (g[1] = g[1].slice(0, -1), g[2] = '/' + g[2]); f.push([g[1], ' ', h[1] || '', g[2]].join(''))
+              }
             }
           }()),
           fieldset: function (b, a, d, e, c) {
@@ -2527,23 +2527,23 @@ a['for']; if (!f || f.call(this, c) !== false) { b.getContentElement(d[0], d[1])
             })
           }}, !0); CKEDITOR.ui.dialog.html.prototype = new CKEDITOR.ui.dialog.uiElement(); CKEDITOR.ui.dialog.labeledElement.prototype = CKEDITOR.tools.extend(new CKEDITOR.ui.dialog.uiElement(), {setLabel: function (b) { var a = CKEDITOR.document.getById(this._.labelId); a.getChildCount() < 1 ? (new CKEDITOR.dom.text(b, CKEDITOR.document)).appendTo(a) : a.getChild(0).$.nodeValue = b; return this },
             getLabel: function () {
-            var b =
+              var b =
 CKEDITOR.document.getById(this._.labelId); return !b || b.getChildCount() < 1 ? '' : b.getChild(0).getText()
-          },
+            },
             eventProcessors: o}, !0); CKEDITOR.ui.dialog.button.prototype = CKEDITOR.tools.extend(new CKEDITOR.ui.dialog.uiElement(), {click: function () { return !this._.disabled ? this.fire('click', {dialog: this._.dialog}) : !1 },
-            enable: function () { this._.disabled = !1; var b = this.getElement(); b && b.removeClass('cke_disabled') },
-            disable: function () { this._.disabled = !0; this.getElement().addClass('cke_disabled') },
-            isVisible: function () { return this.getElement().getFirst().isVisible() },
-            isEnabled: function () { return !this._.disabled },
-            eventProcessors: CKEDITOR.tools.extend({}, CKEDITOR.ui.dialog.uiElement.prototype.eventProcessors, {onClick: function (b, a) { this.on('click', function () { a.apply(this, arguments) }) }}, !0),
-            accessKeyUp: function () { this.click() },
-            accessKeyDown: function () { this.focus() },
-            keyboardFocusable: !0}, !0); CKEDITOR.ui.dialog.textInput.prototype = CKEDITOR.tools.extend(new CKEDITOR.ui.dialog.labeledElement(), {getInputElement: function () { return CKEDITOR.document.getById(this._.inputId) },
-              focus: function () { var b = this.selectParentTab(); setTimeout(function () { var a = b.getInputElement(); a && a.$.focus() }, 0) },
-              select: function () { var b = this.selectParentTab(); setTimeout(function () { var a = b.getInputElement(); a && (a.$.focus(), a.$.select()) }, 0) },
-              accessKeyUp: function () { this.select() },
-              setValue: function (b) { !b && (b = ''); return CKEDITOR.ui.dialog.uiElement.prototype.setValue.apply(this, arguments) },
-              keyboardFocusable: !0}, n, !0); CKEDITOR.ui.dialog.textarea.prototype = new CKEDITOR.ui.dialog.textInput(); CKEDITOR.ui.dialog.select.prototype =
+              enable: function () { this._.disabled = !1; var b = this.getElement(); b && b.removeClass('cke_disabled') },
+              disable: function () { this._.disabled = !0; this.getElement().addClass('cke_disabled') },
+              isVisible: function () { return this.getElement().getFirst().isVisible() },
+              isEnabled: function () { return !this._.disabled },
+              eventProcessors: CKEDITOR.tools.extend({}, CKEDITOR.ui.dialog.uiElement.prototype.eventProcessors, {onClick: function (b, a) { this.on('click', function () { a.apply(this, arguments) }) }}, !0),
+              accessKeyUp: function () { this.click() },
+              accessKeyDown: function () { this.focus() },
+              keyboardFocusable: !0}, !0); CKEDITOR.ui.dialog.textInput.prototype = CKEDITOR.tools.extend(new CKEDITOR.ui.dialog.labeledElement(), {getInputElement: function () { return CKEDITOR.document.getById(this._.inputId) },
+                focus: function () { var b = this.selectParentTab(); setTimeout(function () { var a = b.getInputElement(); a && a.$.focus() }, 0) },
+                select: function () { var b = this.selectParentTab(); setTimeout(function () { var a = b.getInputElement(); a && (a.$.focus(), a.$.select()) }, 0) },
+                accessKeyUp: function () { this.select() },
+                setValue: function (b) { !b && (b = ''); return CKEDITOR.ui.dialog.uiElement.prototype.setValue.apply(this, arguments) },
+                keyboardFocusable: !0}, n, !0); CKEDITOR.ui.dialog.textarea.prototype = new CKEDITOR.ui.dialog.textInput(); CKEDITOR.ui.dialog.select.prototype =
 CKEDITOR.tools.extend(new CKEDITOR.ui.dialog.labeledElement(), {getInputElement: function () { return this._.select.getElement() },
   add: function (b, a, d) { var e = new CKEDITOR.dom.element('option', this.getDialog().getParentEditor().document), c = this.getInputElement().$; e.$.text = b; e.$.value = void 0 === a || a === null ? b : a; void 0 === d || d === null ? CKEDITOR.env.ie ? c.add(e.$) : c.add(e.$, null) : c.add(e.$, d); return this },
   remove: function (b) { this.getInputElement().$.remove(b); return this },
@@ -2635,12 +2635,12 @@ q.getChild(0).getFrameDocument(); k.on('mousemove', b); k.on('mouseup', c)
       } function d () { CKEDITOR.document.removeListener('mouseup', d); CKEDITOR.document.removeListener('mousemove', e); j && (j.remove(), j = null); if (CKEDITOR.env.ie6Compat) { var a = q.getChild(0).getFrameDocument(); a.removeListener('mouseup', d); a.removeListener('mousemove', e) } } var g = a.definition, f = g.resizable; if (f != CKEDITOR.DIALOG_RESIZE_NONE) {
         var i = a.getParentEditor(),
           l, k, h, o, j, n = CKEDITOR.tools.addFunction(function (f) {
-        o = a.getSize(); var g = a.parts.contents; g.$.getElementsByTagName('iframe').length && (j = CKEDITOR.dom.element.createFromHtml('<div class="cke_dialog_resize_cover" style="height: 100%; position: absolute; width: 100%;"></div>'), g.append(j)); k = o.height - a.parts.contents.getSize('height', !(CKEDITOR.env.gecko || CKEDITOR.env.opera || CKEDITOR.env.ie && CKEDITOR.env.quirks)); l = o.width - a.parts.contents.getSize('width', 1); b = f.screenX; c = f.screenY; h = CKEDITOR.document.getWindow().getViewPaneSize()
-        CKEDITOR.document.on('mousemove', e); CKEDITOR.document.on('mouseup', d); CKEDITOR.env.ie6Compat && (g = q.getChild(0).getFrameDocument(), g.on('mousemove', e), g.on('mouseup', d)); f.preventDefault && f.preventDefault()
-      }); a.on('load', function () {
-        var b = ''; f == CKEDITOR.DIALOG_RESIZE_WIDTH ? b = ' cke_resizer_horizontal' : f == CKEDITOR.DIALOG_RESIZE_HEIGHT && (b = ' cke_resizer_vertical'); b = CKEDITOR.dom.element.createFromHtml('<div class="cke_resizer' + b + ' cke_resizer_' + i.lang.dir + '" title="' + CKEDITOR.tools.htmlEncode(i.lang.common.resize) +
+            o = a.getSize(); var g = a.parts.contents; g.$.getElementsByTagName('iframe').length && (j = CKEDITOR.dom.element.createFromHtml('<div class="cke_dialog_resize_cover" style="height: 100%; position: absolute; width: 100%;"></div>'), g.append(j)); k = o.height - a.parts.contents.getSize('height', !(CKEDITOR.env.gecko || CKEDITOR.env.opera || CKEDITOR.env.ie && CKEDITOR.env.quirks)); l = o.width - a.parts.contents.getSize('width', 1); b = f.screenX; c = f.screenY; h = CKEDITOR.document.getWindow().getViewPaneSize()
+            CKEDITOR.document.on('mousemove', e); CKEDITOR.document.on('mouseup', d); CKEDITOR.env.ie6Compat && (g = q.getChild(0).getFrameDocument(), g.on('mousemove', e), g.on('mouseup', d)); f.preventDefault && f.preventDefault()
+          }); a.on('load', function () {
+            var b = ''; f == CKEDITOR.DIALOG_RESIZE_WIDTH ? b = ' cke_resizer_horizontal' : f == CKEDITOR.DIALOG_RESIZE_HEIGHT && (b = ' cke_resizer_vertical'); b = CKEDITOR.dom.element.createFromHtml('<div class="cke_resizer' + b + ' cke_resizer_' + i.lang.dir + '" title="' + CKEDITOR.tools.htmlEncode(i.lang.common.resize) +
 '" onmousedown="CKEDITOR.tools.callFunction(' + n + ', event )">' + (i.lang.dir == 'ltr' ? '◢' : '◣') + '</div>'); a.parts.footer.append(b, 1)
-      }); i.on('destroy', function () { CKEDITOR.tools.removeFunction(n) })
+          }); i.on('destroy', function () { CKEDITOR.tools.removeFunction(n) })
       }
     } function E (a) { a.data.preventDefault(1) } function J (a) {
       var b = CKEDITOR.document.getWindow(), c = a.config, e = c.dialog_backgroundCoverColor || 'white', d = c.dialog_backgroundCoverOpacity, g = c.baseFloatZIndex, c = CKEDITOR.tools.genKey(e, d, g), f = w[c]; f ? f.show() : (g = ['<div tabIndex="-1" style="position: ', CKEDITOR.env.ie6Compat
@@ -2691,11 +2691,11 @@ i.length; k++) if (l = i[k].split(':'), l.length == 2) { var n = l[0]; h[n] || (
 function (a) { !1 === f.onCancel.call(this, a) && (a.data.hide = !1) })
           } var m = this, p = function (a) { var b = m._.contents, c = !1, d; for (d in b) for (var f in b[d]) if (c = a.call(this, b[d][f])) return }; this.on('ok', function (a) { p(function (b) { if (b.validate) { var c = b.validate(this), d = typeof c === 'string' || !1 === c; d && (a.data.hide = !1, a.stop()); P.call(b, !d, typeof c === 'string' ? c : void 0); return d } }) }, this, null, 0); this.on('cancel', function (b) {
             p(function (c) {
-            if (c.isChanged()) {
-           return !a.config.dialog_noConfirmCancel && !confirm(a.lang.common.confirmCancel) &&
+              if (c.isChanged()) {
+                return !a.config.dialog_noConfirmCancel && !confirm(a.lang.common.confirmCancel) &&
 (b.data.hide = !1), !0
-         }
-          })
+              }
+            })
           }, this, null, 0); this.parts.close.on('click', function (a) { !1 !== this.fire('cancel', {hide: !0}).hide && this.hide(); a.data.preventDefault() }, this); this.changeFocus = e; var v = this._.element; a.focusManager.add(v, 1); this.on('show', function () { v.on('keydown', d, this); if (CKEDITOR.env.opera || CKEDITOR.env.gecko)v.on('keypress', g, this) }); this.on('hide', function () { v.removeListener('keydown', d); (CKEDITOR.env.opera || CKEDITOR.env.gecko) && v.removeListener('keypress', g); p(function (a) { Q.apply(a) }) }); this.on('iframeAdded',
 function (a) { (new CKEDITOR.dom.document(a.data.iframe.$.contentWindow.document)).on('keydown', d, this, null, 0) }); this.on('show', function () { c(); if (a.config.dialog_startupFocusTab && m._.pageCount > 1)m._.tabBarMode = !0, m._.tabs[m._.currentTabId][0].focus(); else if (!this._.hasFocus) if (this._.currentFocusIndex = -1, f.onFocus) { var b = f.onFocus.call(this); b && b.focus() } else e(1) }, this, null, 4294967295); if (CKEDITOR.env.ie6Compat) {
   this.on('load', function () { var a = this.getElement(), b = a.getFirst(); b.remove(); b.appendTo(a) },
@@ -2833,67 +2833,67 @@ a)
 a.data.$.altKey, e = a.data.$.shiftKey, d = String.fromCharCode(a.data.$.keyCode); if ((b = s[(b ? 'CTRL+' : '') + (c ? 'ALT+' : '') + (e ? 'SHIFT+' : '') + d]) && b.length)b = b[b.length - 1], b.keydown && b.keydown.call(b.uiElement, b.dialog, b.key), a.data.preventDefault()
               }, N = function (a) {
                 var b = a.data.$.ctrlKey || a.data.$.metaKey, c = a.data.$.altKey, e = a.data.$.shiftKey, d = String.fromCharCode(a.data.$.keyCode); if ((b = s[(b ? 'CTRL+' : '') + (c ? 'ALT+' : '') + (e ? 'SHIFT+' : '') + d]) && b.length) {
-                b = b[b.length - 1], b.keyup && (b.keyup.call(b.uiElement, b.dialog, b.key),
+                  b = b[b.length - 1], b.keyup && (b.keyup.call(b.uiElement, b.dialog, b.key),
 a.data.preventDefault())
-              }
-              }, O = function (a, b, c, e, d) { (s[c] || (s[c] = [])).push({uiElement: a, dialog: b, key: c, keyup: d || a.accessKeyUp, keydown: e || a.accessKeyDown}) }, X = function (a) { for (var b in s) { for (var c = s[b], e = c.length - 1; e >= 0; e--)(c[e].dialog == a || c[e].uiElement == a) && c.splice(e, 1); c.length === 0 && delete s[b] } }, Z = function (a, b) { a._.accessKeyMap[b] && a.selectPage(a._.accessKeyMap[b]) }, Y = function () {}; (function () {
-              CKEDITOR.ui.dialog = {uiElement: function (a, b, c, e, d, g, f) {
-              if (!(arguments.length < 4)) {
-                  var i = (e.call ? e(b) : e) || 'div',
-              l = ['<', i, ' '], k = (d && d.call ? d(b) : d) || {}, h = (g && g.call ? g(b) : g) || {}, o = (f && f.call ? f.call(this, a, b) : f) || '', j = this.domId = h.id || CKEDITOR.tools.getNextId() + '_uiElement'; this.id = b.id; b.requiredContent && !a.getParentEditor().filter.check(b.requiredContent) && (k.display = 'none', this.notAllowed = !0); h.id = j; var n = {}; b.type && (n['cke_dialog_ui_' + b.type] = 1); b.className && (n[b.className] = 1); b.disabled && (n.cke_disabled = 1); for (var m = h['class'] && h['class'].split ? h['class'].split(' ') : [], j = 0; j < m.length; j++)m[j] && (n[m[j]] = 1)
-                  m = []; for (j in n)m.push(j); h['class'] = m.join(' '); b.title && (h.title = b.title); n = (b.style || '').split(';'); b.align && (m = b.align, k['margin-left'] = m == 'left' ? 0 : 'auto', k['margin-right'] = m == 'right' ? 0 : 'auto'); for (j in k)n.push(j + ':' + k[j]); b.hidden && n.push('display:none'); for (j = n.length - 1; j >= 0; j--)n[j] === '' && n.splice(j, 1); n.length > 0 && (h.style = (h.style ? h.style + '; ' : '') + n.join('; ')); for (j in h)l.push(j + '="' + CKEDITOR.tools.htmlEncode(h[j]) + '" '); l.push('>', o, '</', i, '>'); c.push(l.join('')); (this._ || (this._ = {})).dialog =
-a; typeof b.isChanged === 'boolean' && (this.isChanged = function () { return b.isChanged }); typeof b.isChanged === 'function' && (this.isChanged = b.isChanged); typeof b.setValue === 'function' && (this.setValue = CKEDITOR.tools.override(this.setValue, function (a) { return function (c) { a.call(this, b.setValue.call(this, c)) } })); typeof b.getValue === 'function' && (this.getValue = CKEDITOR.tools.override(this.getValue, function (a) { return function () { return b.getValue.call(this, a.call(this)) } })); CKEDITOR.event.implementOn(this); this.registerEvents(b)
-                  this.accessKeyUp && (this.accessKeyDown && b.accessKey) && O(this, a, 'CTRL+' + b.accessKey); var p = this; a.on('load', function () { var b = p.getInputElement(); if (b) { var c = p.type in {checkbox: 1, ratio: 1} && CKEDITOR.env.ie && CKEDITOR.env.version < 8 ? 'cke_dialog_ui_focused' : ''; b.on('focus', function () { a._.tabBarMode = false; a._.hasFocus = true; p.fire('focus'); c && this.addClass(c) }); b.on('blur', function () { p.fire('blur'); c && this.removeClass(c) }) } }); CKEDITOR.tools.extend(this, b); this.keyboardFocusable && (this.tabIndex = b.tabIndex ||
-0, this.focusIndex = a._.focusList.push(this) - 1, this.on('focus', function () { a._.currentFocusIndex = p.focusIndex }))
                 }
-            },
-              hbox: function (a, b, c, e, d) {
+              }, O = function (a, b, c, e, d) { (s[c] || (s[c] = [])).push({uiElement: a, dialog: b, key: c, keyup: d || a.accessKeyUp, keydown: e || a.accessKeyDown}) }, X = function (a) { for (var b in s) { for (var c = s[b], e = c.length - 1; e >= 0; e--)(c[e].dialog == a || c[e].uiElement == a) && c.splice(e, 1); c.length === 0 && delete s[b] } }, Z = function (a, b) { a._.accessKeyMap[b] && a.selectPage(a._.accessKeyMap[b]) }, Y = function () {}; (function () {
+                CKEDITOR.ui.dialog = {uiElement: function (a, b, c, e, d, g, f) {
                   if (!(arguments.length < 4)) {
-              this._ || (this._ = {}); var g = this._.children = b, f = d && d.widths || null, i = d && d.height || null, l, k = {role: 'presentation'}; d && d.align && (k.align = d.align); CKEDITOR.ui.dialog.uiElement.call(this, a, d || {type: 'hbox'}, e, 'table', {}, k, function () {
-                var a = ['<tbody><tr class="cke_dialog_ui_hbox">']; for (l = 0; l < c.length; l++) {
-              var b = 'cke_dialog_ui_hbox_child', e = []; l ===
-0 && (b = 'cke_dialog_ui_hbox_first'); l == c.length - 1 && (b = 'cke_dialog_ui_hbox_last'); a.push('<td class="', b, '" role="presentation" '); f ? f[l] && e.push('width:' + r(f[l])) : e.push('width:' + Math.floor(100 / c.length) + '%'); i && e.push('height:' + r(i)); d && void 0 != d.padding && e.push('padding:' + r(d.padding)); CKEDITOR.env.ie && (CKEDITOR.env.quirks && g[l].align) && e.push('text-align:' + g[l].align); e.length > 0 && a.push('style="' + e.join('; ') + '" '); a.push('>', c[l], '</td>')
-            }a.push('</tr></tbody>'); return a.join('')
-              })
-            }
+                    var i = (e.call ? e(b) : e) || 'div',
+                      l = ['<', i, ' '], k = (d && d.call ? d(b) : d) || {}, h = (g && g.call ? g(b) : g) || {}, o = (f && f.call ? f.call(this, a, b) : f) || '', j = this.domId = h.id || CKEDITOR.tools.getNextId() + '_uiElement'; this.id = b.id; b.requiredContent && !a.getParentEditor().filter.check(b.requiredContent) && (k.display = 'none', this.notAllowed = !0); h.id = j; var n = {}; b.type && (n['cke_dialog_ui_' + b.type] = 1); b.className && (n[b.className] = 1); b.disabled && (n.cke_disabled = 1); for (var m = h['class'] && h['class'].split ? h['class'].split(' ') : [], j = 0; j < m.length; j++)m[j] && (n[m[j]] = 1)
+                    m = []; for (j in n)m.push(j); h['class'] = m.join(' '); b.title && (h.title = b.title); n = (b.style || '').split(';'); b.align && (m = b.align, k['margin-left'] = m == 'left' ? 0 : 'auto', k['margin-right'] = m == 'right' ? 0 : 'auto'); for (j in k)n.push(j + ':' + k[j]); b.hidden && n.push('display:none'); for (j = n.length - 1; j >= 0; j--)n[j] === '' && n.splice(j, 1); n.length > 0 && (h.style = (h.style ? h.style + '; ' : '') + n.join('; ')); for (j in h)l.push(j + '="' + CKEDITOR.tools.htmlEncode(h[j]) + '" '); l.push('>', o, '</', i, '>'); c.push(l.join('')); (this._ || (this._ = {})).dialog =
+a; typeof b.isChanged === 'boolean' && (this.isChanged = function () { return b.isChanged }); typeof b.isChanged === 'function' && (this.isChanged = b.isChanged); typeof b.setValue === 'function' && (this.setValue = CKEDITOR.tools.override(this.setValue, function (a) { return function (c) { a.call(this, b.setValue.call(this, c)) } })); typeof b.getValue === 'function' && (this.getValue = CKEDITOR.tools.override(this.getValue, function (a) { return function () { return b.getValue.call(this, a.call(this)) } })); CKEDITOR.event.implementOn(this); this.registerEvents(b)
+                    this.accessKeyUp && (this.accessKeyDown && b.accessKey) && O(this, a, 'CTRL+' + b.accessKey); var p = this; a.on('load', function () { var b = p.getInputElement(); if (b) { var c = p.type in {checkbox: 1, ratio: 1} && CKEDITOR.env.ie && CKEDITOR.env.version < 8 ? 'cke_dialog_ui_focused' : ''; b.on('focus', function () { a._.tabBarMode = false; a._.hasFocus = true; p.fire('focus'); c && this.addClass(c) }); b.on('blur', function () { p.fire('blur'); c && this.removeClass(c) }) } }); CKEDITOR.tools.extend(this, b); this.keyboardFocusable && (this.tabIndex = b.tabIndex ||
+0, this.focusIndex = a._.focusList.push(this) - 1, this.on('focus', function () { a._.currentFocusIndex = p.focusIndex }))
+                  }
                 },
-              vbox: function (a,
+                  hbox: function (a, b, c, e, d) {
+                    if (!(arguments.length < 4)) {
+                      this._ || (this._ = {}); var g = this._.children = b, f = d && d.widths || null, i = d && d.height || null, l, k = {role: 'presentation'}; d && d.align && (k.align = d.align); CKEDITOR.ui.dialog.uiElement.call(this, a, d || {type: 'hbox'}, e, 'table', {}, k, function () {
+                        var a = ['<tbody><tr class="cke_dialog_ui_hbox">']; for (l = 0; l < c.length; l++) {
+                          var b = 'cke_dialog_ui_hbox_child', e = []; l ===
+0 && (b = 'cke_dialog_ui_hbox_first'); l == c.length - 1 && (b = 'cke_dialog_ui_hbox_last'); a.push('<td class="', b, '" role="presentation" '); f ? f[l] && e.push('width:' + r(f[l])) : e.push('width:' + Math.floor(100 / c.length) + '%'); i && e.push('height:' + r(i)); d && void 0 != d.padding && e.push('padding:' + r(d.padding)); CKEDITOR.env.ie && (CKEDITOR.env.quirks && g[l].align) && e.push('text-align:' + g[l].align); e.length > 0 && a.push('style="' + e.join('; ') + '" '); a.push('>', c[l], '</td>')
+                        }a.push('</tr></tbody>'); return a.join('')
+                      })
+                    }
+                  },
+                  vbox: function (a,
 b, c, e, d) {
-                  if (!(arguments.length < 3)) {
-              this._ || (this._ = {}); var g = this._.children = b, f = d && d.width || null, i = d && d.heights || null; CKEDITOR.ui.dialog.uiElement.call(this, a, d || {type: 'vbox'}, e, 'div', null, {role: 'presentation'}, function () {
-                var b = ['<table role="presentation" cellspacing="0" border="0" ']; b.push('style="'); d && d.expand && b.push('height:100%;'); b.push('width:' + r(f || '100%'), ';'); CKEDITOR.env.webkit && b.push('float:none;'); b.push('"'); b.push('align="', CKEDITOR.tools.htmlEncode(d && d.align || (a.getParentEditor().lang.dir == 'ltr'
+                    if (!(arguments.length < 3)) {
+                      this._ || (this._ = {}); var g = this._.children = b, f = d && d.width || null, i = d && d.heights || null; CKEDITOR.ui.dialog.uiElement.call(this, a, d || {type: 'vbox'}, e, 'div', null, {role: 'presentation'}, function () {
+                        var b = ['<table role="presentation" cellspacing="0" border="0" ']; b.push('style="'); d && d.expand && b.push('height:100%;'); b.push('width:' + r(f || '100%'), ';'); CKEDITOR.env.webkit && b.push('float:none;'); b.push('"'); b.push('align="', CKEDITOR.tools.htmlEncode(d && d.align || (a.getParentEditor().lang.dir == 'ltr'
 ? 'left' : 'right')), '" '); b.push('><tbody>'); for (var e = 0; e < c.length; e++) { var h = []; b.push('<tr><td role="presentation" '); f && h.push('width:' + r(f || '100%')); i ? h.push('height:' + r(i[e])) : d && d.expand && h.push('height:' + Math.floor(100 / c.length) + '%'); d && void 0 != d.padding && h.push('padding:' + r(d.padding)); CKEDITOR.env.ie && (CKEDITOR.env.quirks && g[e].align) && h.push('text-align:' + g[e].align); h.length > 0 && b.push('style="', h.join('; '), '" '); b.push(' class="cke_dialog_ui_vbox_child">', c[e], '</td></tr>') }b.push('</tbody></table>')
-                return b.join('')
-              })
-            }
-                }}
-            })(); CKEDITOR.ui.dialog.uiElement.prototype = {getElement: function () { return CKEDITOR.document.getById(this.domId) },
-            getInputElement: function () { return this.getElement() },
-            getDialog: function () { return this._.dialog },
-            setValue: function (a, b) { this.getInputElement().setValue(a); !b && this.fire('change', {value: a}); return this },
-            getValue: function () { return this.getInputElement().getValue() },
-            isChanged: function () { return !1 },
-            selectParentTab: function () {
-                for (var a = this.getInputElement(); (a = a.getParent()) &&
+                        return b.join('')
+                      })
+                    }
+                  }}
+              })(); CKEDITOR.ui.dialog.uiElement.prototype = {getElement: function () { return CKEDITOR.document.getById(this.domId) },
+                getInputElement: function () { return this.getElement() },
+                getDialog: function () { return this._.dialog },
+                setValue: function (a, b) { this.getInputElement().setValue(a); !b && this.fire('change', {value: a}); return this },
+                getValue: function () { return this.getInputElement().getValue() },
+                isChanged: function () { return !1 },
+                selectParentTab: function () {
+                  for (var a = this.getInputElement(); (a = a.getParent()) &&
 a.$.className.search('cke_dialog_page_contents') == -1;);if (!a) return this; a = a.getAttribute('name'); this._.dialog._.currentTabId != a && this._.dialog.selectPage(a); return this
-              },
-            focus: function () { this.selectParentTab().getInputElement().focus(); return this },
-            registerEvents: function (a) {
-                var b = /^on([A-Z]\w+)/, c, e = function (a, b, c, d) { b.on('load', function () { a.getInputElement().on(c, d, a) }) }, d; for (d in a) {
-            if (c = d.match(b)) {
-              this.eventProcessors[d] ? this.eventProcessors[d].call(this, this._.dialog, a[d]) : e(this, this._.dialog,
+                },
+                focus: function () { this.selectParentTab().getInputElement().focus(); return this },
+                registerEvents: function (a) {
+                  var b = /^on([A-Z]\w+)/, c, e = function (a, b, c, d) { b.on('load', function () { a.getInputElement().on(c, d, a) }) }, d; for (d in a) {
+                    if (c = d.match(b)) {
+                      this.eventProcessors[d] ? this.eventProcessors[d].call(this, this._.dialog, a[d]) : e(this, this._.dialog,
 c[1].toLowerCase(), a[d])
-            }
-          } return this
-              },
-            eventProcessors: {onLoad: function (a, b) { a.on('load', b, this) }, onShow: function (a, b) { a.on('show', b, this) }, onHide: function (a, b) { a.on('hide', b, this) }},
-            accessKeyDown: function () { this.focus() },
-            accessKeyUp: function () {},
-            disable: function () { var a = this.getElement(); this.getInputElement().setAttribute('disabled', 'true'); a.addClass('cke_disabled') },
-            enable: function () { var a = this.getElement(); this.getInputElement().removeAttribute('disabled'); a.removeClass('cke_disabled') },
-            isEnabled: function () { return !this.getElement().hasClass('cke_disabled') },
-            isVisible: function () { return this.getInputElement().isVisible() },
-            isFocusable: function () { return !this.isEnabled() || !this.isVisible() ? !1 : !0 }}; CKEDITOR.ui.dialog.hbox.prototype = CKEDITOR.tools.extend(new CKEDITOR.ui.dialog.uiElement(), {getChild: function (a) { if (arguments.length < 1) return this._.children.concat(); a.splice || (a = [a]); return a.length < 2 ? this._.children[a[0]] : this._.children[a[0]] && this._.children[a[0]].getChild ? this._.children[a[0]].getChild(a.slice(1, a.length)) : null }}, !0); CKEDITOR.ui.dialog.vbox.prototype =
+                    }
+                  } return this
+                },
+                eventProcessors: {onLoad: function (a, b) { a.on('load', b, this) }, onShow: function (a, b) { a.on('show', b, this) }, onHide: function (a, b) { a.on('hide', b, this) }},
+                accessKeyDown: function () { this.focus() },
+                accessKeyUp: function () {},
+                disable: function () { var a = this.getElement(); this.getInputElement().setAttribute('disabled', 'true'); a.addClass('cke_disabled') },
+                enable: function () { var a = this.getElement(); this.getInputElement().removeAttribute('disabled'); a.removeClass('cke_disabled') },
+                isEnabled: function () { return !this.getElement().hasClass('cke_disabled') },
+                isVisible: function () { return this.getInputElement().isVisible() },
+                isFocusable: function () { return !this.isEnabled() || !this.isVisible() ? !1 : !0 }}; CKEDITOR.ui.dialog.hbox.prototype = CKEDITOR.tools.extend(new CKEDITOR.ui.dialog.uiElement(), {getChild: function (a) { if (arguments.length < 1) return this._.children.concat(); a.splice || (a = [a]); return a.length < 2 ? this._.children[a[0]] : this._.children[a[0]] && this._.children[a[0]].getChild ? this._.children[a[0]].getChild(a.slice(1, a.length)) : null }}, !0); CKEDITOR.ui.dialog.vbox.prototype =
 new CKEDITOR.ui.dialog.hbox(); (function () { var a = {build: function (a, c, e) { for (var d = c.children, g, f = [], i = [], l = 0; l < d.length && (g = d[l]); l++) { var k = []; f.push(k); i.push(CKEDITOR.dialog._.uiElementBuilders[g.type].build(a, g, k)) } return new CKEDITOR.ui.dialog[c.type](a, i, f, e, c) }}; CKEDITOR.dialog.addUIElement('hbox', a); CKEDITOR.dialog.addUIElement('vbox', a) })(); CKEDITOR.dialogCommand = function (a, b) { this.dialogName = a; CKEDITOR.tools.extend(this, b, !0) }; CKEDITOR.dialogCommand.prototype = {exec: function (a) {
   CKEDITOR.env.opera
 ? CKEDITOR.tools.setTimeout(function () { a.openDialog(this.dialogName) }, 0, this) : a.openDialog(this.dialogName)
@@ -2968,9 +2968,9 @@ c), c.show()
           }CKEDITOR.dom.element.clearAllMarkers(d); for (b = e.length - 1; b >= 0; b--) { c = e[b]; a: { d = c; for (var f = 0, k = d.getChildCount(), j = void 0; f < k && (j = d.getChild(f)); f++) if (j.type == CKEDITOR.NODE_ELEMENT && j.isBlockBoundary()) { d = !1; break a }d = !0 }d && c.remove() } if (g.config.enterMode == CKEDITOR.ENTER_BR) {
             for (c = !0; a.length;) {
               if (f = a.shift(), f.getName() == 'div') {
-              b = new CKEDITOR.dom.documentFragment(g.document); c && (f.getPrevious() && !(f.getPrevious().type ==
+                b = new CKEDITOR.dom.documentFragment(g.document); c && (f.getPrevious() && !(f.getPrevious().type ==
 CKEDITOR.NODE_ELEMENT && f.getPrevious().isBlockBoundary())) && b.append(g.document.createElement('br')); for (c = f.getNext() && !(f.getNext().type == CKEDITOR.NODE_ELEMENT && f.getNext().isBlockBoundary()); f.getFirst();)f.getFirst().remove().appendTo(b); c && b.append(g.document.createElement('br')); b.replace(f); c = !1
-            }
+              }
             }
           }
         }i.selectBookmarks(h); g.focus()
@@ -3000,35 +3000,35 @@ CKEDITOR.NODE_ELEMENT && f.getPrevious().isBlockBoundary())) && b.append(g.docum
       } function k (a, d) {
         var c = b.document, i = b.editable(), k = function (b) { b.cancel() }, f = CKEDITOR.env.gecko && CKEDITOR.env.version <= 10902, h; if (!c.getById('cke_pastebin')) {
           var o = b.getSelection(), v = o.createBookmarks(),
-          j = new CKEDITOR.dom.element((CKEDITOR.env.webkit || i.is('body')) && !CKEDITOR.env.ie && !CKEDITOR.env.opera ? 'body' : 'div', c); j.setAttributes({id: 'cke_pastebin', 'data-cke-temp': '1'}); CKEDITOR.env.opera && j.appendBogus(); var g = 0, c = c.getWindow(); f ? (j.insertAfter(v[0].startNode), j.setStyle('display', 'inline')) : (CKEDITOR.env.webkit ? (i.append(j), j.addClass('cke_editable'), i.is('body') || (f = i.getComputedStyle('position') != 'static' ? i : CKEDITOR.dom.element.get(i.$.offsetParent), g = f.getDocumentPosition().y)) : i.getAscendant(CKEDITOR.env.ie ||
+            j = new CKEDITOR.dom.element((CKEDITOR.env.webkit || i.is('body')) && !CKEDITOR.env.ie && !CKEDITOR.env.opera ? 'body' : 'div', c); j.setAttributes({id: 'cke_pastebin', 'data-cke-temp': '1'}); CKEDITOR.env.opera && j.appendBogus(); var g = 0, c = c.getWindow(); f ? (j.insertAfter(v[0].startNode), j.setStyle('display', 'inline')) : (CKEDITOR.env.webkit ? (i.append(j), j.addClass('cke_editable'), i.is('body') || (f = i.getComputedStyle('position') != 'static' ? i : CKEDITOR.dom.element.get(i.$.offsetParent), g = f.getDocumentPosition().y)) : i.getAscendant(CKEDITOR.env.ie ||
 CKEDITOR.env.opera ? 'body' : 'html', 1).append(j), j.setStyles({position: 'absolute', top: c.getScrollPosition().y - g + 10 + 'px', width: '1px', height: Math.max(1, c.getViewPaneSize().height - 20) + 'px', overflow: 'hidden', margin: 0, padding: 0})); (f = j.getParent().isReadOnly()) ? (j.setOpacity(0), j.setAttribute('contenteditable', !0)) : j.setStyle(b.config.contentsLangDirection == 'ltr' ? 'left' : 'right', '-1000px'); b.on('selectionChange', k, null, null, 0); CKEDITOR.env.webkit && (h = i.once('blur', k, null, null, -100)); f && j.focus(); f = new CKEDITOR.dom.range(j)
           f.selectNodeContents(j); var l = f.select(); CKEDITOR.env.ie && (h = i.once('blur', function () { b.lockSelection(l) })); var m = CKEDITOR.document.getWindow().getScrollPosition().y; setTimeout(function () {
-          if (CKEDITOR.env.webkit || CKEDITOR.env.opera)CKEDITOR.document[CKEDITOR.env.webkit ? 'getBody' : 'getDocumentElement']().$.scrollTop = m; h && h.removeListener(); CKEDITOR.env.ie && i.focus(); o.selectBookmarks(v); j.remove(); var a; if (CKEDITOR.env.webkit && (a = j.getFirst()) && a.is && a.hasClass('Apple-style-span'))j = a; b.removeListener('selectionChange',
+            if (CKEDITOR.env.webkit || CKEDITOR.env.opera)CKEDITOR.document[CKEDITOR.env.webkit ? 'getBody' : 'getDocumentElement']().$.scrollTop = m; h && h.removeListener(); CKEDITOR.env.ie && i.focus(); o.selectBookmarks(v); j.remove(); var a; if (CKEDITOR.env.webkit && (a = j.getFirst()) && a.is && a.hasClass('Apple-style-span'))j = a; b.removeListener('selectionChange',
 k); d(j.getHtml())
-        }, 0)
+          }, 0)
         }
       } function o () { if (CKEDITOR.env.ie) { b.focus(); f(); var a = b.focusManager; a.lock(); if (b.editable().fire(q) && !l('paste')) return a.unlock(), !1; a.unlock() } else try { if (b.editable().fire(q) && !b.document.$.execCommand('Paste', !1, null)) throw 0 } catch (d) { return !1 } return !0 } function p (a) {
         if (b.mode == 'wysiwyg') {
-        switch (a.data.keyCode) {
-          case CKEDITOR.CTRL + 86:case CKEDITOR.SHIFT + 45:a = b.editable(); f(); !CKEDITOR.env.ie && a.fire('beforepaste'); (CKEDITOR.env.opera || CKEDITOR.env.gecko && CKEDITOR.env.version < 10900) &&
+          switch (a.data.keyCode) {
+            case CKEDITOR.CTRL + 86:case CKEDITOR.SHIFT + 45:a = b.editable(); f(); !CKEDITOR.env.ie && a.fire('beforepaste'); (CKEDITOR.env.opera || CKEDITOR.env.gecko && CKEDITOR.env.version < 10900) &&
 a.fire('paste'); break; case CKEDITOR.CTRL + 88:case CKEDITOR.SHIFT + 46:b.fire('saveSnapshot'), setTimeout(function () { b.fire('saveSnapshot') }, 0)
+          }
         }
-      }
       } function u (a) { var d = {type: 'auto'}, c = b.fire('beforePaste', d); k(a, function (b) { b = b.replace(/<span[^>]+data-cke-bookmark[^<]*?<\/span>/ig, ''); c && g(d.type, b, 0, 1) }) } function s () { if (b.mode == 'wysiwyg') { var a = m('paste'); b.getCommand('cut').setState(m('cut')); b.getCommand('copy').setState(m('copy')); b.getCommand('paste').setState(a); b.fire('pasteState', a) } } function m (a) {
-      if (t &&
+        if (t &&
 a in {paste: 1, cut: 1}) return CKEDITOR.TRISTATE_DISABLED; if (a == 'paste') return CKEDITOR.TRISTATE_OFF; var a = b.getSelection(), d = a.getRanges(); return a.getType() == CKEDITOR.SELECTION_NONE || d.length == 1 && d[0].collapsed ? CKEDITOR.TRISTATE_DISABLED : CKEDITOR.TRISTATE_OFF
-    } var n = 0, r = 0, t = 0, q = CKEDITOR.env.ie ? 'beforepaste' : 'paste'; (function () {
-      b.on('key', p); b.on('contentDom', a); b.on('selectionChange', function (a) { t = a.data.selection.getRanges()[0].checkReadOnly(); s() }); b.contextMenu && b.contextMenu.addListener(function (a,
+      } var n = 0, r = 0, t = 0, q = CKEDITOR.env.ie ? 'beforepaste' : 'paste'; (function () {
+        b.on('key', p); b.on('contentDom', a); b.on('selectionChange', function (a) { t = a.data.selection.getRanges()[0].checkReadOnly(); s() }); b.contextMenu && b.contextMenu.addListener(function (a,
 b) { t = b.getRanges()[0].checkReadOnly(); return {cut: m('cut'), copy: m('copy'), paste: m('paste')} })
-    })(); (function () { function a (d, c, i, e, f) { var k = b.lang.clipboard[c]; b.addCommand(c, i); b.ui.addButton && b.ui.addButton(d, {label: k, command: c, toolbar: 'clipboard,' + e}); b.addMenuItems && b.addMenuItem(c, {label: k, command: c, group: 'clipboard', order: f}) }a('Cut', 'cut', c('cut'), 10, 1); a('Copy', 'copy', c('copy'), 20, 4); a('Paste', 'paste', d(), 30, 8) })(); b.getClipboardData = function (a, d) {
-    function c (a) {
-    a.removeListener(); a.cancel()
-    d(a.data)
-  } function i (a) { a.removeListener(); a.cancel(); g = !0; d({type: h, dataValue: a.data}) } function f () { this.customTitle = a && a.title } var k = !1, h = 'auto', g = !1; d || (d = a, a = null); b.on('paste', c, null, null, 0); b.on('beforePaste', function (a) { a.removeListener(); k = true; h = a.data.type }, null, null, 1E3); !1 === o() && (b.removeListener('paste', c), k && b.fire('pasteDialog', f) ? (b.on('pasteDialogCommit', i), b.on('dialogHide', function (a) {
-    a.removeListener(); a.data.removeListener('pasteDialogCommit', i); setTimeout(function () { g || d(null) },
+      })(); (function () { function a (d, c, i, e, f) { var k = b.lang.clipboard[c]; b.addCommand(c, i); b.ui.addButton && b.ui.addButton(d, {label: k, command: c, toolbar: 'clipboard,' + e}); b.addMenuItems && b.addMenuItem(c, {label: k, command: c, group: 'clipboard', order: f}) }a('Cut', 'cut', c('cut'), 10, 1); a('Copy', 'copy', c('copy'), 20, 4); a('Paste', 'paste', d(), 30, 8) })(); b.getClipboardData = function (a, d) {
+        function c (a) {
+          a.removeListener(); a.cancel()
+          d(a.data)
+        } function i (a) { a.removeListener(); a.cancel(); g = !0; d({type: h, dataValue: a.data}) } function f () { this.customTitle = a && a.title } var k = !1, h = 'auto', g = !1; d || (d = a, a = null); b.on('paste', c, null, null, 0); b.on('beforePaste', function (a) { a.removeListener(); k = true; h = a.data.type }, null, null, 1E3); !1 === o() && (b.removeListener('paste', c), k && b.fire('pasteDialog', f) ? (b.on('pasteDialogCommit', i), b.on('dialogHide', function (a) {
+          a.removeListener(); a.data.removeListener('pasteDialogCommit', i); setTimeout(function () { g || d(null) },
 10)
-  })) : d(null))
-  }
+        })) : d(null))
+      }
     } function x (b) { if (CKEDITOR.env.webkit) { if (!b.match(/^[^<]*$/g) && !b.match(/^(<div><br( ?\/)?><\/div>|<div>[^<]*<\/div>)*$/gi)) return 'html' } else if (CKEDITOR.env.ie) { if (!b.match(/^([^<]|<br( ?\/)?>)*$/gi) && !b.match(/^(<p>([^<]|<br( ?\/)?>)*<\/p>|(\r\n))*$/gi)) return 'html' } else if (CKEDITOR.env.gecko || CKEDITOR.env.opera) { if (!b.match(/^([^<]|<br( ?\/)?>)*$/gi)) return 'html' } else return 'html'; return 'htmlifiedtext' } function y (b, a) {
       function c (a) {
         return CKEDITOR.tools.repeat('</p><p>', ~~(a / 2)) +
@@ -3058,16 +3058,16 @@ a = a.replace(/<\/div><div>/g, '<br>'), a = a.replace(/<\/?div>/g, '')); if ((CK
 CKEDITOR.ENTER_BR ? a = a.replace(/(<\/p><p>)+/g, function (a) { return CKEDITOR.tools.repeat('<br>', 2 * (a.length / 7)) }).replace(/<\/?p>/g, '') : b.enterMode == CKEDITOR.ENTER_DIV && (a = a.replace(/<(\/)?p>/g, '<$1div>')); return a
     }CKEDITOR.plugins.add('clipboard', {requires: 'dialog',
       init: function (b) {
-      var a; w(b); CKEDITOR.dialog.add('paste', CKEDITOR.getUrl(this.path + 'dialogs/paste.js')); b.on('paste', function (a) {
-        var b = a.data.dataValue, f = CKEDITOR.dtd.$block; b.indexOf('Apple-') > -1 && (b = b.replace(/<span class="Apple-converted-space">&nbsp;<\/span>/gi,
+        var a; w(b); CKEDITOR.dialog.add('paste', CKEDITOR.getUrl(this.path + 'dialogs/paste.js')); b.on('paste', function (a) {
+          var b = a.data.dataValue, f = CKEDITOR.dtd.$block; b.indexOf('Apple-') > -1 && (b = b.replace(/<span class="Apple-converted-space">&nbsp;<\/span>/gi,
 ' '), a.data.type != 'html' && (b = b.replace(/<span class="Apple-tab-span"[^>]*>([^<]*)<\/span>/gi, function (a, b) { return b.replace(/\t/g, '&nbsp;&nbsp; &nbsp;') })), b.indexOf('<br class="Apple-interchange-newline">') > -1 && (a.data.startsWithEOL = 1, a.data.preSniffing = 'html', b = b.replace(/<br class="Apple-interchange-newline">/, '')), b = b.replace(/(<[^>]+) class="Apple-[^"]*"/gi, '$1')); if (b.match(/^<[^<]+cke_(editable|contents)/i)) {
   var h, l, g = new CKEDITOR.dom.element('div'); for (g.setHtml(b); g.getChildCount() == 1 && (h =
 g.getFirst()) && h.type == CKEDITOR.NODE_ELEMENT && (h.hasClass('cke_editable') || h.hasClass('cke_contents'));)g = l = h; l && (b = l.getHtml().replace(/<br>$/i, ''))
 }CKEDITOR.env.ie ? b = b.replace(/^&nbsp;(?: |\r\n)?<(\w+)/g, function (b, d) { if (d.toLowerCase() in f) { a.data.preSniffing = 'html'; return '<' + d } return b }) : CKEDITOR.env.webkit ? b = b.replace(/<\/(\w+)><div><br><\/div>$/, function (b, d) { if (d in f) { a.data.endsWithEOL = 1; return '</' + d + '>' } return b }) : CKEDITOR.env.gecko && (b = b.replace(/(\s)<br>$/, '$1')); a.data.dataValue = b
-      }, null,
+        }, null,
 null, 3); b.on('paste', function (c) { var c = c.data, d = c.type, f = c.dataValue, h, l = b.config.clipboard_defaultContentType || 'html'; h = d == 'html' || c.preSniffing == 'html' ? 'html' : x(f); h == 'htmlifiedtext' ? f = y(b.config, f) : d == 'text' && h == 'html' && (f = A(b.config, f, a || (a = z(b)))); c.startsWithEOL && (f = '<br data-cke-eol="1">' + f); c.endsWithEOL && (f += '<br data-cke-eol="1">'); d == 'auto' && (d = h == 'html' || l == 'html' ? 'html' : 'text'); c.type = d; c.dataValue = f; delete c.preSniffing; delete c.startsWithEOL; delete c.endsWithEOL }, null, null, 6); b.on('paste',
 function (a) { a = a.data; b.insertHtml(a.dataValue, a.type); setTimeout(function () { b.fire('afterPaste') }, 0) }, null, null, 1E3); b.on('pasteDialog', function (a) { setTimeout(function () { b.openDialog('paste', a.data) }, 0) })
-    }})
+      }})
   })(); (function () {
     CKEDITOR.plugins.add('panel', {beforeInit: function (a) { a.ui.addHandler(CKEDITOR.UI_PANEL, CKEDITOR.ui.panel.handler) }}); CKEDITOR.UI_PANEL = 'panel'; CKEDITOR.ui.panel = function (a, b) { b && CKEDITOR.tools.extend(this, b); CKEDITOR.tools.extend(this, {className: '', css: []}); this.id = CKEDITOR.tools.getNextId(); this.document = a; this.isFramed = this.forceIFrame || this.css.length; this._ = {blocks: {}} }; CKEDITOR.ui.panel.handler = {create: function (a) { return new CKEDITOR.ui.panel(a) }}; var f = CKEDITOR.addTemplate('panel',
 '<div lang="{langCode}" id="{id}" dir={dir} class="cke cke_reset_all {editorId} cke_panel cke_panel {cls} cke_{dir}" style="z-index:{z-index}" role="presentation">{frame}</div>'), g = CKEDITOR.addTemplate('panel-frame', '<iframe id="{id}" class="cke_panel_frame" role="presentation" frameborder="0" src="{src}"></iframe>'), h = CKEDITOR.addTemplate('panel-frame-inner', '<!DOCTYPE html><html class="cke_panel_container {env}" dir="{dir}" lang="{langCode}"><head>{css}</head><body class="cke_{dir}" style="margin:0;padding:0" onload="{onload}"></body></html>')
@@ -3098,10 +3098,10 @@ this.element.remove()
           hide: function () { (!this.onHide || !0 !== this.onHide.call(this)) && this.element.setStyle('display', 'none') },
           onKeyDown: function (a, b) {
             var d = this.keys[a]; switch (d) {
-            case 'next':for (var e = this._.focusIndex, d = this.element.getElementsByTag('a'),
-              c; c = d.getItem(++e);) if (c.getAttribute('_cke_focus') && c.$.offsetWidth) { this._.focusIndex = e; c.focus(); break } return !c && !b ? (this._.focusIndex = -1, this.onKeyDown(a, 1)) : !1; case 'prev':e = this._.focusIndex; for (d = this.element.getElementsByTag('a'); e > 0 && (c = d.getItem(--e));) { if (c.getAttribute('_cke_focus') && c.$.offsetWidth) { this._.focusIndex = e; c.focus(); break }c = null } return !c && !b ? (this._.focusIndex = d.count(), this.onKeyDown(a, 1)) : !1; case 'click':case 'mouseup':return e = this._.focusIndex, (c = e >= 0 && this.element.getElementsByTag('a').getItem(e)) &&
+              case 'next':for (var e = this._.focusIndex, d = this.element.getElementsByTag('a'),
+                c; c = d.getItem(++e);) if (c.getAttribute('_cke_focus') && c.$.offsetWidth) { this._.focusIndex = e; c.focus(); break } return !c && !b ? (this._.focusIndex = -1, this.onKeyDown(a, 1)) : !1; case 'prev':e = this._.focusIndex; for (d = this.element.getElementsByTag('a'); e > 0 && (c = d.getItem(--e));) { if (c.getAttribute('_cke_focus') && c.$.offsetWidth) { this._.focusIndex = e; c.focus(); break }c = null } return !c && !b ? (this._.focusIndex = d.count(), this.onKeyDown(a, 1)) : !1; case 'click':case 'mouseup':return e = this._.focusIndex, (c = e >= 0 && this.element.getElementsByTag('a').getItem(e)) &&
 (c.$[d] ? c.$[d]() : c.$['on' + d]()), !1
-          } return !0
+            } return !0
           }}})
   })(); CKEDITOR.plugins.add('floatpanel', {requires: 'panel'});
   (function () {
@@ -3252,22 +3252,22 @@ k))
             a.on('contentDirChanged',
 function (b) { var c = CKEDITOR.document.getById(this._.id), d = c.getFirst(), b = b.data; b != a.lang.dir ? c.addClass('cke_' + b) : c.removeClass('cke_ltr').removeClass('cke_rtl'); d.setAttribute('style', CKEDITOR.skin.getIconStyle(h, b == 'rtl', this.icon, this.iconOffset)) }, this)
           }e || (f += 'off'); var h = g = this.name || this.command; this.icon && !/\./.test(this.icon) && (h = this.icon, this.icon = null); c = {id: i,
-          name: g,
-          iconName: h,
-          label: this.label,
-          cls: this.className || '',
-          state: f,
-          ariaDisabled: f == 'disabled' ? 'true' : 'false',
-          title: this.title,
-          titleJs: c.gecko &&
+            name: g,
+            iconName: h,
+            label: this.label,
+            cls: this.className || '',
+            state: f,
+            ariaDisabled: f == 'disabled' ? 'true' : 'false',
+            title: this.title,
+            titleJs: c.gecko &&
 c.version >= 10900 && !c.hc ? '' : (this.title || '').replace("'", ''),
-          hasArrow: this.hasArrow ? 'true' : 'false',
-          keydownFn: o,
-          mousedownFn: q,
-          focusFn: p,
-          clickFn: l,
-          style: CKEDITOR.skin.getIconStyle(h, a.lang.dir == 'rtl', this.icon, this.iconOffset),
-          arrowHtml: this.hasArrow ? m.output() : ''}; n.output(c, b); if (this.onRender) this.onRender(); return d
+            hasArrow: this.hasArrow ? 'true' : 'false',
+            keydownFn: o,
+            mousedownFn: q,
+            focusFn: p,
+            clickFn: l,
+            style: CKEDITOR.skin.getIconStyle(h, a.lang.dir == 'rtl', this.icon, this.iconOffset),
+            arrowHtml: this.hasArrow ? m.output() : ''}; n.output(c, b); if (this.onRender) this.onRender(); return d
       },
         setState: function (a) {
           if (this._.state == a) return !1; this._.state = a; var b = CKEDITOR.document.getById(this._.id); return b ? (b.setState(a, 'cke_button'), a == CKEDITOR.TRISTATE_DISABLED ? b.setAttribute('aria-disabled',
@@ -3284,36 +3284,36 @@ a) { return b.order == a.order ? 0 : a.order < 0 ? -1 : b.order < 0 ? 1 : b.orde
           } return b
         } function c (c, e) { if (e.length) { c.items ? c.items.push(a.ui.create('-')) : c.items = []; for (var f; f = e.shift();) if (f = typeof f === 'string' ? f : f.name, !b || CKEDITOR.tools.indexOf(b, f) == -1)(f = a.ui.create(f)) && a.addFeature(f) && c.items.push(f) } } function h (b) {
           var a = [], e, d, h; for (e = 0; e < b.length; ++e) {
-          d = b[e], h = {}, d == '/' ? a.push(d) : CKEDITOR.tools.isArray(d) ? (c(h, CKEDITOR.tools.clone(d)), a.push(h)) : d.items && (c(h, CKEDITOR.tools.clone(d.items)),
+            d = b[e], h = {}, d == '/' ? a.push(d) : CKEDITOR.tools.isArray(d) ? (c(h, CKEDITOR.tools.clone(d)), a.push(h)) : d.items && (c(h, CKEDITOR.tools.clone(d.items)),
 h.name = d.name, a.push(h))
-        } return a
+          } return a
         } var b = a.config.removeButtons, b = b && b.split(','), e = a.config.toolbar; typeof e === 'string' && (e = a.config['toolbar_' + e]); return a.toolbar = e ? h(e) : d()
       } function n (a) {
         return a._.toolbarGroups || (a._.toolbarGroups = [{name: 'document', groups: ['mode', 'document', 'doctools']}, {name: 'clipboard', groups: ['clipboard', 'undo']}, {name: 'editing', groups: ['find', 'selection', 'spellchecker']}, {name: 'forms'}, '/', {name: 'basicstyles', groups: ['basicstyles', 'cleanup']}, {name: 'paragraph',
           groups: ['list',
-          'indent', 'blocks', 'align', 'bidi']}, {name: 'links'}, {name: 'insert'}, '/', {name: 'styles'}, {name: 'colors'}, {name: 'tools'}, {name: 'others'}, {name: 'about'}])
+            'indent', 'blocks', 'align', 'bidi']}, {name: 'links'}, {name: 'insert'}, '/', {name: 'styles'}, {name: 'colors'}, {name: 'tools'}, {name: 'others'}, {name: 'about'}])
       } var u = function () { this.toolbars = []; this.focusCommandExecuted = !1 }; u.prototype.focus = function () { for (var a = 0, d; d = this.toolbars[a++];) for (var g = 0, c; c = d.items[g++];) if (c.focus) { c.focus(); return } }; var x = {modes: {wysiwyg: 1, source: 1},
         readOnly: 1,
         exec: function (a) {
-        a.toolbox && (a.toolbox.focusCommandExecuted = !0, CKEDITOR.env.ie || CKEDITOR.env.air ? setTimeout(function () { a.toolbox.focus() },
+          a.toolbox && (a.toolbox.focusCommandExecuted = !0, CKEDITOR.env.ie || CKEDITOR.env.air ? setTimeout(function () { a.toolbox.focus() },
 100) : a.toolbox.focus())
-      }}; CKEDITOR.plugins.add('toolbar', {requires: 'button',
-      init: function (a) {
-        var d, g = function (c, h) {
-            var b, e = a.lang.dir == 'rtl', j = a.config.toolbarGroupCycling, o = e ? 37 : 39, e = e ? 39 : 37, j = void 0 === j || j; switch (h) {
-             case 9:case CKEDITOR.SHIFT + 9:for (;!b || !b.items.length;) {
-              if (b = h == 9 ? (b ? b.next : c.toolbar.next) || a.toolbox.toolbars[0] : (b ? b.previous : c.toolbar.previous) || a.toolbox.toolbars[a.toolbox.toolbars.length - 1], b.items.length) {
-                for (c = b.items[d ? b.items.length - 1 : 0]; c && !c.focus;) {
-                (c = d ? c.previous : c.next) ||
+        }}; CKEDITOR.plugins.add('toolbar', {requires: 'button',
+          init: function (a) {
+            var d, g = function (c, h) {
+                var b, e = a.lang.dir == 'rtl', j = a.config.toolbarGroupCycling, o = e ? 37 : 39, e = e ? 39 : 37, j = void 0 === j || j; switch (h) {
+                  case 9:case CKEDITOR.SHIFT + 9:for (;!b || !b.items.length;) {
+                    if (b = h == 9 ? (b ? b.next : c.toolbar.next) || a.toolbox.toolbars[0] : (b ? b.previous : c.toolbar.previous) || a.toolbox.toolbars[a.toolbox.toolbars.length - 1], b.items.length) {
+                      for (c = b.items[d ? b.items.length - 1 : 0]; c && !c.focus;) {
+                        (c = d ? c.previous : c.next) ||
 (b = 0)
-              }
-              }
-            }c && c.focus(); return !1; case o:b = c; do b = b.next, !b && j && (b = c.toolbar.items[0]); while (b && !b.focus);b ? b.focus() : g(c, 9); return !1; case 40:return c.button && c.button.hasArrow ? (a.once('panelShow', function (b) { b.data._.panel._.currentBlock.onKeyDown(40) }), c.execute()) : g(c, h == 40 ? o : e), !1; case e:case 38:b = c; do b = b.previous, !b && j && (b = c.toolbar.items[c.toolbar.items.length - 1]); while (b && !b.focus);b ? b.focus() : (d = 1, g(c, CKEDITOR.SHIFT + 9), d = 0); return !1; case 27:return a.focus(), !1; case 13:case 32:return c.execute(),
+                      }
+                    }
+                  }c && c.focus(); return !1; case o:b = c; do b = b.next, !b && j && (b = c.toolbar.items[0]); while (b && !b.focus);b ? b.focus() : g(c, 9); return !1; case 40:return c.button && c.button.hasArrow ? (a.once('panelShow', function (b) { b.data._.panel._.currentBlock.onKeyDown(40) }), c.execute()) : g(c, h == 40 ? o : e), !1; case e:case 38:b = c; do b = b.previous, !b && j && (b = c.toolbar.items[c.toolbar.items.length - 1]); while (b && !b.focus);b ? b.focus() : (d = 1, g(c, CKEDITOR.SHIFT + 9), d = 0); return !1; case 27:return a.focus(), !1; case 13:case 32:return c.execute(),
 !1
-           } return !0
-          }; a.on('uiSpace', function (c) {
-           if (c.data.space == a.config.toolbarLocation) {
-            c.removeListener(); a.toolbox = new u(); var d = CKEDITOR.tools.getNextId(), b = ['<span id="', d, '" class="cke_voice_label">', a.lang.toolbar.toolbars, '</span>', '<span id="' + a.ui.spaceId('toolbox') + '" class="cke_toolbox" role="group" aria-labelledby="', d, '" onmousedown="return false;">'], d = !1 !== a.config.toolbarStartupExpanded, e, j; a.config.toolbarCanCollapse && a.elementMode != CKEDITOR.ELEMENT_MODE_INLINE && b.push('<span class="cke_toolbox_main"' +
+                } return !0
+              }; a.on('uiSpace', function (c) {
+                if (c.data.space == a.config.toolbarLocation) {
+                  c.removeListener(); a.toolbox = new u(); var d = CKEDITOR.tools.getNextId(), b = ['<span id="', d, '" class="cke_voice_label">', a.lang.toolbar.toolbars, '</span>', '<span id="' + a.ui.spaceId('toolbox') + '" class="cke_toolbox" role="group" aria-labelledby="', d, '" onmousedown="return false;">'], d = !1 !== a.config.toolbarStartupExpanded, e, j; a.config.toolbarCanCollapse && a.elementMode != CKEDITOR.ELEMENT_MODE_INLINE && b.push('<span class="cke_toolbox_main"' +
 (d ? '>' : ' style="display:none">')); for (var o = a.toolbox.toolbars, f = w(a), k = 0; k < f.length; k++) {
   var i, l = 0, r, m = f[k], s; if (m) {
     if (e && (b.push('</span>'), j = e = 0), m === '/')b.push('<span class="cke_toolbar_break"></span>'); else {
@@ -3339,16 +3339,16 @@ i + '_label"' : '', ' role="toolbar">'); r && b.push('<span id="', i, '_label" c
     modes: {wysiwyg: 1, source: 1}}); a.setKeystroke(CKEDITOR.ALT + (CKEDITOR.env.ie || CKEDITOR.env.webkit
 ? 189 : 109), 'toolbarCollapse'); b.push('<a title="' + (d ? a.lang.toolbar.toolbarCollapse : a.lang.toolbar.toolbarExpand) + '" id="' + a.ui.spaceId('toolbar_collapser') + '" tabIndex="-1" class="cke_toolbox_collapser'); d || b.push(' cke_toolbox_collapser_min'); b.push('" onclick="CKEDITOR.tools.callFunction(' + v + ')">', '<span class="cke_arrow">&#9650;</span>', '</a>')
 }b.push('</span>'); c.data.html += b.join('')
-          }
-         }); a.on('destroy', function () {
-          if (this.toolbox) {
-            var a, d = 0, b, e, g; for (a = this.toolbox.toolbars; d < a.length; d++) {
-            e = a[d].items
-            for (b = 0; b < e.length; b++)g = e[b], g.clickFn && CKEDITOR.tools.removeFunction(g.clickFn), g.keyDownFn && CKEDITOR.tools.removeFunction(g.keyDownFn)
-          }
-          }
-        }); a.on('uiReady', function () { var c = a.ui.space('toolbox'); c && a.focusManager.add(c, 1) }); a.addCommand('toolbarFocus', x); a.setKeystroke(CKEDITOR.ALT + 121, 'toolbarFocus'); a.ui.add('-', CKEDITOR.UI_SEPARATOR, {}); a.ui.addHandler(CKEDITOR.UI_SEPARATOR, {create: function () { return {render: function (a, d) { d.push('<span class="cke_toolbar_separator" role="separator"></span>'); return {} }} }})
-      }})
+                }
+              }); a.on('destroy', function () {
+                if (this.toolbox) {
+                  var a, d = 0, b, e, g; for (a = this.toolbox.toolbars; d < a.length; d++) {
+                    e = a[d].items
+                    for (b = 0; b < e.length; b++)g = e[b], g.clickFn && CKEDITOR.tools.removeFunction(g.clickFn), g.keyDownFn && CKEDITOR.tools.removeFunction(g.keyDownFn)
+                  }
+                }
+              }); a.on('uiReady', function () { var c = a.ui.space('toolbox'); c && a.focusManager.add(c, 1) }); a.addCommand('toolbarFocus', x); a.setKeystroke(CKEDITOR.ALT + 121, 'toolbarFocus'); a.ui.add('-', CKEDITOR.UI_SEPARATOR, {}); a.ui.addHandler(CKEDITOR.UI_SEPARATOR, {create: function () { return {render: function (a, d) { d.push('<span class="cke_toolbar_separator" role="separator"></span>'); return {} }} }})
+          }})
       CKEDITOR.ui.prototype.addToolbarGroup = function (a, d, g) { var c = n(this.editor), h = d === 0, b = {name: a}; if (g) { if (g = CKEDITOR.tools.search(c, function (a) { return a.name == g })) { !g.groups && (g.groups = []); if (d && (d = CKEDITOR.tools.indexOf(g.groups, d), d >= 0)) { g.groups.splice(d + 1, 0, a); return }h ? g.groups.splice(0, 0, a) : g.groups.push(a); return }d = null }d && (d = CKEDITOR.tools.indexOf(c, function (a) { return a.name == d })); h ? c.splice(0, 0, a) : typeof d === 'number' ? c.splice(d + 1, 0, b) : c.push(a) }
     })(); CKEDITOR.UI_SEPARATOR = 'separator'
   CKEDITOR.config.toolbarLocation = 'top'; (function () {
@@ -3440,9 +3440,9 @@ a + ',height=' + b + ',top=' + f + ',left=' + g, c = window.open('', null, d, !0
         for (var e, g = b.length; g--;) {
           if (e = b[g], (e.type == 'hbox' || e.type == 'vbox' || e.type == 'fieldset') && j(a, c, d, e.children), e.filebrowser) {
             if (typeof e.filebrowser === 'string' && (e.filebrowser = {action: e.type == 'fileButton' ? 'QuickUpload' : 'Browse', target: e.filebrowser}), e.filebrowser.action == 'Browse') {
-            var f = e.filebrowser.url; void 0 === f && (f = a.config['filebrowser' +
+              var f = e.filebrowser.url; void 0 === f && (f = a.config['filebrowser' +
 i(c) + 'BrowseUrl'], void 0 === f && (f = a.config.filebrowserBrowseUrl)); f && (e.onClick = k, e.filebrowser.url = f, e.hidden = !1)
-          } else if (e.filebrowser.action == 'QuickUpload' && e['for'] && (f = e.filebrowser.url, void 0 === f && (f = a.config['filebrowser' + i(c) + 'UploadUrl'], void 0 === f && (f = a.config.filebrowserUploadUrl)), f)) { var h = e.onClick; e.onClick = function (a) { var b = a.sender; return h && h.call(b, a) === false ? false : l.call(b, a) }; e.filebrowser.url = f; e.hidden = !1; m(a, d.getContents(e['for'][0]).get(e['for'][1]), e.filebrowser) }
+            } else if (e.filebrowser.action == 'QuickUpload' && e['for'] && (f = e.filebrowser.url, void 0 === f && (f = a.config['filebrowser' + i(c) + 'UploadUrl'], void 0 === f && (f = a.config.filebrowserUploadUrl)), f)) { var h = e.onClick; e.onClick = function (a) { var b = a.sender; return h && h.call(b, a) === false ? false : l.call(b, a) }; e.filebrowser.url = f; e.hidden = !1; m(a, d.getContents(e['for'][0]).get(e['for'][1]), e.filebrowser) }
           }
         }
       }
@@ -3591,9 +3591,9 @@ a
             a.on('selectionChange', function (b) {
               var c = this.getValue(), b = b.data.path; this.refresh(); for (var e in d) {
                 if (d[e].checkActive(b)) {
-                e !=
+                  e !=
 c && this.setValue(e, a.lang.format['tag_' + e]); return
-              }
+                }
               } this.setValue('')
             }, this)
           },
@@ -3670,17 +3670,17 @@ c)); a.fire('ariaWidget', e)
           base: CKEDITOR.editable,
           proto: {setData: function (a, d) {
             var b = this.editor; if (d) this.setHtml(a), b.fire('dataReady'); else {
-            this._.isLoadingData = !0; b._.dataStore = {id: 1}; var c = b.config, e = c.fullPage, g = c.docType, f = CKEDITOR.tools.buildStyleHtml(l()).replace(/<style>/,
+              this._.isLoadingData = !0; b._.dataStore = {id: 1}; var c = b.config, e = c.fullPage, g = c.docType, f = CKEDITOR.tools.buildStyleHtml(l()).replace(/<style>/,
 '<style data-cke-temp="1">'); e || (f += CKEDITOR.tools.buildStyleHtml(b.config.contentsCss)); var h = c.baseHref ? '<base href="' + c.baseHref + '" data-cke-temp="1" />' : ''; e && (a = a.replace(/<!DOCTYPE[^>]*>/i, function (a) { b.docType = g = a; return '' }).replace(/<\?xml\s[^\?]*\?>/i, function (a) { b.xmlDeclaration = a; return '' })); a = b.dataProcessor.toHtml(a); e ? (/<body[\s|>]/.test(a) || (a = '<body>' + a), /<html[\s|>]/.test(a) || (a = '<html>' + a + '</html>'), /<head[\s|>]/.test(a) ? /<title[\s|>]/.test(a) || (a = a.replace(/<head[^>]*>/, '$&<title></title>'))
 : a = a.replace(/<html[^>]*>/, '$&<head><title></title></head>'), h && (a = a.replace(/<head>/, '$&' + h)), a = a.replace(/<\/head\s*>/, f + '$&'), a = g + a) : a = c.docType + '<html dir="' + c.contentsLangDirection + '" lang="' + (c.contentsLanguage || b.langCode) + '"><head><title>' + this._.docTitle + '</title>' + h + f + '</head><body' + (c.bodyId ? ' id="' + c.bodyId + '"' : '') + (c.bodyClass ? ' class="' + c.bodyClass + '"' : '') + '>' + a + '</body></html>'; CKEDITOR.env.gecko && (a = a.replace(/<body/, '<body contenteditable="true" '), CKEDITOR.env.version < 2E4 && (a = a.replace(/<body[^>]*>/,
 '$&<\!-- cke-content-start --\>'))); c = '<script id="cke_actscrpt" type="text/javascript"' + (CKEDITOR.env.ie ? ' defer="defer" ' : '') + '>var wasLoaded=0;function onload(){if(!wasLoaded)window.parent.CKEDITOR.tools.callFunction(' + this._.frameLoadedHandler + ',window);wasLoaded=1;}' + (CKEDITOR.env.ie ? 'onload();' : 'document.addEventListener("DOMContentLoaded", onload, false );') + '<\/script>'; CKEDITOR.env.ie && CKEDITOR.env.version < 9 && (c += '<script id="cke_shimscrpt">window.parent.CKEDITOR.tools.enableHtml5Elements(document)<\/script>')
-            a = a.replace(/(?=\s*<\/(:?head)>)/, c); this.clearCustomData(); this.clearListeners(); b.fire('contentDomUnload'); var i = this.getDocument(); try { i.write(a) } catch (j) { setTimeout(function () { i.write(a) }, 0) }
-          }
+              a = a.replace(/(?=\s*<\/(:?head)>)/, c); this.clearCustomData(); this.clearListeners(); b.fire('contentDomUnload'); var i = this.getDocument(); try { i.write(a) } catch (j) { setTimeout(function () { i.write(a) }, 0) }
+            }
           },
             getData: function (a) {
-            if (a) return this.getHtml(); var a = this.editor, d = a.config, b = d.fullPage, c = b && a.docType, e = b && a.xmlDeclaration, g = this.getDocument(), b = b ? g.getDocumentElement().getOuterHtml() : g.getBody().getHtml(); CKEDITOR.env.gecko && d.enterMode != CKEDITOR.ENTER_BR && (b = b.replace(/<br>(?=\s*(:?$|<\/body>))/,
+              if (a) return this.getHtml(); var a = this.editor, d = a.config, b = d.fullPage, c = b && a.docType, e = b && a.xmlDeclaration, g = this.getDocument(), b = b ? g.getDocumentElement().getOuterHtml() : g.getBody().getHtml(); CKEDITOR.env.gecko && d.enterMode != CKEDITOR.ENTER_BR && (b = b.replace(/<br>(?=\s*(:?$|<\/body>))/,
 '')); b = a.dataProcessor.toDataFormat(b); e && (b = e + '\n' + b); c && (b = c + '\n' + b); return b
-          },
+            },
             focus: function () { this._.isLoadingData ? this._.isPendingFocus = !0 : j.baseProto.focus.call(this) },
             detach: function () { var a = this.editor, d = a.document, b = a.window.getFrame(); j.baseProto.detach.call(this); this.clearCustomData(); d.getDocumentElement().clearCustomData(); b.clearCustomData(); CKEDITOR.tools.removeFunction(this._.frameLoadedHandler); (d = b.removeCustomData('onResize')) && d.removeListener(); a.fire('contentDomUnload'); b.remove() }}})
       })()
@@ -3728,11 +3728,11 @@ c.getDirection()) { f.setStartAfter(c); l = new CKEDITOR.dom.walker(f) } else { 
           for (var a in b) {
             (function (a, b) {
               var e = a.getCommand(b.relatedGlobal), c; for (c in b.jobs) {
-              e.on('exec', function (d) {
-                d.data.done || (a.fire('lockSnapshot'), b.execJob(a, c) && (d.data.done =
+                e.on('exec', function (d) {
+                  d.data.done || (a.fire('lockSnapshot'), b.execJob(a, c) && (d.data.done =
 !0), a.fire('unlockSnapshot'), CKEDITOR.dom.element.clearAllMarkers(b.database))
-              }, this, null, c), e.on('refresh', function (d) { d.data.states || (d.data.states = {}); d.data.states[b.name + '@' + c] = b.refreshJob(a, c, d.data.path) }, this, null, c)
-            }a.addFeature(b)
+                }, this, null, c), e.on('refresh', function (d) { d.data.states || (d.data.states = {}); d.data.states[b.name + '@' + c] = b.refreshJob(a, c, d.data.path) }, this, null, c)
+              }a.addFeature(b)
             })(this, b[a])
           }
         })
@@ -3747,9 +3747,9 @@ b, e) { b = this.jobs[b]; b.state = a.activeFilter.checkFeature(this) ? b.refres
           a = a.getCustomData('listarray_index'); a <= f.getCustomData('listarray_index'); a++) if (c[a].indent += h, h > 0) { var l = c[a].parent; c[a].parent = new CKEDITOR.dom.element(l.getName(), l.getDocument()) } for (a = f.getCustomData('listarray_index') + 1; a < c.length && c[a].indent > g; a++)c[a].indent += h; f = CKEDITOR.plugins.list.arrayToList(c, o, null, e.config.enterMode, b.getDirection()); if (!n.isIndent) {
             var i; if ((i = b.getParent()) && i.is('li')) {
               for (var h = f.listNode.getChildren(), m = [], j, a = h.count() - 1; a >= 0; a--) {
-              (j = h.getItem(a)) && (j.is &&
+                (j = h.getItem(a)) && (j.is &&
 j.is('li')) && m.push(j)
-            }
+              }
             }
           }f && f.listNode.replace(b); if (m && m.length) for (a = 0; a < m.length; a++) { for (j = b = m[a]; (j = j.getNext()) && j.is && j.getName() in k;)CKEDITOR.env.needsNbspFiller && !b.getFirst(t) && b.append(d.document.createText(' ')), b.append(j); b.insertAfter(i) }f && e.fire('contentDomInvalidated'); return !0
       } for (var n = this, o = this.database, k = this.context, l = e.getSelection(), l = (l && l.getRanges()).createIterator(), d; d = l.getNextRange();) {
@@ -3860,29 +3860,29 @@ k, e, b, j) {
         e || (e = 0); if (!c || c.length < e + 1) return null; for (var g, h = c[e].parent.getDocument(), f = new CKEDITOR.dom.documentFragment(h), a = null, d = e, m = Math.max(c[e].indent, 0), i = null, n, l, p = b == CKEDITOR.ENTER_P ? 'p' : 'div'; ;) {
           var o = c[d]; g = o.grandparent; n = o.element.getDirection(1)
           if (o.indent == m) { if (!a || c[d].parent.getName() != a.getName())a = c[d].parent.clone(!1, 1), j && a.setAttribute('dir', j), f.append(a); i = a.append(o.element.clone(0, 1)); n != a.getDirection(1) && i.setAttribute('dir', n); for (g = 0; g < o.contents.length; g++)i.append(o.contents[g].clone(1, 1)); d++ } else if (o.indent == Math.max(m, 0) + 1) {
-          o = c[d - 1].element.getDirection(1), d = CKEDITOR.plugins.list.arrayToList(c, null, d, b, o != n ? n : null), !i.getChildCount() && (CKEDITOR.env.needsNbspFiller && !(h.$.documentMode > 7)) && i.append(h.createText(' ')),
+            o = c[d - 1].element.getDirection(1), d = CKEDITOR.plugins.list.arrayToList(c, null, d, b, o != n ? n : null), !i.getChildCount() && (CKEDITOR.env.needsNbspFiller && !(h.$.documentMode > 7)) && i.append(h.createText(' ')),
 i.append(d.listNode), d = d.nextIndex
-        } else if (o.indent == -1 && !e && g) {
-        r[g.getName()] ? (i = o.element.clone(!1, !0), n != g.getDirection(1) && i.setAttribute('dir', n)) : i = new CKEDITOR.dom.documentFragment(h); var a = g.getDirection(1) != n, u = o.element, z = u.getAttribute('class'), v = u.getAttribute('style'), w = i.type == CKEDITOR.NODE_DOCUMENT_FRAGMENT && (b != CKEDITOR.ENTER_BR || a || v || z), s, x = o.contents.length, t; for (g = 0; g < x; g++) {
-          if (s = o.contents[g], D(s) && x > 1)w ? t = s.clone(1, 1) : i.append(s.clone(1, 1)); else if (s.type == CKEDITOR.NODE_ELEMENT &&
+          } else if (o.indent == -1 && !e && g) {
+            r[g.getName()] ? (i = o.element.clone(!1, !0), n != g.getDirection(1) && i.setAttribute('dir', n)) : i = new CKEDITOR.dom.documentFragment(h); var a = g.getDirection(1) != n, u = o.element, z = u.getAttribute('class'), v = u.getAttribute('style'), w = i.type == CKEDITOR.NODE_DOCUMENT_FRAGMENT && (b != CKEDITOR.ENTER_BR || a || v || z), s, x = o.contents.length, t; for (g = 0; g < x; g++) {
+              if (s = o.contents[g], D(s) && x > 1)w ? t = s.clone(1, 1) : i.append(s.clone(1, 1)); else if (s.type == CKEDITOR.NODE_ELEMENT &&
 s.isBlockBoundary()) { a && !s.getDirection() && s.setAttribute('dir', n); l = s; var y = u.getAttribute('style'); y && l.setAttribute('style', y.replace(/([^;])$/, '$1;') + (l.getAttribute('style') || '')); z && s.addClass(z); l = null; t && (i.append(t), t = null); i.append(s.clone(1, 1)) } else w ? (l || (l = h.createElement(p), i.append(l), a && l.setAttribute('dir', n)), v && l.setAttribute('style', v), z && l.setAttribute('class', z), t && (l.append(t), t = null), l.append(s.clone(1, 1))) : i.append(s.clone(1, 1))
-        } t && ((l || i).append(t), t = null); i.type == CKEDITOR.NODE_DOCUMENT_FRAGMENT &&
+            } t && ((l || i).append(t), t = null); i.type == CKEDITOR.NODE_DOCUMENT_FRAGMENT &&
 d != c.length - 1 && (CKEDITOR.env.needsBrFiller && (n = i.getLast()) && (n.type == CKEDITOR.NODE_ELEMENT && n.is('br')) && n.remove(), n = i.getLast(q), (!n || !(n.type == CKEDITOR.NODE_ELEMENT && n.is(CKEDITOR.dtd.$block))) && i.append(h.createElement('br'))); n = i.$.nodeName.toLowerCase(); (n == 'div' || n == 'p') && i.appendBogus(); f.append(i); a = null; d++
-      } else return null; l = null; if (c.length <= d || Math.max(c[d].indent, 0) < m) break
+          } else return null; l = null; if (c.length <= d || Math.max(c[d].indent, 0) < m) break
         } if (k) {
-        for (c = f.getFirst(); c;) {
-        if (c.type == CKEDITOR.NODE_ELEMENT && (CKEDITOR.dom.element.clearMarkers(k, c), c.getName() in
+          for (c = f.getFirst(); c;) {
+            if (c.type == CKEDITOR.NODE_ELEMENT && (CKEDITOR.dom.element.clearMarkers(k, c), c.getName() in
 CKEDITOR.dtd.$listItem && (e = c, h = j = b = void 0, b = e.getDirection()))) { for (j = e.getParent(); j && !(h = j.getDirection());)j = j.getParent(); b == h && e.removeAttribute('dir') }c = c.getNextSourceNode()
-      }
-      } return {listNode: f, nextIndex: d}
+          }
+        } return {listNode: f, nextIndex: d}
       }}; var H = /^h[1-6]$/, F = CKEDITOR.dom.walker.nodeType(CKEDITOR.NODE_ELEMENT); x.prototype = {exec: function (c) {
         this.refresh(c, c.elementPath()); var k = c.config, e = c.getSelection(), b = e && e.getRanges(); if (this.state == CKEDITOR.TRISTATE_OFF) {
-        var j = c.editable(); if (j.getFirst(q)) {
-        var g = b.length == 1 && b[0]; (k =
+          var j = c.editable(); if (j.getFirst(q)) {
+            var g = b.length == 1 && b[0]; (k =
 g && g.getEnclosedNode()) && (k.is && this.type == k.getName()) && this.setState(CKEDITOR.TRISTATE_ON)
-      } else k.enterMode == CKEDITOR.ENTER_BR ? j.appendBogus() : b[0].fixBlock(1, k.enterMode == CKEDITOR.ENTER_P ? 'p' : 'div'), e.selectRanges(b)
-      } for (var k = e.createBookmarks(!0), j = [], h = {}, b = b.createIterator(), f = 0; (g = b.getNextRange()) && ++f;) {
-      var a = g.getBoundaryNodes(), d = a.startNode, m = a.endNode; d.type == CKEDITOR.NODE_ELEMENT && d.getName() == 'td' && g.setStartAt(a.startNode, CKEDITOR.POSITION_AFTER_START); m.type == CKEDITOR.NODE_ELEMENT &&
+          } else k.enterMode == CKEDITOR.ENTER_BR ? j.appendBogus() : b[0].fixBlock(1, k.enterMode == CKEDITOR.ENTER_P ? 'p' : 'div'), e.selectRanges(b)
+        } for (var k = e.createBookmarks(!0), j = [], h = {}, b = b.createIterator(), f = 0; (g = b.getNextRange()) && ++f;) {
+          var a = g.getBoundaryNodes(), d = a.startNode, m = a.endNode; d.type == CKEDITOR.NODE_ELEMENT && d.getName() == 'td' && g.setStartAt(a.startNode, CKEDITOR.POSITION_AFTER_START); m.type == CKEDITOR.NODE_ELEMENT &&
 m.getName() == 'td' && g.setEndAt(a.endNode, CKEDITOR.POSITION_BEFORE_END); g = g.createIterator(); for (g.forceBrBreak = this.state == CKEDITOR.TRISTATE_OFF; a = g.getNextParagraph();) {
   if (!a.getCustomData('list_block')) {
     CKEDITOR.dom.element.setMarker(h, a, 'list_block', 1); for (var i = c.elementPath(a), d = i.elements, m = 0, i = i.blockLimit, n, l = d.length - 1; l >= 0 && (n = d[l]); l--) {
@@ -3893,35 +3893,35 @@ j.push(d), CKEDITOR.dom.element.setMarker(h, n, 'list_group_object', d)); m = 1;
     }m || (m = i, m.getCustomData('list_group_object_' + f) ? m.getCustomData('list_group_object_' + f).contents.push(a) : (d = {root: m, contents: [a]}, CKEDITOR.dom.element.setMarker(h, m, 'list_group_object_' + f, d), j.push(d)))
   }
 }
-    } for (n = []; j.length > 0;) {
-      if (d = j.shift(), this.state == CKEDITOR.TRISTATE_OFF) {
-        if (r[d.root.getName()]) {
-          b = c; f = d; d = h; g = n; m = CKEDITOR.plugins.list.listToArray(f.root, d); i = []; for (a = 0; a < f.contents.length; a++) {
-          if (l = f.contents[a], (l = l.getAscendant('li',
+        } for (n = []; j.length > 0;) {
+          if (d = j.shift(), this.state == CKEDITOR.TRISTATE_OFF) {
+            if (r[d.root.getName()]) {
+              b = c; f = d; d = h; g = n; m = CKEDITOR.plugins.list.listToArray(f.root, d); i = []; for (a = 0; a < f.contents.length; a++) {
+                if (l = f.contents[a], (l = l.getAscendant('li',
 !0)) && !l.getCustomData('list_item_processed'))i.push(l), CKEDITOR.dom.element.setMarker(d, l, 'list_item_processed', !0)
-        } for (var l = f.root.getDocument(), p = void 0, o = void 0, a = 0; a < i.length; a++) { var u = i[a].getCustomData('listarray_index'), p = m[u].parent; p.is(this.type) || (o = l.createElement(this.type), p.copyAttributes(o, {start: 1, type: 1}), o.removeStyle('list-style-type'), m[u].parent = o) }d = CKEDITOR.plugins.list.arrayToList(m, d, null, b.config.enterMode); m = void 0; i = d.listNode.getChildCount(); for (a = 0; a < i && (m = d.listNode.getChild(a)); a++) {
-          m.getName() ==
+              } for (var l = f.root.getDocument(), p = void 0, o = void 0, a = 0; a < i.length; a++) { var u = i[a].getCustomData('listarray_index'), p = m[u].parent; p.is(this.type) || (o = l.createElement(this.type), p.copyAttributes(o, {start: 1, type: 1}), o.removeStyle('list-style-type'), m[u].parent = o) }d = CKEDITOR.plugins.list.arrayToList(m, d, null, b.config.enterMode); m = void 0; i = d.listNode.getChildCount(); for (a = 0; a < i && (m = d.listNode.getChild(a)); a++) {
+                m.getName() ==
 this.type && g.push(m)
-        }d.listNode.replace(f.root); b.fire('contentDomInvalidated')
-        } else {
-          m = c; a = d; g = n; i = a.contents; b = a.root.getDocument(); f = []; i.length == 1 && i[0].equals(a.root) && (d = b.createElement('div'), i[0].moveChildren && i[0].moveChildren(d), i[0].append(d), i[0] = d); a = a.contents[0].getParent(); for (l = 0; l < i.length; l++)a = a.getCommonAncestor(i[l].getParent()); p = m.config.useComputedState; m = d = void 0; p = void 0 === p || p; for (l = 0; l < i.length; l++) {
-          for (o = i[l]; u = o.getParent();) {
-            if (u.equals(a)) {
-             f.push(o); !m && o.getDirection() &&
+              }d.listNode.replace(f.root); b.fire('contentDomInvalidated')
+            } else {
+              m = c; a = d; g = n; i = a.contents; b = a.root.getDocument(); f = []; i.length == 1 && i[0].equals(a.root) && (d = b.createElement('div'), i[0].moveChildren && i[0].moveChildren(d), i[0].append(d), i[0] = d); a = a.contents[0].getParent(); for (l = 0; l < i.length; l++)a = a.getCommonAncestor(i[l].getParent()); p = m.config.useComputedState; m = d = void 0; p = void 0 === p || p; for (l = 0; l < i.length; l++) {
+                for (o = i[l]; u = o.getParent();) {
+                  if (u.equals(a)) {
+                    f.push(o); !m && o.getDirection() &&
 (m = 1); o = o.getDirection(p); d !== null && (d = d && d != o ? null : o); break
-           }o = u
-          }
-        } if (!(f.length < 1)) { i = f[f.length - 1].getNext(); l = b.createElement(this.type); g.push(l); for (p = g = void 0; f.length;)g = f.shift(), p = b.createElement('li'), g.is('pre') || H.test(g.getName()) || g.getAttribute('contenteditable') == 'false' ? g.appendTo(p) : (g.copyAttributes(p), d && g.getDirection() && (p.removeStyle('direction'), p.removeAttribute('dir')), g.moveChildren(p), g.remove()), p.appendTo(l); d && m && l.setAttribute('dir', d); i ? l.insertBefore(i) : l.appendTo(a) }
-        }
-      } else {
-        this.state ==
+                  }o = u
+                }
+              } if (!(f.length < 1)) { i = f[f.length - 1].getNext(); l = b.createElement(this.type); g.push(l); for (p = g = void 0; f.length;)g = f.shift(), p = b.createElement('li'), g.is('pre') || H.test(g.getName()) || g.getAttribute('contenteditable') == 'false' ? g.appendTo(p) : (g.copyAttributes(p), d && g.getDirection() && (p.removeStyle('direction'), p.removeAttribute('dir')), g.moveChildren(p), g.remove()), p.appendTo(l); d && m && l.setAttribute('dir', d); i ? l.insertBefore(i) : l.appendTo(a) }
+            }
+          } else {
+            this.state ==
 CKEDITOR.TRISTATE_ON && r[d.root.getName()] && E.call(this, c, d, h)
-      }
-    } for (l = 0; l < n.length; l++)B(n[l]); CKEDITOR.dom.element.clearAllMarkers(h); e.selectBookmarks(k); c.focus()
+          }
+        } for (l = 0; l < n.length; l++)B(n[l]); CKEDITOR.dom.element.clearAllMarkers(h); e.selectBookmarks(k); c.focus()
       },
         refresh: function (c, k) { var e = k.contains(r, 1), b = k.blockLimit || k.root; e && b.contains(e) ? this.setState(e.is(this.type) ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF) : this.setState(CKEDITOR.TRISTATE_OFF) }}; CKEDITOR.plugins.add('list', {requires: 'indentlist',
-        init: function (c) {
-        c.blockless || (c.addCommand('numberedlist', new x('numberedlist', 'ol')), c.addCommand('bulletedlist',
+          init: function (c) {
+            c.blockless || (c.addCommand('numberedlist', new x('numberedlist', 'ol')), c.addCommand('bulletedlist',
 new x('bulletedlist', 'ul')), c.ui.addButton && (c.ui.addButton('NumberedList', {label: c.lang.list.numberedlist, command: 'numberedlist', directional: !0, toolbar: 'list,10'}), c.ui.addButton('BulletedList', {label: c.lang.list.bulletedlist, command: 'bulletedlist', directional: !0, toolbar: 'list,20'})), c.on('key', function (k) {
   var e = k.data.keyCode; if (c.mode == 'wysiwyg' && e in {8: 1, 46: 1}) {
     var b = c.getSelection().getRanges()[0], j = b && b.startPath(); if (b && b.collapsed) {
@@ -3945,7 +3945,7 @@ CKEDITOR.POSITION_BEFORE_END); h = (j = d.getLast(q)) && C(j) ? j : d; d = 0; if
     }
   }
 }))
-      }})
+          }})
   })(); (function () {
     function Q (a, c, d) { return m(c) && m(d) && d.equals(c.getNext(function (a) { return !(z(a) || A(a) || p(a)) })) } function u (a) { this.upper = a[0]; this.lower = a[1]; this.set.apply(this, a.slice(2)) } function J (a) { var c = a.element; if (c && m(c) && (c = c.getAscendant(a.triggers, !0)) && a.editable.contains(c)) { var d = K(c, !0); if (d.getAttribute('contenteditable') == 'true') return c; if (d.is(a.triggers)) return d } return null } function ga (a, c, d) { o(a, c); o(a, d); a = c.size.bottom; d = d.size.top; return a && d ? 0 | (a + d) / 2 : a || d } function r (a, c,
 d) { return c = c[d ? 'getPrevious' : 'getNext'](function (b) { return b && b.type == CKEDITOR.NODE_TEXT && !z(b) || m(b) && !p(b) && !v(a, b) }) } function K (a, c) { if (a.data('cke-editable')) return null; for (c || (a = a.getParent()); a && !a.data('cke-editable');) { if (a.hasAttribute('contenteditable')) return a; a = a.getParent() } return null } function ha (a) {
@@ -4069,20 +4069,20 @@ a.focus())
           readOnly: 1,
           editorFocus: !1,
           exec: function () {
-          var h = a.container.getChild(1), g = a.ui.space('contents'); if (a.mode == 'wysiwyg') {
-            var c = a.getSelection(); j = c && c.getRanges()
-            k = d.getScrollPosition()
-          } else { var i = a.editable().$; j = !CKEDITOR.env.ie && [i.selectionStart, i.selectionEnd]; k = [i.scrollLeft, i.scrollTop] } if (this.state == CKEDITOR.TRISTATE_OFF) {
-            d.on('resize', e); m = d.getScrollPosition(); for (c = a.container; c = c.getParent();)c.setCustomData('maximize_saved_styles', n(c)), c.setStyle('z-index', a.config.baseFloatZIndex - 5); g.setCustomData('maximize_saved_styles', n(g, !0)); h.setCustomData('maximize_saved_styles', n(h, !0)); g = {overflow: CKEDITOR.env.webkit ? '' : 'hidden', width: 0, height: 0}
-            b.getDocumentElement().setStyles(g); !CKEDITOR.env.gecko && b.getDocumentElement().setStyle('position', 'fixed'); (!CKEDITOR.env.gecko || !CKEDITOR.env.quirks) && b.getBody().setStyles(g); CKEDITOR.env.ie ? setTimeout(function () { d.$.scrollTo(0, 0) }, 0) : d.$.scrollTo(0, 0); h.setStyle('position', CKEDITOR.env.gecko && CKEDITOR.env.quirks ? 'fixed' : 'absolute'); h.$.offsetLeft; h.setStyles({'z-index': a.config.baseFloatZIndex - 5, left: '0px', top: '0px'}); h.addClass('cke_maximized'); e(); g = h.getDocumentPosition(); h.setStyles({left: -1 *
+            var h = a.container.getChild(1), g = a.ui.space('contents'); if (a.mode == 'wysiwyg') {
+              var c = a.getSelection(); j = c && c.getRanges()
+              k = d.getScrollPosition()
+            } else { var i = a.editable().$; j = !CKEDITOR.env.ie && [i.selectionStart, i.selectionEnd]; k = [i.scrollLeft, i.scrollTop] } if (this.state == CKEDITOR.TRISTATE_OFF) {
+              d.on('resize', e); m = d.getScrollPosition(); for (c = a.container; c = c.getParent();)c.setCustomData('maximize_saved_styles', n(c)), c.setStyle('z-index', a.config.baseFloatZIndex - 5); g.setCustomData('maximize_saved_styles', n(g, !0)); h.setCustomData('maximize_saved_styles', n(h, !0)); g = {overflow: CKEDITOR.env.webkit ? '' : 'hidden', width: 0, height: 0}
+              b.getDocumentElement().setStyles(g); !CKEDITOR.env.gecko && b.getDocumentElement().setStyle('position', 'fixed'); (!CKEDITOR.env.gecko || !CKEDITOR.env.quirks) && b.getBody().setStyles(g); CKEDITOR.env.ie ? setTimeout(function () { d.$.scrollTo(0, 0) }, 0) : d.$.scrollTo(0, 0); h.setStyle('position', CKEDITOR.env.gecko && CKEDITOR.env.quirks ? 'fixed' : 'absolute'); h.$.offsetLeft; h.setStyles({'z-index': a.config.baseFloatZIndex - 5, left: '0px', top: '0px'}); h.addClass('cke_maximized'); e(); g = h.getDocumentPosition(); h.setStyles({left: -1 *
 g.x + 'px',
-            top: -1 * g.y + 'px'}); CKEDITOR.env.gecko && q(a)
-          } else if (this.state == CKEDITOR.TRISTATE_ON) {
-          d.removeListener('resize', e); g = [g, h]; for (c = 0; c < g.length; c++)p(g[c], g[c].getCustomData('maximize_saved_styles')), g[c].removeCustomData('maximize_saved_styles'); for (c = a.container; c = c.getParent();)p(c, c.getCustomData('maximize_saved_styles')), c.removeCustomData('maximize_saved_styles'); CKEDITOR.env.ie ? setTimeout(function () { d.$.scrollTo(m.x, m.y) }, 0) : d.$.scrollTo(m.x, m.y); h.removeClass('cke_maximized'); CKEDITOR.env.webkit &&
+                top: -1 * g.y + 'px'}); CKEDITOR.env.gecko && q(a)
+            } else if (this.state == CKEDITOR.TRISTATE_ON) {
+              d.removeListener('resize', e); g = [g, h]; for (c = 0; c < g.length; c++)p(g[c], g[c].getCustomData('maximize_saved_styles')), g[c].removeCustomData('maximize_saved_styles'); for (c = a.container; c = c.getParent();)p(c, c.getCustomData('maximize_saved_styles')), c.removeCustomData('maximize_saved_styles'); CKEDITOR.env.ie ? setTimeout(function () { d.$.scrollTo(m.x, m.y) }, 0) : d.$.scrollTo(m.x, m.y); h.removeClass('cke_maximized'); CKEDITOR.env.webkit &&
 (h.setStyle('display', 'inline'), setTimeout(function () { h.setStyle('display', 'block') }, 0)); a.fire('resize')
-        } this.toggleState(); if (c = this.uiItems[0])g = this.state == CKEDITOR.TRISTATE_OFF ? f.maximize.maximize : f.maximize.minimize, c = CKEDITOR.document.getById(c._.id), c.getChild(1).setHtml(g), c.setAttribute('title', g), c.setAttribute('href', 'javascript:void("' + g + '");'); a.mode == 'wysiwyg' ? j ? (CKEDITOR.env.gecko && q(a), a.getSelection().selectRanges(j), (i = a.getSelection().getStartElement()) && i.scrollIntoView(!0))
+            } this.toggleState(); if (c = this.uiItems[0])g = this.state == CKEDITOR.TRISTATE_OFF ? f.maximize.maximize : f.maximize.minimize, c = CKEDITOR.document.getById(c._.id), c.getChild(1).setHtml(g), c.setAttribute('title', g), c.setAttribute('href', 'javascript:void("' + g + '");'); a.mode == 'wysiwyg' ? j ? (CKEDITOR.env.gecko && q(a), a.getSelection().selectRanges(j), (i = a.getSelection().getStartElement()) && i.scrollIntoView(!0))
 : d.$.scrollTo(k.x, k.y) : (j && (i.selectionStart = j[0], i.selectionEnd = j[1]), i.scrollLeft = k[0], i.scrollTop = k[1]); j = k = null; l = this.state; a.fire('maximize', this.state)
-        },
+          },
           canUndo: !1}); a.ui.addButton && a.ui.addButton('Maximize', {label: f.maximize.maximize, command: 'maximize', toolbar: 'tools,10'}); a.on('mode', function () { var b = a.getCommand('maximize'); b.setState(b.state == CKEDITOR.TRISTATE_DISABLED ? CKEDITOR.TRISTATE_DISABLED : l) }, null, null, 100)
       }
     }})
@@ -4100,18 +4100,18 @@ function (a) { a.data.type != 'html' && (a.data.type = 'text') })
         var d = 0, f = this.path; a.addCommand('pastefromword', {canUndo: !1,
           async: !0,
           exec: function (a) {
-          var e = this; d = 1; a.once('beforePaste', i); a.getClipboardData({title: a.lang.pastefromword.title}, function (c) {
-            c && a.fire('paste',
+            var e = this; d = 1; a.once('beforePaste', i); a.getClipboardData({title: a.lang.pastefromword.title}, function (c) {
+              c && a.fire('paste',
 {type: 'html', dataValue: c.dataValue}); a.fire('afterCommandExec', {name: 'pastefromword', command: e, returnValue: !!c})
-          })
-        }}); a.ui.addButton && a.ui.addButton('PasteFromWord', {label: a.lang.pastefromword.toolbar, command: 'pastefromword', toolbar: 'clipboard,50'}); a.on('pasteState', function (b) { a.getCommand('pastefromword').setState(b.data) }); a.on('paste', function (b) {
-          var e = b.data, c = e.dataValue; if (c && (d || /(class=\"?Mso|style=\"[^\"]*\bmso\-|w:WordDocument)/.test(c))) {
-            var g = h(a, f, function () {
-              if (g)a.fire('paste', e)
-              else if (!a.config.pasteFromWordPromptCleanup || d || confirm(a.lang.pastefromword.confirmCleanup))e.dataValue = CKEDITOR.cleanWord(c, a)
-            }); g && b.cancel()
-          }
-        }, null, null, 3)
+            })
+          }}); a.ui.addButton && a.ui.addButton('PasteFromWord', {label: a.lang.pastefromword.toolbar, command: 'pastefromword', toolbar: 'clipboard,50'}); a.on('pasteState', function (b) { a.getCommand('pastefromword').setState(b.data) }); a.on('paste', function (b) {
+            var e = b.data, c = e.dataValue; if (c && (d || /(class=\"?Mso|style=\"[^\"]*\bmso\-|w:WordDocument)/.test(c))) {
+              var g = h(a, f, function () {
+                if (g)a.fire('paste', e)
+                else if (!a.config.pasteFromWordPromptCleanup || d || confirm(a.lang.pastefromword.confirmCleanup))e.dataValue = CKEDITOR.cleanWord(c, a)
+              }); g && b.cancel()
+            }
+          }, null, null, 3)
       }})
   })(); CKEDITOR.plugins.add('removeformat', {init: function (a) { a.addCommand('removeFormat', CKEDITOR.plugins.removeformat.commands.removeformat); a.ui.addButton && a.ui.addButton('RemoveFormat', {label: a.lang.removeformat.toolbar, command: 'removeFormat', toolbar: 'cleanup,10'}) }})
   CKEDITOR.plugins.removeformat = {commands: {removeformat: {exec: function (a) {
@@ -4243,9 +4243,9 @@ CKEDITOR.getUrl(this.path + 'dialogs/options.js')); c = d.getUiTabs(a); a.addMen
       } if (!i || !i.length) { p(a, 'no_sugg', h.noSuggestions, 'scayt_no_sugg', {exec: function () {}}, 'scayt_control', 1, true); e.scayt_no_sugg = CKEDITOR.TRISTATE_OFF } else {
         g = {}; e = {}; m = a.config.scayt_moreSuggestions || 'on'; var j = false, s = a.config.scayt_maxSuggestions; typeof s !== 'number' && (s = 5); !s && (s = i.length); for (var k = 0, r = i.length; k < r; k = k + 1) {
           var q = 'scayt_suggestion_' + i[k].replace(' ', '_'), t = (function (a, b) { return {exec: function () { f.replace(a, b) }} }(n, i[k])); if (k < s) {
-          p(a, 'button_' + q, i[k], q, t, 'scayt_suggest',
+            p(a, 'button_' + q, i[k], q, t, 'scayt_suggest',
 k + 1); e[q] = CKEDITOR.TRISTATE_OFF
-        } else if (m == 'on') { p(a, 'button_' + q, i[k], q, t, 'scayt_moresuggest', k + 1); g[q] = CKEDITOR.TRISTATE_OFF; j = true }
+          } else if (m == 'on') { p(a, 'button_' + q, i[k], q, t, 'scayt_moresuggest', k + 1); g[q] = CKEDITOR.TRISTATE_OFF; j = true }
         } if (j) { a.addMenuItem('scayt_moresuggest', {label: h.moreSuggestions, group: 'scayt_moresuggest', order: 10, getItems: function () { return g }}); e.scayt_moresuggest = CKEDITOR.TRISTATE_OFF }
       } if (o('all', l) || o('ignore', l)) { p(a, 'ignore', h.ignore, 'scayt_ignore', {exec: function () { f.ignore(n) }}, 'scayt_control', 2); e.scayt_ignore = CKEDITOR.TRISTATE_OFF } if (o('all', l) || o('ignoreall', l)) {
         p(a, 'ignore_all',
@@ -4297,9 +4297,9 @@ e[h], g = d.type; d.checkApplicable(b, c.activeFilter) ? a[g]++ : this.hideItem(
           if (d.editable().hasFocus) {
             var e = d.getSelection(), b; if (b = (new CKEDITOR.dom.elementPath(e.getCommonAncestor(), e.root)).contains({td: 1, th: 1}, 1)) {
               var e = d.createRange(), a = CKEDITOR.tools.tryThese(function () { var a = b.getParent().$.cells[b.$.cellIndex + (c ? -1 : 1)]; a.parentNode.parentNode; return a }, function () {
-                var a = b.getParent(), a = a.getAscendant('table').$.rows[a.$.rowIndex + (c ? -1 : 1)]; return a.cells[c ? a.cells.length - 1
+                  var a = b.getParent(), a = a.getAscendant('table').$.rows[a.$.rowIndex + (c ? -1 : 1)]; return a.cells[c ? a.cells.length - 1
 : 0]
-              }); if (!a && !c) { for (var f = b.getAscendant('table').$, a = b.getParent().$.cells, f = new CKEDITOR.dom.element(f.insertRow(-1), d.document), g = 0, h = a.length; g < h; g++)f.append((new CKEDITOR.dom.element(a[g], d.document)).clone(!1, !1)).appendBogus(); e.moveToElementEditStart(f) } else if (a)a = new CKEDITOR.dom.element(a), e.moveToElementEditStart(a), (!e.checkStartOfBlock() || !e.checkEndOfBlock()) && e.selectNodeContents(a); else return !0; e.select(!0); return !0
+                }); if (!a && !c) { for (var f = b.getAscendant('table').$, a = b.getParent().$.cells, f = new CKEDITOR.dom.element(f.insertRow(-1), d.document), g = 0, h = a.length; g < h; g++)f.append((new CKEDITOR.dom.element(a[g], d.document)).clone(!1, !1)).appendBogus(); e.moveToElementEditStart(f) } else if (a)a = new CKEDITOR.dom.element(a), e.moveToElementEditStart(a), (!e.checkStartOfBlock() || !e.checkEndOfBlock()) && e.selectNodeContents(a); else return !0; e.select(!0); return !0
             }
           } return !1
         }}
@@ -4362,96 +4362,96 @@ b[h] == c[h] ? (a = c[h], a.colSpan += 1) : (a = (new CKEDITOR.dom.element(c[h])
         }
       } function u (e, d) { var b = e.getStartElement(); if (b = b.getAscendant('td', 1) || b.getAscendant('th', 1)) { var c = b.clone(); c.appendBogus(); d ? c.insertBefore(b) : c.insertAfter(b) } } function t (e) {
         if (e instanceof CKEDITOR.dom.selection) {
-      var e = p(e), d = e[0] && e[0].getAscendant('table'), b; a: {
-        var c = 0; b = e.length -
+          var e = p(e), d = e[0] && e[0].getAscendant('table'), b; a: {
+            var c = 0; b = e.length -
 1; for (var a = {}, f, g; f = e[c++];)CKEDITOR.dom.element.setMarker(a, f, 'delete_cell', !0); for (c = 0; f = e[c++];) if ((g = f.getPrevious()) && !g.getCustomData('delete_cell') || (g = f.getNext()) && !g.getCustomData('delete_cell')) { CKEDITOR.dom.element.clearAllMarkers(a); b = g; break a }CKEDITOR.dom.element.clearAllMarkers(a); g = e[0].getParent(); (g = g.getPrevious()) ? b = g.getLast() : (g = e[b].getParent(), b = (g = g.getNext()) ? g.getChild(0) : null)
-      } for (g = e.length - 1; g >= 0; g--)t(e[g]); b ? m(b, !0) : d && d.remove()
-    } else {
-      e instanceof CKEDITOR.dom.element &&
+          } for (g = e.length - 1; g >= 0; g--)t(e[g]); b ? m(b, !0) : d && d.remove()
+        } else {
+          e instanceof CKEDITOR.dom.element &&
 (d = e.getParent(), d.getChildCount() == 1 ? d.remove() : e.remove())
-    }
+        }
       } function m (e, d) { var b = e.getDocument(), c = CKEDITOR.document; CKEDITOR.env.ie && CKEDITOR.env.version < 11 && (c.focus(), b.focus()); b = new CKEDITOR.dom.range(b); if (!b['moveToElementEdit' + (d ? 'End' : 'Start')](e))b.selectNodeContents(e), b.collapse(d ? !1 : !0); b.select(!0) } function v (e, d, b) { e = e[d]; if (typeof b === 'undefined') return e; for (d = 0; e && d < e.length; d++) { if (b.is && e[d] == b.$) return d; if (d == b) return new CKEDITOR.dom.element(e[d]) } return b.is ? -1 : null } function s (e,
 d, b) {
-    var c = p(e), a; if ((d ? c.length != 1 : c.length < 2) || (a = e.getCommonAncestor()) && a.type == CKEDITOR.NODE_ELEMENT && a.is('table')) return !1; var f, e = c[0]; a = e.getAscendant('table'); var g = CKEDITOR.tools.buildTableMap(a), h = g.length, i = g[0].length, j = e.getParent().$.rowIndex, l = v(g, j, e); if (d) {
-      var n; try { var m = parseInt(e.getAttribute('rowspan'), 10) || 1; f = parseInt(e.getAttribute('colspan'), 10) || 1; n = g[d == 'up' ? j - m : d == 'down' ? j + m : j][d == 'left' ? l - f : d == 'right' ? l + f : l] } catch (z) { return !1 } if (!n || e.$ == n) return !1; c[d == 'up' || d ==
+        var c = p(e), a; if ((d ? c.length != 1 : c.length < 2) || (a = e.getCommonAncestor()) && a.type == CKEDITOR.NODE_ELEMENT && a.is('table')) return !1; var f, e = c[0]; a = e.getAscendant('table'); var g = CKEDITOR.tools.buildTableMap(a), h = g.length, i = g[0].length, j = e.getParent().$.rowIndex, l = v(g, j, e); if (d) {
+          var n; try { var m = parseInt(e.getAttribute('rowspan'), 10) || 1; f = parseInt(e.getAttribute('colspan'), 10) || 1; n = g[d == 'up' ? j - m : d == 'down' ? j + m : j][d == 'left' ? l - f : d == 'right' ? l + f : l] } catch (z) { return !1 } if (!n || e.$ == n) return !1; c[d == 'up' || d ==
 'left' ? 'unshift' : 'push'](new CKEDITOR.dom.element(n))
-    } for (var d = e.getDocument(), o = j, m = n = 0, q = !b && new CKEDITOR.dom.documentFragment(d), s = 0, d = 0; d < c.length; d++) {
-     f = c[d]; var k = f.getParent(), t = f.getFirst(), r = f.$.colSpan, u = f.$.rowSpan, k = k.$.rowIndex, w = v(g, k, f), s = s + r * u, m = Math.max(m, w - l + r); n = Math.max(n, k - j + u); if (!b) {
-      r = f; (u = r.getBogus()) && u.remove(); r.trim(); if (f.getChildren().count()) {
-        if (k != o && t && (!t.isBlockBoundary || !t.isBlockBoundary({br: 1}))) {
-          (o = q.getLast(CKEDITOR.dom.walker.whitespaces(!0))) && (!o.is || !o.is('br')) &&
+        } for (var d = e.getDocument(), o = j, m = n = 0, q = !b && new CKEDITOR.dom.documentFragment(d), s = 0, d = 0; d < c.length; d++) {
+          f = c[d]; var k = f.getParent(), t = f.getFirst(), r = f.$.colSpan, u = f.$.rowSpan, k = k.$.rowIndex, w = v(g, k, f), s = s + r * u, m = Math.max(m, w - l + r); n = Math.max(n, k - j + u); if (!b) {
+            r = f; (u = r.getBogus()) && u.remove(); r.trim(); if (f.getChildren().count()) {
+              if (k != o && t && (!t.isBlockBoundary || !t.isBlockBoundary({br: 1}))) {
+                (o = q.getLast(CKEDITOR.dom.walker.whitespaces(!0))) && (!o.is || !o.is('br')) &&
 q.append('br')
-        }f.moveChildren(q)
-      }d ? f.remove() : f.setHtml('')
-    }o = k
-   } if (b) return n * m == s; q.moveChildren(e); e.appendBogus(); m >= i ? e.removeAttribute('rowSpan') : e.$.rowSpan = n; n >= h ? e.removeAttribute('colSpan') : e.$.colSpan = m; b = new CKEDITOR.dom.nodeList(a.$.rows); c = b.count(); for (d = c - 1; d >= 0; d--)a = b.getItem(d), a.$.cells.length || (a.remove(), c++); return e
-  } function w (e, d) {
-    var b = p(e); if (b.length > 1) return !1; if (d) return !0; var b = b[0], c = b.getParent(), a = c.getAscendant('table'), f = CKEDITOR.tools.buildTableMap(a), g = c.$.rowIndex,
-     h = v(f, g, b), i = b.$.rowSpan, j; if (i > 1) { j = Math.ceil(i / 2); for (var i = Math.floor(i / 2), c = g + j, a = new CKEDITOR.dom.element(a.$.rows[c]), f = v(f, c), l, c = b.clone(), g = 0; g < f.length; g++) if (l = f[g], l.parentNode == a.$ && g > h) { c.insertBefore(new CKEDITOR.dom.element(l)); break } else l = null; l || a.append(c, !0) } else { i = j = 1; a = c.clone(); a.insertAfter(c); a.append(c = b.clone()); l = v(f, g); for (h = 0; h < l.length; h++)l[h].rowSpan++ }c.appendBogus(); b.$.rowSpan = j; c.$.rowSpan = i; j == 1 && b.removeAttribute('rowSpan'); i == 1 && c.removeAttribute('rowSpan')
-    return c
-  } function x (e, d) {
-   var b = p(e); if (b.length > 1) return !1; if (d) return !0; var b = b[0], c = b.getParent(), a = c.getAscendant('table'), a = CKEDITOR.tools.buildTableMap(a), f = v(a, c.$.rowIndex, b), g = b.$.colSpan; if (g > 1)c = Math.ceil(g / 2), g = Math.floor(g / 2); else { for (var g = c = 1, h = [], i = 0; i < a.length; i++) { var j = a[i]; h.push(j[f]); j[f].rowSpan > 1 && (i += j[f].rowSpan - 1) } for (a = 0; a < h.length; a++)h[a].colSpan++ }a = b.clone(); a.insertAfter(b); a.appendBogus(); b.$.colSpan = c; a.$.colSpan = g; c == 1 && b.removeAttribute('colSpan'); g == 1 && a.removeAttribute('colSpan')
-   return a
- } var y = /^(?:td|th)$/; CKEDITOR.plugins.tabletools = {requires: 'table,dialog,contextmenu',
-  init: function (e) {
-    function d (a) { return CKEDITOR.tools.extend(a || {}, {contextSensitive: 1, refresh: function (a, b) { this.setState(b.contains({td: 1, th: 1}, 1) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED) }}) } function b (a, b) { var c = e.addCommand(a, b); e.addFeature(c) } var c = e.lang.table; b('cellProperties', new CKEDITOR.dialogCommand('cellProperties', d({allowedContent: 'td th{width,height,border-color,background-color,white-space,vertical-align,text-align}[colspan,rowspan]',
-      requiredContent: 'table'}))); CKEDITOR.dialog.add('cellProperties', this.path + 'dialogs/tableCell.js'); b('rowDelete', d({requiredContent: 'table', exec: function (a) { a = a.getSelection(); m(q(a)) }})); b('rowInsertBefore', d({requiredContent: 'table', exec: function (a) { a = a.getSelection(); o(a, !0) }})); b('rowInsertAfter', d({requiredContent: 'table', exec: function (a) { a = a.getSelection(); o(a) }})); b('columnDelete', d({requiredContent: 'table',
-        exec: function (a) {
-          for (var a = a.getSelection(), a = p(a), b = a[0], c = a[a.length - 1], a = b.getAscendant('table'),
-            d = CKEDITOR.tools.buildTableMap(a), e, j, l = [], n = 0, o = d.length; n < o; n++) for (var k = 0, q = d[n].length; k < q; k++)d[n][k] == b.$ && (e = k), d[n][k] == c.$ && (j = k); for (n = e; n <= j; n++) for (k = 0; k < d.length; k++)c = d[k], b = new CKEDITOR.dom.element(a.$.rows[k]), c = new CKEDITOR.dom.element(c[n]), c.$ && (c.$.colSpan == 1 ? c.remove() : c.$.colSpan -= 1, k += c.$.rowSpan - 1, b.$.cells.length || l.push(b)); j = a.$.rows[0] && a.$.rows[0].cells; e = new CKEDITOR.dom.element(j[e] || (e ? j[e - 1] : a.$.parentNode)); l.length == o && a.remove(); e && m(e, !0)
-        }})); b('columnInsertBefore',
+              }f.moveChildren(q)
+            }d ? f.remove() : f.setHtml('')
+          }o = k
+        } if (b) return n * m == s; q.moveChildren(e); e.appendBogus(); m >= i ? e.removeAttribute('rowSpan') : e.$.rowSpan = n; n >= h ? e.removeAttribute('colSpan') : e.$.colSpan = m; b = new CKEDITOR.dom.nodeList(a.$.rows); c = b.count(); for (d = c - 1; d >= 0; d--)a = b.getItem(d), a.$.cells.length || (a.remove(), c++); return e
+      } function w (e, d) {
+        var b = p(e); if (b.length > 1) return !1; if (d) return !0; var b = b[0], c = b.getParent(), a = c.getAscendant('table'), f = CKEDITOR.tools.buildTableMap(a), g = c.$.rowIndex,
+          h = v(f, g, b), i = b.$.rowSpan, j; if (i > 1) { j = Math.ceil(i / 2); for (var i = Math.floor(i / 2), c = g + j, a = new CKEDITOR.dom.element(a.$.rows[c]), f = v(f, c), l, c = b.clone(), g = 0; g < f.length; g++) if (l = f[g], l.parentNode == a.$ && g > h) { c.insertBefore(new CKEDITOR.dom.element(l)); break } else l = null; l || a.append(c, !0) } else { i = j = 1; a = c.clone(); a.insertAfter(c); a.append(c = b.clone()); l = v(f, g); for (h = 0; h < l.length; h++)l[h].rowSpan++ }c.appendBogus(); b.$.rowSpan = j; c.$.rowSpan = i; j == 1 && b.removeAttribute('rowSpan'); i == 1 && c.removeAttribute('rowSpan')
+        return c
+      } function x (e, d) {
+        var b = p(e); if (b.length > 1) return !1; if (d) return !0; var b = b[0], c = b.getParent(), a = c.getAscendant('table'), a = CKEDITOR.tools.buildTableMap(a), f = v(a, c.$.rowIndex, b), g = b.$.colSpan; if (g > 1)c = Math.ceil(g / 2), g = Math.floor(g / 2); else { for (var g = c = 1, h = [], i = 0; i < a.length; i++) { var j = a[i]; h.push(j[f]); j[f].rowSpan > 1 && (i += j[f].rowSpan - 1) } for (a = 0; a < h.length; a++)h[a].colSpan++ }a = b.clone(); a.insertAfter(b); a.appendBogus(); b.$.colSpan = c; a.$.colSpan = g; c == 1 && b.removeAttribute('colSpan'); g == 1 && a.removeAttribute('colSpan')
+        return a
+      } var y = /^(?:td|th)$/; CKEDITOR.plugins.tabletools = {requires: 'table,dialog,contextmenu',
+        init: function (e) {
+          function d (a) { return CKEDITOR.tools.extend(a || {}, {contextSensitive: 1, refresh: function (a, b) { this.setState(b.contains({td: 1, th: 1}, 1) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED) }}) } function b (a, b) { var c = e.addCommand(a, b); e.addFeature(c) } var c = e.lang.table; b('cellProperties', new CKEDITOR.dialogCommand('cellProperties', d({allowedContent: 'td th{width,height,border-color,background-color,white-space,vertical-align,text-align}[colspan,rowspan]',
+            requiredContent: 'table'}))); CKEDITOR.dialog.add('cellProperties', this.path + 'dialogs/tableCell.js'); b('rowDelete', d({requiredContent: 'table', exec: function (a) { a = a.getSelection(); m(q(a)) }})); b('rowInsertBefore', d({requiredContent: 'table', exec: function (a) { a = a.getSelection(); o(a, !0) }})); b('rowInsertAfter', d({requiredContent: 'table', exec: function (a) { a = a.getSelection(); o(a) }})); b('columnDelete', d({requiredContent: 'table',
+              exec: function (a) {
+                for (var a = a.getSelection(), a = p(a), b = a[0], c = a[a.length - 1], a = b.getAscendant('table'),
+                  d = CKEDITOR.tools.buildTableMap(a), e, j, l = [], n = 0, o = d.length; n < o; n++) for (var k = 0, q = d[n].length; k < q; k++)d[n][k] == b.$ && (e = k), d[n][k] == c.$ && (j = k); for (n = e; n <= j; n++) for (k = 0; k < d.length; k++)c = d[k], b = new CKEDITOR.dom.element(a.$.rows[k]), c = new CKEDITOR.dom.element(c[n]), c.$ && (c.$.colSpan == 1 ? c.remove() : c.$.colSpan -= 1, k += c.$.rowSpan - 1, b.$.cells.length || l.push(b)); j = a.$.rows[0] && a.$.rows[0].cells; e = new CKEDITOR.dom.element(j[e] || (e ? j[e - 1] : a.$.parentNode)); l.length == o && a.remove(); e && m(e, !0)
+              }})); b('columnInsertBefore',
 d({requiredContent: 'table', exec: function (a) { a = a.getSelection(); k(a, !0) }})); b('columnInsertAfter', d({requiredContent: 'table', exec: function (a) { a = a.getSelection(); k(a) }})); b('cellDelete', d({requiredContent: 'table', exec: function (a) { a = a.getSelection(); t(a) }})); b('cellMerge', d({allowedContent: 'td[colspan,rowspan]', requiredContent: 'td[colspan,rowspan]', exec: function (a) { m(s(a.getSelection()), !0) }})); b('cellMergeRight', d({allowedContent: 'td[colspan]',
   requiredContent: 'td[colspan]',
   exec: function (a) {
     m(s(a.getSelection(),
 'right'), !0)
   }})); b('cellMergeDown', d({allowedContent: 'td[rowspan]', requiredContent: 'td[rowspan]', exec: function (a) { m(s(a.getSelection(), 'down'), !0) }})); b('cellVerticalSplit', d({allowedContent: 'td[rowspan]', requiredContent: 'td[rowspan]', exec: function (a) { m(w(a.getSelection())) }})); b('cellHorizontalSplit', d({allowedContent: 'td[colspan]', requiredContent: 'td[colspan]', exec: function (a) { m(x(a.getSelection())) }})); b('cellInsertBefore', d({requiredContent: 'table', exec: function (a) { a = a.getSelection(); u(a, !0) }}))
-    b('cellInsertAfter', d({requiredContent: 'table', exec: function (a) { a = a.getSelection(); u(a) }})); e.addMenuItems && e.addMenuItems({tablecell: {label: c.cell.menu,
-      group: 'tablecell',
-      order: 1,
-      getItems: function () {
-        var a = e.getSelection(), b = p(a); return {tablecell_insertBefore: CKEDITOR.TRISTATE_OFF,
-          tablecell_insertAfter: CKEDITOR.TRISTATE_OFF,
-          tablecell_delete: CKEDITOR.TRISTATE_OFF,
-          tablecell_merge: s(a, null, !0) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
-          tablecell_merge_right: s(a, 'right', !0) ? CKEDITOR.TRISTATE_OFF
+          b('cellInsertAfter', d({requiredContent: 'table', exec: function (a) { a = a.getSelection(); u(a) }})); e.addMenuItems && e.addMenuItems({tablecell: {label: c.cell.menu,
+            group: 'tablecell',
+            order: 1,
+            getItems: function () {
+              var a = e.getSelection(), b = p(a); return {tablecell_insertBefore: CKEDITOR.TRISTATE_OFF,
+                tablecell_insertAfter: CKEDITOR.TRISTATE_OFF,
+                tablecell_delete: CKEDITOR.TRISTATE_OFF,
+                tablecell_merge: s(a, null, !0) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
+                tablecell_merge_right: s(a, 'right', !0) ? CKEDITOR.TRISTATE_OFF
 : CKEDITOR.TRISTATE_DISABLED,
-          tablecell_merge_down: s(a, 'down', !0) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
-          tablecell_split_vertical: w(a, !0) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
-          tablecell_split_horizontal: x(a, !0) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
-          tablecell_properties: b.length > 0 ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED}
-      }},
-      tablecell_insertBefore: {label: c.cell.insertBefore, group: 'tablecell', command: 'cellInsertBefore', order: 5},
-      tablecell_insertAfter: {label: c.cell.insertAfter,
-        group: 'tablecell',
-        command: 'cellInsertAfter',
-        order: 10},
-      tablecell_delete: {label: c.cell.deleteCell, group: 'tablecell', command: 'cellDelete', order: 15},
-      tablecell_merge: {label: c.cell.merge, group: 'tablecell', command: 'cellMerge', order: 16},
-      tablecell_merge_right: {label: c.cell.mergeRight, group: 'tablecell', command: 'cellMergeRight', order: 17},
-      tablecell_merge_down: {label: c.cell.mergeDown, group: 'tablecell', command: 'cellMergeDown', order: 18},
-      tablecell_split_horizontal: {label: c.cell.splitHorizontal,
-        group: 'tablecell',
-        command: 'cellHorizontalSplit',
-        order: 19},
-      tablecell_split_vertical: {label: c.cell.splitVertical, group: 'tablecell', command: 'cellVerticalSplit', order: 20},
-      tablecell_properties: {label: c.cell.title, group: 'tablecellproperties', command: 'cellProperties', order: 21},
-      tablerow: {label: c.row.menu, group: 'tablerow', order: 1, getItems: function () { return {tablerow_insertBefore: CKEDITOR.TRISTATE_OFF, tablerow_insertAfter: CKEDITOR.TRISTATE_OFF, tablerow_delete: CKEDITOR.TRISTATE_OFF} }},
-      tablerow_insertBefore: {label: c.row.insertBefore,
-        group: 'tablerow',
-        command: 'rowInsertBefore',
-        order: 5},
-      tablerow_insertAfter: {label: c.row.insertAfter, group: 'tablerow', command: 'rowInsertAfter', order: 10},
-      tablerow_delete: {label: c.row.deleteRow, group: 'tablerow', command: 'rowDelete', order: 15},
-      tablecolumn: {label: c.column.menu, group: 'tablecolumn', order: 1, getItems: function () { return {tablecolumn_insertBefore: CKEDITOR.TRISTATE_OFF, tablecolumn_insertAfter: CKEDITOR.TRISTATE_OFF, tablecolumn_delete: CKEDITOR.TRISTATE_OFF} }},
-      tablecolumn_insertBefore: {label: c.column.insertBefore,
-        group: 'tablecolumn',
-        command: 'columnInsertBefore',
-        order: 5},
-      tablecolumn_insertAfter: {label: c.column.insertAfter, group: 'tablecolumn', command: 'columnInsertAfter', order: 10},
-      tablecolumn_delete: {label: c.column.deleteColumn, group: 'tablecolumn', command: 'columnDelete', order: 15}}); e.contextMenu && e.contextMenu.addListener(function (a, b, c) { return (a = c.contains({td: 1, th: 1}, 1)) && !a.isReadOnly() ? {tablecell: CKEDITOR.TRISTATE_OFF, tablerow: CKEDITOR.TRISTATE_OFF, tablecolumn: CKEDITOR.TRISTATE_OFF} : null })
-  },
-  getSelectedCells: p}
+                tablecell_merge_down: s(a, 'down', !0) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
+                tablecell_split_vertical: w(a, !0) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
+                tablecell_split_horizontal: x(a, !0) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
+                tablecell_properties: b.length > 0 ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED}
+            }},
+            tablecell_insertBefore: {label: c.cell.insertBefore, group: 'tablecell', command: 'cellInsertBefore', order: 5},
+            tablecell_insertAfter: {label: c.cell.insertAfter,
+              group: 'tablecell',
+              command: 'cellInsertAfter',
+              order: 10},
+            tablecell_delete: {label: c.cell.deleteCell, group: 'tablecell', command: 'cellDelete', order: 15},
+            tablecell_merge: {label: c.cell.merge, group: 'tablecell', command: 'cellMerge', order: 16},
+            tablecell_merge_right: {label: c.cell.mergeRight, group: 'tablecell', command: 'cellMergeRight', order: 17},
+            tablecell_merge_down: {label: c.cell.mergeDown, group: 'tablecell', command: 'cellMergeDown', order: 18},
+            tablecell_split_horizontal: {label: c.cell.splitHorizontal,
+              group: 'tablecell',
+              command: 'cellHorizontalSplit',
+              order: 19},
+            tablecell_split_vertical: {label: c.cell.splitVertical, group: 'tablecell', command: 'cellVerticalSplit', order: 20},
+            tablecell_properties: {label: c.cell.title, group: 'tablecellproperties', command: 'cellProperties', order: 21},
+            tablerow: {label: c.row.menu, group: 'tablerow', order: 1, getItems: function () { return {tablerow_insertBefore: CKEDITOR.TRISTATE_OFF, tablerow_insertAfter: CKEDITOR.TRISTATE_OFF, tablerow_delete: CKEDITOR.TRISTATE_OFF} }},
+            tablerow_insertBefore: {label: c.row.insertBefore,
+              group: 'tablerow',
+              command: 'rowInsertBefore',
+              order: 5},
+            tablerow_insertAfter: {label: c.row.insertAfter, group: 'tablerow', command: 'rowInsertAfter', order: 10},
+            tablerow_delete: {label: c.row.deleteRow, group: 'tablerow', command: 'rowDelete', order: 15},
+            tablecolumn: {label: c.column.menu, group: 'tablecolumn', order: 1, getItems: function () { return {tablecolumn_insertBefore: CKEDITOR.TRISTATE_OFF, tablecolumn_insertAfter: CKEDITOR.TRISTATE_OFF, tablecolumn_delete: CKEDITOR.TRISTATE_OFF} }},
+            tablecolumn_insertBefore: {label: c.column.insertBefore,
+              group: 'tablecolumn',
+              command: 'columnInsertBefore',
+              order: 5},
+            tablecolumn_insertAfter: {label: c.column.insertAfter, group: 'tablecolumn', command: 'columnInsertAfter', order: 10},
+            tablecolumn_delete: {label: c.column.deleteColumn, group: 'tablecolumn', command: 'columnDelete', order: 15}}); e.contextMenu && e.contextMenu.addListener(function (a, b, c) { return (a = c.contains({td: 1, th: 1}, 1)) && !a.isReadOnly() ? {tablecell: CKEDITOR.TRISTATE_OFF, tablerow: CKEDITOR.TRISTATE_OFF, tablecolumn: CKEDITOR.TRISTATE_OFF} : null })
+        },
+        getSelectedCells: p}
       CKEDITOR.plugins.add('tabletools', CKEDITOR.plugins.tabletools)
     })(); CKEDITOR.tools.buildTableMap = function (p) { for (var p = p.$.rows, o = -1, q = [], r = 0; r < p.length; r++) { o++; !q[o] && (q[o] = []); for (var k = -1, u = 0; u < p[r].cells.length; u++) { var t = p[r].cells[u]; for (k++; q[o][k];)k++; for (var m = isNaN(t.colSpan) ? 1 : t.colSpan, t = isNaN(t.rowSpan) ? 1 : t.rowSpan, v = 0; v < t; v++) { q[o + v] || (q[o + v] = []); for (var s = 0; s < m; s++)q[o + v][k + s] = p[r].cells[u] }k += m - 1 } } return q }; (function () {
       function g (a) { this.editor = a; this.reset() }CKEDITOR.plugins.add('undo', {init: function (a) {
@@ -4488,18 +4488,18 @@ c) ? (this.modifiersCount = 0, this.typesCount++, this.typesCount > 25 ? (this.s
           undoable: function () { return this.enabled && this.hasUndo },
           undo: function () {
             if (this.undoable()) {
-          this.save(!0); var a = this.getNextImage(!0); if (a) {
-            return this.restoreImage(a),
+              this.save(!0); var a = this.getNextImage(!0); if (a) {
+                return this.restoreImage(a),
 !0
-          }
-        } return !1
+              }
+            } return !1
           },
           redo: function () { if (this.redoable() && (this.save(!0), this.redoable())) { var a = this.getNextImage(!1); if (a) return this.restoreImage(a), !0 } return !1 },
           update: function (a) { if (!this.locked) { a || (a = new f(this.editor)); for (var c = this.index, d = this.snapshots; c > 0 && this.currentImage.equalsContent(d[c - 1]);)c -= 1; d.splice(c, this.index - c + 1, a); this.index = c; this.currentImage = a } },
           lock: function (a) {
             this.locked ? this.locked.level++ : a ? this.locked = {level: 1} : (a = new f(this.editor, !0), this.locked = {update: this.currentImage &&
 this.currentImage.equalsContent(a) ? a : null,
-          level: 1})
+              level: 1})
           },
           unlock: function () { if (this.locked && !--this.locked.level) { var a = this.locked.update, c = a && new f(this.editor, !0); this.locked = null; a && !a.equalsContent(c) && this.update() } }}
     })(); CKEDITOR.config.wsc_removeGlobalVariable = !0

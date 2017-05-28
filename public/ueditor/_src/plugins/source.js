@@ -94,8 +94,8 @@
                 case 'caption':
                   if (node.children && node.children.length == 1) {
                     if (node.firstChild().tagName == 'br') {
-                        node.removeChild(node.firstChild())
-                      }
+                      node.removeChild(node.firstChild())
+                    }
                   };
                   break
                 case 'pre':

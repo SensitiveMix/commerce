@@ -106,11 +106,11 @@
                             // no path mapping for a path starting with '..'.
                             // This can still fail, but catches the most reasonable
                             // uses of ..
-                 break
-               } else if (i > 0) {
-                name.splice(i - 1, 2)
-                i -= 2
-              }
+                    break
+                  } else if (i > 0) {
+                    name.splice(i - 1, 2)
+                    i -= 2
+                  }
                 }
               }
                 // end trimDots
@@ -142,10 +142,10 @@
                     mapValue = mapValue[nameSegment]
                     if (mapValue) {
                                 // Match, update name to the new value.
-                   foundMap = mapValue
-                   foundI = i
-                   break
-                 }
+                      foundMap = mapValue
+                      foundI = i
+                      break
+                    }
                   }
                 }
               }
@@ -328,13 +328,13 @@
               } else if (hasProp(defined, depName) ||
                            hasProp(waiting, depName) ||
                            hasProp(defining, depName)) {
-             args[i] = callDep(depName)
-           } else if (map.p) {
-            map.p.load(map.n, makeRequire(relName, true), makeLoad(depName), {})
-            args[i] = defined[depName]
-          } else {
-            throw new Error(name + ' missing ' + depName)
-          }
+                args[i] = callDep(depName)
+              } else if (map.p) {
+                map.p.load(map.n, makeRequire(relName, true), makeLoad(depName), {})
+                args[i] = defined[depName]
+              } else {
+                throw new Error(name + ' missing ' + depName)
+              }
             }
 
             ret = callback ? callback.apply(defined[name], args) : undefined
@@ -5104,10 +5104,10 @@
 
             evt.preventDefault()
           } else if (key === KEYS.ESC || key === KEYS.TAB) {
-          self.close()
+            self.close()
 
-          evt.preventDefault()
-        }
+            evt.preventDefault()
+          }
         } else {
           if (key === KEYS.ENTER || key === KEYS.SPACE ||
             ((key === KEYS.DOWN || key === KEYS.UP) && evt.altKey)) {

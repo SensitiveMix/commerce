@@ -3293,10 +3293,10 @@ JS environment could actually contain many instances. */
 
                 if (cached) {
                   if (cached[R]) {
-                  self.insLeftOf(cached[R])
-                } else {
-                  self.insAtRightEnd(cached.parent)
-                }
+                    self.insLeftOf(cached[R])
+                  } else {
+                    self.insAtRightEnd(cached.parent)
+                  }
                 } else {
                   var pageX = offset(self).left
                   self.insAtRightEnd(prop)

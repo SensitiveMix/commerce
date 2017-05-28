@@ -49,28 +49,28 @@ this.getDialog(), b = ['urlOptions', 'anchorOptions', 'emailOptions'], c = this.
             a.type =
 this.getValue()
           }}, {type: 'vbox',
-          id: 'urlOptions',
-          children: [{type: 'hbox',
-            widths: ['25%', '75%'],
-            children: [{id: 'protocol', type: 'select', label: i.protocol, 'default': 'http://', items: [['http://‎', 'http://'], ['https://‎', 'https://'], ['ftp://‎', 'ftp://'], ['news://‎', 'news://'], [b.other, '']], setup: function (a) { a.url && this.setValue(a.url.protocol || '') }, commit: function (a) { if (!a.url)a.url = {}; a.url.protocol = this.getValue() }}, {type: 'text',
-            id: 'url',
-            label: i.url,
-            required: !0,
-            onLoad: function () { this.allowOnChange = true },
-            onKeyUp: function () {
-              this.allowOnChange =
+            id: 'urlOptions',
+            children: [{type: 'hbox',
+              widths: ['25%', '75%'],
+              children: [{id: 'protocol', type: 'select', label: i.protocol, 'default': 'http://', items: [['http://‎', 'http://'], ['https://‎', 'https://'], ['ftp://‎', 'ftp://'], ['news://‎', 'news://'], [b.other, '']], setup: function (a) { a.url && this.setValue(a.url.protocol || '') }, commit: function (a) { if (!a.url)a.url = {}; a.url.protocol = this.getValue() }}, {type: 'text',
+                id: 'url',
+                label: i.url,
+                required: !0,
+                onLoad: function () { this.allowOnChange = true },
+                onKeyUp: function () {
+                  this.allowOnChange =
 false; var a = this.getDialog().getContentElement('info', 'protocol'), b = this.getValue(), c = /^((javascript:)|[#\/\.\?])/i, d = /^(http|https|ftp|news):\/\/(?=.)/i.exec(b); if (d) { this.setValue(b.substr(d[0].length)); a.setValue(d[0].toLowerCase()) } else c.test(b) && a.setValue(''); this.allowOnChange = true
-            },
-            onChange: function () { if (this.allowOnChange) this.onKeyUp() },
-            validate: function () {
-              var a = this.getDialog(); if (a.getContentElement('info', 'linkType') && a.getValueOf('info', 'linkType') != 'url') return true; if (/javascript\:/.test(this.getValue())) {
-              alert(i.invalidValue)
-              return false
-            } return this.getDialog().fakeObj ? true : CKEDITOR.dialog.validate.notEmpty(b.noUrl).apply(this)
-            },
-            setup: function (a) { this.allowOnChange = false; a.url && this.setValue(a.url.url); this.allowOnChange = true },
-            commit: function (a) { this.onChange(); if (!a.url)a.url = {}; a.url.url = this.getValue(); this.allowOnChange = false }}],
-            setup: function () { this.getDialog().getContentElement('info', 'linkType') || this.getElement().show() }}, {type: 'button', id: 'browse', hidden: 'true', filebrowser: 'info:url', label: i.browseServer}]},
+                },
+                onChange: function () { if (this.allowOnChange) this.onKeyUp() },
+                validate: function () {
+                  var a = this.getDialog(); if (a.getContentElement('info', 'linkType') && a.getValueOf('info', 'linkType') != 'url') return true; if (/javascript\:/.test(this.getValue())) {
+                    alert(i.invalidValue)
+                    return false
+                  } return this.getDialog().fakeObj ? true : CKEDITOR.dialog.validate.notEmpty(b.noUrl).apply(this)
+                },
+                setup: function (a) { this.allowOnChange = false; a.url && this.setValue(a.url.url); this.allowOnChange = true },
+                commit: function (a) { this.onChange(); if (!a.url)a.url = {}; a.url.url = this.getValue(); this.allowOnChange = false }}],
+              setup: function () { this.getDialog().getContentElement('info', 'linkType') || this.getElement().show() }}, {type: 'button', id: 'browse', hidden: 'true', filebrowser: 'info:url', label: i.browseServer}]},
         {type: 'vbox',
           id: 'anchorOptions',
           width: 260,
@@ -81,62 +81,62 @@ false; var a = this.getDialog().getContentElement('info', 'protocol'), b = this.
             label: b.selectAnchor,
             setup: function (a) { a.anchors.length > 0 ? this.getElement().show() : this.getElement().hide() },
             children: [{type: 'hbox',
-            id: 'selectAnchor',
-            children: [{type: 'select',
-              id: 'anchorName',
-              'default': '',
-              label: b.anchorName,
-              style: 'width: 100%;',
-              items: [['']],
-              setup: function (a) {
-              this.clear(); this.add(''); for (var b = 0; b < a.anchors.length; b++)a.anchors[b].name && this.add(a.anchors[b].name); a.anchor &&
+              id: 'selectAnchor',
+              children: [{type: 'select',
+                id: 'anchorName',
+                'default': '',
+                label: b.anchorName,
+                style: 'width: 100%;',
+                items: [['']],
+                setup: function (a) {
+                  this.clear(); this.add(''); for (var b = 0; b < a.anchors.length; b++)a.anchors[b].name && this.add(a.anchors[b].name); a.anchor &&
 this.setValue(a.anchor.name); (a = this.getDialog().getContentElement('info', 'linkType')) && a.getValue() == 'email' && this.focus()
-            },
-              commit: function (a) { if (!a.anchor)a.anchor = {}; a.anchor.name = this.getValue() }}, {type: 'select',
-              id: 'anchorId',
-              'default': '',
-              label: b.anchorId,
-              style: 'width: 100%;',
-              items: [['']],
-              setup: function (a) { this.clear(); this.add(''); for (var b = 0; b < a.anchors.length; b++)a.anchors[b].id && this.add(a.anchors[b].id); a.anchor && this.setValue(a.anchor.id) },
-              commit: function (a) {
-                if (!a.anchor)a.anchor = {}; a.anchor.id =
+                },
+                commit: function (a) { if (!a.anchor)a.anchor = {}; a.anchor.name = this.getValue() }}, {type: 'select',
+                  id: 'anchorId',
+                  'default': '',
+                  label: b.anchorId,
+                  style: 'width: 100%;',
+                  items: [['']],
+                  setup: function (a) { this.clear(); this.add(''); for (var b = 0; b < a.anchors.length; b++)a.anchors[b].id && this.add(a.anchors[b].id); a.anchor && this.setValue(a.anchor.id) },
+                  commit: function (a) {
+                    if (!a.anchor)a.anchor = {}; a.anchor.id =
 this.getValue()
-              }}],
-            setup: function (a) { a.anchors.length > 0 ? this.getElement().show() : this.getElement().hide() }}]}, {type: 'html', id: 'noAnchors', style: 'text-align: center;', html: '<div role="note" tabIndex="-1">' + CKEDITOR.tools.htmlEncode(b.noAnchors) + '</div>', focus: !0, setup: function (a) { a.anchors.length < 1 ? this.getElement().show() : this.getElement().hide() }}],
+                  }}],
+              setup: function (a) { a.anchors.length > 0 ? this.getElement().show() : this.getElement().hide() }}]}, {type: 'html', id: 'noAnchors', style: 'text-align: center;', html: '<div role="note" tabIndex="-1">' + CKEDITOR.tools.htmlEncode(b.noAnchors) + '</div>', focus: !0, setup: function (a) { a.anchors.length < 1 ? this.getElement().show() : this.getElement().hide() }}],
           setup: function () { this.getDialog().getContentElement('info', 'linkType') || this.getElement().hide() }}, {type: 'vbox',
             id: 'emailOptions',
             padding: 1,
             children: [{type: 'text',
-            id: 'emailAddress',
-            label: b.emailAddress,
-            required: !0,
-            validate: function () { var a = this.getDialog(); return !a.getContentElement('info', 'linkType') || a.getValueOf('info', 'linkType') != 'email' ? true : CKEDITOR.dialog.validate.notEmpty(b.noEmail).apply(this) },
-            setup: function (a) { a.email && this.setValue(a.email.address); (a = this.getDialog().getContentElement('info', 'linkType')) && a.getValue() == 'email' && this.select() },
-            commit: function (a) { if (!a.email)a.email = {}; a.email.address = this.getValue() }}, {type: 'text',
-              id: 'emailSubject',
-              label: b.emailSubject,
-              setup: function (a) { a.email && this.setValue(a.email.subject) },
-              commit: function (a) { if (!a.email)a.email = {}; a.email.subject = this.getValue() }}, {type: 'textarea', id: 'emailBody', label: b.emailBody, rows: 3, 'default': '', setup: function (a) { a.email && this.setValue(a.email.body) }, commit: function (a) { if (!a.email)a.email = {}; a.email.body = this.getValue() }}],
+              id: 'emailAddress',
+              label: b.emailAddress,
+              required: !0,
+              validate: function () { var a = this.getDialog(); return !a.getContentElement('info', 'linkType') || a.getValueOf('info', 'linkType') != 'email' ? true : CKEDITOR.dialog.validate.notEmpty(b.noEmail).apply(this) },
+              setup: function (a) { a.email && this.setValue(a.email.address); (a = this.getDialog().getContentElement('info', 'linkType')) && a.getValue() == 'email' && this.select() },
+              commit: function (a) { if (!a.email)a.email = {}; a.email.address = this.getValue() }}, {type: 'text',
+                id: 'emailSubject',
+                label: b.emailSubject,
+                setup: function (a) { a.email && this.setValue(a.email.subject) },
+                commit: function (a) { if (!a.email)a.email = {}; a.email.subject = this.getValue() }}, {type: 'textarea', id: 'emailBody', label: b.emailBody, rows: 3, 'default': '', setup: function (a) { a.email && this.setValue(a.email.body) }, commit: function (a) { if (!a.email)a.email = {}; a.email.body = this.getValue() }}],
             setup: function () { this.getDialog().getContentElement('info', 'linkType') || this.getElement().hide() }}]}, {id: 'target',
-            requiredContent: 'a[target]',
-            label: b.target,
-            title: b.target,
-            elements: [{type: 'hbox',
-              widths: ['50%', '50%'],
-              children: [{type: 'select', id: 'linkTargetType', label: i.target, 'default': 'notSet', style: 'width : 100%;', items: [[i.notSet, 'notSet'], [b.targetFrame, 'frame'], [b.targetPopup, 'popup'], [i.targetNew, '_blank'], [i.targetTop, '_top'], [i.targetSelf, '_self'], [i.targetParent, '_parent']], onChange: s, setup: function (a) { a.target && this.setValue(a.target.type || 'notSet'); s.call(this) }, commit: function (a) { if (!a.target)a.target = {}; a.target.type = this.getValue() }}, {type: 'text',
-              id: 'linkTargetName',
-              label: b.targetFrameName,
-              'default': '',
-              setup: function (a) { a.target && this.setValue(a.target.name) },
-              commit: function (a) { if (!a.target)a.target = {}; a.target.name = this.getValue().replace(/\W/gi, '') }}]}, {type: 'vbox',
-                width: '100%',
-                align: 'center',
-                padding: 2,
-                id: 'popupFeatures',
-                children: [{type: 'fieldset',
-                label: b.popupFeatures,
-                children: [{type: 'hbox', children: [{type: 'checkbox', id: 'resizable', label: b.popupResizable, setup: j, commit: l}, {type: 'checkbox', id: 'status', label: b.popupStatusBar, setup: j, commit: l}]},
+              requiredContent: 'a[target]',
+              label: b.target,
+              title: b.target,
+              elements: [{type: 'hbox',
+                widths: ['50%', '50%'],
+                children: [{type: 'select', id: 'linkTargetType', label: i.target, 'default': 'notSet', style: 'width : 100%;', items: [[i.notSet, 'notSet'], [b.targetFrame, 'frame'], [b.targetPopup, 'popup'], [i.targetNew, '_blank'], [i.targetTop, '_top'], [i.targetSelf, '_self'], [i.targetParent, '_parent']], onChange: s, setup: function (a) { a.target && this.setValue(a.target.type || 'notSet'); s.call(this) }, commit: function (a) { if (!a.target)a.target = {}; a.target.type = this.getValue() }}, {type: 'text',
+                  id: 'linkTargetName',
+                  label: b.targetFrameName,
+                  'default': '',
+                  setup: function (a) { a.target && this.setValue(a.target.name) },
+                  commit: function (a) { if (!a.target)a.target = {}; a.target.name = this.getValue().replace(/\W/gi, '') }}]}, {type: 'vbox',
+                    width: '100%',
+                    align: 'center',
+                    padding: 2,
+                    id: 'popupFeatures',
+                    children: [{type: 'fieldset',
+                      label: b.popupFeatures,
+                      children: [{type: 'hbox', children: [{type: 'checkbox', id: 'resizable', label: b.popupResizable, setup: j, commit: l}, {type: 'checkbox', id: 'status', label: b.popupStatusBar, setup: j, commit: l}]},
 {type: 'hbox', children: [{type: 'checkbox', id: 'location', label: b.popupLocationBar, setup: j, commit: l}, {type: 'checkbox', id: 'toolbar', label: b.popupToolbar, setup: j, commit: l}]}, {type: 'hbox', children: [{type: 'checkbox', id: 'menubar', label: b.popupMenuBar, setup: j, commit: l}, {type: 'checkbox', id: 'fullscreen', label: b.popupFullScreen, setup: j, commit: l}]}, {type: 'hbox', children: [{type: 'checkbox', id: 'scrollbars', label: b.popupScrollBars, setup: j, commit: l}, {type: 'checkbox', id: 'dependent', label: b.popupDependent, setup: j, commit: l}]},
 {type: 'hbox', children: [{type: 'text', widths: ['50%', '50%'], labelLayout: 'horizontal', label: i.width, id: 'width', setup: j, commit: l}, {type: 'text', labelLayout: 'horizontal', widths: ['50%', '50%'], label: b.popupLeft, id: 'left', setup: j, commit: l}]}, {type: 'hbox', children: [{type: 'text', labelLayout: 'horizontal', widths: ['50%', '50%'], label: i.height, id: 'height', setup: j, commit: l}, {type: 'text', labelLayout: 'horizontal', label: b.popupTop, widths: ['50%', '50%'], id: 'top', setup: j, commit: l}]}]}]}]}, {id: 'upload',
   label: b.upload,
@@ -182,16 +182,16 @@ c.anchor && c.anchor.id; a['data-cke-saved-href'] = '#' + (c.anchor && c.anchor.
 }a['data-cke-saved-href'] = e.join('')
         } if (c.target) {
           if (c.target.type == 'popup') { for (var e = ["window.open(this.href, '", c.target.name || '', "', '"], j = ['resizable', 'status', 'location', 'toolbar', 'menubar', 'fullscreen', 'scrollbars', 'dependent'], i = j.length, f = function (a) { c.target[a] && j.push(a + '=' + c.target[a]) }, h = 0; h < i; h++)j[h] = j[h] + (c.target[j[h]] ? '=yes' : '=no'); f('width'); f('left'); f('height'); f('top'); e.push(j.join(','), "'); return false;"); a['data-cke-pa-onclick'] = e.join(''); b.push('target') } else {
-          c.target.type !=
+            c.target.type !=
 'notSet' && c.target.name ? a.target = c.target.name : b.push('target'); b.push('data-cke-pa-onclick', 'onclick')
-        }
+          }
         } if (c.adv) {
-        e = function (d, e) { var f = c.adv[d]; f ? a[e] = f : b.push(e) }; e('advId', 'id'); e('advLangDir', 'dir'); e('advAccessKey', 'accessKey'); c.adv.advName ? a.name = a['data-cke-saved-name'] = c.adv.advName : b = b.concat(['data-cke-saved-name', 'name']); e('advLangCode', 'lang'); e('advTabIndex', 'tabindex'); e('advTitle', 'title'); e('advContentType', 'type'); e('advCSSClasses', 'class'); e('advCharset', 'charset'); e('advStyles',
+          e = function (d, e) { var f = c.adv[d]; f ? a[e] = f : b.push(e) }; e('advId', 'id'); e('advLangDir', 'dir'); e('advAccessKey', 'accessKey'); c.adv.advName ? a.name = a['data-cke-saved-name'] = c.adv.advName : b = b.concat(['data-cke-saved-name', 'name']); e('advLangCode', 'lang'); e('advTabIndex', 'tabindex'); e('advTitle', 'title'); e('advContentType', 'type'); e('advCSSClasses', 'class'); e('advCharset', 'charset'); e('advStyles',
 'style'); e('advRel', 'rel')
-      }e = d.getSelection(); a.href = a['data-cke-saved-href']; if (this._.selectedElement) { d = this._.selectedElement; i = d.data('cke-saved-href'); f = d.getHtml(); d.setAttributes(a); d.removeAttributes(b); c.adv && (c.adv.advName && CKEDITOR.plugins.link.synAnchorSelector) && d.addClass(d.getChildCount() ? 'cke_anchor' : 'cke_anchor_empty'); if (i == f || c.type == 'email' && f.indexOf('@') != -1) { d.setHtml(c.type == 'email' ? c.email.address : a['data-cke-saved-href']); e.selectElement(d) } delete this._.selectedElement } else {
-        e =
+        }e = d.getSelection(); a.href = a['data-cke-saved-href']; if (this._.selectedElement) { d = this._.selectedElement; i = d.data('cke-saved-href'); f = d.getHtml(); d.setAttributes(a); d.removeAttributes(b); c.adv && (c.adv.advName && CKEDITOR.plugins.link.synAnchorSelector) && d.addClass(d.getChildCount() ? 'cke_anchor' : 'cke_anchor_empty'); if (i == f || c.type == 'email' && f.indexOf('@') != -1) { d.setHtml(c.type == 'email' ? c.email.address : a['data-cke-saved-href']); e.selectElement(d) } delete this._.selectedElement } else {
+          e =
 e.getRanges()[0]; if (e.collapsed) { d = new CKEDITOR.dom.text(c.type == 'email' ? c.email.address : a['data-cke-saved-href'], d.document); e.insertNode(d); e.selectNodeContents(d) }d = new CKEDITOR.style({element: 'a', attributes: a}); d.type = CKEDITOR.STYLE_INLINE; d.applyToRange(e); e.select()
-      }
+        }
       },
       onLoad: function () { n.config.linkShowAdvancedTab || this.hidePage('advanced'); n.config.linkShowTargetTab || this.hidePage('target') },
       onFocus: function () {

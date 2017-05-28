@@ -19,8 +19,8 @@
           var self = this; if (!this.form) { var form = document.createElement('form'); var area = document.createElement('textarea'); var id = this.iframeId = 'eio_iframe_' + this.index; var iframe; form.className = 'socketio'; form.style.position = 'absolute'; form.style.top = '-1000px'; form.style.left = '-1000px'; form.target = id; form.method = 'POST'; form.setAttribute('accept-charset', 'utf-8'); area.name = 'd'; form.appendChild(area); document.body.appendChild(form); this.form = form; this.area = area } this.form.action = this.uri(); function complete () { initIframe(); fn() } function initIframe () {
             if (self.iframe) {
               try {
-            self.form.removeChild(self.iframe)
-          } catch (e) { self.onError('jsonp polling iframe removal error', e) }
+                self.form.removeChild(self.iframe)
+              } catch (e) { self.onError('jsonp polling iframe removal error', e) }
             } try { var html = '<iframe src="javascript:0" name="' + self.iframeId + '">'; iframe = document.createElement(html) } catch (e) { iframe = document.createElement('iframe'); iframe.name = self.iframeId; iframe.src = 'javascript:0' }iframe.id = self.iframeId; self.form.appendChild(iframe); self.iframe = iframe
           }initIframe(); data = data.replace(rEscapedNewline, '\\\n'); this.area.value = data.replace(rNewline, '\\n'); try { this.form.submit() } catch (e) {} if (this.iframe.attachEvent) { this.iframe.onreadystatechange = function () { if (self.iframe.readyState == 'complete') { complete() } } } else { this.iframe.onload = complete }
         }

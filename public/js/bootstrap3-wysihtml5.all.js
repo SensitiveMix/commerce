@@ -790,8 +790,8 @@ var wysihtml5 = {
             if (n === childA) {
               return -1
             } else if (n === childB) {
-                return 1
-              }
+              return 1
+            }
             n = n.nextSibling
           }
         }
@@ -2067,8 +2067,8 @@ var wysihtml5 = {
                   ec = node
                   eo = nodeLength
                 } else if (eo > nodeIndex) {
-                    eo--
-                  }
+                  eo--
+                }
               }
             }
           }
@@ -3277,12 +3277,12 @@ var wysihtml5 = {
                                 // Check whether the range that we added to the selection is reflected in the last range extracted from
                                 // the selection
                 if (api.config.checkSelectionRanges) {
-                    var nativeRange = getSelectionRangeAt(this.nativeSelection, this.rangeCount - 1)
-                    if (nativeRange && !rangesEqual(nativeRange, range)) {
+                  var nativeRange = getSelectionRangeAt(this.nativeSelection, this.rangeCount - 1)
+                  if (nativeRange && !rangesEqual(nativeRange, range)) {
                                         // Happens in WebKit with, for example, a selection placed at the start of a text node
-                      range = new WrappedRange(nativeRange)
-                    }
+                    range = new WrappedRange(nativeRange)
                   }
+                }
                 this._ranges[this.rangeCount - 1] = range
                 updateAnchorAndFocusFromRange(this, range, selectionIsBackward(this.nativeSelection))
                 this.isCollapsed = selectionIsCollapsed(this)
@@ -3331,8 +3331,8 @@ var wysihtml5 = {
             } else if (this.docSelection.type == CONTROL) {
               var controlRange = this.docSelection.createRange()
               if (controlRange.length) {
-                  doc = getDocument(controlRange.item(0))
-                }
+                doc = getDocument(controlRange.item(0))
+              }
             }
             if (doc) {
               var textRange = getBody(doc).createTextRange()
@@ -14540,17 +14540,17 @@ this['wysihtml5']['tpl']['lists'] = Handlebars.template(function (Handlebars, de
         }).map(function (commandObj) {
           return commandObj.dialog
         }).forEach(function (dialog) {
-            dialog.on('show', function () {
-              $(this.container).modal('show')
-            })
-            dialog.on('hide', function () {
-              $(this.container).modal('hide')
-              setTimeout(editor.composer.focus, 0)
-            })
-            $(dialog.container).on('shown.bs.modal', function () {
-              $(this).find('input, select, textarea').first().focus()
-            })
+          dialog.on('show', function () {
+            $(this.container).modal('show')
           })
+          dialog.on('hide', function () {
+            $(this.container).modal('hide')
+            setTimeout(editor.composer.focus, 0)
+          })
+          $(dialog.container).on('shown.bs.modal', function () {
+            $(this).find('input, select, textarea').first().focus()
+          })
+        })
         this.on('change_view', function () {
           $(this.toolbar.container.children).find('a.btn').not('[data-wysihtml5-action="change_view"]').toggleClass('disabled')
         })
