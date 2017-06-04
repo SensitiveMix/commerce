@@ -1,6 +1,6 @@
 {
   "name": "e-commerce-platform",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "scripts": {
     "start": "cross-env NODE_ENV=dev node app_browsersync",
