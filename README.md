@@ -18,6 +18,8 @@ A Commerce website for taking advantage of the built-in commerce platform in nod
 
 
 ### Contains
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/SensitiveMix/commerce.svg)](https://greenkeeper.io/)
 - [x] [Node.js](https://github.com/nodejs/node)
 - [x] [Express](https://github.com/expressjs/express)
 - [x] [EJS](https://github.com/tj/ejs)
