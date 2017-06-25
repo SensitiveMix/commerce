@@ -33,7 +33,7 @@ var productionConfig = [{
       loader: 'url-loader?limit=100000&name=icons/[name].[ext]'
     }, {
       test: /\.css$/,
-      loader: Ex.extract('style-loader', 'css-loader')
+      loader: Ex.extract({ fallback: 'style-loader', use: 'css-loader' })
     }, {
       test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       loader: 'url-loader?limit=10000&mimetype=application/font-woff&name=icons/[name].[ext]'
