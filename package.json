@@ -104,11 +104,11 @@
     "webpack": "^3.0.0"
   },
   "standard": {
-  "ignore": [
-    "**/test/",
-    "/public/",
-    "/node_modules/",
-    "/views/"
-  ]
-}
+    "ignore": [
+      "**/test/",
+      "/public/",
+      "/node_modules/",
+      "/views/"
+    ]
+  }
 }
