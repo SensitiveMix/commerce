@@ -67,7 +67,7 @@
     "webpack-hot-middleware": "^2.12.2",
     "xls-to-json": "^0.4.0",
     "xls-to-json-lc": "^0.3.3",
-    "xlsx": "^0.10.6",
+    "xlsx": "^0.11.0",
     "xlsx-to-json-lc": "^0.4.1"
   },
   "devDependencies": {
