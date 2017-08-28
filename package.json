@@ -97,7 +97,7 @@
     "mochawesome": "^2.2.1",
     "mongoose": "^4.6.3",
     "nodemon": "^1.11.0",
-    "should": "^11.1.1",
+    "should": "^12.0.0",
     "superagent": "^3.5.2",
     "supertest": "^3.0.0",
     "url-loader": "^0.5.7",
