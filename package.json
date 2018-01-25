@@ -96,7 +96,7 @@
     "jsx-loader": "^0.13.2",
     "mocha": "^4.0.1",
     "mocha-lcov-reporter": "^1.2.0",
-    "mochawesome": "^2.2.1",
+    "mochawesome": "^3.0.2",
     "mongoose": "^4.6.3",
     "nodemon": "^1.11.0",
     "should": "^13.0.0",
