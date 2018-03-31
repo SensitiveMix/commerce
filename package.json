@@ -59,7 +59,7 @@
     "reload": "^2.0.0",
     "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.6",
-    "serve-favicon": "~2.4.3",
+    "serve-favicon": "~2.5.0",
     "style-loader": "^0.20.0",
     "superagent": "^3.5.2",
     "supertest": "^3.0.0",
