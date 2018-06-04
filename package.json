@@ -70,7 +70,8 @@
     "xls-to-json": "^0.5.0",
     "xls-to-json-lc": "^0.3.3",
     "xlsx": "^0.13.0",
-    "xlsx-to-json-lc": "^0.5.0"
+    "xlsx-to-json-lc": "^0.5.0",
+    "grunt": "1.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
