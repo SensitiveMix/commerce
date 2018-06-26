@@ -12,7 +12,9 @@
     "generate": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "production": "webpack --config webpack.production.config.js -p & cross-env NODE_ENV=production node app",
-    "test-cov": "node node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha  -- --timeout 500000 --recursive test/"
+    "test-cov": "node node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha  -- --timeout 500000 --recursive test/",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "assert": "^1.4.1",
@@ -71,7 +73,8 @@
     "xls-to-json-lc": "^0.3.3",
     "xlsx": "^0.13.0",
     "xlsx-to-json-lc": "^0.5.0",
-    "grunt": "1.0.3"
+    "grunt": "1.0.3",
+    "snyk": "^1.85.0"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
@@ -113,5 +116,6 @@
       "/node_modules/",
       "/views/"
     ]
-  }
+  },
+  "snyk": true
 }
