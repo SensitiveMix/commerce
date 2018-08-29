@@ -9,9 +9,9 @@ patch:
     - express > serve-static > send > mime:
         patched: '2018-06-26T00:39:37.074Z'
     - express > send > mime:
-        patched: '2018-08-29T05:54:45.236Z'
+        patched: '2018-08-29T05:56:42.895Z'
     - express > serve-static > send > mime:
-        patched: '2018-08-29T05:54:45.236Z'
+        patched: '2018-08-29T05:56:42.895Z'
   'npm:tunnel-agent:20170305':
     - node-sass > request > tunnel-agent:
         patched: '2018-06-26T00:39:37.074Z'
@@ -20,10 +20,10 @@ patch:
         patched: '2018-07-03T00:39:18.116Z'
   'npm:debug:20170905':
     - browser-sync > localtunnel > debug:
-        patched: '2018-08-29T05:54:45.236Z'
+        patched: '2018-08-29T05:56:42.895Z'
   'npm:minimatch:20160620':
     - istanbul-harmony > fileset > minimatch:
-        patched: '2018-08-29T05:54:45.236Z'
+        patched: '2018-08-29T05:56:42.895Z'
   'npm:uglify-js:20151024':
     - istanbul-harmony > handlebars > uglify-js:
-        patched: '2018-08-29T05:54:45.236Z'
+        patched: '2018-08-29T05:56:42.895Z'
