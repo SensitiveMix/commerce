@@ -107,7 +107,7 @@
     "superagent": "^3.5.2",
     "supertest": "^3.0.0",
     "url-loader": "^1.1.1",
-    "webpack": "^4.0.0"
+    "webpack": "4.18.0"
   },
   "standard": {
     "ignore": [
