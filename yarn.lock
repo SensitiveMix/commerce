@@ -8618,9 +8618,9 @@ xls-to-json-lc@^0.3.3:
     csv "~0.3.6"
     xlsjs "0.7.6"
 
-xls-to-json@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/xls-to-json/-/xls-to-json-0.5.0.tgz#5085399db8ae59aec6a73b0a58aa5ea8acb08424"
+xls-to-json@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/xls-to-json/-/xls-to-json-0.5.1.tgz#c0c681f764315c3268e31e7d2f7ae40709038852"
   dependencies:
     csv "~0.3.7"
     xlsx "0.12.8"
