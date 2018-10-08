@@ -62,7 +62,7 @@
     "resolve-url-loader": "^3.0.0",
     "sass-loader": "^7.0.0",
     "serve-favicon": "~2.5.0",
-    "style-loader": "^0.23.0",
+    "style-loader": "^0.23.1",
     "superagent": "^3.5.2",
     "supertest": "^3.0.0",
     "url-loader": "^1.1.1",
