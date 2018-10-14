@@ -1112,16 +1112,18 @@ browser-stdout@1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/browser-stdout/-/browser-stdout-1.3.1.tgz#baa559ee14ced73452229bad7326467c61fabd60"
 
-browser-sync-client@^2.26.0:
-  version "2.26.0"
-  resolved "https://registry.yarnpkg.com/browser-sync-client/-/browser-sync-client-2.26.0.tgz#ea8b38a251e8445177e23a0e37b68b1e4eeff0a0"
+browser-sync-client@^2.26.2:
+  version "2.26.2"
+  resolved "https://registry.yarnpkg.com/browser-sync-client/-/browser-sync-client-2.26.2.tgz#dd0070c80bdc6d9021e89f7837ee70ed0a8acf91"
   dependencies:
+    etag "1.8.1"
+    fresh "0.5.2"
     mitt "^1.1.3"
     rxjs "^5.5.6"
 
-browser-sync-ui@^2.26.0:
-  version "2.26.0"
-  resolved "https://registry.yarnpkg.com/browser-sync-ui/-/browser-sync-ui-2.26.0.tgz#8fd7ec972fc30288ca3706df6c3e79ef784710e5"
+browser-sync-ui@^2.26.2:
+  version "2.26.2"
+  resolved "https://registry.yarnpkg.com/browser-sync-ui/-/browser-sync-ui-2.26.2.tgz#a1d8e107cfed5849d77e3bbd84ae5d566beb4ea0"
   dependencies:
     async-each-series "0.1.1"
     connect-history-api-fallback "^1"
@@ -1130,12 +1132,12 @@ browser-sync-ui@^2.26.0:
     socket.io-client "^2.0.4"
     stream-throttle "^0.1.3"
 
-browser-sync@^2.26.0:
-  version "2.26.0"
-  resolved "https://registry.yarnpkg.com/browser-sync/-/browser-sync-2.26.0.tgz#63b401c51b715e85dc4df9ef1d135a63a6d3889e"
+browser-sync@^2.26.3:
+  version "2.26.3"
+  resolved "https://registry.yarnpkg.com/browser-sync/-/browser-sync-2.26.3.tgz#1b59bd5935938a5b0fa73b3d78ef1050bd2bf912"
   dependencies:
-    browser-sync-client "^2.26.0"
-    browser-sync-ui "^2.26.0"
+    browser-sync-client "^2.26.2"
+    browser-sync-ui "^2.26.2"
     bs-recipes "1.3.4"
     bs-snippet-injector "^2.0.1"
     chokidar "^2.0.4"
@@ -2742,7 +2744,7 @@ esutils@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
 
-etag@^1.8.1, etag@~1.8.1:
+etag@1.8.1, etag@^1.8.1, etag@~
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
 
@@ -3123,8 +3125,8 @@ flush-write-stream@^1.0.0:
     readable-stream "^2.0.4"
 
 follow-redirects@^1.2.5:
-  version "1.5.8"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.8.tgz#1dbfe13e45ad969f813e86c00e5296f525c885a1"
+  version "1.5.9"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.9.tgz#c9ed9d748b814a39535716e531b9196a845d89c6"
   dependencies:
     debug "=3.1.0"
 
