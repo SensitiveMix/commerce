@@ -30,7 +30,7 @@
     "grunt-transcoding": "~0.1.1",
     "grunt-text-replace": "~0.4.0",
     "grunt-contrib-compress": "~1.4.3",
-    "snyk": "^1.107.1"
+    "snyk": "^1.108.0"
   },
   "devDependencies": {
     "grunt": "~1.0.3"
