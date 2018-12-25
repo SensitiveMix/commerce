@@ -31,7 +31,7 @@
     "cors": "^2.8.1",
     "cross-env": "^5.0.1",
     "crypto": "1.0.1",
-    "css-loader": "^2.0.0",
+    "css-loader": "^2.1.0",
     "debug": "~4.1.0",
     "ejs": "~2.6.1",
     "ejs-locals": "^1.0.2",
