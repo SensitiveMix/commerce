@@ -24,7 +24,7 @@
     "chai": "^4.0.2",
     "cheerio": "^0.22.0",
     "chokidar": "^2.0.0",
-    "clean-webpack-plugin": "^2.0.0",
+    "clean-webpack-plugin": "^2.0.1",
     "colors": "^1.1.2",
     "consolidate": "^0.15.0",
     "cookie-parser": "~1.4.3",
