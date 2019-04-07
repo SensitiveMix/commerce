@@ -48,7 +48,7 @@
     "jquery": "^3.1.1",
     "loadash": "1.0.0",
     "lodash": "^4.16.6",
-    "mocha": "^6.0.0",
+    "mocha": "^6.1.0",
     "mochawesome": "^3.1.1",
     "moment": "^2.15.1",
     "mongoose": "5.4.22",
