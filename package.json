@@ -19,7 +19,7 @@
   "dependencies": {
     "assert": "^1.4.1",
     "async": "^2.1.2",
-    "body-parser": "~1.18.0",
+    "body-parser": "~1.19.0",
     "browser-sync": "^2.26.3",
     "chai": "^4.0.2",
     "cheerio": "^0.22.0",
