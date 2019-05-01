@@ -102,7 +102,7 @@
     "mocha-lcov-reporter": "^1.2.0",
     "mochawesome": "^3.0.2",
     "mongoose": "^5.2.14",
-    "nodemon": "^1.11.0",
+    "nodemon": "^1.19.0",
     "should": "^13.0.0",
     "superagent": "^3.5.2",
     "supertest": "^3.0.0",
