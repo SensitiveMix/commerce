@@ -17,7 +17,7 @@
     "prepare": "npm run snyk-protect"
   },
   "dependencies": {
-    "assert": "^1.4.1",
+    "assert": "^2.0.0",
     "async": "^2.1.2",
     "body-parser": "~1.19.0",
     "browser-sync": "^2.26.3",
