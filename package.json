@@ -63,7 +63,7 @@
     "sass-loader": "^7.0.0",
     "serve-favicon": "~2.5.0",
     "style-loader": "^0.23.0",
-    "superagent": "^5.0.2",
+    "superagent": "^5.0.6",
     "supertest": "^4.0.0",
     "url-loader": "^1.1.1",
     "webpack": "^4.25.1",
