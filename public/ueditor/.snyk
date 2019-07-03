@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.12.0
+version: v1.13.5
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -10,3 +10,44 @@ patch:
         patched: '2018-10-24T05:16:37.680Z'
     - grunt-transcoding > grunt > glob > minimatch:
         patched: '2018-10-24T05:16:37.680Z'
+  SNYK-JS-LODASH-450202:
+    - snyk > @snyk/dep-graph > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - snyk > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - grunt-contrib-compress > archiver > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - snyk > snyk-nuget-plugin > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - grunt > grunt-legacy-log > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - grunt > grunt-legacy-util > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - snyk > inquirer > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - snyk > snyk-config > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - snyk > snyk-mvn-plugin > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - snyk > snyk-nodejs-lockfile-parser > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - grunt-contrib-compress > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - snyk > snyk-nodejs-lockfile-parser > graphlib > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - grunt-contrib-compress > archiver > async > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - grunt-contrib-compress > archiver > zip-stream > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - grunt > grunt-legacy-log > grunt-legacy-log-utils > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - snyk > snyk-php-plugin > @snyk/composer-lockfile-parser > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - snyk > @snyk/dep-graph > graphlib > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - grunt-contrib-compress > archiver > archiver-utils > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - snyk > snyk-go-plugin > graphlib > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
+    - grunt-contrib-compress > archiver > zip-stream > archiver-utils > lodash:
+        patched: '2019-07-03T21:31:36.269Z'
