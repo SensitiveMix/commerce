@@ -30,14 +30,15 @@
     "grunt-transcoding": "~0.1.1",
     "grunt-text-replace": "~0.4.0",
     "grunt-contrib-compress": "~1.5.0",
-    "snyk": "^1.108.0"
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "grunt": "~1.0.3"
   },
   "scripts": {
     "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "prepare": "npm run snyk-protect",
+    "prepublish": "npm run snyk-protect"
   },
   "snyk": true
 }
