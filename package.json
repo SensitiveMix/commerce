@@ -60,7 +60,7 @@
     "paypal-rest-sdk": "^1.7.0",
     "reload": "^3.0.0",
     "resolve-url-loader": "^3.0.0",
-    "sass-loader": "^7.0.0",
+    "sass-loader": "^7.3.0",
     "serve-favicon": "~2.5.0",
     "style-loader": "^1.0.0",
     "superagent": "^5.0.2",
