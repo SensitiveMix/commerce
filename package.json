@@ -51,7 +51,7 @@
     "mocha": "^6.0.0",
     "mochawesome": "^4.0.0",
     "moment": "^2.15.1",
-    "mongoose": "5.7.3",
+    "mongoose": "5.7.4",
     "mongoose-dbref": "0.0.4",
     "morgan": "~1.9.0",
     "multer": "^1.4.1",
