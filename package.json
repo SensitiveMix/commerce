@@ -23,7 +23,7 @@
     "browser-sync": "^2.26.3",
     "chai": "^4.0.2",
     "cheerio": "^0.22.0",
-    "chokidar": "^3.0.0",
+    "chokidar": "^3.2.2",
     "clean-webpack-plugin": "^3.0.0",
     "colors": "^1.1.2",
     "consolidate": "^0.15.0",
