@@ -33,7 +33,7 @@
     "crypto": "1.0.1",
     "css-loader": "^3.0.0",
     "debug": "~4.1.0",
-    "ejs": "~2.7.1",
+    "ejs": "~2.7.2",
     "ejs-locals": "^1.0.2",
     "express": "~5.0.0-alpha.6",
     "express-ejs-layouts": "^2.2.0",
