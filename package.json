@@ -41,7 +41,7 @@
     "express-session": "^1.14.2",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^5.0.0",
-    "formidable": "^1.0.17",
+    "formidable": "^1.2.2",
     "fs": "0.0.2",
     "http": "0.0.0",
     "istanbul-harmony": "^0.3.16",
