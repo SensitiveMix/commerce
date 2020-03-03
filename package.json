@@ -29,7 +29,7 @@
     "consolidate": "^0.15.0",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.1",
-    "cross-env": "^6.0.0",
+    "cross-env": "^7.0.1",
     "crypto": "1.0.1",
     "css-loader": "^3.0.0",
     "debug": "~4.1.0",
