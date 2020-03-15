@@ -27,7 +27,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "colors": "^1.1.2",
     "consolidate": "^0.15.0",
-    "cookie-parser": "~1.4.3",
+    "cookie-parser": "~1.4.5",
     "cors": "^2.8.1",
     "cross-env": "^7.0.0",
     "crypto": "1.0.1",
