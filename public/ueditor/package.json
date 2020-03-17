@@ -33,7 +33,7 @@
     "snyk": "^2.0.0"
   },
   "devDependencies": {
-    "grunt": "~1.0.3"
+    "grunt": "~1.1.0"
   },
   "scripts": {
     "snyk-protect": "snyk protect",
