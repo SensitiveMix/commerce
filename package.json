@@ -45,7 +45,7 @@
     "fs": "0.0.2",
     "http": "0.0.0",
     "istanbul-harmony": "^0.3.16",
-    "jquery": "^3.1.1",
+    "jquery": "^3.5.1",
     "loadash": "1.0.0",
     "lodash": "^4.16.6",
     "mocha": "^7.0.1",
