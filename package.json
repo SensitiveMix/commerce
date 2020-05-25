@@ -58,7 +58,7 @@
     "node-sass": "^4.10.0",
     "npm-install-webpack-plugin": "^4.0.4",
     "paypal-rest-sdk": "^1.7.0",
-    "reload": "^3.0.0",
+    "reload": "^3.0.5",
     "resolve-url-loader": "^3.0.0",
     "sass-loader": "^8.0.0",
     "serve-favicon": "~2.5.0",
