@@ -73,7 +73,7 @@
     "xls-to-json-lc": "^0.3.3",
     "xlsx": "^0.16.0",
     "xlsx-to-json-lc": "^0.5.0",
-    "grunt": "~1.0.3",
+    "grunt": "~1.1.0",
     "snyk": "^2.0.0"
   },
   "devDependencies": {
