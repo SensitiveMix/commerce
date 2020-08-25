@@ -53,20 +53,20 @@ patch:
         patched: '2019-07-03T21:31:36.269Z'
   SNYK-JS-LODASH-567746:
     - grunt-contrib-compress > lodash:
-        patched: '2020-04-30T21:32:09.132Z'
+        patched: '2020-05-01T00:05:15.108Z'
     - grunt > grunt-legacy-log > lodash:
-        patched: '2020-04-30T21:32:09.132Z'
+        patched: '2020-05-01T00:05:15.108Z'
     - grunt > grunt-legacy-util > lodash:
-        patched: '2020-04-30T21:32:09.132Z'
+        patched: '2020-05-01T00:05:15.108Z'
     - grunt-contrib-compress > archiver > lodash:
-        patched: '2020-04-30T21:32:09.132Z'
+        patched: '2020-05-01T00:05:15.108Z'
     - grunt > grunt-legacy-log > grunt-legacy-log-utils > lodash:
-        patched: '2020-04-30T21:32:09.132Z'
+        patched: '2020-05-01T00:05:15.108Z'
     - grunt-contrib-compress > archiver > archiver-utils > lodash:
-        patched: '2020-04-30T21:32:09.132Z'
+        patched: '2020-05-01T00:05:15.108Z'
     - grunt-contrib-compress > archiver > async > lodash:
-        patched: '2020-04-30T21:32:09.132Z'
+        patched: '2020-05-01T00:05:15.108Z'
     - grunt-contrib-compress > archiver > zip-stream > lodash:
-        patched: '2020-04-30T21:32:09.132Z'
+        patched: '2020-05-01T00:05:15.108Z'
     - grunt-contrib-compress > archiver > zip-stream > archiver-utils > lodash:
-        patched: '2020-04-30T21:32:09.132Z'
+        patched: '2020-05-01T00:05:15.108Z'
