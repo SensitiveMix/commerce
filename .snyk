@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.12.0
+version: v1.25.0
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -21,9 +21,32 @@ patch:
   'npm:debug:20170905':
     - browser-sync > localtunnel > debug:
         patched: '2018-08-29T05:56:42.895Z'
+    - browser-sync > resp-modifier > debug:
+        patched: '2022-08-24T16:41:40.153Z'
+    - mongoose-dbref > mongoose > mquery > debug:
+        patched: '2022-08-24T16:41:40.153Z'
+    - browser-sync > chokidar > braces > snapdragon > debug:
+        patched: '2022-08-24T16:41:40.153Z'
+    - browser-sync > chokidar > anymatch > micromatch > snapdragon > debug:
+        patched: '2022-08-24T16:41:40.153Z'
+    - browser-sync > chokidar > anymatch > micromatch > braces > snapdragon > debug:
+        patched: '2022-08-24T16:41:40.153Z'
+    - browser-sync > chokidar > anymatch > micromatch > extglob > snapdragon > debug:
+        patched: '2022-08-24T16:41:40.153Z'
+    - browser-sync > chokidar > anymatch > micromatch > nanomatch > snapdragon > debug:
+        patched: '2022-08-24T16:41:40.153Z'
+    - browser-sync > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > debug:
+        patched: '2022-08-24T16:41:40.153Z'
   'npm:minimatch:20160620':
     - istanbul-harmony > fileset > minimatch:
         patched: '2018-08-29T05:56:42.895Z'
   'npm:uglify-js:20151024':
     - istanbul-harmony > handlebars > uglify-js:
         patched: '2018-08-29T05:56:42.895Z'
+  SNYK-JS-LODASH-567746:
+    - browser-sync > easy-extender > lodash:
+        patched: '2022-08-24T16:41:40.153Z'
+    - extract-text-webpack-plugin > async > lodash:
+        patched: '2022-08-24T16:41:40.153Z'
+    - mongoose-dbref > mongoose > async > lodash:
+        patched: '2022-08-24T16:41:40.153Z'
